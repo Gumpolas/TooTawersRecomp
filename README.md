@@ -79,3 +79,6 @@ Sreenshots and gameplay: <img width="1096" height="617" alt="TwoTowers-Recompile
 <img width="1345" height="1030" alt="image" src="https://github.com/user-attachments/assets/ecb2e886-0cce-4fbd-9d85-1e0f8df95e18" />
 
 <img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/ab48d8dc-9225-4cd3-bb01-b58cc8639e14" />
+
+<img width="1096" height="617" alt="tEST Screenshot 2026 10 08 - 15 15 06 05" src="https://github.com/user-attachments/assets/357ae1e5-dcc5-4416-96d3-31db095ed6a4" />
+
