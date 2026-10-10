@@ -64,3 +64,15 @@ You will need to compensate for the new attack animations. As of now Frodo and B
 
 Bug reports are welcome. Please include `twotowers_log.txt`, which is next to the game (for the Extra heroes mod, its `[HEROES]` lines).
 
+Screenshots and gameplay: 
+<img width="2336" height="940" alt="71a47139-f2d2-4a8e-a85a-1cb04c062484" src="https://github.com/user-attachments/assets/106a8073-de66-4084-bbf6-cafeb3460dc9" />
+
+<img width="1585" height="999" alt="imag4" src="https://github.com/user-attachments/assets/f67df73d-16c4-42a3-9196-b6ddb3aa58c5" />
+
+
+https://github.com/user-attachments/assets/4ec5e31d-ab8e-4fa5-9df8-f4074c29a3d0
+
+<img width="1030" height="770" alt="imag44e" src="https://github.com/user-attachments/assets/c580be17-135b-453e-bf71-13eb08a1455b" />
+<img width="1345" height="1030" alt="image" src="https://github.com/user-attachments/assets/184186dd-bc56-4783-8ee3-610839aeea58" />
+<img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/1d865abd-7658-421a-81db-88167dd4d178" />
+
