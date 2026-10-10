@@ -1,92 +1,66 @@
-# TooTawersRecomp
-A native Windows PC port of The Lord of the Rings: The Two Towers (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
-
-# The Two Towers Recompiled v1.2
+# The Two Towers Recompiled v1.3
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play at **30 fps**, the frame rate the game was made for. If the game crashes or freezes, restart it: the same spot usually works on the next try.
+> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. It is recommended to play the game at **30 fps**, the frame rate the game was made for. If the game crashes or freezes with unlocked frame rates, restart it: the same spot usually works on the next try. Most tests have no crashes with higher frame rates, and none at 30 fpos
 
 ## Downloads
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.2-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.2-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer (Ubuntu 18.04+, Debian 10+, Fedora 28+, Steam Deck desktop mode, …) |
-| `TwoTowers-Recompiled-v1.2-source.zip` | Source code (LGPL-2.1) |
+| `TwoTowers-Recompiled-v1.3-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.3-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer (Ubuntu 18.04+, Debian 10+, Fedora 28+, Steam Deck desktop mode, …) |
+| `TwoTowers-Recompiled-v1.3-source.zip` | Source code (LGPL-2.1) |
+|  E3hudNEWCHARACTERSICONS.zip | Extra icons for the new characters when using the ECTS 2002 HUD mod  
 
-## New in 1.2
+Updating from 1.2: unpack over your old folder, or into a new one and copy your `game_files` folder (or point the launcher at your extracted folder again). Your saves and settings carry over. If you played the Extra heroes mod in 1.2, its `heroes` folder is rebuilt automatically; the heroes' experience and upgrades are kept.
 
-### Linux build
-- Native 64-bit Linux version. Graphics use OpenGL 3.3, and sound and controllers go through SDL2 (Xbox, PlayStation 3/4/5, Switch Pro and most other pads, with rumble).
-- Run `TwoTowers.sh`. On first start it runs `twotowers-setup`, which checks and extracts your disc image (or uses an extracted folder), lets you change a few settings and adds a menu entry. If SDL2 is missing, it tells you how to install it.
+## New in 1.3: Extra heroes mod fixes/changes  
 
-### Windows 7 and N editions
-- The game now starts on Windows 7 SP1 and 8.1, and on the "N" editions of any Windows. It no longer needs the Universal C Runtime or a Visual C++ redistributable.
-- XAudio2, the shader compiler and Media Foundation are loaded only if present. Without them the game falls back to other sound output, the software renderer or no movie audio, instead of refusing to start.
-- A graphics card or Windows 7 setup without Direct3D 11 feature level 11_0 now gets the software renderer and a line in the log, instead of a broken picture.
+> ⚠ Still **highly experimental** and **off by default**. Expect the odd visual glitch in cutscenes and during gameplay. Your saves are not changed by it. Toggle it in the launcher's settings (**Mod: Extra heroes**) or with `[Mods] extra_heroes=1`.
 
-### PlayStation controller support
-- **Button prompts:** with a PlayStation pad as player 1, the game's button icons (the upgrade screen's combo lists, "Help", …) show cross, circle, square, triangle and R2 instead of A, B, X, Y and the right trigger. Choose Automatic, Xbox or PlayStation under "Button prompts" in the F10 menu, or set `[Input] prompts=` in the settings file.
-- **Loading-screen controller diagrams:** with PlayStation prompts, the control diagrams on the early loading screens show a **DualShock 3, DualShock 4 or DualSense**, whichever pad is plugged in. The game's own lines and labels still point at the right buttons. Use `[Input] ps_pad=auto|ps3|ps4|ps5` to pick one.
+1.2 brought Boromir, Gandalf, Frodo and Lurtz to the character select, but they were stretched over Aragorn's body and fought with his sword and bow. In 1.3 each one is himself.
+
+You will need to compensate for the new attack animations. As of now Frodo and Boromir's heavy attacks don't line up perfectly, but with practice and timing around the new animations you can easily complete any level with any of the new characters. Gandalf and Lurtz are the most playable/fun to use so far.
+
+### Their own bodies and moves
+- They play on their **own skeletons**, with their own walk, run, block, hit reactions and death. Frodo and Lurtz are no longer distorted.
+- Walks and runs are paced to each hero's stride, so their feet keep to the ground.
+- **Boromir and Frodo** fight with the heroes' light and heavy attacks, fitted to their bodies. **Gandalf and Lurtz** fight with their own attacks, timed so the blow lands where the swing does.
+- **Heavy attacks now hit.** The guests' blades swept beside where the game looked for a hit, so heavy attacks missed. Measured in Hornburg Courtyard, they now land about as often as Aragorn's.
+
+### Their own weapons
+- **Boromir:** his sword, and his shield on his other arm.
+- **Gandalf:** his staff, always in hand. His ranged attack is a **beam of light from the staff's head**, never arrows.
+- **Frodo:** Sting, its blade glowing a pale blue.
+- **Lurtz:** his Uruk-hai sword and his own bow.
+
+### Their own pictures
+- Each has his own idle pose on the character select, his own pose when chosen and his own move when confirmed.
+- His own figure on the pause screen's upgrades and on the end-of-level model.
+- His own HUD portrait, upgrade-screen and results-screen pictures.
+
+### Unlocking, one at a time
+- Each finish of the Tower of Orthanc **as Isildur** on a save unlocks the next hero: the 2nd finish unlocks Boromir, the 3rd Gandalf, the 4th Frodo and the 5th Lurtz. Locked heroes show as a faint shadow and are skipped.
+- **"On, unlocked for testing"** (`extra_heroes=2`) still shows all four on any save, without changing it.
 
 ### Fixes
-- **Controls freezing with the last input held** (Windows), for example Gimli aiming at the breach or Aragorn walking into a wall. The real cause was the thread-local storage in the MinGW Windows builds, which every thread shared by mistake. Pad input also now runs on its own thread, so a slow controller driver (Bluetooth, Steam Input, virtual pads) can't stall it.
-- **Crash in Helm's Deep at 60 fps / unlocked**: a race in the game's sound engine.
-- **Crash entering Balin's Tomb on Linux.**
-- **Timer overflow:** the game would have frozen on its first frame if the PC had been on for about 10.7 days without a restart.
-
-### ECTS 2002 HUD mod
-- **Westfold:** the villager counter is now the demo's two rows of villager faces, with a red cross over each one lost. The left villager's mouth is no longer cut off.
-- **Westfold:** the villager faces no longer show on the results and upgrade screens after the level.
-- **Helm's Deep wall:** the progress-bar picture is centred on the bar.
-
-### Extra heroes mod (new, ⚠ highly experimental, off by default)
-> This is an early preview and is **partly broken**: expect visual glitches, missing moves and possibly crashes. Leave it off for a normal game. Your saves are not changed by it.
-
-- Adds **Boromir, Gandalf, Frodo and Lurtz** to the character select (eight heroes), made from the game's own models. Turn it on in the launcher's settings (**Mod: Extra heroes**) or with `[Mods] extra_heroes=1`.
-- They unlock once a save has finished Hornburg Courtyard and the Tower of Orthanc. **"On, unlocked for testing"** (`extra_heroes=2`) shows them on any save without changing it.
-- Each takes Isildur's place in the level, with his own experience and upgrades, kept in the `heroes` folder. They move with Aragorn's moves, sword and bow.
-- Known problems: Frodo and Lurtz are visibly distorted when they move. Gandalf has no staff or magic yet. The upgrade screen and HUD still show Isildur's picture. After leaving a level, the new heroes are sometimes missing from the character select until a save is loaded again. Proper moves, weapons and pictures for each are planned for 1.3.
+- The new heroes sometimes missing from the character select after returning to the menu.
+- ECTS HUD mod: the HUD is drawn only in play.
 
 ## Tested
-- **Windows:** all 14 levels load and reach gameplay, rotating Aragorn, Legolas and Gimli at 30, 60 and unlocked fps, with no crash. A run in Windows 7 compatibility mode also started and played normally.
-- **Linux:** all 14 levels load and reach gameplay. This testing found the Balin's Tomb crash, which is now fixed.
+- **Windows:** all 14 levels load and reach gameplay without the mod, rotating Aragorn, Legolas and Gimli at 30, 60 and unlocked fps, with no crash. (The prologue's long opening movie outlasted the test run on the slow test machine, as 1.2 does there too.)
+- **Extra heroes on Windows:** all four in the Plains of Rohan and Hornburg Courtyard: moves, weapons, Gandalf's beam, and heavy-attack hits measured against Aragorn's.
+- **Linux:** the game built from the published source; a level with Boromir builds and plays its opening scene with no crash.
+- The release was built from a fresh copy of the source, with the game code generated from scratch by `generate.py`.
 
 ## Known issues
-- Rarely (once in about 30 test runs, on a heavily overloaded two-core machine), the game froze during the movie before Amon Hen. The next try worked.
-- With PlayStation prompts, on-screen text still names the Xbox buttons ("Press the A button…"). Only the pictures and button icons change.
+- Character shadow bug. Warped shadows can sometimes appear for the main character. 
+- Extra heroes: they have no voices of their own. Frodo's Sting glow is a tint of the blade, not a light on its surroundings. Breaking shields with heavy attacks has not been measured as closely as plain hits; reports are welcome.
+- Rarely, the game froze during the movie before Amon Hen in 1.2 testing; the next try worked.
+- With PlayStation prompts, on-screen text still names the Xbox buttons ("Press the A button…"). Only the pictures and button icons change. Fixes for button prompts planned for 1.4.
 - 60 fps and unlocked are experimental: crackling or music cutting out can still happen.
 - Widescreen is experimental: a few full-screen effects may not line up at the edges.
 
-Bug reports are welcome. Please include `twotowers_log.txt`, which is next to the game.
-
-Sreenshots and gameplay: <img width="1096" height="617" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 07 - 15 18 17 87" src="https://github.com/user-attachments/assets/fa06ebdc-558e-4124-b346-4480554b497c" />
-<img width="1096" height="617" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 07 - 16 14 33 03" src="https://github.com/user-attachments/assets/e5445391-c4bc-4955-a41f-6bd0fea4f21f" />
-
-
-
-
-<img width="2336" height="940" alt="71a47139-f2d2-4a8e-a85a-1cb04c062484" src="https://github.com/user-attachments/assets/6ba425cd-f7bc-4beb-8206-780d7af45ec6" />
-
-<img width="1585" height="999" alt="imag4" src="https://github.com/user-attachments/assets/b7c9f2bc-5707-4218-b0bf-42313ddfac7b" />
-
-
-<img width="4608" height="1296" alt="Untitled6" src="https://github.com/user-attachments/assets/18cf9c22-c34d-450c-9c88-d679c51cd2fd" />
-
-<img width="1030" height="770" alt="imag44e" src="https://github.com/user-attachments/assets/08fc97f4-3607-4ab9-81a2-e842e8182bba" />
-
-<img width="1345" height="1030" alt="image" src="https://github.com/user-attachments/assets/ecb2e886-0cce-4fbd-9d85-1e0f8df95e18" />
-
-<img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/ab48d8dc-9225-4cd3-bb01-b58cc8639e14" />
-
-<img width="1096" height="617" alt="tEST Screenshot 2026 10 08 - 15 15 06 05" src="https://github.com/user-attachments/assets/357ae1e5-dcc5-4416-96d3-31db095ed6a4" />
-
-
-
-https://github.com/user-attachments/assets/543bcbfe-df9e-4ff4-8bc6-897b70e5cb8c
-
-
-
-
+Bug reports are welcome. Please include `twotowers_log.txt`, which is next to the game (for the Extra heroes mod, its `[HEROES]` lines).
 
