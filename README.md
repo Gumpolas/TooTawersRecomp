@@ -23,6 +23,9 @@ Updating from 1.2: unpack over your old folder, or into a new one and copy your 
 
 You will need to compensate for the new attack animations. As of now Frodo and Boromir's heavy attacks don't line up perfectly, but with practice and timing around the new animations you can easily complete any level with any of the new characters. Gandalf and Lurtz are the most playable/fun to use so far.
 
+With the mod "on", you can unlock each character one at a time by finishing the Tower of Orthanc as Isildur on that save: Completing the level a second time unlocks Boromir, the
+3rd time Gandalf, the 4th time Frodo, and the 5th time Lurtz. A locked hero shows as a faint shadow until they have been unlocked. With "unlocked for testing" enabled, all characters are enabled by default.
+
 ### Their own bodies and moves
 - They play on their **own skeletons**, with their own walk, run, block, hit reactions and death. Frodo and Lurtz are no longer distorted.
 - Walks and runs are paced to each hero's stride, so their feet keep to the ground.
@@ -75,4 +78,5 @@ https://github.com/user-attachments/assets/4ec5e31d-ab8e-4fa5-9df8-f4074c29a3d0
 <img width="1030" height="770" alt="imag44e" src="https://github.com/user-attachments/assets/c580be17-135b-453e-bf71-13eb08a1455b" />
 <img width="1345" height="1030" alt="image" src="https://github.com/user-attachments/assets/184186dd-bc56-4783-8ee3-610839aeea58" />
 <img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/1d865abd-7658-421a-81db-88167dd4d178" />
+
 
