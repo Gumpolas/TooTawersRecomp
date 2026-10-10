@@ -61,7 +61,7 @@ With the mod "on", you can unlock each character one at a time by finishing the 
 - Character shadow bug. Warped shadows can sometimes appear for the main character. 
 - Extra heroes: they have no voices of their own. Frodo's Sting glow is a tint of the blade, not a light on its surroundings. Breaking shields with heavy attacks has not been measured as closely as plain hits; reports are welcome.
 - Rarely, the game froze during the movie before Amon Hen in 1.2 testing; the next try worked.
-- With PlayStation prompts, on-screen text still names the Xbox buttons ("Press the A button…"). Only the pictures and button icons change. Fixes for button prompts planned for 1.4.
+- With PlayStation prompts, on-screen text still names the Xbox buttons ("Press the A button…"). Only the pictures and button icons change.
 - 60 fps and unlocked are experimental: crackling or music cutting out can still happen.
 - Widescreen is experimental: a few full-screen effects may not line up at the edges.
 
