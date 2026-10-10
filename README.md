@@ -30,7 +30,7 @@ With the mod "on", you can unlock each character one at a time by finishing the 
 - They play on their **own skeletons**, with their own walk, run, block, hit reactions and death animations. Frodo and Lurtz are no longer distorted outside of cutscenes.
 - Walks and runs are paced to each hero's stride, so their feet keep to the ground.
 - **Boromir and Frodo** fight with the heroes' light and heavy attacks, fitted to their bodies. **Gandalf and Lurtz** fight with their own attacks, timed so the blow lands where the swing does.
-- **Heavy attacks now hit.** The guests' blades swept beside where the game looked for a hit, so heavy attacks missed. Measured in Hornburg Courtyard, they now land about as often as Aragorn's.
+- **Heavy attacks improved.** The guests' blades swept beside where the game looked for a hit, so heavy attacks missed sometimes. Measured in Hornburg Courtyard, they now land about as often as Aragorn's.
 
 ### Their own weapons
 - **Boromir:** his sword, and his shield on his other arm.
