@@ -27,7 +27,7 @@ With the mod "on", you can unlock each character one at a time by finishing the 
 3rd time Gandalf, the 4th time Frodo, and the 5th time Lurtz. A locked hero shows as a faint shadow until they have been unlocked. With "unlocked for testing" enabled, all characters are enabled by default.
 
 ### Their own bodies and moves
-- They play on their **own skeletons**, with their own walk, run, block, hit reactions and death. Frodo and Lurtz are no longer distorted.
+- They play on their **own skeletons**, with their own walk, run, block, hit reactions and death animations. Frodo and Lurtz are no longer distorted outside of cutscenes.
 - Walks and runs are paced to each hero's stride, so their feet keep to the ground.
 - **Boromir and Frodo** fight with the heroes' light and heavy attacks, fitted to their bodies. **Gandalf and Lurtz** fight with their own attacks, timed so the blow lands where the swing does.
 - **Heavy attacks now hit.** The guests' blades swept beside where the game looked for a hit, so heavy attacks missed. Measured in Hornburg Courtyard, they now land about as often as Aragorn's.
