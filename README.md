@@ -89,8 +89,8 @@ https://github.com/user-attachments/assets/6153922f-3cb8-4017-bf66-747b611f1825
 
 https://github.com/user-attachments/assets/fc51cdac-edbf-4c00-b49c-f038150b6bce
 
+<img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 16 43 15 16" src="https://github.com/user-attachments/assets/ce849440-a354-4662-9651-11d7297fa8a8" />
 
-<img width="4608" height="1296" alt="Untitled" src="https://github.com/user-attachments/assets/1c7279cc-2d39-4248-9096-a7143594f540"
   
 <img width="4608" height="1296" alt="Untitled3" src="https://github.com/user-attachments/assets/453815b0-cde7-416c-9a31-3702edaf83d4" />
 
