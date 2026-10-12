@@ -59,7 +59,7 @@ Bug reports are welcome, especially for Mac and Linux users. Please include `two
 Screenshots and gameplay: 
 <img width="2336" height="940" alt="71a47139-f2d2-4a8e-a85a-1cb04c062484" src="https://github.com/user-attachments/assets/106a8073-de66-4084-bbf6-cafeb3460dc9" />
 
-
+https://github.com/user-attachments/assets/fc51cdac-edbf-4c00-b49c-f038150b6bce
 
 
 https://github.com/user-attachments/assets/a91ea354-b100-43ea-9da8-bf31345b9c16
@@ -87,7 +87,7 @@ https://github.com/user-attachments/assets/6153922f-3cb8-4017-bf66-747b611f1825
 
 
 
-https://github.com/user-attachments/assets/fc51cdac-edbf-4c00-b49c-f038150b6bce
+
 
 <img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 16 43 15 16" src="https://github.com/user-attachments/assets/ce849440-a354-4662-9651-11d7297fa8a8" />
 
