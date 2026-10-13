@@ -92,11 +92,10 @@ https://github.com/user-attachments/assets/6153922f-3cb8-4017-bf66-747b611f1825
 <img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 16 43 15 16" src="https://github.com/user-attachments/assets/ce849440-a354-4662-9651-11d7297fa8a8" />
 
   
-<img width="4608" height="1296" alt="Untitled3" src="https://github.com/user-attachments/assets/453815b0-cde7-416c-9a31-3702edaf83d4" />
-
 <img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 20 57 50 13" src="https://github.com/user-attachments/assets/c0373910-f0d7-475f-9e90-7c2091114b44" />
 <img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 20 29 51 74" src="https://github.com/user-attachments/assets/920917e7-0052-48ce-88ce-4a777b2c5394" />
 
+<img width="1920" height="1080" alt="Desktop Screenshot 2026 10 12 - 20 47 32 98" src="https://github.com/user-attachments/assets/f88f7baa-d58a-4a95-8a15-2113c49df079" />
 
 <img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/1d865abd-7658-421a-81db-88167dd4d178" />
 <img width="1096" height="617" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 10 - 00 06 48 45" src="https://github.com/user-attachments/assets/a04259e8-5b13-40c7-b51c-f124ac166873" />
