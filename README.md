@@ -17,7 +17,7 @@ Updating from 1.5.x or earlier: unpack over your old folder, or into a new one a
 
 ## What's new in 1.6
 
-### Everyone
+### Rendering/Button icons
 - **Keyboard and mouse button prompts.** Every button icon can show the key or mouse button its action is bound to (a keycap such as K, SPACE or NUM 8, or a mouse with the button lit), and it changes as soon as you rebind a key. **Automatic** (the default) follows what you play with. Choose it in the F10 menu, the launcher or `[Input] prompts=auto|xbox|playstation|keyboard`. The prologue's hints in play change too.
 - **Keyboard and mouse on the loading screens.** The loading screens that explain the controls on a picture of the Xbox pad show a keyboard and a mouse instead: the keys and buttons you use are lit, and each of the game's labels has your key beside it. The hint under the picture names your keys ("Hold F to switch to your Ranged Weapon. Press K or the left mouse button to fire. Use W A S D to aim.").
 - **Vulkan (Windows):** Renderer → **Vulkan (DXVK)** in the launcher runs the game's Direct3D 11 renderer on Vulkan through DXVK. Download a DXVK release and copy its `x64\d3d11.dll` and `x64\dxgi.dll` into a folder named `dxvk` next to `twotowers_recomp.exe`. Without them the game uses Direct3D 11 and says so in the log. Experimental: see the known issues.
