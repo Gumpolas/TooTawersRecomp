@@ -17,7 +17,7 @@ Updating from 1.6 or earlier: unpack over your old folder, or into a new one and
 
 ## What's new in 1.7
 
-This release brings together everything from 1.7 through 1.7.6.
+This release brings together everything from 1.7
 
 ### Rendering and button prompts. 
 - **Menus fill the screen.** The game drew its menus, loading screens and upgrade and results screens inside the old TV "safe area", a black margin all round. They're now shown large enough for the art to reach the screen's edges (with "Stretch to fill", edge to edge in widescreen). Play and movies are unchanged. `RECOMP_MENU_FILL=0` puts the margin back.
