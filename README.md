@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v1.6
+# The Two Towers Recompiled v1.7
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,40 +8,48 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.6-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.6-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer (Ubuntu 18.04+, Debian 10+, Fedora 28+, Steam Deck desktop mode, …) |
-| `TwoTowers-Recompiled-v1.6-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2). **New and not yet tested on a Mac**: see below |
-| `TwoTowers-Recompiled-v1.6-source.zip` | Source code (LGPL-2.1) |
+| `TwoTowers-Recompiled-v1.7-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.7-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer (Ubuntu 18.04+, Debian 10+, Fedora 28+, Steam Deck desktop mode, …) |
+| `TwoTowers-Recompiled-v1.7-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2). **New and not yet tested on a Mac**: see below |
+| `TwoTowers-Recompiled-v1.7-source.zip` | Source code (LGPL-2.1) |
 
-Updating from 1.5.x or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder (or point the launcher at your extracted folder again). Your saves and settings carry over. The Extra heroes mod's `heroes` folder is rebuilt automatically; the heroes' experience, upgrades and unlocks are kept.
+Updating from 1.6 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder (or point the launcher at your extracted folder again). Your saves and settings carry over. The Extra heroes mod's `heroes` folder is rebuilt automatically; the heroes' experience, upgrades and unlocks are kept.
 
-## What's new in 1.6
+## What's new in 1.7
 
-### Rendering/Button icons
-- **Keyboard and mouse button prompts.** Every button icon can show the key or mouse button its action is bound to (a keycap such as K, SPACE or NUM 8, or a mouse with the button lit), and it changes as soon as you rebind a key. **Automatic** (the default) follows what you play with. Choose it in the F10 menu, the launcher or `[Input] prompts=auto|xbox|playstation|keyboard`. The prologue's hints in play change too.
-- **Keyboard and mouse on the loading screens.** The loading screens that explain the controls on a picture of the Xbox pad show a keyboard and a mouse instead: the keys and buttons you use are lit, and each of the game's labels has your key beside it. The hint under the picture names your keys ("Hold F to switch to your Ranged Weapon. Press K or the left mouse button to fire. Use W A S D to aim.").
-- **Vulkan (Windows):** Renderer → **Vulkan (DXVK)** in the launcher runs the game's Direct3D 11 renderer on Vulkan through DXVK. Download a DXVK release and copy its `x64\d3d11.dll` and `x64\dxgi.dll` into a folder named `dxvk` next to `twotowers_recomp.exe`. Without them the game uses Direct3D 11 and says so in the log. Experimental: see the known issues.
-- **Widescreen HUD at the screen's edges:** in a picture wider than 4:3 the health sword and counters sit against the left edge and the prompts against the right; "HUD in widescreen" can put it back in the middle.
-- **Fewer stutters.** Compiled shaders are kept in a `shadercache` folder beside the game, so a new effect stutters only the first time you ever see it. A small cushion of sound is kept queued at the output, so the sound no longer breaks up when a busy moment holds the game back.
-- **Sharper on scaled displays.** The game window is DPI aware: on a 4K screen at 150–200 % scaling it is drawn in real pixels instead of small and stretched by Windows.
-- **macOS download** (x86-64; Apple silicon through Rosetta 2). It is cross-built and has not been tested on a Mac yet. The first time, right-click `TwoTowers.command` → Open (the program is not signed by Apple); it asks for your disc image and installs the game files. SDL2 is included. Testing for the Mac version is welcome. 
+This release brings together everything from 1.7 through 1.7.6.
+
+### Rendering and button prompts. 
+- **Menus fill the screen.** The game drew its menus, loading screens and upgrade and results screens inside the old TV "safe area", a black margin all round. They're now shown large enough for the art to reach the screen's edges (with "Stretch to fill", edge to edge in widescreen). Play and movies are unchanged. `RECOMP_MENU_FILL=0` puts the margin back.
+- **Walk key for keyboard and mouse: B.** Hold it with the move keys and your hero walks instead of running, as a light push on a controller's stick does. Rebindable in the launcher's **Controls…** and the F10 **Controls** page (`kb_walk` in the settings file). On a controller, push the stick part way.
+- **Controller Start:** the log (`twotowers_log.txt`) records the controller's first Start presses and whether each one reached the game. This is to help track down reports of Start not working on some controllers.
 
 ### Extra heroes (still highly experimental, off by default)
-- **Three more heroes, eleven in all:** **Elrond** (the elves' curved sword), **the black Uruk-hai** (his great sword and his own attacks; he throws **burning rocks**) and **Sauron** (his mace and his own swings; a **red** bolt of power, and he takes blows better). Unlocked by the **6th**, **7th** and **8th** finish of the Tower of Orthanc as Isildur.
-- **Unlocks go with your game.** Loading a save brings that save's count of Isildur's Orthanc finishes; every save you write carries the count of the game you are playing — whichever slot it goes to, and whichever hero you played since. The save written after Isildur's finish counts one more. The 2nd finish unlocks Boromir, then one more hero with each finish. Before you load anything, the newest save's count shows.
-- **Upgrades of their own.** Each hero's six named moves have names of their own instead of Isildur's — Sauron's Dance, Eye of Sauron, You Shall Not Pass, Shadowfax Charge, Sting's Bite, Ringbearer's Will, Horn of Gondor, Berserker Frenzy, … — and his ranged weapon is named and described for what it is: Frodo's **Shire Stones**, **Flintshot** and **Elf Stones**, the Uruk-hai's **Fire Rocks**, **Hot Rocks** and **Lava Rocks**, Gandalf's and Sauron's fire, Lurtz's black bows of Isengard. Plus "Strength of Barad-dur" and the like.
-- **Their own voices:** attacks, blows taken and deaths have each hero's own voice; on the character select, choosing one plays his own sounds. **Their shots** have their own sounds (Sauron's bolt, Frodo's stones, the Uruk-hai's burning rocks; Gandalf's the bow's), and Gandalf's and Sauron's bolts show only the beam.
-- **Character select:** every unlocked character shows his level in the distance, Isildur and the new heroes too. Isildur no longer loses his sword or stands in a T-pose after you played as a new hero. Sauron comes last.
-- **Toughness:** Gandalf has more health and flinches less (a little less than Sauron); Lurtz a little less than Gandalf. Sauron takes blows better. Lurtz has more health as well. 
-- **Moves:** everyone kicks and parries with the heroes' kick and parry, fitted to his body; they fall when they die; they stand still as they aim; the Uruk-hai's heavy attacks are his two forward swings and his rising attack is his own getting-up move. Frodo throws stones.
-- **Icons:** their own ammo counters and upgrade-screen items; a posed figure on the pause screen; your own upgrade-screen pictures from an `upgpics` folder. With the ECTS HUD: Changed Gandalf's and Frodo's portraits (Frodo's from the E3 demo), and added the cave troll's health bar in Balin's Tomb as in the E3 demo.
+- **In game cutscene improvements.** The new heroes play the heroes' own moves in the in-game cutscenes, fitted to their own bodies, and stay whole: Fangorn's opening scene (where they were torn into stretched slabs), Balin's Tomb's opening scene and the Gates of Moria's scenes (where they twisted and turned).
+- **Lurtz's and the Uruk-hai's blades reach a little further.
+- **Tougher Gandalf and Lurtz.** Both take less damage. Lurtz has more health (1800), is much harder to knock back or down, and gets over his flinches sooner.
+- **The last ranged upgrade changes the shots:**
+  - **Gandalf — White Fire:** his beam turns white.
+  - **Sauron — Doom Fire:** his bolts are red and blue in turn; before this upgrade they stay red.
+  - **The Uruk-hai — Lava Rocks:** plain stones until this upgrade, then burning rocks. Every third one bursts as the Orthanc archers' fire pots do and leaves fire on the ground that hurts. His first two ranged upgrades are renamed **Crag Rocks** and **War Rocks**.
+- **No more drifting in water.** Several movement animations a new hero's own set lacked had been filled with a sideways step. In water (Gates of Moria, Gap of Rohan) and elsewhere he went sideways or backwards. Those are now the heroes' moves, fitted to his body. Sauron keeps all his own moves.
+- **Pause-screen figures stand upright,** weapon in hand at their side, instead of twisted or mid-stride (Lurtz looked one-legged).
+
+Everything from 1.6 is included: see its notes, and the README for the full list.
 
 ## Tested
-- **Windows build under Wine:** the new heroes in Hornburg Courtyard, Amon Hen, Fangorn and the Helm's Deep levels; Gandalf's and Sauron's beams; the character select with every hero unlocked; Frodo's upgrade names and descriptions; the keyboard loading screens of Weathertop, the Gates of Moria and Balin's Tomb; Vulkan through DXVK on a software Vulkan driver.
-- The release was built from a fresh copy of the source, with the game code generated from scratch by `generate.py`. The macOS build is cross-compiled and has **not** been run on a Mac.
+- Windows, Linux and macOS builds compile.
+- Windows build under Wine:
+  - the cutscenes as the new heroes (Fangorn, Balin's Tomb, the Gates of Moria);
+  - the shots before and after the last ranged upgrade in Hornburg Courtyard;
+  - the pause-screen figures, and the menus at 16:9 with stretch;
+  - Sauron at the Gates of Moria: walking and fighting with every upgrade, and the fall-through catch (pushed under the ground on purpose, he was stood back on the path);
+  - the stick pushed part way (what Walk does) moving at about a quarter of running speed;
+  - Start pressed on a (simulated) controller pausing the game and confirming in the menus.
+- Not tested: a high frame rate (the test machine reaches 5–16 fps); the launcher's and F10's new Walk row on Windows; the macOS build on a Mac.
 
 ## Known issues
--  Visual bugs: Character shadow bug. Sometimes the character shadows can appear stretched out or stringy, especially for larger NPC's. Some visual bugs with lighting as well. 
+-  Visual bugs: Character shadow bug. Sometimes the character shadows can appear stretched out or stringy, especially for larger NPC's. Some visual bugs with lighting as well.
 - * Vulkan: If you get a black screen when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable. 
 - Extra heroes: Most in game cut scenes do not currently show proper animations for the new characters yet, so any cut scene that requires a special animation will have the new character models appear mangled/unaligned. All animations seem to work okay in game/during gameplay.
 - Extra Heroes: Kicking animations and their range during the Deepening level can be off. Kicking works fine against enemies, but some of the new characters have to be angled to the side to kick down the ladders. Again kicking works fine against enemies but not the ladders during this level. NPC's like Sauron, Frodo, and Lurtz can kick them just fine, but Elrond, Boromir, the Uruk and Gandalf may have some trouble and need to be angled to the side.
@@ -99,4 +107,3 @@ https://github.com/user-attachments/assets/6153922f-3cb8-4017-bf66-747b611f1825
 
 <img width="4608" height="1508" alt="Untitled6" src="https://github.com/user-attachments/assets/1d865abd-7658-421a-81db-88167dd4d178" />
 <img width="1096" height="617" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 10 - 00 06 48 45" src="https://github.com/user-attachments/assets/a04259e8-5b13-40c7-b51c-f124ac166873" />
-
