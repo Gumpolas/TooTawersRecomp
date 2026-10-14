@@ -86,7 +86,7 @@ Everything from 1.7 is included: see its notes, and the README for the full list
 - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
 - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks,
 some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
-- Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations. 
+- Extra heroes: Currently the new models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations. 
 - Unlocked fps is experimental: One Known issue with frame rates above 60 fps is that some of the NPC animations during the prologue level fail to complete during the end of the in game cutscene for that level. Example is both Sauron and an elf NPC not turning their heads properly. Another known issue is Sauron falling through the Gates of Moria level after the intro cutscene during gameplay. At 60 fps these issues don't occur, so it is advised to set the frame rate to 60 fps before beginning the prologue or when playing that mission with Sauron. As of 1.8 to fix this issue, in game cutscenes are now locked at 60 fps and for 5 seconds after they end. Crackling audio can occur at unlocked frame rates as well.
 - Widescreen is experimental: a few full-screen effects may not line up at the edges.
 
