@@ -1,0 +1,33 @@
+MIT License
+
+Copyright (c) 2026 The Two Towers Recompiled contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-------------------------------------------------------------------------------
+This licence covers the port's own code (twotowers/, generate.py). The bundled
+xboxrecomp-0.12.0/ keeps its own licences: MIT (xboxrecomp-0.12.0/LICENSE) and
+LGPL-2.1-or-later for the parts taken from xemu (xboxrecomp-0.12.0/NOTICE,
+xboxrecomp-0.12.0/LICENSES/).
+
+This licence grants nothing in The Lord of the Rings: The Two Towers or any
+other third-party property. No game data is included. The release build's
+game program contains code mechanically translated from the original game's
+executable; that code is not covered by this licence and remains the property
+of its rights holders. See the Disclaimer in README.md.
