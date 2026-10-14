@@ -47,7 +47,6 @@ Everything since 1.7, in one release.
 - **Controller Start:** the log records the controller's Start presses and whether each one reached the game.
 
 ### Extra heroes (still highly experimental, off by default)
-- **Sauron's sprint is back** (left stick click / Shift, rebindable): press to toggle, or hold (Controls page). He simply runs faster, easing in and out, with no skip or jump.
 - New heroes' weapons no longer turn up in other characters' hands in scenes (the Plains of Rohan's archer on the wall).
 - A crash on the upgrade screen after a level (pointing at a leaf) is fixed.
 - A new hero who keeps falling through the ground is put back where he came into play.
@@ -89,6 +88,7 @@ some of those weapons may show up on other NPC's. This doesn't happen with the m
 - Extra heroes: Currently the new models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations. 
 - Unlocked fps is experimental: One Known issue with frame rates above 60 fps is that some of the NPC animations during the prologue level fail to complete during the end of the in game cutscene for that level. Example is both Sauron and an elf NPC not turning their heads properly. Another known issue is Sauron falling through the Gates of Moria level after the intro cutscene during gameplay. At 60 fps these issues don't occur, so it is advised to set the frame rate to 60 fps before beginning the prologue or when playing that mission with Sauron. As of 1.8 to fix this issue, in game cutscenes are now locked at 60 fps and for 5 seconds after they end. Crackling audio can occur at unlocked frame rates as well.
 - Widescreen is experimental: a few full-screen effects may not line up at the edges.
+- -Sauron's Sprint option does in the settings does not currently work in 1.8. Leaving it on does nothing. Due to his default walking speed, he has trouble completing some of the timed Rohan levels.  
 
 
 Bug reports are welcome, especially for Mac and Linux users. Please include `twotowers_log.txt`, which is next to the game (for the Extra heroes mod, its `[HEROES]` lines).
