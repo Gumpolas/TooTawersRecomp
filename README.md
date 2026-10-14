@@ -57,8 +57,8 @@ some of those weapons may show up on other NPC's. This doesn't happen with the m
 - Some grass, clouds, and certain environmental textures included with the high resolution pack (Glos69) can appear warped or out of place. Examples are level 2,6, and 10. Most of these textures were upscaled with AI and converted from the gamecube version, so that could explain why that occurs as applying alpha/transparency fixes didn't seem to work.
 - Some of the included high resolution menu textures in the level select menu can appear or some odd to some as well. The textures can be disabled at will if needed.
 - The Uruk currently can only shoot arrows instead of rocks on level 3 due to the way the watcher boss battle works. His ranged attack still fires rocks in all other levels. 
-- Some fire pots thrown by archers may disappear for a few seconds when multiple ranged beam shots are fired from either Gandalf or Sauron. This is due to the way the particle limit works. Normal ranged attacks or the Uruks fire rocks/Frodo's rocks do not cause this issue. 
-
+- Some fire pots thrown by archers may disappear for a few seconds when multiple ranged beam shots are fired from either Gandalf or Sauron. This is due to the way the particle limit works. Normal ranged attacks or the Uruks fire rocks/Frodo's rocks do not cause this issue.
+- Some crashes or black screens may occur while alt tabbed. Restarting the game usually fixes it. 
 
 Bug reports are welcome, especially for Mac and Linux users. Please include `twotowers_log.txt`, which is next to the game (for the Extra heroes mod, its `[HEROES]` lines).
 
