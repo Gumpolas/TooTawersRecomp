@@ -1,80 +1,46 @@
-# The Two Towers Recompiled v1.8
+# The Two Towers Recompiled v1.9
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play at no higher than **60 fps**, as unlocked frame rates are experimental. See known issues.
-
+> ⚠ **Work in progress.**  The game is fully playable, but not everything works perfectly yet. It is recommended to play at no higher than 60 fps, as unlocked frame rates are experimental. See known issues.
 ## Downloads
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.8-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.8-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer (Ubuntu 18.04+, Debian 10+, Fedora 28+, Steam Deck desktop mode, …) |
-| `TwoTowers-Recompiled-v1.8-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2). **New and not yet tested on a Mac**: see below |
-| `TwoTowers-Recompiled-v1.8-source.zip` | Source code (LGPL-2.1) |
+| `TwoTowers-Recompiled-v1.9-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
+| `TwoTowers-Recompiled-v1.9-source.zip` | Source code (LGPL-2.1) |
 
-Updating from 1.7 or an earlier 1.8: unpack over your old folder, or into a new one and copy your `game_files` folder (or point the launcher at your extracted folder again). Your saves and settings carry over. The Extra heroes mod's `heroes` folder is rebuilt automatically; the heroes' experience, upgrades and unlocks are kept.
+**Ultra textures, GameCube pack:** Requires the 4k ai remastered GameCube high-resolution texture pack (`GLOS69`) downloaded separately from its author. It is not part of this release.
+ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-## What's new in 1.8
+Updating from 1.8.x or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. If you used the Ultra textures test build, keep your `GLOS69` folder; the launcher prepares it again once.
 
-Everything since 1.7, in one release.
+## What's new in 1.9
 
-### The mouse in the menus
-- **A mouse pointer in every menu:** the title screen, main menu, options, load and save screens, mission select, character select, upgrade and results screens, and the pause screen. Point to choose, click to press, right click to go back. Leaves (Back, Continue, Replay) light up under the pointer, the mission select picks the place under the pointer at once, the character select turns with a click left or right, sliders can be clicked and dragged, and the mouse wheel scrolls. Picture galleries step left and right with a click.
-- **A left click skips the intro films** (the logos before the title screen).
-- **Aiming with the mouse:** hold the ranged button and move the mouse, with invert, sensitivity and pointer-size settings.
-- On the mission and character select, a right mouse button bound to Help or Options does that action.
-- Turn the pointer off with **Mouse pointer in menus** (F10, launcher, Controls page).
+### Ultra textures
+- **Default Ultra Textures:** the menus, the level select and its pictures of each level, the text and the HUD (including the ECTS HUD mod's icons), upscaled 4x from the game's own textures, for more readable, less blurry text. Turn on **Ultra textures** in Graphics settings or Display Options.
+- **The GameCube high-resolution Ultra texture pack (`GLOS69`)** replaces every texture. It is its author's work and is **downloaded separately**: put its `GLOS69` folder next to `twotowers_recomp.exe`. The first time you press **Play** with the option on, the launcher prepares the pack (once; a few minutes, with a progress bar; about 1 GB). If you turn the option on in the game's own menus, the launcher opens and prepares it while you play, and the new pictures appear when it finishes. On Linux and macOS, `TwoTowers.sh` / `TwoTowers.command` do this (or run `./twotowers-setup ultra`).
 
-### Options and controls
-- **Options opens on a first page:** General Options (the game's own page), **Display Options** (every graphics setting, in the game's own look) and **Controls** (the mouse, Sauron's sprint and **every key binding**: choose one and press the key or mouse button; Esc cancels, Delete clears; left / right changes the controller button). From the main menu, the mission select and the pause screen. **Tab** (the Back key) backs out.
-- **Exit** on the main menu. The title screen says **Press Enter** when you play with the keyboard, and messages such as "Game Saved. Press the A button to continue" name your key (Enter, which also closes them).
-- The "Are you finished purchasing upgrades?" Yes / No, Replay on the results screen and the upgrade screens' level leaves all work with the pointer.
+### Graphics
+- **Internal resolution up to 12x** (7680 × 5760 at 4:3). A picture larger than the window is now averaged down to it properly. Before, high settings sharpened textures but left edges as jagged as at 1x; now they smooth edges too. At very wide aspect ratios the picture is held to the largest one a graphics card can draw (16384 wide).
+- **MSAA anti-aliasing:** MSAA 2x, 4x and 8x, and MSAA 4x / 8x with FXAA, in Display Options, the launcher and the ini (`antialiasing=msaa4`, ...). It works on Direct3D 11, Vulkan and OpenGL (Linux, macOS). At very high internal resolutions it uses fewer samples rather than run out of video memory.
 
-### Display
-- **Internal resolution up to 8x**, and **4.5x** for 2160 lines (3840 x 2160 at 16:9, a 4K screen pixel for pixel).
-- With **unlocked** frame rate, the in-engine scenes and the first 5 seconds of play after one run at 60 fps: at very high frame rates the scenes' characters stopped turning their heads (the prologue's ending) and Sauron could fall through the ground as the Gates of Moria began.
+### Gameplay and effects
+- **Up to 512 particle effects at once** (the game had 64). Beams, the Uruk-hai's fire rock and the archers' fire pots now all show together. Before, your own effects put out the archers' fire, though it still caused player damage.
 
-### Everyone (from 1.7.1 to 1.7.8)
-
-- **Every menu fills the screen.** The game drew its menus inside the old TV safe area, with a black margin all round. This covers the main menu, mission select, load and save screens, character select, loading screens, and the upgrade and results screens. In widescreen with "Stretch to fill" they now fill the screen edge to edge.
-- **Two new options** in F10 and the launcher's settings:
-  - **Menus:** "Fill the screen" (the default) or "Original", with the old margin.
-  - **Movies in widescreen:** "As made" (4:3, the default) or "Fill the width", which cuts off the films' black bands so they fill a widescreen picture (a little closer).
-- **Controller prompts follow your bindings.** Each button prompt shows the button of your own controller bound to that action, in play, on the menus and in the loading screens' hints, as the keyboard prompts already did.
-- **Xbox One prompts:** a new Button prompts choice in F10 and the launcher. It has black buttons with coloured letters, LB / RB / LT / RT, View and Menu, and an Xbox One pad on the loading screens' controls pictures.
-- **Walk key for keyboard and mouse: B.** Hold it with the move keys and any hero walks instead of running. It's rebindable in the launcher's Controls… and on the F10 Controls page. On a controller, push the stick part way.
-- **Controller Start:** the log records the controller's Start presses and whether each one reached the game.
-
-### Extra heroes (still highly experimental, off by default)
-- New heroes' weapons no longer turn up in other characters' hands in scenes (the Plains of Rohan's archer on the wall).
-- A crash on the upgrade screen after a level (pointing at a leaf) is fixed.
-- **Everyone fights with his own attacks, as in 1.6.** Lurtz's and the Uruk-hai's blades reach a little further.
-- **A tougher Lurtz:** 1800 health, much harder to knock back or down, and he gets over his flinches sooner.
-- **The last ranged upgrade changes the shots:**
-  - Gandalf's beam turns white (White Fire).
-  - Sauron's bolts alternate red and blue (Doom Fire).
-  - The Uruk-hai throws plain stones until then, then burning rocks (Lava Rocks); every third one bursts like the Orthanc archers' fire pots and leaves burning ground.
-  - His first two ranged upgrades are now Crag Rocks and War Rocks.
-- **No more drifting in water.** The other new heroes use the heroes' moves where their own sets had a sideways step. Sauron keeps all his own moves.
-- **Falling through the ground is caught.** If a new hero drops through the floor (Sauron at the Gates of Moria), he's stood back where he last stood, or where he came into play at a level's start.
-- **Pause-screen figures stand upright,** weapon in hand.
-
-Everything from 1.7 is included: see its notes, and the README for the full list.
+### From 1.8.2 (test builds)
+- In widescreen, the in-engine cutscenes stay 4:3 unless **Widescreen cutscenes** is on (Display Options, launcher). Their skies and mountain cards were made for 4:3.
+- Menu buttons no longer press themselves (the title screen, hovering over Credits). Right click backs out of Options opened from the mission select. Right click on the character select unselects the hero.
+- The Uruk-hai's fire rock burns. The upgrade screen's level leaves follow the pointer. **Mouse steering** turns the hero where he stands, and the move keys go by his facing. Frodo's stones hurt the Watcher.
 
 ## Tested
 - Windows, Linux and macOS builds compile.
-- Windows build under Wine: the pointer in the main menu, options pages (hover, click, values, sliders, wheel, Tab), load screen, mission and character select, results and upgrade screens (Replay, the Yes / No dialog, Continue), the intro film skipped by a click; Sauron's sprint button; the 4.5x resolution; heavy attacks compared with the earlier 1.8 (no change).
-- Earlier in 1.8:- Windows, Linux and macOS builds compile.
-- Windows build under Wine, at 16:9 with "Stretch to fill":
-  - the menus fill the screen; play and the pause menu are unchanged;
-  - the two new F10 options are shown and work (movies filling the width, menus with their margin);
-  - the Xbox One loading-screen picture appears, and every controller button was drawn in each prompt style;
-  - the shots before and after the last ranged upgrade;
-  - Sauron at the Gates of Moria: walking and fighting with every upgrade, and the fall-through catch (pushed under the floor on purpose, mid-level and at the start);
-  - the stick pushed part way (what Walk does) walks;
-  - Start pressed on a simulated controller pauses the game.
-- Not tested: a high frame rate (the test machine reaches 5–16 fps); a rebound controller button on the upgrade screen; the macOS build on a Mac.
+- Ultra textures on the real GLOS69 pack: the prepared set matches the hand-made one checked earlier (the same 2869 pictures, the same pairings). The launcher's `--build-ultra`, Linux's `twotowers-setup ultra`, and the game picking the pack up while running were also tested.
+- Under Wine (Direct3D 11) and on Linux (OpenGL): MSAA 4x / 8x in Orthanc and its scenes (edges smoothed, effects as before); 4x and 12x internal resolution (12x at 32:9 with 8x MSAA held to 16384 wide); 512 particle effects at once, and a level replayed.
+- Not tested: real graphics cards at 9x–12x or 8x MSAA (video memory and speed); MSAA through Vulkan (DXVK); the macOS build on a Mac.
+
 
 
 ## Known issues
@@ -87,7 +53,11 @@ some of those weapons may show up on other NPC's. This doesn't happen with the m
 - Extra heroes: Currently the new models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations. 
 - Unlocked fps is experimental: One Known issue with frame rates above 60 fps is that some of the NPC animations during the prologue level fail to complete during the end of the in game cutscene for that level. Example is both Sauron and an elf NPC not turning their heads properly. Another known issue is Sauron falling through the Gates of Moria level after the intro cutscene during gameplay. At 60 fps these issues don't occur, so it is advised to set the frame rate to 60 fps before beginning the prologue or when playing that mission with Sauron. As of 1.8 to fix this issue, in game cutscenes are now locked at 60 fps and for 5 seconds after they end. Crackling audio can occur at unlocked frame rates as well.
 - Widescreen is experimental: a few full-screen effects may not line up at the edges.
-- -Sauron's Sprint option does in the settings does not currently work in 1.8. Leaving it on does nothing. Due to his default walking speed, he has trouble completing some of the timed Rohan levels.  
+- -Sauron's Sprint option in the settings does not currently work in 1.8. Leaving it on does nothing. Due to his default walking speed, he has trouble completing some of the timed Rohan levels as he can walks slower than the other characters. 
+- Some grass, clouds, and certain environmental textures included with the high resolution pack (Glos69) can appear warped or out of place. Examples are level 2,6, and 10. Most of these textures were upscaled with AI and converted from the gamecube version, so that could explain why that occurs as applying alpha/transparency fixes didn't seem to work.
+- Some of the included high resolution menu textures in the level select menu can appear or some odd to some as well. The textures can be disabled at will if needed.
+- The Uruk currently can only shoot arrows instead of rocks on level 3 due to the way the watcher boss battle works. His ranged attack still fires rocks in all other levels. 
+- Some fire pots thrown by archers may disappear for a few seconds when multiple ranged beam shots are fired from either Gandalf or Sauron. This is due to the way the particle limit works. Normal ranged attacks or the Uruks fire rocks/Frodo's rocks do not cause this issue. 
 
 
 Bug reports are welcome, especially for Mac and Linux users. Please include `twotowers_log.txt`, which is next to the game (for the Extra heroes mod, its `[HEROES]` lines).
