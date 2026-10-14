@@ -49,7 +49,6 @@ Everything since 1.7, in one release.
 ### Extra heroes (still highly experimental, off by default)
 - New heroes' weapons no longer turn up in other characters' hands in scenes (the Plains of Rohan's archer on the wall).
 - A crash on the upgrade screen after a level (pointing at a leaf) is fixed.
-- A new hero who keeps falling through the ground is put back where he came into play.
 - **Everyone fights with his own attacks, as in 1.6.** Lurtz's and the Uruk-hai's blades reach a little further.
 - **A tougher Lurtz:** 1800 health, much harder to knock back or down, and he gets over his flinches sooner.
 - **The last ranged upgrade changes the shots:**
