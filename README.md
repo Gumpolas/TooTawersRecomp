@@ -99,6 +99,8 @@ Screenshots and gameplay:
 
 <img width="1920" height="1080" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 13 - 18 45 38 41" src="https://github.com/user-attachments/assets/796889e4-60c0-4210-a187-94949b9f56ba" />
 
+<img width="1920" height="1080" alt="TwoTowers-Recompiled-0 12 Screenshot 2026 10 13 - 18 45 43 21" src="https://github.com/user-attachments/assets/24e59e5d-3b48-4993-a86e-ee84d267557c" />
+
 
 <img width="2336" height="940" alt="71a47139-f2d2-4a8e-a85a-1cb04c062484" src="https://github.com/user-attachments/assets/106a8073-de66-4084-bbf6-cafeb3460dc9" />
 
