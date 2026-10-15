@@ -60,7 +60,6 @@ What 1.9 added:
 - -Sauron's Sprint option in the settings does not currently work. Leaving it on does nothing. Due to his default walking speed, he has trouble completing some of the timed Rohan levels as he can walks slower than the other characters. 
 - Some grass, clouds, and certain environmental textures included with the high resolution pack (Glos69) can appear warped or out of place. Examples are level 2,6, and 10. Most of these textures were upscaled with AI and converted from the gamecube version, so that could explain why that occurs as applying alpha/transparency fixes didn't seem to work.
 - Some of the included high resolution menu textures in the level select menu can appear or some odd to some as well. The textures can be disabled at will if needed.
-- The Uruk currently can only shoot arrows instead of rocks on level 3 due to the way the watcher boss battle works. His ranged attack still fires rocks in all other levels. Frodo's rock attacks work on all levels. 
 - Some fire pots thrown by archers may disappear for a few seconds when multiple ranged beam shots are fired from either Gandalf or Sauron. This is due to the way the particle limit works. Normal ranged attacks or the Uruks fire rocks/Frodo's rocks do not cause this issue.
 - Freezing or black screens may occur while alt tabbed.
 
