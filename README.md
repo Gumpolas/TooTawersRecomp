@@ -24,7 +24,7 @@ Updating from 1.9 or earlier: unpack over your old folder, or into a new one and
 - **Extra heroes:** the Uruks rock throw for level three has been restored (and their fire upgrades), and they do damage to the Watcher.
 
 
-What 1.9 added
+What 1.9 added:
 ### Ultra textures
 - **Default Ultra Textures:** the menus, the level select and its pictures of each level, the text and the HUD (including the ECTS HUD mod's icons), upscaled 4x from the game's own textures, for more readable, less blurry text. Turn on **Ultra textures** in Graphics settings or Display Options.
 - **The GameCube high-resolution Ultra texture pack (`GLOS69`)** replaces every texture. It is its author's work and is **downloaded separately**: put its `GLOS69` folder next to `twotowers_recomp.exe`. The first time you press **Play** with the option on, the launcher prepares the pack (once; a few minutes, with a progress bar; about 1 GB). If you turn the option on in the game's own menus, the launcher opens and prepares it while you play, and the new pictures appear when it finishes. On Linux and macOS, `TwoTowers.sh` / `TwoTowers.command` do this (or run `./twotowers-setup ultra`).
