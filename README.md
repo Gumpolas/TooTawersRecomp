@@ -1,23 +1,29 @@
-# The Two Towers Recompiled v1.9
+# The Two Towers Recompiled v1.9.1
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.**  The game is fully playable, but not everything works perfectly yet. It is recommended to play at no higher than 60 fps, as unlocked frame rates are experimental. See known issues.
+> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. If the game crashes or freezes, restart it: the same spot usually works on the next try.
+
 ## Downloads
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v1.9-source.zip` | Source code (LGPL-2.1) |
+| `TwoTowers-Recompiled-v1.9.1-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9.1-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9.1-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
+| `TwoTowers-Recompiled-v1.9.1-source.zip` | Source code (LGPL-2.1) |
 
-**Ultra textures Gamecube pack:** Requires the 4k ai remastered GameCube high-resolution texture pack (`GLOS69`) downloaded separately from its author. It is not part of this release.
- https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
+**Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
+https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.8.x or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. If you used the Ultra textures test build, keep your `GLOS69` folder; the launcher prepares it again once.
+Updating from 1.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. If you used the Ultra textures test build, keep your `GLOS69` folder; the launcher prepares it again once.
 
-## What's new in 1.9
+## What's new in 1.9.1
+- **Mouse steering improvements** (Controls page, launcher, `[Input] mouse_steer`) works like aiming with the ranged button does (as in the prologue, where Isildur has no bow): hold **W** (or push the stick up) and the mouse is the stick. 
+- **Sauron's sprint is removed**, with its option: Shift and the left stick click are the left stick click again.
+- **Extra heroes:** the Uruks rock throw for level three has been restored (and their fire upgrades), and they do damage to the Watcher.
+
+
 
 ### Ultra textures
 - **Default Ultra Textures:** the menus, the level select and its pictures of each level, the text and the HUD (including the ECTS HUD mod's icons), upscaled 4x from the game's own textures, for more readable, less blurry text. Turn on **Ultra textures** in Graphics settings or Display Options.
