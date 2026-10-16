@@ -64,7 +64,7 @@ Known issues
      - The "Loading..." picture and other text drawn into pictures stay English.
 
 
-Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game (for the Extra heroes mod, its [HEROES] lines).
+Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game.
 
 Screenshots and Gameplay:
 
