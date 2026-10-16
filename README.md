@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. If the game crashes or freezes, restart it: the same spot usually works on the next try.
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates are experimental. It is recommended to play the game at 60 fps. See known issues. 
 
 ## Downloads
 
