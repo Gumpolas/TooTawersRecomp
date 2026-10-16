@@ -23,7 +23,7 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 - **Runs natively** on Windows, Linux and macOS, from your own disc.
 - **Languages** *(new)*: 33 languages besides English for every text in the game, subtitles included, plus the launcher and the F10 menu.
 - **Resolution and widescreen**: internal resolution 1x–12x, 4:3 to 32:9 with the HUD at the screen's edges, widescreen cutscenes, menus that fill the screen.
-- **Picture**: Direct3D 11, Vulkan (DXVK) or OpenGL; MSAA and FXAA, anisotropic filtering, brightness, sharpening and colour.
+- **Picture**: Direct3D 11, Vulkan (DXVK) or OpenGL; MSAA and FXAA, anisotropic filtering, brightness, sharpening and color.
 - **Ultra textures**: sharper menus, text and HUD, and every texture with the GameCube pack.
 - **Frame rate**: 30 fps as on the Xbox, or 60 / unlocked (experimental).
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
