@@ -13,7 +13,8 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 | `TwoTowers-Recompiled-v1.9.2-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
 | `TwoTowers-Recompiled-v1.9.2-source.zip` | Source code |
 
-**Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
+**Ultra textures, GameCube compatibility pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
+https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
 Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
 
@@ -60,6 +61,9 @@ Known issues
     Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
     Unlocked fps is experimental: One Known issue with frame rates above 60 fps is that some of the NPC animations during the prologue level fail to complete during the end of the in game cutscene for that level. Example is both Sauron and an elf NPC not turning their heads properly. Another known issue is Sauron falling through the Gates of Moria level after the intro cutscene during gameplay. At 60 fps these issues don't occur, so it is advised to set the frame rate to 60 fps before beginning the prologue or when playing that mission with Sauron. Crackling audio can occur at unlocked frame rates as well.
     Widescreen is experimental: a few full-screen effects may not line up at the edges.
+     Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
+ The "Loading..." picture and other text drawn into pictures stay English.
+
 
 Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game (for the Extra heroes mod, its [HEROES] lines).
 
