@@ -40,7 +40,6 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 - The `lang` folder holds only the translations. The game's files are copied with the language's text into `lang_cache` on first use (a few seconds); your game files are not changed. Spoken dialogue stays English.
 
 ### Fixes
-- **Ultra textures were prepared again and again** when you pressed Play. Now the pack is prepared once, and an already prepared pack is recognised.
 - **Legolas's mission results picture** showed Aragorn with Ultra textures and the GameCube pack (the pack has no picture of him, and its second picture of Aragorn had been paired with it). It is his own now.
 - **Mouse steering**: hold Walk with W and the hero walks while steering. 
 
