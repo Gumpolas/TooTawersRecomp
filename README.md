@@ -12,7 +12,7 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 | `TwoTowers-Recompiled-v1.9.1-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
 | `TwoTowers-Recompiled-v1.9.1-source.zip` | Source code (LGPL-2.1) |
 
-**Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not included in this release.
+**Ultra textures, GameCube pack compatibility:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not included in this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
 Updating from 1.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. If you used the Ultra textures test build, keep your `GLOS69` folder; the launcher prepares it again once.
