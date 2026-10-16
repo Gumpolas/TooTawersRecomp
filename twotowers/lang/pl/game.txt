@@ -1,0 +1,1454 @@
+# Polski, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	WADCA PIERCIENI:  DWIE WIEE
+G20EBC61E	Film Petera Jacksona
+G2D8D3B98	Producenci
+G7EDB1AE9	Koproducenci
+G90AF53E8	Efekty specjalne
+G893165F0	Weta Digital
+GD9523953	Muzyka: Howard Shore
+G7B677F6E	Gosy w grze
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	ZESPÓ XBOX
+GAAA9253B	Zarzdzanie projektem
+G2E65B2E4	Programowanie
+G1E165282	Grafika
+G4CFF767B	Dwik
+G1B12D0CA	ORYGINALNY ZESPÓ PRODUKCYJNY
+G5BB408B8	Dyrektor projektu
+GA9D987DE	Dyrektor techniczny
+GA4E53836	Dyrektor ds. rozwoju
+GCBF9A863	Dyrektor ds. dwiku
+G71D27F1C	Gówny projektant
+GABE6171F	Gówny programista
+GB6AEE806	Gówni graficy otoczenia
+G0FAA1BD8	Gówny grafik przerywników
+G93A039A2	Gówny animator
+G85851417	Kierownictwo artystyczne
+GEC5EB699	Producent wspópracujcy
+G1E1B7E49	Grafik efektów specjalnych
+GE457B26A	Graficy otoczenia
+G09AFDB2B	Graficy przerywników w grze
+GC6201467	Graficy koncepcyjni
+GCE12C680	Modelarze i animatorzy postaci
+G958F64A1	Grafik interfejsu
+G5817028D	Programici grafiki
+G8E313DB8	Programici SI
+G7559A05A	Programici rozgrywki
+G47FDFA0D	Projektanci gry
+G2A1A4D1F	Udwikowienie i monta muzyki
+GD6AC199C	Udwikowienie
+G83731102	Dodatkowe kierownictwo produkcji
+G9B9AC6A2	Dodatkowe zarzdzanie projektem
+G2C8B85F3	Dodatkowa grafika
+G154B3F75	Dodatkowe programowanie
+GEC34AAA5	Dodatkowe udwikowienie
+GE9E2F454	Dodatkowe teksty
+G8B63E4D8	Rozwój biznesu
+G8E754AFA	Dyrektor wykonawczy ds. produkcji
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Producent wykonawczy
+GF944BB31	Starszy producent
+G49F95533	Producent wspópracujcy ds. lokalizacji
+GE5AAA381	Asystent producenta
+G20A463E8	Inynierowie oprogramowania
+GEDDCFA70	Gówny tester
+G6EC637F4	Zastpca gównego testera
+GA9C92124	Gówni testerzy
+GDDEFB046	Producenci
+G5F4C2C91	Dyrektor ds. tworzenia gier
+G53E62C46	Projektant poziomów
+G4019279E	Zastpca dyrektora artystycznego
+G3548CB79	Przerywniki w grze
+G5BF26924	Projekt graficzny (interfejs)
+GF5E6331B	Asystent producenta ds. lokalizacji
+GB9029242	Asystenci producenta
+G81160EAA	Starszy animator
+GB1B5EEDE	Animator
+G1D384099	Modelarze otoczenia
+GD670D187	Filmy FMV
+GB4300D0E	Kierownik produkcji
+GDB61FEB0	Kierownik produkcji FMV
+G13204F99	Techniczny dyrektor artystyczny
+G8774AEB2	Dyrektor artystyczny
+G2EDA5AA3	Reyser animacji
+G4761EC6C	Dyrektor techniczny postaci
+GC40AEB65	Gówny grafik otoczenia
+G04B7AD9A	Scenarzysta
+GCCDC1EDE	Graficy postaci
+G765B2120	Starsi animatorzy postaci
+GDB98BF7E	Starszy grafik owietlenia
+G8AEFA15C	Starszy animator efektów
+GB64D9748	Animator efektów
+GB770287B	Rigger i modelarz CG
+GA89434BE	Ukad kamer
+GBAA388EF	Montayci
+GA79B5345	Projektant dwiku i realizator nagra
+GE2D38E72	Kierownik produkcji grafiki
+G29C8EC71	Asystent zarzdu
+GB01B1D73	Administrator systemu
+G257D0532	Asystent produkcji
+GB2965969	Monta dialogów
+G2ACF75E1	Dodatkowa obróbka dwiku
+G821EF7A5	Aktorzy gosowi
+G3CCB3DF3	EA Quality Assurance
+G2851776E	Kierownik kontroli jakoci
+G3D43CCDD	Nadzór kontroli jakoci
+G997D9582	Liderzy kontroli jakoci
+G5B5CE9C6	Zastpcy liderów kontroli jakoci
+GE0B33004	Gówni testerzy kontroli jakoci
+GBBB3A592	Kierownik projektu FLT
+G7F330F1A	Testerzy funkcjonalni wersji jzykowych
+G731958CD	Testerzy wersji jzykowych
+G7005C763	Kontrola jakoci dla klientów
+GCC3D24EF	Kierownik CQC
+G0FF24E54	Nadzór CQC
+G7498FE74	Kierownik dziau CQC
+G5AB35ED0	Analitycy produktu CQC
+G6E529086	Laboratorium masteringu
+G0229B6F3	Dyrektor ds. midzynarodowego rozwoju produktów
+G6B435E81	Kierownik projektu lokalizacji
+GF8BA9878	Koordynator projektu lokalizacji
+G906896D8	Kierownik ds. zgód i akceptacji partnerów
+G860EDA13	Sprawy biznesowe
+G7AC94AC6	Dzia prawny
+GFDF965B3	Operacje studia
+G9FF9799E	Koordynator umów studia
+G9E24FEC0	Dyrektor marketingu
+G44C57DC5	Meneder produktu
+GE1A6D911	Public relations
+GA5ADE5FF	Dokumentacja
+G4C2A256D	Skad dokumentacji
+G279BA159	Zarzdzanie projektem opakowania
+G482E9235	Projekt opakowania
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Ekipa filmowa Wadcy Piercieni
+GE196FA55	Reyser
+GE364782E	Producenci wykonawczy
+GB11B5F1A	Koproducenci
+GDDE9A104	Archiwista
+G73D53EB3	Opiekun materiaów
+G4616CF92	Asystent producentów
+GD98C077D	Kierownicy postprodukcji
+G26FFE43A	Pierwszy asystent montaysty
+GFAE3387C	Opiekun miniatur
+G0D7D1A1D	Wiceprezes wykonawczy ds. licencji i merchandisingu
+GD58105C6	Dyrektor kreatywny
+GB0E8D9D5	Obsada filmu
+G4267BE40	Galadriela
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwena
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Wiceprezes ds. biznesowych muzyki
+G96EBB4D8	Dyrektor wykonawczy ds. muzyki
+G2728DB7D	Dyrektor muzyczny
+GFE08F13A	3Foot6
+GCFF1286B	Koordynator merchandisingu
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Wiceprezes
+GE58F283A	Producent i kierownik produkcji
+G97C336EB	Kierownik animacji
+G96FF4CEA	Starszy dyrektor techniczny
+GE816CF3D	Gówny specjalista ds. konfiguracji technicznej
+G22B756F5	Animatorzy
+G86F5B2D9	Malarz te (matte painting)
+GBC50C796	Kierownik biura
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Producent liniowy
+G14C96B5C	Gówny grafik CG
+GD9742A3C	Graficy i animatorzy CG
+GBA7D6969	Arnson Communications
+G22C5AB99	Producent wykonawczy i dyrektor kreatywny
+G45C5172D	Scenarzysta i producent
+GDCC6F23E	Dyrektor artystyczny i animator
+G9C4F3B3B	Grafik DS
+GF0F58DD3	SPECJALNE PODZIKOWANIA OD EA
+G895C842A	SPECJALNE PODZIKOWANIA OD STORMFRONT STUDIOS
+G9D4DD21A	W krainach ródziemia legenda mówi o Czarnym Wadcy, Sauronie,
+G6CFA90F6	i o Piercieniu, który daby mu moc zniewolenia wiata.
+G18F2969C	A teraz trafi w rce najmniej prawdopodobnej osoby, jak mona sobie wyobrazi.
+G378C79D6	Jestem wielkim fanem gier, wic oczywicie chciaem pozna wszystkie szczegóy gry o Wadcy Piercieni.
+GDCF04190	Wpadam w taki tryb, e gram cay czas,
+G977EBA13	i zwykle dzieje si tak, kiedy gram w jak gr przygodow, która mnie wciga.
+G49C9AB1A	Kiedy ju wsikn, nie mog przesta o tym myle i musz doprowadzi posta do koca.
+GD2647A40	To zadanie zostao powierzone tobie, a jeli ty nie znajdziesz drogi, nikt jej nie znajdzie.
+G3AC8371A	Kry si!
+GAD82B19D	Troch o to wypytywaem i w kocu mogem w to zagra  to jest niewiarygodne.
+G8DE86872	Po prostu piknie si na to patrzy.
+G72E74697	O, to jest super!
+GF9824FCA	Tak, dalej, Aragornie! No dalej!
+G2EE7D5D4	Nadchodz.
+G61F7CD7D	To taki bonus, e mona wczy gr wideo i zobaczy, jak sam w niej biegam.
+G57A5BC04	Ale dostaj w skór.
+G1F85273D	Frodo wyglda jak ja! Czy to nie super?
+G1FFE0A40	Super.
+GE6E563F9	Znajd Piercie
+GD135555F	i zabij tego, kto go niesie.
+G18844D24	Biegnij! Biegnij, Frodo!
+G525D5AD9	Chc Piercienia! Nie mog go zdoby.
+GB99DAE56	Rónica midzy postsynchronami do filmu a podkadaniem gosu w grze polega na tym, e postsynchrony do filmu robi si zwykle do obrazu.
+G7558081F	Patrzysz na film i próbujesz powtórzy kwestie, które ju kiedy zagrae, i zgra je z dialogiem w filmie.
+GDD3F428F	Kim jeste?
+GE906BA5B	Boisz si?
+G9BDAB30C	Tak.
+G3B07B1B1	Nie do mocno.
+GFBD6613D	W grze nie ma obrazu, to po prostu mnóstwo takich klimatycznych elementów, które si dorzuca.
+G0EE06D0F	Niebezpieczestwo, woanie o pomoc, takie rzeczy.
+G2F9FC8E2	Aragornie! Pomocy! Aragornie! Aragornie!
+G289F7C03	Jestem fanem figurek i fanem gier, wic jeli mog w tym by, to totalna frajda dla maniaka i bardzo mi si to podoba.
+G67346E61	Nawet najmniejsza istota moe zmieni bieg przyszoci.
+G16420686	Jestem tak podekscytowany  nie mog si doczeka swojego egzemplarza. Jest czadowa.
+GDBA69463	Moria.
+G1D429D96	Lkasz si wej do tych kopal.
+G372C9F91	Wiesz, co zbudzili w ciemnociach.
+G34515230	Naprawd lubiem robi t gr, bo nie trzeba si tak cholernie napracowa
+G93AEF9C3	jak przy tworzeniu postaci od pocztku.
+GA9883FB4	Krcenie filmu jest z natury bardzo powolne.
+G0C1E0E8C	Wspaniae w grze komputerowej jest oczywicie to, e nie musz siedzie w charakteryzacji.
+GA5F1044B	Kiedy robisz gr, stoisz w studiu,
+GCE4A81AD	a kto mówi: no, myl, e powiniene powiedzie to, to i to,
+G049A3A66	maj stos scenariuszy, a ty wygaszasz te wszystkie wspaniae kwestie.
+G70F1359D	Zasadzka! Zasadzka!
+G65325B21	A potem bior to wszystko, wplataj w gr, a tobie przypada cz zasug.
+G39F1D126	Te adunki wybuchowe trzeba zniszczy!
+GEB33699E	Uwielbiam ten model mnie jako Gimlego.
+GD9A0C650	Uwaam, e to taka energiczna, mska, atrakcyjna posta.
+G43591DCA	To naprawd jedyna posta, któr chciaoby si gra.
+G5C0A6C1E	No bo reszta, wiecie, ci wszyscy Aragornowie, Legolasowie, przystojni, adni chopcy i tak dalej,
+G3D52D95F	ale jeli chodzi o prawdziw, porzdn wojaczk, trzeba wybra Gimlego.
+G8E74524F	Spdzilimy czternacie miesicy w najpikniejszych miejscach wiata, w Nowej Zelandii, eby film wyglda jak naley.
+GAD562976	Gra to wojna, sytuacja bojowa, i jest wspaniale, znakomicie zrobiona.
+G7F21BCD6	Nie mog go tam zostawi! Boe!
+G9AA947F5	Ile to bdzie pochania czasu.
+G669C44C6	To nowy naóg, który odkryem.
+G63540AD1	No wic, gracze, brawo, gratuluj, e dotarlicie do tego zaktka, w którym jest wywiad.
+G925FED56	Chciabym wam podpowiedzie, jak lepiej gra, ale tak naprawd nigdy nie doszedem do tego poziomu.
+GC3162ADB	Powodzenia i grajcie dalej.
+GA3572714	Wkrótce rozstrzygn si losy wiata.
+G922859CB	Cay proces tworzenia czy budowania gry wideo
+GD9B03397	to gównie walka z rónymi rzeczami i jakie ninja... sam nie wiem.
+G24326AFA	Byem zaskoczony, wyglda o wiele bardziej realistycznie,
+G3E302C15	wydaje si, e to wchodzi na wyszy poziom.
+GBD830A87	Chyba Aragorn w grze celuje lepiej ni ja...
+GF76948D6	ale nie zamierzam na to narzeka.
+GD27FED3E	Jeli moje ycie lub mier mog ci ochroni, zrobi to.
+G56368F53	Masz mój miecz.
+G8D6DAFD1	To, co widziaem z gry, zdaje si odzwierciedla fakt, e
+G970D4AB6	drugi film  w przeciwiestwie do pierwszego  ma wikszy rozmach,
+GFD0BADCA	i nie mog si ich doczeka, tak jak reszty tej gry.
+G1F48F697	Dzi widziaem tylko próbk.
+GB689F1B9	Ciesz si na przykad, e Aragorn czasem zostaje przewrócony, upada albo si przetacza,
+G6F6072BC	i e jego styl walki si zmienia, wiecie, w zalenoci od sytuacji.
+GA3A3F7A1	Nie zawsze jest to czyste i schludne, wiecie, to raczej...
+G28095E46	czasem bywa z niego troch zabijaka  przynajmniej tak to wygldao w filmie  i myl, e gra to oddaje.
+G43AA6A0B	Robi wraenie.
+G8559FF90	Przybysze z dalekich krain, wezwano was tu, abycie odpowiedzieli na zagroenie ze strony Mordoru.
+GC2A75F48	ródziemie stoi na krawdzi zagady.
+GFE143A07	Nikt jej nie ujdzie. Zjednoczcie si albo zginiecie.
+GF59E5460	Zawsze mnie zdumiewa, kiedy widz postp techniki i tak dalej,
+GAD5CBAE4	i jak blisko prawdziwego wiata to ju doszo.
+GF96BCD4B	Musz natychmiast dotrze do Boromira!
+GD262135E	Kiedy nagrywasz postsynchrony do filmu, oczywicie patrzysz na ekran,
+G83EECB7A	widzisz akcj przed sob, tak jak j zagrae na planie.
+G3C0B6913	Kiedy nagrywasz ciek do tego,
+G2A8B6AD2	nie ma na ciebie skierowanej kamery
+G52F7D105	i nie próbujesz zsynchronizowa ruchu ust z obrazem przed sob,
+G8EE2279F	wic moesz naprawd da z siebie wicej i jakby
+GA5BE0F5A	podkreli i rozbudowa to, co jest na kartce.
+G51E230FB	Wracajcie do jam, które was zrodziy!
+G97400E1E	S bardziej przerysowane ni w filmie.
+GC26338C3	Rozumiecie, o co mi chodzi?
+G40EB5D5C	S troch mieszne i to jest zabawne.
+G52FECFA2	Fajnie byo si tym tak naprawd pobawi.
+G91D69630	Chod!
+G87873143	Nie wygrasz tej walki!
+G47AECCC4	Myl, e gdybym gra w t gr,
+GB0CCD2A6	mio byoby wiedzie, e to prawdziwi aktorzy uyczyli gosu akcji, któr odgrywaa komputerowa posta,
+GC1719889	i chyba im wicej prawdy w wiecie komputerowym, tym bardziej ekscytujce jest to dla gracza.
+G77ECFBF0	Nie moesz nim wada. Nikt z nas nie moe.
+GB42EC53B	Piercie musi zosta zniszczony.
+G43E793ED	Niebezpieczestwo groce Powiernikowi Piercienia ronie.
+G6E2FF8E0	Jest bowiem kto jeszcze, kto poluje na Piercie.
+GDD26CBEC	Nigdy w yciu nie graem w gr wideo.
+GF783F574	Nigdy nie mog zrozumie zasad.
+G573BC826	Mam bardzo due i niezgrabne donie i brak mi koordynacji rki z umysem, która chyba jest potrzebna,
+GFBB68CB5	a któr zdaje si mie kady poniej szóstego roku ycia.
+G8D9D9F75	W tej grze, Wadcy Piercieni, wspaniae jest to,
+G81AEE08E	e syszysz gosy oryginalnych aktorów  wszystkich.
+GAE3BFBD7	A dzi nagrywaem Gandalfa Szarego i Gandalfa Biaego,
+G21F22F52	dwie postacie, które gram we Wadcy Piercieni.
+GCED01E94	Co widzisz?
+GB4F26455	S tu jakie znaki.
+G5C7EB8BC	To jaka odmiana pisma elfów.
+G27A03C42	Nie umiem tego odczyta.
+G8E22513B	Niewielu to potrafi.
+G4B2817A2	Teraz dwie wiee s w przymierzu: Orthanc i Barad-dûr.
+GC69D576A	W grze jest to troch bardziej surowe, troch bardziej gotowe, moe troch bardziej bezporednie.
+G363960EA	Jeden z was musi wej.
+GFFCB2D5D	Pomó tym wieniakom, którzy jeszcze yj.
+GF4DAF5B8	W zasadzie to agresywny fragment walki.
+G00009069	Wychodzi militarna strona Gandalfa: dowódca, samuraj, przywódca.
+G4519FC71	Nie przejdziesz!
+G066F3360	Wic to, co widzicie na ekranie, jest tak bliskie  do licha 
+GF4CF848B	Gandalfowi, którego widzicie w filmach. I auj, e nie mog przyj i zagra w t gr razem z wami.
+G699B7BF2	W ten Piercie przela swoje okruciestwo, swoj zoliwo i wol panowania nad wszelkim yciem.
+GA1469225	Jeden Piercie, by wszystkimi rzdzi.
+G01090CE9	To, co zrobilimy, jest zwieczeniem ogromnej pracy tysicy ludzi.
+G74E1F68D	Tytu Dwie Wiee odnosi si do wiey Orthanc, 
+G0AE01FA9	gdzie rezyduje Saruman, posta grana przez Christophera Lee,
+GD9642178	i do wiey Barad-dûr w Mordorze, siedziby Saurona.
+G573418F9	Drugi film, jak kady film tej trylogii, to wyzwanie. I pozostanie nim, dopóki go nie skoczymy.
+GB2A31EA0	To wspaniay film. Bdzie wikszy ni pierwszy.
+GB831FA3A	Myl, e zdecydowanie woono tyle troski w tworzenie tych filmów,
+GCCFC11FE	i to, e mona przekaza t wiedz zespoowi, który tworzy gry, jest wspaniae, 
+G327C2028	bo wiem, e wkadaj równie duo troski i wysiku, by da ludziom naprawd bogat gr.
+G2C4A352E	Tolkien bardzo plastycznie opisuje w ksikach Edoras
+G10EFB23A	jako miasto drewnianych budynków na wzgórzu przed pasmem onieonych gór.
+G50D180A4	Kiedy szukalimy plenerów, powiedziaem: suchajcie, musimy znale w Nowej Zelandii miejsce,
+GDA11996F	musi tu by takie wzgórze przed górami.
+GD6F61F77	Wic latali helikopterem po caym kraju i wrócili ze zdjciem absolutnie idealnego wzgórza.
+GC56228ED	Byo jakie sto, sto dwadziecia kilometrów od najbliszego miasta.
+GF796DA0F	Byo w rodku Wyspy Poudniowej, na kompletnym odludziu.
+GFA1CD969	Budowa tych ogromnych budynków zaja nam jakie siedem, osiem miesicy.
+GC2D0BAAA	W efekcie mamy w filmie Edoras, które jest w peni wiarygodne.
+GC2774958	Mogem tam pojecha i po prostu krci, jakby to byo istniejce miejsce.
+G99F69515	Jedn z ekscytujcych rzeczy w grach EA i w tym, co widziaem w budowanych modelach,
+G6B3554D6	jest wietne odwzorowanie naszych scenografii i postaci,
+GB997C9B4	do tego stopnia, e EA dogadao si z naszymi aktorami, by przyszli i sami nagrali swoje kwestie.
+G815CAC49	Aktorzy byli tym bardzo podekscytowani.
+GA1640DEB	Bitwa o Helmowy Jar dobiega koca.
+G93BD7122	Bitwa o ródziemie zaraz si rozpocznie.
+G958468DE	Zbudowalimy miniatur Helmowego Jaru, ale co ciekawe, to nie bya zwyka makieta. 
+G1BC58576	To bya ogromna miniatura. W skali jeden do czterech, a i tak miaa jakie dziesi, dwanacie metrów szerokoci.
+GFA4F689B	Bya tak dua, e moglimy j po prostu filmowa naszymi kamerami i nie wygldaa jak miniatura.
+G2571B991	Wygldaa cakowicie wiarygodnie.
+G31C24FB0	O wielkoci filmu decyduje tak naprawd wietny scenariusz i wietna obsada.
+G9C04D37F	Wyobraam sobie, e przy tworzeniu gry wyzwania s w duej mierze takie same.
+GA0B86A25	Trzeba przycign do gry odpowiednie talenty.
+G0B7DC714	Trzeba mie histori, która przycignie odbiorców, a potem ich ni zachwyci
+G5E1101AB	i sprawi, e bd chcieli zobaczy, jak oywa.
+G87FC774C	Nic nie moemy zrobi dla Froda.
+G3C9AA8BC	Ta misja bdzie go kosztowa ycie.
+G98F7C221	Rohan jest saby i gotów upa,
+GA01F7D34	wic uderzy mocno i szybko na wiat ludzi.
+GA8723617	Nadchodzi wojna.
+GE1AF4B03	Ukradli nasz skarb, a my go chcemy.
+G6A5F57B3	Chyba najbardziej oniemielajce w podjciu si tego projektu byo
+GDE1DC635	poczucie, e spoczywa na nas ogromna odpowiedzialno, by dostarczy
+GCFDFC743	w formie interaktywnej to samo, co Peter Jackson da w filmie.
+GC87068A6	Wzi jedne z najbardziej ukochanych dzie literackich wszech czasów
+G423C7E0C	i przeoy je na epickie arcydzieo filmowe, które zdobyo miliony fanów na caym wiecie.
+GC8F29411	Na pocztku projektu pracuje si nad stron koncepcyjn i projektow.
+GBACB2DE5	W miar postpów projektu programici, graficy, animatorzy, graficy otoczenia,
+G047AC48F	specjalici od modelowania, od tekstur  wszyscy ci ludzie myl o swoim fragmencie gry,
+GB60517EB	ale w kontekcie caoci dowiadczenia.
+G13170460	Jedn z zalet tak bliskiej wspópracy z twórcami filmu
+GA03610FF	jest to, e moglimy wykorzysta modele i rekwizyty, które stworzyli do filmu,
+G9DADDEE4	jako wzór dla rzeczy, które musielimy stworzy w naszej grze.
+GF0D449E5	Cie porusza si w ciemnoci.
+GEC940136	Projektujc Aragorna, musielimy myle jednoczenie o wszystkich trzech grywalnych postaciach.
+GBB381F7C	Na przykad Legolas to posta nastawiona bardziej na szybko i finezj.
+G4CE351A9	Gimli to taki may czog bojowy.
+G21025B26	Aragorn jest poczeniem obu.
+G3ADE6E66	Zanim zaczlimy cokolwiek budowa, przyjrzelimy si ruchom kadej z postaci  klatka po klatce.
+G80ADBA8B	Potem tworzylimy siatk postaci. To jej podstawowe proporcje, rozmiar i skala.
+G85E5A400	Potem dodawalimy tekstury i owietlenie, by dopeni strój i doda drobne szczegóy postaci.
+GCD3CDD42	Aktorzy byli bardzo zainteresowani wspóprac z nami.
+G092B49A0	Na przykad Viggo Mortensen pokaza nam kilka swoich ruchów z walk.
+G915A1A70	Razem ze swoim dublerem otworzyli skrzyni z mieczami i zaczli ze sob walczy.
+G215B5E15	To stao si podstaw wielu ruchów Aragorna.
+G7126178B	On chce zosta odnaleziony.
+G7E02AF05	Kiedy wybieralimy sceny z filmu do naszej rozgrywki, Grobowiec Balina od razu by mocnym kandydatem.
+GF4146E18	To jeden z najbardziej pamitnych momentów pierwszego filmu.
+GE152213A	Chcielimy odtworzy atmosfer tej bardzo silnej smugi wiata padajcej na sam grobowiec.
+GB236432D	To byo wyzwanie dla naszych modelarzy otoczenia i specjalistów od owietlenia.
+GD3C26DBB	Poziomy w wiosce w Rohanie s wyjtkowe, bo day nam okazj rozbudowa miejsca znane z filmu.
+G8669E69D	Sam poziom gry wyglda i sprawia wraenie bardzo podobnego do plenerów filmowych pod wzgldem owietlenia,
+GF9B205CF	ksztatu architektury i ludzi, którzy tam s, ale w tym przypadku rozbudowujemy to
+GB285B32E	i tworzymy czci poziomu, które gracz moe bada i w których moe walczy, a których by moe nie widzia w filmie.
+G5E5F1D1C	W tej grze, Wadcy Piercieni, wspaniae jest to,
+G610E0BE4	e na wasnym ekranie syszysz gosy oryginalnych aktorów  wszystkich.
+GC6FCAA65	Pomocy! Aragornie! Aragornie! Pomocy!
+G20165D69	Jest niesamowicie autentyczna, a myl, e naprawd trudno zrobi gr na podstawie filmu.
+GBF3A0A5B	Tej grze to si udaje. Jest bardzo podobna do filmu.
+GDD010A37	Zaprojektowalimy bardzo dynamiczny system muzyki, który oddaje nastrój biecych wydarze w grze.
+G96BEDA9C	Jeden, by wszystkie zgromadzi i w ciemnoci zwiza.
+G91629050	W filmie Saruman atakuje Helmowy Jar z dziesicioma tysicami Uruk-hai.
+G3B702B98	Musielimy wic uy innych dostpnych rodków, by odda poczucie bitwy.
+GDEFA604D	Dziki efektom dwikowym naprawd czu, e w tym miejscu s tysice orków.
+G204351C8	Jeli kto wczy gr i powie sobie:
+GEC81BA2D	O mój Boe! To jest film!  to osignlimy dokadnie to, co zamierzalimy.
+G52BF957B	To miejsce, które pamitam z filmu.
+G571B482E	Jestem tam. Mog co zrobi. Teraz moja kolej.
+G625B0A6D	Wanie tak chcemy, eby czu si gracz.
+GB222979D	Gdzie jest ko i jedziec?
+G2457FF85	Gdzie jest róg, co gra?
+G8B36CA83	Przeminli jak deszcz w górach,
+G50095CA7	jak wiatr na ce.
+G10EB8BCF	Dni odeszy na Zachód,
+G109A0CCE	za wzgórza,
+G02628501	w cie.
+G80A942D2	Aragornie!
+GDDEA48AC	Pomoc
+G4C40E774	Nacinij przycisk START
+GEE711094	Kontynuuj
+GF9202936	Powtórz
+G2E427514	W.
+GFC4343CA	Wy.
+G52E4CD32	Nawigacja
+G39D074FD	Wybierz
+GAC3A8B6E	Wró
+G42B46F3C	 2002 New Line Productions, Inc. The Lord of The Rings oraz wystpujce w nim postacie, nazwy i miejsca s wasnoci The Saul Zaentz Company d/b/a Tolkien Enterprises na licencji udzielonej New Line Productions, Inc. Wszelkie prawa zastrzeone.
+G035F710A	EA GAMES to marka Electronic Arts.
+GBAC3ED5F	Kod gry i niektóre elementy audiowizualne  2002 Electronic Arts Inc. Wszelkie prawa zastrzeone.
+G0EF5F91F	Nowa gra
+GB8D9D2FD	Wczytaj gr
+G0BE2A075	Opcje
+G5D6AEEF7	Tryb debugowania
+G83335327	Dodatki
+G731194FA	Zapisz gr
+G7BA082D0	Nacinij START, aby wznowi
+G755B3BA1	Konfiguracja kontrolera
+G03961FD4	Ustawienia gry
+GABEE6EA4	Poziom trudnoci:
+GF065116B	atwy
+G8D3A16F6	Normalny
+GACDD0363	Ekspert
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Przestrzenny
+GA10C5C21	Gono gosów:
+G7F04050E	Gono muzyki:
+GF30A57F8	Napisy:
+G64752D2D	Wibracje:
+GB3F78571	Gono gry:
+GED3C9F14	Dwik:
+GB065D5A4	Wybierz gr do wczytania:
+G00FF7920	Wybierz miejsce zapisu:
+GC99B6C1E	Wybierz gniazdo KARTY PAMICI:
+GFB5C0BA2	Dysk twardy Xbox
+GD2F916B6	Gniazdo KARTY PAMICI 2
+GAEFBDEF3	Anuluj
+GDA714102	Tak
+GB893E04C	Nie
+GE506E266	Na pewno?
+G574C52F2	Czy na pewno chcesz kupi to ulepszenie?
+G0D91D779	Na pewno? Wyniki ostatniego przejcia tej misji zostan utracone.
+G1CF7123A	Na pewno? Cay niezapisany postp w tej grze zostanie utracony.
+GEF04DC5D	Na pewno? Postp w tej misji zostanie utracony.
+GEDF6F861	Czy na pewno chcesz nadpisa t gr?
+GF44D8878	Czy skoczye kupowa ulepszenia?
+G1EF3EFE3	Zapisz gr na dysku twardym
+G05163971	Wczytaj gr z dysku twardego
+G8F93A6FE	Wybierz poziom trudnoci
+G654484DF	Zablokowana
+G5A7CB330	Ukoczona
+G8D6AAF13	Nierozegrana
+GBE8C099C	Prolog
+GF4FBBE46	Wichrowy Czub
+GE7EA3020	Wrota Morii
+GE13A531D	Grobowiec Balina
+G79C1EAD3	Amon Hen
+G51C82E11	Las Fangorn
+G35CCE51F	Równiny Rohanu
+GAD341B58	Zachodnia Bruzda
+G94ADD008	Wrota Rohanu
+G9760067E	Mur Helmowy
+GF8B38ED5	Wyom w murze
+G644C89AD	Dziedziniec Rogatego Grodu
+G69B8B4C2	Wiea Orthanc
+GBF00F963	Helmowy Jar:
+GE34AB2FD	Zoo New Line
+GE132F5FF	Wybierz film do odtworzenia:
+G4B3C17B9	Pocztek
+GAD303F2A	Zakoczenie
+G668B98BD	Pitro
+G9C7A95F0	Punkty ulepsze:
+G4AE44639	4) Wprowad podan sekwencj kodu.
+G5374B3F5	Tajne kody
+GDF7B6B3A	Zawsze niszczycielski:
+GFECB245B	Dwóch graczy:
+GCAB16744	Mali wrogowie:
+G587D657D	Wszystkie ulepszenia:
+G58E34314	Niezniszczalno:
+GF0336180	Zwolnione tempo:
+G5A122CB0	Aby wprowadzi kod:
+G35BC6746	1) Rozpocznij misj.
+G46DF9919	2) Nacinij przycisk START, aby wstrzyma gr.
+G5A1291EE	3) Wcinij i przytrzymaj
+GEB88B42D	Nieskoczone zdrowie:
+G6AE6FFFE	Nieskoczone pociski:
+GAA29A634	Zakocz misj:
+GB2AE1BCE	Tryb pauzy:
+GAA467E08	Dodaj dowiadczenie:
+GEA42298C	Awans:
+G6BA0C403	Przywró zdrowie:
+G41D871E0	Uzupenij pociski:
+G04DBD06B	Ulepszenie pocisków:
+GA7A50BB5	Poka ulepszenia
+GA67DF58D	Wyjd do menu
+G773B79A5	Przejd do nastpnej misji
+G96540044	Misja zakoczya si porak.
+G5ADDCAC2	Powtórz misj
+G9DD85D6D	Wyjd do menu
+G730918CA	Spróbuj ponownie
+GB437BA93	Twórcy
+G798A44A2	Powtórz misj
+G6F46B26E	Wybierz jzyk.
+G2809E047	English
+GE3AAFF7A	Szybki
+GD0DB46DB	Mocny
+G9AD854EF	Dobicie
+GE83BE834	Specjalny
+GDB34AED9	Kombinacja
+GDACF8DCA	Kupione
+G125CAC9A	Jeszcze nieodblokowane. Nacinij przycisk A, aby kontynuowa.
+GDA9711D2	Nie zebrae do punktów ulepsze, by kupi to ulepszenie. Nacinij przycisk A, aby kontynuowa.
+GEB0E0008	lub
+G90A54691	po parowaniu
+GF5F43483	gdy ley
+GFC1C2104	Puste miejsce
+GB8BCCCB9	Gra 2
+G92BA5250	Gra 3
+G9CCBAB2F	Gra 4
+G76C930C6	Gra 5
+G50C6B65D	Gra 6
+G2AC43BF4	Gra 7
+G34D594D3	Gra 8
+G0ED31A6A	Gra 9
+GBE76BA62	Gra 10
+GE47934CB	Gra 11
+G6ED86859	Nie woono karty pamici (PS2). Do zapisania danych tej gry potrzeba co najmniej 80 KB. Czy chcesz kontynuowa?
+G87DE26DA	Za mao miejsca na karcie pamici (PS2) w gniedzie KARTY PAMICI 1. Do zapisania danych tej aplikacji potrzeba co najmniej 80 KB. Czy chcesz kontynuowa?
+G7118C569	Za mao miejsca na karcie pamici (PS2) w gniedzie KARTY PAMICI 2. Do zapisania danych tej aplikacji potrzeba co najmniej 80 KB. Czy chcesz kontynuowa?
+G6804B4C2	Za mao miejsca na kartach pamici (PS2) w gniazdach KART PAMICI. Do zapisania danych tej aplikacji potrzeba co najmniej 80 KB. Czy chcesz kontynuowa?
+G849021EA	Brak karty pamici (PS2) w gniedzie KARTY PAMICI 1. Nacinij przycisk X, aby kontynuowa.
+G59CE2129	Brak karty pamici (PS2) w gniedzie KARTY PAMICI 2. Nacinij przycisk X, aby kontynuowa.
+GC5BD8B5F	Podcz ponownie kontroler i nacinij START, aby kontynuowa.
+GC2BDD02C	Karta pamici (PS2) w gniedzie KARTY PAMICI 2 jest niesformatowana. Sformatowa kart pamici (PS2)?
+G6B64948C	Twój Xbox nie ma do wolnych bloków, by zapisa gr. Nacinij A, aby kontynuowa bez zapisywania, lub B, aby zwolni co najmniej
+GEDAB4EA9	Podcz ponownie kontroler i nacinij START, aby kontynuowa
+G00E55934	Na dysku twardym brakuje wolnych bloków na ten zapis gry.
+G20A17FB1	bloków trzeba zwolni.
+G353AAE58	Formatowanie nie powiodo si! Bd karty pamici (PS2) w gniedzie KARTY PAMICI 2! Nacinij przycisk X, aby kontynuowa.
+G9CAF03E3	Nie mona zapisa gry. Nacinij przycisk A, aby kontynuowa.
+GCB03752D	Gra zapisana. Nacinij przycisk A, aby kontynuowa.
+GACBFB64F	Zapis na karcie pamici (PS2) w gniedzie KARTY PAMICI 2 powiód si! Nacinij przycisk X, aby kontynuowa.
+GC7C0454F	Zapisywanie danych na karcie pamici (PS2) w gniedzie KARTY PAMICI 1. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+G4B14AAB4	Zapisywanie danych na karcie pamici (PS2) w gniedzie KARTY PAMICI 2. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+G53DAC278	Wczytywanie danych z karty pamici (PS2) w gniedzie KARTY PAMICI 1. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+GF144B8B3	Wczytywanie danych z karty pamici (PS2) w gniedzie KARTY PAMICI 2. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+G063DD8CC	Nie mona wczyta gry. Nacinij przycisk A, aby kontynuowa.
+GE5BDAC0B	Czy chcesz zapisa gr?
+GED3A9CCF	Brak zapisanych gier. Nacinij przycisk A, aby kontynuowa.
+GAF453999	bloków.
+GEE649E5A	Karta pamici (PS2) w gniedzie KARTY PAMICI 1 jest niesformatowana. Nacinij przycisk X, aby kontynuowa.
+G81447581	Karta pamici (PS2) w gniedzie KARTY PAMICI 2 jest niesformatowana. Nacinij przycisk X, aby kontynuowa.
+GB36F8F0C	Odczytywanie danych z karty pamici (PS2) w gniedzie KARTY PAMICI 1. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+G97EC5687	Odczytywanie danych z karty pamici (PS2) w gniedzie KARTY PAMICI 2. Nie wyjmuj karty pamici (PS2), nie resetuj ani nie wyczaj konsoli.
+G8E8AF6C1	Wystpi problem z uywan pyt. Moe by brudna lub uszkodzona.
+G9CB8DFF0	Misja 1
+G0EC04F2B	Misja 2
+GE8BDD4C2	Misja 3
+G5AC543FD	Misja 4
+G34C2C994	Misja 5
+GA6CA38CF	Misja 6
+G80C7BE66	Misja 7
+GF2CF2DA1	Misja 8
+GCCCCB338	Misja 9
+GA1F545C0	Misja 10
+GC7F7C029	Misja 11
+GEDFA3A92	Misja 12
+G13FCB4FB	Misja 13
+GFBA35200	Misja A
+G6DAAC13B	Misja B
+G47A846D2	Misja C
+GB9AFB60D	Misja D
+G0111B4C5	Dowiadczenie z misji:
+G10CB2024	Ocena misji:
+GB8F11F62	cznie punktów ulepsze:
+G94649BD6	Perfekcyjnie
+GE424E811	Doskonale
+G70E9184E	Dobrze
+GE98543F1	Przecitnie
+GF9792B5F	Sabo
+G4DE9139C	Umiejtno
+GB525F096	Sia
+G5F8C23CD	Obrona
+G8673311D	Atak
+G7829DFB2	Szybka kombinacja. Skuteczna przeciw mniejszym wrogom bez tarcz.
+G63E6B4FD	Niszczycielska kombinacja do przebijania si przez przeszkody i rozbijania wrogich tarcz.
+G406CD62A	Aby uy, wcinij i przytrzymaj lewy spust. Strzelaj przyciskiem A (przytrzymaj, by zwikszy obraenia).
+G7651B078	To pchnicie dobija kadego powalonego wroga.
+G09258F36	Odrzuca wrogów od ciebie, poza zasig ich ciosów.
+G36E84E05	Blokuje ataki i pociski wrogów.
+G074FC78D	Niszczycielski atak. Aby uy, nacinij i przytrzymaj przycisk Y.
+GE5C8740D	Trwale zwiksza twoje zdrowie.
+G791AEDAB	Szara naprzód, która powala na ziemi wrogów bez tarcz.
+GF4A5485B	Atakuj, podnoszc si z ziemi, i zaskocz wrogów.
+GC0B8F80A	Bardzo skuteczna kombinacja do eliminowania wrogów bez tarcz.
+G6CBE68E9	Bardzo skuteczna, by jak najszybciej rozprawi si z wrogami z tarczami.
+GD7BB121B	RUCH CZONY: Natychmiast zabija atakujcego goblina.
+G4A59663E	Uywane jak uk Dúnedainów, zadziorowe strzay Rohirrimów zadaj powane obraenia.
+G96A8AB86	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Namiestników)
+GED26DEB8	Szara z duej odlegoci, która powala na ziemi wrogów bez tarcz. (Wymaga: Atak z rozpdu)
+GB4790643	Zra, powal i dobij wroga tym atakiem kombinowanym.
+G9709901B	Uyj tej kombinacji, by trafi wroga bez tarczy, wykoczy go i szybko uderzy nastpnego.
+G066B80A4	RUCH CZONY: Natychmiast zabija atakujcego orka.
+GB54F0B8A	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Isildura)
+G1C742C09	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Stranika)
+G9F299E6A	Zwiksza obraenia twojego szybkiego ataku.
+G2A888253	Zra, powal, a nastpnie dobij potnych wrogów t kombinacj.
+GEF4043FD	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Elendila)
+GF3D48718	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Dziczy)
+GDAE09290	elazne strzay Gondoru zadaj straszliwe obraenia. (Wymaga: uk Rohanu)
+GBD1ED2AE	RUCH CZONY: Natychmiast zabija atakujcego Uruk-hai.
+G6DF8DC34	Uyj przeciw potnemu wrogowi, by roztrzaska mu tarcz, powali go i dobi.
+GB1BCB280	Nic
+GE225A1EC	Aby uy, wcinij i przytrzymaj lewy spust. Rzucaj przyciskiem A (przytrzymaj, by zwikszy obraenia).
+GFF3FB1CE	Ten cios toporem dobija kadego powalonego wroga.
+G81A89461	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Skay)
+GF266C7E6	Trwale zwiksza twoje zdrowie. (Wymaga: Moc elaza)
+G2FCD00C0	Szara z duej odlegoci, która powala na ziemi wrogów bez tarcz. (Wymaga: Atak z rozpdu)
+G00247254	Trwale zwiksza twoje zdrowie. (Wymaga: Runa Ochrony)
+GA505D28C	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Balina)
+G34C62FC4	Rzucane jak Topory z Ereboru, ostre jak brzytwa Topory z Morii zadaj jeszcze wiksze obraenia.
+G57901BB9	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Krasnoludów)
+G8840F62F	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Glóina)
+G361F0511	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Gór)
+G219C0125	Te ostrza o mithrilowych krawdziach zadaj straszliwe obraenia. (Wymaga: Topory z Morii)
+G9986DAAB	Zwiksza obraenia twojego mocnego ataku.
+G11BF2FC5	Uywane jak Dugi uk z Mrocznej Puszczy, jesionowe strzay z Rivendell zadaj jeszcze wiksze obraenia.
+G7A9893BB	Zaczarowane strzay z Lothlórien zadaj potworne obraenia. (Wymaga: Dugi uk z Rivendell)
+G42E47239	Te magiczne strzay podpalaj twoich wrogów. (Wymaga: Dugi uk z Lothlórien)
+G5BAB8220	Trwale zwiksza twoje zdrowie. (Wymaga: Potga Celeborna)
+G39265CB0	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Elfów)
+G084B6AEF	Te strzay przebijaj i rani wszystkich wrogów na swojej drodze. (Wymaga: Strzay smoczego ognia)
+GB1D19C39	Zwiksza obraenia kadej wystrzelonej strzay.
+G06E26BE1	Potrójne cicie
+G20A303C1	Podwójne rbnicie
+GCB8F4087	uk Dúnedainów
+G3F6F3751	Cios z cienia
+GBE8C73E9	Kopnicie bojowe
+G5660E3B0	Parowanie mieczem
+GDF332280	Furia Stranika
+GB8AB07B9	Sia Namiestników
+G187F8CC1	Atak z rozpdu
+G86E487F5	Atak z ziemi
+GF7D6DC76	Szybka Groza Isildura
+GB34DCC39	Wybawienie Isildura
+GC9303634	Zguba goblinów
+G3A0786A5	uk Rohanu
+G8B17B5C5	Sia Isildura
+G579A1927	Atak szar
+G207C1523	miertelna Szara Isildura
+G6C2653E9	Gambit Isildura
+G2A3BA153	Zguba orków
+GA28B29AA	Sia Elendila
+G7D213CCE	Sza Dziczy
+G006BF315	Mistrz miecza
+G6B68444D	Wojenny Pd Isildura
+G3B0A3720	Sia Argonath
+G78BAB3BC	Gniew Númenoru
+GCEDAD8B0	uk Gondoru
+G3BE146BB	Zguba Sarumana
+G701FD063	Sd Isildura
+G0251EC9F	Topory z Ereboru
+G96C77DAD	Pchnicie toporem
+GDD4B6691	Parowanie toporem
+GADD20DD0	Furia Krasnoludów
+GB0D95BC6	Moc Skay
+G4FB6CF69	Moc elaza
+G5F017E32	Szybka Groza Balina
+GDFD7CADD	Wybawienie Balina
+GDF1B571B	Runa Ochrony
+G9B37EDE7	miertelna Szara Balina
+GCDB1A82D	Gambit Balina
+G2DEF1D03	Moc Balina
+GE89D3658	Moc Glóina
+G31B06C3A	Topory z Morii
+GADFB76EF	Sza Gór
+G75612F09	Wojenny Pd Balina
+G8CE2E527	Moc Khazad-dûm
+GE4E87FCC	Gniew Morii
+GA16173AB	Topory z Gór Mglistych
+G24288EA5	Królewskie mistrzostwo topora
+G45AAD667	Sd Balina
+GB752504B	Dugi uk z Mrocznej Puszczy
+GA018F71A	Parowanie noem
+G0DCE9941	Furia Elfów
+G4A27D7DF	Potga Celeborna
+GE0EC06AA	Dugi uk z Rivendell
+G76059454	Szybka Groza Elronda
+GE8C0678B	Wybawienie Elronda
+GE9F2F2C9	Dugi uk z Lothlórien
+G5FE47D01	miertelna Szara Elronda
+G4B1902CB	Gambit Elronda
+GB3FB8DDE	Strzay smoczego ognia
+G4A61DECC	Potga Galadrieli
+G204DE538	Sza Gil-galada
+G5B85BC6F	Wojenny Pd Elronda
+GBDF43860	Strzay z mithrilu
+G4B69DAC6	Elfickie mistrzostwo uku
+G43AB31C1	Sd Elronda
+GEAA8149B	Poziom
+G11886F39	Paruj, aby blokowa ataki wrogów i odbija strzay.
+GE4E78CFD	Parowanie
+G3226B277	Wcinij i przytrzymaj lewy spust, aby przeczy si na bro dystansow. Nacinij przycisk A, aby strzeli. Celuj lew gak.
+GFF931564	Bro dystansowa
+G9A309E3D	Strza
+GC4AB2A6D	Uywaj szybkiego ataku przeciw wrogom bez tarcz.
+G5C64BDED	Uywaj mocnego ataku, by rozbija wrogie tarcze.
+G4B1F5E2B	Mocny atak
+G12993772	Szybki atak
+G5550F308	Zdobywaj punkty dowiadczenia, aby podnosi poziom postaci i kupowa cenne ulepszenia.
+GD5F0D645	Zdobyte punkty dowiadczenia
+G109A17A7	Uywaj zaawansowanych kombinacji i unikaj ciosów wrogów, by napeni wskanik umiejtnoci i zdoby maksimum punktów dowiadczenia.
+GDB22979F	Wskanik umiejtnoci
+GF7AF01B8	Celowanie
+G552324EC	Odskok
+G3962B27E	Cios koczcy
+G819AB384	Odrzucenie
+GB5FE5915	Strza / szybki atak
+G1438BF1E	Ruch / celowanie
+GCDD8B9EF	Pauza
+G63E0263C	Wywiad
+GA970F7F6	Peter Jackson i Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Wadca Piercieni
+GF0462ED4	Jak powstawaa gra
+G0DB34230	Ekskluzywne fragmenty filmu
+G9DF19E57	Druyna Piercienia
+G1704CE51	Zdjcia z produkcji
+G330E63EE	Fangorn i Orthanc
+GD722C1B8	Rohan i Helmowy Jar
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Graj jako Aragorn
+GA8934934	Graj jako Legolas
+G84C57E95	Graj jako Gimli
+G46EA0007	Graj jako Isildur
+G5689E41F	Tajna misja
+G7F2C7A4C	Graj tajn postaci
+G96AF0882	Grafiki koncepcyjne
+G8813AE29	Ukocz Wrota Morii, aby odblokowa
+G4EEEB554	Ukocz Grobowiec Balina, aby odblokowa
+G3182CC3A	Ukocz Amon Hen, aby odblokowa
+G54747798	Ukocz Las Fangorn, aby odblokowa
+G5D796BA6	Ukocz Równiny Rohanu, aby odblokowa
+G758A2B31	Ukocz Zachodni Bruzd, aby odblokowa
+GD1B66361	Ukocz Wrota Rohanu, aby odblokowa
+GEC95C099	Ukocz Helmowy Jar: Mur Helmowy, aby odblokowa
+G4F6E6B62	Ukocz Helmowy Jar: Wyom w murze, aby odblokowa
+G7E4B2F5F	Osignij 5. poziom Aragornem
+GA825B93E	Osignij 5. poziom Legolasem
+GD08EF3EF	Osignij 5. poziom Gimlim
+G060F3A0C	Ukocz Helmowy Jar: Dziedziniec Rogatego Grodu i osignij 10. poziom Aragornem
+G9C00EBDD	Ukocz Helmowy Jar: Dziedziniec Rogatego Grodu i osignij 10. poziom Legolasem
+GCA301FEC	Ukocz Helmowy Jar: Dziedziniec Rogatego Grodu i osignij 10. poziom Gimlim
+G2A4097F8	Ukocz tajn misj dowoln postaci
+GF80714A8	Ukocz tajn misj tajn postaci
+GF281A415	Peter Jackson i Barrie Osborne rozmawiaj o filmie i grze
+GEF6D5A30	Elijah Wood opowiada o roli Froda w grze Wadca Piercieni
+G1B7C2E20	Ian McKellen mówi o roli Gandalfa w grze Wadca Piercieni
+G100A11D4	Za kulisami powstawania gry Wadca Piercieni
+G14A8622F	Zdjcia postaci i scenerii z Druyny Piercienia
+G228511D6	Zdjcia postaci i scenerii z Fangornu i Orthanku
+GFDF064C7	Grafiki Johna Howe'a i Alana Lee inspirowane Wadc Piercieni
+GAAE1A0C0	Zdjcia postaci i scenerii z Rohanu i Helmowego Jaru
+G6CEBDAE1	Viggo Mortensen opowiada o roli Aragorna w grze Wadca Piercieni
+G6824CF13	Orlando Bloom mówi o roli Legolasa w grze Wadca Piercieni
+G84770794	John Rhys-Davies opowiada o roli Gimlego w grze Wadca Piercieni
+G775EAFA1	Tajne kody odblokowujce ukryte funkcje gry Wadca Piercieni
+G640E4463	Zmie wybór
+G6D02770F	Zatwierd wybór
+GE5EE10E6	Wró
+GA75BE7EE	Zmie lub zmodyfikuj wybór
+GE7B4EE86	Wyjd do menu gównego
+G47C91DD4	Zmie obraz
+GE445F6CE	Wydawaj punkty ulepsze na usprawnienia dla swojej postaci.
+GB2D2B6DB	Zabi ich wszystkich!
+GFD9FFC0E	Powal t besti szybkimi atakami!
+G7BD97E94	Uyj mocnego ataku, by zniszczy jego tarcz!
+G62FC14DC	Nadchodz! Zabi ich wszystkich!
+GA3F97A90	Uyczcie mi swoich mieczy!
+G88F3FEA7	Ugh! Gi, pomiocie Mordoru!
+G4888927E	Za Biae Miasto!
+GB5DB8B33	Ju po tobie!
+G91F156A0	Precz, istoto cienia!
+G8F5E1C57	Gi, pomiocie Saurona! Gi!
+GEF59BEBD	Odeprze ich!
+G263E18E0	Naprzód!
+G8715790C	Nie ustpowa!
+G09E491AC	Gi!
+GC9D8887A	Gondorska hoota!
+GD909145B	Ty, gi!
+G8524085B	Nie zabijesz nas wszystkich!
+GFA0F31A8	Gi, cierwo!
+G6949F8FB	Jest ich za duo, musisz si broni!
+GAB41028F	Brocie si, panie.
+GC99D9EF1	Szybkie ataki pokonaj tego.
+G8BC62719	Mocne ataki rozbij te tarcze.
+G24319240	wiat si zmieni.
+G6FC7E51E	Czuj to w wodzie.
+G586AE929	Czuj to w ziemi.
+GA0D1D398	Wyczuwam to w powietrzu.
+G20A7EC8F	Wiele z tego, co byo, przepado,
+G9A5EEA48	bo nie yje ju nikt, kto by to pamita.
+G991F588A	Wszystko zaczo si od wykucia Wielkich Piercieni.
+GDCCA686B	Trzy dano elfom 
+G64D4928C	niemiertelnym, najmdrzejszym i najpikniejszym ze wszystkich istot.
+GC38B0B40	Siedem wadcom krasnoludów,
+GE4E9DA85	wielkim górnikom i rzemielnikom z górskich hal.
+G8EA28015	A dziewi... dziewi Piercieni otrzymaa rasa ludzi,
+G5415D8A9	którzy ponad wszystko pragn wadzy.
+GCAF2B8E3	Bo w Piercieniach tych zawarto si i wol, by rzdzi kad z ras.
+GEAB51D48	Lecz wszyscy zostali oszukani...
+G9968C959	bo wykuto jeszcze jeden Piercie.
+G6DF9A86C	W krainie Mordor, w ogniu Góry Przeznaczenia,
+GD5CC3D06	Czarny Wadca Sauron wyku w tajemnicy Piercie Wadzy, by panowa nad wszystkimi innymi.
+GA5AF65D9	I w ten Piercie przela swoje okruciestwo, swoj zoliwo i wol panowania nad wszelkim yciem...
+GF9C8C37E	Jedna po drugiej wolne krainy ródziemia ulegay potdze Piercienia.
+GD7B567A4	Lecz byli i tacy, którzy stawili opór.
+G9673067D	Ostatni Sojusz ludzi i elfów wyruszy przeciw armiom Mordoru
+G9292CF8B	i na zboczach Góry Przeznaczenia walczy o wolno ródziemia.
+G9C449910	To wanie w tej chwili,
+G4E624CE3	gdy zgasa ju wszelka nadzieja...
+G8B971AFC	...Isildur, syn króla, podniós miecz swego ojca.
+GA0976A20	Sauron, wróg wolnych ludów ródziemia, zosta pokonany.
+GCE1FEBD6	Piercie przeszed w rce Isildura, który mia t jedyn szans, by na zawsze zniszczy zo.
+G4653B8E6	Lecz serca ludzi atwo ulegaj zepsuciu.
+GF1F12CD3	Zniszcz go!
+G7A59BC32	Nie.
+GEDAFB589	Jestem potomkiem Isildura, nie samym Isildurem. Mój los naley do mnie.
+GECD0FC9B	Do Helmowego Jaru! Brego, naprzód!
+GE526C94A	Frodo! Trzymaj si od nich z daleka!
+GE5AC368C	Pomocy! S wszdzie!
+GE18CFED5	Znajdziemy ci.
+G754CEC13	Precz, plugawy stworze!
+G0EE492EC	Szukaj Powiernika Piercienia! Trzymajcie si blisko!
+GA236A198	Nie oprzesz si, nizioku.
+GB0F6888B	Jestemy zgubieni.
+GABCB70B5	Cae Isengard opustoszao.
+GD4A9E9B3	To armia wyhodowana w jednym celu: by zniszczy wiat ludzi.
+G65599300	Czarny Wadca si zblia.
+GC6B5C82C	Baggins...
+GDE3725D0	Upiory Piercienia! Cofnij si!
+GDB2A2A63	Obieywiat!
+GDF3A925F	Niech zostanie oszczdzony. Ocal go.
+G4867AD04	W azylu Rivendell najmniejszy z nas okaza najwiksz odwag.
+G3505351D	Ja go wezm!
+G5B8CB3F8	I tak powstaa Druyna.
+GF6138FE1	Zanios Piercie do Mordoru!
+GA7DC204A	Cho...
+G2FFEE7D1	...nie znam drogi.
+GD051F7C5	Pomog ci dwiga to brzemi, Frodo Bagginsie...
+G82079845	...dopóki to ty masz je dwiga.
+G8308B082	Niesiesz los nas wszystkich, maleki.
+G32030F3F	I masz mój uk.
+G7A19CD10	I mój topór.
+G18A439E8	Daj nam piercie, nizioku.
+G5E09B681	Piercie jest nasz.
+GC7625599	Chod do nas, nizioku.
+GB2DCED15	Pomó mi!
+GF8B88DB9	Chod, pomó mi!
+G111D0DD5	Umieram.
+G439D87CA	Ta kraina si zmienia.
+GB5DB841A	Zaczekamy tu, a dalsza droga bdzie wyglda na bezpieczn.
+GF0EB3761	Od wielu lat nie mamy wieci z Morii.
+G3A9580D6	Moglibymy przej przez kopalnie Morii.
+G852B83DE	Mój kuzyn Balin powitaby nas po królewsku.
+G48D6F333	Uwaaj!
+G20BEF03C	Szybko! Tdy!
+G37B7E741	Plugawa bestia.
+G70A83B75	Oto Wrota Durina, Wadcy Morii.
+GE6E19D64	A wic, Gandalfie, próbujesz poprowadzi ich przez Caradhras.
+GF7BC40D4	A jeli to si nie uda 
+GC7F3ECF5	dokd wtedy pójdziesz?
+G4F7AA217	Do Morii!
+G0F8A9576	Powiedz, przyjacielu, i wejd.
+GCB3668DA	Mellon.
+G64134F99	Pozosta nam tylko jeden wybór.
+GE57BDBA1	Musimy stawi czoo dugim ciemnociom Morii.
+G3CA10A85	Mordorska hoota!
+GC753F514	Zasadzka!
+G66D5EE9E	S tu orkowie. Mnóstwo orków.
+G8AB8C148	Gdy jest kopot, wylij krasnoluda!
+G6F4359B4	Dobry cios, Gimli!
+G43E71D7A	Pójd przodem i poszukam przejcia.
+G0F5D4F40	Stwór.
+G0BFC06A5	To tu mielimy znale o wiele wicej ni Grobowiec Balina, Wadcy Morii.
+G79CBD185	Zatarasowalimy wrota. Bbny w gbinach.
+G676CE560	Nie moemy si wydosta.
+GC2C2532E	Precz, bezduszne bestie!
+G41169039	Legolasie! Potrzebujemy twojego uku!
+GED8A660A	Popiesz si, Gimli!
+G548B1E16	Precz, plugawa bestio!
+G8B6C996D	Bior go!
+GD624A593	Za tob!
+G22876487	Nie ustpujcie!
+G6E72BC38	Precz, stwory!
+G98FB35D8	Tutaj!
+G758C706B	Legolasie!
+G7D3C2C42	Gimli!
+G96015B03	Gandalfie!
+G2F5D8C59	Jest ich za duo!
+GEB38BB38	Jak mamy ich powstrzyma?
+GDB1D4894	Nie mog z nimi walczy!
+GCA82C10C	Nie zdoam ich powstrzyma!
+G839F36D1	Wykocz ich ukiem!
+G426819B7	Za Balina!
+G32A709EE	Ju ci mam!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Jest ich zbyt wielu!
+GB502E0B9	Za Mroczn Puszcz!
+G5C8B1856	Powycinam ci w brzuchu dziury dla robali!
+GF8D92047	Bierzcie ich wszystkich!
+GDFB1C64C	Zmiady ich!
+G5AF9060B	Wracaj w cie!
+GF1BFC8A0	Aragornie! Potrzebuj twojego ostrza!
+GF83070F8	Do mnie, Gimli! Tutaj!
+G2EC65D74	Bdcie gotowi!
+GCD82317C	Strzela!
+GCEA41230	Rozproszy si! Nie mog nas otoczy!
+G3AD812AF	Znale nizioka!
+G6B59AA20	Frodo niesie los nas wszystkich!
+G4B4B5CA5	Musimy go broni!
+G1881769E	Zapacisz mi za jego honor!
+G743E1105	Moria bya dla naszej Druyny mroczn wdrówk.
+G32DCF8A9	Uciekajcie, gupcy!
+G10D542AD	Nieeeeeee!
+GD10EAA8A	Misja stoi na ostrzu noa.
+GF997012E	Wystarczy drobne zboczenie z drogi, a si nie powiedzie.
+G01C6A95F	Lecz miao sta si jeszcze mroczniej, bo nasza Druyna si rozpadaa.
+G212FEF60	Poszedbym z tob do koca, w same ognie Mordoru.
+G960898CD	Uciekaj!
+GD941582B	Spoczywaj w pokoju...
+G9D8421F1	...synu Gondoru.
+G60BC6BA4	Musimy pokona tych Uruk-hai, eby Frodo móg uciec!
+GF0E0DD02	Boromirze!
+G1C9C2949	Przydaaby si pomoc, elfie!
+GB1E7FF01	Uruk-hai! Do ataku!
+G62308F86	To mi si spodoba!
+GA7F87EAC	Wracajcie do jam, które was zrodziy.
+G06BA8520	Szli tdy, chodcie.
+G817C5460	Ale ich lad urywa si tutaj. Musimy si rozdzieli, eby szybko ich znale.
+G934A6365	Aragornie, co tam jest.
+G32456D68	Co widzisz, Legolasie?
+G090A57A6	Biay Czarodziej.
+G3BE10384	Saruman.
+GF471A310	Mimo bohaterstwa Boromira sudzy Sarumana pojmali czonków naszej Druyny.
+G9EB3E2D9	Lecz nie zamierzalimy zostawi towarzyszy na mki i mier.
+GC9337F85	Caymi dniami szlimy ich tropem...
+G1A87CFBD	...a w kocu zaprowadzi nas do Lasu Fangorn.
+G7754D2C1	Ten las jest stary...
+G9261B17A	...bardzo stary.
+GF7DCBBD1	Peen wspomnie...
+GC4192431	...i gniewu.
+G92086B9D	W tym wielkim lesie zbiego si wiele cieek.
+G6F680400	To niemoliwe.
+G7A0AC815	Teraz dwie wiee s w przymierzu  Orthanc i Barad-dûr.
+GF36A1977	Jeste potrzebny gdzie indziej.
+GA926AFE5	Wojna nadciga do Rohanu.
+GC5293984	Teraz si zabawimy!
+GCF6954E1	Widziaem to ju wczeniej, ale nigdy w ten sposób.
+G2E930B75	Nasz jedyn nadziej jest trzyma si razem!
+GFD82D6F4	Siy Sarumana przewo przez to miasteczko dziwne adunki wybuchowe. Pomó nam je zniszczy!
+G86FA279C	Zatrzymajcie ich przy bramie!
+G7B48AD72	Ci nieliczni z nas, którzy mog walczy, maszeruj do Helmowego Jaru.
+GD55B6BE3	Tam rozstrzygnie si, czy Rohan przetrwa, czy zginie.
+G2256A18D	Uwaaj na adunki wybuchowe!
+GE0BD0D44	Tak! Niech posmakuj ognia!
+G82C8009F	To powinno ich spowolni!
+GA0C82879	Co my tu mamy?
+G751859FC	Co to jest?
+G06637EF0	Musimy zniszczy te adunki wybuchowe!
+GABF94061	Te adunki wybuchowe trzeba zniszczy.
+G13114F1E	Có to moe by?
+G5B2AF650	To moe si przyda.
+G14659B9A	To wydaje si cenne.
+G418ECC01	Prosz. Zatrzymam to.
+G136EC46C	Warto to zabra ze sob.
+G360BBC1D	Pdzi ich szalestwo Sarumana i wola Czarnego Wadcy.
+G4840EFEC	Znowu fajerwerki? Ha! Chc nas wszystkich zamieni w trupy!
+G19910876	Teraz id po nas!
+G08EB8FDB	Nie da si tdy przej.
+G6FED1000	Bd musia znale inn drog.
+G68F91872	Ta wioska ponie jak suche próchno!
+G57BD9573	Cakiem przydatne.
+G424E3FF5	To wystarczy!
+G501ABC20	Trzymajcie si!
+G31FDA576	Tutaj te si przedzieraj!
+GB60A7265	Nie bylimy sami w obronie Rohanu.
+GA48B596C	Królewska Stra równie przebijaa si do Helmowego Jaru.
+G65866A2E	Zrobie tu wszystko, co moge.
+G115A6D12	Ocaleni wyrusz do Helmowego Jaru.
+GC07CBB0E	Masz jeszcze co do zrobienia. Wróc do ciebie, gdy szala si przechyli.
+G63B48C52	Przedarli si!
+GAAD29572	Prosz! Nie! Nie! Nie!
+G589F2E2F	Musimy ocali wszystkich, kogo si da, inaczej ta wioska padnie.
+GE1654ECA	Zanim nasza duga wdrówka przywioda nas do Edoras...
+G97FC9F74	...twój lud by ju w wielkim niebezpieczestwie.
+GB52DB0C9	Oszczd mnie!
+GDDA274AE	Prosz! Oszczd mnie!
+GA354A5CD	Aaach! Nie!
+G1C74FEB5	Nie!
+G946E2F3A	Nie! Nie! Nie rób tego!
+GF46D4AC5	Nie! Nie! Nie!
+G1BD76207	Wycignij nas std! Szybko!
+GE57CB50F	Oszczd mnie, bagam!
+G716689E1	Chro nas!
+G6295F93F	Ratunku! Prosz, ratuj mnie!
+GFA27E38F	Aaaaaach! Pal nas ywcem!
+G25B702F8	Daruj mi ycie! Prosz!
+GDE034FBB	Musisz i dalej. Jestem potrzebny gdzie indziej.
+G898F1CFF	Niech si boj wilków Isengardu!
+G04FC403B	Nie moglimy pozwoli, by te stwory dotary do uchodców.
+GD8C5307E	Twój lud zosta obroniony, ale zapacilimy za to wieloma istnieniami.
+G4FD6FE99	Omal sam nie straciem ycia.
+G753DFA73	I tak rónymi ciekami wszyscy dotarlimy do twierdzy w Helmowym Jarze, by stoczy ostatni bój.
+G932478E9	A teraz zabi tamtego!
+GF940F960	Tak, moje licznoci!
+G646F5FC4	Nasze wargi bd dzi ucztowa!
+G948FC6FF	Nie baw si z nim! Zabij go!
+G99617AA4	Wycofali si. Na razie to koniec.
+G4A0F838F	Mam dziewitnacie!
+GC16105A6	To mamy remis.
+GAC4FD1F9	Jeszcze zobaczymy.
+GF71FBCA2	Mam dwóch.
+G641CA89C	Starczy ich dla nas obu, Gimli!
+GF4B76D82	Musimy skupia na sobie wzrok Saurona  niech bdzie lepy na wszystko inne, co si dzieje!
+G5B04C967	Cofn si!
+G3487D102	Zejdcie z muru!
+G8B575855	Orkowie s na murze!
+GCE3C16C0	Mam ju siedemnastu!
+G3D052135	Kry si!
+G05C9D273	Znowu do nas strzelaj!
+G4941BF74	Zrzucie t drabin, zanim nas zalej!
+G265760A3	Padnij! Na ziemi!
+G2E8173A8	Nie moemy ich dopuci do Byszczcych Pieczar!
+G36DE1341	Nigdy nie widziaem takiej roboty toporem, moci krasnoludzie.
+G80FBF437	A ja takiej biegoci w strzelaniu z uku.
+G3F35FF0E	Ale ci, których ja trafi, ju nigdy nie wstaj.
+GEC633822	Nasza obrona pada! Kobiety i dzieci s w puapce!
+G17070638	Zaprowadcie je do Wielkiej Sali!
+G5CAB82D3	Zatrzymamy ich tutaj albo w Twierdzy!
+GFFC47594	Powstrzymalimy ich. Kobiety i dzieci s bezpieczne  na razie.
+GBD5794D5	Nie utrzymamy ich duej! Do Wielkiej Sali!
+G088ED5E4	Nie utrzymamy ich!
+G7C6E3511	Sauron i Saruman zaciskaj ptl.
+G7B236705	Lecz mimo caej ich przebiegoci mamy jedn przewag.
+GFCAC9515	Piercie pozostaje ukryty.
+G1C7DF558	A to, e chcemy go zniszczy, nie przyszo im nawet w najmroczniejszych snach.
+GB72B409D	I tak bro wroga zmierza do Mordoru w rkach hobbita 
+G86CED6F6	kady dzie przyblia j do ognia Góry Przeznaczenia.
+GD9BB4CD5	Sauron boi si ciebie, Aragornie.
+GDD966B5E	ucznicy na mury!
+G6A122B51	Odsun si! Barykada zaraz padnie!
+G427F5206	Popiesz si, moci krasnoludzie!
+G113213B2	Id do Legolasa, ja ich tu zatrzymam!
+GA7B95A20	Za Gondor!
+G7C696E8A	Aragorn nie daje rady! Do niego!
+GFC98A99D	Nasz przyjaciel elf potrzebuje pomocy.
+G66A680C0	Uruk-hai!
+G8968245E	Zaraz rozbij barykad!
+G428EE07E	S w twierdzy. Jestemy zgubieni!
+GFAE8490C	NIEEEEEE!!
+G63F31F0F	Twój koniec jest bliski.
+GE8B9DB2E	Wybrae drog bólu!
+G910D7B12	Gupcze.
+G58E8BBAA	Czas, by przesta.
+GD8425223	Chyba nie sdzie, e jaki obdarty stranik zdoa przeciwstawi si mojej woli? Jestem poza twoim zasigiem.
+G1A989E68	Zapacisz za swoj arogancj.
+G0079D300	Nie sdzie chyba, e krasnolud zdoa przeciwstawi si woli Sarumana. Nikt tego nie potrafi.
+GFB1E1C33	Naprawd sdzie, e elf zdoa stawi czoo Sarumanowi? Nikt nie zdoa, nikt nie powinien nawet próbowa.
+GCB4F521C	Uywane jak uk Namiestnika, zadziorowe strzay Rohirrimów zadaj powane obraenia.
+G906620AF	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Denethora)
+GE4F990F3	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Gondoru)
+G55B83821	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Gondoru)
+GD4900EBD	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Gniew Gondoru)
+GF1EE1785	uk Namiestnika
+GC7DFC68A	Furia Gondoru
+G26838C80	Róg Gondoru
+G948EF2DD	Opór Kapitana
+GC354B788	Moc Denethora
+G2675AC6D	Szara Minas Tirith
+G3A16134F	Gambit Namiestnika
+G7C6E9536	Sia Gondoru
+G909BDBD3	Gniew Gondoru
+GBCA2DB1D	Pd Biaej Wiey
+GA70E206F	Opór na Amon Hen
+GECE9E935	Graj jako Boromir
+G2BAAD5AF	Aby uy, wcinij i przytrzymaj lewy spust. Rzucaj czar przyciskiem A (przytrzymaj, by zwikszy obraenia).
+GF2DB6139	Rzucany jak wiato Czarodzieja, pomie Naryi pali wrogów, zadajc powane obraenia.
+G4E51B4E3	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Istarich)
+G701450DF	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Olórina)
+G876BFE80	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Majara)
+G554AF8D3	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Naryi)
+GF20F1105	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Czarodzieja)
+GE86497FB	Biay ogie Istarich pali straszliwie. (Wymaga: Ogie Piercienia)
+G5D1DA1B0	wiato Czarodzieja
+GE4245C5B	Parowanie lask
+G68852FD1	Furia Majara
+G63891384	Sia Istarich
+G3023E8DD	Pomie Anoru
+G03053C48	Nie przejdziesz
+G44E88937	Ogie Piercienia
+G31781C88	Sia Olórina
+GC67FABAE	Szara Cienistogrzywego
+GB28BAB38	Szary Pielgrzym
+GBB647C84	Sia Naryi
+G3A1959EB	Sza Czarodzieja
+G910A4D18	Mistrz Glamdringa
+GE54BB6DF	Pd Mithrandira
+G80CB05F7	Sia Biaego
+G5500602D	Gniew Olórina
+GB3B8BA9A	Biay Ogie
+G4D3F3799	Gniew Majara
+GB06CD44C	Graj jako Gandalf
+GD63AEB69	Aby uy, wcinij i przytrzymaj lewy spust. Ciskaj przyciskiem A (przytrzymaj, by zwikszy obraenia).
+GF1500B18	Rzucane jak Kamienie z Shire, ostre krzemienie znad Brandywiny zadaj powane obraenia.
+G1594107A	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Shire)
+G223FB1F4	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Bilba)
+G419FBE06	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Hobbita)
+G549E8839	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Samwise'a)
+G3E7B6E97	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Shire)
+G5DBA6F26	Kamienie pobogosawione przez elfy zadaj straszliwe obraenia. (Wymaga: Krzemienny Pocisk)
+G586DFFA8	Kamienie z Shire
+GAF333BB7	Furia Hobbita
+GA30AB0B5	Sia Shire
+G5B952654	Ukszenie da
+G3F0B7A46	Wola Powiernika
+GE7A5F0EC	Krzemienny Pocisk
+G97512A2B	Sia Bilba
+G4F6E34B0	Szara Bagginsa
+G8AFDEEE2	Szczcie Hobbita
+G9AE8326E	Sia Samwise'a
+G5FECDC01	Sza Shire
+GB7F9A847	Mistrzostwo da
+GD629F714	Pd Tooków
+G31486B52	Sia Bag End
+G4023054B	Gniew da
+GD48B81F2	Elfickie Kamienie
+G371FFFDE	Mithrilowa Determinacja
+G031E765B	Graj jako Frodo
+G63C78123	Uywane jak uk Isengardu, zadziorowe strzay Orthanku zadaj powane obraenia.
+G266F9F27	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Isengardu)
+G4451D279	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Sarumana)
+G2DE635F5	Jeszcze bardziej niszczycielski atak. (Wymaga: Furia Uruków)
+G4D25FA2B	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Orthanku)
+G055C2C2B	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Isengardu)
+G478E4DB1	Czarne strzay Isengardu zadaj straszliwe obraenia. (Wymaga: uk Uruków)
+GB0EED2A6	uk Isengardu
+G13D5F1B3	Parowanie ostrzem
+GCC2F9E7C	Furia Uruków
+GF496EAA0	Sia Isengardu
+GC727C10B	owy Lurtza
+G73D0C070	Wola Sarumana
+GD64B9B56	uk Uruków
+G9E8D350E	Sia Sarumana
+G6426C642	Szara Wojownika Uruk
+GCC3C5342	Gambit Rzenika
+G0DEF3FCC	Sia Orthanku
+G0EBAA8C5	Sza Isengardu
+GFC62112E	Mistrz Rzenik
+GEE7780E5	Nawaa Isengardu
+G838B10AC	Sia Uruk-hai
+GF44614A3	Gniew Sarumana
+G45DC8B08	Czarny uk
+G4F638CF6	Zguba Rohanu
+G9E606E3B	Zagada Pierwszego Uruka
+GE31550F8	Lurtz
+G981416DE	Graj jako Lurtz
+G6F22BB2E	Uywane jak Elficki uk, strzay z Rivendell zadaj powane obraenia.
+GCA4A15A1	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Rivendell)
+G75BCF244	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Gil-galada)
+G216AF74D	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Vilyi)
+G0B6CC0B6	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Noldorów)
+G0355C5D7	Srebrne strzay Eldarów zadaj straszliwe obraenia. (Wymaga: uk Vanyarów)
+GD3F16BA3	Elficki uk
+G710A6666	Sia Rivendell
+G96D9F158	aska Vilyi
+GF127A06E	Ostatni Sojusz
+GB426C696	uk Vanyarów
+G71620C4B	Moc Gil-galada
+GFBF3A490	Szara Lindonu
+G00542D8B	Gambit Herolda
+G5104305A	Sia Vilyi
+G221633E0	Sza Noldorów
+G11A9FF39	Wojenny Pd Noldorów
+GDE2839BE	Sia Eldarów
+GB0E7C432	Gniew Lindonu
+G008B68D9	uk Eldarów
+G10607364	Wadca Imladris
+G0BA28B85	Graj jako Elrond
+GD6BB77A1	Rzucany jak Mroczny Pocisk, ogie Barad-dûr zadaje powane obraenia.
+G113CAFFC	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Barad-dûr)
+G2F14F0F7	Trwale zwiksza twoje zdrowie. (Wymaga: Sia Mordoru)
+G573FFFF8	Jeszcze bardziej niszczycielski atak. (Wymaga: Mroczna Furia)
+G6AE28C4F	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Piercienia)
+GC4B7E7DB	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Mordoru)
+G5FEE9C56	Pomienie Góry Przeznaczenia zadaj straszliwe obraenia. (Wymaga: Piekielny Ogie)
+GA07FAB7C	Mroczny Pocisk
+G59838F7F	Parowanie buzdyganem
+G0ACE1349	Mroczna Furia
+GD97CF863	Sia Barad-dûr
+GF62B2130	Taniec Saurona
+G53F430F0	Wola Jedynego Piercienia
+GB60C89B8	Piekielny Ogie
+GC26DDD50	Sia Mordoru
+G29856B22	Szara Czarnego Wadcy
+G27C67462	Gambit Annatara
+G66205DC8	Moc Piercienia
+GA64C9515	Sza Mordoru
+G278CB8C1	Mistrz buzdygana
+G4B8493DC	Wojenny Pd Mordoru
+G5487C52D	Sia Góry Przeznaczenia
+GE9A37F55	Gniew Mordoru
+G3F70A0C4	Ogie Przeznaczenia
+GBB8776B5	Zguba Elfów
+G6E2AA149	Oko Saurona
+G1C11BF19	Sauron
+G3057B52F	Graj jako Sauron
+GB76B50B9	Rzucane jak Gazy z Turni, te kamienie z jam zadaj powane obraenia.
+GECFE6FA3	Trwale zwiksza twoje zdrowie. (Wymaga: Moc Jam)
+G47753157	Ten niszczycielski atak podpala wielu wrogów naraz. (Wymaga: Sza Berserkera)
+GF2D43E42	Roztopione skay zadaj straszliwe obraenia. (Wymaga: Wojenne Gazy)
+GC390874C	Gazy z Turni
+G035878D4	Furia Berserkera
+GC2D0B8DB	Pochodnia Jaru
+GFF1647F7	Wojenne Gazy
+G98869254	Moc Jam
+GC4A495AD	Szara na Mur Helmowy
+GE0FB4F25	Gambit Uruk-hai
+G8925F4A1	Sza Berserkera
+G468B4A5C	Mistrz Berserker
+GB0E58D9C	Pd Oblenia
+GD5AF6DD1	Gniew Orthanku
+G01AF5769	Gazy z Lawy
+G18494AB3	Gniew Jam
+GB3AAE2E1	Uruk-hai
+G683077D7	Graj jako Uruk-hai
+P:Frame Rate:	Liczba klatek:
+P:Unlocked	Bez limitu
+P:Display Mode:	Tryb ekranu:
+P:Window	Okno
+P:Full Screen	Peny ekran
+P:Window Size:	Rozmiar okna:
+P:Automatic	Automatyczny
+P:Aspect Ratio:	Proporcje obrazu:
+P:Custom	Wasne
+P:Resolution:	Rozdzielczo:
+P:Anisotropic:	Anizotropia:
+P:Mipmaps:	Mipmapy:
+P:Off	Wy.
+P:On	W.
+P:Ultra Textures:	Tekstury Ultra:
+P:Wide Cutscenes:	Szerokie przerywniki:
+P:Anti-aliasing:	Antyaliasing:
+P:VSync:	VSync:
+P:Picture:	Obraz:
+P:Keep Shape	Zachowaj ksztat
+P:Stretch	Rozcignij
+P:Vertex Programs:	Programy wierzchoków:
+P:Brightness:	Jasno:
+P:Sharpening:	Wyostrzanie:
+P:Colour:	Kolory:
+P:Original	Oryginalne
+P:Vivid	ywe
+P:Muted	Stonowane
+P:HUD Widescreen:	HUD panoramiczny:
+P:Edges	Przy krawdziach
+P:Centred	Wyrodkowany
+P:Menus:	Menu:
+P:Fill	Wypenij
+P:Movies:	Filmy:
+P:As Made	Oryginalnie
+P:Button Prompts:	Ikony przycisków:
+P:Keyboard	Klawiatura
+P:Mouse Pointer:	Kursor myszy:
+P:Sensitivity:	Czuo:
+P:Pointer Size:	Rozmiar kursora:
+P:Mouse Aiming:	Celowanie mysz:
+P:Invert Aiming:	Odwró celowanie:
+P:Up/Down	Góra/dó
+P:Left/Right	Lewo/prawo
+P:Both	Oba
+P:Mouse Steering:	Sterowanie mysz:
+P:A Button:	Przycisk A:
+P:B Button:	Przycisk B:
+P:X Button:	Przycisk X:
+P:Y Button:	Przycisk Y:
+P:Black Button:	Czarny przycisk:
+P:White Button:	Biay przycisk:
+P:Left Trigger:	Lewy spust:
+P:Right Trigger:	Prawy spust:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	Krzyak w gór:
+P:D-pad Down:	Krzyak w dó:
+P:D-pad Left:	Krzyak w lewo:
+P:D-pad Right:	Krzyak w prawo:
+P:L Stick Click:	Wcin. lewej gaki:
+P:R Stick Click:	Wcin. prawej gaki:
+P:Move Forward:	Naprzód:
+P:Move Back:	Do tyu:
+P:Move Left:	W lewo:
+P:Move Right:	W prawo:
+P:Look Up:	Patrz w gór:
+P:Look Down:	Patrz w dó:
+P:Look Left:	Patrz w lewo:
+P:Look Right:	Patrz w prawo:
+P:Walk:	Chód:
+P:General Options	Opcje ogólne
+P:Display Options	Opcje obrazu
+P:Controls	Sterowanie
+P:Reset Controls	Przywró sterowanie
+P:Press a key...  (Esc: cancel, Delete: clear)	Nacinij klawisz...  (Esc: anuluj, Delete: wyczy)
+P:R Stick	Prawa gaka
+P:Stick	Gaka
+P:L Stick	Lewa gaka
+P:Black button	Czarny przycisk
+P:White button	Biay przycisk
+P:Left trigger	Lewy spust
+P:Right trigger	Prawy spust
+P:Start	Start
+P:Back	Back
+P:D-pad up	Krzyak w gór
+P:D-pad down	Krzyak w dó
+P:D-pad left	Krzyak w lewo
+P:D-pad right	Krzyak w prawo
+P:Left stick click	Wcinicie lewej gaki
+P:Right stick click	Wcinicie prawej gaki
+P:Move forward	Naprzód
+P:Move back	Do tyu
+P:Move left	W lewo
+P:Move right	W prawo
+P:Right stick up	Prawa gaka w gór
+P:Right stick down	Prawa gaka w dó
+P:Right stick left	Prawa gaka w lewo
+P:Right stick right	Prawa gaka w prawo
+P:Walk	Chód
+P:None	Brak
+P:LS click	Wcin. LS
+P:RS click	Wcin. RS
+P:Mouse Left	Lewy przycisk myszy
+P:Mouse Right	Prawy przycisk myszy
+P:Mouse Middle	rodkowy przycisk myszy
+P:Mouse 4	Mysz 4
+P:Mouse 5	Mysz 5
+P:Space	Spacja
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Strzaka w gór
+P:Down	Strzaka w dó
+P:Left	Strzaka w lewo
+P:Right	Strzaka w prawo
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	rednik
+P:Equals	Znak równoci
+P:Comma	Przecinek
+P:Minus	Minus
+P:Period	Kropka
+P:Slash	Ukonik
+P:Backquote	Grawis
+P:Backslash	Ukonik wsteczny
+P:Quote	Apostrof
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Przytrzymaj {6}, aby przeczy si na bro dystansow. Nacinij {0}, aby strzeli. Celowanie: {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Wcinij i przytrzymaj {6}, aby przeczy si na bro dystansow. Nacinij {0}, aby strzeli. Celowanie: {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Przytrzymaj {6}, aby uy. Nacinij {0}, aby strzeli (przytrzymaj, by zwikszy obraenia).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Wcinij i przytrzymaj {6}, aby uy. Nacinij {0}, aby strzeli (przytrzymaj, by zwikszy obraenia).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Przytrzymaj {6}, aby uy. Nacinij {0}, aby rzuci (przytrzymaj, by zwikszy obraenia).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Wcinij i przytrzymaj {6}, aby uy. Nacinij {0}, aby rzuci (przytrzymaj, by zwikszy obraenia).
+P:A devastating attack.  Press and hold {3} to use.	Niszczycielski atak. Aby uy, nacinij i przytrzymaj {3}.
+P:Game Saved.  Press {8} to continue.	Gra zapisana. Nacinij {8}, aby kontynuowa.
+P:Game Saved.  Press {0} to continue.	Gra zapisana. Nacinij {0}, aby kontynuowa.
+P:Unable to save game. Press {8} to continue.	Nie mona zapisa gry. Nacinij {8}, aby kontynuowa.
+P:Unable to save game. Press {0} to continue.	Nie mona zapisa gry. Nacinij {0}, aby kontynuowa.
+P:Unable to load game. Press {8} to continue.	Nie mona wczyta gry. Nacinij {8}, aby kontynuowa.
+P:Unable to load game. Press {0} to continue.	Nie mona wczyta gry. Nacinij {0}, aby kontynuowa.
+P:No saved games. Press {8} to continue.	Brak zapisanych gier. Nacinij {8}, aby kontynuowa.
+P:No saved games. Press {0} to continue.	Brak zapisanych gier. Nacinij {0}, aby kontynuowa.
+P:Not unlocked yet. Press {8} to continue.	Jeszcze nieodblokowane. Nacinij {8}, aby kontynuowa.
+P:Not unlocked yet. Press {0} to continue.	Jeszcze nieodblokowane. Nacinij {0}, aby kontynuowa.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Nie zebrae do punktów ulepsze, by kupi to ulepszenie. Nacinij {8}, aby kontynuowa.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Nie zebrae do punktów ulepsze, by kupi to ulepszenie. Nacinij {0}, aby kontynuowa.
+P:Press {8} to resume	Nacinij {8}, aby wznowi
+P:the left mouse button	lewy przycisk myszy
+P:the right mouse button	prawy przycisk myszy
+P:the middle mouse button	rodkowy przycisk myszy
+P:mouse button 4	przycisk myszy 4
+P:mouse button 5	przycisk myszy 5
+P:the A button	przycisk A
+P:the B button	przycisk B
+P:the X button	przycisk X
+P:the Y button	przycisk Y
+P:the Black button	czarny przycisk
+P:the White button	biay przycisk
+P:the left trigger	lewy spust
+P:the right trigger	prawy spust
+P:up on the d-pad	krzyak w gór
+P:down on the d-pad	krzyak w dó
+P:left on the d-pad	krzyak w lewo
+P:right on the d-pad	krzyak w prawo
+P:the left thumbstick button	przycisk lewej gaki
+P:the right thumbstick button	przycisk prawej gaki
+P:the Menu button	przycisk Menu
+P:the View button	przycisk Widok
+P:the cross button	przycisk krzyyk
+P:the circle button	przycisk kóko
+P:the square button	przycisk kwadrat
+P:the triangle button	przycisk trójkt
+P:Left Click	LPM
+P:Right Click	PPM
+P:Middle Click	PM
+P: or 	 lub 
+P:Exit	Wyjcie
+P:Press {k}	Nacinij {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	lewej gaki

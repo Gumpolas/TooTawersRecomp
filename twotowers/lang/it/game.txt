@@ -1,0 +1,1454 @@
+# Italiano, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	IL SIGNORE DEGLI ANELLI:  LE DUE TORRI
+G20EBC61E	Un film di Peter Jackson
+G2D8D3B98	Prodotto da
+G7EDB1AE9	Co-prodotto da
+G90AF53E8	Effetti speciali
+G893165F0	Weta Digital
+GD9523953	Musiche di Howard Shore
+G7B677F6E	Voci del gioco
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	TEAM XBOX
+GAAA9253B	Gestione del progetto
+G2E65B2E4	Programmazione
+G1E165282	Grafica
+G4CFF767B	Audio
+G1B12D0CA	TEAM DI SVILUPPO ORIGINALE
+G5BB408B8	Direttore del progetto
+GA9D987DE	Direttore tecnico
+GA4E53836	Direttore dello sviluppo
+GCBF9A863	Direttore audio
+G71D27F1C	Lead designer
+GABE6171F	Programmatore capo
+GB6AEE806	Grafici capo degli ambienti
+G0FAA1BD8	Grafico capo delle cinematiche
+G93A039A2	Animatore capo
+G85851417	Direzione artistica
+GEC5EB699	Produttore associato
+G1E1B7E49	Grafico effetti speciali
+GE457B26A	Grafici degli ambienti
+G09AFDB2B	Grafici delle cinematiche di gioco
+GC6201467	Artisti concettuali
+GCE12C680	Modellatori/animatori dei personaggi
+G958F64A1	Grafico dell'interfaccia
+G5817028D	Programmatori grafici
+G8E313DB8	Programmatori IA
+G7559A05A	Programmatori del gameplay
+G47FDFA0D	Game designer
+G2A1A4D1F	Sound design e montaggio musicale
+GD6AC199C	Sound design
+G83731102	Direzione dello sviluppo aggiuntiva
+G9B9AC6A2	Gestione del progetto aggiuntiva
+G2C8B85F3	Grafica aggiuntiva
+G154B3F75	Programmazione aggiuntiva
+GEC34AAA5	Sound design aggiuntivo
+GE9E2F454	Testi aggiuntivi
+G8B63E4D8	Sviluppo commerciale
+G8E754AFA	Responsabile esecutivo dello sviluppo
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Produttore esecutivo
+GF944BB31	Produttore senior
+G49F95533	Produttore associato alla localizzazione
+GE5AAA381	Assistente di produzione
+G20A463E8	Ingegneri del software
+GEDDCFA70	Tester capo
+G6EC637F4	Assistente tester capo
+GA9C92124	Tester principali
+GDDEFB046	Produttori
+G5F4C2C91	Direttore dello sviluppo dei giochi
+G53E62C46	Level designer
+G4019279E	Direttore artistico associato
+G3548CB79	Cinematiche di gioco
+G5BF26924	Grafica (interfaccia)
+GF5E6331B	Assistente produttore della localizzazione
+GB9029242	Assistenti di produzione
+G81160EAA	Animatore senior
+GB1B5EEDE	Animatore
+G1D384099	Modellatori degli ambienti
+GD670D187	Filmati
+GB4300D0E	Supervisore di produzione
+GDB61FEB0	Responsabile produzione filmati
+G13204F99	Direttore artistico tecnico
+G8774AEB2	Direttore artistico
+G2EDA5AA3	Direttore dell'animazione
+G4761EC6C	TD dei personaggi
+GC40AEB65	Grafico capo degli ambienti
+G04B7AD9A	Sceneggiatore
+GCCDC1EDE	Grafici dei personaggi
+G765B2120	Animatori senior dei personaggi
+GDB98BF7E	Grafico senior dell'illuminazione
+G8AEFA15C	Animatore senior effetti
+GB64D9748	Animatore effetti
+GB770287B	Rigger/modellatori CG
+GA89434BE	Layout della telecamera
+GBAA388EF	Montatori
+GA79B5345	Sound designer/mixaggio
+GE2D38E72	Responsabile produzione grafica
+G29C8EC71	Assistente esecutivo
+GB01B1D73	Amministratore di sistema
+G257D0532	Assistente di produzione
+GB2965969	Montaggio dei dialoghi
+G2ACF75E1	Elaborazione audio aggiuntiva
+G821EF7A5	Doppiatori
+G3CCB3DF3	Controllo qualità EA
+G2851776E	Responsabile controllo qualità
+G3D43CCDD	Supervisore controllo qualità
+G997D9582	Responsabili controllo qualità
+G5B5CE9C6	Assistenti responsabili controllo qualità
+GE0B33004	Tester principali controllo qualità
+GBBB3A592	Responsabile progetto FLT
+G7F330F1A	Tester linguistici funzionali
+G731958CD	Tester linguistici
+G7005C763	Controllo qualità clienti
+GCC3D24EF	Responsabile CQC
+G0FF24E54	Supervisore CQC
+G7498FE74	Responsabile reparto CQC
+G5AB35ED0	Analisti di prodotto CQC
+G6E529086	Laboratorio di mastering
+G0229B6F3	Direttore, sviluppo prodotti internazionali
+G6B435E81	Responsabile progetto di localizzazione
+GF8BA9878	Coordinatore progetto di localizzazione
+G906896D8	Responsabile, autorizzazioni e approvazioni dei partner
+G860EDA13	Affari commerciali
+G7AC94AC6	Ufficio legale
+GFDF965B3	Operazioni dello studio
+G9FF9799E	Coordinatore contratti dello studio
+G9E24FEC0	Direttore marketing
+G44C57DC5	Product manager
+GE1A6D911	Pubbliche relazioni
+GA5ADE5FF	Documentazione
+G4C2A256D	Impaginazione della documentazione
+G279BA159	Gestione progetto confezione
+G482E9235	Design della confezione
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Team del film Il Signore degli Anelli
+GE196FA55	Regista
+GE364782E	Produttori esecutivi
+GB11B5F1A	Co-produttori
+GDDE9A104	Archivista
+G73D53EB3	Gestione materiali
+G4616CF92	Assistente dei produttori
+GD98C077D	Supervisori di post-produzione
+G26FFE43A	Primo assistente al montaggio
+GFAE3387C	Gestione modellini
+G0D7D1A1D	Vicepresidente esecutivo licenze e merchandising mondiali
+GD58105C6	Direttore creativo
+GB0E8D9D5	Attori del film
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samvise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Vicepresidente affari commerciali musica
+G96EBB4D8	Responsabile esecutivo della musica
+G2728DB7D	Direttore della musica
+GFE08F13A	3Foot6
+GCFF1286B	Coordinatore merchandising
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Vicepresidente
+GE58F283A	Produttore/direttore di produzione
+G97C336EB	Supervisore dell'animazione
+G96FF4CEA	Direttore tecnico senior
+GE816CF3D	Capo configurazione tecnica
+G22B756F5	Animatori
+G86F5B2D9	Matte painter
+GBC50C796	Responsabile dell'ufficio
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Produttore esecutivo di linea
+G14C96B5C	Grafico CG capo
+GD9742A3C	Grafici/animatori CG
+GBA7D6969	Arnson Communications
+G22C5AB99	Produttore esecutivo/direttore creativo
+G45C5172D	Sceneggiatore/produttore
+GDCC6F23E	Direttore artistico/animatore
+G9C4F3B3B	Grafico DS
+GF0F58DD3	RINGRAZIAMENTI SPECIALI EA
+G895C842A	RINGRAZIAMENTI SPECIALI STORMFRONT STUDIOS
+G9D4DD21A	Nelle terre della Terra di Mezzo, la leggenda narra dell'Oscuro Signore Sauron
+G6CFA90F6	e dell'Anello che gli avrebbe dato il potere di rendere schiavo il mondo.
+G18F2969C	E che ora è finito nelle mani della persona più impensabile.
+G378C79D6	Sono un grande appassionato di videogiochi, quindi ovviamente volevo sapere tutto di un videogioco del Signore degli Anelli.
+GDCF04190	Entro in una fase in cui gioco in continuazione,
+G977EBA13	e di solito succede quando gioco, tipo, a un gioco d'avventura che mi prende la testa.
+G49C9AB1A	Una volta che ci sono dentro, non riesco a smettere di pensarci e devo portare il mio personaggio fino alla fine.
+GD2647A40	Questo compito è stato affidato a te, e se non troverai tu il modo, nessuno lo troverà.
+G3AC8371A	Al riparo!
+GAD82B19D	Allora, ho chiesto un po' in giro di questa cosa e finalmente ci ho giocato, ed è incredibile.
+G8DE86872	È semplicemente bellissimo da vedere.
+G72E74697	Oh, che forte!
+GF9824FCA	Sì, vai, Aragorn! Forza!
+G2EE7D5D4	Stanno arrivando.
+G61F7CD7D	È una specie di bonus poter accendere un videogioco e vedermi correre di qua e di là.
+G57A5BC04	Mi stanno facendo il culo.
+G1F85273D	Frodo mi somiglia! Non è forte?
+G1FFE0A40	Fortissimo.
+GE6E563F9	Troveranno l'Anello
+GD135555F	e uccideranno chi lo porta.
+G18844D24	Vai! Vai, Frodo!
+G525D5AD9	Vogliono l'Anello! Non devono prenderlo.
+GB99DAE56	La differenza tra il doppiaggio di un film e il dare la voce a un gioco è che il doppiaggio di un film di solito si fa sulle immagini.
+G7558081F	Guardi il film e cerchi di rifare i dialoghi che hai già recitato e di sincronizzarli con quelli del film.
+GDD3F428F	Chi sei?
+GE906BA5B	Hai paura?
+G9BDAB30C	Sì.
+G3B07B1B1	Non abbastanza.
+GFBD6613D	Per il gioco non ci sono immagini, sono solo tanti elementi d'atmosfera che ci butti dentro.
+G0EE06D0F	Pericolo, aiuto, cose del genere.
+G2F9FC8E2	Aragorn! Aiuto! Aragorn! Aragorn!
+G289F7C03	Mi piacciono le action figure e mi piacciono i videogiochi, e se ci finisco dentro anch'io è un bonus da vero nerd, e mi piace un sacco.
+G67346E61	Anche la persona più piccola può cambiare il corso del futuro.
+G16420686	Sono così emozionata, non vedo l'ora di avere la mia copia. È fantastico.
+GDBA69463	Moria.
+G1D429D96	Hai paura di entrare in quelle miniere.
+G372C9F91	Sai cosa hanno risvegliato nell'oscurità.
+G34515230	Mi è piaciuto molto fare il gioco, perché non devi fare tutta quella fatica
+G93AEF9C3	che fai quando crei il personaggio la prima volta.
+GA9883FB4	Girare un film è per forza molto lento.
+G0C1E0E8C	Una cosa meravigliosa del videogioco è che, naturalmente, non devo farmi truccare.
+GA5F1044B	Quando fai il gioco, stai in uno studio
+GCE4A81AD	e dici: be', secondo me dovresti dire questo, questo e questo,
+G049A3A66	e loro hanno una pila di copioni e tu reciti tutte queste battute meravigliose.
+G70F1359D	Imboscata! Imboscata!
+G65325B21	E poi prendono tutto quanto, lo inseriscono nel gioco, e a te va un po' del merito.
+G39F1D126	Quegli ordigni esplosivi vanno distrutti!
+GEB33699E	Adoro questo modello di me nei panni di Gimli.
+GD9A0C650	Credo che sia un personaggio così vigoroso, virile, attraente.
+G43591DCA	È davvero l'unico personaggio con cui vorresti giocare.
+G5C0A6C1E	Voglio dire, gli altri, sai, gli Aragorn, sai, i Legolas, sai, tipi belli, affascinanti e via dicendo,
+G3D52D95F	ma per una vera guerra di qualità, devi scegliere Gimli.
+G8E74524F	Abbiamo passato quattordici mesi nei luoghi più belli del mondo, in Nuova Zelanda, per dare al film l'aspetto giusto.
+GAD562976	Il gioco è una situazione di guerra, di combattimento, ed è creato in modo meraviglioso e brillante.
+G7F21BCD6	Non posso lasciarlo lì! Dio!
+G9AA947F5	Chissà quanto tempo mi porterà via.
+G669C44C6	Cioè, è una nuova dipendenza che ho scoperto.
+G63540AD1	Allora, giocatori, bravi, complimenti per essere arrivati a questo angolino che vi regala l'intervista.
+G925FED56	Vorrei potervi dire come giocare meglio, ma in realtà io non sono mai riuscito ad arrivare a questo livello.
+GC3162ADB	Buona fortuna e continuate a giocare.
+GA3572714	Il destino del mondo sarà presto deciso.
+G922859CB	Tutto il processo di costruzione o realizzazione del videogioco
+GD9B03397	è soprattutto che combatti contro cose e roba da ninja... non so cosa.
+G24326AFA	Sono rimasto sorpreso, sembra molto più realistico,
+G3E302C15	sembra che salga di un livello.
+GBD830A87	Credo che Aragorn nel videogioco abbia una mira migliore della mia...
+GF76948D6	ma non ho intenzione di lamentarmene.
+GD27FED3E	Se con la vita o con la morte potrò proteggerti, lo farò.
+G56368F53	Avrai la mia spada.
+G8D6DAFD1	Da quello che ho visto del videogioco, sembra rispecchiare il fatto che
+G970D4AB6	il secondo film, a differenza del primo, è su scala più grande
+GFD0BADCA	e non vedo l'ora di vederli, così come non vedo l'ora di vedere il resto del gioco.
+G1F48F697	Oggi ho visto solo un assaggio.
+GB689F1B9	Sono contento di vedere, per esempio, che a volte Aragorn viene atterrato, o cade, o rotola a terra,
+G6F6072BC	e che il suo stile di combattimento cambia, sai, per adattarsi alla situazione.
+GA3A3F7A1	Non è sempre pulito e ordinato, sai, è un po'...
+G28095E46	a volte può essere un po' un attaccabrighe, almeno è così che l'ha fatto nel film, e il gioco lo rispecchia, credo.
+G43AA6A0B	È impressionante.
+G8559FF90	Stranieri da terre lontane, siete stati convocati qui per rispondere alla minaccia di Mordor.
+GC2A75F48	La Terra di Mezzo è sull'orlo della distruzione.
+GFE143A07	Nessuno può sfuggirle. Unitevi, o cadrete.
+GF59E5460	Mi stupisco sempre quando vedo i progressi della tecnologia e tutto il resto
+GAD5CBAE4	e quanto si è avvicinata alla realtà.
+GF96BCD4B	Devo raggiungere Boromir, subito!
+GD262135E	Quando registri il doppiaggio di un film, sai, ovviamente guardi lo schermo,
+G83EECB7A	vedi l'azione che si svolge davanti a te come l'hai recitata quel giorno.
+G3C0B6913	Quando registri la traccia per questo,
+G2A8B6AD2	non hai una telecamera puntata addosso
+G52F7D105	e non cerchi di sincronizzare le labbra con un'immagine davanti a te,
+G8EE2279F	quindi puoi davvero fare uno sforzo in più e in un certo senso
+GA5BE0F5A	accentuare ed elaborare quello che c'è sulla pagina.
+G51E230FB	Tornate nelle fosse che vi hanno generato!
+G97400E1E	Sono più enfatizzate di quanto lo sarebbero nel film.
+GC26338C3	Capisci cosa intendo?
+G40EB5D5C	Sono un po' ridicole, ed è divertente.
+G52FECFA2	È stato divertente giocarci davvero in quel modo.
+G91D69630	Venite!
+G87873143	Non puoi vincere questa battaglia!
+G47AECCC4	Credo che se giocassi al gioco
+GB0CCD2A6	sarebbe bello sapere che i veri attori hanno dato la voce all'azione che il personaggio generato al computer stava compiendo,
+GC1719889	e immagino che più realtà c'è nel mondo del computer, più è emozionante per il giocatore.
+G77ECFBF0	Tu non puoi usarlo. Nessuno di noi può.
+GB42EC53B	L'Anello deve essere distrutto.
+G43E793ED	Il pericolo per il Portatore dell'Anello aumenta.
+G6E2FF8E0	Perché c'è un altro che dà la caccia all'Anello.
+GDD26CBEC	Non ho mai giocato a un videogioco in vita mia.
+GF783F574	Non riesco mai a capire le regole.
+G573BC826	Ho mani molto grandi e goffe e non proprio la coordinazione mano-cervello che credo sia necessaria
+GFBB68CB5	e che sembra essere alla portata di tutti i bambini sotto i sei anni.
+G8D9D9F75	La cosa meravigliosa di questo gioco, Il Signore degli Anelli,
+G81AEE08E	è che ci sono le voci degli attori originali, tutti quanti.
+GAE3BFBD7	E oggi ho registrato Gandalf il Grigio e Gandalf il Bianco,
+G21F22F52	i due personaggi che interpreto nel Signore degli Anelli.
+GCED01E94	Cosa vedi?
+GB4F26455	Ci sono dei segni.
+G5C7EB8BC	È una qualche forma di elfico.
+G27A03C42	Non riesco a leggerlo.
+G8E22513B	Pochi ci riescono.
+G4B2817A2	Ora c'è un'unione tra le Due Torri: Orthanc e Barad-dûr.
+GC69D576A	Per il gioco è un po' più grezzo, un po' più spiccio, un po' più immediato, forse.
+G363960EA	Uno di voi deve entrare.
+GFFCB2D5D	Aiutate gli abitanti del villaggio ancora vivi.
+GF4DAF5B8	In sostanza, è un pezzo di combattimento aggressivo.
+G00009069	È il lato militare di Gandalf che viene fuori: il comandante, il samurai, il condottiero.
+G4519FC71	Tu non puoi passare!
+G066F3360	Quindi quello che vedete sullo schermo è quanto di più vicino, accidenti,
+GF4CF848B	al Gandalf che vedete nei film. E vorrei poter venire a giocare con voi.
+G699B7BF2	In questo Anello riversò la sua crudeltà, la sua malvagità e la sua volontà di dominare ogni forma di vita.
+GA1469225	Un Anello per domarli tutti.
+G01090CE9	Ciò che abbiamo fatto è il culmine di un'enorme quantità di lavoro che ha coinvolto migliaia di persone.
+G74E1F68D	Il titolo, Le Due Torri, si riferisce alla Torre di Orthanc, 
+G0AE01FA9	dove ha sede Saruman, il personaggio di Christopher Lee,
+GD9642178	e alla Torre di Barad-dûr a Mordor, la dimora di Sauron.
+G573418F9	Il secondo film, come ogni film di questa trilogia, è una sfida. E lo resterà finché non lo consegneremo.
+GB2A31EA0	È un grande film. Sarà più grande del primo.
+GB831FA3A	Credo proprio che ci sia stata tanta cura nel realizzare questi film,
+GCCFC11FE	e poter trasmettere queste informazioni al team che sta creando i giochi è fantastico, 
+G327C2028	perché so che ci stanno mettendo la stessa cura e lo stesso impegno per offrire al pubblico un gioco davvero ricco.
+G2C4A352E	Tolkien descrive Edoras in modo molto vivido nei libri
+G10EFB23A	come una città di edifici di legno su una specie di collina davanti a una catena di montagne innevate.
+G50D180A4	Quando all'inizio cercavamo le location, dissi: sentite, dobbiamo trovare un posto in Nuova Zelanda,
+GDA11996F	ci deve essere una collina così, davanti alle montagne.
+GD6F61F77	Così hanno girato tutto il paese in elicottero e sono tornati con la foto della collina assolutamente perfetta.
+GC56228ED	Era a circa cento chilometri dalla città più vicina.
+GF796DA0F	Era nel mezzo dell'Isola del Sud; era molto isolata.
+GFA1CD969	Abbiamo passato circa sette o otto mesi a costruire questi enormi edifici.
+GC2D0BAAA	Il risultato finale è che nel film abbiamo un'Edoras assolutamente credibile.
+GC2774958	Ho potuto andare lì e girare come se fosse un luogo reale.
+G99F69515	Una delle cose entusiasmanti dei giochi EA e di quello che ho visto nei modelli mentre venivano realizzati
+G6B3554D6	è la grande riproduzione dei nostri set e dei nostri personaggi,
+GB997C9B4	al punto che EA ha raggiunto un accordo con i nostri attori perché venissero a registrare i propri dialoghi.
+G815CAC49	Gli attori ne erano piuttosto entusiasti.
+GA1640DEB	La battaglia del Fosso di Helm è finita.
+G93BD7122	La battaglia per la Terra di Mezzo sta per cominciare.
+G958468DE	Abbiamo costruito un modellino del Fosso di Helm, ma la cosa interessante è che non era un semplice modello. 
+G1BC58576	Era un modellino enorme. Era in scala uno a quattro, ma di per sé era largo circa dieci o dodici metri.
+GFA4F689B	Era così grande che potevamo semplicemente fotografarlo con le nostre cineprese e non sembrava un modellino.
+G2571B991	Sembrava del tutto credibile.
+G31C24FB0	Ciò che fa un grande film è davvero un'ottima sceneggiatura e un ottimo cast.
+G9C04D37F	Immagino che quando si fa un gioco le sfide siano in gran parte le stesse.
+GA0B86A25	Devi attirare i talenti giusti nel gioco.
+G0B7DC714	Devi avere una storia che attiri il pubblico e che poi lo appassioni
+G5E1101AB	e lo spinga a volerla vedere prendere vita.
+G87FC774C	Non c'è niente che possiamo fare per Frodo.
+G3C9AA8BC	La missione gli costerà la vita.
+G98F7C221	Rohan è debole e pronta a cadere,
+GA01F7D34	e così colpirà duramente e rapidamente il mondo degli Uomini.
+GA8723617	La guerra è alle porte.
+GE1AF4B03	Ci hanno rubato il nostro tesssoro e noi lo vogliamo.
+G6A5F57B3	Probabilmente l'aspetto più intimidatorio dell'imbarcarci in questo progetto era
+GDE1DC635	la sensazione di avere l'incredibile responsabilità di essere all'altezza
+GCFDFC743	in un formato interattivo, così come Peter Jackson lo era stato nel cinema.
+GC87068A6	Ha preso alcune delle opere letterarie più amate di tutti i tempi
+G423C7E0C	e le ha trasformate in un capolavoro cinematografico epico che ha creato milioni e milioni di fan in tutto il mondo.
+GC8F29411	All'inizio di un progetto si lavora sul lato concettuale e sulla progettazione.
+GBACB2DE5	Man mano che il progetto avanza: programmatori, grafici, animatori, grafici degli ambienti,
+G047AC48F	specialisti di modellazione, specialisti di texture, tutte queste persone pensano alla propria area del gioco,
+GB60517EB	ma in funzione dell'esperienza complessiva.
+G13170460	Uno dei vantaggi di poter lavorare a così stretto contatto con i cineasti
+GA03610FF	è che abbiamo potuto usare i modelli e gli oggetti di scena creati per il film
+G9DADDEE4	come riferimento per le cose che dovevamo creare nel nostro gioco.
+GF0D449E5	L'ombra si muove nell'oscurità.
+GEC940136	Nel progettare Aragorn abbiamo dovuto pensare a tutti e tre i personaggi giocabili contemporaneamente.
+GBB381F7C	Per esempio, Legolas è un personaggio molto più orientato alla velocità e all'eleganza.
+G4CE351A9	Gimli è un piccolo carro armato.
+G21025B26	Aragorn è più una via di mezzo tra i due.
+G3ADE6E66	Abbiamo studiato le mosse di ciascun personaggio, fotogramma per fotogramma, prima di iniziare a costruire qualsiasi cosa.
+G80ADBA8B	Poi creavamo un modello wireframe del personaggio. Sono le sue proporzioni, dimensioni e scala di base.
+G85E5A400	Poi aggiungevamo texture e illuminazione per completare il costume e aggiungere i dettagli del personaggio.
+GCD3CDD42	Gli attori erano molto interessati a lavorare con noi.
+G092B49A0	In un caso, Viggo Mortensen ci ha mostrato alcune delle sue mosse d'azione.
+G915A1A70	Lui e la sua controfigura hanno aperto una cassa di spade e hanno cominciato a duellare.
+G215B5E15	Questo è diventato la base di molte mosse di Aragorn.
+G7126178B	Vuole essere trovato.
+G7E02AF05	Quando sceglievamo le scene del film da inserire nel gioco, la Tomba di Balin spiccava come una candidata forte.
+GF4146E18	È uno dei momenti più memorabili del primo film.
+GE152213A	Volevamo ricreare l'atmosfera di questo fascio di luce molto intenso sulla tomba stessa.
+GB236432D	È stata una sfida per i nostri modellatori degli ambienti e gli specialisti dell'illuminazione.
+GD3C26DBB	I livelli del villaggio di Rohan sono unici, perché ci hanno permesso di ampliare alcune zone del film.
+G8669E69D	Il livello di gioco vero e proprio ha l'aspetto e l'atmosfera delle location del film per l'illuminazione,
+GF9B205CF	la forma dell'architettura, le persone che ci sono, ma in questo caso specifico ci abbiamo costruito sopra
+GB285B32E	e abbiamo creato zone del livello da esplorare e in cui combattere che forse nel film non si vedevano.
+G5E5F1D1C	La cosa meravigliosa di questo gioco, Il Signore degli Anelli,
+G610E0BE4	è che sul tuo schermo ci sono le voci degli attori originali, tutti quanti.
+GC6FCAA65	Aiuto! Aragorn! Aragorn! Aiuto!
+G20165D69	È incredibilmente fedele, e credo che sia davvero difficile fare un gioco tratto da un film.
+GBF3A0A5B	Questo gioco ci riesce. È molto simile al film.
+GDD010A37	Abbiamo progettato un sistema musicale molto dinamico che rispecchia l'atmosfera degli eventi del gioco.
+G96BEDA9C	Un Anello per ghermirli e nel buio incatenarli.
+G91629050	Nel film, Saruman attacca il Fosso di Helm con diecimila Uruk-hai.
+G3B702B98	Quindi abbiamo dovuto usare altri elementi a nostra disposizione per creare la sensazione di battaglia.
+GDEFA604D	Con gli effetti sonori e l'audio, facciamo davvero sembrare che ci siano migliaia di Orchi sul posto.
+G204351C8	Se qualcuno avvia il gioco e dice tra sé:
+GEC81BA2D	Oddio! È il film! Allora abbiamo ottenuto esattamente ciò che ci eravamo prefissi.
+G52BF957B	Questo è il posto che ricordo dal film.
+G571B482E	Ci sono. Posso fare qualcosa. Ora tocca a me.
+G625B0A6D	È così che vogliamo che si senta il giocatore.
+GB222979D	Dov'è il cavallo e il cavaliere?
+G2457FF85	Dov'è il corno che suonava?
+G8B36CA83	Sono passati come pioggia sulle montagne,
+G50095CA7	come vento nel prato.
+G10EB8BCF	I giorni sono scesi a occidente,
+G109A0CCE	dietro le colline,
+G02628501	nell'ombra.
+G80A942D2	Aragorn!
+GDDEA48AC	Aiuto
+G4C40E774	Premi il tasto START
+GEE711094	Continua
+GF9202936	Rigioca
+G2E427514	Sì
+GFC4343CA	No
+G52E4CD32	Scorri
+G39D074FD	Seleziona
+GAC3A8B6E	Indietro
+G42B46F3C	 2002 New Line Productions, Inc.  Il Signore degli Anelli e i personaggi, i nomi e i luoghi in esso contenuti,  The Saul Zaentz Company d/b/a Tolkien Enterprises su licenza di New Line Productions, Inc.  Tutti i diritti riservati.
+G035F710A	EA GAMES è un marchio Electronic Arts.
+GBAC3ED5F	Codice del gioco e alcuni elementi audiovisivi  2002 Electronic Arts Inc. Tutti i diritti riservati.
+G0EF5F91F	Nuova partita
+GB8D9D2FD	Carica partita
+G0BE2A075	Opzioni
+G5D6AEEF7	Modalità debug
+G83335327	Contenuti extra
+G731194FA	Salva partita
+G7BA082D0	Premi START per riprendere
+G755B3BA1	Configurazione controller
+G03961FD4	Impostazioni di gioco
+GABEE6EA4	Difficoltà:
+GF065116B	Facile
+G8D3A16F6	Normale
+GACDD0363	Esperto
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Volume voci:
+G7F04050E	Volume musica:
+GF30A57F8	Sottotitoli:
+G64752D2D	Vibrazione:
+GB3F78571	Volume gioco:
+GED3C9F14	Suono:
+GB065D5A4	Scegli la partita da caricare:
+G00FF7920	Scegli dove salvare:
+GC99B6C1E	Scegli lo slot MEMORY CARD:
+GFB5C0BA2	Disco rigido Xbox
+GD2F916B6	Slot MEMORY CARD 2
+GAEFBDEF3	Annulla
+GDA714102	Sì
+GB893E04C	No
+GE506E266	Sei sicuro?
+G574C52F2	Sei sicuro di voler acquistare questo potenziamento?
+G0D91D779	Sei sicuro? I risultati dell'ultima partita a questa missione andranno persi.
+G1CF7123A	Sei sicuro? Tutti i progressi non salvati di questa partita andranno persi.
+GEF04DC5D	Sei sicuro? I progressi in questa missione andranno persi.
+GEDF6F861	Sei sicuro di voler sovrascrivere questa partita?
+GF44D8878	Hai finito di acquistare potenziamenti?
+G1EF3EFE3	Salva partita su disco rigido
+G05163971	Carica partita da disco rigido
+G8F93A6FE	Scegli la difficoltà
+G654484DF	Bloccato
+G5A7CB330	Completato
+G8D6AAF13	Non giocato
+GBE8C099C	Prologo
+GF4FBBE46	Colle Vento
+GE7EA3020	Porte di Moria
+GE13A531D	Tomba di Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Foresta di Fangorn
+G35CCE51F	Pianure di Rohan
+GAD341B58	Ovestfalda
+G94ADD008	Varco di Rohan
+G9760067E	Il Muro Fondo
+GF8B38ED5	Muro sfondato
+G644C89AD	Cortile del Trombatorrione
+G69B8B4C2	Torre di Orthanc
+GBF00F963	Fosso di Helm:
+GE34AB2FD	Zoo New Line
+GE132F5FF	Scegli un filmato da riprodurre:
+G4B3C17B9	Inizio
+GAD303F2A	Finale
+G668B98BD	Piano
+G9C7A95F0	Punti potenziamento:
+G4AE44639	4) Inserisci la sequenza di codice indicata.
+G5374B3F5	Codici segreti
+GDF7B6B3A	Sempre devastante:
+GFECB245B	2 giocatori:
+GCAB16744	Nemici piccoli:
+G587D657D	Tutti i potenziamenti:
+G58E34314	Invulnerabile:
+GF0336180	Rallentatore:
+G5A122CB0	Per inserire un codice:
+G35BC6746	1) Avvia una missione.
+G46DF9919	2) Premi il tasto START per mettere in pausa.
+G5A1291EE	3) Tieni premuti
+GEB88B42D	Salute infinita:
+G6AE6FFFE	Proiettili infiniti:
+GAA29A634	Termina missione:
+GB2AE1BCE	Modalità pausa:
+GAA467E08	Aggiungi esperienza:
+GEA42298C	Sali di livello:
+G6BA0C403	Ripristina salute:
+G41D871E0	Ripristina proiettili:
+G04DBD06B	Potenziamento proiettili:
+GA7A50BB5	Mostra potenziamenti
+GA67DF58D	Esci al menu
+G773B79A5	Vai alla missione successiva
+G96540044	Hai fallito la missione.
+G5ADDCAC2	Rigioca la missione
+G9DD85D6D	Esci al menu
+G730918CA	Riprova
+GB437BA93	Riconoscimenti
+G798A44A2	Rigioca missione
+G6F46B26E	Seleziona una lingua.
+G2809E047	Italiano
+GE3AAFF7A	Velocità
+GD0DB46DB	Feroce
+G9AD854EF	Uccisione
+GE83BE834	Speciale
+GDB34AED9	Combo
+GDACF8DCA	Acquistato
+G125CAC9A	Non ancora sbloccato. Premi il tasto A per continuare.
+GDA9711D2	Non hai raccolto abbastanza punti potenziamento per acquistare questo potenziamento. Premi il tasto A per continuare.
+GEB0E0008	o
+G90A54691	dopo una parata
+GF5F43483	a terra
+GFC1C2104	Spazio libero
+GB8BCCCB9	Partita 2
+G92BA5250	Partita 3
+G9CCBAB2F	Partita 4
+G76C930C6	Partita 5
+G50C6B65D	Partita 6
+G2AC43BF4	Partita 7
+G34D594D3	Partita 8
+G0ED31A6A	Partita 9
+GBE76BA62	Partita 10
+GE47934CB	Partita 11
+G6ED86859	Nessuna Memory Card (PS2) inserita. Sono necessari almeno 80 KB per salvare i dati di gioco. Vuoi continuare?
+G87DE26DA	Spazio insufficiente sulla Memory Card (PS2) nello slot MEMORY CARD 1.  Sono necessari almeno 80 KB per salvare i dati dell'applicazione. Vuoi continuare?
+G7118C569	Spazio insufficiente sulla Memory Card (PS2) nello slot MEMORY CARD 2.  Sono necessari almeno 80 KB per salvare i dati dell'applicazione. Vuoi continuare?
+G6804B4C2	Spazio insufficiente sulle Memory Card (PS2) negli slot MEMORY CARD. Sono necessari almeno 80 KB per salvare i dati dell'applicazione. Vuoi continuare?
+G849021EA	Nessuna Memory Card (PS2) inserita nello slot MEMORY CARD 1. Premi il tasto X per continuare.
+G59CE2129	Nessuna Memory Card (PS2) inserita nello slot MEMORY CARD 2. Premi il tasto X per continuare.
+GC5BD8B5F	Ricollega il controller e premi START per continuare.
+GC2BDD02C	La Memory Card (PS2) nello slot MEMORY CARD 2 non è formattata. Formattare la Memory Card (PS2)?
+G6B64948C	La tua Xbox non ha abbastanza blocchi liberi per salvare le partite.  Premi A per continuare senza salvare o B per liberare almeno
+GEDAB4EA9	Ricollega il controller e premi START per continuare
+G00E55934	Il disco rigido non ha abbastanza blocchi liberi per questa partita salvata.
+G20A17FB1	blocchi devono essere liberati.
+G353AAE58	Formattazione non riuscita! Errore della Memory Card (PS2) nello slot MEMORY CARD 2! Premi il tasto X per continuare.
+G9CAF03E3	Impossibile salvare la partita. Premi il tasto A per continuare.
+GCB03752D	Partita salvata.  Premi il tasto A per continuare.
+GACBFB64F	Salvataggio sulla Memory Card (PS2) nello slot MEMORY CARD 2 riuscito! Premi il tasto X per continuare.
+GC7C0454F	Salvataggio dei dati sulla Memory Card (PS2) nello slot MEMORY CARD 1. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+G4B14AAB4	Salvataggio dei dati sulla Memory Card (PS2) nello slot MEMORY CARD 2. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+G53DAC278	Caricamento dei dati dalla Memory Card (PS2) nello slot MEMORY CARD 1. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+GF144B8B3	Caricamento dei dati dalla Memory Card (PS2) nello slot MEMORY CARD 2. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+G063DD8CC	Impossibile caricare la partita. Premi il tasto A per continuare.
+GE5BDAC0B	Vuoi salvare la partita?
+GED3A9CCF	Nessuna partita salvata. Premi il tasto A per continuare.
+GAF453999	blocchi.
+GEE649E5A	La Memory Card (PS2) nello slot MEMORY CARD 1 non è formattata. Premi il tasto X per continuare.
+G81447581	La Memory Card (PS2) nello slot MEMORY CARD 2 non è formattata. Premi il tasto X per continuare.
+GB36F8F0C	Lettura dei dati dalla Memory Card (PS2) nello slot MEMORY CARD 1. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+G97EC5687	Lettura dei dati dalla Memory Card (PS2) nello slot MEMORY CARD 2. Non rimuovere la Memory Card (PS2), non resettare e non spegnere la console.
+G8E8AF6C1	C'è un problema con il disco in uso. Potrebbe essere sporco o danneggiato.
+G9CB8DFF0	Missione 1
+G0EC04F2B	Missione 2
+GE8BDD4C2	Missione 3
+G5AC543FD	Missione 4
+G34C2C994	Missione 5
+GA6CA38CF	Missione 6
+G80C7BE66	Missione 7
+GF2CF2DA1	Missione 8
+GCCCCB338	Missione 9
+GA1F545C0	Missione 10
+GC7F7C029	Missione 11
+GEDFA3A92	Missione 12
+G13FCB4FB	Missione 13
+GFBA35200	Missione A
+G6DAAC13B	Missione B
+G47A846D2	Missione C
+GB9AFB60D	Missione D
+G0111B4C5	Esperienza missione:
+G10CB2024	Valutazione missione:
+GB8F11F62	Punti potenziamento totali:
+G94649BD6	Perfetto
+GE424E811	Eccellente
+G70E9184E	Buono
+GE98543F1	Discreto
+GF9792B5F	Scarso
+G4DE9139C	Abilità
+GB525F096	Forte
+G5F8C23CD	Difesa
+G8673311D	Attacco
+G7829DFB2	Una combinazione rapida. Efficace contro i nemici più piccoli e senza scudo.
+G63E6B4FD	Una combinazione devastante per sfondare gli ostacoli o frantumare gli scudi nemici.
+G406CD62A	Tieni premuto il grilletto sinistro per usarlo. Tira con il tasto A (tieni premuto per aumentare i danni).
+G7651B078	Questo affondo finisce qualsiasi nemico a terra.
+G09258F36	Allontana i nemici da te e fuori dalla portata dei loro colpi.
+G36E84E05	Blocca gli attacchi e i proiettili nemici.
+G074FC78D	Un attacco devastante. Tieni premuto il tasto Y per usarlo.
+GE5C8740D	Aumenta permanentemente la tua salute.
+G791AEDAB	Carica in avanti e getta a terra i nemici senza scudo.
+GF4A5485B	Attacca mentre ti rialzi, cogliendo di sorpresa i nemici.
+GC0B8F80A	Una combo molto efficace per eliminare i nemici senza scudo.
+G6CBE68E9	Molto efficace per sbarazzarsi il più rapidamente possibile dei nemici con lo scudo.
+GD7BB121B	MOSSA COLLEGATA: uccide all'istante un goblin che attacca.
+G4A59663E	Si usano come l'Arco dei Dúnedain, ma le frecce uncinate dei Rohirrim infliggono danni gravi.
+G96A8AB86	Aumenta permanentemente la tua salute.  (Richiede Forza dei Sovrintendenti)
+GED26DEB8	Carica da lontano per gettare a terra i nemici senza scudo. (Richiede Assalto)
+GB4790643	Ferisci, atterra e colpisci il nemico con questo attacco combinato.
+G9709901B	Usa questa combo per colpire un nemico senza scudo, finirlo e colpirne rapidamente un altro.
+G066B80A4	MOSSA COLLEGATA: uccide all'istante un orco che attacca.
+GB54F0B8A	Aumenta permanentemente la tua salute.  (Richiede Forza di Isildur)
+G1C742C09	Un attacco ancora più devastante.  (Richiede Furia del Ramingo)
+G9F299E6A	Aumenta i danni del tuo attacco rapido.
+G2A888253	Ferisci, atterra e poi finisci i nemici potenti con questa combo.
+GEF4043FD	Aumenta permanentemente la tua salute.  (Richiede Forza di Elendil)
+GF3D48718	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira delle Terre Selvagge)
+GDAE09290	Le frecce di ferro di Gondor infliggono danni terribili.  (Richiede Arco di Rohan)
+GBD1ED2AE	MOSSA COLLEGATA: uccide all'istante un Uruk-hai che attacca.
+G6DF8DC34	Usala contro un nemico potente per spezzargli lo scudo, gettarlo a terra e colpirlo.
+GB1BCB280	Niente
+GE225A1EC	Tieni premuto il grilletto sinistro per usarle.  Lancia con il tasto A (tieni premuto per aumentare i danni).
+GFF3FB1CE	Questo colpo d'ascia finisce qualsiasi nemico a terra.
+G81A89461	Aumenta permanentemente la tua salute.  (Richiede Potenza della Roccia)
+GF266C7E6	Aumenta permanentemente la tua salute.  (Richiede Potenza del Ferro)
+G2FCD00C0	Carica da lontano per gettare a terra i nemici senza scudo.  (Richiede Assalto)
+G00247254	Aumenta permanentemente la tua salute.  (Richiede Runa di protezione)
+GA505D28C	Aumenta permanentemente la tua salute.  (Richiede Potenza di Balin)
+G34C62FC4	Si lanciano come le Asce di Erebor, ma le affilatissime asce di Moria infliggono ancora più danni.
+G57901BB9	Un attacco ancora più devastante.  (Richiede Furia nanica)
+G8840F62F	Aumenta permanentemente la tua salute.  (Richiede Potenza di Glóin)
+G361F0511	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira della Montagna)
+G219C0125	Queste lame dal filo di mithril infliggono danni terribili.  (Richiede Asce di Moria)
+G9986DAAB	Aumenta i danni del tuo attacco feroce.
+G11BF2FC5	Si usano come l'Arco lungo di Bosco Atro, ma le frecce di frassino di Gran Burrone infliggono ancora più danni.
+G7A9893BB	Le frecce incantate di Lothlórien infliggono danni spaventosi.  (Richiede Arco lungo di Gran Burrone)
+G42E47239	Queste frecce magiche danno fuoco ai tuoi nemici.  (Richiede Arco lungo di Lothlórien)
+G5BAB8220	Aumenta permanentemente la tua salute.  (Richiede Vigore di Celeborn)
+G39265CB0	Un attacco ancora più devastante.  (Richiede Furia elfica)
+G084B6AEF	Queste frecce trapassano e danneggiano tutti i nemici sulla loro traiettoria.  (Richiede Frecce di fuoco di drago)
+GB1D19C39	Aumenta i danni di ogni freccia che scagli.
+G06E26BE1	Colpo triplo
+G20A303C1	Doppio fendente
+GCB8F4087	Arco dei Dúnedain
+G3F6F3751	Colpo d'ombra
+GBE8C73E9	Calcio da combattimento
+G5660E3B0	Parata con la spada
+GDF332280	Furia del Ramingo
+GB8AB07B9	Forza dei Sovrintendenti
+G187F8CC1	Assalto
+G86E487F5	Attacco da terra
+GF7D6DC76	Rapido terrore di Isildur
+GB34DCC39	Liberazione di Isildur
+GC9303634	Flagello dei goblin
+G3A0786A5	Arco di Rohan
+G8B17B5C5	Forza di Isildur
+G579A1927	Attacco in carica
+G207C1523	Carica mortale di Isildur
+G6C2653E9	Stratagemma di Isildur
+G2A3BA153	Flagello degli orchi
+GA28B29AA	Forza di Elendil
+G7D213CCE	Ira delle Terre Selvagge
+G006BF315	Maestro di spada
+G6B68444D	Assalto di guerra di Isildur
+G3B0A3720	Forza degli Argonath
+G78BAB3BC	Collera di Númenor
+GCEDAD8B0	Arco di Gondor
+G3BE146BB	Flagello di Saruman
+G701FD063	Giudizio di Isildur
+G0251EC9F	Asce di Erebor
+G96C77DAD	Affondo d'ascia
+GDD4B6691	Parata con l'ascia
+GADD20DD0	Furia nanica
+GB0D95BC6	Potenza della Roccia
+G4FB6CF69	Potenza del Ferro
+G5F017E32	Rapido terrore di Balin
+GDFD7CADD	Liberazione di Balin
+GDF1B571B	Runa di protezione
+G9B37EDE7	Carica mortale di Balin
+GCDB1A82D	Stratagemma di Balin
+G2DEF1D03	Potenza di Balin
+GE89D3658	Potenza di Glóin
+G31B06C3A	Asce di Moria
+GADFB76EF	Ira della Montagna
+G75612F09	Assalto di guerra di Balin
+G8CE2E527	Potenza di Khazad-dûm
+GE4E87FCC	Collera di Moria
+GA16173AB	Asce delle Montagne Nebbiose
+G24288EA5	Maestria d'ascia dei Re
+G45AAD667	Giudizio di Balin
+GB752504B	Arco lungo di Bosco Atro
+GA018F71A	Parata con i pugnali
+G0DCE9941	Furia elfica
+G4A27D7DF	Vigore di Celeborn
+GE0EC06AA	Arco lungo di Gran Burrone
+G76059454	Rapido terrore di Elrond
+GE8C0678B	Liberazione di Elrond
+GE9F2F2C9	Arco lungo di Lothlórien
+G5FE47D01	Carica mortale di Elrond
+G4B1902CB	Stratagemma di Elrond
+GB3FB8DDE	Frecce di fuoco di drago
+G4A61DECC	Vigore di Galadriel
+G204DE538	Ira di Gil-galad
+G5B85BC6F	Assalto di guerra di Elrond
+GBDF43860	Frecce di mithril
+G4B69DAC6	Maestria dell'arco elfico
+G43AB31C1	Giudizio di Elrond
+GEAA8149B	Livello
+G11886F39	Para per bloccare gli attacchi nemici e deviare le frecce.
+GE4E78CFD	Parata
+G3226B277	Tieni premuto il grilletto sinistro per passare all'arma a distanza.  Premi il tasto A per tirare.  Usa la levetta sinistra per mirare.
+GFF931564	Arma a distanza
+G9A309E3D	Tira
+GC4AB2A6D	Usa un attacco rapido per colpire i nemici senza scudo.
+G5C64BDED	Usa l'attacco feroce per spezzare gli scudi nemici.
+G4B1F5E2B	Attacco feroce
+G12993772	Attacco rapido
+G5550F308	Guadagna punti esperienza per aumentare il livello del tuo personaggio e acquistare preziosi potenziamenti.
+GD5F0D645	Punti esperienza guadagnati
+G109A17A7	Usa combinazioni avanzate ed evita i colpi nemici per riempire l'indicatore di abilità e guadagnare il massimo dei punti esperienza.
+GDB22979F	Indicatore di abilità
+GF7AF01B8	Mira
+G552324EC	Salto indietro
+G3962B27E	Mossa letale
+G819AB384	Respingi
+GB5FE5915	Tiro/Attacco rapido
+G1438BF1E	Muovi/Mira
+GCDD8B9EF	Pausa
+G63E0263C	Intervista
+GA970F7F6	Peter Jackson e Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Il Signore degli Anelli
+GF0462ED4	Il making of del videogioco
+G0DB34230	Spezzoni esclusivi del film
+G9DF19E57	'La Compagnia dell'Anello'
+G1704CE51	Foto di produzione
+G330E63EE	Fangorn e Orthanc
+GD722C1B8	Rohan e il Fosso di Helm
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Gioca con Aragorn
+GA8934934	Gioca con Legolas
+G84C57E95	Gioca con Gimli
+G46EA0007	Gioca con Isildur
+G5689E41F	Missione segreta
+G7F2C7A4C	Gioca con il personaggio segreto
+G96AF0882	Bozzetti
+G8813AE29	Completa Porte di Moria per sbloccare
+G4EEEB554	Completa Tomba di Balin per sbloccare
+G3182CC3A	Completa Amon Hen per sbloccare
+G54747798	Completa Foresta di Fangorn per sbloccare
+G5D796BA6	Completa Pianure di Rohan per sbloccare
+G758A2B31	Completa Ovestfalda per sbloccare
+GD1B66361	Completa Varco di Rohan per sbloccare
+GEC95C099	Completa Fosso di Helm: Il Muro Fondo per sbloccare
+G4F6E6B62	Completa Fosso di Helm: Muro sfondato per sbloccare
+G7E4B2F5F	Raggiungi il livello 5 con Aragorn
+GA825B93E	Raggiungi il livello 5 con Legolas
+GD08EF3EF	Raggiungi il livello 5 con Gimli
+G060F3A0C	Completa Fosso di Helm: Cortile del Trombatorrione e raggiungi il livello 10 con Aragorn
+G9C00EBDD	Completa Fosso di Helm: Cortile del Trombatorrione e raggiungi il livello 10 con Legolas
+GCA301FEC	Completa Fosso di Helm: Cortile del Trombatorrione e raggiungi il livello 10 con Gimli
+G2A4097F8	Completa la missione segreta con un personaggio qualsiasi
+GF80714A8	Completa la missione segreta con il personaggio segreto
+GF281A415	Peter Jackson e Barrie Osborne parlano del film e del gioco
+GEF6D5A30	Elijah Wood parla di come ha interpretato Frodo nel videogioco 'Il Signore degli Anelli'
+G1B7C2E20	Ian McKellen parla di come ha interpretato Gandalf nel videogioco 'Il Signore degli Anelli'
+G100A11D4	Uno sguardo dietro le quinte della realizzazione del videogioco 'Il Signore degli Anelli'
+G14A8622F	Foto di personaggi e scenari de 'La Compagnia dell'Anello'
+G228511D6	Foto di personaggi e scenari di Fangorn e Orthanc
+GFDF064C7	Illustrazioni di John Howe e Alan Lee ispirate a 'Il Signore degli Anelli'
+GAAE1A0C0	Foto di personaggi e scenari di Rohan e del Fosso di Helm
+G6CEBDAE1	Viggo Mortensen parla di come ha interpretato Aragorn nel videogioco 'Il Signore degli Anelli'
+G6824CF13	Orlando Bloom parla di come ha interpretato Legolas nel videogioco 'Il Signore degli Anelli'
+G84770794	John Rhys-Davies parla di come ha interpretato Gimli nel videogioco 'Il Signore degli Anelli'
+G775EAFA1	Codici segreti per sbloccare i contenuti nascosti del videogioco 'Il Signore degli Anelli'
+G640E4463	Cambia selezione
+G6D02770F	Conferma selezione
+GE5EE10E6	Torna indietro
+GA75BE7EE	Cambia o modifica la selezione
+GE7B4EE86	Esci al menu principale
+G47C91DD4	Cambia immagine
+GE445F6CE	Usa i punti potenziamento per acquistare miglioramenti per il tuo personaggio.
+GB2D2B6DB	Uccideteli tutti!
+GFD9FFC0E	Abbatti questa creatura con gli attacchi rapidi!
+G7BD97E94	Usa l'attacco feroce per distruggere il suo scudo!
+G62FC14DC	Eccoli! Uccideteli tutti!
+GA3F97A90	Prestatemi le vostre spade!
+G88F3FEA7	Argh! Muori, creatura di Mordor!
+G4888927E	Per la Città Bianca!
+GB5DB8B33	Sei finito!
+G91F156A0	Vattene, creatura dell'ombra!
+G8F5E1C57	Muori, progenie di Sauron! Muori!
+GEF59BEBD	Respingeteli!
+G263E18E0	Avanti!
+G8715790C	Mantenete la posizione!
+G09E491AC	Muori!
+GC9D8887A	Feccia di Gondor!
+GD909145B	Tu, muori!
+G8524085B	Non puoi ucciderci tutti!
+GFA0F31A8	Muori, feccia!
+G6949F8FB	Sono troppi, devi difenderti!
+GAB41028F	Difendetevi, mio signore.
+GC99D9EF1	Gli attacchi rapidi avranno ragione di questo.
+G8BC62719	Gli attacchi feroci spezzeranno quegli scudi.
+G24319240	Il mondo è cambiato.
+G6FC7E51E	Lo sento nell'acqua.
+G586AE929	Lo sento nella terra.
+GA0D1D398	Lo avverto nell'aria.
+G20A7EC8F	Molto di ciò che era è perduto,
+G9A5EEA48	perché ora non vive nessuno che lo ricordi.
+G991F588A	Tutto ebbe inizio con la forgiatura dei Grandi Anelli.
+GDCCA686B	Tre furono dati agli Elfi,
+G64D4928C	immortali, i più saggi e leali di tutti gli esseri.
+GC38B0B40	Sette ai Re dei Nani,
+GE4E9DA85	grandi minatori e artigiani delle dimore della montagna.
+G8EA28015	E nove... nove anelli furono donati alla razza degli Uomini,
+G5415D8A9	che più di ogni altra cosa desiderano il potere.
+GCAF2B8E3	Perché in questi anelli erano racchiusi la forza e la volontà di governare ogni popolo.
+GEAB51D48	Ma tutti loro furono ingannati...
+G9968C959	perché venne forgiato un altro Anello.
+G6DF9A86C	Nella terra di Mordor, nelle fiamme del Monte Fato,
+GD5CC3D06	l'Oscuro Signore Sauron forgiò in segreto un Anello sovrano per controllare tutti gli altri.
+GA5AF65D9	E in questo Anello riversò la sua crudeltà, la sua malvagità e la sua volontà di dominare ogni forma di vita...
+GF9C8C37E	Una dopo l'altra, le libere terre della Terra di Mezzo caddero sotto il potere dell'Anello.
+GD7B567A4	Ma ci fu chi resistette.
+G9673067D	Un'Ultima Alleanza di Uomini ed Elfi marciò contro gli eserciti di Mordor,
+G9292CF8B	e sulle pendici del Monte Fato combatterono per la libertà della Terra di Mezzo.
+G9C449910	Fu in quel momento,
+G4E624CE3	quando ogni speranza era svanita...
+G8B971AFC	...che Isildur, figlio del Re, raccolse la spada di suo padre.
+GA0976A20	Sauron, il nemico dei popoli liberi della Terra di Mezzo, fu sconfitto.
+GCE1FEBD6	L'Anello passò a Isildur, che ebbe quest'unica occasione per distruggere il male per sempre.
+G4653B8E6	Ma il cuore degli Uomini si corrompe facilmente.
+GF1F12CD3	Distruggilo!
+G7A59BC32	No.
+GEDAFB589	Io sono l'erede di Isildur, non Isildur stesso. Il mio destino mi appartiene.
+GECD0FC9B	Al Fosso di Helm! Brego, vai!
+GE526C94A	Frodo! Stai lontano da loro!
+GE5AC368C	Aiuto! Sono dappertutto!
+GE18CFED5	Ti troveremo.
+G754CEC13	Indietro, essere immondo!
+G0EE492EC	Cercano il Portatore dell'Anello! State vicini!
+GA236A198	Non puoi resistere, Mezzuomo.
+GB0F6888B	Siamo perduti.
+GABCB70B5	Isengard si è svuotata.
+GD4A9E9B3	È un esercito creato con un solo scopo: distruggere il mondo degli Uomini.
+G65599300	L'Oscuro Signore si avvicina.
+GC6B5C82C	Baggins...
+GDE3725D0	Spettri dell'Anello! Indietro!
+GDB2A2A63	Grampasso!
+GDF3A925F	Che sia risparmiato. Salvalo.
+G4867AD04	Nel rifugio di Gran Burrone, il più piccolo di noi mostrò il coraggio più grande.
+G3505351D	Lo porterò io!
+G5B8CB3F8	E fu forgiata una Compagnia.
+GF6138FE1	Porterò io l'Anello a Mordor!
+GA7DC204A	Anche se...
+G2FFEE7D1	...non conosco la strada.
+GD051F7C5	Ti aiuterò a portare questo fardello, Frodo Baggins...
+G82079845	...finché spetterà a te portarlo.
+G8308B082	Porti il destino di tutti noi, piccolo amico.
+G32030F3F	E avrai il mio arco.
+G7A19CD10	E la mia ascia.
+G18A439E8	Dacci l'anello, Mezzuomo.
+G5E09B681	L'anello è nostro.
+GC7625599	Vieni da noi, Mezzuomo.
+GB2DCED15	Aiutami!
+GF8B88DB9	Vieni ad aiutarmi!
+G111D0DD5	Sto morendo.
+G439D87CA	Questa terra è cambiata.
+GB5DB841A	Aspetteremo qui finché il sentiero più avanti non sembrerà sicuro.
+GF0EB3761	Non abbiamo notizie da Moria da molti anni.
+G3A9580D6	Potremmo passare per le Miniere di Moria.
+G852B83DE	Mio cugino Balin ci accoglierebbe da re.
+G48D6F333	Attenzione!
+G20BEF03C	Presto! Da questa parte!
+G37B7E741	Bestia immonda.
+G70A83B75	Questa è la Porta di Durin, Signore di Moria.
+GE6E19D64	Dunque, Gandalf, tenti di condurli oltre il Caradhras.
+GF7BC40D4	E se fallisci,
+GC7F3ECF5	dove andrai allora?
+G4F7AA217	A Moria!
+G0F8A9576	Dite amici ed entrate.
+GCB3668DA	Mellon.
+G64134F99	Ora abbiamo una sola scelta.
+GE57BDBA1	Dobbiamo affrontare il lungo buio di Moria.
+G3CA10A85	Feccia di Mordor!
+GC753F514	Imboscata!
+G66D5EE9E	Ci sono degli Orchi. Molti.
+G8AB8C148	Quando sei nei guai, manda avanti un nano!
+G6F4359B4	Bel colpo, Gimli!
+G43E71D7A	Andrò in avanscoperta a cercare un passaggio.
+G0F5D4F40	Creatura.
+G0BFC06A5	Fu qui che avremmo trovato molto più della Tomba di Balin, Signore di Moria.
+G79CBD185	Abbiamo sbarrato i cancelli. Tamburi negli abissi.
+G676CE560	Non possiamo uscire.
+GC2C2532E	Indietro, bestie senz'anima!
+G41169039	Legolas! Ci serve il tuo arco!
+GED8A660A	Svelto, Gimli!
+G548B1E16	Vattene, bestia immonda!
+G8B6C996D	Lo prendo io!
+GD624A593	Dietro di te!
+G22876487	Mantenete la posizione!
+G6E72BC38	Indietro, creature!
+G98FB35D8	Da questa parte!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Sono troppi!
+GEB38BB38	Come possiamo fermarli?
+GDB1D4894	Non posso combatterli!
+GCA82C10C	Non riesco a tenerli a bada!
+G839F36D1	Abbattili con il tuo arco!
+G426819B7	Per Balin!
+G32A709EE	Sono su di te!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Sono troppi!
+GB502E0B9	Per Bosco Atro!
+G5C8B1856	Ti farò dei bei buchi nella pancia per i vermi!
+GF8D92047	Prendeteli tutti!
+GDFB1C64C	Schiacciateli!
+G5AF9060B	Tornate nell'ombra!
+GF1BFC8A0	Aragorn! Mi serve la tua lama!
+GF83070F8	A me, Gimli! Da questa parte!
+G2EC65D74	Preparatevi!
+GCD82317C	Tirate!
+GCEA41230	Sparpagliatevi! Non devono circondarci!
+G3AD812AF	Trovate il Mezzuomo!
+G6B59AA20	Frodo porta il destino di tutti noi!
+G4B4B5CA5	Dobbiamo difenderlo!
+G1881769E	Sul suo onore, la pagherete!
+G743E1105	Moria era stata un viaggio oscuro per la nostra Compagnia.
+G32DCF8A9	Fuggite, sciocchi!
+G10D542AD	Nooooooo!
+GD10EAA8A	La missione è appesa a un filo.
+GF997012E	Basta un passo falso e fallirà.
+G01C6A95F	Ma sarebbe diventato ancora più buio, perché la nostra Compagnia si stava sfaldando.
+G212FEF60	Ti avrei seguito fino alla fine, fin dentro le fiamme di Mordor.
+G960898CD	Correte!
+GD941582B	Riposa in pace...
+G9D8421F1	...figlio di Gondor.
+G60BC6BA4	Dobbiamo sconfiggere questi Uruk-hai perché Frodo possa fuggire!
+GF0E0DD02	Boromir!
+G1C9C2949	Dammi una mano, Elfo!
+GB1E7FF01	Uruk-hai! All'attacco!
+G62308F86	Mi divertirò!
+GA7F87EAC	Tornate nelle fosse che vi hanno generato.
+G06BA8520	Sono passati di qui, venite.
+G817C5460	Ma le loro tracce finiscono qui. Dobbiamo dividerci per trovarli in fretta.
+G934A6365	Aragorn, c'è qualcosa là fuori.
+G32456D68	Cosa vedi, Legolas?
+G090A57A6	Lo Stregone Bianco.
+G3BE10384	Saruman.
+GF471A310	Nonostante l'eroismo di Boromir, i servi di Saruman catturarono alcuni membri della nostra Compagnia.
+G9EB3E2D9	Ma non avremmo abbandonato i nostri compagni alla tortura e alla morte.
+GC9337F85	Per giorni seguimmo le loro tracce...
+G1A87CFBD	...che alla fine ci condussero alla Foresta di Fangorn.
+G7754D2C1	Questa foresta è antica...
+G9261B17A	...molto antica.
+GF7DCBBD1	È piena di ricordi...
+GC4192431	...e di rabbia.
+G92086B9D	In quella grande foresta, molti sentieri si incrociarono.
+G6F680400	Non può essere.
+G7A0AC815	Ora c'è un'unione tra le due torri: Orthanc e Barad-dûr.
+GF36A1977	C'è bisogno di voi altrove.
+GA926AFE5	La guerra sta arrivando a Rohan.
+GC5293984	Ora sì che ci divertiamo!
+GCF6954E1	L'ho già visto prima, ma mai così.
+G2E930B75	La nostra unica speranza è restare uniti!
+GFD82D6F4	Le forze di Saruman portano strani ordigni esplosivi in questo paese. Aiutateci a distruggerli!
+G86FA279C	Tratteneteli al cancello!
+G7B48AD72	I pochi di noi in grado di combattere marciano verso il Fosso di Helm.
+GD55B6BE3	Là il futuro di Rohan vivrà o morirà.
+G2256A18D	Attenti agli esplosivi!
+GE0BD0D44	Sì! Fategli assaggiare il fuoco!
+G82C8009F	Questo dovrebbe rallentarli!
+GA0C82879	Cosa abbiamo qui?
+G751859FC	Cos'è questo?
+G06637EF0	Dobbiamo distruggere questi ordigni esplosivi!
+GABF94061	Quegli ordigni esplosivi vanno distrutti.
+G13114F1E	Cosa potrebbe essere?
+G5B2AF650	Questo potrebbe tornare utile.
+G14659B9A	Sembra di valore.
+G418ECC01	Ecco. Lo terrò io.
+G136EC46C	Questo vale la pena di portarlo con me.
+G360BBC1D	Sono spinti dalla follia di Saruman e dalla volontà dell'Oscuro Signore.
+G4840EFEC	Altri fuochi d'artificio? Ah! Vogliono fare di noi tutti dei cadaveri!
+G19910876	Ora vengono a prenderci!
+G08EB8FDB	È impraticabile.
+G6FED1000	Dovrò trovare un'altra strada.
+G68F91872	Questo villaggio brucia come esca secca!
+G57BD9573	Piuttosto utile.
+G424E3FF5	Ecco fatto!
+G501ABC20	Tenete duro!
+G31FDA576	Invadono anche questa zona!
+GB60A7265	Non eravamo soli a difendere Rohan.
+GA48B596C	Anche la Guardia del Re si stava aprendo la strada verso il Fosso di Helm.
+G65866A2E	Avete fatto tutto il possibile qui.
+G115A6D12	I sopravvissuti si dirigeranno al Fosso di Helm.
+GC07CBB0E	Avete ancora del lavoro da fare. Tornerò da voi al volgere della marea.
+G63B48C52	Hanno sfondato!
+GAAD29572	Vi prego! No! No! No!
+G589F2E2F	Dobbiamo salvare tutti quelli che possiamo, o questo villaggio cadrà.
+GE1654ECA	Prima che il nostro lungo viaggio ci portasse a Edoras...
+G97FC9F74	...la vostra gente era già in grave pericolo.
+GB52DB0C9	Risparmiami!
+GDDA274AE	Ti prego! Risparmiami!
+GA354A5CD	Aaah! No!
+G1C74FEB5	No!
+G946E2F3A	No! No! Non farlo!
+GF46D4AC5	No! No! No!
+G1BD76207	Fateci uscire! Presto!
+GE57CB50F	Risparmiami, ti supplico!
+G716689E1	Proteggeteci!
+G6295F93F	Salvami! Ti prego, salvami!
+GFA27E38F	Aaaaah! Ci bruciano vivi!
+G25B702F8	Lasciami vivere! Ti prego!
+GDE034FBB	Dovete proseguire.  C'è bisogno di me altrove.
+G898F1CFF	Fate loro temere i lupi di Isengard!
+G04FC403B	Non potevamo permettere che queste creature raggiungessero i profughi.
+GD8C5307E	La vostra gente fu difesa, ma lo pagammo con molte vite.
+G4FD6FE99	Per poco non persi la mia.
+G753DFA73	È così che, per vie diverse, siamo tutti giunti alla fortezza del Fosso di Helm, per un'ultima resistenza.
+G932478E9	Ora, uccidete quello!
+GF940F960	Sì, tesori miei!
+G646F5FC4	I nostri mannari banchetteranno stanotte!
+G948FC6FF	Non giocarci!  Uccidilo!
+G99617AA4	Si sono ritirati.  Per ora è finita.
+G4A0F838F	Ne ho fatti diciannove!
+GC16105A6	Allora siamo pari.
+GAC4FD1F9	Questo lo vedremo.
+GF71FBCA2	Ne ho fatti due.
+G641CA89C	Ce ne sono abbastanza per tutti e due, Gimli!
+GF4B76D82	Dobbiamo tenere lo sguardo di Sauron fisso su di noi: renderlo cieco a tutto ciò che si muove!
+G5B04C967	Indietro!
+G3487D102	Via dalle mura!
+G8B575855	Gli Orchi sono sulle mura!
+GCE3C16C0	Sono arrivato a diciassette!
+G3D052135	Al riparo!
+G05C9D273	Ci tirano di nuovo!
+G4941BF74	Abbattete quella scala prima che ci travolgano!
+G265760A3	Giù!  Abbassatevi!
+G2E8173A8	Non possiamo lasciarli avvicinare alle Caverne Scintillanti!
+G36DE1341	Non ho mai visto maneggiare così l'ascia, Mastro Nano.
+G80FBF437	Né io tanta abilità con l'arco.
+G3F35FF0E	Ma quelli che colpisco io non si rialzano più.
+GEC633822	La nostra difesa è travolta! Le donne e i bambini sono in trappola!
+G17070638	Portateli nella Sala Grande!
+G5CAB82D3	Li fermeremo qui, o al Mastio!
+GFFC47594	Li abbiamo fermati. Le donne e i bambini sono salvi, per ora.
+GBD5794D5	Non riusciamo più a trattenerli! Nella Sala Grande!
+G088ED5E4	Non riusciamo a trattenerli!
+G7C6E3511	Sauron e Saruman stanno stringendo il cappio.
+G7B236705	Ma con tutta la loro astuzia, noi abbiamo un vantaggio.
+GFCAC9515	L'Anello resta nascosto.
+G1C7DF558	E che noi cerchiamo di distruggerlo non è ancora entrato nei loro sogni più oscuri.
+GB72B409D	E così l'arma del nemico si muove verso Mordor nelle mani di uno Hobbit;
+G86CED6F6	ogni giorno lo avvicina alle fiamme del Monte Fato.
+GD9BB4CD5	Sauron ti teme, Aragorn.
+GDD966B5E	Arcieri sulle mura!
+G6A122B51	State indietro! La barricata sta per cedere!
+G427F5206	Svelto, Mastro Nano!
+G113213B2	Vai da Legolas, io li tratterrò qui!
+GA7B95A20	Per Gondor!
+G7C696E8A	Aragorn è sopraffatto! Da lui!
+GFC98A99D	Il nostro amico Elfo ha bisogno di una mano.
+G66A680C0	Uruk-hai!
+G8968245E	Stanno per sfondare la barricata!
+G428EE07E	Sono dentro il mastio. Siamo perduti!
+GFAE8490C	NOOOOOOO!!
+G63F31F0F	La tua fine è vicina.
+GE8B9DB2E	Hai scelto la via del dolore!
+G910D7B12	Sciocco.
+G58E8BBAA	È ora che tu ti fermi.
+GD8425223	Non crederai che un ramingo straccione possa opporsi alla mia volontà? Sono al di là del tuo potere.
+G1A989E68	Pagherai per la tua arroganza.
+G0079D300	Non pensavi davvero che un Nano potesse opporsi alla volontà di Saruman. Nessuno può.
+GFB1E1C33	Pensavi davvero che un Elfo potesse opporsi a Saruman? Nessuno può, né dovrebbe nemmeno osare.
+GCB4F521C	Si usano come l'Arco del Sovrintendente, ma le frecce uncinate dei Rohirrim infliggono danni gravi.
+G906620AF	Aumenta permanentemente la tua salute.  (Richiede Potenza di Denethor)
+GE4F990F3	Un attacco ancora più devastante.  (Richiede Furia di Gondor)
+G55B83821	Aumenta permanentemente la tua salute.  (Richiede Forza di Gondor)
+GD4900EBD	Questo attacco devastante dà fuoco a più nemici.  (Richiede Collera di Gondor)
+GF1EE1785	Arco del Sovrintendente
+GC7DFC68A	Furia di Gondor
+G26838C80	Corno di Gondor
+G948EF2DD	Resistenza del Capitano
+GC354B788	Potenza di Denethor
+G2675AC6D	Carica di Minas Tirith
+G3A16134F	Stratagemma del Sovrintendente
+G7C6E9536	Forza di Gondor
+G909BDBD3	Collera di Gondor
+GBCA2DB1D	Assalto della Torre Bianca
+GA70E206F	Resistenza di Amon Hen
+GECE9E935	Gioca con Boromir
+G2BAAD5AF	Tieni premuto il grilletto sinistro per usarlo.  Lancia l'incantesimo con il tasto A (tieni premuto per aumentare i danni).
+GF2DB6139	Si lancia come la Luce dello Stregone, ma la fiamma di Narya brucia i nemici infliggendo danni gravi.
+G4E51B4E3	Aumenta permanentemente la tua salute.  (Richiede Forza degli Istari)
+G701450DF	Aumenta permanentemente la tua salute.  (Richiede Forza di Olórin)
+G876BFE80	Un attacco ancora più devastante.  (Richiede Furia del Maia)
+G554AF8D3	Aumenta permanentemente la tua salute.  (Richiede Forza di Narya)
+GF20F1105	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira dello Stregone)
+GE86497FB	Il fuoco bianco degli Istari brucia in modo terribile. (Richiede Fuoco dell'Anello)
+G5D1DA1B0	Luce dello Stregone
+GE4245C5B	Parata con il bastone
+G68852FD1	Furia del Maia
+G63891384	Forza degli Istari
+G3023E8DD	Fiamma di Anor
+G03053C48	Tu non puoi passare
+G44E88937	Fuoco dell'Anello
+G31781C88	Forza di Olórin
+GC67FABAE	Carica di Ombromanto
+GB28BAB38	Grigio Pellegrino
+GBB647C84	Forza di Narya
+G3A1959EB	Ira dello Stregone
+G910A4D18	Maestro di Glamdring
+GE54BB6DF	Assalto di Mithrandir
+G80CB05F7	Forza del Bianco
+G5500602D	Collera di Olórin
+GB3B8BA9A	Fuoco bianco
+G4D3F3799	Collera del Maia
+GB06CD44C	Gioca con Gandalf
+GD63AEB69	Tieni premuto il grilletto sinistro per usarlo.  Scaglia con il tasto A (tieni premuto per aumentare i danni).
+GF1500B18	Si lanciano come le Pietre della Contea, ma le selci appuntite del Brandivino infliggono danni gravi.
+G1594107A	Aumenta permanentemente la tua salute.  (Richiede Forza della Contea)
+G223FB1F4	Aumenta permanentemente la tua salute.  (Richiede Forza di Bilbo)
+G419FBE06	Un attacco ancora più devastante.  (Richiede Furia hobbit)
+G549E8839	Aumenta permanentemente la tua salute.  (Richiede Forza di Samvise)
+G3E7B6E97	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira della Contea)
+G5DBA6F26	Le pietre benedette dagli Elfi infliggono danni terribili.  (Richiede Tiro di selce)
+G586DFFA8	Pietre della Contea
+GAF333BB7	Furia hobbit
+GA30AB0B5	Forza della Contea
+G5B952654	Morso di Pungolo
+G3F0B7A46	Volontà del Portatore
+GE7A5F0EC	Tiro di selce
+G97512A2B	Forza di Bilbo
+G4F6E34B0	Carica dei Baggins
+G8AFDEEE2	Fortuna dello hobbit
+G9AE8326E	Forza di Samvise
+G5FECDC01	Ira della Contea
+GB7F9A847	Maestria con Pungolo
+GD629F714	Assalto alla Tuc
+G31486B52	Forza di Casa Baggins
+G4023054B	Collera di Pungolo
+GD48B81F2	Pietre elfiche
+G371FFFDE	Tempra di mithril
+G031E765B	Gioca con Frodo
+G63C78123	Si usano come l'Arco di Isengard, ma le frecce uncinate di Orthanc infliggono danni gravi.
+G266F9F27	Aumenta permanentemente la tua salute.  (Richiede Forza di Isengard)
+G4451D279	Aumenta permanentemente la tua salute.  (Richiede Forza di Saruman)
+G2DE635F5	Un attacco ancora più devastante.  (Richiede Furia Uruk)
+G4D25FA2B	Aumenta permanentemente la tua salute.  (Richiede Forza di Orthanc)
+G055C2C2B	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira di Isengard)
+G478E4DB1	Le frecce nere di Isengard infliggono danni terribili.  (Richiede Arco Uruk)
+GB0EED2A6	Arco di Isengard
+G13D5F1B3	Parata con la lama
+GCC2F9E7C	Furia Uruk
+GF496EAA0	Forza di Isengard
+GC727C10B	Caccia di Lurtz
+G73D0C070	Volontà di Saruman
+GD64B9B56	Arco Uruk
+G9E8D350E	Forza di Saruman
+G6426C642	Carica dell'Uruk guerriero
+GCC3C5342	Stratagemma del Macellaio
+G0DEF3FCC	Forza di Orthanc
+G0EBAA8C5	Ira di Isengard
+GFC62112E	Maestro Macellaio
+GEE7780E5	Offensiva di Isengard
+G838B10AC	Forza degli Uruk-hai
+GF44614A3	Collera di Saruman
+G45DC8B08	Arco nero
+G4F638CF6	Flagello di Rohan
+G9E606E3B	Condanna del Primo Uruk
+GE31550F8	Lurtz
+G981416DE	Gioca con Lurtz
+G6F22BB2E	Si usano come l'Arco elfico, ma le frecce di Gran Burrone infliggono danni gravi.
+GCA4A15A1	Aumenta permanentemente la tua salute.  (Richiede Forza di Gran Burrone)
+G75BCF244	Aumenta permanentemente la tua salute.  (Richiede Potenza di Gil-galad)
+G216AF74D	Aumenta permanentemente la tua salute.  (Richiede Forza di Vilya)
+G0B6CC0B6	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira dei Noldor)
+G0355C5D7	Le frecce d'argento degli Eldar infliggono danni terribili. (Richiede Arco dei Vanyar)
+GD3F16BA3	Arco elfico
+G710A6666	Forza di Gran Burrone
+G96D9F158	Grazia di Vilya
+GF127A06E	Ultima Alleanza
+GB426C696	Arco dei Vanyar
+G71620C4B	Potenza di Gil-galad
+GFBF3A490	Carica di Lindon
+G00542D8B	Stratagemma dell'Araldo
+G5104305A	Forza di Vilya
+G221633E0	Ira dei Noldor
+G11A9FF39	Assalto di guerra dei Noldor
+GDE2839BE	Forza degli Eldar
+GB0E7C432	Collera di Lindon
+G008B68D9	Arco degli Eldar
+G10607364	Signore di Imladris
+G0BA28B85	Gioca con Elrond
+GD6BB77A1	Si lancia come il Dardo oscuro, ma il fuoco di Barad-dûr infligge danni gravi.
+G113CAFFC	Aumenta permanentemente la tua salute.  (Richiede Forza di Barad-dûr)
+G2F14F0F7	Aumenta permanentemente la tua salute.  (Richiede Forza di Mordor)
+G573FFFF8	Un attacco ancora più devastante.  (Richiede Furia oscura)
+G6AE28C4F	Aumenta permanentemente la tua salute.  (Richiede Potenza dell'Anello)
+GC4B7E7DB	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira di Mordor)
+G5FEE9C56	Le fiamme del Monte Fato infliggono danni terribili.  (Richiede Fuoco infernale)
+GA07FAB7C	Dardo oscuro
+G59838F7F	Parata con la mazza
+G0ACE1349	Furia oscura
+GD97CF863	Forza di Barad-dûr
+GF62B2130	Danza di Sauron
+G53F430F0	Volontà dell'Unico Anello
+GB60C89B8	Fuoco infernale
+GC26DDD50	Forza di Mordor
+G29856B22	Carica dell'Oscuro Signore
+G27C67462	Stratagemma di Annatar
+G66205DC8	Potenza dell'Anello
+GA64C9515	Ira di Mordor
+G278CB8C1	Maestro della mazza
+G4B8493DC	Assalto di guerra di Mordor
+G5487C52D	Forza del Monte Fato
+GE9A37F55	Collera di Mordor
+G3F70A0C4	Fuoco del Fato
+GBB8776B5	Flagello degli Elfi
+G6E2AA149	Occhio di Sauron
+G1C11BF19	Sauron
+G3057B52F	Gioca con Sauron
+GB76B50B9	Si lanciano come le Rocce della rupe, ma questi massi delle fosse infliggono danni gravi.
+GECFE6FA3	Aumenta permanentemente la tua salute.  (Richiede Potenza delle Fosse)
+G47753157	Questo attacco devastante dà fuoco a più nemici.  (Richiede Ira del Berserker)
+GF2D43E42	Le rocce fuse infliggono danni terribili.  (Richiede Rocce da guerra)
+GC390874C	Rocce della rupe
+G035878D4	Frenesia del Berserker
+GC2D0B8DB	Torcia del Fosso
+GFF1647F7	Rocce da guerra
+G98869254	Potenza delle Fosse
+GC4A495AD	Carica del Muro Fondo
+GE0FB4F25	Stratagemma degli Uruk-hai
+G8925F4A1	Ira del Berserker
+G468B4A5C	Maestro Berserker
+GB0E58D9C	Assalto d'assedio
+GD5AF6DD1	Collera di Orthanc
+G01AF5769	Rocce di lava
+G18494AB3	Collera delle Fosse
+GB3AAE2E1	Uruk-hai
+G683077D7	Gioca con gli Uruk-hai
+P:Frame Rate:	Frame rate:
+P:Unlocked	Sbloccato
+P:Display Mode:	Modalità schermo:
+P:Window	Finestra
+P:Full Screen	Schermo intero
+P:Window Size:	Dim. finestra:
+P:Automatic	Automatica
+P:Aspect Ratio:	Proporzioni:
+P:Custom	Personalizzate
+P:Resolution:	Risoluzione:
+P:Anisotropic:	Anisotropico:
+P:Mipmaps:	Mipmap:
+P:Off	No
+P:On	Sì
+P:Ultra Textures:	Texture Ultra:
+P:Wide Cutscenes:	Filmati panoramici:
+P:Anti-aliasing:	Anti-aliasing:
+P:VSync:	VSync:
+P:Picture:	Immagine:
+P:Keep Shape	Mantieni forma
+P:Stretch	Allarga
+P:Vertex Programs:	Vertex program:
+P:Brightness:	Luminosità:
+P:Sharpening:	Nitidezza:
+P:Colour:	Colore:
+P:Original	Originale
+P:Vivid	Vivace
+P:Muted	Tenue
+P:HUD Widescreen:	HUD panoramico:
+P:Edges	Ai bordi
+P:Centred	Centrato
+P:Menus:	Menu:
+P:Fill	Riempi
+P:Movies:	Filmati:
+P:As Made	Originali
+P:Button Prompts:	Icone tasti:
+P:Keyboard	Tastiera
+P:Mouse Pointer:	Puntatore mouse:
+P:Sensitivity:	Sensibilità:
+P:Pointer Size:	Dim. puntatore:
+P:Mouse Aiming:	Mira col mouse:
+P:Invert Aiming:	Inverti mira:
+P:Up/Down	Su/Giù
+P:Left/Right	Sinistra/Destra
+P:Both	Entrambi
+P:Mouse Steering:	Sterzo col mouse:
+P:A Button:	Tasto A:
+P:B Button:	Tasto B:
+P:X Button:	Tasto X:
+P:Y Button:	Tasto Y:
+P:Black Button:	Tasto nero:
+P:White Button:	Tasto bianco:
+P:Left Trigger:	Grilletto sinistro:
+P:Right Trigger:	Grilletto destro:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	Croce su:
+P:D-pad Down:	Croce giù:
+P:D-pad Left:	Croce sinistra:
+P:D-pad Right:	Croce destra:
+P:L Stick Click:	Clic levetta S:
+P:R Stick Click:	Clic levetta D:
+P:Move Forward:	Avanti:
+P:Move Back:	Indietro:
+P:Move Left:	Sinistra:
+P:Move Right:	Destra:
+P:Look Up:	Guarda su:
+P:Look Down:	Guarda giù:
+P:Look Left:	Guarda a sinistra:
+P:Look Right:	Guarda a destra:
+P:Walk:	Cammina:
+P:General Options	Opzioni generali
+P:Display Options	Opzioni video
+P:Controls	Comandi
+P:Reset Controls	Ripristina comandi
+P:Press a key...  (Esc: cancel, Delete: clear)	Premi un tasto...  (Esc: annulla, Canc: cancella)
+P:R Stick	Levetta D
+P:Stick	Levetta
+P:L Stick	Levetta S
+P:Black button	Tasto nero
+P:White button	Tasto bianco
+P:Left trigger	Grilletto sinistro
+P:Right trigger	Grilletto destro
+P:Start	Start
+P:Back	Back
+P:D-pad up	Croce su
+P:D-pad down	Croce giù
+P:D-pad left	Croce sinistra
+P:D-pad right	Croce destra
+P:Left stick click	Clic levetta sinistra
+P:Right stick click	Clic levetta destra
+P:Move forward	Avanti
+P:Move back	Indietro
+P:Move left	Sinistra
+P:Move right	Destra
+P:Right stick up	Levetta destra su
+P:Right stick down	Levetta destra giù
+P:Right stick left	Levetta destra sinistra
+P:Right stick right	Levetta destra destra
+P:Walk	Cammina
+P:None	Nessuno
+P:LS click	Clic LS
+P:RS click	Clic RS
+P:Mouse Left	Mouse sinistro
+P:Mouse Right	Mouse destro
+P:Mouse Middle	Mouse centrale
+P:Mouse 4	Mouse 4
+P:Mouse 5	Mouse 5
+P:Space	Spazio
+P:Enter	Invio
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Maiusc
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Bloc Maiusc
+P:Up	Su
+P:Down	Giù
+P:Left	Sinistra
+P:Right	Destra
+P:Insert	Ins
+P:Delete	Canc
+P:Home	Home
+P:End	Fine
+P:Page Up	Pag Su
+P:Page Down	Pag Giù
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Punto e virgola
+P:Equals	Uguale
+P:Comma	Virgola
+P:Minus	Meno
+P:Period	Punto
+P:Slash	Barra
+P:Backquote	Accento grave
+P:Backslash	Barra inversa
+P:Quote	Apostrofo
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Tieni premuto {6} per passare all'arma a distanza.  Premi {0} per tirare.  Usa {M} per mirare.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Tieni premuto {6} per passare all'arma a distanza.  Premi {0} per tirare.  Usa {M} per mirare.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Tieni premuto {6} per usarlo.  Tira con {0} (tieni premuto per aumentare i danni).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Tieni premuto {6} per usarlo.  Tira con {0} (tieni premuto per aumentare i danni).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Tieni premuto {6} per usarle.  Lancia con {0} (tieni premuto per aumentare i danni).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Tieni premuto {6} per usarle.  Lancia con {0} (tieni premuto per aumentare i danni).
+P:A devastating attack.  Press and hold {3} to use.	Un attacco devastante.  Tieni premuto {3} per usarlo.
+P:Game Saved.  Press {8} to continue.	Partita salvata.  Premi {8} per continuare.
+P:Game Saved.  Press {0} to continue.	Partita salvata.  Premi {0} per continuare.
+P:Unable to save game. Press {8} to continue.	Impossibile salvare la partita. Premi {8} per continuare.
+P:Unable to save game. Press {0} to continue.	Impossibile salvare la partita. Premi {0} per continuare.
+P:Unable to load game. Press {8} to continue.	Impossibile caricare la partita. Premi {8} per continuare.
+P:Unable to load game. Press {0} to continue.	Impossibile caricare la partita. Premi {0} per continuare.
+P:No saved games. Press {8} to continue.	Nessuna partita salvata. Premi {8} per continuare.
+P:No saved games. Press {0} to continue.	Nessuna partita salvata. Premi {0} per continuare.
+P:Not unlocked yet. Press {8} to continue.	Non ancora sbloccato. Premi {8} per continuare.
+P:Not unlocked yet. Press {0} to continue.	Non ancora sbloccato. Premi {0} per continuare.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Non hai raccolto abbastanza punti potenziamento per acquistare questo potenziamento. Premi {8} per continuare.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Non hai raccolto abbastanza punti potenziamento per acquistare questo potenziamento. Premi {0} per continuare.
+P:Press {8} to resume	Premi {8} per riprendere
+P:the left mouse button	il tasto sinistro del mouse
+P:the right mouse button	il tasto destro del mouse
+P:the middle mouse button	il tasto centrale del mouse
+P:mouse button 4	il tasto 4 del mouse
+P:mouse button 5	il tasto 5 del mouse
+P:the A button	il tasto A
+P:the B button	il tasto B
+P:the X button	il tasto X
+P:the Y button	il tasto Y
+P:the Black button	il tasto nero
+P:the White button	il tasto bianco
+P:the left trigger	il grilletto sinistro
+P:the right trigger	il grilletto destro
+P:up on the d-pad	su sulla croce direzionale
+P:down on the d-pad	giù sulla croce direzionale
+P:left on the d-pad	sinistra sulla croce direzionale
+P:right on the d-pad	destra sulla croce direzionale
+P:the left thumbstick button	il tasto della levetta sinistra
+P:the right thumbstick button	il tasto della levetta destra
+P:the Menu button	il tasto Menu
+P:the View button	il tasto Visualizza
+P:the cross button	il tasto croce
+P:the circle button	il tasto cerchio
+P:the square button	il tasto quadrato
+P:the triangle button	il tasto triangolo
+P:Left Click	Clic sinistro
+P:Right Click	Clic destro
+P:Middle Click	Clic centrale
+P: or 	 o 
+P:Exit	Esci
+P:Press {k}	Premi {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	la levetta sinistra

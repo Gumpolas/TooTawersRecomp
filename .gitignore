@@ -1,0 +1,41 @@
+# Build output
+/build/
+/build-*/
+*.exe
+*.obj
+*.o
+*.a
+*.pdb
+
+# Generated from YOUR copy of the game -- never commit
+/twotowers/src/recomp/gen/
+/xboxrecomp-0.12.0/game_files/*
+!/xboxrecomp-0.12.0/game_files/.gitkeep
+/xboxrecomp-0.12.0/tools/disasm/output/
+/xboxrecomp-0.12.0/tools/func_id/output/
+/xboxrecomp-0.12.0/tools/abi_analysis/output/
+/xboxrecomp-0.12.0/tools/recomp/output/
+/xboxrecomp-0.12.0/tools/ghidra_naming/work/
+
+# Game files, disc images, saves, user settings and logs
+game_files/
+*.iso
+*.xiso
+*.xbe
+*.xsv
+twotowers_recomp.ini
+twotowers_recomp.ini.old
+twotowers_log.txt
+xbox_kernel.log
+crash_report.txt
+
+# Personal art (your own icon / cover)
+/twotowers/resources/local/
+
+# Python
+__pycache__/
+*.pyc
+
+# Texture dumps and the E3 mod's portrait icons (crops of E3 2002 footage, not ours to publish)
+texture_dump/
+e3hud/

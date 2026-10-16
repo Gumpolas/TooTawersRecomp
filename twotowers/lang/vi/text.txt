@@ -1,0 +1,1749 @@
+# Tiếng Việt -- made by tools/lang/build_lang.py
+GA81157BF	CHÚA TỂ NHỮNG CHIẾC NHẪN:  HAI TÒA THÁP
+G20EBC61E	Một bộ phim của Peter Jackson
+G2D8D3B98	Sản xuất
+G7EDB1AE9	Đồng sản xuất
+G90AF53E8	Hiệu ứng đặc biệt
+G893165F0	Weta Digital
+GD9523953	Âm nhạc: Howard Shore
+G7B677F6E	Lồng tiếng trong game
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	NHÓM XBOX
+GAAA9253B	Quản lý dự án
+G2E65B2E4	Lập trình
+G1E165282	Mỹ thuật
+G4CFF767B	Âm thanh
+G1B12D0CA	NHÓM PHÁT TRIỂN GỐC
+G5BB408B8	Giám đốc dự án
+GA9D987DE	Giám đốc kỹ thuật
+GA4E53836	Giám đốc phát triển
+GCBF9A863	Giám đốc âm thanh
+G71D27F1C	Thiết kế trưởng
+GABE6171F	Lập trình viên trưởng
+GB6AEE806	Họa sĩ môi trường trưởng
+G0FAA1BD8	Họa sĩ đoạn phim trưởng
+G93A039A2	Họa sĩ hoạt hình trưởng
+G85851417	Chỉ đạo mỹ thuật
+GEC5EB699	Nhà sản xuất liên kết
+G1E1B7E49	Họa sĩ hiệu ứng đặc biệt
+GE457B26A	Họa sĩ môi trường
+G09AFDB2B	Họa sĩ đoạn phim trong game
+GC6201467	Họa sĩ ý tưởng
+GCE12C680	Dựng hình/Hoạt hình nhân vật
+G958F64A1	Họa sĩ giao diện
+G5817028D	Lập trình viên đồ họa
+G8E313DB8	Lập trình viên AI
+G7559A05A	Lập trình viên lối chơi
+G47FDFA0D	Nhà thiết kế game
+G2A1A4D1F	Thiết kế âm thanh & Biên tập âm nhạc
+GD6AC199C	Thiết kế âm thanh
+G83731102	Chỉ đạo phát triển bổ sung
+G9B9AC6A2	Quản lý dự án bổ sung
+G2C8B85F3	Mỹ thuật bổ sung
+G154B3F75	Lập trình bổ sung
+GEC34AAA5	Thiết kế âm thanh bổ sung
+GE9E2F454	Biên kịch bổ sung
+G8B63E4D8	Phát triển kinh doanh
+G8E754AFA	Giám đốc điều hành phát triển
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Giám đốc sản xuất
+GF944BB31	Nhà sản xuất cấp cao
+G49F95533	Nhà sản xuất liên kết bản địa hóa
+GE5AAA381	Trợ lý sản xuất
+G20A463E8	Kỹ sư phần mềm
+GEDDCFA70	Trưởng nhóm kiểm thử
+G6EC637F4	Phó trưởng nhóm kiểm thử
+GA9C92124	Kiểm thử viên chính
+GDDEFB046	Nhà sản xuất
+G5F4C2C91	Giám đốc phát triển game
+G53E62C46	Thiết kế màn chơi
+G4019279E	Phó giám đốc mỹ thuật
+G3548CB79	Đoạn phim trong game
+G5BF26924	Thiết kế đồ họa (Giao diện)
+GF5E6331B	Trợ lý sản xuất bản địa hóa
+GB9029242	Trợ lý sản xuất
+G81160EAA	Họa sĩ hoạt hình cấp cao
+GB1B5EEDE	Họa sĩ hoạt hình
+G1D384099	Dựng hình môi trường
+GD670D187	Video toàn cảnh
+GB4300D0E	Giám sát sản xuất
+GDB61FEB0	Quản lý sản xuất FMV
+G13204F99	Giám đốc mỹ thuật kỹ thuật
+G8774AEB2	Giám đốc mỹ thuật
+G2EDA5AA3	Giám đốc hoạt hình
+G4761EC6C	Kỹ thuật nhân vật
+GC40AEB65	Họa sĩ môi trường trưởng
+G04B7AD9A	Biên kịch
+GCCDC1EDE	Họa sĩ nhân vật
+G765B2120	Họa sĩ hoạt hình nhân vật cấp cao
+GDB98BF7E	Họa sĩ ánh sáng cấp cao
+G8AEFA15C	Họa sĩ hiệu ứng cấp cao
+GB64D9748	Họa sĩ hiệu ứng
+GB770287B	Dựng khung/Dựng hình CG
+GA89434BE	Bố cục máy quay
+GBAA388EF	Biên tập
+GA79B5345	Thiết kế âm thanh/Thu âm lại
+GE2D38E72	Quản lý sản xuất mỹ thuật
+G29C8EC71	Trợ lý điều hành
+GB01B1D73	Quản trị hệ thống
+G257D0532	Trợ lý sản xuất
+GB2965969	Biên tập lời thoại
+G2ACF75E1	Xử lý âm thanh bổ sung
+G821EF7A5	Diễn viên lồng tiếng
+G3CCB3DF3	Đảm bảo chất lượng EA
+G2851776E	Quản lý QA
+G3D43CCDD	Giám sát QA
+G997D9582	Trưởng nhóm QA
+G5B5CE9C6	Phó trưởng nhóm QA
+GE0B33004	Kiểm thử viên QA chính
+GBBB3A592	Trưởng dự án FLT
+G7F330F1A	Kiểm thử ngôn ngữ chức năng
+G731958CD	Kiểm thử ngôn ngữ
+G7005C763	Kiểm soát chất lượng khách hàng
+GCC3D24EF	Quản lý CQC
+G0FF24E54	Giám sát CQC
+G7498FE74	Trưởng bộ phận CQC
+G5AB35ED0	Chuyên viên phân tích sản phẩm CQC
+G6E529086	Phòng mastering
+G0229B6F3	Giám đốc phát triển sản phẩm quốc tế
+G6B435E81	Quản lý dự án bản địa hóa
+GF8BA9878	Điều phối dự án bản địa hóa
+G906896D8	Quản lý cấp phép và phê duyệt đối tác
+G860EDA13	Pháp chế kinh doanh
+G7AC94AC6	Pháp lý
+GFDF965B3	Vận hành studio
+G9FF9799E	Điều phối hợp đồng studio
+G9E24FEC0	Giám đốc tiếp thị
+G44C57DC5	Quản lý sản phẩm
+GE1A6D911	Quan hệ công chúng
+GA5ADE5FF	Tài liệu
+G4C2A256D	Dàn trang tài liệu
+G279BA159	Quản lý dự án bao bì
+G482E9235	Thiết kế bao bì
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Đoàn làm phim Chúa tể những chiếc nhẫn
+GE196FA55	Đạo diễn
+GE364782E	Giám đốc sản xuất
+GB11B5F1A	Đồng sản xuất
+GDDE9A104	Lưu trữ viên
+G73D53EB3	Quản lý tư liệu
+G4616CF92	Trợ lý nhà sản xuất
+GD98C077D	Giám sát hậu kỳ
+G26FFE43A	Trợ lý dựng phim thứ nhất
+GFAE3387C	Quản lý mô hình thu nhỏ
+G0D7D1A1D	Phó chủ tịch điều hành cấp phép và kinh doanh sản phẩm toàn cầu
+GD58105C6	Giám đốc sáng tạo
+GB0E8D9D5	Diễn viên phim
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Phó chủ tịch kinh doanh âm nhạc
+G96EBB4D8	Giám đốc điều hành âm nhạc
+G2728DB7D	Giám đốc âm nhạc
+GFE08F13A	3Foot6
+GCFF1286B	Điều phối kinh doanh sản phẩm
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Phó chủ tịch
+GE58F283A	Nhà sản xuất/Quản lý sản xuất
+G97C336EB	Giám sát hoạt hình
+G96FF4CEA	Giám đốc kỹ thuật cấp cao
+GE816CF3D	Trưởng thiết lập kỹ thuật
+G22B756F5	Họa sĩ hoạt hình
+G86F5B2D9	Họa sĩ vẽ phông nền
+GBC50C796	Quản lý văn phòng
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Nhà sản xuất hiện trường
+G14C96B5C	Họa sĩ CG trưởng
+GD9742A3C	Họa sĩ CG/Hoạt hình
+GBA7D6969	Arnson Communications
+G22C5AB99	Giám đốc sản xuất/Giám đốc sáng tạo
+G45C5172D	Biên kịch/Nhà sản xuất
+GDCC6F23E	Giám đốc mỹ thuật/Họa sĩ hoạt hình
+G9C4F3B3B	Họa sĩ DS
+GF0F58DD3	LỜI CẢM ƠN ĐẶC BIỆT CỦA EA
+G895C842A	LỜI CẢM ƠN ĐẶC BIỆT CỦA STORMFRONT STUDIOS
+G9D4DD21A	Ở vùng đất Trung Địa, truyền thuyết kể về Chúa tể Bóng tối Sauron,
+G6CFA90F6	và chiếc Nhẫn sẽ cho hắn sức mạnh để nô dịch cả thế giới.
+G18F2969C	Và giờ đây nó đã rơi vào tay một người không ai có thể ngờ tới.
+G378C79D6	Tôi là fan game cực lớn, nên dĩ nhiên tôi muốn biết mọi chi tiết về một trò chơi Chúa tể những chiếc nhẫn.
+GDCF04190	Tôi sẽ rơi vào trạng thái chơi suốt ngày suốt đêm,
+G977EBA13	và thường thì đó là khi tôi chơi, kiểu như, một game phiêu lưu khiến tôi mê mẩn.
+G49C9AB1A	Một khi đã nhập cuộc, tôi không thể ngừng nghĩ về nó, và tôi phải đưa nhân vật của mình đến tận cùng.
+GD2647A40	Nhiệm vụ này được giao cho cậu, và nếu cậu không tìm ra cách, sẽ không ai tìm ra.
+G3AC8371A	Nấp đi!
+GAD82B19D	Thế là tôi cứ dò hỏi về trò này và cuối cùng cũng được chơi, và nó thật không thể tin nổi.
+G8DE86872	Nhìn thôi đã thấy đẹp rồi.
+G72E74697	Ôi, ngầu quá!
+GF9824FCA	Đúng rồi, tiến lên, Aragorn! Cố lên!
+G2EE7D5D4	Chúng đang đến.
+G61F7CD7D	Kiểu như một phần thưởng thêm khi bật game lên và thấy chính mình chạy khắp nơi.
+G57A5BC04	Tôi đang bị đánh tơi bời.
+G1F85273D	Frodo trông giống tôi! Ngầu không?
+G1FFE0A40	Ngầu thật.
+GE6E563F9	Chúng sẽ tìm ra chiếc Nhẫn,
+GD135555F	và giết kẻ mang nó.
+G18844D24	Đi đi! Đi nào Frodo!
+G525D5AD9	Chúng muốn chiếc Nhẫn! Không được để chúng lấy nó.
+GB99DAE56	Sự khác biệt giữa lồng tiếng hậu kỳ cho phim và lồng tiếng cho game là lồng tiếng phim thường phải khớp với hình ảnh.
+G7558081F	Bạn phải nhìn vào phim và cố lặp lại lời thoại đã nói trước đó, sao cho khớp với lời thoại trong phim.
+GDD3F428F	Ngươi là ai?
+GE906BA5B	Ngươi có sợ không?
+G9BDAB30C	Có.
+G3B07B1B1	Chưa sợ đủ đâu.
+GFBD6613D	Với game thì không có hình ảnh, chỉ là rất nhiều yếu tố không khí mà bạn thêm vào.
+G0EE06D0F	Nguy hiểm, cứu với, đại loại thế.
+G2F9FC8E2	Aragorn! Cứu với! Aragorn! Aragorn!
+G289F7C03	Tôi mê mô hình nhân vật và mê game, nên nếu được góp mặt thì đúng là phần thưởng cho dân mọt, và tôi thích lắm.
+G67346E61	Ngay cả người nhỏ bé nhất cũng có thể thay đổi tương lai.
+G16420686	Tôi háo hức quá - không thể chờ để có bản của mình. Đỉnh thật.
+GDBA69463	Moria.
+G1D429D96	Ông sợ đi vào những hầm mỏ đó.
+G372C9F91	Ông biết thứ chúng đã đánh thức trong bóng tối.
+G34515230	Tôi thực sự thích làm game, vì không phải làm việc vất vả kinh khủng
+G93AEF9C3	như khi lần đầu xây dựng nhân vật.
+GA9883FB4	Quay phim tất nhiên là rất chậm.
+G0C1E0E8C	Một điều tuyệt vời ở game máy tính là, dĩ nhiên, tôi không phải hóa trang.
+GA5F1044B	Khi làm game, bạn đứng trong phòng thu
+GCE4A81AD	và bạn nói, à, tôi nghĩ anh nên nói thế này, thế này, thế này
+G049A3A66	và họ có cả chồng kịch bản, và bạn nói tất cả những câu thoại tuyệt vời ấy.
+G70F1359D	Phục kích! Phục kích!
+G65325B21	Rồi họ lấy tất cả, đưa vào game, và bạn được ghi công một phần.
+G39F1D126	Những thiết bị nổ đó phải bị phá hủy!
+GEB33699E	Tôi rất thích mô hình của tôi trong vai Gimli.
+GD9A0C650	Tôi thấy đó là một nhân vật thật mạnh mẽ, nam tính, hấp dẫn.
+G43591DCA	Ông ấy thực sự là nhân vật duy nhất bạn muốn chơi.
+G5C0A6C1E	Ý tôi là những người còn lại, bạn biết đấy, mấy anh Aragorn, mấy anh Legolas, đẹp trai, điển trai các kiểu,
+G3D52D95F	nhưng để chiến đấu thực thụ, chất lượng, bạn phải chọn Gimli.
+G8E74524F	Chúng tôi đã dành mười bốn tháng ở những địa điểm đẹp nhất thế giới tại New Zealand để có được diện mạo phù hợp cho phim.
+GAD562976	Game là một tình huống chiến tranh, chiến đấu, và nó được tạo ra thật tuyệt vời và xuất sắc.
+G7F21BCD6	Tôi không thể bỏ cậu ấy lại đó! Trời ơi!
+G9AA947F5	Chắc sẽ tốn thời gian lắm đây.
+G669C44C6	Ý tôi là đó là một cơn nghiện mới mà tôi vừa phát hiện.
+G63540AD1	Vậy nên, các game thủ, làm tốt lắm, chúc mừng đã vào được góc nhỏ có bài phỏng vấn này.
+G925FED56	Ước gì tôi có thể chỉ bạn chơi giỏi hơn nhưng thật ra tôi chưa bao giờ qua được màn này.
+GC3162ADB	Chúc may mắn và cứ tiếp tục chơi nhé.
+GA3572714	Số phận thế giới sẽ sớm được định đoạt.
+G922859CB	Toàn bộ quá trình làm ra trò chơi điện tử
+GD9B03397	chủ yếu là bạn đánh nhau với đủ thứ, thứ kiểu ninja... tôi cũng không biết nữa.
+G24326AFA	Tôi ngạc nhiên vì nó trông chân thực hơn nhiều,
+G3E302C15	có vẻ như nó đã lên một tầm cao mới.
+GBD830A87	Tôi nghĩ Aragorn trong game ngắm bắn giỏi hơn tôi...
+GF76948D6	nhưng tôi sẽ không phàn nàn về chuyện đó đâu.
+GD27FED3E	Dù sống hay chết, nếu có thể bảo vệ cậu, tôi sẽ làm.
+G56368F53	Ông có thanh gươm của tôi.
+G8D6DAFD1	Những gì tôi thấy về game có vẻ phản ánh việc
+G970D4AB6	phần phim thứ hai - khác với phần đầu - có quy mô lớn hơn
+GFD0BADCA	và tôi mong được thấy chúng cũng như mong được thấy phần còn lại của game.
+G1F48F697	Hôm nay tôi mới chỉ xem một đoạn mẫu.
+GB689F1B9	Tôi mừng khi thấy, chẳng hạn, đôi khi Aragorn bị hạ gục, hoặc ngã xuống, hoặc lăn lộn,
+G6F6072BC	và lối đánh của anh ấy thay đổi, bạn biết đấy, cho phù hợp với tình huống.
+GA3A3F7A1	Không phải lúc nào cũng gọn gàng sạch sẽ, bạn biết đấy, kiểu như...
+G28095E46	đôi khi anh ấy hơi giống dân đánh lộn - ít nhất là trong phim anh ấy làm vậy - và tôi nghĩ game phản ánh được điều đó.
+G43AA6A0B	Thật ấn tượng.
+G8559FF90	Những người lạ từ những vùng đất xa xôi, các vị được triệu tập đến đây để đối phó với mối đe dọa từ Mordor.
+GC2A75F48	Trung Địa đang đứng bên bờ vực hủy diệt.
+GFE143A07	Không ai thoát được. Đoàn kết, hoặc các vị sẽ gục ngã.
+GF59E5460	Tôi luôn kinh ngạc khi thấy công nghệ tiến bộ
+GAD5CBAE4	và nó đã gần với thật đến mức nào.
+GF96BCD4B	Tôi phải đến chỗ Boromir, ngay!
+GD262135E	Khi thu âm hậu kỳ cho phim, bạn biết đấy, rõ ràng bạn nhìn vào màn hình,
+G83EECB7A	thấy hành động diễn ra trước mặt đúng như bạn đã diễn hôm đó.
+G3C0B6913	Khi thu tiếng cho game này,
+G2A8B6AD2	không có máy quay nào chĩa vào bạn,
+G52F7D105	và bạn không phải cố khớp khẩu hình với hình ảnh trước mặt,
+G8EE2279F	nên bạn có thể thật sự làm thêm một chút và kiểu như
+GA5BE0F5A	nhấn mạnh và phát triển những gì có trên trang giấy.
+G51E230FB	Quay về cái hố đã sinh ra lũ bay đi!
+G97400E1E	Chúng được đẩy lên cao hơn so với trong phim.
+GC26338C3	Bạn hiểu ý tôi chứ?
+G40EB5D5C	Chúng hơi lố bịch một chút, và thế là vui.
+G52FECFA2	Thật vui khi được chơi đùa với nó theo cách đó.
+G91D69630	Đến đây!
+G87873143	Ngươi không thể thắng trận này!
+G47AECCC4	Tôi nghĩ nếu tôi chơi game
+GB0CCD2A6	sẽ thật hay khi biết chính các diễn viên thật đã lồng tiếng cho hành động mà nhân vật đồ họa máy tính thực hiện,
+GC1719889	và tôi đoán thế giới máy tính càng chân thực thì người chơi càng thấy hứng thú.
+G77ECFBF0	Ông không thể sử dụng nó. Không ai trong chúng ta có thể.
+GB42EC53B	Chiếc Nhẫn phải bị phá hủy.
+G43E793ED	Hiểm nguy với người mang Nhẫn ngày càng lớn.
+G6E2FF8E0	Vì còn một kẻ khác đang săn lùng chiếc Nhẫn.
+GDD26CBEC	Cả đời tôi chưa từng chơi trò chơi điện tử nào.
+GF783F574	Tôi chẳng bao giờ hiểu nổi luật chơi.
+G573BC826	Tay tôi rất to và vụng về, và không có được sự phối hợp tay và đầu óc mà tôi nghĩ là cần thiết
+GFBB68CB5	thứ mà có vẻ ai dưới sáu tuổi cũng có.
+G8D9D9F75	Điều tuyệt vời ở game Chúa tể những chiếc nhẫn này
+G81AEE08E	là bạn được nghe giọng của các diễn viên gốc--tất cả bọn họ.
+GAE3BFBD7	Và hôm nay tôi đã thu âm cho Gandalf Áo Xám và Gandalf Áo Trắng,
+G21F22F52	hai nhân vật tôi đóng trong Chúa tể những chiếc nhẫn.
+GCED01E94	Ông thấy gì?
+GB4F26455	Có những ký hiệu.
+G5C7EB8BC	Đó là một dạng chữ Tiên.
+G27A03C42	Tôi không đọc được.
+G8E22513B	Ít ai đọc được.
+G4B2817A2	Giờ đây đã có liên minh giữa Hai Tòa Tháp: Orthanc và Barad-dûr.
+GC69D576A	Với game thì thô hơn một chút, sẵn sàng hơn một chút, tức thời hơn một chút, có lẽ vậy.
+G363960EA	Một trong các ngươi phải vào.
+GFFCB2D5D	Hãy giúp những dân làng vẫn còn sống.
+GF4DAF5B8	Về cơ bản, đây là một đoạn chiến đấu dữ dội.
+G00009069	Đó là khía cạnh quân sự của Gandalf bộc lộ ra: người chỉ huy, samurai, thủ lĩnh.
+G4519FC71	Ngươi không được qua!
+G066F3360	Vậy nên những gì bạn thấy trên màn hình gần như - chết tiệt -
+GF4CF848B	chính là Gandalf mà bạn thấy trong phim. Và ước gì tôi có thể đến chơi game cùng các bạn.
+G699B7BF2	Vào chiếc Nhẫn này hắn đổ tất cả sự tàn ác, hiểm độc và ý chí thống trị mọi sự sống.
+GA1469225	Một chiếc Nhẫn thống trị tất cả.
+G01090CE9	Những gì chúng tôi làm được là thành quả của một khối lượng công việc khổng lồ với hàng nghìn người tham gia.
+G74E1F68D	Tựa đề Hai Tòa Tháp ám chỉ Tháp Orthanc, 
+G0AE01FA9	nơi Saruman, nhân vật của Christopher Lee, đóng đại bản doanh,
+GD9642178	và Tháp Barad-dûr ở Mordor, nơi ở của Sauron.
+G573418F9	Phần phim thứ hai, như mọi phần trong bộ ba này, là một thử thách. Và sẽ vẫn vậy cho đến khi chúng tôi hoàn thành nó.
+GB2A31EA0	Đó là một bộ phim tuyệt vời. Nó sẽ hoành tráng hơn phần một.
+GB831FA3A	Tôi nghĩ chắc chắn đã có rất nhiều tâm huyết đổ vào việc làm những bộ phim này,
+GCCFC11FE	và việc có thể chuyển giao thông tin đó cho đội làm game thật tuyệt, 
+G327C2028	vì tôi biết họ cũng đổ vào đó tâm huyết và công sức tương đương để mang đến cho công chúng một trò chơi thật phong phú.
+G2C4A352E	Tolkien miêu tả Edoras rất sống động trong sách
+G10EFB23A	là một thành phố với những ngôi nhà gỗ trên một ngọn đồi trước dãy núi phủ tuyết.
+G50D180A4	Khi chúng tôi bắt đầu đi tìm bối cảnh, tôi đã nói, phải tìm được một nơi nào đó ở New Zealand,
+GDA11996F	phải có một ngọn đồi như thế này nằm trước dãy núi.
+GD6F61F77	Vậy là họ đi trực thăng khắp đất nước và mang về bức ảnh một ngọn đồi hoàn hảo tuyệt đối.
+GC56228ED	Nó cách thị trấn gần nhất khoảng sáu bảy chục dặm.
+GF796DA0F	Nó nằm giữa Đảo Nam; rất hẻo lánh.
+GFA1CD969	Chúng tôi đã mất khoảng bảy tám tháng để thực sự xây dựng những công trình khổng lồ này.
+GC2D0BAAA	Kết quả cuối cùng là trong phim chúng tôi có một Edoras hoàn toàn đáng tin.
+GC2774958	Tôi có thể đến đó và quay như thể đó là một địa điểm có thật.
+G99F69515	Một trong những điều thú vị về game của EA và những gì tôi thấy ở các mô hình khi chúng được dựng
+G6B3554D6	là sự tái hiện tuyệt vời các bối cảnh và nhân vật của chúng tôi
+GB997C9B4	đến mức EA đã thỏa thuận với các diễn viên để họ đến và tự thu lời thoại của mình.
+G815CAC49	Các diễn viên khá hào hứng với điều đó.
+GA1640DEB	Trận chiến ở Thung lũng Helm đã kết thúc.
+G93BD7122	Trận chiến giành Trung Địa sắp bắt đầu.
+G958468DE	Chúng tôi dựng một mô hình thu nhỏ của Thung lũng Helm nhưng điều thú vị là nó không chỉ là một mô hình. 
+G1BC58576	Đó là một mô hình thu nhỏ khổng lồ. Tỷ lệ một phần tư nhưng bản thân nó rộng khoảng chín mười hai mét.
+GFA4F689B	Nó lớn đến mức chúng tôi chỉ cần quay bằng máy quay là nó trông không giống mô hình chút nào.
+G2571B991	Nó trông hoàn toàn như thật.
+G31C24FB0	Điều làm nên một bộ phim tuyệt vời thực sự là một kịch bản hay và một dàn diễn viên giỏi.
+G9C04D37F	Tôi đoán khi làm game cũng có nhiều thử thách tương tự.
+GA0B86A25	Bạn phải thu hút đúng người tài cho game.
+G0B7DC714	Bạn phải có một câu chuyện thu hút khán giả, khiến họ hào hứng với câu chuyện đó
+G5E1101AB	và bị câu chuyện cuốn hút đến mức muốn thấy nó sống động.
+G87FC774C	Chúng ta không thể làm gì cho Frodo.
+G3C9AA8BC	Nhiệm vụ này sẽ lấy đi mạng sống của cậu ấy.
+G98F7C221	Rohan yếu ớt và sắp sụp đổ
+GA01F7D34	và vì thế hắn sẽ tấn công mạnh và nhanh vào thế giới loài Người.
+GA8723617	Chiến tranh đã ập đến.
+GE1AF4B03	Chúng đã cướp báu vật của ta và chúng ta muốn nó.
+G6A5F57B3	Có lẽ điều đáng sợ nhất khi bắt tay vào dự án này là
+GDE1DC635	cảm giác rằng chúng tôi có một trách nhiệm to lớn phải hoàn thành
+GCFDFC743	trên một định dạng tương tác giống như Peter Jackson đã làm được với phim.
+GC87068A6	Ông ấy đã lấy một trong những tác phẩm văn học được yêu mến nhất mọi thời đại
+G423C7E0C	và chuyển thể thành một kiệt tác điện ảnh sử thi, tạo ra hàng triệu người hâm mộ trên khắp thế giới.
+GC8F29411	Khi bắt đầu dự án, bạn làm phần ý tưởng và phần thiết kế.
+GBACB2DE5	Khi dự án tiến triển - lập trình viên, họa sĩ, họa sĩ hoạt hình, họa sĩ môi trường,
+G047AC48F	chuyên gia dựng hình, chuyên gia chất liệu - tất cả những người này nghĩ về mảng riêng của mình trong game,
+GB60517EB	nhưng xét về trải nghiệm tổng thể.
+G13170460	Một trong những lợi thế khi được làm việc sát sao với các nhà làm phim
+GA03610FF	là chúng tôi có thể dùng mô hình và đạo cụ họ tạo ra cho phim
+G9DADDEE4	làm tham chiếu cho những thứ chúng tôi cần tạo ra trong game.
+GF0D449E5	Bóng tối đang chuyển động.
+GEC940136	Khi thiết kế Aragorn, chúng tôi phải nghĩ về cả ba nhân vật có thể chơi cùng một lúc.
+GBB381F7C	Ví dụ, Legolas là nhân vật thiên về tốc độ và sự khéo léo hơn nhiều.
+G4CE351A9	Gimli là một chiếc xe tăng nhỏ bé.
+G21025B26	Aragorn là sự kết hợp của cả hai.
+G3ADE6E66	Chúng tôi đã xem từng động tác của mỗi nhân vật - từng khung hình - trước khi bắt đầu xây dựng bất cứ thứ gì.
+G80ADBA8B	Sau đó chúng tôi tạo khung lưới của nhân vật. Đó là tỷ lệ, kích thước và quy mô cơ bản của họ.
+G85E5A400	Rồi chúng tôi thêm chất liệu và ánh sáng để hoàn thiện trang phục và thêm các chi tiết nhỏ cho nhân vật.
+GCD3CDD42	Các diễn viên rất hứng thú làm việc với chúng tôi.
+G092B49A0	Có lần, Viggo Mortensen đã cho chúng tôi xem vài động tác hành động của anh ấy.
+G915A1A70	Anh ấy và diễn viên đóng thế mở một thùng gươm và bắt đầu đấu tập với nhau.
+G215B5E15	Đó trở thành nền tảng cho nhiều động tác của Aragorn.
+G7126178B	Nó muốn được tìm thấy.
+G7E02AF05	Khi chọn cảnh từ phim để đưa vào lối chơi, Lăng mộ Balin thực sự nổi bật là một ứng viên sáng giá.
+GF4146E18	Đó là một trong những khoảnh khắc đáng nhớ nhất của phần phim đầu tiên.
+GE152213A	Chúng tôi muốn tái tạo không khí với chùm sáng rất mạnh chiếu lên chính ngôi mộ.
+GB236432D	Đó là một thử thách với những người dựng hình môi trường và chuyên gia ánh sáng của chúng tôi.
+GD3C26DBB	Các màn Làng Rohan độc đáo ở chỗ chúng cho phép chúng tôi mở rộng các khu vực trong phim.
+G8669E69D	Bản thân màn chơi trông và tạo cảm giác rất giống các bối cảnh phim về ánh sáng,
+GF9B205CF	hình dáng kiến trúc, những con người ở đó, nhưng trong trường hợp này chúng tôi thực sự phát triển thêm
+GB285B32E	và tạo ra những khu vực trong màn chơi để người chơi khám phá và chiến đấu mà có lẽ họ chưa thấy trong phim.
+G5E5F1D1C	Điều tuyệt vời ở game Chúa tể những chiếc nhẫn này
+G610E0BE4	là bạn được nghe ngay trên màn hình của mình giọng của các diễn viên gốc--tất cả bọn họ.
+GC6FCAA65	Cứu với! Aragorn! Aragorn! Cứu với!
+G20165D69	Nó chân thực đến khó tin và tôi nghĩ làm game dựa trên phim thật sự rất khó.
+GBF3A0A5B	Game này làm được. Nó rất giống phim.
+GDD010A37	Chúng tôi thiết kế một hệ thống âm nhạc rất linh hoạt, phản ánh tâm trạng của các sự kiện trong game.
+G96BEDA9C	Một chiếc Nhẫn gom tất cả và trói buộc chúng trong bóng tối.
+G91629050	Trong phim, Saruman tấn công Thung lũng Helm với mười nghìn quân Uruk-hai.
+G3B702B98	Vì vậy chúng tôi phải dùng những yếu tố khác trong tầm tay để tạo cảm giác chiến trận.
+GDEFA604D	Qua hiệu ứng và âm thanh, chúng tôi thực sự tạo cảm giác như có hàng nghìn tên Orc ở đó.
+G204351C8	Nếu ai đó bật game lên và tự nhủ:
+GEC81BA2D	Trời ơi! Đây chính là bộ phim! Thì chúng tôi đã đạt đúng điều mình đặt ra.
+G52BF957B	Đây là nơi tôi nhớ trong phim.
+G571B482E	Tôi ở đó. Tôi có thể làm gì đó. Giờ là lượt của tôi.
+G625B0A6D	Đó là cảm giác chúng tôi muốn người chơi có được.
+GB222979D	Đâu rồi con ngựa và người kỵ sĩ?
+G2457FF85	Đâu rồi chiếc tù và từng vang lên?
+G8B36CA83	Chúng đã trôi qua như mưa trên núi;
+G50095CA7	như gió trên đồng cỏ.
+G10EB8BCF	Những ngày tháng đã lặn về phía Tây,
+G109A0CCE	sau những ngọn đồi,
+G02628501	vào bóng tối.
+G80A942D2	Aragorn!
+GDDEA48AC	Trợ giúp
+G4C40E774	Nhấn nút START
+GEE711094	Tiếp tục
+GF9202936	Chơi lại
+G2E427514	Bật
+GFC4343CA	Tắt
+G52E4CD32	Di chuyển
+G39D074FD	Chọn
+GAC3A8B6E	Quay lại
+G42B46F3C	@ 2002 New Line Productions, Inc.  The Lord of The Rings cùng các nhân vật, tên và địa danh trong đó, * The Saul Zaentz Company d/b/a Tolkien Enterprises, được cấp phép cho New Line Productions, Inc.  Bảo lưu mọi quyền.
+G035F710A	EA GAMES* là một thương hiệu của Electronic Arts*.
+GBAC3ED5F	Mã game và một số yếu tố hình ảnh/âm thanh @ 2002 Electronic Arts Inc. Bảo lưu mọi quyền.
+G0EF5F91F	Game mới
+GB8D9D2FD	Tải game
+G0BE2A075	Tùy chọn
+G5D6AEEF7	Chế độ gỡ lỗi
+G83335327	Nội dung thêm
+G731194FA	Lưu game
+G7BA082D0	Nhấn START để tiếp tục
+G755B3BA1	Cấu hình tay cầm
+G03961FD4	Thiết lập game
+GABEE6EA4	Độ khó:
+GF065116B	Dễ
+G8D3A16F6	Thường
+GACDD0363	Chuyên gia
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Vòm
+GA10C5C21	Âm lượng giọng:
+G7F04050E	Âm lượng nhạc:
+GF30A57F8	Phụ đề:
+G64752D2D	Rung:
+GB3F78571	Âm lượng game:
+GED3C9F14	Âm thanh:
+GB065D5A4	Chọn game để tải:
+G00FF7920	Chọn vị trí lưu:
+GC99B6C1E	Chọn khe MEMORY CARD:
+GFB5C0BA2	Ổ cứng Xbox
+GD2F916B6	Khe MEMORY CARD 2
+GAEFBDEF3	Hủy
+GDA714102	Có
+GB893E04C	Không
+GE506E266	Bạn có chắc không?
+G574C52F2	Bạn có chắc muốn mua nâng cấp này?
+G0D91D779	Bạn có chắc không? Kết quả lần chơi trước của nhiệm vụ này sẽ bị mất.
+G1CF7123A	Bạn có chắc không? Mọi tiến trình chưa lưu trong game này sẽ bị mất.
+GEF04DC5D	Bạn có chắc không? Tiến trình trong nhiệm vụ này sẽ bị mất.
+GEDF6F861	Bạn có chắc muốn ghi đè game này?
+GF44D8878	Bạn đã mua nâng cấp xong chưa?
+G1EF3EFE3	Lưu game vào ổ cứng
+G05163971	Tải game từ ổ cứng
+G8F93A6FE	Chọn độ khó
+G654484DF	Đã khóa
+G5A7CB330	Hoàn thành
+G8D6AAF13	Chưa chơi
+GBE8C099C	Mở đầu
+GF4FBBE46	Đỉnh Gió
+GE7EA3020	Cổng Moria
+GE13A531D	Lăng mộ Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Rừng Fangorn
+G35CCE51F	Đồng bằng Rohan
+GAD341B58	Westfold
+G94ADD008	Khe Rohan
+G9760067E	Tường Deeping
+GF8B38ED5	Tường bị phá
+G644C89AD	Sân Hornburg
+G69B8B4C2	Tháp Orthanc
+GBF00F963	Thung lũng Helm:
+GE34AB2FD	Sở thú New Line
+GE132F5FF	Chọn đoạn phim để xem:
+G4B3C17B9	Mở đầu
+GAD303F2A	Kết thúc
+G668B98BD	Tầng
+G9C7A95F0	Điểm nâng cấp:
+G4AE44639	4) Nhập chuỗi mã được chỉ định.
+G5374B3F5	Mã bí mật
+GDF7B6B3A	Luôn tàn phá:
+GFECB245B	2 người chơi:
+GCAB16744	Kẻ thù nhỏ:
+G587D657D	Mọi nâng cấp:
+G58E34314	Bất tử:
+GF0336180	Chuyển động chậm:
+G5A122CB0	Để nhập mã:
+G35BC6746	1) Bắt đầu một nhiệm vụ.
+G46DF9919	2) Nhấn nút START để tạm dừng.
+G5A1291EE	3) Bóp và giữ
+GEB88B42D	Máu vô hạn:
+G6AE6FFFE	Tên vô hạn:
+GAA29A634	Kết thúc nhiệm vụ:
+GB2AE1BCE	Chế độ tạm dừng:
+GAA467E08	Thêm kinh nghiệm:
+GEA42298C	Lên cấp:
+G6BA0C403	Hồi máu:
+G41D871E0	Hồi tên:
+G04DBD06B	Nâng cấp tên:
+GA7A50BB5	Xem nâng cấp
+GA67DF58D	Về menu
+G773B79A5	Đến nhiệm vụ tiếp theo
+G96540044	Bạn đã thất bại trong nhiệm vụ.
+G5ADDCAC2	Chơi lại nhiệm vụ
+G9DD85D6D	Về menu
+G730918CA	Thử lại
+GB437BA93	Đội ngũ thực hiện
+G798A44A2	Chơi lại nhiệm vụ
+G6F46B26E	Vui lòng chọn ngôn ngữ.
+G2809E047	Tiếng Anh
+GE3AAFF7A	Tốc độ
+GD0DB46DB	Mãnh liệt
+G9AD854EF	Kết liễu
+GE83BE834	Đặc biệt
+GDB34AED9	Liên hoàn
+GDACF8DCA	Đã mua
+G125CAC9A	Chưa mở khóa. Nhấn nút A để tiếp tục.
+GDA9711D2	Bạn chưa thu thập đủ điểm nâng cấp để mua nâng cấp này. Nhấn nút A để tiếp tục.
+GEB0E0008	hoặc
+G90A54691	sau khi đỡ đòn
+GF5F43483	khi bị ngã
+GFC1C2104	Ô trống
+GB8BCCCB9	Game 2
+G92BA5250	Game 3
+G9CCBAB2F	Game 4
+G76C930C6	Game 5
+G50C6B65D	Game 6
+G2AC43BF4	Game 7
+G34D594D3	Game 8
+G0ED31A6A	Game 9
+GBE76BA62	Game 10
+GE47934CB	Game 11
+G6ED86859	Chưa cắm Memory Card (PS2). Cần ít nhất 80 KB để lưu dữ liệu game này. Bạn có muốn tiếp tục?
+G87DE26DA	Không đủ dung lượng trên Memory Card (PS2) ở khe MEMORY CARD 1.  Cần ít nhất 80 KB để lưu dữ liệu ứng dụng này. Bạn có muốn tiếp tục?
+G7118C569	Không đủ dung lượng trên Memory Card (PS2) ở khe MEMORY CARD 2.  Cần ít nhất 80 KB để lưu dữ liệu ứng dụng này. Bạn có muốn tiếp tục?
+G6804B4C2	Không đủ dung lượng trên các Memory Card (PS2) ở các khe MEMORY CARD. Cần ít nhất 80 KB để lưu dữ liệu ứng dụng này. Bạn có muốn tiếp tục?
+G849021EA	Không có Memory Card (PS2) ở khe MEMORY CARD 1. Nhấn nút X để tiếp tục.
+G59CE2129	Không có Memory Card (PS2) ở khe MEMORY CARD 2. Nhấn nút X để tiếp tục.
+GC5BD8B5F	Vui lòng kết nối lại tay cầm và nhấn START để tiếp tục.
+GC2BDD02C	Memory Card (PS2) ở khe MEMORY CARD 2 chưa được định dạng. Định dạng Memory Card (PS2)?
+G6B64948C	Xbox của bạn không đủ khối trống để lưu game.  Nhấn A để tiếp tục mà không lưu hoặc B để giải phóng ít nhất
+GEDAB4EA9	Vui lòng kết nối lại tay cầm và nhấn START để tiếp tục
+G00E55934	Ổ cứng không đủ khối trống cho bản lưu game này.
+G20A17FB1	khối cần được giải phóng.
+G353AAE58	Định dạng thất bại! Lỗi Memory Card (PS2) ở khe MEMORY CARD 2! Nhấn nút X để tiếp tục.
+G9CAF03E3	Không thể lưu game. Nhấn nút A để tiếp tục.
+GCB03752D	Đã lưu game.  Nhấn nút A để tiếp tục.
+GACBFB64F	Lưu vào Memory Card (PS2) ở khe MEMORY CARD 2 thành công! Nhấn nút X để tiếp tục.
+GC7C0454F	Đang lưu dữ liệu vào Memory Card (PS2) ở khe MEMORY CARD 1. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+G4B14AAB4	Đang lưu dữ liệu vào Memory Card (PS2) ở khe MEMORY CARD 2. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+G53DAC278	Đang tải dữ liệu từ Memory Card (PS2) ở khe MEMORY CARD 1. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+GF144B8B3	Đang tải dữ liệu từ Memory Card (PS2) ở khe MEMORY CARD 2. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+G063DD8CC	Không thể tải game. Nhấn nút A để tiếp tục.
+GE5BDAC0B	Bạn có muốn lưu game không?
+GED3A9CCF	Không có game đã lưu. Nhấn nút A để tiếp tục.
+GAF453999	khối.
+GEE649E5A	Memory Card (PS2) ở khe MEMORY CARD 1 chưa được định dạng. Nhấn nút X để tiếp tục.
+G81447581	Memory Card (PS2) ở khe MEMORY CARD 2 chưa được định dạng. Nhấn nút X để tiếp tục.
+GB36F8F0C	Đang đọc dữ liệu từ Memory Card (PS2) ở khe MEMORY CARD 1. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+G97EC5687	Đang đọc dữ liệu từ Memory Card (PS2) ở khe MEMORY CARD 2. Không tháo Memory Card (PS2), khởi động lại hoặc tắt máy.
+G8E8AF6C1	Có vấn đề với đĩa bạn đang dùng. Đĩa có thể bị bẩn hoặc hư hỏng.
+G9CB8DFF0	Nhiệm vụ 1
+G0EC04F2B	Nhiệm vụ 2
+GE8BDD4C2	Nhiệm vụ 3
+G5AC543FD	Nhiệm vụ 4
+G34C2C994	Nhiệm vụ 5
+GA6CA38CF	Nhiệm vụ 6
+G80C7BE66	Nhiệm vụ 7
+GF2CF2DA1	Nhiệm vụ 8
+GCCCCB338	Nhiệm vụ 9
+GA1F545C0	Nhiệm vụ 10
+GC7F7C029	Nhiệm vụ 11
+GEDFA3A92	Nhiệm vụ 12
+G13FCB4FB	Nhiệm vụ 13
+GFBA35200	Nhiệm vụ A
+G6DAAC13B	Nhiệm vụ B
+G47A846D2	Nhiệm vụ C
+GB9AFB60D	Nhiệm vụ D
+G0111B4C5	Kinh nghiệm nhiệm vụ:
+G10CB2024	Xếp hạng nhiệm vụ:
+GB8F11F62	Tổng điểm nâng cấp:
+G94649BD6	Hoàn hảo
+GE424E811	Xuất sắc
+G70E9184E	Tốt
+GE98543F1	Khá
+GF9792B5F	Kém
+G4DE9139C	Kỹ năng
+GB525F096	Mạnh
+G5F8C23CD	Phòng thủ
+G8673311D	Tấn công
+G7829DFB2	Một đòn liên hoàn nhanh.  Hiệu quả với kẻ thù nhỏ không có khiên.
+G63E6B4FD	Một đòn liên hoàn mạnh để đập tan chướng ngại vật hoặc phá vỡ khiên địch.
+G406CD62A	Bóp và giữ cò trái để sử dụng.  Bắn bằng nút A (giữ để tăng sát thương).
+G7651B078	Cú đâm này kết liễu mọi kẻ thù đã bị hạ gục.
+G09258F36	Đánh bật kẻ thù ra xa khỏi tầm tấn công.
+G36E84E05	Chặn đòn tấn công và vật phóng của địch.
+G074FC78D	Một đòn tấn công hủy diệt.  Nhấn và giữ nút Y để sử dụng.
+GE5C8740D	Tăng vĩnh viễn lượng máu của bạn.
+G791AEDAB	Lao về phía trước và quật ngã kẻ thù không có khiên.
+GF4A5485B	Tấn công khi đứng dậy, khiến kẻ thù bất ngờ.
+GC0B8F80A	Một đòn liên hoàn rất hiệu quả để hạ kẻ thù không có khiên.
+G6CBE68E9	Rất hiệu quả để hạ kẻ thù có khiên nhanh nhất có thể.
+GD7BB121B	ĐÒN LIÊN KẾT: Giết ngay một tên goblin đang tấn công.
+G4A59663E	Bắn như Cung Dúnedain, những mũi tên ngạnh của người Rohirrim gây sát thương nặng.
+G96A8AB86	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Quan Nhiếp Chính)
+GED26DEB8	Lao tới từ xa để quật ngã kẻ thù không có khiên. (Cần Đòn Lao Tới)
+GB4790643	Gây thương tích, quật ngã và đánh kẻ thù bằng đòn liên hoàn này.
+G9709901B	Dùng đòn liên hoàn này để đánh một kẻ thù không có khiên, hạ gục hắn, rồi nhanh chóng đánh tên khác.
+G066B80A4	ĐÒN LIÊN KẾT: Giết ngay một tên Orc đang tấn công.
+GB54F0B8A	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Isildur)
+G1C742C09	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Du Hiệp)
+G9F299E6A	Tăng sát thương của Đòn Tốc Độ.
+G2A888253	Gây thương tích, quật ngã rồi kết liễu kẻ thù mạnh bằng đòn liên hoàn này.
+GEF4043FD	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Elendil)
+GF3D48718	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Hoang Dã)
+GDAE09290	Những mũi tên sắt của Gondor gây sát thương khủng khiếp.  (Cần Cung Rohan)
+GBD1ED2AE	ĐÒN LIÊN KẾT: Giết ngay một tên Uruk-hai đang tấn công.
+G6DF8DC34	Dùng với kẻ thù mạnh để đập vỡ khiên, quật ngã và đánh hắn.
+GB1BCB280	Không có gì
+GE225A1EC	Bóp và giữ cò trái để sử dụng.  Ném bằng nút A (giữ để tăng sát thương).
+GFF3FB1CE	Nhát rìu này kết liễu mọi kẻ thù đã bị hạ gục.
+G81A89461	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Đá)
+GF266C7E6	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Sắt)
+G2FCD00C0	Lao tới từ xa để quật ngã kẻ thù không có khiên.  (Cần Đòn Lao Tới)
+G00247254	Tăng vĩnh viễn lượng máu của bạn.  (Cần Chữ Rune Bảo Hộ)
+GA505D28C	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Balin)
+G34C62FC4	Ném như Rìu Erebor, những chiếc Rìu Moria sắc như dao cạo còn gây sát thương lớn hơn.
+G57901BB9	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Người Lùn)
+G8840F62F	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Glóin)
+G361F0511	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Núi Non)
+G219C0125	Những lưỡi rìu viền Mithril này gây sát thương khủng khiếp.  (Cần Rìu Moria)
+G9986DAAB	Tăng sát thương của Đòn Mãnh Liệt.
+G11BF2FC5	Bắn như Trường Cung Mirkwood, những mũi tên gỗ tần bì của Rivendell còn gây sát thương lớn hơn.
+G7A9893BB	Những mũi tên phù phép của Lothlórien gây sát thương khủng khiếp.  (Cần Trường Cung Rivendell)
+G42E47239	Những mũi tên phép thuật này sẽ thiêu đốt kẻ thù.  (Cần Trường Cung Lothlórien)
+G5BAB8220	Tăng vĩnh viễn lượng máu của bạn.  (Cần Nội Lực Celeborn)
+G39265CB0	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Tiên Tộc)
+G084B6AEF	Những mũi tên này xuyên qua và gây sát thương cho mọi kẻ thù trên đường bay.  (Cần Tên Hỏa Long)
+GB1D19C39	Tăng sát thương của mỗi mũi tên bạn bắn.
+G06E26BE1	Ba Nhát Chém
+G20A303C1	Hai Nhát Bổ
+GCB8F4087	Cung Dúnedain
+G3F6F3751	Đòn Bóng Tối
+GBE8C73E9	Cú Đá Chiến Đấu
+G5660E3B0	Đỡ Gươm
+GDF332280	Phẫn Nộ Du Hiệp
+GB8AB07B9	Sức Mạnh Quan Nhiếp Chính
+G187F8CC1	Đòn Lao Tới
+G86E487F5	Đòn Đứng Dậy
+GF7D6DC76	Kinh Hoàng Chớp Nhoáng của Isildur
+GB34DCC39	Sự Giải Thoát của Isildur
+GC9303634	Khắc Tinh Goblin
+G3A0786A5	Cung Rohan
+G8B17B5C5	Sức Mạnh Isildur
+G579A1927	Đòn Xung Phong
+G207C1523	Xung Phong Tử Thần của Isildur
+G6C2653E9	Nước Cờ của Isildur
+G2A3BA153	Khắc Tinh Orc
+GA28B29AA	Sức Mạnh Elendil
+G7D213CCE	Cuồng Nộ Hoang Dã
+G006BF315	Bậc Thầy Kiếm Thuật
+G6B68444D	Cuộc Tấn Công của Isildur
+G3B0A3720	Sức Mạnh Argonath
+G78BAB3BC	Cơn Giận Númenor
+GCEDAD8B0	Cung Gondor
+G3BE146BB	Khắc Tinh Saruman
+G701FD063	Phán Xét của Isildur
+G0251EC9F	Rìu Erebor
+G96C77DAD	Cú Đâm Rìu
+GDD4B6691	Đỡ Rìu
+GADD20DD0	Phẫn Nộ Người Lùn
+GB0D95BC6	Uy Lực Đá
+G4FB6CF69	Uy Lực Sắt
+G5F017E32	Kinh Hoàng Chớp Nhoáng của Balin
+GDFD7CADD	Sự Giải Thoát của Balin
+GDF1B571B	Chữ Rune Bảo Hộ
+G9B37EDE7	Xung Phong Tử Thần của Balin
+GCDB1A82D	Nước Cờ của Balin
+G2DEF1D03	Uy Lực Balin
+GE89D3658	Uy Lực Glóin
+G31B06C3A	Rìu Moria
+GADFB76EF	Cuồng Nộ Núi Non
+G75612F09	Cuộc Tấn Công của Balin
+G8CE2E527	Uy Lực Khazad-dûm
+GE4E87FCC	Cơn Giận Moria
+GA16173AB	Rìu Dãy Núi Sương Mù
+G24288EA5	Rìu Thuật Các Vua
+G45AAD667	Phán Xét của Balin
+GB752504B	Trường Cung Mirkwood
+GA018F71A	Đỡ Dao
+G0DCE9941	Phẫn Nộ Tiên Tộc
+G4A27D7DF	Nội Lực Celeborn
+GE0EC06AA	Trường Cung Rivendell
+G76059454	Kinh Hoàng Chớp Nhoáng của Elrond
+GE8C0678B	Sự Giải Thoát của Elrond
+GE9F2F2C9	Trường Cung Lothlórien
+G5FE47D01	Xung Phong Tử Thần của Elrond
+G4B1902CB	Nước Cờ của Elrond
+GB3FB8DDE	Tên Hỏa Long
+G4A61DECC	Nội Lực Galadriel
+G204DE538	Cuồng Nộ Gil-galad
+G5B85BC6F	Cuộc Tấn Công của Elrond
+GBDF43860	Tên Mithril
+G4B69DAC6	Cung Thuật Tiên Tộc
+G43AB31C1	Phán Xét của Elrond
+GEAA8149B	Cấp
+G11886F39	Đỡ đòn để chặn đòn tấn công của địch và gạt tên bay.
+GE4E78CFD	Đỡ đòn
+G3226B277	Bóp và giữ cò trái để chuyển sang Vũ Khí Tầm Xa.  Nhấn nút A để bắn.  Dùng cần analog trái để ngắm.
+GFF931564	Vũ Khí Tầm Xa
+G9A309E3D	Bắn
+GC4AB2A6D	Dùng Đòn Tốc Độ để đánh kẻ thù không có khiên.
+G5C64BDED	Dùng Đòn Mãnh Liệt để phá khiên địch.
+G4B1F5E2B	Đòn Mãnh Liệt
+G12993772	Đòn Tốc Độ
+G5550F308	Kiếm Điểm Kinh Nghiệm để tăng Cấp cho nhân vật và mua những nâng cấp giá trị.
+GD5F0D645	Điểm Kinh Nghiệm nhận được
+G109A17A7	Dùng các đòn liên hoàn nâng cao và tránh bị địch đánh trúng để làm đầy Thanh Kỹ Năng và nhận tối đa Điểm Kinh Nghiệm.
+GDB22979F	Thanh Kỹ Năng
+GF7AF01B8	Ngắm
+G552324EC	Nhảy lùi
+G3962B27E	Đòn kết liễu
+G819AB384	Đánh bật
+GB5FE5915	Bắn/Đòn Tốc Độ
+G1438BF1E	Di chuyển/Ngắm
+GCDD8B9EF	Tạm dừng
+G63E0263C	Phỏng vấn
+GA970F7F6	Peter Jackson và Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Chúa tể những chiếc nhẫn
+GF0462ED4	Hậu trường làm game
+G0DB34230	Đoạn phim độc quyền
+G9DF19E57	'Hiệp hội Nhẫn thần'
+G1704CE51	Ảnh sản xuất
+G330E63EE	Fangorn và Orthanc
+GD722C1B8	Rohan và Thung lũng Helm
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Chơi với Aragorn
+GA8934934	Chơi với Legolas
+G84C57E95	Chơi với Gimli
+G46EA0007	Chơi với Isildur
+G5689E41F	Nhiệm vụ bí mật
+G7F2C7A4C	Chơi với nhân vật bí mật
+G96AF0882	Tranh ý tưởng
+G8813AE29	Hoàn thành Cổng Moria để mở khóa
+G4EEEB554	Hoàn thành Lăng mộ Balin để mở khóa
+G3182CC3A	Hoàn thành Amon Hen để mở khóa
+G54747798	Hoàn thành Rừng Fangorn để mở khóa
+G5D796BA6	Hoàn thành Đồng bằng Rohan để mở khóa
+G758A2B31	Hoàn thành Westfold để mở khóa
+GD1B66361	Hoàn thành Khe Rohan để mở khóa
+GEC95C099	Hoàn thành Thung lũng Helm: Tường Deeping để mở khóa
+G4F6E6B62	Hoàn thành Thung lũng Helm: Tường bị phá để mở khóa
+G7E4B2F5F	Đạt Cấp 5 với Aragorn
+GA825B93E	Đạt Cấp 5 với Legolas
+GD08EF3EF	Đạt Cấp 5 với Gimli
+G060F3A0C	Hoàn thành Thung lũng Helm: Sân Hornburg và đạt Cấp 10 với Aragorn
+G9C00EBDD	Hoàn thành Thung lũng Helm: Sân Hornburg và đạt Cấp 10 với Legolas
+GCA301FEC	Hoàn thành Thung lũng Helm: Sân Hornburg và đạt Cấp 10 với Gimli
+G2A4097F8	Hoàn thành Nhiệm vụ bí mật với bất kỳ nhân vật nào
+GF80714A8	Hoàn thành Nhiệm vụ bí mật với nhân vật bí mật
+GF281A415	Peter Jackson và Barrie Osborne nói về bộ phim và trò chơi
+GEF6D5A30	Elijah Wood nói về việc vào vai Frodo trong game 'Chúa tể những chiếc nhẫn'
+G1B7C2E20	Ian McKellen nói về việc vào vai Gandalf trong game 'Chúa tể những chiếc nhẫn'
+G100A11D4	Hậu trường quá trình làm game 'Chúa tể những chiếc nhẫn'
+G14A8622F	Ảnh nhân vật và cảnh quan trong 'Hiệp hội Nhẫn thần'
+G228511D6	Ảnh nhân vật và cảnh quan ở Fangorn và Orthanc
+GFDF064C7	Tranh lấy cảm hứng từ 'Chúa tể những chiếc nhẫn' của John Howe và Alan Lee
+GAAE1A0C0	Ảnh nhân vật và cảnh quan ở Rohan và Thung lũng Helm
+G6CEBDAE1	Viggo Mortensen nói về việc vào vai Aragorn trong game 'Chúa tể những chiếc nhẫn'
+G6824CF13	Orlando Bloom nói về việc vào vai Legolas trong game 'Chúa tể những chiếc nhẫn'
+G84770794	John Rhys-Davies nói về việc vào vai Gimli trong game 'Chúa tể những chiếc nhẫn'
+G775EAFA1	Mã bí mật để mở khóa các tính năng ẩn của game 'Chúa tể những chiếc nhẫn'
+G640E4463	Đổi lựa chọn
+G6D02770F	Xác nhận lựa chọn
+GE5EE10E6	Quay lại
+GA75BE7EE	Đổi hoặc chỉnh lựa chọn
+GE7B4EE86	Về menu chính
+G47C91DD4	Đổi hình
+GE445F6CE	Dùng Điểm Nâng Cấp để mua cải tiến cho nhân vật của bạn.
+GB2D2B6DB	Giết hết chúng!
+GFD9FFC0E	Hạ con quái này bằng Đòn Tốc Độ!
+G7BD97E94	Dùng Đòn Mãnh Liệt để phá khiên của hắn!
+G62FC14DC	Chúng đến kìa! Giết hết chúng!
+GA3F97A90	Hãy cho ta mượn gươm của các người!
+G88F3FEA7	Hự! Chết đi, quái vật Mordor!
+G4888927E	Vì Bạch Thành!
+GB5DB8B33	Ngươi tiêu rồi!
+G91F156A0	Cút đi, sinh vật bóng tối!
+G8F5E1C57	Chết đi, lũ con đẻ của Sauron! Chết đi!
+GEF59BEBD	Đẩy lùi chúng!
+G263E18E0	Tiến lên!
+G8715790C	Giữ vững vị trí!
+G09E491AC	Chết đi!
+GC9D8887A	Đồ cặn bã Gondor!
+GD909145B	Ngươi, chết đi!
+G8524085B	Các ngươi không thể giết hết bọn ta!
+GFA0F31A8	Chết đi, đồ cặn bã!
+G6949F8FB	Chúng quá đông, ngài phải phòng thủ!
+GAB41028F	Hãy tự vệ, thưa ngài.
+GC99D9EF1	Đòn Tốc Độ sẽ hạ được tên này.
+G8BC62719	Đòn Mãnh Liệt sẽ phá vỡ những tấm khiên đó.
+G24319240	Thế giới đã thay đổi.
+G6FC7E51E	Ta cảm nhận được nó trong nước.
+G586AE929	Ta cảm nhận được nó trong đất.
+GA0D1D398	Ta ngửi thấy nó trong không khí.
+G20A7EC8F	Nhiều thứ từng tồn tại đã mất đi,
+G9A5EEA48	vì giờ không còn ai sống mà nhớ đến.
+G991F588A	Mọi chuyện bắt đầu từ việc rèn những chiếc Nhẫn Quyền năng.
+GDCCA686B	Ba chiếc được trao cho tộc Tiên -
+G64D4928C	bất tử, thông thái và đẹp đẽ nhất trong muôn loài.
+GC38B0B40	Bảy chiếc cho các Chúa tể Người Lùn,
+GE4E9DA85	những thợ mỏ và thợ thủ công vĩ đại của những sảnh đường trong núi.
+G8EA28015	Và chín... chín chiếc Nhẫn được tặng cho loài Người,
+G5415D8A9	những kẻ trên hết khao khát quyền lực.
+GCAF2B8E3	Vì trong những chiếc Nhẫn này chứa đựng sức mạnh và ý chí để cai trị mỗi tộc.
+GEAB51D48	Nhưng tất cả bọn họ đều đã bị lừa...
+G9968C959	vì một chiếc Nhẫn khác đã được tạo ra.
+G6DF9A86C	Tại vùng đất Mordor, trong ngọn lửa của Núi Diệt Vong,
+GD5CC3D06	Chúa tể Bóng tối Sauron đã bí mật rèn một chiếc Nhẫn Chủ để điều khiển tất cả những chiếc khác.
+GA5AF65D9	Và vào chiếc Nhẫn này hắn đổ tất cả sự tàn ác, hiểm độc và ý chí thống trị mọi sự sống...
+GF9C8C37E	Từng vùng đất tự do của Trung Địa lần lượt rơi vào tay quyền lực của chiếc Nhẫn.
+GD7B567A4	Nhưng vẫn có những kẻ kháng cự.
+G9673067D	Liên minh Cuối cùng của Người và Tiên đã tiến quân chống lại đạo quân Mordor,
+G9292CF8B	và trên sườn Núi Diệt Vong, họ đã chiến đấu vì tự do của Trung Địa.
+G9C449910	Chính vào khoảnh khắc này,
+G4E624CE3	khi mọi hy vọng đã tắt...
+G8B971AFC	...Isildur, con trai của nhà vua, đã cầm lên thanh gươm của cha mình.
+GA0976A20	Sauron, kẻ thù của các dân tộc tự do ở Trung Địa, đã bị đánh bại.
+GCE1FEBD6	Chiếc Nhẫn về tay Isildur, người có một cơ hội duy nhất để tiêu diệt cái ác mãi mãi.
+G4653B8E6	Nhưng trái tim loài Người rất dễ bị tha hóa.
+GF1F12CD3	Hủy nó đi!
+G7A59BC32	Không.
+GEDAFB589	Tôi là hậu duệ của Isildur, không phải chính Isildur. Số phận của tôi do tôi định đoạt.
+GECD0FC9B	Đến Thung lũng Helm! Brego, đi!
+GE526C94A	Frodo! Tránh xa chúng ra!
+GE5AC368C	Cứu với! Chúng ở khắp nơi!
+GE18CFED5	Chúng ta sẽ tìm ra ngươi.
+G754CEC13	Lùi lại, đồ ghê tởm!
+G0EE492EC	Chúng tìm người mang Nhẫn! Ở gần nhau!
+GA236A198	Ngươi không thể chống cự đâu, tên Tí Hon.
+GB0F6888B	Chúng ta tiêu rồi.
+GABCB70B5	Toàn bộ Isengard đã dốc quân ra.
+GD4A9E9B3	Đó là đạo quân được tạo ra cho một mục đích: hủy diệt thế giới loài Người.
+G65599300	Chúa tể Bóng tối đang tới gần.
+GC6B5C82C	Baggins...
+GDE3725D0	Nhẫn Ma! Lùi lại!
+GDB2A2A63	Strider!
+GDF3A925F	Hãy tha cho cậu ấy. Cứu cậu ấy.
+G4867AD04	Tại chốn an toàn Rivendell, người nhỏ bé nhất trong chúng ta đã thể hiện lòng can đảm lớn nhất.
+G3505351D	Tôi sẽ mang nó!
+G5B8CB3F8	Và một Hiệp hội đã được lập nên.
+GF6138FE1	Tôi sẽ mang chiếc Nhẫn đến Mordor!
+GA7DC204A	Dù...
+G2FFEE7D1	...tôi không biết đường.
+GD051F7C5	Ta sẽ giúp cậu gánh vác gánh nặng này, Frodo Baggins...
+G82079845	...chừng nào nó còn là gánh nặng của cậu.
+G8308B082	Cậu mang số phận của tất cả chúng tôi, bạn nhỏ.
+G32030F3F	Và cậu có cây cung của tôi.
+G7A19CD10	Và cây rìu của tôi.
+G18A439E8	Đưa chiếc nhẫn cho chúng ta, tên Tí Hon.
+G5E09B681	Chiếc nhẫn là của chúng ta.
+GC7625599	Đến với chúng ta, tên Tí Hon.
+GB2DCED15	Cứu tôi với!
+GF8B88DB9	Đến cứu tôi với!
+G111D0DD5	Tôi sắp chết.
+G439D87CA	Vùng đất này đã thay đổi.
+GB5DB841A	Chúng ta sẽ đợi ở đây cho đến khi con đường phía trước có vẻ an toàn.
+GF0EB3761	Đã nhiều năm rồi chúng ta không có tin tức gì từ Moria.
+G3A9580D6	Chúng ta có thể đi qua Mỏ Moria.
+G852B83DE	Anh họ tôi, Balin, sẽ đón tiếp chúng ta như hoàng gia.
+G48D6F333	Coi chừng!
+G20BEF03C	Nhanh lên! Lối này!
+G37B7E741	Quái thú.
+G70A83B75	Đây là Cửa Durin, Chúa tể Moria.
+GE6E19D64	Vậy, Gandalf, ông định dẫn chúng qua Caradhras.
+GF7BC40D4	Và nếu thất bại -
+GC7F3ECF5	thì ông sẽ đi đâu?
+G4F7AA217	Đến Moria!
+G0F8A9576	Hãy nói "bạn" và bước vào.
+GCB3668DA	Mellon.
+G64134F99	Giờ chúng ta chỉ còn một lựa chọn.
+GE57BDBA1	Chúng ta phải đối mặt với bóng tối dài dằng dặc của Moria.
+G3CA10A85	Đồ cặn bã Mordor!
+GC753F514	Phục kích!
+G66D5EE9E	Có lũ Orc. Rất nhiều.
+G8AB8C148	Khi gặp rắc rối, hãy cử một người lùn ra!
+G6F4359B4	Đánh hay lắm, Gimli!
+G43E71D7A	Tôi sẽ đi trinh sát phía trước để tìm đường qua.
+G0F5D4F40	Sinh vật.
+G0BFC06A5	Chính ở đây chúng ta sẽ tìm thấy nhiều thứ hơn hẳn Lăng mộ Balin, Chúa tể Moria.
+G79CBD185	Chúng tôi đã chặn cổng. Tiếng trống dưới lòng sâu.
+G676CE560	Chúng tôi không thể thoát ra.
+GC2C2532E	Lùi lại, lũ thú vật vô hồn!
+G41169039	Legolas! Chúng tôi cần cung của anh!
+GED8A660A	Nhanh lên, Gimli!
+G548B1E16	Cút đi, quái thú!
+G8B6C996D	Để tôi hạ hắn!
+GD624A593	Sau lưng anh!
+G22876487	Giữ vững vị trí!
+G6E72BC38	Lùi lại, lũ quái vật!
+G98FB35D8	Bên này!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Chúng đông quá!
+GEB38BB38	Làm sao ngăn chúng được?
+GDB1D4894	Tôi không thể đánh lại chúng!
+GCA82C10C	Tôi không thể cầm chân chúng!
+G839F36D1	Hạ chúng bằng cung của anh!
+G426819B7	Vì Balin!
+G32A709EE	Ta đến đây!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Chúng đông quá!
+GB502E0B9	Vì Mirkwood!
+G5C8B1856	Tao sẽ khoét lỗ cho giòi chui vào bụng mày!
+GF8D92047	Bắt hết chúng!
+GDFB1C64C	Đập nát chúng!
+G5AF9060B	Quay về bóng tối đi!
+GF1BFC8A0	Aragorn! Tôi cần lưỡi kiếm của anh!
+GF83070F8	Lại đây, Gimli! Bên này!
+G2EC65D74	Hãy chuẩn bị tinh thần!
+GCD82317C	Bắn!
+GCEA41230	Tản ra! Không được để chúng bao vây!
+G3AD812AF	Tìm tên Tí Hon!
+G6B59AA20	Frodo mang số phận của tất cả chúng ta!
+G4B4B5CA5	Chúng ta phải bảo vệ cậu ấy!
+G1881769E	Vì danh dự của anh ấy, các ngươi sẽ phải trả giá!
+G743E1105	Moria là một chặng đường tăm tối với Hiệp hội chúng tôi.
+G32DCF8A9	Chạy đi, lũ ngốc!
+G10D542AD	Khôôôôông!
+GD10EAA8A	Nhiệm vụ đang đứng trên lưỡi dao.
+GF997012E	Chỉ cần lạc bước một chút thôi, nó sẽ thất bại.
+G01C6A95F	Nhưng mọi thứ còn tăm tối hơn nữa, vì Hiệp hội chúng tôi đang tan rã.
+G212FEF60	Tôi sẽ đi cùng cậu đến cùng, vào tận ngọn lửa của Mordor.
+G960898CD	Chạy đi!
+GD941582B	Hãy yên nghỉ...
+G9D8421F1	...người con của Gondor.
+G60BC6BA4	Chúng ta phải đánh bại lũ Uruk-hai này để Frodo trốn thoát!
+GF0E0DD02	Boromir!
+G1C9C2949	Giúp một tay đi, Tiên!
+GB1E7FF01	Uruk-hai! Tấn công!
+G62308F86	Ta sẽ tận hưởng chuyện này!
+GA7F87EAC	Quay về cái hố đã sinh ra lũ bay đi.
+G06BA8520	Chúng đã đi lối này, đi nào.
+G817C5460	Nhưng dấu vết của chúng dừng ở đây. Chúng ta phải chia ra để tìm chúng nhanh hơn.
+G934A6365	Aragorn, có thứ gì đó ngoài kia.
+G32456D68	Anh thấy gì, Legolas?
+G090A57A6	Phù thủy Trắng.
+G3BE10384	Saruman.
+GF471A310	Dù Boromir anh dũng, tay sai của Saruman vẫn bắt được các thành viên trong Đoàn chúng tôi.
+G9EB3E2D9	Nhưng chúng tôi sẽ không bỏ mặc bạn đồng hành cho đau đớn và cái chết.
+GC9337F85	Suốt nhiều ngày chúng tôi lần theo dấu vết của chúng...
+G1A87CFBD	...cuối cùng nó dẫn chúng tôi đến Rừng Fangorn.
+G7754D2C1	Khu rừng này rất cổ...
+G9261B17A	...rất cổ.
+GF7DCBBD1	Nó đầy ký ức...
+GC4192431	...và giận dữ.
+G92086B9D	Trong khu rừng lớn ấy, nhiều con đường đã gặp nhau.
+G6F680400	Không thể nào.
+G7A0AC815	Giờ đây đã có liên minh giữa hai tòa tháp - Orthanc và Barad-dûr.
+GF36A1977	Các anh cần có mặt ở nơi khác.
+GA926AFE5	Chiến tranh đang đến với Rohan.
+GC5293984	Giờ thì có trò vui rồi!
+GCF6954E1	Tôi từng thấy rồi, nhưng chưa bao giờ như thế này.
+G2E930B75	Hy vọng duy nhất của chúng ta là sát cánh bên nhau!
+GFD82D6F4	Quân của Saruman đang vận chuyển những thiết bị nổ kỳ lạ qua thị trấn này. Giúp chúng tôi phá hủy chúng!
+G86FA279C	Chặn chúng ở cổng!
+G7B48AD72	Số ít người trong chúng tôi còn chiến đấu được đang hành quân đến Thung lũng Helm.
+GD55B6BE3	Ở đó, tương lai của Rohan sẽ được định đoạt, sống hay chết.
+G2256A18D	Coi chừng thuốc nổ!
+GE0BD0D44	Đúng rồi! Cho chúng nếm mùi lửa!
+G82C8009F	Thế sẽ làm chúng chậm lại!
+GA0C82879	Chúng ta có gì đây?
+G751859FC	Đây là gì?
+G06637EF0	Chúng ta phải phá hủy những thiết bị nổ này!
+GABF94061	Những thiết bị nổ đó phải bị phá hủy.
+G13114F1E	Thứ này là gì nhỉ?
+G5B2AF650	Thứ này có thể hữu ích.
+G14659B9A	Thứ này có vẻ có giá trị.
+G418ECC01	Đây. Ta sẽ giữ cái này.
+G136EC46C	Thứ này đáng mang theo.
+G360BBC1D	Chúng bị thúc đẩy bởi sự điên loạn của Saruman và ý chí của Chúa tể Bóng tối.
+G4840EFEC	Thêm pháo hoa nữa à? Ha! Chúng định biến tất cả chúng ta thành xác chết!
+G19910876	Chúng đang đến bắt chúng ta!
+G08EB8FDB	Không thể đi qua.
+G6FED1000	Ta sẽ phải tìm đường khác.
+G68F91872	Ngôi làng này cháy như bùi nhùi khô!
+G57BD9573	Khá hữu ích.
+G424E3FF5	Thế là được!
+G501ABC20	Đứng vững!
+G31FDA576	Chúng tràn qua cả khu này nữa!
+GB60A7265	Chúng tôi không đơn độc trong việc bảo vệ Rohan.
+GA48B596C	Đội Cận vệ của Nhà vua cũng đang chiến đấu mở đường đến Thung lũng Helm.
+G65866A2E	Các anh đã làm hết sức ở đây rồi.
+G115A6D12	Những người sống sót sẽ đến Thung lũng Helm.
+GC07CBB0E	Các anh vẫn còn việc phải làm. Ta sẽ quay lại với các anh khi thời thế xoay chuyển.
+G63B48C52	Chúng đã phá vỡ phòng tuyến!
+GAAD29572	Làm ơn! Không! Không! Không!
+G589F2E2F	Chúng ta phải cứu tất cả những ai có thể, nếu không ngôi làng này sẽ thất thủ.
+GE1654ECA	Trước khi hành trình dài đưa chúng tôi đến Edoras...
+G97FC9F74	...dân của ngài đã gặp hiểm nguy lớn.
+GB52DB0C9	Tha cho tôi!
+GDDA274AE	Làm ơn! Tha cho tôi!
+GA354A5CD	Áaa! Không!
+G1C74FEB5	Không!
+G946E2F3A	Không! Không! Đừng!
+GF46D4AC5	Không! Không! Không!
+G1BD76207	Đưa chúng tôi ra! Nhanh lên!
+GE57CB50F	Tha cho tôi, tôi xin ngài!
+G716689E1	Bảo vệ chúng tôi!
+G6295F93F	Cứu tôi! Làm ơn, cứu tôi!
+GFA27E38F	Áaaaa! Chúng đang thiêu sống chúng tôi!
+G25B702F8	Cho tôi sống! Làm ơn!
+GDE034FBB	Các anh phải tiếp tục tiến lên.  Ta cần có mặt ở nơi khác.
+G898F1CFF	Hãy khiến chúng khiếp sợ lũ sói của Isengard!
+G04FC403B	Chúng tôi không thể để lũ quái vật này tới chỗ những người tị nạn.
+GD8C5307E	Dân của ngài đã được bảo vệ, nhưng chúng tôi phải trả giá bằng nhiều sinh mạng.
+G4FD6FE99	Tôi suýt mất mạng mình.
+G753DFA73	Và như thế, qua nhiều ngả đường khác nhau, tất cả chúng ta đã đến pháo đài Thung lũng Helm để tử thủ trận cuối cùng.
+G932478E9	Giờ thì giết tên đó!
+GF940F960	Đúng rồi, các cưng của ta!
+G646F5FC4	Lũ sói Warg của chúng ta sẽ được ăn tiệc đêm nay!
+G948FC6FF	Đừng đùa với hắn!  Giết hắn đi!
+G99617AA4	Chúng đã rút lui.  Tạm thời đã xong.
+G4A0F838F	Tôi được mười chín!
+GC16105A6	Vậy là ta hòa.
+GAC4FD1F9	Để xem.
+GF71FBCA2	Tôi được hai.
+G641CA89C	Đủ cho cả hai chúng ta, Gimli!
+GF4B76D82	Chúng ta phải giữ ánh mắt Sauron dán vào chúng ta - khiến hắn không thấy mọi thứ khác đang chuyển động!
+G5B04C967	Lùi lại!
+G3487D102	Xuống khỏi tường thành!
+G8B575855	Lũ Orc đã lên tường thành!
+GCE3C16C0	Tôi được mười bảy rồi!
+G3D052135	Tìm chỗ nấp!
+G05C9D273	Chúng lại bắn chúng ta!
+G4941BF74	Hạ cái thang đó xuống trước khi chúng ta bị tràn ngập!
+G265760A3	Nằm xuống!  Nằm xuống!
+G2E8173A8	Không được để chúng đến gần Hang Động Lấp Lánh!
+G36DE1341	Tôi chưa từng thấy ai dùng rìu như vậy, ngài Người Lùn.
+G80FBF437	Tôi cũng chưa thấy ai bắn cung giỏi như thế.
+G3F35FF0E	Nhưng chúng chẳng bao giờ đứng dậy được sau khi bị tôi đánh.
+GEC633822	Phòng tuyến bị tràn ngập! Phụ nữ và trẻ em đang bị mắc kẹt!
+G17070638	Đưa họ vào Đại Sảnh!
+G5CAB82D3	Chúng ta sẽ cầm chân chúng ở đây, hoặc ở Thành Lũy!
+GFFC47594	Chúng ta đã cầm chân được chúng. Phụ nữ và trẻ em đã an toàn - tạm thời.
+GBD5794D5	Chúng ta không thể cầm chân chúng nữa! Vào Đại Sảnh!
+G088ED5E4	Chúng ta không thể cầm chân chúng!
+G7C6E3511	Sauron và Saruman đang siết chặt thòng lọng.
+G7B236705	Nhưng dù chúng xảo quyệt đến đâu, chúng ta vẫn có một lợi thế.
+GFCAC9515	Chiếc Nhẫn vẫn đang được giấu kín.
+G1C7DF558	Và việc chúng ta tìm cách phá hủy nó chưa từng xuất hiện trong những giấc mơ đen tối nhất của chúng.
+GB72B409D	Và thế là vũ khí của kẻ thù đang tiến về Mordor trong tay một người Hobbit -
+G86CED6F6	mỗi ngày nó lại gần hơn với ngọn lửa của Núi Diệt Vong.
+GD9BB4CD5	Sauron sợ anh, Aragorn.
+GDD966B5E	Cung thủ lên tường thành!
+G6A122B51	Lùi lại! Rào chắn sắp sập!
+G427F5206	Nhanh lên, ngài Người Lùn!
+G113213B2	Đến chỗ Legolas đi, tôi sẽ cầm chân chúng ở đây!
+GA7B95A20	Vì Gondor!
+G7C696E8A	Aragorn đang bị áp đảo! Đến giúp anh ấy!
+GFC98A99D	Anh bạn Tiên của chúng ta cần giúp một tay.
+G66A680C0	Uruk-hai!
+G8968245E	Chúng sắp phá tan rào chắn!
+G428EE07E	Chúng đã vào trong thành lũy. Chúng ta tiêu rồi!
+GFAE8490C	KHÔÔÔÔÔNG!!
+G63F31F0F	Ngày tàn của ngươi đã gần.
+GE8B9DB2E	Ngươi đã chọn con đường đau đớn!
+G910D7B12	Đồ ngu.
+G58E8BBAA	Đã đến lúc ngươi phải dừng lại.
+GD8425223	Ngươi không nghĩ một tên du hiệp rách rưới có thể đọ ý chí với ta chứ? Ta vượt xa sức mạnh của ngươi.
+G1A989E68	Ngươi sẽ phải trả giá cho sự ngạo mạn của mình.
+G0079D300	Ngươi không nghĩ một tên Người Lùn có thể đọ với ý chí của Saruman chứ. Không ai có thể.
+GFB1E1C33	Ngươi không thực sự nghĩ một tên Tiên có thể đọ với Saruman chứ? Không ai có thể, thậm chí không ai nên dám.
+GCB4F521C	Bắn như Cung Quan Nhiếp Chính, những mũi tên ngạnh của người Rohirrim gây sát thương nặng.
+G906620AF	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Denethor)
+GE4F990F3	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Gondor)
+G55B83821	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Gondor)
+GD4900EBD	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cơn Giận Gondor)
+GF1EE1785	Cung Quan Nhiếp Chính
+GC7DFC68A	Phẫn Nộ Gondor
+G26838C80	Tù Và Gondor
+G948EF2DD	Trận Tử Thủ của Đại Úy
+GC354B788	Uy Lực Denethor
+G2675AC6D	Xung Phong Minas Tirith
+G3A16134F	Nước Cờ của Quan Nhiếp Chính
+G7C6E9536	Sức Mạnh Gondor
+G909BDBD3	Cơn Giận Gondor
+GBCA2DB1D	Đột Kích Tháp Trắng
+GA70E206F	Trận Tử Thủ Amon Hen
+GECE9E935	Chơi với Boromir
+G2BAAD5AF	Bóp và giữ cò trái để sử dụng.  Thi triển bằng nút A (giữ để tăng sát thương).
+GF2DB6139	Thi triển như Ánh Sáng Phù Thủy, ngọn lửa của Narya thiêu đốt kẻ thù, gây sát thương nặng.
+G4E51B4E3	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Istari)
+G701450DF	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Olórin)
+G876BFE80	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Maia)
+G554AF8D3	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Narya)
+GF20F1105	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Phù Thủy)
+GE86497FB	Ngọn lửa trắng của Istari thiêu đốt khủng khiếp. (Cần Lửa Nhẫn)
+G5D1DA1B0	Ánh Sáng Phù Thủy
+GE4245C5B	Đỡ Bằng Gậy
+G68852FD1	Phẫn Nộ Maia
+G63891384	Sức Mạnh Istari
+G3023E8DD	Ngọn Lửa Anor
+G03053C48	Ngươi Không Được Qua
+G44E88937	Lửa Nhẫn
+G31781C88	Sức Mạnh Olórin
+GC67FABAE	Xung Phong Shadowfax
+GB28BAB38	Lữ Khách Áo Xám
+GBB647C84	Sức Mạnh Narya
+G3A1959EB	Cuồng Nộ Phù Thủy
+G910A4D18	Bậc Thầy Glamdring
+GE54BB6DF	Đột Kích của Mithrandir
+G80CB05F7	Sức Mạnh Áo Trắng
+G5500602D	Cơn Giận Olórin
+GB3B8BA9A	Lửa Trắng
+G4D3F3799	Cơn Giận của Maia
+GB06CD44C	Chơi với Gandalf
+GD63AEB69	Bóp và giữ cò trái để sử dụng.  Ném mạnh bằng nút A (giữ để tăng sát thương).
+GF1500B18	Ném như Đá Shire, những viên đá lửa sắc nhọn từ Brandywine gây sát thương nặng.
+G1594107A	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Shire)
+G223FB1F4	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Bilbo)
+G419FBE06	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Hobbit)
+G549E8839	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Samwise)
+G3E7B6E97	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Shire)
+G5DBA6F26	Những viên đá được Tiên ban phước gây sát thương khủng khiếp.  (Cần Đá Lửa)
+G586DFFA8	Đá Shire
+GAF333BB7	Phẫn Nộ Hobbit
+GA30AB0B5	Sức Mạnh Shire
+G5B952654	Vết Cắn của Sting
+G3F0B7A46	Ý Chí Người Mang Nhẫn
+GE7A5F0EC	Đá Lửa
+G97512A2B	Sức Mạnh Bilbo
+G4F6E34B0	Xung Phong Baggins
+G8AFDEEE2	Vận May Hobbit
+G9AE8326E	Sức Mạnh Samwise
+G5FECDC01	Cuồng Nộ Shire
+GB7F9A847	Bậc Thầy Sting
+GD629F714	Đột Kích nhà Took
+G31486B52	Sức Mạnh Bag End
+G4023054B	Cơn Giận của Sting
+GD48B81F2	Đá Tiên
+G371FFFDE	Ý Chí Mithril
+G031E765B	Chơi với Frodo
+G63C78123	Bắn như Cung Isengard, những mũi tên ngạnh của Orthanc gây sát thương nặng.
+G266F9F27	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Isengard)
+G4451D279	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Saruman)
+G2DE635F5	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Uruk)
+G4D25FA2B	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Orthanc)
+G055C2C2B	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Isengard)
+G478E4DB1	Những mũi tên đen của Isengard gây sát thương khủng khiếp.  (Cần Cung Uruk)
+GB0EED2A6	Cung Isengard
+G13D5F1B3	Đỡ Bằng Lưỡi Kiếm
+GCC2F9E7C	Phẫn Nộ Uruk
+GF496EAA0	Sức Mạnh Isengard
+GC727C10B	Cuộc Săn của Lurtz
+G73D0C070	Ý Chí Saruman
+GD64B9B56	Cung Uruk
+G9E8D350E	Sức Mạnh Saruman
+G6426C642	Xung Phong Chiến Binh Uruk
+GCC3C5342	Nước Cờ Đồ Tể
+G0DEF3FCC	Sức Mạnh Orthanc
+G0EBAA8C5	Cuồng Nộ Isengard
+GFC62112E	Đồ Tể Bậc Thầy
+GEE7780E5	Cuộc Tấn Công Isengard
+G838B10AC	Sức Mạnh Uruk-hai
+GF44614A3	Cơn Giận Saruman
+G45DC8B08	Cung Đen
+G4F638CF6	Khắc Tinh Rohan
+G9E606E3B	Diệt Vong của Uruk Đầu Tiên
+GE31550F8	Lurtz
+G981416DE	Chơi với Lurtz
+G6F22BB2E	Bắn như Cung Tiên Tộc, những mũi tên của Rivendell gây sát thương nặng.
+GCA4A15A1	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Rivendell)
+G75BCF244	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Gil-galad)
+G216AF74D	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Vilya)
+G0B6CC0B6	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Noldor)
+G0355C5D7	Những mũi tên bạc của Eldar gây sát thương khủng khiếp. (Cần Cung Vanya)
+GD3F16BA3	Cung Tiên Tộc
+G710A6666	Sức Mạnh Rivendell
+G96D9F158	Ân Huệ của Vilya
+GF127A06E	Liên Minh Cuối Cùng
+GB426C696	Cung Vanya
+G71620C4B	Uy Lực Gil-galad
+GFBF3A490	Xung Phong Lindon
+G00542D8B	Nước Cờ của Sứ Giả
+G5104305A	Sức Mạnh Vilya
+G221633E0	Cuồng Nộ Noldor
+G11A9FF39	Cuộc Tấn Công Noldor
+GDE2839BE	Sức Mạnh Eldar
+GB0E7C432	Cơn Giận Lindon
+G008B68D9	Cung Eldar
+G10607364	Chúa Tể Imladris
+G0BA28B85	Chơi với Elrond
+GD6BB77A1	Thi triển như Tia Bóng Tối, ngọn lửa của Barad-dûr gây sát thương nặng.
+G113CAFFC	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Barad-dûr)
+G2F14F0F7	Tăng vĩnh viễn lượng máu của bạn.  (Cần Sức Mạnh Mordor)
+G573FFFF8	Một đòn tấn công hủy diệt hơn.  (Cần Phẫn Nộ Bóng Tối)
+G6AE28C4F	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Chiếc Nhẫn)
+GC4B7E7DB	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Mordor)
+G5FEE9C56	Ngọn lửa của Núi Diệt Vong gây sát thương khủng khiếp.  (Cần Lửa Địa Ngục)
+GA07FAB7C	Tia Bóng Tối
+G59838F7F	Đỡ Bằng Chùy
+G0ACE1349	Phẫn Nộ Bóng Tối
+GD97CF863	Sức Mạnh Barad-dûr
+GF62B2130	Vũ Điệu của Sauron
+G53F430F0	Ý Chí Nhẫn Chúa
+GB60C89B8	Lửa Địa Ngục
+GC26DDD50	Sức Mạnh Mordor
+G29856B22	Xung Phong của Chúa Tể Bóng Tối
+G27C67462	Nước Cờ của Annatar
+G66205DC8	Uy Lực Chiếc Nhẫn
+GA64C9515	Cuồng Nộ Mordor
+G278CB8C1	Bậc Thầy Dùng Chùy
+G4B8493DC	Cuộc Tấn Công Mordor
+G5487C52D	Sức Mạnh Núi Diệt Vong
+GE9A37F55	Cơn Giận Mordor
+G3F70A0C4	Lửa Diệt Vong
+GBB8776B5	Khắc Tinh Tiên Tộc
+G6E2AA149	Con Mắt Sauron
+G1C11BF19	Sauron
+G3057B52F	Chơi với Sauron
+GB76B50B9	Ném như Đá Vách Núi, những tảng đá từ hầm sâu này gây sát thương nặng.
+GECFE6FA3	Tăng vĩnh viễn lượng máu của bạn.  (Cần Uy Lực Hầm Sâu)
+G47753157	Đòn tấn công hủy diệt này thiêu đốt nhiều kẻ thù.  (Cần Cuồng Nộ Cuồng Chiến Binh)
+GF2D43E42	Đá nung chảy gây sát thương khủng khiếp.  (Cần Đá Chiến Tranh)
+GC390874C	Đá Vách Núi
+G035878D4	Điên Loạn Cuồng Chiến Binh
+GC2D0B8DB	Đuốc Lòng Sâu
+GFF1647F7	Đá Chiến Tranh
+G98869254	Uy Lực Hầm Sâu
+GC4A495AD	Xung Phong Tường Deeping
+GE0FB4F25	Nước Cờ Uruk-hai
+G8925F4A1	Cuồng Nộ Cuồng Chiến Binh
+G468B4A5C	Cuồng Chiến Binh Bậc Thầy
+GB0E58D9C	Đột Kích Công Thành
+GD5AF6DD1	Cơn Giận Orthanc
+G01AF5769	Đá Dung Nham
+G18494AB3	Cơn Giận Hầm Sâu
+GB3AAE2E1	Uruk-hai
+G683077D7	Chơi với Uruk-hai
+P:Frame Rate:	Tốc độ khung hình:
+P:Unlocked	Không giới hạn
+P:Display Mode:	Chế độ hiển thị:
+P:Window	Cửa sổ
+P:Full Screen	Toàn màn hình
+P:Window Size:	Cỡ cửa sổ:
+P:Automatic	Tự động
+P:Aspect Ratio:	Tỷ lệ khung hình:
+P:Custom	Tùy chỉnh
+P:Resolution:	Độ phân giải:
+P:Anisotropic:	Lọc bất đẳng hướng:
+P:Mipmaps:	Mipmap:
+P:Off	Tắt
+P:On	Bật
+P:Ultra Textures:	Texture Ultra:
+P:Wide Cutscenes:	Đoạn phim rộng:
+P:Anti-aliasing:	Khử răng cưa:
+P:VSync:	VSync:
+P:Picture:	Hình ảnh:
+P:Keep Shape	Giữ tỷ lệ
+P:Stretch	Kéo giãn
+P:Vertex Programs:	Vertex Program:
+P:Brightness:	Độ sáng:
+P:Sharpening:	Làm nét:
+P:Colour:	Màu sắc:
+P:Original	Gốc
+P:Vivid	Rực rỡ
+P:Muted	Dịu
+P:HUD Widescreen:	HUD màn hình rộng:
+P:Edges	Mép
+P:Centred	Giữa
+P:Menus:	Menu:
+P:Fill	Lấp đầy
+P:Movies:	Phim:
+P:As Made	Như bản gốc
+P:Button Prompts:	Gợi ý nút:
+P:Keyboard	Bàn phím
+P:Mouse Pointer:	Con trỏ chuột:
+P:Sensitivity:	Độ nhạy:
+P:Pointer Size:	Cỡ con trỏ:
+P:Mouse Aiming:	Ngắm bằng chuột:
+P:Invert Aiming:	Đảo trục ngắm:
+P:Up/Down	Lên/Xuống
+P:Left/Right	Trái/Phải
+P:Both	Cả hai
+P:Mouse Steering:	Điều hướng bằng chuột:
+P:A Button:	Nút A:
+P:B Button:	Nút B:
+P:X Button:	Nút X:
+P:Y Button:	Nút Y:
+P:Black Button:	Nút Đen:
+P:White Button:	Nút Trắng:
+P:Left Trigger:	Cò trái:
+P:Right Trigger:	Cò phải:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad lên:
+P:D-pad Down:	D-pad xuống:
+P:D-pad Left:	D-pad trái:
+P:D-pad Right:	D-pad phải:
+P:L Stick Click:	Nhấn cần trái:
+P:R Stick Click:	Nhấn cần phải:
+P:Move Forward:	Tiến lên:
+P:Move Back:	Lùi lại:
+P:Move Left:	Sang trái:
+P:Move Right:	Sang phải:
+P:Look Up:	Nhìn lên:
+P:Look Down:	Nhìn xuống:
+P:Look Left:	Nhìn trái:
+P:Look Right:	Nhìn phải:
+P:Walk:	Đi bộ:
+P:General Options	Tùy chọn chung
+P:Display Options	Tùy chọn hiển thị
+P:Controls	Điều khiển
+P:Reset Controls	Đặt lại điều khiển
+P:Press a key...  (Esc: cancel, Delete: clear)	Nhấn một phím...  (Esc: hủy, Delete: xóa)
+P:R Stick	Cần phải
+P:Stick	Cần
+P:L Stick	Cần trái
+P:Black button	Nút Đen
+P:White button	Nút Trắng
+P:Left trigger	Cò trái
+P:Right trigger	Cò phải
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad lên
+P:D-pad down	D-pad xuống
+P:D-pad left	D-pad trái
+P:D-pad right	D-pad phải
+P:Left stick click	Nhấn cần trái
+P:Right stick click	Nhấn cần phải
+P:Move forward	Tiến lên
+P:Move back	Lùi lại
+P:Move left	Sang trái
+P:Move right	Sang phải
+P:Right stick up	Cần phải lên
+P:Right stick down	Cần phải xuống
+P:Right stick left	Cần phải trái
+P:Right stick right	Cần phải phải
+P:Walk	Đi bộ
+P:None	Không có
+P:LS click	Nhấn LS
+P:RS click	Nhấn RS
+P:Mouse Left	Chuột trái
+P:Mouse Right	Chuột phải
+P:Mouse Middle	Chuột giữa
+P:Mouse 4	Chuột 4
+P:Mouse 5	Chuột 5
+P:Space	Space
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Lên
+P:Down	Xuống
+P:Left	Trái
+P:Right	Phải
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num *
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Chấm phẩy
+P:Equals	Dấu bằng
+P:Comma	Dấu phẩy
+P:Minus	Dấu trừ
+P:Period	Dấu chấm
+P:Slash	Gạch chéo
+P:Backquote	Dấu nháy ngược
+P:Backslash	Gạch chéo ngược
+P:Quote	Dấu nháy
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Giữ {6} để chuyển sang Vũ Khí Tầm Xa.  Nhấn {0} để bắn.  Dùng {M} để ngắm.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Bóp và giữ {6} để chuyển sang Vũ Khí Tầm Xa.  Nhấn {0} để bắn.  Dùng {M} để ngắm.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Giữ {6} để sử dụng.  Bắn bằng {0} (giữ để tăng sát thương).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Bóp và giữ {6} để sử dụng.  Bắn bằng {0} (giữ để tăng sát thương).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Giữ {6} để sử dụng.  Ném bằng {0} (giữ để tăng sát thương).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Bóp và giữ {6} để sử dụng.  Ném bằng {0} (giữ để tăng sát thương).
+P:A devastating attack.  Press and hold {3} to use.	Một đòn tấn công hủy diệt.  Nhấn và giữ {3} để sử dụng.
+P:Game Saved.  Press {8} to continue.	Đã lưu game.  Nhấn {8} để tiếp tục.
+P:Game Saved.  Press {0} to continue.	Đã lưu game.  Nhấn {0} để tiếp tục.
+P:Unable to save game. Press {8} to continue.	Không thể lưu game. Nhấn {8} để tiếp tục.
+P:Unable to save game. Press {0} to continue.	Không thể lưu game. Nhấn {0} để tiếp tục.
+P:Unable to load game. Press {8} to continue.	Không thể tải game. Nhấn {8} để tiếp tục.
+P:Unable to load game. Press {0} to continue.	Không thể tải game. Nhấn {0} để tiếp tục.
+P:No saved games. Press {8} to continue.	Không có game đã lưu. Nhấn {8} để tiếp tục.
+P:No saved games. Press {0} to continue.	Không có game đã lưu. Nhấn {0} để tiếp tục.
+P:Not unlocked yet. Press {8} to continue.	Chưa mở khóa. Nhấn {8} để tiếp tục.
+P:Not unlocked yet. Press {0} to continue.	Chưa mở khóa. Nhấn {0} để tiếp tục.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Bạn chưa thu thập đủ điểm nâng cấp để mua nâng cấp này. Nhấn {8} để tiếp tục.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Bạn chưa thu thập đủ điểm nâng cấp để mua nâng cấp này. Nhấn {0} để tiếp tục.
+P:Press {8} to resume	Nhấn {8} để tiếp tục
+P:the left mouse button	chuột trái
+P:the right mouse button	chuột phải
+P:the middle mouse button	chuột giữa
+P:mouse button 4	nút chuột 4
+P:mouse button 5	nút chuột 5
+P:the A button	nút A
+P:the B button	nút B
+P:the X button	nút X
+P:the Y button	nút Y
+P:the Black button	nút Đen
+P:the White button	nút Trắng
+P:the left trigger	cò trái
+P:the right trigger	cò phải
+P:up on the d-pad	nút lên trên D-pad
+P:down on the d-pad	nút xuống trên D-pad
+P:left on the d-pad	nút trái trên D-pad
+P:right on the d-pad	nút phải trên D-pad
+P:the left thumbstick button	nút cần trái
+P:the right thumbstick button	nút cần phải
+P:the Menu button	nút Menu
+P:the View button	nút View
+P:the cross button	nút chữ thập
+P:the circle button	nút tròn
+P:the square button	nút vuông
+P:the triangle button	nút tam giác
+P:Left Click	Chuột trái
+P:Right Click	Chuột phải
+P:Middle Click	Chuột giữa
+P: or 	 hoặc 
+P:Exit	Thoát
+P:Press {k}	Nhấn {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	Đường dẫn
+L:Game files ready:  	Tệp game đã sẵn sàng:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	Chưa cài đặt tệp game. Hãy chọn tệp ISO Xbox The Two Towers (USA) hoặc thư mục đĩa đã giải nén.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Đang tạo texture Ultra từ gói GLOS69 (một lần; mất vài phút)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Ảnh đĩa Xbox (*.iso;*.xiso)\\0*.iso;*.xiso\\0Tất cả tệp\\0*.*\\0
+L:Checking disc...	Đang kiểm tra đĩa...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Chọn thư mục đĩa The Two Towers đã giải nén (chứa default.xbe)
+L:Display	Hiển thị
+L:Developer	Nhà phát triển
+L:Renderer	Trình kết xuất
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, đặt vào thư mục dxvk)
+L:Software (no graphics card)	Phần mềm (không cần card đồ họa)
+L:Frame rate	Tốc độ khung hình
+L:30 fps (as on the Xbox)	30 fps (như trên Xbox)
+L:60 fps (experimental)	60 fps (thử nghiệm)
+L:Unlocked (experimental)	Không giới hạn (thử nghiệm)
+L:Display mode	Chế độ hiển thị
+L:Windowed	Cửa sổ
+L:Full screen (borderless)	Toàn màn hình (không viền)
+L:Window size	Cỡ cửa sổ
+L:Automatic	Tự động
+L:Aspect ratio	Tỷ lệ khung hình
+L:4:3 (original)	4:3 (gốc)
+L:16:9 widescreen	16:9 màn hình rộng
+L:21:9 ultrawide	21:9 siêu rộng
+L:32:9 super ultrawide	32:9 siêu siêu rộng
+L:HUD in widescreen	HUD trên màn hình rộng
+L:At the screen's edges	Ở mép màn hình
+L:Centred (4:3)	Giữa (4:3)
+L:Menus	Menu
+L:Fill the screen (past the old TV margin)	Lấp đầy màn hình (vượt lề TV cũ)
+L:Original (with a margin)	Gốc (có lề)
+L:Movies in widescreen	Phim trên màn hình rộng
+L:As made (4:3)	Như bản gốc (4:3)
+L:Fill the width (black bands cut off)	Lấp đầy chiều ngang (cắt dải đen)
+L:Widescreen cutscenes	Đoạn phim màn hình rộng
+L:Off (4:3, side bars)	Tắt (4:3, viền hai bên)
+L:On (the sky's edges can show)	Bật (có thể lộ mép bầu trời)
+L:Ultra textures	Texture Ultra
+L:Off	Tắt
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	Bật (menu và HUD nét hơn; toàn bộ với gói GLOS69)
+L:Internal resolution	Độ phân giải nội bộ
+L:1x  (640 x 480, original)	1x  (640 x 480, gốc)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 dòng: 3840 x 2160 ở 16:9)
+L:Anisotropic filtering	Lọc bất đẳng hướng
+L:Mipmaps	Mipmap
+L:On (less shimmer)	Bật (ít nhấp nháy hơn)
+L:Anti-aliasing	Khử răng cưa
+L:FXAA (the finished picture)	FXAA (hình ảnh hoàn chỉnh)
+L:VSync	VSync
+L:On (no tearing)	Bật (không xé hình)
+L:Picture shape	Khung hình
+L:Keep aspect (black bars)	Giữ tỷ lệ (viền đen)
+L:Stretch to fill	Kéo giãn lấp đầy
+L:Vertex programs	Vertex program
+L:Graphics card (faster)	Card đồ họa (nhanh hơn)
+L:CPU (old method)	CPU (cách cũ)
+L:Brightness	Độ sáng
+L:Darker	Tối hơn
+L:Original	Gốc
+L:Brighter	Sáng hơn
+L:Brighter +	Sáng hơn +
+L:Brightest	Sáng nhất
+L:Sharpening	Làm nét
+L:Low	Thấp
+L:Medium	Trung bình
+L:High	Cao
+L:Colour	Màu sắc
+L:Vivid	Rực rỡ
+L:Muted	Dịu
+L:Button prompts	Gợi ý nút
+L:Automatic (follows the pad or keys you use)	Tự động (theo tay cầm hoặc phím bạn dùng)
+L:Keyboard / mouse (your bound keys)	Bàn phím / chuột (phím bạn đã gán)
+L:Input	Điều khiển
+L:Mouse pointer in menus	Con trỏ chuột trong menu
+L:On (point and click in the menus)	Bật (trỏ và nhấp trong menu)
+L:Off (mouse buttons as bound)	Tắt (nút chuột như đã gán)
+L:Mouse sensitivity	Độ nhạy chuột
+L:Normal	Bình thường
+L:Very high	Rất cao
+L:Pointer size	Cỡ con trỏ
+L:Small	Nhỏ
+L:Large	Lớn
+L:Extra large	Rất lớn
+L:Mouse aiming (ranged)	Ngắm bằng chuột (tầm xa)
+L:On (hold the ranged button, move the mouse)	Bật (giữ nút tầm xa, di chuột)
+L:Mouse aiming: invert	Ngắm bằng chuột: đảo trục
+L:Up / down	Lên / xuống
+L:Left / right	Trái / phải
+L:Both	Cả hai
+L:Mouse steering (movement)	Điều hướng bằng chuột (di chuyển)
+L:On (the mouse sets the way; W A S D move by it)	Bật (chuột định hướng; W A S D di chuyển theo đó)
+L:Mod: ECTS 2002 HUD (experimental)	Mod: HUD ECTS 2002 (thử nghiệm)
+L:Off (retail HUD)	Tắt (HUD bản phát hành)
+L:On (ECTS 2002 demo HUD)	Bật (HUD bản demo ECTS 2002)
+L:Mods	Mod
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Mod: Vật phẩm hồi máu màu cam (xuất hiện trong video trước phát hành & hậu trường)
+L:Off (green, as retail)	Tắt (màu xanh lá, như bản phát hành)
+L:On (orange health pickups)	Bật (vật phẩm hồi máu màu cam)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Mod: Thêm anh hùng (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; mở khóa cùng Isildur)
+L:Off (four heroes, as retail)	Tắt (bốn anh hùng, như bản phát hành)
+L:On (eleven heroes)	Bật (mười một anh hùng)
+L:On, unlocked for testing (save not changed)	Bật, mở khóa để thử nghiệm (không thay đổi bản lưu)
+L:Custom: 	Tùy chỉnh: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Texture Ultra đang bật: menu, màn chọn màn chơi và HUD nét hơn.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	Để có mọi texture, hãy tải gói texture độ phân giải cao bản GameCube (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	từ tác giả và đặt thư mục GLOS69 vào đây:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nTrình khởi chạy sẽ chuẩn bị nó vào lần tới bạn nhấn Chơi (một lần; mất vài phút).
+L:Graphics settings	Cài đặt đồ họa
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	Mọi thứ trừ mod cũng có thể thay đổi khi đang chơi: nhấn F10 (hoặc giữ Back và nhấn Start). 
+L:The mods are set here and take effect when the game starts.	Mod được đặt ở đây và có hiệu lực khi game khởi động.
+L:Defaults	Mặc định
+L:Cancel	Hủy
+L:A button	Nút A
+L:B button	Nút B
+L:X button	Nút X
+L:Y button	Nút Y
+L:Black button	Nút Đen
+L:White button	Nút Trắng
+L:Left trigger	Cò trái
+L:Right trigger	Cò phải
+L:Start	Start
+L:Back	Back
+L:D-pad up	D-pad lên
+L:D-pad down	D-pad xuống
+L:D-pad left	D-pad trái
+L:D-pad right	D-pad phải
+L:Left stick click	Nhấn cần trái
+L:Right stick click	Nhấn cần phải
+L:Move forward	Tiến lên
+L:Move back	Lùi lại
+L:Move left	Sang trái
+L:Move right	Sang phải
+L:Right stick up	Cần phải lên
+L:Right stick down	Cần phải xuống
+L:Right stick left	Cần phải trái
+L:Right stick right	Cần phải phải
+L:Walk (hold)	Đi bộ (giữ)
+L:None	Không có
+L:LS click	Nhấn LS
+L:RS click	Nhấn RS
+L:Mouse Left	Chuột trái
+L:Mouse Right	Chuột phải
+L:Mouse Middle	Chuột giữa
+L:Mouse 4	Chuột 4
+L:Mouse 5	Chuột 5
+L:Space	Space
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Lên
+L:Down	Xuống
+L:Left	Trái
+L:Right	Phải
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num *
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Chấm phẩy
+L:Equals	Dấu bằng
+L:Comma	Dấu phẩy
+L:Minus	Dấu trừ
+L:Period	Dấu chấm
+L:Slash	Gạch chéo
+L:Backquote	Dấu nháy ngược
+L:Backslash	Gạch chéo ngược
+L:Quote	Dấu nháy
+L:Key 	Phím 
+L:Controls	Điều khiển
+L:press a key or mouse button…	nhấn một phím hoặc nút chuột…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Nhấn phím hoặc nút chuột cho hành động này (Esc để hủy). Nó thay thế phím đầu tiên của hành động; các hành động khác sẽ mất phím đó.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Nhấp vào một ô phím, rồi nhấn một phím hoặc nút chuột. Các danh sách thả xuống chọn nút nào trên tay cầm thực hiện mỗi hành động. Bạn cũng có thể thay đổi trong game: F10, trang Điều khiển.
+L:Action	Hành động
+L:Keyboard / mouse	Bàn phím / chuột
+L:Controller	Tay cầm
+L:stick part way	nghiêng cần một phần
+L:right stick	cần phải
+L:left stick	cần trái
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Vẫn đang xử lý (đang cài đặt hoặc tạo texture Ultra). Vẫn thoát?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	Chúa tể những chiếc nhẫn: Hai tòa tháp  -  bản biên dịch lại gốc cho PC
+L:Install from ISO…	Cài đặt từ ISO…
+L:Use extracted folder…	Dùng thư mục đã giải nén…
+L:Show the game window	Hiện cửa sổ game
+L:Write a log file (for bug reports)	Ghi tệp nhật ký (để báo lỗi)
+L:Graphics settings…	Cài đặt đồ họa…
+L:Controls…	Điều khiển…
+L:Play	Chơi
+L:Open folder	Mở thư mục
+L:30 fps (original)	30 fps (gốc)
+L:60 / unlocked can run some scenes faster than normal	60 / không giới hạn có thể làm một số cảnh chạy nhanh hơn bình thường
+L:Full screen	Toàn màn hình
+L:Alt+Enter or F11 also switches	Alt+Enter hoặc F11 cũng chuyển đổi được
+L:The 3D view widens fully after the next load	Khung nhìn 3D sẽ mở rộng hoàn toàn sau lần tải tiếp theo
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Nét hơn, nhưng cần card đồ họa mạnh hơn (từ 9x trở lên: rất nhiều bộ nhớ đồ họa)
+L:On	Bật
+L:Less shimmer on distant textures	Ít nhấp nháy hơn ở texture xa
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA làm mượt cạnh 3D khi vẽ; FXAA làm mượt hình ảnh hoàn chỉnh
+L:Waits for the monitor: no tearing	Chờ màn hình: không xé hình
+L:Picture	Hình ảnh
+L:Keep shape	Giữ tỷ lệ
+L:Graphics card	Card đồ họa
+L:Graphics card is much faster	Card đồ họa nhanh hơn nhiều
+L:Lifts the dark areas (gamma)	Làm sáng vùng tối (gamma)
+L:Crisper textures, best with a higher internal resolution	Texture sắc nét hơn, tốt nhất với độ phân giải nội bộ cao hơn
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Tự động: theo thiết bị bạn dùng gần nhất (tay cầm, tay cầm PlayStation, bàn phím)
+L:Where the HUD sits when the picture is wider than 4:3	Vị trí HUD khi hình ảnh rộng hơn 4:3
+L:Fill the screen	Lấp đầy màn hình
+L:Menus, loading and upgrade screens: past the old TV margin	Menu, màn hình tải và nâng cấp: vượt lề TV cũ
+L:Fill the width	Lấp đầy chiều ngang
+L:Fill: the films' black bands cut off, a little closer	Lấp đầy: cắt dải đen của phim, gần hơn một chút
+L:Point and click in the menus (Off: the mouse buttons act as before)	Trỏ và nhấp trong menu (Tắt: nút chuột hoạt động như trước)
+L:The pointer's speed and the mouse aiming's	Tốc độ con trỏ và tốc độ ngắm bằng chuột
+L:Hold the ranged button and move the mouse to aim	Giữ nút tầm xa và di chuột để ngắm
+L:Press to toggle	Nhấn để bật/tắt
+L:Hold	Giữ
+L:Windowed mode	Chế độ cửa sổ
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	Gói texture độ phân giải cao (GLOS69 và textures_ultra cạnh game)
+L:Off (4:3)	Tắt (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	Bật: các cảnh dựng bằng engine cũng được mở rộng (có thể lộ mép bầu trời)
+L:Mod: ECTS 2002 HUD	Mod: HUD ECTS 2002
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Chân dung, quả cầu rune và chỉ số EXP của bản demo ECTS 2002
+L:Mod: Orange health pickups	Mod: Vật phẩm hồi máu màu cam
+L:Health pickups are orange, as in pre-release and making-of videos	Vật phẩm hồi máu có màu cam, như trong video trước phát hành và hậu trường
+L:Custom (%.2f:1)	Tùy chỉnh (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	CÀI ĐẶT ĐỒ HỌA
+L:Page	Trang
+L:Graphics	Đồ họa
+L:Left/Right: switch to the Controls page	Trái/Phải: chuyển sang trang Điều khiển
+L:press a key...	nhấn một phím...
+L:Reset all controls to the defaults	Đặt lại mọi điều khiển về mặc định
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Nhấn phím hoặc nút chuột.  Esc: hủy.  Delete: xóa.
+L:A / Enter: reset	A / Enter: đặt lại
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: gán phím.   Trái/Phải: nút tay cầm.
+L:Left/Right: switch to the Graphics page	Trái/Phải: chuyển sang trang Đồ họa
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Lên/Xuống: chọn     Trái/Phải hoặc A: thay đổi     B / Esc / F10: đóng
+L:Changes are saved automatically	Thay đổi được lưu tự động
+L:Language	Ngôn ngữ
+L:Restart the game for the language to change	Khởi động lại game để đổi ngôn ngữ
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Chuột định hướng phía trước; W, A, S và D di chuyển theo đó (Đi bộ vẫn là đi bộ)
+L:Language (game and launcher):	Ngôn ngữ (trò chơi và trình khởi chạy):
+L:CONTROLS	ĐIỀU KHIỂN
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Thêm anh hùng: Sauron chạy nước rút khi nhấn cần trái (Shift trên bàn phím)
+L:Sauron's sprint	Nước rút của Sauron
+L:hold	giữ
+L:toggle	bật/tắt
+L:Combo Runes	Rune Liên hoàn
+L:Speed	Tốc độ
+L:Fierce	Mãnh liệt
+L:Special	Đặc biệt
+L:Each attack fills a quarter	Mỗi đòn lấp đầy một phần tư
+L:OK	OK
+L:Could not start twotowers_recomp.exe.	Không thể khởi chạy twotowers_recomp.exe.
+P:the left thumbstick	cần analog trái
+L:default.xbe was not found in that folder.	Không tìm thấy default.xbe trong thư mục đó.
+L:That default.xbe is not the USA retail release this port was built from.	default.xbe đó không phải của bản bán lẻ Mỹ (USA) mà bản port này được xây dựng từ đó.
+L:Error: 	Lỗi: 
+L:Error: the disc has no default.xbe.	Lỗi: đĩa không có default.xbe.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Lỗi: ISO này không phải đĩa bán lẻ Mỹ (USA) của The Two Towers mà bản port này hỗ trợ.
+L:Extracting 	Đang giải nén 
+L:Ultra textures (once): 	Texture Ultra (một lần): 
+L:Ultra textures: 	Texture Ultra: 
+L:Converting 	Đang chuyển đổi 
+L:Softening the edges of 	Đang làm mềm viền của 
+L:Fixing the transparency of 	Đang sửa độ trong suốt của 
+L:Writing the index	Đang ghi chỉ mục
+L:Ultra textures ready: 	Texture Ultra đã sẵn sàng: 
+L: pictures	 hình
+L: could not be made	 không tạo được
+L:The GLOS69 texture pack is not in the game's folder.	Gói texture GLOS69 không có trong thư mục của trò chơi.
+L:Could not write textures_ultra/index.bin.	Không thể ghi textures_ultra/index.bin.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	Bật (giữ W: chạy theo hướng chuột đẩy; Đi bộ thì đi bộ)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	Giữ W: chạy theo hướng chuột đẩy (Đi bộ thì đi bộ)

@@ -1,0 +1,1454 @@
+# Tiếng Việt, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	CHÚA T NHNG CHIC NHN:  HAI TÒA THÁP
+G20EBC61E	Mt b phim ca Peter Jackson
+G2D8D3B98	Sn xut
+G7EDB1AE9	Ðng sn xut
+G90AF53E8	Hiu ng c bit
+G893165F0	Weta Digital
+GD9523953	Âm nhc: Howard Shore
+G7B677F6E	Lng ting trong game
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	NHÓM XBOX
+GAAA9253B	Qun lý d án
+G2E65B2E4	Lp trình
+G1E165282	M thut
+G4CFF767B	Âm thanh
+G1B12D0CA	NHÓM PHÁT TRIN GC
+G5BB408B8	Giám c d án
+GA9D987DE	Giám c k thut
+GA4E53836	Giám c phát trin
+GCBF9A863	Giám c âm thanh
+G71D27F1C	Thit k trng
+GABE6171F	Lp trình viên trng
+GB6AEE806	Ha s môi trng trng
+G0FAA1BD8	Ha s on phim trng
+G93A039A2	Ha s hot hình trng
+G85851417	Ch o m thut
+GEC5EB699	Nhà sn xut liên kt
+G1E1B7E49	Ha s hiu ng c bit
+GE457B26A	Ha s môi trng
+G09AFDB2B	Ha s on phim trong game
+GC6201467	Ha s ý tng
+GCE12C680	Dng hình/Hot hình nhân vt
+G958F64A1	Ha s giao din
+G5817028D	Lp trình viên  ha
+G8E313DB8	Lp trình viên AI
+G7559A05A	Lp trình viên li chi
+G47FDFA0D	Nhà thit k game
+G2A1A4D1F	Thit k âm thanh & Biên tp âm nhc
+GD6AC199C	Thit k âm thanh
+G83731102	Ch o phát trin b sung
+G9B9AC6A2	Qun lý d án b sung
+G2C8B85F3	M thut b sung
+G154B3F75	Lp trình b sung
+GEC34AAA5	Thit k âm thanh b sung
+GE9E2F454	Biên kch b sung
+G8B63E4D8	Phát trin kinh doanh
+G8E754AFA	Giám c iu hành phát trin
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Giám c sn xut
+GF944BB31	Nhà sn xut cp cao
+G49F95533	Nhà sn xut liên kt bn a hóa
+GE5AAA381	Tr lý sn xut
+G20A463E8	K s phn mm
+GEDDCFA70	Trng nhóm kim th
+G6EC637F4	Phó trng nhóm kim th
+GA9C92124	Kim th viên chính
+GDDEFB046	Nhà sn xut
+G5F4C2C91	Giám c phát trin game
+G53E62C46	Thit k màn chi
+G4019279E	Phó giám c m thut
+G3548CB79	Ðon phim trong game
+G5BF26924	Thit k  ha (Giao din)
+GF5E6331B	Tr lý sn xut bn a hóa
+GB9029242	Tr lý sn xut
+G81160EAA	Ha s hot hình cp cao
+GB1B5EEDE	Ha s hot hình
+G1D384099	Dng hình môi trng
+GD670D187	Video toàn cnh
+GB4300D0E	Giám sát sn xut
+GDB61FEB0	Qun lý sn xut FMV
+G13204F99	Giám c m thut k thut
+G8774AEB2	Giám c m thut
+G2EDA5AA3	Giám c hot hình
+G4761EC6C	K thut nhân vt
+GC40AEB65	Ha s môi trng trng
+G04B7AD9A	Biên kch
+GCCDC1EDE	Ha s nhân vt
+G765B2120	Ha s hot hình nhân vt cp cao
+GDB98BF7E	Ha s ánh sáng cp cao
+G8AEFA15C	Ha s hiu ng cp cao
+GB64D9748	Ha s hiu ng
+GB770287B	Dng khung/Dng hình CG
+GA89434BE	B cc máy quay
+GBAA388EF	Biên tp
+GA79B5345	Thit k âm thanh/Thu âm li
+GE2D38E72	Qun lý sn xut m thut
+G29C8EC71	Tr lý iu hành
+GB01B1D73	Qun tr h thng
+G257D0532	Tr lý sn xut
+GB2965969	Biên tp li thoi
+G2ACF75E1	X lý âm thanh b sung
+G821EF7A5	Din viên lng ting
+G3CCB3DF3	Ðm bo cht lng EA
+G2851776E	Qun lý QA
+G3D43CCDD	Giám sát QA
+G997D9582	Trng nhóm QA
+G5B5CE9C6	Phó trng nhóm QA
+GE0B33004	Kim th viên QA chính
+GBBB3A592	Trng d án FLT
+G7F330F1A	Kim th ngôn ng chc nng
+G731958CD	Kim th ngôn ng
+G7005C763	Kim soát cht lng khách hàng
+GCC3D24EF	Qun lý CQC
+G0FF24E54	Giám sát CQC
+G7498FE74	Trng b phn CQC
+G5AB35ED0	Chuyên viên phân tích sn phm CQC
+G6E529086	Phòng mastering
+G0229B6F3	Giám c phát trin sn phm quc t
+G6B435E81	Qun lý d án bn a hóa
+GF8BA9878	Ðiu phi d án bn a hóa
+G906896D8	Qun lý cp phép và phê duyt i tác
+G860EDA13	Pháp ch kinh doanh
+G7AC94AC6	Pháp lý
+GFDF965B3	Vn hành studio
+G9FF9799E	Ðiu phi hp ng studio
+G9E24FEC0	Giám c tip th
+G44C57DC5	Qun lý sn phm
+GE1A6D911	Quan h công chúng
+GA5ADE5FF	Tài liu
+G4C2A256D	Dàn trang tài liu
+G279BA159	Qun lý d án bao bì
+G482E9235	Thit k bao bì
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Ðoàn làm phim Chúa t nhng chic nhn
+GE196FA55	Ðo din
+GE364782E	Giám c sn xut
+GB11B5F1A	Ðng sn xut
+GDDE9A104	Lu tr viên
+G73D53EB3	Qun lý t liu
+G4616CF92	Tr lý nhà sn xut
+GD98C077D	Giám sát hu k
+G26FFE43A	Tr lý dng phim th nht
+GFAE3387C	Qun lý mô hình thu nh
+G0D7D1A1D	Phó ch tch iu hành cp phép và kinh doanh sn phm toàn cu
+GD58105C6	Giám c sáng to
+GB0E8D9D5	Din viên phim
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Phó ch tch kinh doanh âm nhc
+G96EBB4D8	Giám c iu hành âm nhc
+G2728DB7D	Giám c âm nhc
+GFE08F13A	3Foot6
+GCFF1286B	Ðiu phi kinh doanh sn phm
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Phó ch tch
+GE58F283A	Nhà sn xut/Qun lý sn xut
+G97C336EB	Giám sát hot hình
+G96FF4CEA	Giám c k thut cp cao
+GE816CF3D	Trng thit lp k thut
+G22B756F5	Ha s hot hình
+G86F5B2D9	Ha s v phông nn
+GBC50C796	Qun lý vn phòng
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Nhà sn xut hin trng
+G14C96B5C	Ha s CG trng
+GD9742A3C	Ha s CG/Hot hình
+GBA7D6969	Arnson Communications
+G22C5AB99	Giám c sn xut/Giám c sáng to
+G45C5172D	Biên kch/Nhà sn xut
+GDCC6F23E	Giám c m thut/Ha s hot hình
+G9C4F3B3B	Ha s DS
+GF0F58DD3	LI CM N ÐC BIT CA EA
+G895C842A	LI CM N ÐC BIT CA STORMFRONT STUDIOS
+G9D4DD21A	 vùng t Trung Ða, truyn thuyt k v Chúa t Bóng ti Sauron,
+G6CFA90F6	và chic Nhn s cho hn sc mnh  nô dch c th gii.
+G18F2969C	Và gi ây nó ã ri vào tay mt ngi không ai có th ng ti.
+G378C79D6	Tôi là fan game cc ln, nên d nhiên tôi mun bit mi chi tit v mt trò chi Chúa t nhng chic nhn.
+GDCF04190	Tôi s ri vào trng thái chi sut ngày sut êm,
+G977EBA13	và thng thì ó là khi tôi chi, kiu nh, mt game phiêu lu khin tôi mê mn.
+G49C9AB1A	Mt khi ã nhp cuc, tôi không th ngng ngh v nó, và tôi phi a nhân vt ca mình n tn cùng.
+GD2647A40	Nhim v này c giao cho cu, và nu cu không tìm ra cách, s không ai tìm ra.
+G3AC8371A	Np i!
+GAD82B19D	Th là tôi c dò hi v trò này và cui cùng cng c chi, và nó tht không th tin ni.
+G8DE86872	Nhìn thôi ã thy p ri.
+G72E74697	Ôi, ngu quá!
+GF9824FCA	Ðúng ri, tin lên, Aragorn! C lên!
+G2EE7D5D4	Chúng ang n.
+G61F7CD7D	Kiu nh mt phn thng thêm khi bt game lên và thy chính mình chy khp ni.
+G57A5BC04	Tôi ang b ánh ti bi.
+G1F85273D	Frodo trông ging tôi! Ngu không?
+G1FFE0A40	Ngu tht.
+GE6E563F9	Chúng s tìm ra chic Nhn,
+GD135555F	và git k mang nó.
+G18844D24	Ði i! Ði nào Frodo!
+G525D5AD9	Chúng mun chic Nhn! Không c  chúng ly nó.
+GB99DAE56	S khác bit gia lng ting hu k cho phim và lng ting cho game là lng ting phim thng phi khp vi hình nh.
+G7558081F	Bn phi nhìn vào phim và c lp li li thoi ã nói trc ó, sao cho khp vi li thoi trong phim.
+GDD3F428F	Ngi là ai?
+GE906BA5B	Ngi có s không?
+G9BDAB30C	Có.
+G3B07B1B1	Cha s  âu.
+GFBD6613D	Vi game thì không có hình nh, ch là rt nhiu yu t không khí mà bn thêm vào.
+G0EE06D0F	Nguy him, cu vi, i loi th.
+G2F9FC8E2	Aragorn! Cu vi! Aragorn! Aragorn!
+G289F7C03	Tôi mê mô hình nhân vt và mê game, nên nu c góp mt thì úng là phn thng cho dân mt, và tôi thích lm.
+G67346E61	Ngay c ngi nh bé nht cng có th thay i tng lai.
+G16420686	Tôi háo hc quá - không th ch  có bn ca mình. Ðnh tht.
+GDBA69463	Moria.
+G1D429D96	Ông s i vào nhng hm m ó.
+G372C9F91	Ông bit th chúng ã ánh thc trong bóng ti.
+G34515230	Tôi thc s thích làm game, vì không phi làm vic vt v kinh khng
+G93AEF9C3	nh khi ln u xây dng nhân vt.
+GA9883FB4	Quay phim tt nhiên là rt chm.
+G0C1E0E8C	Mt iu tuyt vi  game máy tính là, d nhiên, tôi không phi hóa trang.
+GA5F1044B	Khi làm game, bn ng trong phòng thu
+GCE4A81AD	và bn nói, à, tôi ngh anh nên nói th này, th này, th này
+G049A3A66	và h có c chng kch bn, và bn nói tt c nhng câu thoi tuyt vi y.
+G70F1359D	Phc kích! Phc kích!
+G65325B21	Ri h ly tt c, a vào game, và bn c ghi công mt phn.
+G39F1D126	Nhng thit b n ó phi b phá hy!
+GEB33699E	Tôi rt thích mô hình ca tôi trong vai Gimli.
+GD9A0C650	Tôi thy ó là mt nhân vt tht mnh m, nam tính, hp dn.
+G43591DCA	Ông y thc s là nhân vt duy nht bn mun chi.
+G5C0A6C1E	Ý tôi là nhng ngi còn li, bn bit y, my anh Aragorn, my anh Legolas, p trai, in trai các kiu,
+G3D52D95F	nhng  chin u thc th, cht lng, bn phi chn Gimli.
+G8E74524F	Chúng tôi ã dành mi bn tháng  nhng a im p nht th gii ti New Zealand  có c din mo phù hp cho phim.
+GAD562976	Game là mt tình hung chin tranh, chin u, và nó c to ra tht tuyt vi và xut sc.
+G7F21BCD6	Tôi không th b cu y li ó! Tri i!
+G9AA947F5	Chc s tn thi gian lm ây.
+G669C44C6	Ý tôi là ó là mt cn nghin mi mà tôi va phát hin.
+G63540AD1	Vy nên, các game th, làm tt lm, chúc mng ã vào c góc nh có bài phng vn này.
+G925FED56	c gì tôi có th ch bn chi gii hn nhng tht ra tôi cha bao gi qua c màn này.
+GC3162ADB	Chúc may mn và c tip tc chi nhé.
+GA3572714	S phn th gii s sm c nh ot.
+G922859CB	Toàn b quá trình làm ra trò chi in t
+GD9B03397	ch yu là bn ánh nhau vi  th, th kiu ninja... tôi cng không bit na.
+G24326AFA	Tôi ngc nhiên vì nó trông chân thc hn nhiu,
+G3E302C15	có v nh nó ã lên mt tm cao mi.
+GBD830A87	Tôi ngh Aragorn trong game ngm bn gii hn tôi...
+GF76948D6	nhng tôi s không phàn nàn v chuyn ó âu.
+GD27FED3E	Dù sng hay cht, nu có th bo v cu, tôi s làm.
+G56368F53	Ông có thanh gm ca tôi.
+G8D6DAFD1	Nhng gì tôi thy v game có v phn ánh vic
+G970D4AB6	phn phim th hai - khác vi phn u - có quy mô ln hn
+GFD0BADCA	và tôi mong c thy chúng cng nh mong c thy phn còn li ca game.
+G1F48F697	Hôm nay tôi mi ch xem mt on mu.
+GB689F1B9	Tôi mng khi thy, chng hn, ôi khi Aragorn b h gc, hoc ngã xung, hoc ln ln,
+G6F6072BC	và li ánh ca anh y thay i, bn bit y, cho phù hp vi tình hung.
+GA3A3F7A1	Không phi lúc nào cng gn gàng sch s, bn bit y, kiu nh...
+G28095E46	ôi khi anh y hi ging dân ánh ln - ít nht là trong phim anh y làm vy - và tôi ngh game phn ánh c iu ó.
+G43AA6A0B	Tht n tng.
+G8559FF90	Nhng ngi l t nhng vùng t xa xôi, các v c triu tp n ây  i phó vi mi e da t Mordor.
+GC2A75F48	Trung Ða ang ng bên b vc hy dit.
+GFE143A07	Không ai thoát c. Ðoàn kt, hoc các v s gc ngã.
+GF59E5460	Tôi luôn kinh ngc khi thy công ngh tin b
+GAD5CBAE4	và nó ã gn vi tht n mc nào.
+GF96BCD4B	Tôi phi n ch Boromir, ngay!
+GD262135E	Khi thu âm hu k cho phim, bn bit y, rõ ràng bn nhìn vào màn hình,
+G83EECB7A	thy hành ng din ra trc mt úng nh bn ã din hôm ó.
+G3C0B6913	Khi thu ting cho game này,
+G2A8B6AD2	không có máy quay nào cha vào bn,
+G52F7D105	và bn không phi c khp khu hình vi hình nh trc mt,
+G8EE2279F	nên bn có th tht s làm thêm mt chút và kiu nh
+GA5BE0F5A	nhn mnh và phát trin nhng gì có trên trang giy.
+G51E230FB	Quay v cái h ã sinh ra l bay i!
+G97400E1E	Chúng c y lên cao hn so vi trong phim.
+GC26338C3	Bn hiu ý tôi ch?
+G40EB5D5C	Chúng hi l bch mt chút, và th là vui.
+G52FECFA2	Tht vui khi c chi ùa vi nó theo cách ó.
+G91D69630	Ðn ây!
+G87873143	Ngi không th thng trn này!
+G47AECCC4	Tôi ngh nu tôi chi game
+GB0CCD2A6	s tht hay khi bit chính các din viên tht ã lng ting cho hành ng mà nhân vt  ha máy tính thc hin,
+GC1719889	và tôi oán th gii máy tính càng chân thc thì ngi chi càng thy hng thú.
+G77ECFBF0	Ông không th s dng nó. Không ai trong chúng ta có th.
+GB42EC53B	Chic Nhn phi b phá hy.
+G43E793ED	Him nguy vi ngi mang Nhn ngày càng ln.
+G6E2FF8E0	Vì còn mt k khác ang sn lùng chic Nhn.
+GDD26CBEC	C i tôi cha tng chi trò chi in t nào.
+GF783F574	Tôi chng bao gi hiu ni lut chi.
+G573BC826	Tay tôi rt to và vng v, và không có c s phi hp tay và u óc mà tôi ngh là cn thit
+GFBB68CB5	th mà có v ai di sáu tui cng có.
+G8D9D9F75	Ðiu tuyt vi  game Chúa t nhng chic nhn này
+G81AEE08E	là bn c nghe ging ca các din viên gc--tt c bn h.
+GAE3BFBD7	Và hôm nay tôi ã thu âm cho Gandalf Áo Xám và Gandalf Áo Trng,
+G21F22F52	hai nhân vt tôi óng trong Chúa t nhng chic nhn.
+GCED01E94	Ông thy gì?
+GB4F26455	Có nhng ký hiu.
+G5C7EB8BC	Ðó là mt dng ch Tiên.
+G27A03C42	Tôi không c c.
+G8E22513B	Ít ai c c.
+G4B2817A2	Gi ây ã có liên minh gia Hai Tòa Tháp: Orthanc và Barad-dûr.
+GC69D576A	Vi game thì thô hn mt chút, sn sàng hn mt chút, tc thi hn mt chút, có l vy.
+G363960EA	Mt trong các ngi phi vào.
+GFFCB2D5D	Hãy giúp nhng dân làng vn còn sng.
+GF4DAF5B8	V c bn, ây là mt on chin u d di.
+G00009069	Ðó là khía cnh quân s ca Gandalf bc l ra: ngi ch huy, samurai, th lnh.
+G4519FC71	Ngi không c qua!
+G066F3360	Vy nên nhng gì bn thy trên màn hình gn nh - cht tit -
+GF4CF848B	chính là Gandalf mà bn thy trong phim. Và c gì tôi có th n chi game cùng các bn.
+G699B7BF2	Vào chic Nhn này hn  tt c s tàn ác, him c và ý chí thng tr mi s sng.
+GA1469225	Mt chic Nhn thng tr tt c.
+G01090CE9	Nhng gì chúng tôi làm c là thành qu ca mt khi lng công vic khng l vi hàng nghìn ngi tham gia.
+G74E1F68D	Ta  Hai Tòa Tháp ám ch Tháp Orthanc, 
+G0AE01FA9	ni Saruman, nhân vt ca Christopher Lee, óng i bn doanh,
+GD9642178	và Tháp Barad-dûr  Mordor, ni  ca Sauron.
+G573418F9	Phn phim th hai, nh mi phn trong b ba này, là mt th thách. Và s vn vy cho n khi chúng tôi hoàn thành nó.
+GB2A31EA0	Ðó là mt b phim tuyt vi. Nó s hoành tráng hn phn mt.
+GB831FA3A	Tôi ngh chc chn ã có rt nhiu tâm huyt  vào vic làm nhng b phim này,
+GCCFC11FE	và vic có th chuyn giao thông tin ó cho i làm game tht tuyt, 
+G327C2028	vì tôi bit h cng  vào ó tâm huyt và công sc tng ng  mang n cho công chúng mt trò chi tht phong phú.
+G2C4A352E	Tolkien miêu t Edoras rt sng ng trong sách
+G10EFB23A	là mt thành ph vi nhng ngôi nhà g trên mt ngn i trc dãy núi ph tuyt.
+G50D180A4	Khi chúng tôi bt u i tìm bi cnh, tôi ã nói, phi tìm c mt ni nào ó  New Zealand,
+GDA11996F	phi có mt ngn i nh th này nm trc dãy núi.
+GD6F61F77	Vy là h i trc thng khp t nc và mang v bc nh mt ngn i hoàn ho tuyt i.
+GC56228ED	Nó cách th trn gn nht khong sáu by chc dm.
+GF796DA0F	Nó nm gia Ðo Nam; rt ho lánh.
+GFA1CD969	Chúng tôi ã mt khong by tám tháng  thc s xây dng nhng công trình khng l này.
+GC2D0BAAA	Kt qu cui cùng là trong phim chúng tôi có mt Edoras hoàn toàn áng tin.
+GC2774958	Tôi có th n ó và quay nh th ó là mt a im có tht.
+G99F69515	Mt trong nhng iu thú v v game ca EA và nhng gì tôi thy  các mô hình khi chúng c dng
+G6B3554D6	là s tái hin tuyt vi các bi cnh và nhân vt ca chúng tôi
+GB997C9B4	n mc EA ã tha thun vi các din viên  h n và t thu li thoi ca mình.
+G815CAC49	Các din viên khá hào hng vi iu ó.
+GA1640DEB	Trn chin  Thung lng Helm ã kt thúc.
+G93BD7122	Trn chin giành Trung Ða sp bt u.
+G958468DE	Chúng tôi dng mt mô hình thu nh ca Thung lng Helm nhng iu thú v là nó không ch là mt mô hình. 
+G1BC58576	Ðó là mt mô hình thu nh khng l. T l mt phn t nhng bn thân nó rng khong chín mi hai mét.
+GFA4F689B	Nó ln n mc chúng tôi ch cn quay bng máy quay là nó trông không ging mô hình chút nào.
+G2571B991	Nó trông hoàn toàn nh tht.
+G31C24FB0	Ðiu làm nên mt b phim tuyt vi thc s là mt kch bn hay và mt dàn din viên gii.
+G9C04D37F	Tôi oán khi làm game cng có nhiu th thách tng t.
+GA0B86A25	Bn phi thu hút úng ngi tài cho game.
+G0B7DC714	Bn phi có mt câu chuyn thu hút khán gi, khin h hào hng vi câu chuyn ó
+G5E1101AB	và b câu chuyn cun hút n mc mun thy nó sng ng.
+G87FC774C	Chúng ta không th làm gì cho Frodo.
+G3C9AA8BC	Nhim v này s ly i mng sng ca cu y.
+G98F7C221	Rohan yu t và sp sp 
+GA01F7D34	và vì th hn s tn công mnh và nhanh vào th gii loài Ngi.
+GA8723617	Chin tranh ã p n.
+GE1AF4B03	Chúng ã cp báu vt ca ta và chúng ta mun nó.
+G6A5F57B3	Có l iu áng s nht khi bt tay vào d án này là
+GDE1DC635	cm giác rng chúng tôi có mt trách nhim to ln phi hoàn thành
+GCFDFC743	trên mt nh dng tng tác ging nh Peter Jackson ã làm c vi phim.
+GC87068A6	Ông y ã ly mt trong nhng tác phm vn hc c yêu mn nht mi thi i
+G423C7E0C	và chuyn th thành mt kit tác in nh s thi, to ra hàng triu ngi hâm m trên khp th gii.
+GC8F29411	Khi bt u d án, bn làm phn ý tng và phn thit k.
+GBACB2DE5	Khi d án tin trin - lp trình viên, ha s, ha s hot hình, ha s môi trng,
+G047AC48F	chuyên gia dng hình, chuyên gia cht liu - tt c nhng ngi này ngh v mng riêng ca mình trong game,
+GB60517EB	nhng xét v tri nghim tng th.
+G13170460	Mt trong nhng li th khi c làm vic sát sao vi các nhà làm phim
+GA03610FF	là chúng tôi có th dùng mô hình và o c h to ra cho phim
+G9DADDEE4	làm tham chiu cho nhng th chúng tôi cn to ra trong game.
+GF0D449E5	Bóng ti ang chuyn ng.
+GEC940136	Khi thit k Aragorn, chúng tôi phi ngh v c ba nhân vt có th chi cùng mt lúc.
+GBB381F7C	Ví d, Legolas là nhân vt thiên v tc  và s khéo léo hn nhiu.
+G4CE351A9	Gimli là mt chic xe tng nh bé.
+G21025B26	Aragorn là s kt hp ca c hai.
+G3ADE6E66	Chúng tôi ã xem tng ng tác ca mi nhân vt - tng khung hình - trc khi bt u xây dng bt c th gì.
+G80ADBA8B	Sau ó chúng tôi to khung li ca nhân vt. Ðó là t l, kích thc và quy mô c bn ca h.
+G85E5A400	Ri chúng tôi thêm cht liu và ánh sáng  hoàn thin trang phc và thêm các chi tit nh cho nhân vt.
+GCD3CDD42	Các din viên rt hng thú làm vic vi chúng tôi.
+G092B49A0	Có ln, Viggo Mortensen ã cho chúng tôi xem vài ng tác hành ng ca anh y.
+G915A1A70	Anh y và din viên óng th m mt thùng gm và bt u u tp vi nhau.
+G215B5E15	Ðó tr thành nn tng cho nhiu ng tác ca Aragorn.
+G7126178B	Nó mun c tìm thy.
+G7E02AF05	Khi chn cnh t phim  a vào li chi, Lng m Balin thc s ni bt là mt ng viên sáng giá.
+GF4146E18	Ðó là mt trong nhng khonh khc áng nh nht ca phn phim u tiên.
+GE152213A	Chúng tôi mun tái to không khí vi chùm sáng rt mnh chiu lên chính ngôi m.
+GB236432D	Ðó là mt th thách vi nhng ngi dng hình môi trng và chuyên gia ánh sáng ca chúng tôi.
+GD3C26DBB	Các màn Làng Rohan c áo  ch chúng cho phép chúng tôi m rng các khu vc trong phim.
+G8669E69D	Bn thân màn chi trông và to cm giác rt ging các bi cnh phim v ánh sáng,
+GF9B205CF	hình dáng kin trúc, nhng con ngi  ó, nhng trong trng hp này chúng tôi thc s phát trin thêm
+GB285B32E	và to ra nhng khu vc trong màn chi  ngi chi khám phá và chin u mà có l h cha thy trong phim.
+G5E5F1D1C	Ðiu tuyt vi  game Chúa t nhng chic nhn này
+G610E0BE4	là bn c nghe ngay trên màn hình ca mình ging ca các din viên gc--tt c bn h.
+GC6FCAA65	Cu vi! Aragorn! Aragorn! Cu vi!
+G20165D69	Nó chân thc n khó tin và tôi ngh làm game da trên phim tht s rt khó.
+GBF3A0A5B	Game này làm c. Nó rt ging phim.
+GDD010A37	Chúng tôi thit k mt h thng âm nhc rt linh hot, phn ánh tâm trng ca các s kin trong game.
+G96BEDA9C	Mt chic Nhn gom tt c và trói buc chúng trong bóng ti.
+G91629050	Trong phim, Saruman tn công Thung lng Helm vi mi nghìn quân Uruk-hai.
+G3B702B98	Vì vy chúng tôi phi dùng nhng yu t khác trong tm tay  to cm giác chin trn.
+GDEFA604D	Qua hiu ng và âm thanh, chúng tôi thc s to cm giác nh có hàng nghìn tên Orc  ó.
+G204351C8	Nu ai ó bt game lên và t nh:
+GEC81BA2D	Tri i! Ðây chính là b phim! Thì chúng tôi ã t úng iu mình t ra.
+G52BF957B	Ðây là ni tôi nh trong phim.
+G571B482E	Tôi  ó. Tôi có th làm gì ó. Gi là lt ca tôi.
+G625B0A6D	Ðó là cm giác chúng tôi mun ngi chi có c.
+GB222979D	Ðâu ri con nga và ngi k s?
+G2457FF85	Ðâu ri chic tù và tng vang lên?
+G8B36CA83	Chúng ã trôi qua nh ma trên núi;
+G50095CA7	nh gió trên ng c.
+G10EB8BCF	Nhng ngày tháng ã ln v phía Tây,
+G109A0CCE	sau nhng ngn i,
+G02628501	vào bóng ti.
+G80A942D2	Aragorn!
+GDDEA48AC	Tr giúp
+G4C40E774	Nhn nút START
+GEE711094	Tip tc
+GF9202936	Chi li
+G2E427514	Bt
+GFC4343CA	Tt
+G52E4CD32	Di chuyn
+G39D074FD	Chn
+GAC3A8B6E	Quay li
+G42B46F3C	 2002 New Line Productions, Inc.  The Lord of The Rings cùng các nhân vt, tên và a danh trong ó,  The Saul Zaentz Company d/b/a Tolkien Enterprises, c cp phép cho New Line Productions, Inc.  Bo lu mi quyn.
+G035F710A	EA GAMES là mt thng hiu ca Electronic Arts.
+GBAC3ED5F	Mã game và mt s yu t hình nh/âm thanh  2002 Electronic Arts Inc. Bo lu mi quyn.
+G0EF5F91F	Game mi
+GB8D9D2FD	Ti game
+G0BE2A075	Tùy chn
+G5D6AEEF7	Ch  g li
+G83335327	Ni dung thêm
+G731194FA	Lu game
+G7BA082D0	Nhn START  tip tc
+G755B3BA1	Cu hình tay cm
+G03961FD4	Thit lp game
+GABEE6EA4	Ð khó:
+GF065116B	D
+G8D3A16F6	Thng
+GACDD0363	Chuyên gia
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Vòm
+GA10C5C21	Âm lng ging:
+G7F04050E	Âm lng nhc:
+GF30A57F8	Ph :
+G64752D2D	Rung:
+GB3F78571	Âm lng game:
+GED3C9F14	Âm thanh:
+GB065D5A4	Chn game  ti:
+G00FF7920	Chn v trí lu:
+GC99B6C1E	Chn khe MEMORY CARD:
+GFB5C0BA2	 cng Xbox
+GD2F916B6	Khe MEMORY CARD 2
+GAEFBDEF3	Hy
+GDA714102	Có
+GB893E04C	Không
+GE506E266	Bn có chc không?
+G574C52F2	Bn có chc mun mua nâng cp này?
+G0D91D779	Bn có chc không? Kt qu ln chi trc ca nhim v này s b mt.
+G1CF7123A	Bn có chc không? Mi tin trình cha lu trong game này s b mt.
+GEF04DC5D	Bn có chc không? Tin trình trong nhim v này s b mt.
+GEDF6F861	Bn có chc mun ghi è game này?
+GF44D8878	Bn ã mua nâng cp xong cha?
+G1EF3EFE3	Lu game vào  cng
+G05163971	Ti game t  cng
+G8F93A6FE	Chn  khó
+G654484DF	Ðã khóa
+G5A7CB330	Hoàn thành
+G8D6AAF13	Cha chi
+GBE8C099C	M u
+GF4FBBE46	Ðnh Gió
+GE7EA3020	Cng Moria
+GE13A531D	Lng m Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Rng Fangorn
+G35CCE51F	Ðng bng Rohan
+GAD341B58	Westfold
+G94ADD008	Khe Rohan
+G9760067E	Tng Deeping
+GF8B38ED5	Tng b phá
+G644C89AD	Sân Hornburg
+G69B8B4C2	Tháp Orthanc
+GBF00F963	Thung lng Helm:
+GE34AB2FD	S thú New Line
+GE132F5FF	Chn on phim  xem:
+G4B3C17B9	M u
+GAD303F2A	Kt thúc
+G668B98BD	Tng
+G9C7A95F0	Ðim nâng cp:
+G4AE44639	4) Nhp chui mã c ch nh.
+G5374B3F5	Mã bí mt
+GDF7B6B3A	Luôn tàn phá:
+GFECB245B	2 ngi chi:
+GCAB16744	K thù nh:
+G587D657D	Mi nâng cp:
+G58E34314	Bt t:
+GF0336180	Chuyn ng chm:
+G5A122CB0	Ð nhp mã:
+G35BC6746	1) Bt u mt nhim v.
+G46DF9919	2) Nhn nút START  tm dng.
+G5A1291EE	3) Bóp và gi
+GEB88B42D	Máu vô hn:
+G6AE6FFFE	Tên vô hn:
+GAA29A634	Kt thúc nhim v:
+GB2AE1BCE	Ch  tm dng:
+GAA467E08	Thêm kinh nghim:
+GEA42298C	Lên cp:
+G6BA0C403	Hi máu:
+G41D871E0	Hi tên:
+G04DBD06B	Nâng cp tên:
+GA7A50BB5	Xem nâng cp
+GA67DF58D	V menu
+G773B79A5	Ðn nhim v tip theo
+G96540044	Bn ã tht bi trong nhim v.
+G5ADDCAC2	Chi li nhim v
+G9DD85D6D	V menu
+G730918CA	Th li
+GB437BA93	Ði ng thc hin
+G798A44A2	Chi li nhim v
+G6F46B26E	Vui lòng chn ngôn ng.
+G2809E047	Ting Anh
+GE3AAFF7A	Tc 
+GD0DB46DB	Mãnh lit
+G9AD854EF	Kt liu
+GE83BE834	Ðc bit
+GDB34AED9	Liên hoàn
+GDACF8DCA	Ðã mua
+G125CAC9A	Cha m khóa. Nhn nút A  tip tc.
+GDA9711D2	Bn cha thu thp  im nâng cp  mua nâng cp này. Nhn nút A  tip tc.
+GEB0E0008	hoc
+G90A54691	sau khi  òn
+GF5F43483	khi b ngã
+GFC1C2104	Ô trng
+GB8BCCCB9	Game 2
+G92BA5250	Game 3
+G9CCBAB2F	Game 4
+G76C930C6	Game 5
+G50C6B65D	Game 6
+G2AC43BF4	Game 7
+G34D594D3	Game 8
+G0ED31A6A	Game 9
+GBE76BA62	Game 10
+GE47934CB	Game 11
+G6ED86859	Cha cm Memory Card (PS2). Cn ít nht 80 KB  lu d liu game này. Bn có mun tip tc?
+G87DE26DA	Không  dung lng trên Memory Card (PS2)  khe MEMORY CARD 1.  Cn ít nht 80 KB  lu d liu ng dng này. Bn có mun tip tc?
+G7118C569	Không  dung lng trên Memory Card (PS2)  khe MEMORY CARD 2.  Cn ít nht 80 KB  lu d liu ng dng này. Bn có mun tip tc?
+G6804B4C2	Không  dung lng trên các Memory Card (PS2)  các khe MEMORY CARD. Cn ít nht 80 KB  lu d liu ng dng này. Bn có mun tip tc?
+G849021EA	Không có Memory Card (PS2)  khe MEMORY CARD 1. Nhn nút X  tip tc.
+G59CE2129	Không có Memory Card (PS2)  khe MEMORY CARD 2. Nhn nút X  tip tc.
+GC5BD8B5F	Vui lòng kt ni li tay cm và nhn START  tip tc.
+GC2BDD02C	Memory Card (PS2)  khe MEMORY CARD 2 cha c nh dng. Ðnh dng Memory Card (PS2)?
+G6B64948C	Xbox ca bn không  khi trng  lu game.  Nhn A  tip tc mà không lu hoc B  gii phóng ít nht
+GEDAB4EA9	Vui lòng kt ni li tay cm và nhn START  tip tc
+G00E55934	 cng không  khi trng cho bn lu game này.
+G20A17FB1	khi cn c gii phóng.
+G353AAE58	Ðnh dng tht bi! Li Memory Card (PS2)  khe MEMORY CARD 2! Nhn nút X  tip tc.
+G9CAF03E3	Không th lu game. Nhn nút A  tip tc.
+GCB03752D	Ðã lu game.  Nhn nút A  tip tc.
+GACBFB64F	Lu vào Memory Card (PS2)  khe MEMORY CARD 2 thành công! Nhn nút X  tip tc.
+GC7C0454F	Ðang lu d liu vào Memory Card (PS2)  khe MEMORY CARD 1. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+G4B14AAB4	Ðang lu d liu vào Memory Card (PS2)  khe MEMORY CARD 2. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+G53DAC278	Ðang ti d liu t Memory Card (PS2)  khe MEMORY CARD 1. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+GF144B8B3	Ðang ti d liu t Memory Card (PS2)  khe MEMORY CARD 2. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+G063DD8CC	Không th ti game. Nhn nút A  tip tc.
+GE5BDAC0B	Bn có mun lu game không?
+GED3A9CCF	Không có game ã lu. Nhn nút A  tip tc.
+GAF453999	khi.
+GEE649E5A	Memory Card (PS2)  khe MEMORY CARD 1 cha c nh dng. Nhn nút X  tip tc.
+G81447581	Memory Card (PS2)  khe MEMORY CARD 2 cha c nh dng. Nhn nút X  tip tc.
+GB36F8F0C	Ðang c d liu t Memory Card (PS2)  khe MEMORY CARD 1. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+G97EC5687	Ðang c d liu t Memory Card (PS2)  khe MEMORY CARD 2. Không tháo Memory Card (PS2), khi ng li hoc tt máy.
+G8E8AF6C1	Có vn  vi a bn ang dùng. Ða có th b bn hoc h hng.
+G9CB8DFF0	Nhim v 1
+G0EC04F2B	Nhim v 2
+GE8BDD4C2	Nhim v 3
+G5AC543FD	Nhim v 4
+G34C2C994	Nhim v 5
+GA6CA38CF	Nhim v 6
+G80C7BE66	Nhim v 7
+GF2CF2DA1	Nhim v 8
+GCCCCB338	Nhim v 9
+GA1F545C0	Nhim v 10
+GC7F7C029	Nhim v 11
+GEDFA3A92	Nhim v 12
+G13FCB4FB	Nhim v 13
+GFBA35200	Nhim v A
+G6DAAC13B	Nhim v B
+G47A846D2	Nhim v C
+GB9AFB60D	Nhim v D
+G0111B4C5	Kinh nghim nhim v:
+G10CB2024	Xp hng nhim v:
+GB8F11F62	Tng im nâng cp:
+G94649BD6	Hoàn ho
+GE424E811	Xut sc
+G70E9184E	Tt
+GE98543F1	Khá
+GF9792B5F	Kém
+G4DE9139C	K nng
+GB525F096	Mnh
+G5F8C23CD	Phòng th
+G8673311D	Tn công
+G7829DFB2	Mt òn liên hoàn nhanh.  Hiu qu vi k thù nh không có khiên.
+G63E6B4FD	Mt òn liên hoàn mnh  p tan chng ngi vt hoc phá v khiên ch.
+G406CD62A	Bóp và gi cò trái  s dng.  Bn bng nút A (gi  tng sát thng).
+G7651B078	Cú âm này kt liu mi k thù ã b h gc.
+G09258F36	Ðánh bt k thù ra xa khi tm tn công.
+G36E84E05	Chn òn tn công và vt phóng ca ch.
+G074FC78D	Mt òn tn công hy dit.  Nhn và gi nút Y  s dng.
+GE5C8740D	Tng vnh vin lng máu ca bn.
+G791AEDAB	Lao v phía trc và qut ngã k thù không có khiên.
+GF4A5485B	Tn công khi ng dy, khin k thù bt ng.
+GC0B8F80A	Mt òn liên hoàn rt hiu qu  h k thù không có khiên.
+G6CBE68E9	Rt hiu qu  h k thù có khiên nhanh nht có th.
+GD7BB121B	ÐÒN LIÊN KT: Git ngay mt tên goblin ang tn công.
+G4A59663E	Bn nh Cung Dúnedain, nhng mi tên ngnh ca ngi Rohirrim gây sát thng nng.
+G96A8AB86	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Quan Nhip Chính)
+GED26DEB8	Lao ti t xa  qut ngã k thù không có khiên. (Cn Ðòn Lao Ti)
+GB4790643	Gây thng tích, qut ngã và ánh k thù bng òn liên hoàn này.
+G9709901B	Dùng òn liên hoàn này  ánh mt k thù không có khiên, h gc hn, ri nhanh chóng ánh tên khác.
+G066B80A4	ÐÒN LIÊN KT: Git ngay mt tên Orc ang tn công.
+GB54F0B8A	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Isildur)
+G1C742C09	Mt òn tn công hy dit hn.  (Cn Phn N Du Hip)
+G9F299E6A	Tng sát thng ca Ðòn Tc Ð.
+G2A888253	Gây thng tích, qut ngã ri kt liu k thù mnh bng òn liên hoàn này.
+GEF4043FD	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Elendil)
+GF3D48718	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Hoang Dã)
+GDAE09290	Nhng mi tên st ca Gondor gây sát thng khng khip.  (Cn Cung Rohan)
+GBD1ED2AE	ÐÒN LIÊN KT: Git ngay mt tên Uruk-hai ang tn công.
+G6DF8DC34	Dùng vi k thù mnh  p v khiên, qut ngã và ánh hn.
+GB1BCB280	Không có gì
+GE225A1EC	Bóp và gi cò trái  s dng.  Ném bng nút A (gi  tng sát thng).
+GFF3FB1CE	Nhát rìu này kt liu mi k thù ã b h gc.
+G81A89461	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Ðá)
+GF266C7E6	Tng vnh vin lng máu ca bn.  (Cn Uy Lc St)
+G2FCD00C0	Lao ti t xa  qut ngã k thù không có khiên.  (Cn Ðòn Lao Ti)
+G00247254	Tng vnh vin lng máu ca bn.  (Cn Ch Rune Bo H)
+GA505D28C	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Balin)
+G34C62FC4	Ném nh Rìu Erebor, nhng chic Rìu Moria sc nh dao co còn gây sát thng ln hn.
+G57901BB9	Mt òn tn công hy dit hn.  (Cn Phn N Ngi Lùn)
+G8840F62F	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Glóin)
+G361F0511	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Núi Non)
+G219C0125	Nhng li rìu vin Mithril này gây sát thng khng khip.  (Cn Rìu Moria)
+G9986DAAB	Tng sát thng ca Ðòn Mãnh Lit.
+G11BF2FC5	Bn nh Trng Cung Mirkwood, nhng mi tên g tn bì ca Rivendell còn gây sát thng ln hn.
+G7A9893BB	Nhng mi tên phù phép ca Lothlórien gây sát thng khng khip.  (Cn Trng Cung Rivendell)
+G42E47239	Nhng mi tên phép thut này s thiêu t k thù.  (Cn Trng Cung Lothlórien)
+G5BAB8220	Tng vnh vin lng máu ca bn.  (Cn Ni Lc Celeborn)
+G39265CB0	Mt òn tn công hy dit hn.  (Cn Phn N Tiên Tc)
+G084B6AEF	Nhng mi tên này xuyên qua và gây sát thng cho mi k thù trên ng bay.  (Cn Tên Ha Long)
+GB1D19C39	Tng sát thng ca mi mi tên bn bn.
+G06E26BE1	Ba Nhát Chém
+G20A303C1	Hai Nhát B
+GCB8F4087	Cung Dúnedain
+G3F6F3751	Ðòn Bóng Ti
+GBE8C73E9	Cú Ðá Chin Ðu
+G5660E3B0	Ð Gm
+GDF332280	Phn N Du Hip
+GB8AB07B9	Sc Mnh Quan Nhip Chính
+G187F8CC1	Ðòn Lao Ti
+G86E487F5	Ðòn Ðng Dy
+GF7D6DC76	Kinh Hoàng Chp Nhoáng ca Isildur
+GB34DCC39	S Gii Thoát ca Isildur
+GC9303634	Khc Tinh Goblin
+G3A0786A5	Cung Rohan
+G8B17B5C5	Sc Mnh Isildur
+G579A1927	Ðòn Xung Phong
+G207C1523	Xung Phong T Thn ca Isildur
+G6C2653E9	Nc C ca Isildur
+G2A3BA153	Khc Tinh Orc
+GA28B29AA	Sc Mnh Elendil
+G7D213CCE	Cung N Hoang Dã
+G006BF315	Bc Thy Kim Thut
+G6B68444D	Cuc Tn Công ca Isildur
+G3B0A3720	Sc Mnh Argonath
+G78BAB3BC	Cn Gin Númenor
+GCEDAD8B0	Cung Gondor
+G3BE146BB	Khc Tinh Saruman
+G701FD063	Phán Xét ca Isildur
+G0251EC9F	Rìu Erebor
+G96C77DAD	Cú Ðâm Rìu
+GDD4B6691	Ð Rìu
+GADD20DD0	Phn N Ngi Lùn
+GB0D95BC6	Uy Lc Ðá
+G4FB6CF69	Uy Lc St
+G5F017E32	Kinh Hoàng Chp Nhoáng ca Balin
+GDFD7CADD	S Gii Thoát ca Balin
+GDF1B571B	Ch Rune Bo H
+G9B37EDE7	Xung Phong T Thn ca Balin
+GCDB1A82D	Nc C ca Balin
+G2DEF1D03	Uy Lc Balin
+GE89D3658	Uy Lc Glóin
+G31B06C3A	Rìu Moria
+GADFB76EF	Cung N Núi Non
+G75612F09	Cuc Tn Công ca Balin
+G8CE2E527	Uy Lc Khazad-dûm
+GE4E87FCC	Cn Gin Moria
+GA16173AB	Rìu Dãy Núi Sng Mù
+G24288EA5	Rìu Thut Các Vua
+G45AAD667	Phán Xét ca Balin
+GB752504B	Trng Cung Mirkwood
+GA018F71A	Ð Dao
+G0DCE9941	Phn N Tiên Tc
+G4A27D7DF	Ni Lc Celeborn
+GE0EC06AA	Trng Cung Rivendell
+G76059454	Kinh Hoàng Chp Nhoáng ca Elrond
+GE8C0678B	S Gii Thoát ca Elrond
+GE9F2F2C9	Trng Cung Lothlórien
+G5FE47D01	Xung Phong T Thn ca Elrond
+G4B1902CB	Nc C ca Elrond
+GB3FB8DDE	Tên Ha Long
+G4A61DECC	Ni Lc Galadriel
+G204DE538	Cung N Gil-galad
+G5B85BC6F	Cuc Tn Công ca Elrond
+GBDF43860	Tên Mithril
+G4B69DAC6	Cung Thut Tiên Tc
+G43AB31C1	Phán Xét ca Elrond
+GEAA8149B	Cp
+G11886F39	Ð òn  chn òn tn công ca ch và gt tên bay.
+GE4E78CFD	Ð òn
+G3226B277	Bóp và gi cò trái  chuyn sang V Khí Tm Xa.  Nhn nút A  bn.  Dùng cn analog trái  ngm.
+GFF931564	V Khí Tm Xa
+G9A309E3D	Bn
+GC4AB2A6D	Dùng Ðòn Tc Ð  ánh k thù không có khiên.
+G5C64BDED	Dùng Ðòn Mãnh Lit  phá khiên ch.
+G4B1F5E2B	Ðòn Mãnh Lit
+G12993772	Ðòn Tc Ð
+G5550F308	Kim Ðim Kinh Nghim  tng Cp cho nhân vt và mua nhng nâng cp giá tr.
+GD5F0D645	Ðim Kinh Nghim nhn c
+G109A17A7	Dùng các òn liên hoàn nâng cao và tránh b ch ánh trúng  làm y Thanh K Nng và nhn ti a Ðim Kinh Nghim.
+GDB22979F	Thanh K Nng
+GF7AF01B8	Ngm
+G552324EC	Nhy lùi
+G3962B27E	Ðòn kt liu
+G819AB384	Ðánh bt
+GB5FE5915	Bn/Ðòn Tc Ð
+G1438BF1E	Di chuyn/Ngm
+GCDD8B9EF	Tm dng
+G63E0263C	Phng vn
+GA970F7F6	Peter Jackson và Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Chúa t nhng chic nhn
+GF0462ED4	Hu trng làm game
+G0DB34230	Ðon phim c quyn
+G9DF19E57	'Hip hi Nhn thn'
+G1704CE51	nh sn xut
+G330E63EE	Fangorn và Orthanc
+GD722C1B8	Rohan và Thung lng Helm
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Chi vi Aragorn
+GA8934934	Chi vi Legolas
+G84C57E95	Chi vi Gimli
+G46EA0007	Chi vi Isildur
+G5689E41F	Nhim v bí mt
+G7F2C7A4C	Chi vi nhân vt bí mt
+G96AF0882	Tranh ý tng
+G8813AE29	Hoàn thành Cng Moria  m khóa
+G4EEEB554	Hoàn thành Lng m Balin  m khóa
+G3182CC3A	Hoàn thành Amon Hen  m khóa
+G54747798	Hoàn thành Rng Fangorn  m khóa
+G5D796BA6	Hoàn thành Ðng bng Rohan  m khóa
+G758A2B31	Hoàn thành Westfold  m khóa
+GD1B66361	Hoàn thành Khe Rohan  m khóa
+GEC95C099	Hoàn thành Thung lng Helm: Tng Deeping  m khóa
+G4F6E6B62	Hoàn thành Thung lng Helm: Tng b phá  m khóa
+G7E4B2F5F	Ðt Cp 5 vi Aragorn
+GA825B93E	Ðt Cp 5 vi Legolas
+GD08EF3EF	Ðt Cp 5 vi Gimli
+G060F3A0C	Hoàn thành Thung lng Helm: Sân Hornburg và t Cp 10 vi Aragorn
+G9C00EBDD	Hoàn thành Thung lng Helm: Sân Hornburg và t Cp 10 vi Legolas
+GCA301FEC	Hoàn thành Thung lng Helm: Sân Hornburg và t Cp 10 vi Gimli
+G2A4097F8	Hoàn thành Nhim v bí mt vi bt k nhân vt nào
+GF80714A8	Hoàn thành Nhim v bí mt vi nhân vt bí mt
+GF281A415	Peter Jackson và Barrie Osborne nói v b phim và trò chi
+GEF6D5A30	Elijah Wood nói v vic vào vai Frodo trong game 'Chúa t nhng chic nhn'
+G1B7C2E20	Ian McKellen nói v vic vào vai Gandalf trong game 'Chúa t nhng chic nhn'
+G100A11D4	Hu trng quá trình làm game 'Chúa t nhng chic nhn'
+G14A8622F	nh nhân vt và cnh quan trong 'Hip hi Nhn thn'
+G228511D6	nh nhân vt và cnh quan  Fangorn và Orthanc
+GFDF064C7	Tranh ly cm hng t 'Chúa t nhng chic nhn' ca John Howe và Alan Lee
+GAAE1A0C0	nh nhân vt và cnh quan  Rohan và Thung lng Helm
+G6CEBDAE1	Viggo Mortensen nói v vic vào vai Aragorn trong game 'Chúa t nhng chic nhn'
+G6824CF13	Orlando Bloom nói v vic vào vai Legolas trong game 'Chúa t nhng chic nhn'
+G84770794	John Rhys-Davies nói v vic vào vai Gimli trong game 'Chúa t nhng chic nhn'
+G775EAFA1	Mã bí mt  m khóa các tính nng n ca game 'Chúa t nhng chic nhn'
+G640E4463	Ði la chn
+G6D02770F	Xác nhn la chn
+GE5EE10E6	Quay li
+GA75BE7EE	Ði hoc chnh la chn
+GE7B4EE86	V menu chính
+G47C91DD4	Ði hình
+GE445F6CE	Dùng Ðim Nâng Cp  mua ci tin cho nhân vt ca bn.
+GB2D2B6DB	Git ht chúng!
+GFD9FFC0E	H con quái này bng Ðòn Tc Ð!
+G7BD97E94	Dùng Ðòn Mãnh Lit  phá khiên ca hn!
+G62FC14DC	Chúng n kìa! Git ht chúng!
+GA3F97A90	Hãy cho ta mn gm ca các ngi!
+G88F3FEA7	H! Cht i, quái vt Mordor!
+G4888927E	Vì Bch Thành!
+GB5DB8B33	Ngi tiêu ri!
+G91F156A0	Cút i, sinh vt bóng ti!
+G8F5E1C57	Cht i, l con  ca Sauron! Cht i!
+GEF59BEBD	Ðy lùi chúng!
+G263E18E0	Tin lên!
+G8715790C	Gi vng v trí!
+G09E491AC	Cht i!
+GC9D8887A	Ð cn bã Gondor!
+GD909145B	Ngi, cht i!
+G8524085B	Các ngi không th git ht bn ta!
+GFA0F31A8	Cht i,  cn bã!
+G6949F8FB	Chúng quá ông, ngài phi phòng th!
+GAB41028F	Hãy t v, tha ngài.
+GC99D9EF1	Ðòn Tc Ð s h c tên này.
+G8BC62719	Ðòn Mãnh Lit s phá v nhng tm khiên ó.
+G24319240	Th gii ã thay i.
+G6FC7E51E	Ta cm nhn c nó trong nc.
+G586AE929	Ta cm nhn c nó trong t.
+GA0D1D398	Ta ngi thy nó trong không khí.
+G20A7EC8F	Nhiu th tng tn ti ã mt i,
+G9A5EEA48	vì gi không còn ai sng mà nh n.
+G991F588A	Mi chuyn bt u t vic rèn nhng chic Nhn Quyn nng.
+GDCCA686B	Ba chic c trao cho tc Tiên -
+G64D4928C	bt t, thông thái và p  nht trong muôn loài.
+GC38B0B40	By chic cho các Chúa t Ngi Lùn,
+GE4E9DA85	nhng th m và th th công v i ca nhng snh ng trong núi.
+G8EA28015	Và chín... chín chic Nhn c tng cho loài Ngi,
+G5415D8A9	nhng k trên ht khao khát quyn lc.
+GCAF2B8E3	Vì trong nhng chic Nhn này cha ng sc mnh và ý chí  cai tr mi tc.
+GEAB51D48	Nhng tt c bn h u ã b la...
+G9968C959	vì mt chic Nhn khác ã c to ra.
+G6DF9A86C	Ti vùng t Mordor, trong ngn la ca Núi Dit Vong,
+GD5CC3D06	Chúa t Bóng ti Sauron ã bí mt rèn mt chic Nhn Ch  iu khin tt c nhng chic khác.
+GA5AF65D9	Và vào chic Nhn này hn  tt c s tàn ác, him c và ý chí thng tr mi s sng...
+GF9C8C37E	Tng vùng t t do ca Trung Ða ln lt ri vào tay quyn lc ca chic Nhn.
+GD7B567A4	Nhng vn có nhng k kháng c.
+G9673067D	Liên minh Cui cùng ca Ngi và Tiên ã tin quân chng li o quân Mordor,
+G9292CF8B	và trên sn Núi Dit Vong, h ã chin u vì t do ca Trung Ða.
+G9C449910	Chính vào khonh khc này,
+G4E624CE3	khi mi hy vng ã tt...
+G8B971AFC	...Isildur, con trai ca nhà vua, ã cm lên thanh gm ca cha mình.
+GA0976A20	Sauron, k thù ca các dân tc t do  Trung Ða, ã b ánh bi.
+GCE1FEBD6	Chic Nhn v tay Isildur, ngi có mt c hi duy nht  tiêu dit cái ác mãi mãi.
+G4653B8E6	Nhng trái tim loài Ngi rt d b tha hóa.
+GF1F12CD3	Hy nó i!
+G7A59BC32	Không.
+GEDAFB589	Tôi là hu du ca Isildur, không phi chính Isildur. S phn ca tôi do tôi nh ot.
+GECD0FC9B	Ðn Thung lng Helm! Brego, i!
+GE526C94A	Frodo! Tránh xa chúng ra!
+GE5AC368C	Cu vi! Chúng  khp ni!
+GE18CFED5	Chúng ta s tìm ra ngi.
+G754CEC13	Lùi li,  ghê tm!
+G0EE492EC	Chúng tìm ngi mang Nhn!  gn nhau!
+GA236A198	Ngi không th chng c âu, tên Tí Hon.
+GB0F6888B	Chúng ta tiêu ri.
+GABCB70B5	Toàn b Isengard ã dc quân ra.
+GD4A9E9B3	Ðó là o quân c to ra cho mt mc ích: hy dit th gii loài Ngi.
+G65599300	Chúa t Bóng ti ang ti gn.
+GC6B5C82C	Baggins...
+GDE3725D0	Nhn Ma! Lùi li!
+GDB2A2A63	Strider!
+GDF3A925F	Hãy tha cho cu y. Cu cu y.
+G4867AD04	Ti chn an toàn Rivendell, ngi nh bé nht trong chúng ta ã th hin lòng can m ln nht.
+G3505351D	Tôi s mang nó!
+G5B8CB3F8	Và mt Hip hi ã c lp nên.
+GF6138FE1	Tôi s mang chic Nhn n Mordor!
+GA7DC204A	Dù...
+G2FFEE7D1	...tôi không bit ng.
+GD051F7C5	Ta s giúp cu gánh vác gánh nng này, Frodo Baggins...
+G82079845	...chng nào nó còn là gánh nng ca cu.
+G8308B082	Cu mang s phn ca tt c chúng tôi, bn nh.
+G32030F3F	Và cu có cây cung ca tôi.
+G7A19CD10	Và cây rìu ca tôi.
+G18A439E8	Ða chic nhn cho chúng ta, tên Tí Hon.
+G5E09B681	Chic nhn là ca chúng ta.
+GC7625599	Ðn vi chúng ta, tên Tí Hon.
+GB2DCED15	Cu tôi vi!
+GF8B88DB9	Ðn cu tôi vi!
+G111D0DD5	Tôi sp cht.
+G439D87CA	Vùng t này ã thay i.
+GB5DB841A	Chúng ta s i  ây cho n khi con ng phía trc có v an toàn.
+GF0EB3761	Ðã nhiu nm ri chúng ta không có tin tc gì t Moria.
+G3A9580D6	Chúng ta có th i qua M Moria.
+G852B83DE	Anh h tôi, Balin, s ón tip chúng ta nh hoàng gia.
+G48D6F333	Coi chng!
+G20BEF03C	Nhanh lên! Li này!
+G37B7E741	Quái thú.
+G70A83B75	Ðây là Ca Durin, Chúa t Moria.
+GE6E19D64	Vy, Gandalf, ông nh dn chúng qua Caradhras.
+GF7BC40D4	Và nu tht bi -
+GC7F3ECF5	thì ông s i âu?
+G4F7AA217	Ðn Moria!
+G0F8A9576	Hãy nói "bn" và bc vào.
+GCB3668DA	Mellon.
+G64134F99	Gi chúng ta ch còn mt la chn.
+GE57BDBA1	Chúng ta phi i mt vi bóng ti dài dng dc ca Moria.
+G3CA10A85	Ð cn bã Mordor!
+GC753F514	Phc kích!
+G66D5EE9E	Có l Orc. Rt nhiu.
+G8AB8C148	Khi gp rc ri, hãy c mt ngi lùn ra!
+G6F4359B4	Ðánh hay lm, Gimli!
+G43E71D7A	Tôi s i trinh sát phía trc  tìm ng qua.
+G0F5D4F40	Sinh vt.
+G0BFC06A5	Chính  ây chúng ta s tìm thy nhiu th hn hn Lng m Balin, Chúa t Moria.
+G79CBD185	Chúng tôi ã chn cng. Ting trng di lòng sâu.
+G676CE560	Chúng tôi không th thoát ra.
+GC2C2532E	Lùi li, l thú vt vô hn!
+G41169039	Legolas! Chúng tôi cn cung ca anh!
+GED8A660A	Nhanh lên, Gimli!
+G548B1E16	Cút i, quái thú!
+G8B6C996D	Ð tôi h hn!
+GD624A593	Sau lng anh!
+G22876487	Gi vng v trí!
+G6E72BC38	Lùi li, l quái vt!
+G98FB35D8	Bên này!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Chúng ông quá!
+GEB38BB38	Làm sao ngn chúng c?
+GDB1D4894	Tôi không th ánh li chúng!
+GCA82C10C	Tôi không th cm chân chúng!
+G839F36D1	H chúng bng cung ca anh!
+G426819B7	Vì Balin!
+G32A709EE	Ta n ây!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Chúng ông quá!
+GB502E0B9	Vì Mirkwood!
+G5C8B1856	Tao s khoét l cho giòi chui vào bng mày!
+GF8D92047	Bt ht chúng!
+GDFB1C64C	Ðp nát chúng!
+G5AF9060B	Quay v bóng ti i!
+GF1BFC8A0	Aragorn! Tôi cn li kim ca anh!
+GF83070F8	Li ây, Gimli! Bên này!
+G2EC65D74	Hãy chun b tinh thn!
+GCD82317C	Bn!
+GCEA41230	Tn ra! Không c  chúng bao vây!
+G3AD812AF	Tìm tên Tí Hon!
+G6B59AA20	Frodo mang s phn ca tt c chúng ta!
+G4B4B5CA5	Chúng ta phi bo v cu y!
+G1881769E	Vì danh d ca anh y, các ngi s phi tr giá!
+G743E1105	Moria là mt chng ng tm ti vi Hip hi chúng tôi.
+G32DCF8A9	Chy i, l ngc!
+G10D542AD	Khôôôôông!
+GD10EAA8A	Nhim v ang ng trên li dao.
+GF997012E	Ch cn lc bc mt chút thôi, nó s tht bi.
+G01C6A95F	Nhng mi th còn tm ti hn na, vì Hip hi chúng tôi ang tan rã.
+G212FEF60	Tôi s i cùng cu n cùng, vào tn ngn la ca Mordor.
+G960898CD	Chy i!
+GD941582B	Hãy yên ngh...
+G9D8421F1	...ngi con ca Gondor.
+G60BC6BA4	Chúng ta phi ánh bi l Uruk-hai này  Frodo trn thoát!
+GF0E0DD02	Boromir!
+G1C9C2949	Giúp mt tay i, Tiên!
+GB1E7FF01	Uruk-hai! Tn công!
+G62308F86	Ta s tn hng chuyn này!
+GA7F87EAC	Quay v cái h ã sinh ra l bay i.
+G06BA8520	Chúng ã i li này, i nào.
+G817C5460	Nhng du vt ca chúng dng  ây. Chúng ta phi chia ra  tìm chúng nhanh hn.
+G934A6365	Aragorn, có th gì ó ngoài kia.
+G32456D68	Anh thy gì, Legolas?
+G090A57A6	Phù thy Trng.
+G3BE10384	Saruman.
+GF471A310	Dù Boromir anh dng, tay sai ca Saruman vn bt c các thành viên trong Ðoàn chúng tôi.
+G9EB3E2D9	Nhng chúng tôi s không b mc bn ng hành cho au n và cái cht.
+GC9337F85	Sut nhiu ngày chúng tôi ln theo du vt ca chúng...
+G1A87CFBD	...cui cùng nó dn chúng tôi n Rng Fangorn.
+G7754D2C1	Khu rng này rt c...
+G9261B17A	...rt c.
+GF7DCBBD1	Nó y ký c...
+GC4192431	...và gin d.
+G92086B9D	Trong khu rng ln y, nhiu con ng ã gp nhau.
+G6F680400	Không th nào.
+G7A0AC815	Gi ây ã có liên minh gia hai tòa tháp - Orthanc và Barad-dûr.
+GF36A1977	Các anh cn có mt  ni khác.
+GA926AFE5	Chin tranh ang n vi Rohan.
+GC5293984	Gi thì có trò vui ri!
+GCF6954E1	Tôi tng thy ri, nhng cha bao gi nh th này.
+G2E930B75	Hy vng duy nht ca chúng ta là sát cánh bên nhau!
+GFD82D6F4	Quân ca Saruman ang vn chuyn nhng thit b n k l qua th trn này. Giúp chúng tôi phá hy chúng!
+G86FA279C	Chn chúng  cng!
+G7B48AD72	S ít ngi trong chúng tôi còn chin u c ang hành quân n Thung lng Helm.
+GD55B6BE3	 ó, tng lai ca Rohan s c nh ot, sng hay cht.
+G2256A18D	Coi chng thuc n!
+GE0BD0D44	Ðúng ri! Cho chúng nm mùi la!
+G82C8009F	Th s làm chúng chm li!
+GA0C82879	Chúng ta có gì ây?
+G751859FC	Ðây là gì?
+G06637EF0	Chúng ta phi phá hy nhng thit b n này!
+GABF94061	Nhng thit b n ó phi b phá hy.
+G13114F1E	Th này là gì nh?
+G5B2AF650	Th này có th hu ích.
+G14659B9A	Th này có v có giá tr.
+G418ECC01	Ðây. Ta s gi cái này.
+G136EC46C	Th này áng mang theo.
+G360BBC1D	Chúng b thúc y bi s iên lon ca Saruman và ý chí ca Chúa t Bóng ti.
+G4840EFEC	Thêm pháo hoa na à? Ha! Chúng nh bin tt c chúng ta thành xác cht!
+G19910876	Chúng ang n bt chúng ta!
+G08EB8FDB	Không th i qua.
+G6FED1000	Ta s phi tìm ng khác.
+G68F91872	Ngôi làng này cháy nh bùi nhùi khô!
+G57BD9573	Khá hu ích.
+G424E3FF5	Th là c!
+G501ABC20	Ðng vng!
+G31FDA576	Chúng tràn qua c khu này na!
+GB60A7265	Chúng tôi không n c trong vic bo v Rohan.
+GA48B596C	Ði Cn v ca Nhà vua cng ang chin u m ng n Thung lng Helm.
+G65866A2E	Các anh ã làm ht sc  ây ri.
+G115A6D12	Nhng ngi sng sót s n Thung lng Helm.
+GC07CBB0E	Các anh vn còn vic phi làm. Ta s quay li vi các anh khi thi th xoay chuyn.
+G63B48C52	Chúng ã phá v phòng tuyn!
+GAAD29572	Làm n! Không! Không! Không!
+G589F2E2F	Chúng ta phi cu tt c nhng ai có th, nu không ngôi làng này s tht th.
+GE1654ECA	Trc khi hành trình dài a chúng tôi n Edoras...
+G97FC9F74	...dân ca ngài ã gp him nguy ln.
+GB52DB0C9	Tha cho tôi!
+GDDA274AE	Làm n! Tha cho tôi!
+GA354A5CD	Áaa! Không!
+G1C74FEB5	Không!
+G946E2F3A	Không! Không! Ðng!
+GF46D4AC5	Không! Không! Không!
+G1BD76207	Ða chúng tôi ra! Nhanh lên!
+GE57CB50F	Tha cho tôi, tôi xin ngài!
+G716689E1	Bo v chúng tôi!
+G6295F93F	Cu tôi! Làm n, cu tôi!
+GFA27E38F	Áaaaa! Chúng ang thiêu sng chúng tôi!
+G25B702F8	Cho tôi sng! Làm n!
+GDE034FBB	Các anh phi tip tc tin lên.  Ta cn có mt  ni khác.
+G898F1CFF	Hãy khin chúng khip s l sói ca Isengard!
+G04FC403B	Chúng tôi không th  l quái vt này ti ch nhng ngi t nn.
+GD8C5307E	Dân ca ngài ã c bo v, nhng chúng tôi phi tr giá bng nhiu sinh mng.
+G4FD6FE99	Tôi suýt mt mng mình.
+G753DFA73	Và nh th, qua nhiu ng ng khác nhau, tt c chúng ta ã n pháo ài Thung lng Helm  t th trn cui cùng.
+G932478E9	Gi thì git tên ó!
+GF940F960	Ðúng ri, các cng ca ta!
+G646F5FC4	L sói Warg ca chúng ta s c n tic êm nay!
+G948FC6FF	Ðng ùa vi hn!  Git hn i!
+G99617AA4	Chúng ã rút lui.  Tm thi ã xong.
+G4A0F838F	Tôi c mi chín!
+GC16105A6	Vy là ta hòa.
+GAC4FD1F9	Ð xem.
+GF71FBCA2	Tôi c hai.
+G641CA89C	Ð cho c hai chúng ta, Gimli!
+GF4B76D82	Chúng ta phi gi ánh mt Sauron dán vào chúng ta - khin hn không thy mi th khác ang chuyn ng!
+G5B04C967	Lùi li!
+G3487D102	Xung khi tng thành!
+G8B575855	L Orc ã lên tng thành!
+GCE3C16C0	Tôi c mi by ri!
+G3D052135	Tìm ch np!
+G05C9D273	Chúng li bn chúng ta!
+G4941BF74	H cái thang ó xung trc khi chúng ta b tràn ngp!
+G265760A3	Nm xung!  Nm xung!
+G2E8173A8	Không c  chúng n gn Hang Ðng Lp Lánh!
+G36DE1341	Tôi cha tng thy ai dùng rìu nh vy, ngài Ngi Lùn.
+G80FBF437	Tôi cng cha thy ai bn cung gii nh th.
+G3F35FF0E	Nhng chúng chng bao gi ng dy c sau khi b tôi ánh.
+GEC633822	Phòng tuyn b tràn ngp! Ph n và tr em ang b mc kt!
+G17070638	Ða h vào Ði Snh!
+G5CAB82D3	Chúng ta s cm chân chúng  ây, hoc  Thành Ly!
+GFFC47594	Chúng ta ã cm chân c chúng. Ph n và tr em ã an toàn - tm thi.
+GBD5794D5	Chúng ta không th cm chân chúng na! Vào Ði Snh!
+G088ED5E4	Chúng ta không th cm chân chúng!
+G7C6E3511	Sauron và Saruman ang sit cht thòng lng.
+G7B236705	Nhng dù chúng xo quyt n âu, chúng ta vn có mt li th.
+GFCAC9515	Chic Nhn vn ang c giu kín.
+G1C7DF558	Và vic chúng ta tìm cách phá hy nó cha tng xut hin trong nhng gic m en ti nht ca chúng.
+GB72B409D	Và th là v khí ca k thù ang tin v Mordor trong tay mt ngi Hobbit -
+G86CED6F6	mi ngày nó li gn hn vi ngn la ca Núi Dit Vong.
+GD9BB4CD5	Sauron s anh, Aragorn.
+GDD966B5E	Cung th lên tng thành!
+G6A122B51	Lùi li! Rào chn sp sp!
+G427F5206	Nhanh lên, ngài Ngi Lùn!
+G113213B2	Ðn ch Legolas i, tôi s cm chân chúng  ây!
+GA7B95A20	Vì Gondor!
+G7C696E8A	Aragorn ang b áp o! Ðn giúp anh y!
+GFC98A99D	Anh bn Tiên ca chúng ta cn giúp mt tay.
+G66A680C0	Uruk-hai!
+G8968245E	Chúng sp phá tan rào chn!
+G428EE07E	Chúng ã vào trong thành ly. Chúng ta tiêu ri!
+GFAE8490C	KHÔÔÔÔÔNG!!
+G63F31F0F	Ngày tàn ca ngi ã gn.
+GE8B9DB2E	Ngi ã chn con ng au n!
+G910D7B12	Ð ngu.
+G58E8BBAA	Ðã n lúc ngi phi dng li.
+GD8425223	Ngi không ngh mt tên du hip rách ri có th  ý chí vi ta ch? Ta vt xa sc mnh ca ngi.
+G1A989E68	Ngi s phi tr giá cho s ngo mn ca mình.
+G0079D300	Ngi không ngh mt tên Ngi Lùn có th  vi ý chí ca Saruman ch. Không ai có th.
+GFB1E1C33	Ngi không thc s ngh mt tên Tiên có th  vi Saruman ch? Không ai có th, thm chí không ai nên dám.
+GCB4F521C	Bn nh Cung Quan Nhip Chính, nhng mi tên ngnh ca ngi Rohirrim gây sát thng nng.
+G906620AF	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Denethor)
+GE4F990F3	Mt òn tn công hy dit hn.  (Cn Phn N Gondor)
+G55B83821	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Gondor)
+GD4900EBD	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cn Gin Gondor)
+GF1EE1785	Cung Quan Nhip Chính
+GC7DFC68A	Phn N Gondor
+G26838C80	Tù Và Gondor
+G948EF2DD	Trn T Th ca Ði Úy
+GC354B788	Uy Lc Denethor
+G2675AC6D	Xung Phong Minas Tirith
+G3A16134F	Nc C ca Quan Nhip Chính
+G7C6E9536	Sc Mnh Gondor
+G909BDBD3	Cn Gin Gondor
+GBCA2DB1D	Ðt Kích Tháp Trng
+GA70E206F	Trn T Th Amon Hen
+GECE9E935	Chi vi Boromir
+G2BAAD5AF	Bóp và gi cò trái  s dng.  Thi trin bng nút A (gi  tng sát thng).
+GF2DB6139	Thi trin nh Ánh Sáng Phù Thy, ngn la ca Narya thiêu t k thù, gây sát thng nng.
+G4E51B4E3	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Istari)
+G701450DF	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Olórin)
+G876BFE80	Mt òn tn công hy dit hn.  (Cn Phn N Maia)
+G554AF8D3	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Narya)
+GF20F1105	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Phù Thy)
+GE86497FB	Ngn la trng ca Istari thiêu t khng khip. (Cn La Nhn)
+G5D1DA1B0	Ánh Sáng Phù Thy
+GE4245C5B	Ð Bng Gy
+G68852FD1	Phn N Maia
+G63891384	Sc Mnh Istari
+G3023E8DD	Ngn La Anor
+G03053C48	Ngi Không Ðc Qua
+G44E88937	La Nhn
+G31781C88	Sc Mnh Olórin
+GC67FABAE	Xung Phong Shadowfax
+GB28BAB38	L Khách Áo Xám
+GBB647C84	Sc Mnh Narya
+G3A1959EB	Cung N Phù Thy
+G910A4D18	Bc Thy Glamdring
+GE54BB6DF	Ðt Kích ca Mithrandir
+G80CB05F7	Sc Mnh Áo Trng
+G5500602D	Cn Gin Olórin
+GB3B8BA9A	La Trng
+G4D3F3799	Cn Gin ca Maia
+GB06CD44C	Chi vi Gandalf
+GD63AEB69	Bóp và gi cò trái  s dng.  Ném mnh bng nút A (gi  tng sát thng).
+GF1500B18	Ném nh Ðá Shire, nhng viên á la sc nhn t Brandywine gây sát thng nng.
+G1594107A	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Shire)
+G223FB1F4	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Bilbo)
+G419FBE06	Mt òn tn công hy dit hn.  (Cn Phn N Hobbit)
+G549E8839	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Samwise)
+G3E7B6E97	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Shire)
+G5DBA6F26	Nhng viên á c Tiên ban phc gây sát thng khng khip.  (Cn Ðá La)
+G586DFFA8	Ðá Shire
+GAF333BB7	Phn N Hobbit
+GA30AB0B5	Sc Mnh Shire
+G5B952654	Vt Cn ca Sting
+G3F0B7A46	Ý Chí Ngi Mang Nhn
+GE7A5F0EC	Ðá La
+G97512A2B	Sc Mnh Bilbo
+G4F6E34B0	Xung Phong Baggins
+G8AFDEEE2	Vn May Hobbit
+G9AE8326E	Sc Mnh Samwise
+G5FECDC01	Cung N Shire
+GB7F9A847	Bc Thy Sting
+GD629F714	Ðt Kích nhà Took
+G31486B52	Sc Mnh Bag End
+G4023054B	Cn Gin ca Sting
+GD48B81F2	Ðá Tiên
+G371FFFDE	Ý Chí Mithril
+G031E765B	Chi vi Frodo
+G63C78123	Bn nh Cung Isengard, nhng mi tên ngnh ca Orthanc gây sát thng nng.
+G266F9F27	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Isengard)
+G4451D279	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Saruman)
+G2DE635F5	Mt òn tn công hy dit hn.  (Cn Phn N Uruk)
+G4D25FA2B	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Orthanc)
+G055C2C2B	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Isengard)
+G478E4DB1	Nhng mi tên en ca Isengard gây sát thng khng khip.  (Cn Cung Uruk)
+GB0EED2A6	Cung Isengard
+G13D5F1B3	Ð Bng Li Kim
+GCC2F9E7C	Phn N Uruk
+GF496EAA0	Sc Mnh Isengard
+GC727C10B	Cuc Sn ca Lurtz
+G73D0C070	Ý Chí Saruman
+GD64B9B56	Cung Uruk
+G9E8D350E	Sc Mnh Saruman
+G6426C642	Xung Phong Chin Binh Uruk
+GCC3C5342	Nc C Ð T
+G0DEF3FCC	Sc Mnh Orthanc
+G0EBAA8C5	Cung N Isengard
+GFC62112E	Ð T Bc Thy
+GEE7780E5	Cuc Tn Công Isengard
+G838B10AC	Sc Mnh Uruk-hai
+GF44614A3	Cn Gin Saruman
+G45DC8B08	Cung Ðen
+G4F638CF6	Khc Tinh Rohan
+G9E606E3B	Dit Vong ca Uruk Ðu Tiên
+GE31550F8	Lurtz
+G981416DE	Chi vi Lurtz
+G6F22BB2E	Bn nh Cung Tiên Tc, nhng mi tên ca Rivendell gây sát thng nng.
+GCA4A15A1	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Rivendell)
+G75BCF244	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Gil-galad)
+G216AF74D	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Vilya)
+G0B6CC0B6	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Noldor)
+G0355C5D7	Nhng mi tên bc ca Eldar gây sát thng khng khip. (Cn Cung Vanya)
+GD3F16BA3	Cung Tiên Tc
+G710A6666	Sc Mnh Rivendell
+G96D9F158	Ân Hu ca Vilya
+GF127A06E	Liên Minh Cui Cùng
+GB426C696	Cung Vanya
+G71620C4B	Uy Lc Gil-galad
+GFBF3A490	Xung Phong Lindon
+G00542D8B	Nc C ca S Gi
+G5104305A	Sc Mnh Vilya
+G221633E0	Cung N Noldor
+G11A9FF39	Cuc Tn Công Noldor
+GDE2839BE	Sc Mnh Eldar
+GB0E7C432	Cn Gin Lindon
+G008B68D9	Cung Eldar
+G10607364	Chúa T Imladris
+G0BA28B85	Chi vi Elrond
+GD6BB77A1	Thi trin nh Tia Bóng Ti, ngn la ca Barad-dûr gây sát thng nng.
+G113CAFFC	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Barad-dûr)
+G2F14F0F7	Tng vnh vin lng máu ca bn.  (Cn Sc Mnh Mordor)
+G573FFFF8	Mt òn tn công hy dit hn.  (Cn Phn N Bóng Ti)
+G6AE28C4F	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Chic Nhn)
+GC4B7E7DB	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Mordor)
+G5FEE9C56	Ngn la ca Núi Dit Vong gây sát thng khng khip.  (Cn La Ða Ngc)
+GA07FAB7C	Tia Bóng Ti
+G59838F7F	Ð Bng Chùy
+G0ACE1349	Phn N Bóng Ti
+GD97CF863	Sc Mnh Barad-dûr
+GF62B2130	V Ðiu ca Sauron
+G53F430F0	Ý Chí Nhn Chúa
+GB60C89B8	La Ða Ngc
+GC26DDD50	Sc Mnh Mordor
+G29856B22	Xung Phong ca Chúa T Bóng Ti
+G27C67462	Nc C ca Annatar
+G66205DC8	Uy Lc Chic Nhn
+GA64C9515	Cung N Mordor
+G278CB8C1	Bc Thy Dùng Chùy
+G4B8493DC	Cuc Tn Công Mordor
+G5487C52D	Sc Mnh Núi Dit Vong
+GE9A37F55	Cn Gin Mordor
+G3F70A0C4	La Dit Vong
+GBB8776B5	Khc Tinh Tiên Tc
+G6E2AA149	Con Mt Sauron
+G1C11BF19	Sauron
+G3057B52F	Chi vi Sauron
+GB76B50B9	Ném nh Ðá Vách Núi, nhng tng á t hm sâu này gây sát thng nng.
+GECFE6FA3	Tng vnh vin lng máu ca bn.  (Cn Uy Lc Hm Sâu)
+G47753157	Ðòn tn công hy dit này thiêu t nhiu k thù.  (Cn Cung N Cung Chin Binh)
+GF2D43E42	Ðá nung chy gây sát thng khng khip.  (Cn Ðá Chin Tranh)
+GC390874C	Ðá Vách Núi
+G035878D4	Ðiên Lon Cung Chin Binh
+GC2D0B8DB	Ðuc Lòng Sâu
+GFF1647F7	Ðá Chin Tranh
+G98869254	Uy Lc Hm Sâu
+GC4A495AD	Xung Phong Tng Deeping
+GE0FB4F25	Nc C Uruk-hai
+G8925F4A1	Cung N Cung Chin Binh
+G468B4A5C	Cung Chin Binh Bc Thy
+GB0E58D9C	Ðt Kích Công Thành
+GD5AF6DD1	Cn Gin Orthanc
+G01AF5769	Ðá Dung Nham
+G18494AB3	Cn Gin Hm Sâu
+GB3AAE2E1	Uruk-hai
+G683077D7	Chi vi Uruk-hai
+P:Frame Rate:	Tc  khung hình:
+P:Unlocked	Không gii hn
+P:Display Mode:	Ch  hin th:
+P:Window	Ca s
+P:Full Screen	Toàn màn hình
+P:Window Size:	C ca s:
+P:Automatic	T ng
+P:Aspect Ratio:	T l khung hình:
+P:Custom	Tùy chnh
+P:Resolution:	Ð phân gii:
+P:Anisotropic:	Lc bt ng hng:
+P:Mipmaps:	Mipmap:
+P:Off	Tt
+P:On	Bt
+P:Ultra Textures:	Texture Ultra:
+P:Wide Cutscenes:	Ðon phim rng:
+P:Anti-aliasing:	Kh rng ca:
+P:VSync:	VSync:
+P:Picture:	Hình nh:
+P:Keep Shape	Gi t l
+P:Stretch	Kéo giãn
+P:Vertex Programs:	Vertex Program:
+P:Brightness:	Ð sáng:
+P:Sharpening:	Làm nét:
+P:Colour:	Màu sc:
+P:Original	Gc
+P:Vivid	Rc r
+P:Muted	Du
+P:HUD Widescreen:	HUD màn hình rng:
+P:Edges	Mép
+P:Centred	Gia
+P:Menus:	Menu:
+P:Fill	Lp y
+P:Movies:	Phim:
+P:As Made	Nh bn gc
+P:Button Prompts:	Gi ý nút:
+P:Keyboard	Bàn phím
+P:Mouse Pointer:	Con tr chut:
+P:Sensitivity:	Ð nhy:
+P:Pointer Size:	C con tr:
+P:Mouse Aiming:	Ngm bng chut:
+P:Invert Aiming:	Ðo trc ngm:
+P:Up/Down	Lên/Xung
+P:Left/Right	Trái/Phi
+P:Both	C hai
+P:Mouse Steering:	Ðiu hng bng chut:
+P:A Button:	Nút A:
+P:B Button:	Nút B:
+P:X Button:	Nút X:
+P:Y Button:	Nút Y:
+P:Black Button:	Nút Ðen:
+P:White Button:	Nút Trng:
+P:Left Trigger:	Cò trái:
+P:Right Trigger:	Cò phi:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad lên:
+P:D-pad Down:	D-pad xung:
+P:D-pad Left:	D-pad trái:
+P:D-pad Right:	D-pad phi:
+P:L Stick Click:	Nhn cn trái:
+P:R Stick Click:	Nhn cn phi:
+P:Move Forward:	Tin lên:
+P:Move Back:	Lùi li:
+P:Move Left:	Sang trái:
+P:Move Right:	Sang phi:
+P:Look Up:	Nhìn lên:
+P:Look Down:	Nhìn xung:
+P:Look Left:	Nhìn trái:
+P:Look Right:	Nhìn phi:
+P:Walk:	Ði b:
+P:General Options	Tùy chn chung
+P:Display Options	Tùy chn hin th
+P:Controls	Ðiu khin
+P:Reset Controls	Ðt li iu khin
+P:Press a key...  (Esc: cancel, Delete: clear)	Nhn mt phím...  (Esc: hy, Delete: xóa)
+P:R Stick	Cn phi
+P:Stick	Cn
+P:L Stick	Cn trái
+P:Black button	Nút Ðen
+P:White button	Nút Trng
+P:Left trigger	Cò trái
+P:Right trigger	Cò phi
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad lên
+P:D-pad down	D-pad xung
+P:D-pad left	D-pad trái
+P:D-pad right	D-pad phi
+P:Left stick click	Nhn cn trái
+P:Right stick click	Nhn cn phi
+P:Move forward	Tin lên
+P:Move back	Lùi li
+P:Move left	Sang trái
+P:Move right	Sang phi
+P:Right stick up	Cn phi lên
+P:Right stick down	Cn phi xung
+P:Right stick left	Cn phi trái
+P:Right stick right	Cn phi phi
+P:Walk	Ði b
+P:None	Không có
+P:LS click	Nhn LS
+P:RS click	Nhn RS
+P:Mouse Left	Chut trái
+P:Mouse Right	Chut phi
+P:Mouse Middle	Chut gia
+P:Mouse 4	Chut 4
+P:Mouse 5	Chut 5
+P:Space	Space
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Lên
+P:Down	Xung
+P:Left	Trái
+P:Right	Phi
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Chm phy
+P:Equals	Du bng
+P:Comma	Du phy
+P:Minus	Du tr
+P:Period	Du chm
+P:Slash	Gch chéo
+P:Backquote	Du nháy ngc
+P:Backslash	Gch chéo ngc
+P:Quote	Du nháy
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Gi {6}  chuyn sang V Khí Tm Xa.  Nhn {0}  bn.  Dùng {M}  ngm.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Bóp và gi {6}  chuyn sang V Khí Tm Xa.  Nhn {0}  bn.  Dùng {M}  ngm.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Gi {6}  s dng.  Bn bng {0} (gi  tng sát thng).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Bóp và gi {6}  s dng.  Bn bng {0} (gi  tng sát thng).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Gi {6}  s dng.  Ném bng {0} (gi  tng sát thng).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Bóp và gi {6}  s dng.  Ném bng {0} (gi  tng sát thng).
+P:A devastating attack.  Press and hold {3} to use.	Mt òn tn công hy dit.  Nhn và gi {3}  s dng.
+P:Game Saved.  Press {8} to continue.	Ðã lu game.  Nhn {8}  tip tc.
+P:Game Saved.  Press {0} to continue.	Ðã lu game.  Nhn {0}  tip tc.
+P:Unable to save game. Press {8} to continue.	Không th lu game. Nhn {8}  tip tc.
+P:Unable to save game. Press {0} to continue.	Không th lu game. Nhn {0}  tip tc.
+P:Unable to load game. Press {8} to continue.	Không th ti game. Nhn {8}  tip tc.
+P:Unable to load game. Press {0} to continue.	Không th ti game. Nhn {0}  tip tc.
+P:No saved games. Press {8} to continue.	Không có game ã lu. Nhn {8}  tip tc.
+P:No saved games. Press {0} to continue.	Không có game ã lu. Nhn {0}  tip tc.
+P:Not unlocked yet. Press {8} to continue.	Cha m khóa. Nhn {8}  tip tc.
+P:Not unlocked yet. Press {0} to continue.	Cha m khóa. Nhn {0}  tip tc.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Bn cha thu thp  im nâng cp  mua nâng cp này. Nhn {8}  tip tc.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Bn cha thu thp  im nâng cp  mua nâng cp này. Nhn {0}  tip tc.
+P:Press {8} to resume	Nhn {8}  tip tc
+P:the left mouse button	chut trái
+P:the right mouse button	chut phi
+P:the middle mouse button	chut gia
+P:mouse button 4	nút chut 4
+P:mouse button 5	nút chut 5
+P:the A button	nút A
+P:the B button	nút B
+P:the X button	nút X
+P:the Y button	nút Y
+P:the Black button	nút Ðen
+P:the White button	nút Trng
+P:the left trigger	cò trái
+P:the right trigger	cò phi
+P:up on the d-pad	nút lên trên D-pad
+P:down on the d-pad	nút xung trên D-pad
+P:left on the d-pad	nút trái trên D-pad
+P:right on the d-pad	nút phi trên D-pad
+P:the left thumbstick button	nút cn trái
+P:the right thumbstick button	nút cn phi
+P:the Menu button	nút Menu
+P:the View button	nút View
+P:the cross button	nút ch thp
+P:the circle button	nút tròn
+P:the square button	nút vuông
+P:the triangle button	nút tam giác
+P:Left Click	Chut trái
+P:Right Click	Chut phi
+P:Middle Click	Chut gia
+P: or 	 hoc 
+P:Exit	Thoát
+P:Press {k}	Nhn {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	cn analog trái

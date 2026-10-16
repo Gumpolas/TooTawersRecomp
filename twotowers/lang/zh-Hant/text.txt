@@ -1,0 +1,1749 @@
+# 繁體中文 -- made by tools/lang/build_lang.py
+GA81157BF	魔戒二部曲：雙城奇謀
+G20EBC61E	彼得．傑克森作品
+G2D8D3B98	製片
+G7EDB1AE9	聯合製片
+G90AF53E8	特效
+G893165F0	Weta Digital
+GD9523953	配樂：霍華．蕭
+G7B677F6E	遊戲配音
+G566C1E23	亞拉岡
+GCD74F192	勒苟拉斯
+G78602DD3	金靂
+G74CA5DDD	佛羅多
+G025D44AA	甘道夫
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX 團隊
+GAAA9253B	專案管理
+G2E65B2E4	程式設計
+G1E165282	美術
+G4CFF767B	音效
+G1B12D0CA	原始開發團隊
+G5BB408B8	專案總監
+GA9D987DE	技術總監
+GA4E53836	開發總監
+GCBF9A863	音效總監
+G71D27F1C	首席設計師
+GABE6171F	首席程式設計師
+GB6AEE806	首席場景美術
+G0FAA1BD8	首席過場動畫美術
+G93A039A2	首席動畫師
+G85851417	美術指導
+GEC5EB699	副製作人
+G1E1B7E49	特效美術
+GE457B26A	場景美術
+G09AFDB2B	遊戲內過場動畫美術
+GC6201467	概念美術
+GCE12C680	角色建模／動畫師
+G958F64A1	介面美術
+G5817028D	圖形程式設計師
+G8E313DB8	AI 程式設計師
+G7559A05A	遊戲玩法程式設計師
+G47FDFA0D	遊戲設計師
+G2A1A4D1F	音效設計與音樂剪輯
+GD6AC199C	音效設計
+G83731102	額外開發指導
+G9B9AC6A2	額外專案管理
+G2C8B85F3	額外美術
+G154B3F75	額外程式設計
+GEC34AAA5	額外音效設計
+GE9E2F454	額外文案
+G8B63E4D8	業務開發
+G8E754AFA	開發執行主管
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	執行製作人
+GF944BB31	資深製作人
+G49F95533	在地化副製作人
+GE5AAA381	助理製作人
+G20A463E8	軟體工程師
+GEDDCFA70	首席測試員
+G6EC637F4	副首席測試員
+GA9C92124	核心測試員
+GDDEFB046	製作人
+G5F4C2C91	遊戲開發總監
+G53E62C46	關卡設計師
+G4019279E	副美術總監
+G3548CB79	遊戲內過場動畫
+G5BF26924	平面設計（使用者介面）
+GF5E6331B	在地化助理製作人
+GB9029242	助理製作人
+G81160EAA	資深動畫師
+GB1B5EEDE	動畫師
+G1D384099	場景建模師
+GD670D187	全動態影片
+GB4300D0E	製作監督
+GDB61FEB0	FMV 製作經理
+G13204F99	技術美術總監
+G8774AEB2	美術總監
+G2EDA5AA3	動畫總監
+G4761EC6C	角色技術指導
+GC40AEB65	首席場景美術
+G04B7AD9A	編劇
+GCCDC1EDE	角色美術
+G765B2120	資深角色動畫師
+GDB98BF7E	資深燈光美術
+G8AEFA15C	資深特效動畫師
+GB64D9748	特效動畫師
+GB770287B	骨架綁定／CG 建模師
+GA89434BE	鏡頭配置
+GBAA388EF	剪輯
+GA79B5345	音效設計／混音
+GE2D38E72	美術製作經理
+G29C8EC71	執行助理
+GB01B1D73	系統管理員
+G257D0532	製作助理
+GB2965969	對白剪輯
+G2ACF75E1	額外音訊處理
+G821EF7A5	配音演員
+G3CCB3DF3	EA 品質保證
+G2851776E	QA 經理
+G3D43CCDD	QA 主管
+G997D9582	QA 組長
+G5B5CE9C6	QA 副組長
+GE0B33004	QA 核心測試員
+GBBB3A592	FLT 專案組長
+G7F330F1A	功能語言測試員
+G731958CD	語言測試員
+G7005C763	客戶品質控管
+GCC3D24EF	CQC 經理
+G0FF24E54	CQC 主管
+G7498FE74	CQC 部門組長
+G5AB35ED0	CQC 產品分析師
+G6E529086	母片製作實驗室
+G0229B6F3	國際產品開發總監
+G6B435E81	在地化專案經理
+GF8BA9878	在地化專案協調
+G906896D8	合作夥伴授權與審核經理
+G860EDA13	商務事務
+G7AC94AC6	法務
+GFDF965B3	工作室營運
+G9FF9799E	工作室合約協調
+G9E24FEC0	行銷總監
+G44C57DC5	產品經理
+GE1A6D911	公關
+GA5ADE5FF	說明文件
+G4C2A256D	說明文件排版
+G279BA159	包裝專案管理
+G482E9235	包裝設計
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	魔戒電影團隊
+GE196FA55	導演
+GE364782E	執行製片
+GB11B5F1A	聯合製片
+GDDE9A104	資料管理
+G73D53EB3	素材管理
+G4616CF92	製片助理
+GD98C077D	後製監督
+G26FFE43A	第一助理剪輯
+GFAE3387C	模型管理
+G0D7D1A1D	全球授權與商品執行副總裁
+GD58105C6	創意總監
+GB0E8D9D5	電影演員
+G4267BE40	凱蘭崔爾
+GD1604ECA	薩魯曼
+GA16F6333	愛隆
+GE1DA74FC	希優頓
+G147FCF02	亞玟
+GDEEF44C1	埃西鐸
+G4C33F9AA	山姆衛斯
+G4A7482A5	咕魯
+GC771C093	波羅莫
+GF440E316	New Line Music
+GB9E9E9DC	音樂商務副總裁
+G96EBB4D8	音樂執行主管
+G2728DB7D	音樂總監
+GFE08F13A	3Foot6
+GCFF1286B	商品協調
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	副總裁
+GE58F283A	製作人／製作經理
+G97C336EB	動畫監督
+G96FF4CEA	資深技術總監
+GE816CF3D	首席技術設定
+G22B756F5	動畫師
+G86F5B2D9	數位繪景師
+GBC50C796	辦公室經理
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	執行製片
+G14C96B5C	首席 CG 美術
+GD9742A3C	CG 美術／動畫師
+GBA7D6969	Arnson Communications
+G22C5AB99	執行製作人／創意總監
+G45C5172D	編劇／製作人
+GDCC6F23E	美術總監／動畫師
+G9C4F3B3B	DS 美術
+GF0F58DD3	EA 特別感謝
+G895C842A	STORMFRONT STUDIOS 特別感謝
+G9D4DD21A	在中土世界的大地上，傳說中有黑暗魔君索倫，
+G6CFA90F6	以及能讓他奴役全世界的魔戒。
+G18F2969C	如今，它竟落入了一個最令人意想不到的人手中。
+G378C79D6	我是超級遊戲迷，所以當然想知道魔戒電玩的所有細節。
+GDCF04190	我會進入一種一直玩個不停的狀態，
+G977EBA13	通常是玩冒險遊戲的時候，整個人都會陷進去。
+G49C9AB1A	一旦投入就停不下來，非得帶著我的角色破關不可。
+GD2647A40	這個任務是交付給你的，如果你找不到辦法，就沒有人能做到了。
+G3AC8371A	快找掩護！
+GAD82B19D	我一直到處打聽這款遊戲，終於玩到了，真是難以置信。
+G8DE86872	光是看著就覺得好美。
+G72E74697	哇，太酷了！
+GF9824FCA	好耶，上啊，亞拉岡！加油！
+G2EE7D5D4	他們來了。
+G61F7CD7D	打開電玩就能看到自己跑來跑去，算是一種額外的樂趣吧。
+G57A5BC04	我被打得落花流水。
+G1F85273D	佛羅多長得像我耶！很酷吧？
+G1FFE0A40	超酷的。
+GE6E563F9	他們會找到魔戒，
+GD135555F	並殺死持有它的人。
+G18844D24	快走！快走，佛羅多！
+G525D5AD9	他們要的是魔戒！絕不能讓他們奪走。
+GB99DAE56	電影的後製配音和遊戲配音的差別在於，電影配音通常要對著畫面。
+G7558081F	你要看著影片，試著模仿你之前說過的台詞，並和電影裡的對白對上嘴型。
+GDD3F428F	你是誰？
+GE906BA5B	你害怕嗎？
+G9BDAB30C	是的。
+G3B07B1B1	還怕得不夠。
+GFBD6613D	遊戲就沒有畫面，主要是加進去一大堆營造氣氛的元素。
+G0EE06D0F	像是危險、救命之類的。
+G2F9FC8E2	亞拉岡！救命！亞拉岡！亞拉岡！
+G289F7C03	我喜歡公仔也喜歡遊戲，如果我能被收錄進去，那對宅宅來說簡直是天大的福利，我超愛。
+G67346E61	即使是最渺小的人，也能改變未來的命運。
+G16420686	我好興奮，等不及要拿到我的那一份了。太讚了。
+GDBA69463	摩瑞亞。
+G1D429D96	你害怕進入那些礦坑。
+G372C9F91	你知道他們在黑暗中喚醒了什麼。
+G34515230	我很享受製作這款遊戲，因為不用像最初塑造角色時那樣
+G93AEF9C3	做那麼多辛苦的工作。
+GA9883FB4	拍電影必然是非常緩慢的。
+G0C1E0E8C	電腦遊戲很棒的一點，當然就是我不用化妝。
+GA5F1044B	做遊戲時，你站在錄音室裡，
+GCE4A81AD	然後說：嗯，我覺得你應該說這個、這個和這個，
+G049A3A66	他們有一大疊劇本，你就把這些精彩的台詞全唸出來。
+G70F1359D	有埋伏！有埋伏！
+G65325B21	然後他們把這些全部放進遊戲裡，你也能分到一些功勞。
+G39F1D126	那些爆炸裝置必須摧毀！
+GEB33699E	我好愛這個金靂造型的我。
+GD9A0C650	我覺得這是個充滿活力、陽剛又迷人的角色。
+G43591DCA	他真的是你唯一會想玩的角色。
+G5C0A6C1E	我是說其他那些，你知道的，什麼亞拉岡啦、勒苟拉斯啦，都是些英俊帥氣的傢伙，
+G3D52D95F	但要真正高品質的戰鬥，就非選金靂不可。
+G8E74524F	為了讓電影呈現對的樣貌，我們在紐西蘭這個全世界最美的地方拍了十四個月。
+GAD562976	這款遊戲是戰爭與戰鬥的情境，做得非常精彩出色。
+G7F21BCD6	我不能把他丟在那裡！天啊！
+G9AA947F5	這一定會很花時間。
+G669C44C6	我是說，這是我新發現的癮頭。
+G63540AD1	所以，玩家們，幹得好，恭喜你們打進這個隱藏的小角落，看到這段訪談。
+G925FED56	真希望我能教你們怎麼把遊戲玩得更好，但其實我從來沒能打到這一關。
+GC3162ADB	祝你們好運，繼續玩下去吧。
+GA3572714	世界的命運即將決定。
+G922859CB	整個電玩遊戲的製作或打造過程，
+GD9B03397	主要就是你和各種東西還有忍者之類的打鬥……我也不知道是什麼。
+G24326AFA	我很驚訝，它看起來真實多了，
+G3E302C15	好像提升到了另一個層次。
+GBD830A87	我覺得遊戲裡亞拉岡的準頭比我自己還好……
+GF76948D6	不過我不打算抱怨這一點。
+GD27FED3E	如果我的生或死能保護你，我願意。
+G56368F53	我的劍為你效命。
+G8D6DAFD1	從我看到的遊戲內容看來，似乎反映出
+G970D4AB6	第二集電影和第一集比起來，規模更加龐大，
+GFD0BADCA	我很期待看到那些，就像我期待看到這款遊戲的其他部分一樣。
+G1F48F697	我今天只看到了一小段。
+GB689F1B9	我很高興看到，比如說，亞拉岡有時會被擊倒、摔倒或在地上翻滾，
+G6F6072BC	而且他的戰鬥風格會隨著情況而改變。
+GA3A3F7A1	那並不總是乾淨俐落的，你知道，有點像是……
+G28095E46	有時候他會有點像在打群架，至少電影裡他是那樣演的，我覺得遊戲也反映出了這一點。
+G43AA6A0B	令人印象深刻。
+G8559FF90	來自遠方的陌生人，你們被召集到此，是為了回應魔多的威脅。
+GC2A75F48	中土世界正處於毀滅邊緣。
+GFE143A07	沒有人能夠倖免。團結起來，否則你們都將滅亡。
+GF59E5460	每次看到科技的進步，我總是很驚訝，
+GAD5CBAE4	它已經這麼接近真實了。
+GF96BCD4B	我得馬上趕到波羅莫那裡！
+GD262135E	為電影錄後製配音時，你顯然是看著螢幕，
+G83EECB7A	看著你當天演出的動作在眼前播放。
+G3C0B6913	而錄製這個的時候，
+G2A8B6AD2	並沒有攝影機對著你，
+G52F7D105	你也不用試著對上眼前畫面的嘴型，
+G8EE2279F	所以你真的可以更加賣力，
+GA5BE0F5A	把劇本上的東西加以強調和發揮。
+G51E230FB	滾回生出你們的坑洞去！
+G97400E1E	它們比電影裡的還要誇張。
+GC26338C3	你懂我的意思嗎？
+G40EB5D5C	它們有點荒謬，但很好玩。
+G52FECFA2	能夠那樣盡情發揮，蠻好玩的。
+G91D69630	來吧！
+G87873143	你贏不了那場戰鬥！
+G47AECCC4	我想如果我在玩這款遊戲，
+GB0CCD2A6	知道電腦角色的動作是由真正的演員配音，會很不錯，
+GC1719889	我想電腦世界裡越真實，玩家就會越興奮。
+G77ECFBF0	你無法駕馭它，我們都不行。
+GB42EC53B	魔戒必須被摧毀。
+G43E793ED	魔戒持有者的處境越來越危險。
+G6E2FF8E0	因為還有另一個人在追捕魔戒。
+GDD26CBEC	我這輩子從來沒玩過電玩。
+GF783F574	我永遠搞不懂規則。
+G573BC826	我的手又大又笨拙，也沒有我認為必要的手腦協調能力，
+GFBB68CB5	而這似乎是六歲以下的人都具備的。
+G8D9D9F75	魔戒這款遊戲最棒的地方是，
+G81AEE08E	你聽到的是原班演員的聲音，全部都是。
+GAE3BFBD7	今天我錄了灰袍甘道夫和白袍甘道夫的配音，
+G21F22F52	就是我在魔戒裡飾演的兩個角色。
+GCED01E94	你看到了什麼？
+GB4F26455	上面有記號。
+G5C7EB8BC	是某種精靈文字。
+G27A03C42	我看不懂。
+G8E22513B	能看懂的人很少。
+G4B2817A2	現在兩座塔已經結盟：歐散克和巴拉多。
+GC69D576A	在遊戲裡，感覺比較粗獷、比較直接，也許更有臨場感。
+G363960EA	你們之中必須有一人進去。
+GFFCB2D5D	去幫助那些還活著的村民。
+GF4DAF5B8	基本上，這是一段激烈的戰鬥。
+G00009069	展現出來的是甘道夫軍人的一面：指揮官、武士、領袖。
+G4519FC71	你不能過去！
+G066F3360	所以你在螢幕上看到的，簡直就是——該死的——
+GF4CF848B	你在電影裡看到的甘道夫。真希望我能過來和你們一起玩這款遊戲。
+G699B7BF2	他將他的殘酷、他的惡意以及支配一切生靈的意志，全都灌注到這枚戒指中。
+GA1469225	至尊魔戒，駕馭眾戒。
+G01090CE9	我們的成果是數千人投入龐大工作量的結晶。
+G74E1F68D	片名「雙城奇謀」指的是歐散克塔， 
+G0AE01FA9	也就是克里斯多福．李飾演的薩魯曼的據點，
+GD9642178	以及魔多的巴拉多塔，也就是索倫的老巢。
+G573418F9	第二集就像這三部曲的每一集一樣，都是一大挑戰，直到我們交片之前都會是如此。
+GB2A31EA0	這是一部很棒的電影，規模會比第一集還大。
+GB831FA3A	我想拍這些電影時肯定投入了很大的心力，
+GCCFC11FE	能把這些資訊傳達給製作遊戲的團隊真的很棒， 
+G327C2028	因為我知道他們也投入了同樣的心力，要把一款豐富的好遊戲帶給大家。
+G2C4A352E	托爾金在書中把伊多拉斯描寫得非常生動，
+G10EFB23A	說它是一座建在山丘上的木造城市，背後是一片白雪皚皚的山脈。
+G50D180A4	我們最初在勘景時，我說，聽著，我們一定要在紐西蘭找到一個地方，
+GDA11996F	一定有一座像這樣、位在群山前方的山丘。
+GD6F61F77	於是他們搭直升機飛遍全國，帶回了一張完美山丘的照片。
+GC56228ED	那裡距離最近的城鎮大約六、七十英里。
+GF796DA0F	就在南島中部，非常偏遠。
+GFA1CD969	我們花了大約七、八個月真正搭建這些巨大的建築。
+GC2D0BAAA	最後的成果是，電影裡的伊多拉斯完全令人信服。
+GC2774958	我可以到那裡去，就像在一個實際存在的地點那樣拍攝。
+G99F69515	EA 遊戲令人興奮的一點，也是我在製作中的模型裡看到的，
+G6B3554D6	就是它們對我們的布景和角色重現得非常出色，
+GB997C9B4	甚至 EA 還和我們的演員談好，請他們來錄自己的台詞。
+G815CAC49	演員們都對此相當興奮。
+GA1640DEB	聖盔谷之戰結束了。
+G93BD7122	中土世界之戰即將展開。
+G958468DE	我們做了一座聖盔谷的微縮模型，但有趣的是，它不只是個模型而已。 
+G1BC58576	那是個巨型的微縮模型，比例是四分之一，但它本身就有大約三、四十英尺寬。
+GFA4F689B	它大到我們只要用攝影機直接拍，看起來就完全不像模型。
+G2571B991	看起來完全真實可信。
+G31C24FB0	成就一部好電影的，其實是好的劇本和好的卡司。
+G9C04D37F	我想製作遊戲時也會面臨很多相同的挑戰。
+GA0B86A25	你必須吸引對的人才加入遊戲。
+G0B7DC714	你必須有一個能吸引觀眾的故事，讓他們為這個故事興奮，
+G5E1101AB	並受到故事的吸引，真的想看到它活靈活現地呈現出來。
+G87FC774C	我們幫不了佛羅多了。
+G3C9AA8BC	這趟任務將會奪走他的性命。
+G98F7C221	洛汗國力衰弱，即將淪陷，
+GA01F7D34	所以他將對人類世界發動猛烈而迅速的攻擊。
+GA8723617	戰爭已經降臨。
+GE1AF4B03	他們偷走了我們的寶貝，我們要拿回來。
+G6A5F57B3	展開這個專案時，最令人卻步的大概是
+GDE1DC635	我們感覺肩負著巨大的責任，
+GCFDFC743	必須在互動形式上做出像彼得．傑克森在電影上那樣的成就。
+GC87068A6	他把史上最受喜愛的文學作品之一，
+G423C7E0C	轉化成一部史詩級的電影傑作，在全世界創造了數以百萬計的影迷。
+GC8F29411	專案剛開始時，你是在處理概念和設計方面的工作。
+GBACB2DE5	隨著專案進行，程式設計師、美術、動畫師、場景美術、
+G047AC48F	建模專家、材質專家，這些人各自思考自己負責的遊戲部分，
+GB60517EB	但都是從整體體驗的角度出發。
+G13170460	能夠和電影製作團隊如此密切合作的好處之一，
+GA03610FF	就是我們可以用他們為電影製作的模型和道具，
+G9DADDEE4	當作我們在遊戲中需要製作的東西的參考。
+GF0D449E5	陰影在黑暗中移動。
+GEC940136	在設計亞拉岡時，我們必須同時考量三個可操作角色。
+GBB381F7C	比如說，勒苟拉斯是更偏重速度和技巧的角色。
+G4CE351A9	金靂是一台小小的戰車。
+G21025B26	亞拉岡則是兩者的綜合。
+G3ADE6E66	在開始製作任何東西之前，我們都會一格一格地研究每個角色的動作。
+G80ADBA8B	接著我們會建立角色的線框模型，也就是他們的基本比例、大小和尺寸。
+G85E5A400	然後我們加上材質和燈光，完成他們的服裝，並加入角色的精細細節。
+GCD3CDD42	演員們都很有興趣和我們合作。
+G092B49A0	有一次，維果．莫天森為我們示範了他的一些動作招式。
+G915A1A70	他和他的替身打開一箱劍，開始互相對練。
+G215B5E15	那成了亞拉岡許多招式的基礎。
+G7126178B	它想被找到。
+G7E02AF05	在挑選要放進遊戲的電影場景時，巴林之墓特別突出，是很有力的候選。
+GF4146E18	那是第一集電影中最令人難忘的時刻之一。
+GE152213A	我們想重現那道照在墓上的強烈光束所營造的氛圍。
+GB236432D	這對我們的場景建模師和燈光專家來說是一項挑戰。
+GD3C26DBB	洛汗村莊的關卡很特別，因為它讓我們有機會擴展電影中的場景。
+G8669E69D	實際的遊戲關卡在燈光方面，看起來和感覺起來都非常像電影的拍攝地點，
+GF9B205CF	建築的造型、出現的人物也是，但在這個關卡中，我們其實又以此為基礎，
+GB285B32E	為玩家打造了一些可以探索和戰鬥、也許在電影中沒看過的區域。
+G5E5F1D1C	魔戒這款遊戲最棒的地方是，
+G610E0BE4	你能在自己的螢幕上聽到原班演員的聲音，全部都是。
+GC6FCAA65	救命！亞拉岡！亞拉岡！救命！
+G20165D69	它非常道地，而且我覺得要根據電影做遊戲真的很難。
+GBF3A0A5B	這款遊戲做到了，和電影非常像。
+GDD010A37	我們設計了一套非常動態的音樂系統，能反映遊戲中實際事件的氣氛。
+G96BEDA9C	至尊魔戒，尋獲眾戒，至尊魔戒，禁錮眾戒。
+G91629050	在電影中，薩魯曼派出一萬名強獸人攻打聖盔谷。
+G3B702B98	所以我們必須運用手邊的其他元素來營造戰爭的感覺。
+GDEFA604D	透過音效和聲音，我們真的讓人感覺到那裡有成千上萬的半獸人。
+G204351C8	如果有人打開遊戲，心裡想著：
+GEC81BA2D	我的天！這就是電影！那我們就完全達成了我們的目標。
+G52BF957B	這就是我在電影裡記得的地方。
+G571B482E	我身歷其境，我能有所作為，現在輪到我了。
+G625B0A6D	這就是我們希望玩家感受到的。
+GB222979D	戰馬和騎士今何在？
+G2457FF85	吹響的號角今何在？
+G8B36CA83	他們如同山上的雨水般逝去，
+G50095CA7	如同草原上的風。
+G10EB8BCF	時光已在西方落下，
+G109A0CCE	在山丘之後，
+G02628501	沒入陰影之中。
+G80A942D2	亞拉岡！
+GDDEA48AC	說明
+G4C40E774	請按 START 鈕
+GEE711094	繼續
+GF9202936	重玩
+G2E427514	開
+GFC4343CA	關
+G52E4CD32	瀏覽
+G39D074FD	選擇
+GAC3A8B6E	返回
+G42B46F3C	@ 2002 New Line Productions, Inc. 「魔戒」及其中的角色、名稱與地點，* The Saul Zaentz Company d/b/a Tolkien Enterprises 授權予 New Line Productions, Inc. 使用。版權所有。
+G035F710A	EA GAMES* 為 Electronic Arts* 旗下品牌。
+GBAC3ED5F	遊戲程式碼及部分影音元素 @ 2002 Electronic Arts Inc. 版權所有。
+G0EF5F91F	新遊戲
+GB8D9D2FD	載入遊戲
+G0BE2A075	選項
+G5D6AEEF7	除錯模式
+G83335327	特別收錄
+G731194FA	儲存遊戲
+G7BA082D0	按 START 鈕繼續
+G755B3BA1	控制器設定
+G03961FD4	遊戲設定
+GABEE6EA4	難度：
+GF065116B	簡單
+G8D3A16F6	普通
+GACDD0363	專家
+GAEA05F86	單聲道
+G913A11F7	立體聲
+G2A253083	環繞音效
+GA10C5C21	語音音量：
+G7F04050E	音樂音量：
+GF30A57F8	字幕：
+G64752D2D	震動：
+GB3F78571	遊戲音量：
+GED3C9F14	音效：
+GB065D5A4	選擇要載入的遊戲：
+G00FF7920	選擇儲存位置：
+GC99B6C1E	選擇記憶卡插槽：
+GFB5C0BA2	Xbox 硬碟
+GD2F916B6	記憶卡插槽 2
+GAEFBDEF3	取消
+GDA714102	是
+GB893E04C	否
+GE506E266	確定嗎？
+G574C52F2	確定要購買這項升級嗎？
+G0D91D779	確定嗎？上次遊玩此任務的成績將會遺失。
+G1CF7123A	確定嗎？本遊戲所有未儲存的進度都將遺失。
+GEF04DC5D	確定嗎？此任務的進度將會遺失。
+GEDF6F861	確定要覆寫此遊戲嗎？
+GF44D8878	升級購買完畢了嗎？
+G1EF3EFE3	將遊戲儲存至硬碟
+G05163971	從硬碟載入遊戲
+G8F93A6FE	選擇難度
+G654484DF	已鎖定
+G5A7CB330	已完成
+G8D6AAF13	未遊玩
+GBE8C099C	序章
+GF4FBBE46	風雲頂
+GE7EA3020	摩瑞亞之門
+GE13A531D	巴林之墓
+G79C1EAD3	阿蒙漢
+G51C82E11	法貢森林
+G35CCE51F	洛汗平原
+GAD341B58	西谷
+G94ADD008	洛汗隘口
+G9760067E	深溪牆
+GF8B38ED5	城牆破口
+G644C89AD	號角堡中庭
+G69B8B4C2	歐散克塔
+GBF00F963	聖盔谷：
+GE34AB2FD	New Line 動物園
+GE132F5FF	選擇要播放的影片：
+G4B3C17B9	開場
+GAD303F2A	結局
+G668B98BD	地面
+G9C7A95F0	升級點數：
+G4AE44639	4) 輸入指定的密技指令。
+G5374B3F5	秘密密技
+GDF7B6B3A	必定重擊：
+GFECB245B	雙人模式：
+GCAB16744	迷你敵人：
+G587D657D	全部升級：
+G58E34314	無敵：
+GF0336180	慢動作：
+G5A122CB0	輸入密技的方法：
+G35BC6746	1) 開始一項任務。
+G46DF9919	2) 按 START 鈕暫停。
+G5A1291EE	3) 按住
+GEB88B42D	無限生命：
+G6AE6FFFE	無限遠程彈藥：
+GAA29A634	結束任務：
+GB2AE1BCE	暫停模式：
+GAA467E08	增加經驗值：
+GEA42298C	升級：
+G6BA0C403	恢復生命：
+G41D871E0	補充遠程彈藥：
+G04DBD06B	遠程武器升級：
+GA7A50BB5	顯示升級
+GA67DF58D	離開至選單
+G773B79A5	前往下一個任務
+G96540044	任務失敗。
+G5ADDCAC2	重玩任務
+G9DD85D6D	離開至選單
+G730918CA	再試一次
+GB437BA93	製作群
+G798A44A2	重玩任務
+G6F46B26E	請選擇語言。
+G2809E047	English
+GE3AAFF7A	快速
+GD0DB46DB	猛力
+G9AD854EF	擊殺
+GE83BE834	特殊
+GDB34AED9	連擊
+GDACF8DCA	已購買
+G125CAC9A	尚未解鎖。按 A 按鈕繼續。
+GDA9711D2	你收集的升級點數不足，無法購買這項升級。按 A 按鈕繼續。
+GEB0E0008	或
+G90A54691	格擋後
+GF5F43483	倒地時
+GFC1C2104	空白
+GB8BCCCB9	遊戲 2
+G92BA5250	遊戲 3
+G9CCBAB2F	遊戲 4
+G76C930C6	遊戲 5
+G50C6B65D	遊戲 6
+G2AC43BF4	遊戲 7
+G34D594D3	遊戲 8
+G0ED31A6A	遊戲 9
+GBE76BA62	遊戲 10
+GE47934CB	遊戲 11
+G6ED86859	未插入記憶卡（PS2）。儲存此遊戲資料至少需要 80 KB。要繼續嗎？
+G87DE26DA	記憶卡插槽 1 中的記憶卡（PS2）空間不足。儲存此應用程式資料至少需要 80 KB。要繼續嗎？
+G7118C569	記憶卡插槽 2 中的記憶卡（PS2）空間不足。儲存此應用程式資料至少需要 80 KB。要繼續嗎？
+G6804B4C2	記憶卡插槽中的記憶卡（PS2）空間不足。儲存此應用程式資料至少需要 80 KB。要繼續嗎？
+G849021EA	記憶卡插槽 1 中未插入記憶卡（PS2）。按 X 按鈕繼續。
+G59CE2129	記憶卡插槽 2 中未插入記憶卡（PS2）。按 X 按鈕繼續。
+GC5BD8B5F	請重新連接控制器，並按 START 鈕繼續。
+GC2BDD02C	記憶卡插槽 2 中的記憶卡（PS2）尚未格式化。要格式化記憶卡（PS2）嗎？
+G6B64948C	你的 Xbox 沒有足夠的可用區塊來儲存遊戲。按 A 不儲存並繼續，或按 B 釋放至少
+GEDAB4EA9	請重新連接控制器，並按 START 鈕繼續
+G00E55934	硬碟沒有足夠的可用區塊來儲存此遊戲存檔。
+G20A17FB1	個區塊必須釋放。
+G353AAE58	格式化失敗！記憶卡插槽 2 中的記憶卡（PS2）發生錯誤！按 X 按鈕繼續。
+G9CAF03E3	無法儲存遊戲。按 A 按鈕繼續。
+GCB03752D	遊戲已儲存。按 A 按鈕繼續。
+GACBFB64F	已成功儲存至記憶卡插槽 2 中的記憶卡（PS2）！按 X 按鈕繼續。
+GC7C0454F	正在將資料儲存至記憶卡插槽 1 中的記憶卡（PS2）。請勿取出記憶卡（PS2）、重設或關閉主機。
+G4B14AAB4	正在將資料儲存至記憶卡插槽 2 中的記憶卡（PS2）。請勿取出記憶卡（PS2）、重設或關閉主機。
+G53DAC278	正在從記憶卡插槽 1 中的記憶卡（PS2）載入資料。請勿取出記憶卡（PS2）、重設或關閉主機。
+GF144B8B3	正在從記憶卡插槽 2 中的記憶卡（PS2）載入資料。請勿取出記憶卡（PS2）、重設或關閉主機。
+G063DD8CC	無法載入遊戲。按 A 按鈕繼續。
+GE5BDAC0B	要儲存遊戲嗎？
+GED3A9CCF	沒有遊戲存檔。按 A 按鈕繼續。
+GAF453999	個區塊。
+GEE649E5A	記憶卡插槽 1 中的記憶卡（PS2）尚未格式化。按 X 按鈕繼續。
+G81447581	記憶卡插槽 2 中的記憶卡（PS2）尚未格式化。按 X 按鈕繼續。
+GB36F8F0C	正在從記憶卡插槽 1 中的記憶卡（PS2）讀取資料。請勿取出記憶卡（PS2）、重設或關閉主機。
+G97EC5687	正在從記憶卡插槽 2 中的記憶卡（PS2）讀取資料。請勿取出記憶卡（PS2）、重設或關閉主機。
+G8E8AF6C1	你使用的光碟有問題，可能是髒污或損壞。
+G9CB8DFF0	任務 1
+G0EC04F2B	任務 2
+GE8BDD4C2	任務 3
+G5AC543FD	任務 4
+G34C2C994	任務 5
+GA6CA38CF	任務 6
+G80C7BE66	任務 7
+GF2CF2DA1	任務 8
+GCCCCB338	任務 9
+GA1F545C0	任務 10
+GC7F7C029	任務 11
+GEDFA3A92	任務 12
+G13FCB4FB	任務 13
+GFBA35200	任務 A
+G6DAAC13B	任務 B
+G47A846D2	任務 C
+GB9AFB60D	任務 D
+G0111B4C5	任務經驗值：
+G10CB2024	任務評價：
+GB8F11F62	升級點數總計：
+G94649BD6	完美
+GE424E811	極佳
+G70E9184E	良好
+GE98543F1	普通
+GF9792B5F	差勁
+G4DE9139C	技巧
+GB525F096	強力
+G5F8C23CD	防禦
+G8673311D	攻擊
+G7829DFB2	快速的連續攻擊。對付沒有盾牌的小型敵人很有效。
+G63E6B4FD	威力強大的連續攻擊，能擊破障礙物或粉碎敵人的盾牌。
+G406CD62A	按住左扳機使用。按 A 按鈕射擊（按住可提高傷害）。
+G7651B078	這一刺能解決任何被擊倒的敵人。
+G09258F36	將敵人擊退，使其離開攻擊範圍。
+G36E84E05	擋下敵人的攻擊和飛行道具。
+G074FC78D	毀滅性的攻擊。按住 Y 按鈕使用。
+GE5C8740D	永久提升你的生命值。
+G791AEDAB	向前衝鋒，將沒有盾牌的敵人撞倒在地。
+GF4A5485B	在起身時發動攻擊，出其不意地打擊敵人。
+GC0B8F80A	對付沒有盾牌的敵人非常有效的連擊。
+G6CBE68E9	能以最快速度解決持盾敵人，非常有效。
+GD7BB121B	連鎖招式：立即殺死發動攻擊的哥布林。
+G4A59663E	射擊方式和登丹人之弓相同，洛汗驃騎的倒鉤箭能造成重創。
+G96A8AB86	永久提升你的生命值。（需要宰相之力）
+GED26DEB8	從遠距離向前衝鋒，將沒有盾牌的敵人撞倒在地。（需要衝刺攻擊）
+GB4790643	用這招連續攻擊讓敵人受傷、倒地並加以追擊。
+G9709901B	用這招連擊攻擊沒有盾牌的敵人，解決他之後迅速攻擊下一個。
+G066B80A4	連鎖招式：立即殺死發動攻擊的半獸人。
+GB54F0B8A	永久提升你的生命值。（需要埃西鐸之力）
+G1C742C09	更具毀滅性的攻擊。（需要遊俠之怒）
+G9F299E6A	提升快速攻擊的傷害。
+G2A888253	用這招連擊讓強大的敵人受傷、倒地，然後解決他。
+GEF4043FD	永久提升你的生命值。（需要伊蘭迪爾之力）
+GF3D48718	這招毀滅性攻擊能讓多名敵人著火。（需要荒野狂怒）
+GDAE09290	剛鐸的鐵箭能造成可怕的傷害。（需要洛汗之弓）
+GBD1ED2AE	連鎖招式：立即殺死發動攻擊的強獸人。
+G6DF8DC34	對付強大的敵人：擊碎他的盾牌，將他打倒在地並加以攻擊。
+GB1BCB280	無
+GE225A1EC	按住左扳機使用。按 A 按鈕投擲（按住可提高傷害）。
+GFF3FB1CE	這一斧能解決任何被擊倒的敵人。
+G81A89461	永久提升你的生命值。（需要岩石之威）
+GF266C7E6	永久提升你的生命值。（需要鋼鐵之威）
+G2FCD00C0	從遠距離向前衝鋒，將沒有盾牌的敵人撞倒在地。（需要衝刺攻擊）
+G00247254	永久提升你的生命值。（需要守護符文）
+GA505D28C	永久提升你的生命值。（需要巴林之威）
+G34C62FC4	投擲方式和依魯伯飛斧相同，鋒利無比的摩瑞亞飛斧能造成更大的傷害。
+G57901BB9	更具毀滅性的攻擊。（需要矮人之怒）
+G8840F62F	永久提升你的生命值。（需要葛羅音之威）
+G361F0511	這招毀滅性攻擊能讓多名敵人著火。（需要山嶺狂怒）
+G219C0125	這些秘銀鑲邊的利刃能造成可怕的傷害。（需要摩瑞亞飛斧）
+G9986DAAB	提升猛力攻擊的傷害。
+G11BF2FC5	射擊方式和幽暗密林長弓相同，瑞文戴爾的梣木箭能造成更大的傷害。
+G7A9893BB	羅斯洛立安的魔法箭能造成驚人的傷害。（需要瑞文戴爾長弓）
+G42E47239	這些魔法箭會讓敵人著火。（需要羅斯洛立安長弓）
+G5BAB8220	永久提升你的生命值。（需要凱勒鵬之能）
+G39265CB0	更具毀滅性的攻擊。（需要精靈之怒）
+G084B6AEF	這些箭能貫穿並傷害路徑上的所有敵人。（需要龍焰箭）
+GB1D19C39	提升你射出的每支箭的傷害。
+G06E26BE1	三連擊
+G20A303C1	雙重劈砍
+GCB8F4087	登丹人之弓
+G3F6F3751	暗影突擊
+GBE8C73E9	戰鬥踢擊
+G5660E3B0	劍格擋
+GDF332280	遊俠之怒
+GB8AB07B9	宰相之力
+G187F8CC1	衝刺攻擊
+G86E487F5	起身攻擊
+GF7D6DC76	埃西鐸的迅捷恐懼
+GB34DCC39	埃西鐸的救贖
+GC9303634	哥布林剋星
+G3A0786A5	洛汗之弓
+G8B17B5C5	埃西鐸之力
+G579A1927	衝鋒攻擊
+G207C1523	埃西鐸的死亡衝鋒
+G6C2653E9	埃西鐸的奇招
+G2A3BA153	半獸人剋星
+GA28B29AA	伊蘭迪爾之力
+G7D213CCE	荒野狂怒
+G006BF315	劍術大師
+G6B68444D	埃西鐸的戰爭突擊
+G3B0A3720	亞苟納斯之力
+G78BAB3BC	努曼諾爾之怒火
+GCEDAD8B0	剛鐸之弓
+G3BE146BB	薩魯曼剋星
+G701FD063	埃西鐸的審判
+G0251EC9F	依魯伯飛斧
+G96C77DAD	斧刺
+GDD4B6691	斧格擋
+GADD20DD0	矮人之怒
+GB0D95BC6	岩石之威
+G4FB6CF69	鋼鐵之威
+G5F017E32	巴林的迅捷恐懼
+GDFD7CADD	巴林的救贖
+GDF1B571B	守護符文
+G9B37EDE7	巴林的死亡衝鋒
+GCDB1A82D	巴林的奇招
+G2DEF1D03	巴林之威
+GE89D3658	葛羅音之威
+G31B06C3A	摩瑞亞飛斧
+GADFB76EF	山嶺狂怒
+G75612F09	巴林的戰爭突擊
+G8CE2E527	凱薩督姆之威
+GE4E87FCC	摩瑞亞之怒火
+GA16173AB	迷霧山脈飛斧
+G24288EA5	王者斧藝
+G45AAD667	巴林的審判
+GB752504B	幽暗密林長弓
+GA018F71A	短刀格擋
+G0DCE9941	精靈之怒
+G4A27D7DF	凱勒鵬之能
+GE0EC06AA	瑞文戴爾長弓
+G76059454	愛隆的迅捷恐懼
+GE8C0678B	愛隆的救贖
+GE9F2F2C9	羅斯洛立安長弓
+G5FE47D01	愛隆的死亡衝鋒
+G4B1902CB	愛隆的奇招
+GB3FB8DDE	龍焰箭
+G4A61DECC	凱蘭崔爾之能
+G204DE538	吉爾加拉德狂怒
+G5B85BC6F	愛隆的戰爭突擊
+GBDF43860	秘銀箭
+G4B69DAC6	精靈弓藝
+G43AB31C1	愛隆的審判
+GEAA8149B	等級
+G11886F39	格擋可以擋下敵人的攻擊並彈開箭矢。
+GE4E78CFD	格擋
+G3226B277	按住左扳機切換為遠程武器。按 A 按鈕射擊。用左類比搖桿瞄準。
+GFF931564	遠程武器
+G9A309E3D	射擊
+GC4AB2A6D	用快速攻擊打擊沒有盾牌的敵人。
+G5C64BDED	用猛力攻擊擊破敵人的盾牌。
+G4B1F5E2B	猛力攻擊
+G12993772	快速攻擊
+G5550F308	賺取經驗值以提升角色等級，並購買珍貴的升級。
+GD5F0D645	獲得的經驗值
+G109A17A7	使用進階連擊並避免被敵人擊中，即可填滿技巧量表，獲得最多的經驗值。
+GDB22979F	技巧量表
+GF7AF01B8	瞄準
+G552324EC	後跳
+G3962B27E	致命一擊
+G819AB384	擊退
+GB5FE5915	射擊／快速攻擊
+G1438BF1E	移動／瞄準
+GCDD8B9EF	暫停
+G63E0263C	訪談
+GA970F7F6	彼得．傑克森與貝瑞．奧斯朋
+G286B72BD	伊利亞．伍德
+GBCE2F8C0	伊恩．麥克連
+GFD2A8768	魔戒
+GF0462ED4	電玩遊戲幕後製作
+G0DB34230	獨家電影片段
+G9DF19E57	《魔戒首部曲：魔戒現身》
+G1704CE51	劇照
+G330E63EE	法貢與歐散克
+GD722C1B8	洛汗與聖盔谷
+GE704E302	維果．莫天森
+GDAFCF62B	奧蘭多．布魯
+GFE6CEDF7	約翰．瑞斯戴維斯
+G1192CE25	以亞拉岡遊玩
+GA8934934	以勒苟拉斯遊玩
+G84C57E95	以金靂遊玩
+G46EA0007	以埃西鐸遊玩
+G5689E41F	秘密任務
+G7F2C7A4C	以秘密角色遊玩
+G96AF0882	概念美術
+G8813AE29	通過摩瑞亞之門即可解鎖
+G4EEEB554	通過巴林之墓即可解鎖
+G3182CC3A	通過阿蒙漢即可解鎖
+G54747798	通過法貢森林即可解鎖
+G5D796BA6	通過洛汗平原即可解鎖
+G758A2B31	通過西谷即可解鎖
+GD1B66361	通過洛汗隘口即可解鎖
+GEC95C099	通過聖盔谷：深溪牆即可解鎖
+G4F6E6B62	通過聖盔谷：城牆破口即可解鎖
+G7E4B2F5F	亞拉岡達到等級 5
+GA825B93E	勒苟拉斯達到等級 5
+GD08EF3EF	金靂達到等級 5
+G060F3A0C	通過聖盔谷：號角堡中庭，且亞拉岡達到等級 10
+G9C00EBDD	通過聖盔谷：號角堡中庭，且勒苟拉斯達到等級 10
+GCA301FEC	通過聖盔谷：號角堡中庭，且金靂達到等級 10
+G2A4097F8	以任一角色通過秘密任務
+GF80714A8	以秘密角色通過秘密任務
+GF281A415	彼得．傑克森與貝瑞．奧斯朋談論電影與遊戲
+GEF6D5A30	伊利亞．伍德談在《魔戒》電玩中飾演佛羅多
+G1B7C2E20	伊恩．麥克連談在《魔戒》電玩中飾演甘道夫
+G100A11D4	《魔戒》電玩製作過程的幕後花絮
+G14A8622F	《魔戒現身》的角色與場景照片
+G228511D6	法貢與歐散克的角色與場景照片
+GFDF064C7	約翰．豪與艾倫．李受《魔戒》啟發所創作的美術作品
+GAAE1A0C0	洛汗與聖盔谷的角色與場景照片
+G6CEBDAE1	維果．莫天森談在《魔戒》電玩中飾演亞拉岡
+G6824CF13	奧蘭多．布魯談在《魔戒》電玩中飾演勒苟拉斯
+G84770794	約翰．瑞斯戴維斯談在《魔戒》電玩中飾演金靂
+G775EAFA1	解鎖《魔戒》電玩隱藏內容的秘密密技
+G640E4463	變更選擇
+G6D02770F	確認選擇
+GE5EE10E6	返回
+GA75BE7EE	變更或修改選擇
+GE7B4EE86	離開至主選單
+G47C91DD4	切換圖片
+GE445F6CE	用升級點數為你的角色購買強化。
+GB2D2B6DB	殺光他們！
+GFD9FFC0E	用快速攻擊打倒這傢伙！
+G7BD97E94	用猛力攻擊摧毀他的盾牌！
+G62FC14DC	他們來了！殺光他們！
+GA3F97A90	借我你們的劍！
+G88F3FEA7	呃！去死吧，魔多的怪物！
+G4888927E	為了白色之城！
+GB5DB8B33	你完蛋了！
+G91F156A0	滾開，陰影的怪物！
+G8F5E1C57	去死吧，索倫的爪牙！去死！
+GEF59BEBD	把他們擊退！
+G263E18E0	往前推進！
+G8715790C	守住陣地！
+G09E491AC	去死！
+GC9D8887A	剛鐸的渣滓！
+GD909145B	你，去死！
+G8524085B	你們殺不光我們的！
+GFA0F31A8	去死吧，渣滓！
+G6949F8FB	敵人太多了，你必須防守！
+GAB41028F	保護好自己，陛下。
+GC99D9EF1	用快速攻擊就能打倒這傢伙。
+G8BC62719	猛力攻擊能擊碎那些盾牌。
+G24319240	世界變了。
+G6FC7E51E	我在水中感覺得到。
+G586AE929	我在土地中感覺得到。
+GA0D1D398	我在空氣中嗅得到。
+G20A7EC8F	許多過往的事物都已失落，
+G9A5EEA48	因為記得它們的人都已不在人世。
+G991F588A	一切都從鑄造統御魔戒開始。
+GDCCA686B	三枚給了精靈，
+G64D4928C	他們是一切生靈中最長生不死、最睿智、最美麗的種族。
+GC38B0B40	七枚給了矮人王，
+GE4E9DA85	他們是山中殿堂裡偉大的礦工和工匠。
+G8EA28015	而九枚……九枚魔戒賜給了人類，
+G5415D8A9	他們最渴望的就是權力。
+GCAF2B8E3	因為這些魔戒中蘊藏著統治各個種族的力量與意志。
+GEAB51D48	但他們全都受騙了……
+G9968C959	因為還有另一枚魔戒被打造出來。
+G6DF9A86C	在魔多之地，在末日火山的烈焰中，
+GD5CC3D06	黑暗魔君索倫祕密鑄造了一枚能控制其他所有魔戒的至尊魔戒。
+GA5AF65D9	他將他的殘酷、他的惡意以及支配一切生靈的意志，全都灌注到這枚戒指中……
+GF9C8C37E	中土世界的自由之地一個接一個地落入魔戒的力量之下。
+GD7B567A4	但仍有人起身反抗。
+G9673067D	人類與精靈組成最後聯盟，向魔多大軍進軍，
+G9292CF8B	在末日火山的山坡上，為中土世界的自由而戰。
+G9C449910	就在這一刻，
+G4E624CE3	當所有希望都已消逝……
+G8B971AFC	……國王之子埃西鐸拿起了父親的劍。
+GA0976A20	中土世界自由種族的敵人索倫被擊敗了。
+GCE1FEBD6	魔戒落入埃西鐸手中，他有這唯一的機會永遠摧毀邪惡。
+G4653B8E6	但人心很容易被腐化。
+GF1F12CD3	摧毀它！
+G7A59BC32	不。
+GEDAFB589	我是埃西鐸的後裔，不是埃西鐸本人。我的命運由我自己決定。
+GECD0FC9B	去聖盔谷！布理哥，走！
+GE526C94A	佛羅多！離他們遠一點！
+GE5AC368C	救命！到處都是！
+GE18CFED5	我們會找到你的。
+G754CEC13	退下，邪惡的東西！
+G0EE492EC	他們在找魔戒持有者！跟緊一點！
+GA236A198	你無法抵抗的，半身人。
+GB0F6888B	我們完了。
+GABCB70B5	艾辛格已經傾巢而出。
+GD4A9E9B3	這是一支為了唯一目的而培育的大軍：毀滅人類世界。
+G65599300	黑暗魔君逼近了。
+GC6B5C82C	巴金斯……
+GDE3725D0	是戒靈！退後！
+GDB2A2A63	神行客！
+GDF3A925F	饒過他吧，救救他。
+G4867AD04	在瑞文戴爾這個庇護所中，我們之中最渺小的人展現了最大的勇氣。
+G3505351D	我來帶它！
+G5B8CB3F8	於是魔戒遠征隊就此成立。
+GF6138FE1	我會把魔戒帶到魔多！
+GA7DC204A	不過……
+G2FFEE7D1	……我不知道路。
+GD051F7C5	我會幫你承擔這個重擔，佛羅多．巴金斯……
+G82079845	……只要這是你必須承擔的。
+G8308B082	你肩負著我們所有人的命運，小傢伙。
+G32030F3F	我的弓為你效命。
+G7A19CD10	還有我的斧頭。
+G18A439E8	把魔戒交給我們，半身人。
+G5E09B681	魔戒是我們的。
+GC7625599	到我們這裡來，半身人。
+GB2DCED15	救救我！
+GF8B88DB9	快來救我！
+G111D0DD5	我快死了。
+G439D87CA	這片土地變了。
+GB5DB841A	我們在這裡等，直到前方的路看來安全為止。
+GF0EB3761	我們已經很多年沒有摩瑞亞的消息了。
+G3A9580D6	我們可以穿過摩瑞亞礦坑。
+G852B83DE	我的表親巴林會盛大歡迎我們的。
+G48D6F333	小心！
+G20BEF03C	快！這邊走！
+G37B7E741	兇殘的野獸。
+G70A83B75	這是都靈之門，摩瑞亞之王的門。
+GE6E19D64	甘道夫，所以你想帶他們翻越卡拉漢拉斯。
+GF7BC40D4	如果失敗了，
+GC7F3ECF5	你又要往哪裡去？
+G4F7AA217	去摩瑞亞！
+G0F8A9576	朋友，請說出通關密語，即可進入。
+GCB3668DA	美隆。
+G64134F99	我們現在只剩一個選擇。
+GE57BDBA1	我們必須面對摩瑞亞漫長的黑暗。
+G3CA10A85	魔多的渣滓！
+GC753F514	有埋伏！
+G66D5EE9E	有半獸人，數量很多。
+G8AB8C148	遇到麻煩時，就派矮人上場！
+G6F4359B4	打得好，金靂！
+G43E71D7A	我先去前面偵察，找出一條路。
+G0F5D4F40	怪物。
+G0BFC06A5	我們在這裡發現的，遠遠不只是摩瑞亞之王巴林的墳墓。
+G79CBD185	我們封住了大門。地底深處傳來鼓聲。
+G676CE560	我們出不去了。
+GC2C2532E	退下，你們這些沒有靈魂的野獸！
+G41169039	勒苟拉斯！我們需要你的弓！
+GED8A660A	快點，金靂！
+G548B1E16	滾開，兇殘的野獸！
+G8B6C996D	他交給我！
+GD624A593	小心後面！
+G22876487	守住陣地！
+G6E72BC38	退下，你們這些怪物！
+G98FB35D8	這邊！
+G758C706B	勒苟拉斯！
+G7D3C2C42	金靂！
+G96015B03	甘道夫！
+G2F5D8C59	太多了！
+GEB38BB38	我們要怎麼阻止他們？
+GDB1D4894	我打不過他們！
+GCA82C10C	我擋不住他們了！
+G839F36D1	用你的弓解決他們！
+G426819B7	為了巴林！
+G32A709EE	我來收拾你了！
+G7BC2A45C	佛羅多！
+GE0A9DD2D	他們太多了！
+GB502E0B9	為了幽暗密林！
+G5C8B1856	我要在你肚子上開幾個洞給蛆住！
+GF8D92047	全部抓起來！
+GDFB1C64C	砸爛他們！
+G5AF9060B	滾回陰影中去！
+GF1BFC8A0	亞拉岡！我需要你的劍！
+GF83070F8	金靂，到我這裡來！這邊！
+G2EC65D74	做好準備！
+GCD82317C	放箭！
+GCEA41230	散開！絕不能讓他們包圍我們！
+G3AD812AF	找到那個半身人！
+G6B59AA20	佛羅多肩負著我們所有人的命運！
+G4B4B5CA5	我們必須保護他！
+G1881769E	以他的榮譽之名，你們會付出代價！
+G743E1105	摩瑞亞對我們遠征隊來說是一段黑暗的旅程。
+G32DCF8A9	快逃啊，你們這些傻瓜！
+G10D542AD	不——！
+GD10EAA8A	這趟任務如今命懸一線。
+GF997012E	只要稍有差池，就會功虧一簣。
+G01C6A95F	但情況變得更加黑暗，因為我們的遠征隊正在瓦解。
+G212FEF60	我本來會跟你走到最後，直到魔多的烈焰之中。
+G960898CD	快跑！
+GD941582B	安息吧……
+G9D8421F1	……剛鐸之子。
+G60BC6BA4	我們必須打敗這些強獸人，讓佛羅多逃走！
+GF0E0DD02	波羅莫！
+G1C9C2949	幫個忙吧，精靈！
+GB1E7FF01	強獸人！進攻！
+G62308F86	這下有得玩了！
+GA7F87EAC	滾回生出你們的坑洞去。
+G06BA8520	他們往這邊走了，快來。
+G817C5460	但他們的足跡在這裡就斷了。我們得分頭行動，盡快找到他們。
+G934A6365	亞拉岡，外面有東西。
+G32456D68	你看到了什麼，勒苟拉斯？
+G090A57A6	白袍巫師。
+G3BE10384	薩魯曼。
+GF471A310	儘管波羅莫英勇奮戰，薩魯曼的爪牙還是抓走了我們隊上的成員。
+G9EB3E2D9	但我們不會丟下同伴，任由他們受折磨和死去。
+GC9337F85	我們追蹤他們的足跡好幾天……
+G1A87CFBD	……最後來到了法貢森林。
+G7754D2C1	這座森林很古老……
+G9261B17A	……非常古老。
+GF7DCBBD1	它充滿了記憶……
+GC4192431	……和憤怒。
+G92086B9D	在那座大森林中，許多道路交會在一起。
+G6F680400	不可能。
+G7A0AC815	現在兩座塔已經結盟——歐散克和巴拉多。
+GF36A1977	其他地方需要你們。
+GA926AFE5	戰爭即將降臨洛汗。
+GC5293984	現在有好戲看了！
+GCF6954E1	我以前看過，但從沒像這樣。
+G2E930B75	我們唯一的希望就是團結一致！
+GFD82D6F4	薩魯曼的軍隊正運送奇怪的爆炸裝置穿過這座城鎮。幫我們摧毀它們！
+G86FA279C	在大門擋住他們！
+G7B48AD72	我們之中少數還能作戰的人正向聖盔谷進發。
+GD55B6BE3	洛汗的未來將在那裡決定存亡。
+G2256A18D	小心炸藥！
+GE0BD0D44	好！讓他們嚐嚐火的滋味！
+G82C8009F	這應該能拖慢他們！
+GA0C82879	這是什麼？
+G751859FC	這是什麼？
+G06637EF0	我們必須摧毀這些爆炸裝置！
+GABF94061	那些爆炸裝置必須摧毀。
+G13114F1E	這會是什麼呢？
+G5B2AF650	這也許派得上用場。
+G14659B9A	這東西似乎很有價值。
+G418ECC01	好，這個我收下了。
+G136EC46C	這值得帶在身上。
+G360BBC1D	驅使他們的是薩魯曼的瘋狂和黑暗魔君的意志。
+G4840EFEC	又是煙火？哈！他們想把我們全變成屍體！
+G19910876	他們現在衝著我們來了！
+G08EB8FDB	過不去。
+G6FED1000	我得另外找條路。
+G68F91872	這座村莊像乾柴一樣燒起來了！
+G57BD9573	很有用。
+G424E3FF5	這樣就行了！
+G501ABC20	堅守住！
+G31FDA576	他們也攻陷了這一區！
+GB60A7265	守護洛汗的不只有我們。
+GA48B596C	國王的衛隊也正殺出一條血路前往聖盔谷。
+G65866A2E	你們在這裡已經盡力了。
+G115A6D12	倖存者會前往聖盔谷。
+GC07CBB0E	你們還有工作要做。在局勢逆轉之時，我會回到你們身邊。
+G63B48C52	他們突破防線了！
+GAAD29572	求求你！不！不！不！
+G589F2E2F	我們必須盡可能拯救每一個人，否則這座村莊就會淪陷。
+GE1654ECA	在我們漫長的旅程抵達伊多拉斯之前……
+G97FC9F74	……你的子民就已經身陷險境。
+GB52DB0C9	饒了我！
+GDDA274AE	求求你！饒了我！
+GA354A5CD	啊！不！
+G1C74FEB5	不！
+G946E2F3A	不！不！不要！
+GF46D4AC5	不！不！不！
+G1BD76207	救我們出去！快點！
+GE57CB50F	饒了我吧，求求你！
+G716689E1	保護我們！
+G6295F93F	救救我！求求你，救救我！
+GFA27E38F	啊——！他們要把我們活活燒死！
+G25B702F8	讓我活下去！求求你！
+GDE034FBB	你們必須繼續前進。其他地方需要我。
+G898F1CFF	讓他們見識艾辛格之狼的可怕！
+G04FC403B	我們不能讓這些怪物接近難民。
+GD8C5307E	你的子民得到了保護，但我們也付出了許多性命的代價。
+G4FD6FE99	我自己也差點喪命。
+G753DFA73	就這樣，我們各自循著不同的道路，全都來到了聖盔谷的要塞，準備做最後一搏。
+G932478E9	現在，殺了那個！
+GF940F960	好啊，我的寶貝們！
+G646F5FC4	我們的座狼今晚有大餐吃了！
+G948FC6FF	別跟他玩了！殺了他！
+G99617AA4	他們撤退了。暫時結束了。
+G4A0F838F	我殺了十九個！
+GC16105A6	那我們打平了。
+GAC4FD1F9	那可不一定。
+GF71FBCA2	我殺了兩個。
+G641CA89C	敵人多得是，夠我們兩個分，金靂！
+GF4B76D82	我們必須讓索倫的目光緊盯著我們，讓他看不見其他一切的行動！
+G5B04C967	退後！
+G3487D102	離開城牆！
+G8B575855	半獸人爬上城牆了！
+GCE3C16C0	我已經十七個了！
+G3D052135	找掩護！
+G05C9D273	他們又朝我們射擊了！
+G4941BF74	在我們被攻陷之前，把那座梯子推倒！
+G265760A3	趴下！快趴下！
+G2E8173A8	我們不能讓他們接近閃耀洞穴！
+G36DE1341	我從沒見過這樣的斧法，矮人大師。
+G80FBF437	我也沒見過這樣的箭術。
+G3F35FF0E	但被我打中的，就再也站不起來了。
+GEC633822	我們的防線被突破了！婦女和孩子被困住了！
+G17070638	帶他們到大殿去！
+G5CAB82D3	我們要在這裡或主堡擋住他們！
+GFFC47594	我們擋住他們了。婦女和孩子都安全了——暫時如此。
+GBD5794D5	我們再也擋不住他們了！進大殿去！
+G088ED5E4	我們擋不住他們了！
+G7C6E3511	索倫和薩魯曼正在收緊絞索。
+G7B236705	但不管他們多麼狡猾，我們還有一個優勢。
+GFCAC9515	魔戒仍未被發現。
+G1C7DF558	而我們打算摧毀它這件事，他們連在最黑暗的夢裡都想不到。
+GB72B409D	於是，敵人的武器正握在一個哈比人手中，朝魔多前進——
+G86CED6F6	每過一天，它就離末日火山的烈焰更近一步。
+GD9BB4CD5	索倫怕你，亞拉岡。
+GDD966B5E	弓箭手上城牆！
+G6A122B51	退後！路障就要倒了！
+G427F5206	快點，矮人大師！
+G113213B2	去找勒苟拉斯，我在這裡擋住他們！
+GA7B95A20	為了剛鐸！
+G7C696E8A	亞拉岡寡不敵眾！快去幫他！
+GFC98A99D	我們的精靈朋友需要幫忙。
+G66A680C0	強獸人！
+G8968245E	他們快要砸爛路障了！
+G428EE07E	他們攻進主堡了。我們死定了！
+GFAE8490C	不——！！
+G63F31F0F	你的末日近了。
+GE8B9DB2E	你選擇了痛苦之路！
+G910D7B12	你這個傻瓜。
+G58E8BBAA	你該停手了。
+GD8425223	你不會真以為一個衣衫襤褸的遊俠能和我的意志抗衡吧？我的力量遠在你之上。
+G1A989E68	你將為你的傲慢付出代價。
+G0079D300	你沒想到矮人能和薩魯曼的意志抗衡吧。沒有人能做到。
+GFB1E1C33	你該不會真以為一個精靈能和薩魯曼抗衡吧？沒有人能，也沒有人敢。
+GCB4F521C	射擊方式和宰相之弓相同，洛汗驃騎的倒鉤箭能造成重創。
+G906620AF	永久提升你的生命值。（需要迪耐瑟之威）
+GE4F990F3	更具毀滅性的攻擊。（需要剛鐸之怒）
+G55B83821	永久提升你的生命值。（需要剛鐸之力）
+GD4900EBD	這招毀滅性攻擊能讓多名敵人著火。（需要剛鐸之怒火）
+GF1EE1785	宰相之弓
+GC7DFC68A	剛鐸之怒
+G26838C80	剛鐸號角
+G948EF2DD	隊長的堅守
+GC354B788	迪耐瑟之威
+G2675AC6D	米那斯提力斯衝鋒
+G3A16134F	宰相的奇招
+G7C6E9536	剛鐸之力
+G909BDBD3	剛鐸之怒火
+GBCA2DB1D	白塔突擊
+GA70E206F	阿蒙漢的堅守
+GECE9E935	以波羅莫遊玩
+G2BAAD5AF	按住左扳機使用。按 A 按鈕施法（按住可提高傷害）。
+GF2DB6139	施放方式和巫師之光相同，納雅之焰能灼燒敵人，造成重創。
+G4E51B4E3	永久提升你的生命值。（需要伊斯塔利之力）
+G701450DF	永久提升你的生命值。（需要歐羅林之力）
+G876BFE80	更具毀滅性的攻擊。（需要邁雅之怒）
+G554AF8D3	永久提升你的生命值。（需要納雅之力）
+GF20F1105	這招毀滅性攻擊能讓多名敵人著火。（需要巫師狂怒）
+GE86497FB	伊斯塔利的白焰燃燒得極為猛烈。（需要魔戒之火）
+G5D1DA1B0	巫師之光
+GE4245C5B	法杖格擋
+G68852FD1	邁雅之怒
+G63891384	伊斯塔利之力
+G3023E8DD	亞納之焰
+G03053C48	你不能過去
+G44E88937	魔戒之火
+G31781C88	歐羅林之力
+GC67FABAE	影疾衝鋒
+GB28BAB38	灰袍聖徒
+GBB647C84	納雅之力
+G3A1959EB	巫師狂怒
+G910A4D18	敵擊劍大師
+GE54BB6DF	米斯蘭達的突擊
+G80CB05F7	白袍之力
+G5500602D	歐羅林之怒火
+GB3B8BA9A	白焰
+G4D3F3799	邁雅之怒火
+GB06CD44C	以甘道夫遊玩
+GD63AEB69	按住左扳機使用。按 A 按鈕投擲（按住可提高傷害）。
+GF1500B18	投擲方式和夏爾石子相同，烈酒河的尖銳燧石能造成重創。
+G1594107A	永久提升你的生命值。（需要夏爾之力）
+G223FB1F4	永久提升你的生命值。（需要比爾博之力）
+G419FBE06	更具毀滅性的攻擊。（需要哈比人之怒）
+G549E8839	永久提升你的生命值。（需要山姆衛斯之力）
+G3E7B6E97	這招毀滅性攻擊能讓多名敵人著火。（需要夏爾狂怒）
+G5DBA6F26	受精靈祝福的石頭能造成可怕的傷害。（需要燧石彈）
+G586DFFA8	夏爾石子
+GAF333BB7	哈比人之怒
+GA30AB0B5	夏爾之力
+G5B952654	刺針之咬
+G3F0B7A46	魔戒持有者的意志
+GE7A5F0EC	燧石彈
+G97512A2B	比爾博之力
+G4F6E34B0	巴金斯衝鋒
+G8AFDEEE2	哈比人的好運
+G9AE8326E	山姆衛斯之力
+G5FECDC01	夏爾狂怒
+GB7F9A847	刺針精通
+GD629F714	圖克家突擊
+G31486B52	袋底洞之力
+G4023054B	刺針之怒火
+GD48B81F2	精靈石
+G371FFFDE	秘銀決心
+G031E765B	以佛羅多遊玩
+G63C78123	射擊方式和艾辛格之弓相同，歐散克的倒鉤箭能造成重創。
+G266F9F27	永久提升你的生命值。（需要艾辛格之力）
+G4451D279	永久提升你的生命值。（需要薩魯曼之力）
+G2DE635F5	更具毀滅性的攻擊。（需要強獸人之怒）
+G4D25FA2B	永久提升你的生命值。（需要歐散克之力）
+G055C2C2B	這招毀滅性攻擊能讓多名敵人著火。（需要艾辛格狂怒）
+G478E4DB1	艾辛格的黑箭能造成可怕的傷害。（需要強獸人之弓）
+GB0EED2A6	艾辛格之弓
+G13D5F1B3	刀刃格擋
+GCC2F9E7C	強獸人之怒
+GF496EAA0	艾辛格之力
+GC727C10B	路茲的獵殺
+G73D0C070	薩魯曼的意志
+GD64B9B56	強獸人之弓
+G9E8D350E	薩魯曼之力
+G6426C642	強獸人戰士衝鋒
+GCC3C5342	屠夫的奇招
+G0DEF3FCC	歐散克之力
+G0EBAA8C5	艾辛格狂怒
+GFC62112E	屠夫大師
+GEE7780E5	艾辛格猛攻
+G838B10AC	強獸人之力
+GF44614A3	薩魯曼之怒火
+G45DC8B08	黑弓
+G4F638CF6	洛汗剋星
+G9E606E3B	首位強獸人的厄運
+GE31550F8	路茲
+G981416DE	以路茲遊玩
+G6F22BB2E	射擊方式和精靈之弓相同，瑞文戴爾之箭能造成重創。
+GCA4A15A1	永久提升你的生命值。（需要瑞文戴爾之力）
+G75BCF244	永久提升你的生命值。（需要吉爾加拉德之威）
+G216AF74D	永久提升你的生命值。（需要威雅之力）
+G0B6CC0B6	這招毀滅性攻擊能讓多名敵人著火。（需要諾多狂怒）
+G0355C5D7	艾爾達的銀箭能造成可怕的傷害。（需要凡雅之弓）
+GD3F16BA3	精靈之弓
+G710A6666	瑞文戴爾之力
+G96D9F158	威雅的恩典
+GF127A06E	最後聯盟
+GB426C696	凡雅之弓
+G71620C4B	吉爾加拉德之威
+GFBF3A490	林頓衝鋒
+G00542D8B	傳令官的奇招
+G5104305A	威雅之力
+G221633E0	諾多狂怒
+G11A9FF39	諾多戰爭突擊
+GDE2839BE	艾爾達之力
+GB0E7C432	林頓之怒火
+G008B68D9	艾爾達之弓
+G10607364	伊姆拉崔之王
+G0BA28B85	以愛隆遊玩
+GD6BB77A1	施放方式和黑暗魔彈相同，巴拉多之火能造成重創。
+G113CAFFC	永久提升你的生命值。（需要巴拉多之力）
+G2F14F0F7	永久提升你的生命值。（需要魔多之力）
+G573FFFF8	更具毀滅性的攻擊。（需要黑暗之怒）
+G6AE28C4F	永久提升你的生命值。（需要魔戒之威）
+GC4B7E7DB	這招毀滅性攻擊能讓多名敵人著火。（需要魔多狂怒）
+G5FEE9C56	末日火山的烈焰能造成可怕的傷害。（需要地獄之火）
+GA07FAB7C	黑暗魔彈
+G59838F7F	錘矛格擋
+G0ACE1349	黑暗之怒
+GD97CF863	巴拉多之力
+GF62B2130	索倫之舞
+G53F430F0	至尊魔戒的意志
+GB60C89B8	地獄之火
+GC26DDD50	魔多之力
+G29856B22	黑暗魔君衝鋒
+G27C67462	安納塔的奇招
+G66205DC8	魔戒之威
+GA64C9515	魔多狂怒
+G278CB8C1	錘矛大師
+G4B8493DC	魔多戰爭突擊
+G5487C52D	末日火山之力
+GE9A37F55	魔多之怒火
+G3F70A0C4	末日之火
+GBB8776B5	精靈剋星
+G6E2AA149	索倫之眼
+G1C11BF19	索倫
+G3057B52F	以索倫遊玩
+GB76B50B9	投擲方式和峭壁岩石相同，這些來自深坑的岩石能造成重創。
+GECFE6FA3	永久提升你的生命值。（需要深坑之威）
+G47753157	這招毀滅性攻擊能讓多名敵人著火。（需要狂戰士狂怒）
+GF2D43E42	熔化的岩石能造成可怕的傷害。（需要戰爭岩石）
+GC390874C	峭壁岩石
+G035878D4	狂戰士之狂
+GC2D0B8DB	深谷火炬
+GFF1647F7	戰爭岩石
+G98869254	深坑之威
+GC4A495AD	深溪牆衝鋒
+GE0FB4F25	強獸人的奇招
+G8925F4A1	狂戰士狂怒
+G468B4A5C	狂戰士大師
+GB0E58D9C	攻城突擊
+GD5AF6DD1	歐散克之怒火
+G01AF5769	熔岩石
+G18494AB3	深坑之怒火
+GB3AAE2E1	強獸人
+G683077D7	以強獸人遊玩
+P:Frame Rate:	影格率：
+P:Unlocked	不限制
+P:Display Mode:	顯示模式：
+P:Window	視窗
+P:Full Screen	全螢幕
+P:Window Size:	視窗大小：
+P:Automatic	自動
+P:Aspect Ratio:	長寬比：
+P:Custom	自訂
+P:Resolution:	解析度：
+P:Anisotropic:	非等向性過濾：
+P:Mipmaps:	Mipmap：
+P:Off	關
+P:On	開
+P:Ultra Textures:	超高畫質材質：
+P:Wide Cutscenes:	寬螢幕過場：
+P:Anti-aliasing:	反鋸齒：
+P:VSync:	垂直同步：
+P:Picture:	畫面：
+P:Keep Shape	維持比例
+P:Stretch	延展
+P:Vertex Programs:	頂點程式：
+P:Brightness:	亮度：
+P:Sharpening:	銳利化：
+P:Colour:	色彩：
+P:Original	原始
+P:Vivid	鮮豔
+P:Muted	柔和
+P:HUD Widescreen:	HUD 寬螢幕：
+P:Edges	邊緣
+P:Centred	置中
+P:Menus:	選單：
+P:Fill	填滿
+P:Movies:	影片：
+P:As Made	原始比例
+P:Button Prompts:	按鈕提示：
+P:Keyboard	鍵盤
+P:Mouse Pointer:	滑鼠游標：
+P:Sensitivity:	靈敏度：
+P:Pointer Size:	游標大小：
+P:Mouse Aiming:	滑鼠瞄準：
+P:Invert Aiming:	反轉瞄準：
+P:Up/Down	上／下
+P:Left/Right	左／右
+P:Both	兩者
+P:Mouse Steering:	滑鼠操控方向：
+P:A Button:	A 按鈕：
+P:B Button:	B 按鈕：
+P:X Button:	X 按鈕：
+P:Y Button:	Y 按鈕：
+P:Black Button:	黑色按鈕：
+P:White Button:	白色按鈕：
+P:Left Trigger:	左扳機：
+P:Right Trigger:	右扳機：
+P:Start:	Start：
+P:Back:	Back：
+P:D-pad Up:	方向鍵上：
+P:D-pad Down:	方向鍵下：
+P:D-pad Left:	方向鍵左：
+P:D-pad Right:	方向鍵右：
+P:L Stick Click:	按下左搖桿：
+P:R Stick Click:	按下右搖桿：
+P:Move Forward:	向前移動：
+P:Move Back:	向後移動：
+P:Move Left:	向左移動：
+P:Move Right:	向右移動：
+P:Look Up:	向上看：
+P:Look Down:	向下看：
+P:Look Left:	向左看：
+P:Look Right:	向右看：
+P:Walk:	步行：
+P:General Options	一般選項
+P:Display Options	顯示選項
+P:Controls	操作控制
+P:Reset Controls	重設操作
+P:Press a key...  (Esc: cancel, Delete: clear)	請按一個鍵……（Esc：取消，Delete：清除）
+P:R Stick	右搖桿
+P:Stick	搖桿
+P:L Stick	左搖桿
+P:Black button	黑色按鈕
+P:White button	白色按鈕
+P:Left trigger	左扳機
+P:Right trigger	右扳機
+P:Start	Start
+P:Back	Back
+P:D-pad up	方向鍵上
+P:D-pad down	方向鍵下
+P:D-pad left	方向鍵左
+P:D-pad right	方向鍵右
+P:Left stick click	按下左搖桿
+P:Right stick click	按下右搖桿
+P:Move forward	向前移動
+P:Move back	向後移動
+P:Move left	向左移動
+P:Move right	向右移動
+P:Right stick up	右搖桿上
+P:Right stick down	右搖桿下
+P:Right stick left	右搖桿左
+P:Right stick right	右搖桿右
+P:Walk	步行
+P:None	無
+P:LS click	按下左搖桿
+P:RS click	按下右搖桿
+P:Mouse Left	滑鼠左鍵
+P:Mouse Right	滑鼠右鍵
+P:Mouse Middle	滑鼠中鍵
+P:Mouse 4	滑鼠按鍵 4
+P:Mouse 5	滑鼠按鍵 5
+P:Space	空白鍵
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	上
+P:Down	下
+P:Left	左
+P:Right	右
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	數字鍵 0
+P:Num 1	數字鍵 1
+P:Num 2	數字鍵 2
+P:Num 3	數字鍵 3
+P:Num 4	數字鍵 4
+P:Num 5	數字鍵 5
+P:Num 6	數字鍵 6
+P:Num 7	數字鍵 7
+P:Num 8	數字鍵 8
+P:Num 9	數字鍵 9
+P:Num *	數字鍵 *
+P:Num +	數字鍵 +
+P:Num -	數字鍵 -
+P:Num .	數字鍵 .
+P:Num /	數字鍵 /
+P:Semicolon	分號
+P:Equals	等號
+P:Comma	逗號
+P:Minus	減號
+P:Period	句號
+P:Slash	斜線
+P:Backquote	反引號
+P:Backslash	反斜線
+P:Quote	引號
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	按住{6}切換為遠程武器。按{0}射擊。用{M}瞄準。
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	按住{6}切換為遠程武器。按{0}射擊。用{M}瞄準。
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	按住{6}使用。按{0}射擊（按住可提高傷害）。
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	按住{6}使用。按{0}射擊（按住可提高傷害）。
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	按住{6}使用。按{0}投擲（按住可提高傷害）。
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	按住{6}使用。按{0}投擲（按住可提高傷害）。
+P:A devastating attack.  Press and hold {3} to use.	毀滅性的攻擊。按住{3}使用。
+P:Game Saved.  Press {8} to continue.	遊戲已儲存。按{8}繼續。
+P:Game Saved.  Press {0} to continue.	遊戲已儲存。按{0}繼續。
+P:Unable to save game. Press {8} to continue.	無法儲存遊戲。按{8}繼續。
+P:Unable to save game. Press {0} to continue.	無法儲存遊戲。按{0}繼續。
+P:Unable to load game. Press {8} to continue.	無法載入遊戲。按{8}繼續。
+P:Unable to load game. Press {0} to continue.	無法載入遊戲。按{0}繼續。
+P:No saved games. Press {8} to continue.	沒有遊戲存檔。按{8}繼續。
+P:No saved games. Press {0} to continue.	沒有遊戲存檔。按{0}繼續。
+P:Not unlocked yet. Press {8} to continue.	尚未解鎖。按{8}繼續。
+P:Not unlocked yet. Press {0} to continue.	尚未解鎖。按{0}繼續。
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	你收集的升級點數不足，無法購買這項升級。按{8}繼續。
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	你收集的升級點數不足，無法購買這項升級。按{0}繼續。
+P:Press {8} to resume	按{8}繼續遊戲
+P:the left mouse button	滑鼠左鍵
+P:the right mouse button	滑鼠右鍵
+P:the middle mouse button	滑鼠中鍵
+P:mouse button 4	滑鼠按鍵 4
+P:mouse button 5	滑鼠按鍵 5
+P:the A button	A 按鈕
+P:the B button	B 按鈕
+P:the X button	X 按鈕
+P:the Y button	Y 按鈕
+P:the Black button	黑色按鈕
+P:the White button	白色按鈕
+P:the left trigger	左扳機
+P:the right trigger	右扳機
+P:up on the d-pad	方向鍵上
+P:down on the d-pad	方向鍵下
+P:left on the d-pad	方向鍵左
+P:right on the d-pad	方向鍵右
+P:the left thumbstick button	左類比搖桿按鈕
+P:the right thumbstick button	右類比搖桿按鈕
+P:the Menu button	功能表按鈕
+P:the View button	檢視按鈕
+P:the cross button	叉叉按鈕
+P:the circle button	圓圈按鈕
+P:the square button	方塊按鈕
+P:the triangle button	三角按鈕
+P:Left Click	左鍵
+P:Right Click	右鍵
+P:Middle Click	中鍵
+P: or 	 或 
+P:Exit	離開遊戲
+P:Press {k}	請按 {k}
+P:Boromir	波羅莫
+P:Gandalf	甘道夫
+P:Frodo	佛羅多
+P:Lurtz	路茲
+P:Elrond	愛隆
+P:Sauron	索倫
+P:Uruk-hai	強獸人
+L:The Two Towers Recompiled	雙城奇謀 Recompiled
+L:Paths	路徑
+L:Game files ready:  	遊戲檔案已就緒： 
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	尚未安裝遊戲檔案。請選擇你的《雙城奇謀》（美版）Xbox ISO 檔或已解壓縮的光碟資料夾。
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	正在從 GLOS69 材質包建立超高畫質材質（僅需一次，約數分鐘）……
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Xbox 光碟映像檔 (*.iso;*.xiso)\\0*.iso;*.xiso\\0所有檔案\\0*.*\\0
+L:Checking disc...	正在檢查光碟……
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	選擇已解壓縮的《雙城奇謀》光碟資料夾（內含 default.xbe）
+L:Display	顯示
+L:Developer	開發者
+L:Renderer	繪圖引擎
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan（DXVK，放在 dxvk 資料夾中）
+L:Software (no graphics card)	軟體（不使用顯示卡）
+L:Frame rate	影格率
+L:30 fps (as on the Xbox)	30 fps（與 Xbox 相同）
+L:60 fps (experimental)	60 fps（實驗性）
+L:Unlocked (experimental)	不限制（實驗性）
+L:Display mode	顯示模式
+L:Windowed	視窗模式
+L:Full screen (borderless)	全螢幕（無邊框）
+L:Window size	視窗大小
+L:Automatic	自動
+L:Aspect ratio	長寬比
+L:4:3 (original)	4:3（原始）
+L:16:9 widescreen	16:9 寬螢幕
+L:21:9 ultrawide	21:9 超寬螢幕
+L:32:9 super ultrawide	32:9 極寬螢幕
+L:HUD in widescreen	寬螢幕下的 HUD
+L:At the screen's edges	位於螢幕邊緣
+L:Centred (4:3)	置中（4:3）
+L:Menus	選單
+L:Fill the screen (past the old TV margin)	填滿螢幕（超出舊式電視的安全邊界）
+L:Original (with a margin)	原始（保留邊界）
+L:Movies in widescreen	寬螢幕下的影片
+L:As made (4:3)	原始比例（4:3）
+L:Fill the width (black bands cut off)	填滿寬度（裁掉黑邊）
+L:Widescreen cutscenes	寬螢幕過場動畫
+L:Off (4:3, side bars)	關（4:3，兩側黑邊）
+L:On (the sky's edges can show)	開（可能露出天空的邊緣）
+L:Ultra textures	超高畫質材質
+L:Off	關
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	開（選單和 HUD 更清晰；搭配 GLOS69 材質包則全部清晰）
+L:Internal resolution	內部解析度
+L:1x  (640 x 480, original)	1x  （640 x 480，原始）
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x（2160 線：16:9 時為 3840 x 2160）
+L:Anisotropic filtering	非等向性過濾
+L:Mipmaps	Mipmap
+L:On (less shimmer)	開（減少閃爍）
+L:Anti-aliasing	反鋸齒
+L:FXAA (the finished picture)	FXAA（處理完成的畫面）
+L:VSync	垂直同步
+L:On (no tearing)	開（無畫面撕裂）
+L:Picture shape	畫面比例
+L:Keep aspect (black bars)	維持比例（黑邊）
+L:Stretch to fill	延展填滿
+L:Vertex programs	頂點程式
+L:Graphics card (faster)	顯示卡（較快）
+L:CPU (old method)	CPU（舊方法）
+L:Brightness	亮度
+L:Darker	較暗
+L:Original	原始
+L:Brighter	較亮
+L:Brighter +	較亮 +
+L:Brightest	最亮
+L:Sharpening	銳利化
+L:Low	低
+L:Medium	中
+L:High	高
+L:Colour	色彩
+L:Vivid	鮮豔
+L:Muted	柔和
+L:Button prompts	按鈕提示
+L:Automatic (follows the pad or keys you use)	自動（依你使用的手把或按鍵而定）
+L:Keyboard / mouse (your bound keys)	鍵盤／滑鼠（你設定的按鍵）
+L:Input	輸入
+L:Mouse pointer in menus	選單中的滑鼠游標
+L:On (point and click in the menus)	開（在選單中用滑鼠點選）
+L:Off (mouse buttons as bound)	關（滑鼠按鍵依設定運作）
+L:Mouse sensitivity	滑鼠靈敏度
+L:Normal	普通
+L:Very high	非常高
+L:Pointer size	游標大小
+L:Small	小
+L:Large	大
+L:Extra large	特大
+L:Mouse aiming (ranged)	滑鼠瞄準（遠程）
+L:On (hold the ranged button, move the mouse)	開（按住遠程按鈕並移動滑鼠）
+L:Mouse aiming: invert	滑鼠瞄準：反轉
+L:Up / down	上／下
+L:Left / right	左／右
+L:Both	兩者
+L:Mouse steering (movement)	滑鼠操控方向（移動）
+L:On (the mouse sets the way; W A S D move by it)	開（滑鼠決定方向；W A S D 依此方向移動）
+L:Mod: ECTS 2002 HUD (experimental)	模組：ECTS 2002 HUD（實驗性）
+L:Off (retail HUD)	關（正式版 HUD）
+L:On (ECTS 2002 demo HUD)	開（ECTS 2002 試玩版 HUD）
+L:Mods	模組
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	模組：橘色回復道具（出現在發售前及幕後製作影片中）
+L:Off (green, as retail)	關（綠色，與正式版相同）
+L:On (orange health pickups)	開（橘色回復道具）
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	模組：額外英雄（波羅莫、甘道夫、佛羅多、路茲、愛隆、強獸人、索倫；與埃西鐸一同解鎖）
+L:Off (four heroes, as retail)	關（四位英雄，與正式版相同）
+L:On (eleven heroes)	開（十一位英雄）
+L:On, unlocked for testing (save not changed)	開，已解鎖供測試（不變更存檔）
+L:Custom: 	自訂： 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	超高畫質材質已開啟：選單、關卡選擇和 HUD 會更清晰。\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	若要讓所有材質都清晰，請向作者下載 GameCube 高解析度材質包（GLOS69） 
+L:from its author and put its GLOS69 folder here:\n\n	並將其中的 GLOS69 資料夾放在這裡：\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\n下次按下「開始遊戲」時，啟動器會將其準備就緒（僅需一次，約數分鐘）。
+L:Graphics settings	圖形設定
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	除了模組以外，其他設定都可以在遊戲中變更：按 F10（或按住 Back 再按 Start）。 
+L:The mods are set here and take effect when the game starts.	模組在此設定，並於遊戲啟動時生效。
+L:Defaults	預設值
+L:Cancel	取消
+L:A button	A 按鈕
+L:B button	B 按鈕
+L:X button	X 按鈕
+L:Y button	Y 按鈕
+L:Black button	黑色按鈕
+L:White button	白色按鈕
+L:Left trigger	左扳機
+L:Right trigger	右扳機
+L:Start	Start
+L:Back	Back
+L:D-pad up	方向鍵上
+L:D-pad down	方向鍵下
+L:D-pad left	方向鍵左
+L:D-pad right	方向鍵右
+L:Left stick click	按下左搖桿
+L:Right stick click	按下右搖桿
+L:Move forward	向前移動
+L:Move back	向後移動
+L:Move left	向左移動
+L:Move right	向右移動
+L:Right stick up	右搖桿上
+L:Right stick down	右搖桿下
+L:Right stick left	右搖桿左
+L:Right stick right	右搖桿右
+L:Walk (hold)	步行（按住）
+L:None	無
+L:LS click	按下左搖桿
+L:RS click	按下右搖桿
+L:Mouse Left	滑鼠左鍵
+L:Mouse Right	滑鼠右鍵
+L:Mouse Middle	滑鼠中鍵
+L:Mouse 4	滑鼠按鍵 4
+L:Mouse 5	滑鼠按鍵 5
+L:Space	空白鍵
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	上
+L:Down	下
+L:Left	左
+L:Right	右
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	數字鍵 0
+L:Num 1	數字鍵 1
+L:Num 2	數字鍵 2
+L:Num 3	數字鍵 3
+L:Num 4	數字鍵 4
+L:Num 5	數字鍵 5
+L:Num 6	數字鍵 6
+L:Num 7	數字鍵 7
+L:Num 8	數字鍵 8
+L:Num 9	數字鍵 9
+L:Num *	數字鍵 *
+L:Num +	數字鍵 +
+L:Num -	數字鍵 -
+L:Num .	數字鍵 .
+L:Num /	數字鍵 /
+L:Semicolon	分號
+L:Equals	等號
+L:Comma	逗號
+L:Minus	減號
+L:Period	句號
+L:Slash	斜線
+L:Backquote	反引號
+L:Backslash	反斜線
+L:Quote	引號
+L:Key 	按鍵 
+L:Controls	操作控制
+L:press a key or mouse button…	請按一個鍵或滑鼠按鍵……
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	請按下要用於此動作的鍵或滑鼠按鍵（Esc 取消）。它會取代此動作的第一個按鍵；其他動作將不再使用該鍵。
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	點一下按鍵欄位，然後按下一個鍵或滑鼠按鍵。下拉選單可選擇控制器的哪個按鈕執行各個動作。這些設定也可以在遊戲中變更：F10 的「操作控制」頁面。
+L:Action	動作
+L:Keyboard / mouse	鍵盤／滑鼠
+L:Controller	控制器
+L:stick part way	搖桿推一半
+L:right stick	右搖桿
+L:left stick	左搖桿
+L:Still working (installing, or building the Ultra textures). Quit anyway?	仍在處理中（正在安裝或建立超高畫質材質）。仍要結束嗎？
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	魔戒二部曲：雙城奇謀  -  原生 PC 重新編譯版
+L:Install from ISO…	從 ISO 安裝……
+L:Use extracted folder…	使用已解壓縮的資料夾……
+L:Show the game window	顯示遊戲視窗
+L:Write a log file (for bug reports)	寫入記錄檔（用於回報錯誤）
+L:Graphics settings…	圖形設定……
+L:Controls…	操作控制……
+L:Play	開始遊戲
+L:Open folder	開啟資料夾
+L:30 fps (original)	30 fps（原始）
+L:60 / unlocked can run some scenes faster than normal	60 fps／不限制時，部分場景可能會比正常速度快
+L:Full screen	全螢幕
+L:Alt+Enter or F11 also switches	也可以按 Alt+Enter 或 F11 切換
+L:The 3D view widens fully after the next load	3D 畫面會在下次載入後完全加寬
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	更清晰，但需要更強的顯示卡（9x 以上需要大量顯示記憶體）
+L:On	開
+L:Less shimmer on distant textures	減少遠處材質的閃爍
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA 在繪製時平滑 3D 邊緣；FXAA 則處理完成的畫面
+L:Waits for the monitor: no tearing	等待螢幕同步：無畫面撕裂
+L:Picture	畫面
+L:Keep shape	維持比例
+L:Graphics card	顯示卡
+L:Graphics card is much faster	顯示卡快得多
+L:Lifts the dark areas (gamma)	提亮暗部（Gamma）
+L:Crisper textures, best with a higher internal resolution	材質更銳利，搭配較高的內部解析度效果最佳
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	自動：依你最後使用的裝置而定（手把、PlayStation 手把、鍵盤）
+L:Where the HUD sits when the picture is wider than 4:3	畫面寬於 4:3 時 HUD 的位置
+L:Fill the screen	填滿螢幕
+L:Menus, loading and upgrade screens: past the old TV margin	選單、載入和升級畫面：超出舊式電視的安全邊界
+L:Fill the width	填滿寬度
+L:Fill: the films' black bands cut off, a little closer	填滿：裁掉影片的黑邊，畫面稍微放大
+L:Point and click in the menus (Off: the mouse buttons act as before)	在選單中用滑鼠點選（關：滑鼠按鍵維持原本的作用）
+L:The pointer's speed and the mouse aiming's	游標和滑鼠瞄準的速度
+L:Hold the ranged button and move the mouse to aim	按住遠程按鈕並移動滑鼠來瞄準
+L:Press to toggle	按一下切換
+L:Hold	按住
+L:Windowed mode	視窗模式
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	高解析度材質包（將 GLOS69 和 textures_ultra 放在遊戲旁）
+L:Off (4:3)	關（4:3）
+L:On: the in-engine scenes widened too (the sky's edges can show)	開：引擎內的過場也會加寬（可能露出天空的邊緣）
+L:Mod: ECTS 2002 HUD	模組：ECTS 2002 HUD
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	ECTS 2002 試玩版的頭像、符文寶珠和經驗值顯示
+L:Mod: Orange health pickups	模組：橘色回復道具
+L:Health pickups are orange, as in pre-release and making-of videos	回復道具為橘色，與發售前及幕後製作影片中相同
+L:Custom (%.2f:1)	自訂（%.2f:1）
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	圖形設定
+L:Page	頁面
+L:Graphics	圖形
+L:Left/Right: switch to the Controls page	左／右：切換到「操作控制」頁面
+L:press a key...	請按一個鍵……
+L:Reset all controls to the defaults	將所有操作重設為預設值
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	請按下鍵或滑鼠按鍵。Esc：取消。Delete：清除。
+L:A / Enter: reset	A／Enter：重設
+L:A / Enter: set a key.   Left/Right: controller button.	A／Enter：設定按鍵。左／右：控制器按鈕。
+L:Left/Right: switch to the Graphics page	左／右：切換到「圖形」頁面
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	上／下：選擇　　左／右或 A：變更　　B／Esc／F10：關閉
+L:Changes are saved automatically	變更會自動儲存
+L:Language	語言
+L:Restart the game for the language to change	重新啟動遊戲後才會變更語言
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	滑鼠決定前進方向；W、A、S、D 依此方向移動（步行鍵仍可步行）
+L:Language (game and launcher):	語言（遊戲與啟動器）：
+L:CONTROLS	操作控制
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	額外英雄：按下左搖桿讓索倫衝刺（鍵盤為 Shift）
+L:Sauron's sprint	索倫衝刺
+L:hold	按住
+L:toggle	切換
+L:Combo Runes	連擊符文
+L:Speed	快速
+L:Fierce	猛力
+L:Special	特殊
+L:Each attack fills a quarter	每次攻擊填滿四分之一
+L:OK	確定
+L:Could not start twotowers_recomp.exe.	無法啟動 twotowers_recomp.exe。
+P:the left thumbstick	左類比搖桿
+L:default.xbe was not found in that folder.	在該資料夾中找不到 default.xbe。
+L:That default.xbe is not the USA retail release this port was built from.	該 default.xbe 不是本移植版所依據的美版（USA）零售版。
+L:Error: 	錯誤: 
+L:Error: the disc has no default.xbe.	錯誤: 光碟中沒有 default.xbe。
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	錯誤: 此 ISO 不是本移植版支援的美版（USA）零售版《雙城奇謀》光碟。
+L:Extracting 	正在解壓縮 
+L:Ultra textures (once): 	超高畫質材質（僅需一次）: 
+L:Ultra textures: 	超高畫質材質: 
+L:Converting 	正在轉換 
+L:Softening the edges of 	正在柔化邊緣 
+L:Fixing the transparency of 	正在修正透明度 
+L:Writing the index	正在寫入索引
+L:Ultra textures ready: 	超高畫質材質已就緒: 
+L: pictures	 張圖片
+L: could not be made	 張無法製作
+L:The GLOS69 texture pack is not in the game's folder.	GLOS69 材質包不在遊戲資料夾中。
+L:Could not write textures_ultra/index.bin.	無法寫入 textures_ultra/index.bin。
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	開（按住 W：朝滑鼠推動的方向奔跑；步行鍵則步行）
+L:Hold W: he runs the way the mouse pushes (Walk walks)	按住 W：朝滑鼠推動的方向奔跑（步行鍵則步行）

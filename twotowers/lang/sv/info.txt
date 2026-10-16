@@ -1,0 +1,2 @@
+name=Svenska
+rtl=0

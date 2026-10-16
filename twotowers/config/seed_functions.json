@@ -1,0 +1,1974 @@
+[
+ {
+  "start": "0x000FB6A9",
+  "note": "PsCreateSystemThreadEx StartContext1 observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001011F4",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00109590",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00111EB0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00114AC0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00114E50",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00114E90",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00114F90",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00114FD0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00115070",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00115160",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001151E0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00115290",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001152F0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116120",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116190",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116200",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116220",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116240",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001162A0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001162E0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116360",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001163B0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001687D8",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001691EE",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001011EC",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x001011FC",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x00101204",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0010120C",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x00101214",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0010121C",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0010122F",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0006E9D7",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0006E9DE",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0006E9E5",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0011BCC1",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0011BCD5",
+  "reason": "jump-table case reached by indirect tail (CRT memcpy backward copy etc.)"
+ },
+ {
+  "start": "0x0011D890",
+  "reason": "D3D NV2A interrupt service routine (KeConnectInterrupt vector 3)"
+ },
+ {
+  "start": "0x0016EB2F",
+  "reason": "XPP/USB interrupt service routine (KeConnectInterrupt vector 1)"
+ },
+ {
+  "start": "0x0007E530",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000E7AE0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0008FFE0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0016A988",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0007C270",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00082D70",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000895E0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000A04B0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x001010B4",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00101260",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0016A08D",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000A0630",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000A0B10",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00018F80",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x0007B6B0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x0007F5A0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x00080040",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x00080070",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x00081440",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000821F0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x0008CB30",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x0008D070",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x00092000",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000997E0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x0009A8E0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A0C20",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A10C0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A1290",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A1470",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A16F0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A1D60",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A1E40",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A1F10",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2590",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2670",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2750",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2830",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2910",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2B90",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A2E00",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A4440",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A4540",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A4760",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A5240",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A55B0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A5850",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A6BB0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A7380",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A77D0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A7950",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A8480",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A8C70",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A8E30",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A8FC0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A91D0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A92A0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A9350",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A9960",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000A9E80",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AA1B0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AA540",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AB6B0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AB7C0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000ABA90",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000ABBC0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AC150",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AC410",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AC5B0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AC710",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AC830",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AD0A0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AD590",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AD680",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000ADC30",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000ADE70",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000ADFC0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AE280",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AE660",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AE830",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AF050",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AF220",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AF500",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000AF8D0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B00A0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B0310",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B0700",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B08A0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B0CF0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B0FB0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B10D0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B1490",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B1560",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B1620",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B1970",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B2120",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B2520",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B2930",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B29F0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B2BE0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B2D80",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B30F0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B3660",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B3760",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B3BA0",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B3E60",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B3F30",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000B4450",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000BAD10",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000BC340",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x000C5570",
+  "note": "Code pointer in a .rdata/.data table (script command handlers); 16-byte aligned after padding."
+ },
+ {
+  "start": "0x00063360",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00063860",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0012B9F5",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00064EF0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000670E0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00080000",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000800C0",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000800E1",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000B4400",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00140014",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x000127DF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00012EE4",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00013178",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000155FF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00017946",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00017D0B",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00017FAB",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00018F7E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001996E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001A1DB",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001C328",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001C48F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001CA4E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0001F646",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200A6",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200A7",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200A8",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200A9",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AA",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AB",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AC",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AD",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AE",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000200AF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002266E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00022BBF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000236A5",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002402A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002573D",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000259D5",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00025E02",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00028BA7",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00029965",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002A60D",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002B00A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002B04A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002B41F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002C55B",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002E2AF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0002E64D",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003053B",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00031D90",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000320B0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000330F0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003D979",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003E019",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003E9DF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003ED2E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0003F7A3",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00048ABC",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0004BBAB",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0004C25F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0004E4D7",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0004EB08",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000539EC",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00053C3E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00055B8A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0005A145",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0005AAEB",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0005AD7D",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0005BAAE",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00061DCA",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00061F88",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00063DB0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00065170",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000657E0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00065920",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00066370",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00066580",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00067340",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0006A9CE",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0006C1ED",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0006D414",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00080004",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00080064",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0008006B",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00080071",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000800E8",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000800F4",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000810DD",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0008143F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000860CC",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00087818",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00088C00",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00089307",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0008930A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00089C51",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00097BEA",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0009E630",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0009E770",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A003A",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A003F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A2174",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A30ED",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A574B",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A676E",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A6B4F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000A7463",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000AECE7",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000B4289",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000C3579",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000D3A07",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000E247C",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000E51A4",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000E5FC7",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000E7C16",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x000FFFFF",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001091B6",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0010A89F",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00110DAA",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001149B0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001149C0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001149D0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001149E0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x001149F0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114A00",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114A50",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114A60",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114A90",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114AA0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x00114AB0",
+  "note": "Function pointer stored in data or as an immediate (vtable/callback); starts after padding."
+ },
+ {
+  "start": "0x0013E950",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00143250",
+  "note": "PsCreateSystemThreadEx StartContext1 observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00144370",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x00116D5A",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00118700",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00118DC0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0011F0DC",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00120000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001214F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00122E60",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00122EB0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00122EE0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00122FA0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00123050",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001232C0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00123570",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00124050",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00124160",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00128000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0012C000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00132000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133360",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133370",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001333A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001333D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133400",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133430",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133460",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133490",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001334C0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001334F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133520",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133550",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133580",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001335B0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001335E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133610",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133640",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133670",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001336A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001336D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133700",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133730",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133760",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133790",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001337C0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001337F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133820",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133860",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133B40",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133B50",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133BD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133F60",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133FA0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00133FC0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001340D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001340F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00134120",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00139F80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013A1A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013A420",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013A740",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013A9A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013ACA0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013AD10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013ADD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013AE40",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013AF10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013AFA0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B0A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B1A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B310",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B410",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B580",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B6A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B840",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B8B0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013B970",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013BA60",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013BEF0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C220",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C280",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C320",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C370",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C400",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C550",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C640",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C7A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C890",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013C9E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CAF0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CC80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CCD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CD50",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CE30",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013CFC0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D210",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D500",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D640",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D6E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D7F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D860",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D930",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013D990",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DA40",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DB00",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DC30",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DCD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DDD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DE50",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DF30",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013DF80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013E010",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013E080",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013E200",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013E2E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0013E970",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00140010",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00142030",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00144090",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00148630",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014B8C0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014B910",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014B9A0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BA00",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BAA0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BB10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BBE0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BCC0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BDF0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014BED0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C010",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C110",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C280",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C2D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C360",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C440",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C5B0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014C800",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014CAE0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014CB80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014CD80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014CEE0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014CF80",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D0D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D140",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D1D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D2E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D3F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D580",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D680",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D7B0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D970",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014D9D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014DDD0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E0C0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E130",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E210",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E280",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E350",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E3E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E4F0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E600",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E790",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014E890",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014EA10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014EB30",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014ECF0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014ED50",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014EE10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014EF10",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014F380",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0014F660",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00150000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0015A800",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0015AB50",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0015C000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00160000",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00160200",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00163140",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001631D0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x001686E0",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x00168C90",
+  "note": "Function pointer into a library section (D3D/DSOUND/XACT/BINK/WMA/XPP)."
+ },
+ {
+  "start": "0x0002C560",
+  "note": "Indirect-call target observed at runtime; decodes as a function body."
+ },
+ {
+  "start": "0x0002E2B0",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x0002E650",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x00089E40",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x0008A7F0",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x0008AF30",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x0008BA80",
+  "note": "Function pointer stored by mov [mem], imm32 (SIB/disp forms)."
+ },
+ {
+  "start": "0x0001C810",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x00022C30",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x00026530",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x0004E200",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x00059980",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x00098F10",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x00098F20",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x000C7AE0",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x000D29D0",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x000E5180",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x000F5750",
+  "note": "Jump/call target stubbed as unresolved; padded function start (static ctor bodies reached by jmp)."
+ },
+ {
+  "start": "0x0006EA99",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EA8B",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EA84",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EA92",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EC55",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EC47",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EC40",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006EC4E",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006ECCA",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006ECD1",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006ECD8",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ },
+ {
+  "start": "0x0006ECDF",
+  "note": "Upgrade screen switch arm (jump tables 0x6EF40/50/60, reached through an unfolded indirect jmp); seeded so the jump resolves (Aragorn upgrade-menu black screen)."
+ }
+]

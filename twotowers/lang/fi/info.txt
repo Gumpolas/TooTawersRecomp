@@ -1,0 +1,2 @@
+name=Suomi
+rtl=0

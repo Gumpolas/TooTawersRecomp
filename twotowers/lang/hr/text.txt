@@ -1,0 +1,1749 @@
+# Hrvatski -- made by tools/lang/build_lang.py
+GA81157BF	GOSPODAR PRSTENOVA:  DVIJE KULE
+G20EBC61E	Film Petera Jacksona
+G2D8D3B98	Producenti
+G7EDB1AE9	Koproducenti
+G90AF53E8	Specijalni efekti
+G893165F0	Weta Digital
+GD9523953	Glazba: Howard Shore
+G7B677F6E	Glasovi u igri
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX TIM
+GAAA9253B	Upravljanje projektom
+G2E65B2E4	Programiranje
+G1E165282	Grafika
+G4CFF767B	Zvuk
+G1B12D0CA	IZVORNI RAZVOJNI TIM
+G5BB408B8	Direktor projekta
+GA9D987DE	Tehnički direktor
+GA4E53836	Direktor razvoja
+GCBF9A863	Direktor zvuka
+G71D27F1C	Glavni dizajner
+GABE6171F	Glavni programer
+GB6AEE806	Glavni umjetnici okruženja
+G0FAA1BD8	Glavni umjetnik međuscena
+G93A039A2	Glavni animator
+G85851417	Umjetničko vodstvo
+GEC5EB699	Pridruženi producent
+G1E1B7E49	Umjetnik specijalnih efekata
+GE457B26A	Umjetnici okruženja
+G09AFDB2B	Umjetnici međuscena u igri
+GC6201467	Konceptualni umjetnici
+GCE12C680	Modelari/animatori likova
+G958F64A1	Umjetnik sučelja
+G5817028D	Programeri grafike
+G8E313DB8	Programeri umjetne inteligencije
+G7559A05A	Programeri igrivosti
+G47FDFA0D	Dizajneri igre
+G2A1A4D1F	Dizajn zvuka i montaža glazbe
+GD6AC199C	Dizajn zvuka
+G83731102	Dodatno vodstvo razvoja
+G9B9AC6A2	Dodatno upravljanje projektom
+G2C8B85F3	Dodatna grafika
+G154B3F75	Dodatno programiranje
+GEC34AAA5	Dodatni dizajn zvuka
+GE9E2F454	Dodatni tekstovi
+G8B63E4D8	Poslovni razvoj
+G8E754AFA	Izvršni voditelj razvoja
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Izvršni producent
+GF944BB31	Viši producent
+G49F95533	Pridruženi producent lokalizacije
+GE5AAA381	Pomoćnik producenta
+G20A463E8	Softverski inženjeri
+GEDDCFA70	Glavni tester
+G6EC637F4	Pomoćnik glavnog testera
+GA9C92124	Osnovni testeri
+GDDEFB046	Producenti
+G5F4C2C91	Direktor razvoja igara
+G53E62C46	Dizajner razina
+G4019279E	Pridruženi umjetnički direktor
+G3548CB79	Međuscene u igri
+G5BF26924	Grafički dizajn (korisničko sučelje)
+GF5E6331B	Pomoćnik producenta lokalizacije
+GB9029242	Pomoćnici producenta
+G81160EAA	Viši animator
+GB1B5EEDE	Animator
+G1D384099	Modelari okruženja
+GD670D187	Videosekvence
+GB4300D0E	Nadzornik produkcije
+GDB61FEB0	Voditelj produkcije videosekvenci
+G13204F99	Tehnički umjetnički direktor
+G8774AEB2	Umjetnički direktor
+G2EDA5AA3	Direktor animacije
+G4761EC6C	Tehnički direktor likova
+GC40AEB65	Glavni umjetnik okruženja
+G04B7AD9A	Scenarist
+GCCDC1EDE	Umjetnici likova
+G765B2120	Viši animatori likova
+GDB98BF7E	Viši umjetnik rasvjete
+G8AEFA15C	Viši animator efekata
+GB64D9748	Animator efekata
+GB770287B	Rigger/CG modelari
+GA89434BE	Raspored kamere
+GBAA388EF	Montažeri
+GA79B5345	Dizajner zvuka/snimatelj presnimavanja
+GE2D38E72	Voditelj umjetničke produkcije
+G29C8EC71	Izvršni asistent
+GB01B1D73	Administrator sustava
+G257D0532	Asistent produkcije
+GB2965969	Montaža dijaloga
+G2ACF75E1	Dodatna obrada zvuka
+G821EF7A5	Glasovi
+G3CCB3DF3	EA osiguranje kvalitete
+G2851776E	Voditelj osiguranja kvalitete
+G3D43CCDD	Nadzornik osiguranja kvalitete
+G997D9582	Voditelji testiranja
+G5B5CE9C6	Pomoćnici voditelja testiranja
+GE0B33004	Osnovni testeri
+GBBB3A592	Voditelj projekta FLT
+G7F330F1A	Funkcionalni jezični testeri
+G731958CD	Jezični testeri
+G7005C763	Kontrola kvalitete za korisnike
+GCC3D24EF	Voditelj CQC-a
+G0FF24E54	Nadzornik CQC-a
+G7498FE74	Voditelj odjela CQC
+G5AB35ED0	Analitičari proizvoda CQC
+G6E529086	Laboratorij za mastering
+G0229B6F3	Direktor međunarodnog razvoja proizvoda
+G6B435E81	Voditelj projekta lokalizacije
+GF8BA9878	Koordinator projekta lokalizacije
+G906896D8	Voditelj odobrenja i suglasnosti partnera
+G860EDA13	Poslovni poslovi
+G7AC94AC6	Pravni poslovi
+GFDF965B3	Poslovanje studija
+G9FF9799E	Koordinator ugovora studija
+G9E24FEC0	Direktor marketinga
+G44C57DC5	Voditelj proizvoda
+GE1A6D911	Odnosi s javnošću
+GA5ADE5FF	Dokumentacija
+G4C2A256D	Prijelom dokumentacije
+G279BA159	Upravljanje projektom pakiranja
+G482E9235	Dizajn pakiranja
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Filmska ekipa Gospodara prstenova
+GE196FA55	Redatelj
+GE364782E	Izvršni producenti
+GB11B5F1A	Koproducenti
+GDDE9A104	Arhivist
+G73D53EB3	Koordinator materijala
+G4616CF92	Asistent producenata
+GD98C077D	Nadzornici postprodukcije
+G26FFE43A	Prvi asistent montaže
+GFAE3387C	Koordinator minijatura
+G0D7D1A1D	Izvršni potpredsjednik za svjetsko licenciranje i merchandising
+GD58105C6	Kreativni direktor
+GB0E8D9D5	Filmski glumci
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Potpredsjednik za glazbene poslovne poslove
+G96EBB4D8	Izvršni voditelj glazbe
+G2728DB7D	Direktor glazbe
+GFE08F13A	3Foot6
+GCFF1286B	Koordinator merchandisinga
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Potpredsjednik
+GE58F283A	Producent/voditelj produkcije
+G97C336EB	Nadzornik animacije
+G96FF4CEA	Viši tehnički direktor
+GE816CF3D	Glavni za tehničku pripremu
+G22B756F5	Animatori
+G86F5B2D9	Slikar pozadina
+GBC50C796	Voditelj ureda
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Izvršni producent produkcije
+G14C96B5C	Glavni CG umjetnik
+GD9742A3C	CG umjetnici/animatori
+GBA7D6969	Arnson Communications
+G22C5AB99	Izvršni producent/kreativni direktor
+G45C5172D	Scenarist/producent
+GDCC6F23E	Umjetnički direktor/animator
+G9C4F3B3B	DS umjetnik
+GF0F58DD3	POSEBNA ZAHVALA EA
+G895C842A	POSEBNA ZAHVALA STORMFRONT STUDIOS
+G9D4DD21A	U zemljama Međuzemlja legenda govori o Mračnom gospodaru Sauronu
+G6CFA90F6	i o Prstenu koji bi mu dao moć da porobi svijet.
+G18F2969C	A sada je dospio u ruke najnevjerojatnije osobe koju se može zamisliti.
+G378C79D6	Veliki sam ljubitelj igara, pa sam naravno htio saznati sve pojedinosti o videoigri Gospodar prstenova.
+GDCF04190	Uđem u fazu kad igram stalno,
+G977EBA13	i to je obično kad igram, recimo, pustolovnu igru, tad mi je glava u tome.
+G49C9AB1A	Kad jednom uđem, ne mogu prestati misliti o tome i moram svog lika dovesti do kraja.
+GD2647A40	Ovaj je zadatak povjeren tebi, i ako ti ne nađeš put, nitko ga neće naći.
+G3AC8371A	U zaklon!
+GAD82B19D	Malo sam se raspitivao o ovome i napokon sam je zaigrao, i nevjerojatna je.
+G8DE86872	Jednostavno je prekrasna za gledanje.
+G72E74697	Joj, ovo je tako cool!
+GF9824FCA	Da, hajde, Aragorne! Hajde!
+G2EE7D5D4	Dolaze.
+G61F7CD7D	Nekako je bonus kad upališ videoigru i vidiš sebe kako trčiš uokolo.
+G57A5BC04	Dobivam batina.
+G1F85273D	Frodo izgleda kao ja! Nije li to cool?
+G1FFE0A40	Tako cool.
+GE6E563F9	Naći će Prsten
+GD135555F	i ubiti onoga tko ga nosi.
+G18844D24	Bježi! Hajde, Frodo!
+G525D5AD9	Žele Prsten! Ne smiju ga uzeti.
+GB99DAE56	Razlika između sinkronizacije za film i posuđivanja glasa u igri jest u tome što se za film obično snima uz sliku.
+G7558081F	Gledaš film i pokušavaš ponoviti dijalog koji si već izgovorio i uskladiti ga s dijalogom u filmu.
+GDD3F428F	Tko si ti?
+GE906BA5B	Bojiš li se?
+G9BDAB30C	Da.
+G3B07B1B1	Ni približno dovoljno.
+GFBD6613D	Za igru nema slike, nego samo hrpa atmosferskih elemenata koje nekako ubaciš.
+G0EE06D0F	Opasnost, pomoć, takve stvari.
+G2F9FC8E2	Aragorne! Upomoć! Aragorne! Aragorne!
+G289F7C03	Volim akcijske figure i volim igre, i ako mogu biti dio toga, to je pravi štreberski bonus i oduševljen sam.
+G67346E61	Čak i najmanja osoba može promijeniti tijek budućnosti.
+G16420686	Tako sam uzbuđena - jedva čekam svoj primjerak. Fenomenalno je.
+GDBA69463	Moria.
+G1D429D96	Bojiš se ući u te rudnike.
+G372C9F91	Znaš što su probudili u tami.
+G34515230	Stvarno sam uživao raditi igru, jer ne moraš toliko vraški naporno raditi
+G93AEF9C3	kao kad lik stvaraš prvi put.
+GA9883FB4	Snimanje filma nužno je vrlo sporo.
+G0C1E0E8C	Divna stvar kod računalne igre je, naravno, to što ne moram u masku.
+GA5F1044B	Kad radiš igru, stojiš u studiju
+GCE4A81AD	i kažeš, pa, mislim da bi trebao reći ovo i ovo i ovo,
+G049A3A66	a oni imaju hrpu scenarija i ti izgovaraš sve te divne rečenice.
+G70F1359D	Zasjeda! Zasjeda!
+G65325B21	A onda sve to uzmu, ugrade u igru, i dobiješ dio zasluga.
+G39F1D126	Te eksplozivne naprave moraju biti uništene!
+GEB33699E	Obožavam ovaj model mene kao Gimlija.
+GD9A0C650	Mislim da je to tako snažan, muževan, privlačan lik.
+G43591DCA	On je zapravo jedini lik kojeg biste htjeli igrati.
+G5C0A6C1E	Mislim, ostali, znate, Aragorni, znate, Legolasi, znate, zgodni, lijepi dečki i sve to,
+G3D52D95F	ali za pravo, kvalitetno ratovanje morate izabrati Gimlija.
+G8E74524F	Proveli smo četrnaest mjeseci na najljepšim lokacijama na svijetu, na Novom Zelandu, da bismo filmu dali pravi izgled.
+GAD562976	Igra je ratna, borbena situacija, i divno je i briljantno napravljena.
+G7F21BCD6	Ne mogu ga ostaviti tamo! Bože!
+G9AA947F5	Koliko će mi to tek vremena oduzimati.
+G669C44C6	Mislim, to je nova ovisnost koju sam otkrio.
+G63540AD1	Dakle, igrači, svaka čast, čestitam što ste se probili do ove male niše koja vam daje intervju.
+G925FED56	Volio bih da vam mogu reći kako bolje igrati, ali zapravo nikad nisam uspio doći do ove razine.
+GC3162ADB	Sretno i nastavite igrati.
+GA3572714	Sudbina svijeta uskoro će biti odlučena.
+G922859CB	Cijeli proces izrade ili gradnje videoigre
+GD9B03397	uglavnom se svodi na to da se boriš protiv nečega i nekih nindža stvari... ne znam čega.
+G24326AFA	Iznenadio sam se, izgleda mnogo realističnije,
+G3E302C15	čini se da ide na višu razinu.
+GBD830A87	Mislim da Aragorn u videoigri bolje gađa od mene...
+GF76948D6	ali neću se na to žaliti.
+GD27FED3E	Ako te svojim životom ili smrću mogu zaštititi, učinit ću to.
+G56368F53	Imaš moj mač.
+G8D6DAFD1	Ono što sam vidio od videoigre čini se da odražava činjenicu
+G970D4AB6	da je drugi film - za razliku od prvoga - većih razmjera
+GFD0BADCA	i veselim se što ću ih vidjeti, baš kao i ostatak ove igre.
+G1F48F697	Danas sam vidio samo isječak.
+GB689F1B9	Drago mi je vidjeti, na primjer, da Aragorna ponekad obore, ili padne, ili se kotrlja,
+G6F6072BC	i da mu se stil borbe mijenja, znate, prema situaciji.
+GA3A3F7A1	To nije uvijek uredno i čisto, znate, nekako je...
+G28095E46	ponekad zna biti pravi kavgadžija - barem je tako bilo u filmu - i igra to odražava, mislim.
+G43AA6A0B	Impresivno je.
+G8559FF90	Stranci iz dalekih zemalja, pozvani ste ovamo da odgovorite na prijetnju Mordora.
+GC2A75F48	Međuzemlje stoji na rubu propasti.
+GFE143A07	Nitko joj ne može umaći. Ujedinite se ili ćete pasti.
+GF59E5460	Uvijek me zadivi kad vidim napredak tehnologije i toga
+GAD5CBAE4	i koliko se približila stvarnosti.
+GF96BCD4B	Moram do Boromira, odmah!
+GD262135E	Kad snimaš sinkronizaciju za film, znaš, očito gledaš u ekran,
+G83EECB7A	vidiš radnju pred sobom onako kako si je odigrao toga dana.
+G3C0B6913	Kad snimaš glas za ovo,
+G2A8B6AD2	nema kamere uperene u tebe,
+G52F7D105	i ne pokušavaš uskladiti usne sa slikom pred sobom,
+G8EE2279F	pa stvarno možeš otići korak dalje i nekako
+GA5BE0F5A	naglasiti i razraditi ono što piše na papiru.
+G51E230FB	Natrag u jame koje su vas izrodile!
+G97400E1E	Naglašenije su nego što bi bile u filmu.
+GC26338C3	Razumiješ li što mislim?
+G40EB5D5C	Pomalo su smiješne, i to je zabavno.
+G52FECFA2	Bilo je zabavno stvarno se tako poigrati s tim.
+G91D69630	Dođi!
+G87873143	Tu bitku ne možeš dobiti!
+G47AECCC4	Mislim da bi mi, da igram igru,
+GB0CCD2A6	bilo lijepo znati da su pravi glumci dali glas radnji koju izvodi računalno generirani lik,
+GC1719889	i pretpostavljam da što je više stvarnosti u računalnom svijetu, to je igraču uzbudljivije.
+G77ECFBF0	Ne možeš ga koristiti. Nitko od nas ne može.
+GB42EC53B	Prsten mora biti uništen.
+G43E793ED	Opasnost za Prstenonosca raste.
+G6E2FF8E0	Jer postoji još netko tko lovi Prsten.
+GDD26CBEC	Nikad u životu nisam igrao videoigru.
+GF783F574	Nikad ne mogu shvatiti pravila.
+G573BC826	Imam vrlo velike i nespretne ruke i baš nemam usklađenost ruku i uma koja je, mislim, potrebna,
+GFBB68CB5	a čini se da je ima svatko mlađi od šest godina.
+G8D9D9F75	Ono što je tako divno u ovoj igri, Gospodaru prstenova,
+G81AEE08E	jest to što dobivate glasove izvornih glumaca--svih njih.
+GAE3BFBD7	A danas sam snimao Gandalfa Sivog i Gandalfa Bijelog,
+G21F22F52	dva lika koja glumim u Gospodaru prstenova.
+GCED01E94	Što vidiš?
+GB4F26455	Ima nekih oznaka.
+G5C7EB8BC	Neki oblik vilenjačkog.
+G27A03C42	Ne mogu to pročitati.
+G8E22513B	Malo tko može.
+G4B2817A2	Sada postoji savez između Dviju kula: Orthanca i Barad-dûra.
+GC69D576A	Za igru je malo grublje, malo spremnije, možda malo neposrednije.
+G363960EA	Jedan od vas mora ući.
+GFFCB2D5D	Pomozite seljanima koji su još živi.
+GF4DAF5B8	U osnovi, ovo je agresivan dio borbe.
+G00009069	Izlazi na vidjelo vojnička strana Gandalfa: zapovjednik, samuraj, vođa.
+G4519FC71	Nećeš proći!
+G066F3360	Dakle, ono što vidite na ekranu što je bliže moguće - k vragu -
+GF4CF848B	Gandalfu kojeg vidite u filmovima. I volio bih da mogu doći i igrati igru s vama.
+G699B7BF2	U taj je Prsten ulio svoju okrutnost, svoju zlobu i svoju volju da zavlada svim živim.
+GA1469225	Jedan Prsten da svima vlada.
+G01090CE9	Ono što smo napravili vrhunac je golemog rada u kojem su sudjelovale tisuće ljudi.
+G74E1F68D	Naslov, Dvije kule, odnosi se na kulu Orthanc, 
+G0AE01FA9	gdje je smješten Saruman, lik Christophera Leeja,
+GD9642178	i kulu Barad-dûr u Mordoru, dom Saurona.
+G573418F9	Drugi film, kao i svaki film ove trilogije, izazov je. I ostat će to dok ga ne isporučimo.
+GB2A31EA0	Sjajan je film. Bit će veći od prvog filma.
+GB831FA3A	Mislim da je u izradu ovih filmova sigurno uloženo toliko pažnje,
+GCCFC11FE	i sjajno je što to znanje možemo prenijeti timu koji izrađuje igre, 
+G327C2028	jer znam da i oni ulažu jednako pažnje i truda kako bi javnosti donijeli zaista bogatu igru.
+G2C4A352E	Tolkien u knjigama vrlo živo opisuje Edoras
+G10EFB23A	kao grad drvenih građevina na brežuljku ispred lanca snježnih planina.
+G50D180A4	Kad smo prvi put tražili lokacije, rekao sam, gledajte, moramo naći neko mjesto na Novom Zelandu,
+GDA11996F	mora postojati ovakav brežuljak ispred planina.
+GD6F61F77	Pa su helikopterom obišli cijelu zemlju i vratili se s fotografijom apsolutno savršenog brežuljka.
+GC56228ED	Bio je stotinjak kilometara udaljen od najbližeg grada.
+GF796DA0F	Bio je usred Južnog otoka; vrlo zabačen.
+GFA1CD969	Proveli smo sedam ili osam mjeseci gradeći te goleme građevine.
+GC2D0BAAA	Konačni je rezultat da u filmu imamo Edoras koji je potpuno uvjerljiv.
+GC2774958	Mogao sam otići tamo i jednostavno snimati kao da je riječ o postojećoj lokaciji.
+G99F69515	Jedna od uzbudljivih stvari kod EA-ovih igara i onoga što sam vidio na modelima dok su nastajali
+G6B3554D6	jest izvrsna vjernost naših scenografija i naših likova,
+GB997C9B4	toliko da je EA s našim glumcima dogovorio da dođu i snime vlastite dijaloge.
+G815CAC49	Glumci su bili prilično oduševljeni.
+GA1640DEB	Bitka za Helmovu klisuru je gotova.
+G93BD7122	Bitka za Međuzemlje upravo počinje.
+G958468DE	Izgradili smo minijaturu Helmove klisure, ali zanimljivo je da to nije bila samo maketa. 
+G1BC58576	Bila je to golema minijatura. U mjerilu jedan prema četiri, ali i sama je bila široka desetak metara.
+GFA4F689B	Bila je tako velika da smo je mogli jednostavno snimati kamerama i ne bi izgledala kao minijatura.
+G2571B991	Izgledala je potpuno uvjerljivo.
+G31C24FB0	Sjajan film zapravo čine sjajan scenarij i sjajna glumačka postava.
+G9C04D37F	Pretpostavljam da kod izrade igre postoje mnogi isti izazovi.
+GA0B86A25	Morate privući prave talente za igru.
+G0B7DC714	Morate imati priču koja će privući publiku, koju će ta priča oduševiti
+G5E1101AB	i potaknuti da je zaista vidi kako oživljava.
+G87FC774C	Ne možemo ništa učiniti za Froda.
+G3C9AA8BC	Pothvat će ga stajati života.
+G98F7C221	Rohan je slab i spreman pasti
+GA01F7D34	pa će on snažno i brzo udariti na svijet ljudi.
+GA8723617	Rat je pred nama.
+GE1AF4B03	Ukrali su naše blago, i mi ga želimo.
+G6A5F57B3	Vjerojatno je najzastrašujuće kod započinjanja ovog projekta bio
+GDE1DC635	osjećaj da imamo nevjerojatnu odgovornost da isporučimo
+GCFDFC743	u interaktivnom obliku ono što je Peter Jackson isporučio na filmu.
+GC87068A6	On je uzeo neka od najomiljenijih književnih djela svih vremena
+G423C7E0C	i pretočio ih u epsko filmsko remek-djelo koje je stvorilo milijune i milijune obožavatelja diljem svijeta.
+GC8F29411	Na početku projekta radite na konceptualnoj i dizajnerskoj strani.
+GBACB2DE5	Kako projekt napreduje - programeri, umjetnici, animatori, umjetnici okruženja,
+G047AC48F	stručnjaci za modeliranje, stručnjaci za teksture - svi ti ljudi razmišljaju o svom dijelu igre,
+GB60517EB	ali u smislu cjelokupnog doživljaja.
+G13170460	Jedna od prednosti tako bliske suradnje s filmašima
+GA03610FF	jest to što smo modele i rekvizite koje su izradili za film mogli koristiti
+G9DADDEE4	kao predložak za ono što smo trebali stvoriti u našoj igri.
+GF0D449E5	Sjena se kreće u tami.
+GEC940136	Pri oblikovanju Aragorna morali smo istodobno razmišljati o sva tri lika kojima se može igrati.
+GBB381F7C	Na primjer, Legolas je mnogo više lik usmjeren na brzinu i finoću.
+G4CE351A9	Gimli je mali bojni tenk.
+G21025B26	Aragorn je više mješavina tih dvaju.
+G3ADE6E66	Proučili smo pokrete svakog lika - kadar po kadar - prije nego što smo išta počeli graditi.
+G80ADBA8B	Zatim bismo izradili žičani model lika. To su njegove osnovne proporcije, veličina i mjerilo.
+G85E5A400	Zatim bismo dodali teksture i osvjetljenje kako bismo dovršili njihovu odjeću i dodali fine pojedinosti lika.
+GCD3CDD42	Glumci su bili jako zainteresirani za suradnju s nama.
+G092B49A0	Viggo Mortensen nam je, primjerice, pokazao neke od svojih akcijskih pokreta.
+G915A1A70	On i njegov kaskader otvorili su sanduk mačeva i počeli se mačevati.
+G215B5E15	To je postalo osnova za mnoge Aragornove pokrete.
+G7126178B	On želi biti pronađen.
+G7E02AF05	Kad smo birali scene iz filma za našu igru, Balinova grobnica istaknula se kao snažan kandidat.
+GF4146E18	To je jedan od najupečatljivijih trenutaka prvog filma.
+GE152213A	Htjeli smo ponovno stvoriti ugođaj tog vrlo snažnog snopa svjetla na samoj grobnici.
+GB236432D	Bio je to izazov za naše modelare okruženja i stručnjake za rasvjetu.
+GD3C26DBB	Razine u rohanskom selu jedinstvene su jer su nam omogućile da proširimo područja iz filma.
+G8669E69D	Sama razina u igri izgleda i djeluje vrlo slično filmskim lokacijama po osvjetljenju,
+GF9B205CF	obliku arhitekture, ljudima koji su ondje, ali u ovom slučaju na tome zapravo gradimo
+GB285B32E	i stvaramo dijelove razine koje igrač može istraživati i u kojima se bori, a koje možda nije vidio u filmu.
+G5E5F1D1C	Ono što je tako divno u ovoj igri, Gospodaru prstenova,
+G610E0BE4	jest to što na vlastitom ekranu dobivate glasove izvornih glumaca--svih njih.
+GC6FCAA65	Upomoć! Aragorne! Aragorne! Upomoć!
+G20165D69	Nevjerojatno je autentična, a mislim da je zaista teško napraviti igru prema filmu.
+GBF3A0A5B	Ova igra to uspijeva. Jako je slična filmu.
+GDD010A37	Osmislili smo vrlo dinamičan glazbeni sustav koji odražava ugođaj stvarnih događaja u igri.
+G96BEDA9C	Jedan Prsten da sve ih okupi i u tami ih sveže.
+G91629050	U filmu Saruman napada Helmovu klisuru s deset tisuća Uruk-haija.
+G3B702B98	Zato smo morali iskoristiti druge elemente koji su nam bili na raspolaganju da stvorimo dojam bitke.
+GDEFA604D	Zvučnim efektima i zvukom zaista stvaramo dojam da su ondje tisuće orka.
+G204351C8	Ako netko pokrene igru i kaže sam sebi:
+GEC81BA2D	Bože moj! Ovo je film! Onda smo postigli točno ono što smo naumili.
+G52BF957B	Ovo je mjesto kojeg se sjećam iz filma.
+G571B482E	Ja sam tamo. Mogu nešto učiniti. Sad je moj red.
+G625B0A6D	Tako želimo da se igrač osjeća.
+GB222979D	Gdje su konj i jahač?
+G2457FF85	Gdje je rog što je trubio?
+G8B36CA83	Prošli su kao kiša na planinama;
+G50095CA7	kao vjetar na livadi.
+G10EB8BCF	Dani su zašli na Zapadu,
+G109A0CCE	iza brda,
+G02628501	u sjenu.
+G80A942D2	Aragorne!
+GDDEA48AC	Pomoć
+G4C40E774	Pritisnite START
+GEE711094	Nastavi
+GF9202936	Ponovi
+G2E427514	Uklj.
+GFC4343CA	Isklj.
+G52E4CD32	Kretanje
+G39D074FD	Odaberi
+GAC3A8B6E	Natrag
+G42B46F3C	@ 2002 New Line Productions, Inc.  Gospodar prstenova te likovi, imena i mjesta u njemu, * The Saul Zaentz Company d/b/a Tolkien Enterprises pod licencom tvrtke New Line Productions, Inc.  Sva prava pridržana.
+G035F710A	EA GAMES* je robna marka tvrtke Electronic Arts*.
+GBAC3ED5F	Programski kod igre i određeni audiovizualni elementi @ 2002 Electronic Arts Inc. Sva prava pridržana.
+G0EF5F91F	Nova igra
+GB8D9D2FD	Učitaj igru
+G0BE2A075	Opcije
+G5D6AEEF7	Način za otklanjanje grešaka
+G83335327	Bonus sadržaji
+G731194FA	Spremi igru
+G7BA082D0	Pritisnite START za nastavak
+G755B3BA1	Postavke kontrolera
+G03961FD4	Postavke igre
+GABEE6EA4	Težina:
+GF065116B	Lako
+G8D3A16F6	Normalno
+GACDD0363	Stručnjak
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Glasnoća glasova:
+G7F04050E	Glasnoća glazbe:
+GF30A57F8	Titlovi:
+G64752D2D	Vibracija:
+GB3F78571	Glasnoća igre:
+GED3C9F14	Zvuk:
+GB065D5A4	Odaberite igru za učitavanje:
+G00FF7920	Odaberite mjesto za spremanje:
+GC99B6C1E	Odaberite utor MEMORY CARD:
+GFB5C0BA2	Tvrdi disk Xboxa
+GD2F916B6	Utor MEMORY CARD 2
+GAEFBDEF3	Odustani
+GDA714102	Da
+GB893E04C	Ne
+GE506E266	Jeste li sigurni?
+G574C52F2	Jeste li sigurni da želite kupiti ovo poboljšanje?
+G0D91D779	Jeste li sigurni? Rezultati vašeg posljednjeg prelaska ove misije bit će izgubljeni.
+G1CF7123A	Jeste li sigurni? Sav nespremljeni napredak u ovoj igri bit će izgubljen.
+GEF04DC5D	Jeste li sigurni? Napredak u ovoj misiji bit će izgubljen.
+GEDF6F861	Jeste li sigurni da želite prebrisati ovu igru?
+GF44D8878	Jeste li završili s kupnjom poboljšanja?
+G1EF3EFE3	Spremi igru na tvrdi disk
+G05163971	Učitaj igru s tvrdog diska
+G8F93A6FE	Odaberite težinu
+G654484DF	Zaključano
+G5A7CB330	Završeno
+G8D6AAF13	Neodigrano
+GBE8C099C	Prolog
+GF4FBBE46	Vjetrovrh
+GE7EA3020	Vrata Morije
+GE13A531D	Balinova grobnica
+G79C1EAD3	Amon Hen
+G51C82E11	Šuma Fangorn
+G35CCE51F	Rohanske ravnice
+GAD341B58	Westfold
+G94ADD008	Rohanski prolaz
+G9760067E	Zid Klisure
+GF8B38ED5	Probijeni zid
+G644C89AD	Dvorište Hornburga
+G69B8B4C2	Kula Orthanc
+GBF00F963	Helmova klisura:
+GE34AB2FD	New Line zoološki vrt
+GE132F5FF	Odaberite video za reprodukciju:
+G4B3C17B9	Uvod
+GAD303F2A	Kraj
+G668B98BD	Kat
+G9C7A95F0	Bodovi poboljšanja:
+G4AE44639	4) Unesite navedeni slijed kôda.
+G5374B3F5	Tajni kodovi
+GDF7B6B3A	Uvijek razorno:
+GFECB245B	2 igrača:
+GCAB16744	Mali neprijatelji:
+G587D657D	Sva poboljšanja:
+G58E34314	Neranjivost:
+GF0336180	Usporeno:
+G5A122CB0	Za unos kôda:
+G35BC6746	1) Započnite misiju.
+G46DF9919	2) Pritisnite START za pauzu.
+G5A1291EE	3) Povucite i držite
+GEB88B42D	Beskonačno zdravlje:
+G6AE6FFFE	Beskonačni projektili:
+GAA29A634	Završi misiju:
+GB2AE1BCE	Način pauze:
+GAA467E08	Dodaj iskustvo:
+GEA42298C	Nova razina:
+G6BA0C403	Obnovi zdravlje:
+G41D871E0	Obnovi projektile:
+G04DBD06B	Poboljšanje projektila:
+GA7A50BB5	Prikaži poboljšanja
+GA67DF58D	Izlaz u izbornik
+G773B79A5	Sljedeća misija
+G96540044	Niste uspjeli u misiji.
+G5ADDCAC2	Ponovi misiju
+G9DD85D6D	Izlaz u izbornik
+G730918CA	Pokušaj ponovno
+GB437BA93	Zasluge
+G798A44A2	Ponovi misiju
+G6F46B26E	Odaberite jezik.
+G2809E047	Engleski
+GE3AAFF7A	Brzi
+GD0DB46DB	Žestoki
+G9AD854EF	Ubijanje
+GE83BE834	Posebni
+GDB34AED9	Kombo
+GDACF8DCA	Kupljeno
+G125CAC9A	Još nije otključano. Pritisnite tipku A za nastavak.
+GDA9711D2	Niste skupili dovoljno bodova poboljšanja za kupnju ovog poboljšanja. Pritisnite tipku A za nastavak.
+GEB0E0008	ili
+G90A54691	nakon pariranja
+GF5F43483	kad je na tlu
+GFC1C2104	Prazno mjesto
+GB8BCCCB9	Igra 2
+G92BA5250	Igra 3
+G9CCBAB2F	Igra 4
+G76C930C6	Igra 5
+G50C6B65D	Igra 6
+G2AC43BF4	Igra 7
+G34D594D3	Igra 8
+G0ED31A6A	Igra 9
+GBE76BA62	Igra 10
+GE47934CB	Igra 11
+G6ED86859	Memory Card (PS2) nije umetnuta. Za spremanje podataka ove igre potrebno je najmanje 80 KB. Želite li nastaviti?
+G87DE26DA	Nedovoljno prostora na Memory Card (PS2) u utoru MEMORY CARD 1.  Za spremanje podataka ove aplikacije potrebno je najmanje 80 KB. Želite li nastaviti?
+G7118C569	Nedovoljno prostora na Memory Card (PS2) u utoru MEMORY CARD 2.  Za spremanje podataka ove aplikacije potrebno je najmanje 80 KB. Želite li nastaviti?
+G6804B4C2	Nedovoljno prostora na Memory Card (PS2) u utorima MEMORY CARD. Za spremanje podataka ove aplikacije potrebno je najmanje 80 KB. Želite li nastaviti?
+G849021EA	U utoru MEMORY CARD 1 nema Memory Card (PS2). Pritisnite tipku X za nastavak.
+G59CE2129	U utoru MEMORY CARD 2 nema Memory Card (PS2). Pritisnite tipku X za nastavak.
+GC5BD8B5F	Ponovno priključite kontroler i pritisnite START za nastavak.
+GC2BDD02C	Memory Card (PS2) u utoru MEMORY CARD 2 nije formatirana. Formatirati Memory Card (PS2)?
+G6B64948C	Vaš Xbox nema dovoljno slobodnih blokova za spremanje igara.  Pritisnite A za nastavak bez spremanja ili B da oslobodite najmanje
+GEDAB4EA9	Ponovno priključite kontroler i pritisnite START za nastavak
+G00E55934	Na tvrdom disku nema dovoljno slobodnih blokova za ovu spremljenu igru.
+G20A17FB1	blokova treba osloboditi.
+G353AAE58	Formatiranje nije uspjelo! Greška na Memory Card (PS2) u utoru MEMORY CARD 2! Pritisnite tipku X za nastavak.
+G9CAF03E3	Igru nije moguće spremiti. Pritisnite tipku A za nastavak.
+GCB03752D	Igra je spremljena.  Pritisnite tipku A za nastavak.
+GACBFB64F	Spremanje na Memory Card (PS2) u utoru MEMORY CARD 2 uspjelo je! Pritisnite tipku X za nastavak.
+GC7C0454F	Spremanje podataka na Memory Card (PS2) u utoru MEMORY CARD 1. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+G4B14AAB4	Spremanje podataka na Memory Card (PS2) u utoru MEMORY CARD 2. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+G53DAC278	Učitavanje podataka s Memory Card (PS2) u utoru MEMORY CARD 1. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+GF144B8B3	Učitavanje podataka s Memory Card (PS2) u utoru MEMORY CARD 2. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+G063DD8CC	Igru nije moguće učitati. Pritisnite tipku A za nastavak.
+GE5BDAC0B	Želite li spremiti igru?
+GED3A9CCF	Nema spremljenih igara. Pritisnite tipku A za nastavak.
+GAF453999	blokova.
+GEE649E5A	Memory Card (PS2) u utoru MEMORY CARD 1 nije formatirana. Pritisnite tipku X za nastavak.
+G81447581	Memory Card (PS2) u utoru MEMORY CARD 2 nije formatirana. Pritisnite tipku X za nastavak.
+GB36F8F0C	Čitanje podataka s Memory Card (PS2) u utoru MEMORY CARD 1. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+G97EC5687	Čitanje podataka s Memory Card (PS2) u utoru MEMORY CARD 2. Ne vadite Memory Card (PS2), ne resetirajte i ne isključujte konzolu.
+G8E8AF6C1	Postoji problem s diskom koji koristite. Možda je prljav ili oštećen.
+G9CB8DFF0	Misija 1
+G0EC04F2B	Misija 2
+GE8BDD4C2	Misija 3
+G5AC543FD	Misija 4
+G34C2C994	Misija 5
+GA6CA38CF	Misija 6
+G80C7BE66	Misija 7
+GF2CF2DA1	Misija 8
+GCCCCB338	Misija 9
+GA1F545C0	Misija 10
+GC7F7C029	Misija 11
+GEDFA3A92	Misija 12
+G13FCB4FB	Misija 13
+GFBA35200	Misija A
+G6DAAC13B	Misija B
+G47A846D2	Misija C
+GB9AFB60D	Misija D
+G0111B4C5	Iskustvo misije:
+G10CB2024	Ocjena misije:
+GB8F11F62	Ukupno bodova poboljšanja:
+G94649BD6	Savršeno
+GE424E811	Izvrsno
+G70E9184E	Dobro
+GE98543F1	Solidno
+GF9792B5F	Slabo
+G4DE9139C	Vještina
+GB525F096	Snažni
+G5F8C23CD	Obrana
+G8673311D	Napad
+G7829DFB2	Brza kombinacija.  Učinkovita protiv manjih neprijatelja bez štita.
+G63E6B4FD	Razorna kombinacija za probijanje prepreka ili razbijanje neprijateljskih štitova.
+G406CD62A	Za upotrebu povucite i držite lijevi okidač.  Pucajte tipkom A (držite je za veću štetu).
+G7651B078	Ovaj ubod dokrajčuje svakog oborenog neprijatelja.
+G09258F36	Odbacite neprijatelje od sebe, izvan dometa udarca.
+G36E84E05	Blokira neprijateljske napade i projektile.
+G074FC78D	Razoran napad.  Za upotrebu pritisnite i držite tipku Y.
+GE5C8740D	Trajno povećava vaše zdravlje.
+G791AEDAB	Jurnite naprijed i oborite neprijatelje bez štita na tlo.
+GF4A5485B	Napadnite dok se dižete na noge i iznenadite neprijatelje.
+GC0B8F80A	Vrlo učinkovit kombo za uklanjanje neprijatelja bez štita.
+G6CBE68E9	Vrlo učinkovit za što brže uklanjanje neprijatelja sa štitom.
+GD7BB121B	POVEZANI POTEZ: Trenutačno ubijte goblina koji napada.
+G4A59663E	Bodljikave strijele Rohirrima, koje se ispaljuju kao iz Dúnedainskog luka, nanose ozbiljnu štetu.
+G96A8AB86	Trajno povećava vaše zdravlje.  (Potrebna Snaga Namjesnika)
+GED26DEB8	Jurnite naprijed s velike udaljenosti i oborite neprijatelje bez štita na tlo. (Potreban Juriš)
+GB4790643	Ranite, oborite i udarite neprijatelja ovim kombiniranim napadom.
+G9709901B	Ovim kombom udarite neprijatelja bez štita, dokrajčite ga i brzo udarite drugoga.
+G066B80A4	POVEZANI POTEZ: Trenutačno ubijte orka koji napada.
+GB54F0B8A	Trajno povećava vaše zdravlje.  (Potrebna Isildurova snaga)
+G1C742C09	Još razorniji napad.  (Potreban Graničarski bijes)
+G9F299E6A	Povećava štetu vašeg Brzog napada.
+G2A888253	Ranite, oborite, a zatim ovim kombom dokrajčite snažne neprijatelje.
+GEF4043FD	Trajno povećava vaše zdravlje.  (Potrebna Elendilova snaga)
+GF3D48718	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Divlji gnjev)
+GDAE09290	Željezne strijele Gondora nanose strašnu štetu.  (Potreban Rohanski luk)
+GBD1ED2AE	POVEZANI POTEZ: Trenutačno ubijte Uruk-haija koji napada.
+G6DF8DC34	Upotrijebite protiv snažnog neprijatelja da mu razbijete štit, oborite ga na tlo i udarite.
+GB1BCB280	Ništa
+GE225A1EC	Za upotrebu povucite i držite lijevi okidač.  Bacajte tipkom A (držite je za veću štetu).
+GFF3FB1CE	Ovaj udarac sjekirom dokrajčuje svakog oborenog neprijatelja.
+G81A89461	Trajno povećava vaše zdravlje.  (Potrebna Moć stijene)
+GF266C7E6	Trajno povećava vaše zdravlje.  (Potrebna Moć željeza)
+G2FCD00C0	Jurnite naprijed s velike udaljenosti i oborite neprijatelje bez štita na tlo.  (Potreban Juriš)
+G00247254	Trajno povećava vaše zdravlje.  (Potrebna Runa zaštite)
+GA505D28C	Trajno povećava vaše zdravlje.  (Potrebna Balinova moć)
+G34C62FC4	Oštre kao britva, Sjekire Morije bacaju se kao Ereborske sjekire i nanose još veću štetu.
+G57901BB9	Još razorniji napad.  (Potreban Patuljački bijes)
+G8840F62F	Trajno povećava vaše zdravlje.  (Potrebna Glóinova moć)
+G361F0511	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Planinski gnjev)
+G219C0125	Ove oštrice obrubljene mithrilom nanose strašnu štetu.  (Potrebne Sjekire Morije)
+G9986DAAB	Povećava štetu vašeg Žestokog napada.
+G11BF2FC5	Jasenove strijele Rivendella, koje se ispaljuju kao iz Dugog luka Mrkodola, nanose još veću štetu.
+G7A9893BB	Začarane strijele Lothlóriena nanose užasnu štetu.  (Potreban Dugi luk Rivendella)
+G42E47239	Ove čarobne strijele zapalit će vaše neprijatelje.  (Potreban Dugi luk Lothlóriena)
+G5BAB8220	Trajno povećava vaše zdravlje.  (Potrebna Celebornova sila)
+G39265CB0	Još razorniji napad.  (Potreban Vilenjački bijes)
+G084B6AEF	Ove strijele probijaju i ranjavaju sve neprijatelje na svom putu.  (Potrebne Strijele zmajeve vatre)
+GB1D19C39	Povećava štetu svake strijele koju ispalite.
+G06E26BE1	Trostruki udarac
+G20A303C1	Dvostruki zasjek
+GCB8F4087	Dúnedainski luk
+G3F6F3751	Udarac iz sjene
+GBE8C73E9	Borbeni udarac nogom
+G5660E3B0	Pariranje mačem
+GDF332280	Graničarski bijes
+GB8AB07B9	Snaga Namjesnika
+G187F8CC1	Juriš
+G86E487F5	Napad iz ustajanja
+GF7D6DC76	Isildurov brzi užas
+GB34DCC39	Isildurovo izbavljenje
+GC9303634	Pogibelj goblina
+G3A0786A5	Rohanski luk
+G8B17B5C5	Isildurova snaga
+G579A1927	Jurišni napad
+G207C1523	Isildurov smrtni juriš
+G6C2653E9	Isildurov gambit
+G2A3BA153	Pogibelj orka
+GA28B29AA	Elendilova snaga
+G7D213CCE	Divlji gnjev
+G006BF315	Majstor mača
+G6B68444D	Isildurov ratni nalet
+G3B0A3720	Snaga Argonatha
+G78BAB3BC	Gnjev Númenora
+GCEDAD8B0	Gondorski luk
+G3BE146BB	Sarumanova pogibelj
+G701FD063	Isildurov sud
+G0251EC9F	Ereborske sjekire
+G96C77DAD	Ubod sjekirom
+GDD4B6691	Pariranje sjekirom
+GADD20DD0	Patuljački bijes
+GB0D95BC6	Moć stijene
+G4FB6CF69	Moć željeza
+G5F017E32	Balinov brzi užas
+GDFD7CADD	Balinovo izbavljenje
+GDF1B571B	Runa zaštite
+G9B37EDE7	Balinov smrtni juriš
+GCDB1A82D	Balinov gambit
+G2DEF1D03	Balinova moć
+GE89D3658	Glóinova moć
+G31B06C3A	Sjekire Morije
+GADFB76EF	Planinski gnjev
+G75612F09	Balinov ratni nalet
+G8CE2E527	Moć Khazad-dûma
+GE4E87FCC	Gnjev Morije
+GA16173AB	Sjekire Maglenih planina
+G24288EA5	Kraljevsko umijeće sjekire
+G45AAD667	Balinov sud
+GB752504B	Dugi luk Mrkodola
+GA018F71A	Pariranje nožem
+G0DCE9941	Vilenjački bijes
+G4A27D7DF	Celebornova sila
+GE0EC06AA	Dugi luk Rivendella
+G76059454	Elrondov brzi užas
+GE8C0678B	Elrondovo izbavljenje
+GE9F2F2C9	Dugi luk Lothlóriena
+G5FE47D01	Elrondov smrtni juriš
+G4B1902CB	Elrondov gambit
+GB3FB8DDE	Strijele zmajeve vatre
+G4A61DECC	Galadrielina sila
+G204DE538	Gil-galadov gnjev
+G5B85BC6F	Elrondov ratni nalet
+GBDF43860	Mithrilne strijele
+G4B69DAC6	Vilenjačko umijeće luka
+G43AB31C1	Elrondov sud
+GEAA8149B	Razina
+G11886F39	Parirajte kako biste blokirali neprijateljske napade i odbili strijele.
+GE4E78CFD	Pariranje
+G3226B277	Povucite i držite lijevi okidač za prelazak na oružje za daljinu.  Pritisnite tipku A za paljbu.  Lijevom palicom ciljajte.
+GFF931564	Oružje za daljinu
+G9A309E3D	Pucaj
+GC4AB2A6D	Brzim napadom udarajte neprijatelje bez štita.
+G5C64BDED	Žestokim napadom razbijajte neprijateljske štitove.
+G4B1F5E2B	Žestoki napad
+G12993772	Brzi napad
+G5550F308	Skupljajte bodove iskustva kako biste podigli razinu lika i kupili vrijedna poboljšanja.
+GD5F0D645	Osvojeni bodovi iskustva
+G109A17A7	Koristite napredne kombinacije i izbjegavajte neprijateljske udarce kako biste napunili Mjerač vještine i osvojili najviše bodova iskustva.
+GDB22979F	Mjerač vještine
+GF7AF01B8	Ciljanje
+G552324EC	Skok unatrag
+G3962B27E	Smrtonosni potez
+G819AB384	Odbacivanje
+GB5FE5915	Paljba/Brzi napad
+G1438BF1E	Kretanje/Ciljanje
+GCDD8B9EF	Pauza
+G63E0263C	Intervju
+GA970F7F6	Peter Jackson i Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Gospodar prstenova
+GF0462ED4	Kako je nastala videoigra
+G0DB34230	Ekskluzivni filmski isječci
+G9DF19E57	'Prstenova družina'
+G1704CE51	Fotografije sa snimanja
+G330E63EE	Fangorn i Orthanc
+GD722C1B8	Rohan i Helmova klisura
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Igraj kao Aragorn
+GA8934934	Igraj kao Legolas
+G84C57E95	Igraj kao Gimli
+G46EA0007	Igraj kao Isildur
+G5689E41F	Tajna misija
+G7F2C7A4C	Igraj kao tajni lik
+G96AF0882	Konceptualna umjetnost
+G8813AE29	Završite Vrata Morije za otključavanje
+G4EEEB554	Završite Balinovu grobnicu za otključavanje
+G3182CC3A	Završite Amon Hen za otključavanje
+G54747798	Završite Šumu Fangorn za otključavanje
+G5D796BA6	Završite Rohanske ravnice za otključavanje
+G758A2B31	Završite Westfold za otključavanje
+GD1B66361	Završite Rohanski prolaz za otključavanje
+GEC95C099	Završite Helmova klisura: Zid Klisure za otključavanje
+G4F6E6B62	Završite Helmova klisura: Probijeni zid za otključavanje
+G7E4B2F5F	Dosegnite razinu 5 s Aragornom
+GA825B93E	Dosegnite razinu 5 s Legolasom
+GD08EF3EF	Dosegnite razinu 5 s Gimlijem
+G060F3A0C	Završite Helmova klisura: Dvorište Hornburga i dosegnite razinu 10 s Aragornom
+G9C00EBDD	Završite Helmova klisura: Dvorište Hornburga i dosegnite razinu 10 s Legolasom
+GCA301FEC	Završite Helmova klisura: Dvorište Hornburga i dosegnite razinu 10 s Gimlijem
+G2A4097F8	Završite Tajnu misiju s bilo kojim likom
+GF80714A8	Završite Tajnu misiju s tajnim likom
+GF281A415	Peter Jackson i Barrie Osborne govore o filmu i igri
+GEF6D5A30	Elijah Wood govori o tome kako je glumio Froda u videoigri 'Gospodar prstenova'
+G1B7C2E20	Ian McKellen govori o tome kako je glumio Gandalfa u videoigri 'Gospodar prstenova'
+G100A11D4	Pogled iza kulisa na to kako je nastala videoigra 'Gospodar prstenova'
+G14A8622F	Fotografije likova i prizora iz 'Prstenove družine'
+G228511D6	Fotografije likova i prizora iz Fangorna i Orthanca
+GFDF064C7	Umjetnost Johna Howea i Alana Leeja nadahnuta 'Gospodarom prstenova'
+GAAE1A0C0	Fotografije likova i prizora iz Rohana i Helmove klisure
+G6CEBDAE1	Viggo Mortensen govori o tome kako je glumio Aragorna u videoigri 'Gospodar prstenova'
+G6824CF13	Orlando Bloom govori o tome kako je glumio Legolasa u videoigri 'Gospodar prstenova'
+G84770794	John Rhys-Davies govori o tome kako je glumio Gimlija u videoigri 'Gospodar prstenova'
+G775EAFA1	Tajni kodovi za otključavanje skrivenih značajki videoigre 'Gospodar prstenova'
+G640E4463	Promijeni odabir
+G6D02770F	Odaberi
+GE5EE10E6	Natrag
+GA75BE7EE	Promijeni ili prilagodi odabir
+GE7B4EE86	Izlaz u glavni izbornik
+G47C91DD4	Promijeni sliku
+GE445F6CE	Bodovima poboljšanja kupujte poboljšanja za svog lika.
+GB2D2B6DB	Pobijte ih sve!
+GFD9FFC0E	Sruši to stvorenje brzim napadima!
+G7BD97E94	Žestokim napadom uništi mu štit!
+G62FC14DC	Evo ih! Pobijte ih sve!
+GA3F97A90	Posudite mi svoje mačeve!
+G88F3FEA7	Uggh! Umri, stvore Mordora!
+G4888927E	Za Bijeli grad!
+GB5DB8B33	Gotov si!
+G91F156A0	Odlazi, stvore sjene!
+G8F5E1C57	Umri, Sauronov izrode! Umri!
+GEF59BEBD	Potisnite ih!
+G263E18E0	Naprijed!
+G8715790C	Držite položaj!
+G09E491AC	Umri!
+GC9D8887A	Gondorski ološu!
+GD909145B	Ti, umri!
+G8524085B	Ne možete nas sve pobiti!
+GFA0F31A8	Umri, ološu!
+G6949F8FB	Previše ih je, moraš se braniti!
+GAB41028F	Branite se, gospodaru.
+GC99D9EF1	Ovoga će svladati brzi napadi.
+G8BC62719	Žestoki napadi razbit će te štitove.
+G24319240	Svijet se promijenio.
+G6FC7E51E	Osjećam to u vodi.
+G586AE929	Osjećam to u zemlji.
+GA0D1D398	Osjećam to u zraku.
+G20A7EC8F	Mnogo toga što je nekoć bilo izgubljeno je,
+G9A5EEA48	jer nitko tko se toga sjeća više nije živ.
+G991F588A	Počelo je kovanjem Velikih prstenova.
+GDCCA686B	Tri su dana vilenjacima -
+G64D4928C	besmrtnima, najmudrijima i najljepšima od svih bića.
+GC38B0B40	Sedam gospodarima patuljaka,
+GE4E9DA85	velikim rudarima i majstorima planinskih dvorana.
+G8EA28015	A devet... devet prstenova darovano je ljudskom rodu,
+G5415D8A9	koji iznad svega žudi za moći.
+GCAF2B8E3	Jer u tim je prstenovima bila sapeta snaga i volja da se vlada svakim narodom.
+GEAB51D48	Ali svi su oni bili prevareni...
+G9968C959	jer iskovan je još jedan Prsten.
+G6DF9A86C	U zemlji Mordor, u vatrama Kobne gore,
+GD5CC3D06	Mračni gospodar Sauron u tajnosti je iskovao Glavni prsten kojim će nadzirati sve ostale.
+GA5AF65D9	I u taj je Prsten ulio svoju okrutnost, svoju zlobu i svoju volju da zavlada svim živim...
+GF9C8C37E	Jedna za drugom, slobodne zemlje Međuzemlja padale su pod moć Prstena.
+GD7B567A4	Ali bilo je i onih koji su se oduprli.
+G9673067D	Posljednji savez ljudi i vilenjaka krenuo je na vojske Mordora,
+G9292CF8B	i na obroncima Kobne gore borili su se za slobodu Međuzemlja.
+G9C449910	Upravo u tom trenutku,
+G4E624CE3	kad je sva nada izblijedjela...
+G8B971AFC	...Isildur, kraljev sin, podigao je očev mač.
+GA0976A20	Sauron, neprijatelj slobodnih naroda Međuzemlja, bio je poražen.
+GCE1FEBD6	Prsten je pripao Isilduru, koji je imao tu jednu priliku da zauvijek uništi zlo.
+G4653B8E6	Ali srca ljudi lako se pokvare.
+GF1F12CD3	Uništi ga!
+G7A59BC32	Ne.
+GEDAFB589	Ja sam Isildurov nasljednik, a ne sam Isildur. Moja je sudbina samo moja.
+GECD0FC9B	U Helmovu klisuru! Brego, idi!
+GE526C94A	Frodo! Kloni ih se!
+GE5AC368C	Upomoć! Posvuda su!
+GE18CFED5	Naći ćemo te.
+G754CEC13	Natrag, gadna stvari!
+G0EE492EC	Traže Prstenonosca! Držite se blizu!
+GA236A198	Ne možeš se oduprijeti, polučovječe.
+GB0F6888B	Izgubljeni smo.
+GABCB70B5	Cijeli se Isengard ispraznio.
+GD4A9E9B3	To je vojska uzgojena s jednom svrhom: da uništi svijet ljudi.
+G65599300	Mračni gospodar se približava.
+GC6B5C82C	Baggins...
+GDE3725D0	Utvare Prstena! Natrag!
+GDB2A2A63	Kročko!
+GDF3A925F	Neka bude pošteđen. Spasi ga.
+G4867AD04	U utočištu Rivendella najmanji je među nama pokazao najveću hrabrost.
+G3505351D	Ja ću ga odnijeti!
+G5B8CB3F8	I tako je skovana Družina.
+GF6138FE1	Ja ću odnijeti Prsten u Mordor!
+GA7DC204A	Premda...
+G2FFEE7D1	...ne znam put.
+GD051F7C5	Pomoći ću ti nositi ovaj teret, Frodo Baggins...
+G82079845	...dokle god je na tebi da ga nosiš.
+G8308B082	Ti nosiš sudbinu svih nas, mali.
+G32030F3F	I imaš moj luk.
+G7A19CD10	I moju sjekiru.
+G18A439E8	Daj nam prsten, polučovječe.
+G5E09B681	Prsten je naš.
+GC7625599	Dođi k nama, polučovječe.
+GB2DCED15	Pomozi mi!
+GF8B88DB9	Dođi, pomozi mi!
+G111D0DD5	Umirem.
+G439D87CA	Ova se zemlja promijenila.
+GB5DB841A	Čekat ćemo ovdje dok se put pred nama ne učini sigurnim.
+GF0EB3761	Već mnogo godina nemamo vijesti iz Morije.
+G3A9580D6	Mogli bismo proći kroz rudnike Morije.
+G852B83DE	Moj bratić Balin priredio bi nam kraljevski doček.
+G48D6F333	Pazi!
+G20BEF03C	Brzo! Ovuda!
+G37B7E741	Grozna zvijer.
+G70A83B75	Ovo su Durinova vrata, gospodara Morije.
+GE6E19D64	Dakle, Gandalfe, pokušavaš ih povesti preko Caradhrasa.
+GF7BC40D4	A ako to ne uspije -
+GC7F3ECF5	kamo ćeš onda?
+G4F7AA217	U Moriju!
+G0F8A9576	Reci prijatelju i uđi.
+GCB3668DA	Mellon.
+G64134F99	Sad nam preostaje samo jedan izbor.
+GE57BDBA1	Moramo se suočiti s dugom tamom Morije.
+G3CA10A85	Mordorski ološu!
+GC753F514	Zasjeda!
+G66D5EE9E	Orci su. Mnogo njih.
+G8AB8C148	Kad je gusto, pošalji patuljka!
+G6F4359B4	Dobar udarac, Gimli!
+G43E71D7A	Izvidjet ću naprijed i naći put.
+G0F5D4F40	Stvorenje.
+G0BFC06A5	Upravo smo ovdje trebali naći mnogo više od grobnice Balina, gospodara Morije.
+G79CBD185	Zabarikadirali smo vrata. Bubnjevi u dubini.
+G676CE560	Ne možemo izaći.
+GC2C2532E	Natrag, zvijeri bez duše!
+G41169039	Legolase! Treba nam tvoj luk!
+GED8A660A	Požuri, Gimli!
+G548B1E16	Odlazi, grozna zvijeri!
+G8B6C996D	Ja ću njega!
+GD624A593	Iza tebe!
+G22876487	Drži položaj!
+G6E72BC38	Natrag, stvorenja!
+G98FB35D8	Ovamo!
+G758C706B	Legolase!
+G7D3C2C42	Gimli!
+G96015B03	Gandalfe!
+G2F5D8C59	Previše ih je!
+GEB38BB38	Kako ćemo ih zaustaviti?
+GDB1D4894	Ne mogu se boriti s njima!
+GCA82C10C	Ne mogu ih držati podalje!
+G839F36D1	Sredi ih svojim lukom!
+G426819B7	Za Balina!
+G32A709EE	Evo me na tebi!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Previše ih je!
+GB502E0B9	Za Mrkodol!
+G5C8B1856	Izbušit ću ti rupe za crve u trbuhu!
+GF8D92047	Pohvatajte ih sve!
+GDFB1C64C	Smrvite ih!
+G5AF9060B	Natrag u sjenu!
+GF1BFC8A0	Aragorne! Treba mi tvoja oštrica!
+GF83070F8	K meni, Gimli! Ovamo!
+G2EC65D74	Čelik u srca!
+GCD82317C	Pali!
+GCEA41230	Raširite se! Ne smiju nas opkoliti!
+G3AD812AF	Nađite polučovjeka!
+G6B59AA20	Frodo nosi sudbinu svih nas!
+G4B4B5CA5	Moramo ga obraniti!
+G1881769E	Za njegovu čast, platit ćete!
+G743E1105	Morija je bila mračno putovanje za našu Družinu.
+G32DCF8A9	Bježite, budale!
+G10D542AD	Neeeeeee!
+GD10EAA8A	Pothvat stoji na oštrici noža.
+GF997012E	Skrenite samo malo i propast će.
+G01C6A95F	Ali postat će još mračnije, jer se naša Družina raspadala.
+G212FEF60	Išao bih s tobom do kraja, u same vatre Mordora.
+G960898CD	Bježi!
+GD941582B	Počivaj u miru...
+G9D8421F1	...sine Gondora.
+G60BC6BA4	Moramo poraziti ove Uruk-haije da bi Frodo pobjegao!
+GF0E0DD02	Boromire!
+G1C9C2949	Malo pomoći ovdje, vilenjače!
+GB1E7FF01	Uruk-hai! Napad!
+G62308F86	Ovo ću uživati!
+GA7F87EAC	Natrag u jame koje su vas izrodile.
+G06BA8520	Prošli su ovuda, dođite.
+G817C5460	Ali trag im ovdje završava. Moramo se razdvojiti da ih brzo nađemo.
+G934A6365	Aragorne, nešto je vani.
+G32456D68	Što vidiš, Legolase?
+G090A57A6	Bijeli čarobnjak.
+G3BE10384	Saruman.
+GF471A310	Unatoč Boromirovu junaštvu, Sarumanove su sluge zarobile članove naše Družine.
+G9EB3E2D9	Ali nismo htjeli prepustiti svoje drugove mukama i smrti.
+GC9337F85	Danima smo slijedili njihov trag...
+G1A87CFBD	...i napokon nas je doveo do Šume Fangorn.
+G7754D2C1	Ova je šuma stara...
+G9261B17A	...vrlo stara.
+GF7DCBBD1	Puna je sjećanja...
+GC4192431	...i gnjeva.
+G92086B9D	U toj velikoj šumi spojili su se mnogi putovi.
+G6F680400	To ne može biti.
+G7A0AC815	Sada postoji savez između dviju kula - Orthanca i Barad-dûra.
+GF36A1977	Potreban si negdje drugdje.
+GA926AFE5	Rat dolazi u Rohan.
+GC5293984	Sad ćemo se malo zabaviti!
+GCF6954E1	Vidio sam to već, ali nikad ovako.
+G2E930B75	Jedina nam je nada da ostanemo zajedno!
+GFD82D6F4	Sarumanove snage prevoze čudne eksplozivne naprave kroz ovo mjesto. Pomozite nam da ih uništimo!
+G86FA279C	Zadržite ih na vratima!
+G7B48AD72	Ono malo nas koji se mogu boriti kreće prema Helmovoj klisuri.
+GD55B6BE3	Ondje će budućnost Rohana preživjeti ili umrijeti.
+G2256A18D	Pazite na eksploziv!
+GE0BD0D44	Da! Neka okuse vatru!
+G82C8009F	To bi ih trebalo usporiti!
+GA0C82879	Što imamo ovdje?
+G751859FC	Što je ovo?
+G06637EF0	Moramo uništiti ove eksplozivne naprave!
+GABF94061	Te eksplozivne naprave moraju biti uništene.
+G13114F1E	Što bi ovo moglo biti?
+G5B2AF650	Ovo bi moglo biti korisno.
+G14659B9A	Ovo se čini vrijednim.
+G418ECC01	Evo. Ovo ću zadržati.
+G136EC46C	Ovo je vrijedno nositi.
+G360BBC1D	Tjera ih Sarumanovo ludilo i volja Mračnog gospodara.
+G4840EFEC	Još vatrometa? Ha! Namjeravaju nas sve pretvoriti u leševe!
+G19910876	Sad dolaze po nas!
+G08EB8FDB	Ne može se proći.
+G6FED1000	Morat ću naći drugi put.
+G68F91872	Ovo selo gori kao suho trnje!
+G57BD9573	Vrlo korisno.
+G424E3FF5	To je to!
+G501ABC20	Stojte čvrsto!
+G31FDA576	I ovdje sve preplavljuju!
+GB60A7265	Nismo bili sami u obrani Rohana.
+GA48B596C	I Kraljeva se garda probijala prema Helmovoj klisuri.
+G65866A2E	Ovdje si učinio sve što si mogao.
+G115A6D12	Preživjeli će krenuti prema Helmovoj klisuri.
+GC07CBB0E	Još imaš posla. Vratit ću ti se kad se plima okrene.
+G63B48C52	Probili su se!
+GAAD29572	Molim vas! Ne! Ne! Ne!
+G589F2E2F	Moramo spasiti sve koje možemo, ili će ovo selo pasti.
+GE1654ECA	Prije nego što nas je dugo putovanje dovelo u Edoras...
+G97FC9F74	...vaš je narod već bio u velikoj opasnosti.
+GB52DB0C9	Poštedi me!
+GDDA274AE	Molim te! Poštedi me!
+GA354A5CD	Ahhh! Ne!
+G1C74FEB5	Ne!
+G946E2F3A	Ne! Ne! Nemoj!
+GF46D4AC5	Ne! Ne! Ne!
+G1BD76207	Izvucite nas! Brzo!
+GE57CB50F	Poštedi me, preklinjem te!
+G716689E1	Zaštitite nas!
+G6295F93F	Spasi me! Molim te, spasi me!
+GFA27E38F	Aaaaaah! Spaljuju nas žive!
+G25B702F8	Pusti me da živim! Molim te!
+GDE034FBB	Moraš nastaviti.  Potreban sam negdje drugdje.
+G898F1CFF	Neka se boje isengardskih vukova!
+G04FC403B	Nismo smjeli dopustiti da ta stvorenja dođu do izbjeglica.
+GD8C5307E	Vaš je narod obranjen, ali platili smo to mnogim životima.
+G4FD6FE99	Umalo sam izgubio i svoj.
+G753DFA73	I tako smo svi, različitim putovima, došli do tvrđave Helmove klisure da pružimo posljednji otpor.
+G932478E9	Sad, ubijte onoga!
+GF940F960	Da, ljepotice moje!
+G646F5FC4	Naši će se vargovi večeras gostiti!
+G948FC6FF	Ne igraj se s njim!  Ubij ga!
+G99617AA4	Povukli su se.  Zasad je gotovo.
+G4A0F838F	Ja imam devetnaest!
+GC16105A6	Onda smo izjednačeni.
+GAC4FD1F9	To ćemo još vidjeti.
+GF71FBCA2	Ja imam dva.
+G641CA89C	Ima ih dovoljno za obojicu, Gimli!
+GF4B76D82	Moramo zadržati Sauronov pogled na nama - neka bude slijep za sve ostalo što se kreće!
+G5B04C967	Natrag!
+G3487D102	Silazite sa zida!
+G8B575855	Orci su na zidu!
+GCE3C16C0	Ja sam na sedamnaest!
+G3D052135	U zaklon!
+G05C9D273	Opet pucaju na nas!
+G4941BF74	Srušite te ljestve prije nego što nas preplave!
+G265760A3	Dolje!  Sagnite se!
+G2E8173A8	Ne smijemo ih pustiti blizu Blistavih špilja!
+G36DE1341	Nikad nisam vidio takav rad sjekirom, gospodaru patuljče.
+G80FBF437	Ni ja takvu vještinu s lukom.
+G3F35FF0E	Ali oni se nikad ne dižu nakon što ih ja udarim.
+GEC633822	Naša je obrana probijena! Žene i djeca su u zamci!
+G17070638	Odvedite ih u Veliku dvoranu!
+G5CAB82D3	Zadržat ćemo ih ovdje ili kod Utvrde!
+GFFC47594	Zadržali smo ih. Žene i djeca su na sigurnom - zasad.
+GBD5794D5	Ne možemo ih više zadržati! U Veliku dvoranu!
+G088ED5E4	Ne možemo ih zadržati!
+G7C6E3511	Sauron i Saruman stežu omču.
+G7B236705	Ali unatoč svoj njihovoj lukavosti, imamo jednu prednost.
+GFCAC9515	Prsten ostaje skriven.
+G1C7DF558	A to da ga želimo uništiti još im nije palo na pamet ni u najmračnijim snovima.
+GB72B409D	I tako se neprijateljevo oružje kreće prema Mordoru u rukama hobita -
+G86CED6F6	svaki ga dan približava vatrama Kobne gore.
+GD9BB4CD5	Sauron te se boji, Aragorne.
+GDD966B5E	Strijelci na zid!
+G6A122B51	Odmaknite se! Barikada će pasti!
+G427F5206	Požuri, gospodaru patuljče!
+G113213B2	Idi Legolasu, ja ću ih zadržati ovdje!
+GA7B95A20	Za Gondor!
+G7C696E8A	Aragorn je nadjačan! K njemu!
+GFC98A99D	Naš prijatelj vilenjak treba pomoć.
+G66A680C0	Uruk-hai!
+G8968245E	Samo što nisu razbili barikadu!
+G428EE07E	U utvrdi su. Propali smo!
+GFAE8490C	NEEEEEEE!!
+G63F31F0F	Kraj ti je blizu.
+GE8B9DB2E	Izabrao si put boli!
+G910D7B12	Budalo.
+G58E8BBAA	Vrijeme je da staneš.
+GD8425223	Nisi valjda mislio da se jedan otrcani graničar može nositi s mojom voljom? Izvan sam tvoje moći.
+G1A989E68	Platit ćeš za svoju oholost.
+G0079D300	Nisi valjda mislio da se jedan patuljak može nositi sa Sarumanovom voljom. Nitko to ne može.
+GFB1E1C33	Nisi valjda ozbiljno mislio da se jedan vilenjak može nositi sa Sarumanom? Nitko ne može, niti bi se smio usuditi.
+GCB4F521C	Bodljikave strijele Rohirrima, koje se ispaljuju kao iz Namjesnikova luka, nanose ozbiljnu štetu.
+G906620AF	Trajno povećava vaše zdravlje.  (Potrebna Denethorova moć)
+GE4F990F3	Još razorniji napad.  (Potreban Gondorski bijes)
+G55B83821	Trajno povećava vaše zdravlje.  (Potrebna Snaga Gondora)
+GD4900EBD	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Gnjev Gondora)
+GF1EE1785	Namjesnikov luk
+GC7DFC68A	Gondorski bijes
+G26838C80	Rog Gondora
+G948EF2DD	Kapetanov otpor
+GC354B788	Denethorova moć
+G2675AC6D	Juriš Minas Tiritha
+G3A16134F	Namjesnikov gambit
+G7C6E9536	Snaga Gondora
+G909BDBD3	Gnjev Gondora
+GBCA2DB1D	Nalet Bijele kule
+GA70E206F	Otpor na Amon Henu
+GECE9E935	Igraj kao Boromir
+G2BAAD5AF	Za upotrebu povucite i držite lijevi okidač.  Bacajte čaroliju tipkom A (držite je za veću štetu).
+GF2DB6139	Plamen Narye, koji se baca kao Čarobnjačko svjetlo, peče neprijatelje i nanosi ozbiljnu štetu.
+G4E51B4E3	Trajno povećava vaše zdravlje.  (Potrebna Snaga Istara)
+G701450DF	Trajno povećava vaše zdravlje.  (Potrebna Olórinova snaga)
+G876BFE80	Još razorniji napad.  (Potreban Maiarski bijes)
+G554AF8D3	Trajno povećava vaše zdravlje.  (Potrebna Snaga Narye)
+GF20F1105	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Čarobnjački gnjev)
+GE86497FB	Bijela vatra Istara strašno peče. (Potrebna Vatra Prstena)
+G5D1DA1B0	Čarobnjačko svjetlo
+GE4245C5B	Pariranje štapom
+G68852FD1	Maiarski bijes
+G63891384	Snaga Istara
+G3023E8DD	Plamen Anora
+G03053C48	Nećeš proći
+G44E88937	Vatra Prstena
+G31781C88	Olórinova snaga
+GC67FABAE	Juriš Sjenogrivog
+GB28BAB38	Sivi hodočasnik
+GBB647C84	Snaga Narye
+G3A1959EB	Čarobnjački gnjev
+G910A4D18	Gospodar Glamdringa
+GE54BB6DF	Mithrandirov nalet
+G80CB05F7	Snaga Bijeloga
+G5500602D	Olórinov gnjev
+GB3B8BA9A	Bijela vatra
+G4D3F3799	Gnjev Maie
+GB06CD44C	Igraj kao Gandalf
+GD63AEB69	Za upotrebu povucite i držite lijevi okidač.  Bacajte tipkom A (držite je za veću štetu).
+GF1500B18	Oštri kremenci s Brandywinea, koji se bacaju kao Kamenje Shirea, nanose ozbiljnu štetu.
+G1594107A	Trajno povećava vaše zdravlje.  (Potrebna Snaga Shirea)
+G223FB1F4	Trajno povećava vaše zdravlje.  (Potrebna Bilbova snaga)
+G419FBE06	Još razorniji napad.  (Potreban Hobitski bijes)
+G549E8839	Trajno povećava vaše zdravlje.  (Potrebna Samwiseova snaga)
+G3E7B6E97	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Gnjev Shirea)
+G5DBA6F26	Kamenje koje su blagoslovili vilenjaci nanosi strašnu štetu.  (Potreban Kremeni hitac)
+G586DFFA8	Kamenje Shirea
+GAF333BB7	Hobitski bijes
+GA30AB0B5	Snaga Shirea
+G5B952654	Žalčev ugriz
+G3F0B7A46	Prstenonoščeva volja
+GE7A5F0EC	Kremeni hitac
+G97512A2B	Bilbova snaga
+G4F6E34B0	Bagginsov juriš
+G8AFDEEE2	Hobitska sreća
+G9AE8326E	Samwiseova snaga
+G5FECDC01	Gnjev Shirea
+GB7F9A847	Umijeće Žalca
+GD629F714	Tukovski nalet
+G31486B52	Snaga Bag Enda
+G4023054B	Žalčev gnjev
+GD48B81F2	Vilenjačko kamenje
+G371FFFDE	Mithrilna odlučnost
+G031E765B	Igraj kao Frodo
+G63C78123	Bodljikave strijele Orthanca, koje se ispaljuju kao iz Isengardskog luka, nanose ozbiljnu štetu.
+G266F9F27	Trajno povećava vaše zdravlje.  (Potrebna Snaga Isengarda)
+G4451D279	Trajno povećava vaše zdravlje.  (Potrebna Sarumanova snaga)
+G2DE635F5	Još razorniji napad.  (Potreban Bijes Uruka)
+G4D25FA2B	Trajno povećava vaše zdravlje.  (Potrebna Snaga Orthanca)
+G055C2C2B	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Isengardski gnjev)
+G478E4DB1	Crne strijele Isengarda nanose strašnu štetu.  (Potreban Luk Uruka)
+GB0EED2A6	Isengardski luk
+G13D5F1B3	Pariranje oštricom
+GCC2F9E7C	Bijes Uruka
+GF496EAA0	Snaga Isengarda
+GC727C10B	Lurtzov lov
+G73D0C070	Sarumanova volja
+GD64B9B56	Luk Uruka
+G9E8D350E	Sarumanova snaga
+G6426C642	Juriš borbenih Uruka
+GCC3C5342	Koljačev gambit
+G0DEF3FCC	Snaga Orthanca
+G0EBAA8C5	Isengardski gnjev
+GFC62112E	Majstor koljač
+GEE7780E5	Isengardski nasrtaj
+G838B10AC	Snaga Uruk-haija
+GF44614A3	Sarumanov gnjev
+G45DC8B08	Crni luk
+G4F638CF6	Pogibelj Rohana
+G9E606E3B	Kob prvog Uruka
+GE31550F8	Lurtz
+G981416DE	Igraj kao Lurtz
+G6F22BB2E	Strijele Rivendella, koje se ispaljuju kao iz Vilenjačkog luka, nanose ozbiljnu štetu.
+GCA4A15A1	Trajno povećava vaše zdravlje.  (Potrebna Snaga Rivendella)
+G75BCF244	Trajno povećava vaše zdravlje.  (Potrebna Gil-galadova moć)
+G216AF74D	Trajno povećava vaše zdravlje.  (Potrebna Snaga Vilye)
+G0B6CC0B6	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Noldorski gnjev)
+G0355C5D7	Srebrne strijele Eldara nanose strašnu štetu. (Potreban Vanyarski luk)
+GD3F16BA3	Vilenjački luk
+G710A6666	Snaga Rivendella
+G96D9F158	Vilyina milost
+GF127A06E	Posljednji savez
+GB426C696	Vanyarski luk
+G71620C4B	Gil-galadova moć
+GFBF3A490	Juriš Lindona
+G00542D8B	Glasnikov gambit
+G5104305A	Snaga Vilye
+G221633E0	Noldorski gnjev
+G11A9FF39	Noldorski ratni nalet
+GDE2839BE	Snaga Eldara
+GB0E7C432	Gnjev Lindona
+G008B68D9	Eldarski luk
+G10607364	Gospodar Imladrisa
+G0BA28B85	Igraj kao Elrond
+GD6BB77A1	Vatra Barad-dûra, koja se baca kao Mračna munja, nanosi ozbiljnu štetu.
+G113CAFFC	Trajno povećava vaše zdravlje.  (Potrebna Snaga Barad-dûra)
+G2F14F0F7	Trajno povećava vaše zdravlje.  (Potrebna Snaga Mordora)
+G573FFFF8	Još razorniji napad.  (Potreban Mračni bijes)
+G6AE28C4F	Trajno povećava vaše zdravlje.  (Potrebna Moć Prstena)
+GC4B7E7DB	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Mordorski gnjev)
+G5FEE9C56	Plamen Kobne gore nanosi strašnu štetu.  (Potrebna Paklena vatra)
+GA07FAB7C	Mračna munja
+G59838F7F	Pariranje buzdovanom
+G0ACE1349	Mračni bijes
+GD97CF863	Snaga Barad-dûra
+GF62B2130	Sauronov ples
+G53F430F0	Volja Jedinoga Prstena
+GB60C89B8	Paklena vatra
+GC26DDD50	Snaga Mordora
+G29856B22	Juriš Mračnog gospodara
+G27C67462	Annatarov gambit
+G66205DC8	Moć Prstena
+GA64C9515	Mordorski gnjev
+G278CB8C1	Majstor buzdovana
+G4B8493DC	Mordorski ratni nalet
+G5487C52D	Snaga Kobne gore
+GE9A37F55	Gnjev Mordora
+G3F70A0C4	Kobna vatra
+GBB8776B5	Pogibelj vilenjaka
+G6E2AA149	Sauronovo oko
+G1C11BF19	Sauron
+G3057B52F	Igraj kao Sauron
+GB76B50B9	Ovo kamenje iz jama, koje se baca kao Kamenje s litica, nanosi ozbiljnu štetu.
+GECFE6FA3	Trajno povećava vaše zdravlje.  (Potrebna Moć jama)
+G47753157	Ovaj razorni napad pali više neprijatelja odjednom.  (Potreban Berserkerski gnjev)
+GF2D43E42	Užareno kamenje nanosi strašnu štetu.  (Potrebno Ratno kamenje)
+GC390874C	Kamenje s litica
+G035878D4	Berserkerska pomama
+GC2D0B8DB	Baklja Klisure
+GFF1647F7	Ratno kamenje
+G98869254	Moć jama
+GC4A495AD	Juriš na Zid Klisure
+GE0FB4F25	Gambit Uruk-haija
+G8925F4A1	Berserkerski gnjev
+G468B4A5C	Majstor berserker
+GB0E58D9C	Opsadni nalet
+GD5AF6DD1	Gnjev Orthanca
+G01AF5769	Kamenje od lave
+G18494AB3	Gnjev jama
+GB3AAE2E1	Uruk-hai
+G683077D7	Igraj kao Uruk-hai
+P:Frame Rate:	Broj sličica:
+P:Unlocked	Otključano
+P:Display Mode:	Način prikaza:
+P:Window	Prozor
+P:Full Screen	Cijeli zaslon
+P:Window Size:	Veličina prozora:
+P:Automatic	Automatski
+P:Aspect Ratio:	Omjer slike:
+P:Custom	Prilagođeno
+P:Resolution:	Razlučivost:
+P:Anisotropic:	Anizotropno:
+P:Mipmaps:	Mipmape:
+P:Off	Isklj.
+P:On	Uklj.
+P:Ultra Textures:	Ultra teksture:
+P:Wide Cutscenes:	Široke međuscene:
+P:Anti-aliasing:	Zaglađivanje:
+P:VSync:	VSync:
+P:Picture:	Slika:
+P:Keep Shape	Zadrži oblik
+P:Stretch	Rastegni
+P:Vertex Programs:	Vertex programi:
+P:Brightness:	Svjetlina:
+P:Sharpening:	Izoštravanje:
+P:Colour:	Boja:
+P:Original	Izvorno
+P:Vivid	Živo
+P:Muted	Prigušeno
+P:HUD Widescreen:	HUD na širokom zaslonu:
+P:Edges	Rubovi
+P:Centred	Centrirano
+P:Menus:	Izbornici:
+P:Fill	Ispuni
+P:Movies:	Filmovi:
+P:As Made	Kao izvornik
+P:Button Prompts:	Oznake tipki:
+P:Keyboard	Tipkovnica
+P:Mouse Pointer:	Pokazivač miša:
+P:Sensitivity:	Osjetljivost:
+P:Pointer Size:	Veličina pokazivača:
+P:Mouse Aiming:	Ciljanje mišem:
+P:Invert Aiming:	Obrni ciljanje:
+P:Up/Down	Gore/dolje
+P:Left/Right	Lijevo/desno
+P:Both	Oboje
+P:Mouse Steering:	Upravljanje mišem:
+P:A Button:	Tipka A:
+P:B Button:	Tipka B:
+P:X Button:	Tipka X:
+P:Y Button:	Tipka Y:
+P:Black Button:	Crna tipka:
+P:White Button:	Bijela tipka:
+P:Left Trigger:	Lijevi okidač:
+P:Right Trigger:	Desni okidač:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	Križna tipka gore:
+P:D-pad Down:	Križna tipka dolje:
+P:D-pad Left:	Križna tipka lijevo:
+P:D-pad Right:	Križna tipka desno:
+P:L Stick Click:	Klik lijeve palice:
+P:R Stick Click:	Klik desne palice:
+P:Move Forward:	Naprijed:
+P:Move Back:	Natrag:
+P:Move Left:	Lijevo:
+P:Move Right:	Desno:
+P:Look Up:	Pogled gore:
+P:Look Down:	Pogled dolje:
+P:Look Left:	Pogled lijevo:
+P:Look Right:	Pogled desno:
+P:Walk:	Hodanje:
+P:General Options	Opće postavke
+P:Display Options	Postavke prikaza
+P:Controls	Kontrole
+P:Reset Controls	Vrati zadane kontrole
+P:Press a key...  (Esc: cancel, Delete: clear)	Pritisnite tipku...  (Esc: odustani, Delete: obriši)
+P:R Stick	Desna palica
+P:Stick	Palica
+P:L Stick	Lijeva palica
+P:Black button	Crna tipka
+P:White button	Bijela tipka
+P:Left trigger	Lijevi okidač
+P:Right trigger	Desni okidač
+P:Start	Start
+P:Back	Back
+P:D-pad up	Križna tipka gore
+P:D-pad down	Križna tipka dolje
+P:D-pad left	Križna tipka lijevo
+P:D-pad right	Križna tipka desno
+P:Left stick click	Klik lijeve palice
+P:Right stick click	Klik desne palice
+P:Move forward	Naprijed
+P:Move back	Natrag
+P:Move left	Lijevo
+P:Move right	Desno
+P:Right stick up	Desna palica gore
+P:Right stick down	Desna palica dolje
+P:Right stick left	Desna palica lijevo
+P:Right stick right	Desna palica desno
+P:Walk	Hodanje
+P:None	Ništa
+P:LS click	Klik LS
+P:RS click	Klik RS
+P:Mouse Left	Lijeva tipka miša
+P:Mouse Right	Desna tipka miša
+P:Mouse Middle	Srednja tipka miša
+P:Mouse 4	Miš 4
+P:Mouse 5	Miš 5
+P:Space	Razmak
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Strelica gore
+P:Down	Strelica dolje
+P:Left	Strelica lijevo
+P:Right	Strelica desno
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num *
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Točka-zarez
+P:Equals	Jednako
+P:Comma	Zarez
+P:Minus	Minus
+P:Period	Točka
+P:Slash	Kosa crta
+P:Backquote	Obrnuti apostrof
+P:Backslash	Obrnuta kosa crta
+P:Quote	Navodnik
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Držite {6} za prelazak na oružje za daljinu.  Pritisnite {0} za paljbu.  Za ciljanje koristite {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Povucite i držite {6} za prelazak na oružje za daljinu.  Pritisnite {0} za paljbu.  Za ciljanje koristite {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Za upotrebu držite {6}.  Za paljbu pritisnite {0} (držite za veću štetu).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Za upotrebu povucite i držite {6}.  Za paljbu pritisnite {0} (držite za veću štetu).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Za upotrebu držite {6}.  Za bacanje pritisnite {0} (držite za veću štetu).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Za upotrebu povucite i držite {6}.  Za bacanje pritisnite {0} (držite za veću štetu).
+P:A devastating attack.  Press and hold {3} to use.	Razoran napad.  Za upotrebu pritisnite i držite {3}.
+P:Game Saved.  Press {8} to continue.	Igra je spremljena.  Pritisnite {8} za nastavak.
+P:Game Saved.  Press {0} to continue.	Igra je spremljena.  Pritisnite {0} za nastavak.
+P:Unable to save game. Press {8} to continue.	Igru nije moguće spremiti. Pritisnite {8} za nastavak.
+P:Unable to save game. Press {0} to continue.	Igru nije moguće spremiti. Pritisnite {0} za nastavak.
+P:Unable to load game. Press {8} to continue.	Igru nije moguće učitati. Pritisnite {8} za nastavak.
+P:Unable to load game. Press {0} to continue.	Igru nije moguće učitati. Pritisnite {0} za nastavak.
+P:No saved games. Press {8} to continue.	Nema spremljenih igara. Pritisnite {8} za nastavak.
+P:No saved games. Press {0} to continue.	Nema spremljenih igara. Pritisnite {0} za nastavak.
+P:Not unlocked yet. Press {8} to continue.	Još nije otključano. Pritisnite {8} za nastavak.
+P:Not unlocked yet. Press {0} to continue.	Još nije otključano. Pritisnite {0} za nastavak.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Niste skupili dovoljno bodova poboljšanja za kupnju ovog poboljšanja. Pritisnite {8} za nastavak.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Niste skupili dovoljno bodova poboljšanja za kupnju ovog poboljšanja. Pritisnite {0} za nastavak.
+P:Press {8} to resume	Pritisnite {8} za nastavak
+P:the left mouse button	lijevu tipku miša
+P:the right mouse button	desnu tipku miša
+P:the middle mouse button	srednju tipku miša
+P:mouse button 4	tipku miša 4
+P:mouse button 5	tipku miša 5
+P:the A button	tipku A
+P:the B button	tipku B
+P:the X button	tipku X
+P:the Y button	tipku Y
+P:the Black button	crnu tipku
+P:the White button	bijelu tipku
+P:the left trigger	lijevi okidač
+P:the right trigger	desni okidač
+P:up on the d-pad	križnu tipku gore
+P:down on the d-pad	križnu tipku dolje
+P:left on the d-pad	križnu tipku lijevo
+P:right on the d-pad	križnu tipku desno
+P:the left thumbstick button	tipku lijeve palice
+P:the right thumbstick button	tipku desne palice
+P:the Menu button	tipku Menu
+P:the View button	tipku View
+P:the cross button	tipku križić
+P:the circle button	tipku kružić
+P:the square button	tipku kvadratić
+P:the triangle button	tipku trokutić
+P:Left Click	Lijevi klik
+P:Right Click	Desni klik
+P:Middle Click	Srednji klik
+P: or 	 ili 
+P:Exit	Izlaz
+P:Press {k}	Pritisnite {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	Putanje
+L:Game files ready:  	Datoteke igre spremne:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	Datoteke igre još nisu instalirane. Odaberite svoj Xbox ISO igre The Two Towers (USA) ili mapu s raspakiranim diskom.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Izrada Ultra tekstura iz paketa GLOS69 (jednom; nekoliko minuta)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Slika Xbox diska (*.iso;*.xiso)\\0*.iso;*.xiso\\0Sve datoteke\\0*.*\\0
+L:Checking disc...	Provjera diska...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Odaberite mapu s raspakiranim diskom igre The Two Towers (sadrži default.xbe)
+L:Display	Prikaz
+L:Developer	Za razvojne programere
+L:Renderer	Renderer
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, stavite u mapu dxvk)
+L:Software (no graphics card)	Softverski (bez grafičke kartice)
+L:Frame rate	Broj sličica
+L:30 fps (as on the Xbox)	30 fps (kao na Xboxu)
+L:60 fps (experimental)	60 fps (eksperimentalno)
+L:Unlocked (experimental)	Otključano (eksperimentalno)
+L:Display mode	Način prikaza
+L:Windowed	U prozoru
+L:Full screen (borderless)	Cijeli zaslon (bez obruba)
+L:Window size	Veličina prozora
+L:Automatic	Automatski
+L:Aspect ratio	Omjer slike
+L:4:3 (original)	4:3 (izvorno)
+L:16:9 widescreen	16:9 široki zaslon
+L:21:9 ultrawide	21:9 ultraširoki
+L:32:9 super ultrawide	32:9 superultraširoki
+L:HUD in widescreen	HUD na širokom zaslonu
+L:At the screen's edges	Na rubovima zaslona
+L:Centred (4:3)	Centrirano (4:3)
+L:Menus	Izbornici
+L:Fill the screen (past the old TV margin)	Ispuni zaslon (preko starog TV ruba)
+L:Original (with a margin)	Izvorno (s rubom)
+L:Movies in widescreen	Filmovi na širokom zaslonu
+L:As made (4:3)	Kao izvornik (4:3)
+L:Fill the width (black bands cut off)	Ispuni širinu (crne trake odrezane)
+L:Widescreen cutscenes	Međuscene na širokom zaslonu
+L:Off (4:3, side bars)	Isključeno (4:3, bočne trake)
+L:On (the sky's edges can show)	Uključeno (mogu se vidjeti rubovi neba)
+L:Ultra textures	Ultra teksture
+L:Off	Isključeno
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	Uključeno (oštriji izbornici i HUD; sve uz paket GLOS69)
+L:Internal resolution	Unutarnja razlučivost
+L:1x  (640 x 480, original)	1x  (640 x 480, izvorno)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 linija: 3840 x 2160 pri 16:9)
+L:Anisotropic filtering	Anizotropno filtriranje
+L:Mipmaps	Mipmape
+L:On (less shimmer)	Uključeno (manje treperenja)
+L:Anti-aliasing	Zaglađivanje rubova
+L:FXAA (the finished picture)	FXAA (gotova slika)
+L:VSync	VSync
+L:On (no tearing)	Uključeno (bez trganja slike)
+L:Picture shape	Oblik slike
+L:Keep aspect (black bars)	Zadrži omjer (crne trake)
+L:Stretch to fill	Rastegni do punog
+L:Vertex programs	Vertex programi
+L:Graphics card (faster)	Grafička kartica (brže)
+L:CPU (old method)	Procesor (stara metoda)
+L:Brightness	Svjetlina
+L:Darker	Tamnije
+L:Original	Izvorno
+L:Brighter	Svjetlije
+L:Brighter +	Svjetlije +
+L:Brightest	Najsvjetlije
+L:Sharpening	Izoštravanje
+L:Low	Nisko
+L:Medium	Srednje
+L:High	Visoko
+L:Colour	Boja
+L:Vivid	Živo
+L:Muted	Prigušeno
+L:Button prompts	Oznake tipki
+L:Automatic (follows the pad or keys you use)	Automatski (prema kontroleru ili tipkama koje koristite)
+L:Keyboard / mouse (your bound keys)	Tipkovnica / miš (vaše dodijeljene tipke)
+L:Input	Unos
+L:Mouse pointer in menus	Pokazivač miša u izbornicima
+L:On (point and click in the menus)	Uključeno (pokaži i klikni u izbornicima)
+L:Off (mouse buttons as bound)	Isključeno (tipke miša kako su dodijeljene)
+L:Mouse sensitivity	Osjetljivost miša
+L:Normal	Normalno
+L:Very high	Vrlo visoko
+L:Pointer size	Veličina pokazivača
+L:Small	Malen
+L:Large	Velik
+L:Extra large	Vrlo velik
+L:Mouse aiming (ranged)	Ciljanje mišem (na daljinu)
+L:On (hold the ranged button, move the mouse)	Uključeno (držite tipku za daljinu, pomičite miš)
+L:Mouse aiming: invert	Ciljanje mišem: obrnuto
+L:Up / down	Gore / dolje
+L:Left / right	Lijevo / desno
+L:Both	Oboje
+L:Mouse steering (movement)	Upravljanje mišem (kretanje)
+L:On (the mouse sets the way; W A S D move by it)	Uključeno (miš određuje smjer; W A S D kreću prema njemu)
+L:Mod: ECTS 2002 HUD (experimental)	Mod: HUD s ECTS 2002 (eksperimentalno)
+L:Off (retail HUD)	Isključeno (HUD iz prodajne verzije)
+L:On (ECTS 2002 demo HUD)	Uključeno (HUD iz demoa s ECTS 2002)
+L:Mods	Modovi
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Mod: Narančasti dodaci zdravlja (kao u videima prije izlaska i o nastanku igre)
+L:Off (green, as retail)	Isključeno (zeleni, kao u prodajnoj verziji)
+L:On (orange health pickups)	Uključeno (narančasti dodaci zdravlja)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Mod: Dodatni junaci (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; otključavaju se s Isildurom)
+L:Off (four heroes, as retail)	Isključeno (četiri junaka, kao u prodajnoj verziji)
+L:On (eleven heroes)	Uključeno (jedanaest junaka)
+L:On, unlocked for testing (save not changed)	Uključeno, otključano za testiranje (spremljena igra se ne mijenja)
+L:Custom: 	Prilagođeno: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Ultra teksture su uključene: izbornici, odabir razine i HUD su oštriji.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	Za sve teksture preuzmite GameCube paket tekstura visoke razlučivosti (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	od njegova autora i stavite njegovu mapu GLOS69 ovdje:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nPokretač će je pripremiti sljedeći put kad pritisnete Igraj (jednom; nekoliko minuta).
+L:Graphics settings	Postavke grafike
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	Sve osim modova može se mijenjati i tijekom igre: pritisnite F10 (ili držite Back i pritisnite Start). 
+L:The mods are set here and take effect when the game starts.	Modovi se postavljaju ovdje i primjenjuju se pri pokretanju igre.
+L:Defaults	Zadano
+L:Cancel	Odustani
+L:A button	Tipka A
+L:B button	Tipka B
+L:X button	Tipka X
+L:Y button	Tipka Y
+L:Black button	Crna tipka
+L:White button	Bijela tipka
+L:Left trigger	Lijevi okidač
+L:Right trigger	Desni okidač
+L:Start	Start
+L:Back	Back
+L:D-pad up	Križna tipka gore
+L:D-pad down	Križna tipka dolje
+L:D-pad left	Križna tipka lijevo
+L:D-pad right	Križna tipka desno
+L:Left stick click	Klik lijeve palice
+L:Right stick click	Klik desne palice
+L:Move forward	Naprijed
+L:Move back	Natrag
+L:Move left	Lijevo
+L:Move right	Desno
+L:Right stick up	Desna palica gore
+L:Right stick down	Desna palica dolje
+L:Right stick left	Desna palica lijevo
+L:Right stick right	Desna palica desno
+L:Walk (hold)	Hodanje (držanje)
+L:None	Ništa
+L:LS click	Klik LS
+L:RS click	Klik RS
+L:Mouse Left	Lijeva tipka miša
+L:Mouse Right	Desna tipka miša
+L:Mouse Middle	Srednja tipka miša
+L:Mouse 4	Miš 4
+L:Mouse 5	Miš 5
+L:Space	Razmak
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Strelica gore
+L:Down	Strelica dolje
+L:Left	Strelica lijevo
+L:Right	Strelica desno
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num *
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Točka-zarez
+L:Equals	Jednako
+L:Comma	Zarez
+L:Minus	Minus
+L:Period	Točka
+L:Slash	Kosa crta
+L:Backquote	Obrnuti apostrof
+L:Backslash	Obrnuta kosa crta
+L:Quote	Navodnik
+L:Key 	Tipka 
+L:Controls	Kontrole
+L:press a key or mouse button…	pritisnite tipku ili tipku miša…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Pritisnite tipku ili tipku miša za ovu radnju (Esc odustaje). Ona zamjenjuje prvu tipku radnje; ostale je radnje gube.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Kliknite polje tipke, zatim pritisnite tipku ili tipku miša. Padajućim izbornicima birate koja tipka kontrolera izvodi koju radnju. To se može mijenjati i u igri: F10, stranica Kontrole.
+L:Action	Radnja
+L:Keyboard / mouse	Tipkovnica / miš
+L:Controller	Kontroler
+L:stick part way	palica djelomično
+L:right stick	desna palica
+L:left stick	lijeva palica
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Još radim (instalacija ili izrada Ultra tekstura). Svejedno izaći?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	Gospodar prstenova: Dvije kule  -  izvorna PC rekompilacija
+L:Install from ISO…	Instaliraj iz ISO-a…
+L:Use extracted folder…	Koristi raspakiranu mapu…
+L:Show the game window	Prikaži prozor igre
+L:Write a log file (for bug reports)	Zapisuj datoteku dnevnika (za prijavu grešaka)
+L:Graphics settings…	Postavke grafike…
+L:Controls…	Kontrole…
+L:Play	Igraj
+L:Open folder	Otvori mapu
+L:30 fps (original)	30 fps (izvorno)
+L:60 / unlocked can run some scenes faster than normal	Pri 60 / otključano neke scene mogu ići brže nego inače
+L:Full screen	Cijeli zaslon
+L:Alt+Enter or F11 also switches	Prebacuje i Alt+Enter ili F11
+L:The 3D view widens fully after the next load	3D prikaz potpuno se proširuje nakon sljedećeg učitavanja
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Oštrije, ali treba jaču grafičku karticu (9x i više: mnogo videomemorije)
+L:On	Uključeno
+L:Less shimmer on distant textures	Manje treperenja na udaljenim teksturama
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA zaglađuje rubove 3D prikaza pri crtanju; FXAA gotovu sliku
+L:Waits for the monitor: no tearing	Čeka monitor: bez trganja slike
+L:Picture	Slika
+L:Keep shape	Zadrži oblik
+L:Graphics card	Grafička kartica
+L:Graphics card is much faster	Grafička kartica je mnogo brža
+L:Lifts the dark areas (gamma)	Posvjetljuje tamna područja (gama)
+L:Crisper textures, best with a higher internal resolution	Oštrije teksture, najbolje uz višu unutarnju razlučivost
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Automatski: prema onome čime ste zadnje igrali (kontroler, PlayStation kontroler, tipke)
+L:Where the HUD sits when the picture is wider than 4:3	Gdje stoji HUD kad je slika šira od 4:3
+L:Fill the screen	Ispuni zaslon
+L:Menus, loading and upgrade screens: past the old TV margin	Izbornici, zasloni učitavanja i poboljšanja: preko starog TV ruba
+L:Fill the width	Ispuni širinu
+L:Fill: the films' black bands cut off, a little closer	Ispuni: crne trake filmova odrezane, malo bliže
+L:Point and click in the menus (Off: the mouse buttons act as before)	Pokaži i klikni u izbornicima (Isključeno: tipke miša rade kao prije)
+L:The pointer's speed and the mouse aiming's	Brzina pokazivača i ciljanja mišem
+L:Hold the ranged button and move the mouse to aim	Držite tipku za daljinu i pomičite miš za ciljanje
+L:Press to toggle	Pritisak za uklj./isklj.
+L:Hold	Držanje
+L:Windowed mode	Način u prozoru
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	Paket tekstura visoke razlučivosti (GLOS69 i textures_ultra uz igru)
+L:Off (4:3)	Isključeno (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	Uključeno: proširene su i scene u pogonu igre (mogu se vidjeti rubovi neba)
+L:Mod: ECTS 2002 HUD	Mod: HUD s ECTS 2002
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Portret, kugla s runama i prikaz iskustva iz demoa s ECTS 2002
+L:Mod: Orange health pickups	Mod: Narančasti dodaci zdravlja
+L:Health pickups are orange, as in pre-release and making-of videos	Dodaci zdravlja su narančasti, kao u videima prije izlaska i o nastanku igre
+L:Custom (%.2f:1)	Prilagođeno (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	POSTAVKE GRAFIKE
+L:Page	Stranica
+L:Graphics	Grafika
+L:Left/Right: switch to the Controls page	Lijevo/desno: prijelaz na stranicu Kontrole
+L:press a key...	pritisnite tipku...
+L:Reset all controls to the defaults	Vrati sve kontrole na zadano
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Pritisnite tipku ili tipku miša.  Esc: odustani.  Delete: obriši.
+L:A / Enter: reset	A / Enter: vrati
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: postavi tipku.   Lijevo/desno: tipka kontrolera.
+L:Left/Right: switch to the Graphics page	Lijevo/desno: prijelaz na stranicu Grafika
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Gore/dolje: odabir     Lijevo/desno ili A: promjena     B / Esc / F10: zatvori
+L:Changes are saved automatically	Promjene se spremaju automatski
+L:Language	Jezik
+L:Restart the game for the language to change	Ponovno pokrenite igru da bi se jezik promijenio
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Miš određuje smjer kretanja; W, A, S i D kreću prema njemu (Hodanje i dalje hoda)
+L:Language (game and launcher):	Jezik (igra i pokretač):
+L:CONTROLS	KONTROLE
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Dodatni junaci: Sauron sprinta klikom lijeve palice (Shift na tipkovnici)
+L:Sauron's sprint	Sauronov sprint
+L:hold	drži
+L:toggle	uklj./isklj.
+L:Combo Runes	Kombo rune
+L:Speed	Brzi
+L:Fierce	Žestoki
+L:Special	Posebni
+L:Each attack fills a quarter	Svaki napad puni četvrtinu
+L:OK	U redu
+L:Could not start twotowers_recomp.exe.	Nije moguće pokrenuti twotowers_recomp.exe.
+P:the left thumbstick	lijevu palicu
+L:default.xbe was not found in that folder.	default.xbe nije pronađen u toj mapi.
+L:That default.xbe is not the USA retail release this port was built from.	Taj default.xbe nije iz američkog (USA) maloprodajnog izdanja iz kojeg je ovaj port izrađen.
+L:Error: 	Pogreška: 
+L:Error: the disc has no default.xbe.	Pogreška: na disku nema datoteke default.xbe.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Pogreška: ovaj ISO nije američki (USA) maloprodajni disk igre The Two Towers koji ovaj port podržava.
+L:Extracting 	Raspakiravanje: 
+L:Ultra textures (once): 	Ultra teksture (jednom): 
+L:Ultra textures: 	Ultra teksture: 
+L:Converting 	Pretvaranje: 
+L:Softening the edges of 	Omekšavanje rubova: 
+L:Fixing the transparency of 	Ispravljanje prozirnosti: 
+L:Writing the index	Zapisivanje indeksa
+L:Ultra textures ready: 	Ultra teksture spremne: 
+L: pictures	 slika
+L: could not be made	 nije bilo moguće izraditi
+L:The GLOS69 texture pack is not in the game's folder.	Paket tekstura GLOS69 nije u mapi igre.
+L:Could not write textures_ultra/index.bin.	Nije moguće zapisati textures_ultra/index.bin.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	Uključeno (drži W: trči kamo miš gura; Hodanje hoda)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	Drži W: trči kamo miš gura (Hodanje hoda)

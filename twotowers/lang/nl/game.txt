@@ -1,0 +1,1454 @@
+# Nederlands, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	IN DE BAN VAN DE RING:  DE TWEE TORENS
+G20EBC61E	Een film van Peter Jackson
+G2D8D3B98	Geproduceerd door
+G7EDB1AE9	Coproductie
+G90AF53E8	Speciale effecten
+G893165F0	Weta Digital
+GD9523953	Muziek van Howard Shore
+G7B677F6E	Stemmen in de game
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX-TEAM
+GAAA9253B	Projectmanagement
+G2E65B2E4	Programmering
+G1E165282	Art
+G4CFF767B	Audio
+G1B12D0CA	OORSPRONKELIJK ONTWIKKELTEAM
+G5BB408B8	Projectdirecteur
+GA9D987DE	Technisch directeur
+GA4E53836	Ontwikkelingsdirecteur
+GCBF9A863	Audiodirecteur
+G71D27F1C	Hoofdontwerper
+GABE6171F	Hoofdprogrammeur
+GB6AEE806	Hoofdomgevingsartiesten
+G0FAA1BD8	Hoofdartiest cinematics
+G93A039A2	Hoofdanimator
+G85851417	Art direction
+GEC5EB699	Associate producer
+G1E1B7E49	Artiest speciale effecten
+GE457B26A	Omgevingsartiesten
+G09AFDB2B	Artiesten in-game cinematics
+GC6201467	Conceptartiesten
+GCE12C680	Personagemodelleurs/-animators
+G958F64A1	Interface-artiest
+G5817028D	Grafische programmeurs
+G8E313DB8	AI-programmeurs
+G7559A05A	Gameplayprogrammeurs
+G47FDFA0D	Gameontwerpers
+G2A1A4D1F	Geluidsontwerp & muziekmontage
+GD6AC199C	Geluidsontwerp
+G83731102	Aanvullende ontwikkelingsregie
+G9B9AC6A2	Aanvullend projectmanagement
+G2C8B85F3	Aanvullende art
+G154B3F75	Aanvullende programmering
+GEC34AAA5	Aanvullend geluidsontwerp
+GE9E2F454	Aanvullende teksten
+G8B63E4D8	Bedrijfsontwikkeling
+G8E754AFA	Uitvoerend verantwoordelijke ontwikkeling
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Uitvoerend producent
+GF944BB31	Senior producent
+G49F95533	Associate producer lokalisatie
+GE5AAA381	Assistent-producent
+G20A463E8	Software-engineers
+GEDDCFA70	Hoofdtester
+G6EC637F4	Assistent-hoofdtester
+GA9C92124	Kerntesters
+GDDEFB046	Producenten
+G5F4C2C91	Directeur gameontwikkeling
+G53E62C46	Levelontwerper
+G4019279E	Associate art director
+G3548CB79	In-game cinematics
+G5BF26924	Grafisch ontwerp (UI)
+GF5E6331B	Assistent-producent lokalisatie
+GB9029242	Assistent-producenten
+G81160EAA	Senior animator
+GB1B5EEDE	Animator
+G1D384099	Omgevingsmodelleurs
+GD670D187	Full-motion video's
+GB4300D0E	Productiesupervisor
+GDB61FEB0	Productiemanager FMV
+G13204F99	Technisch art director
+G8774AEB2	Art director
+G2EDA5AA3	Animatieregisseur
+G4761EC6C	Character TD
+GC40AEB65	Hoofdomgevingsartiest
+G04B7AD9A	Schrijver
+GCCDC1EDE	Personage-artiesten
+G765B2120	Senior personage-animators
+GDB98BF7E	Senior belichtingsartiest
+G8AEFA15C	Senior FX-animator
+GB64D9748	FX-animator
+GB770287B	Rigger/CG-modelleurs
+GA89434BE	Camera-layout
+GBAA388EF	Editors
+GA79B5345	Geluidsontwerper/re-recordist
+GE2D38E72	Productiemanager art
+G29C8EC71	Directieassistent
+GB01B1D73	Systeembeheerder
+G257D0532	Productieassistent
+GB2965969	Dialoogmontage
+G2ACF75E1	Aanvullende audiobewerking
+G821EF7A5	Stemacteurs
+G3CCB3DF3	EA Quality Assurance
+G2851776E	QA-manager
+G3D43CCDD	QA-supervisor
+G997D9582	QA-leiders
+G5B5CE9C6	Assistent-QA-leiders
+GE0B33004	QA-kerntesters
+GBBB3A592	FLT-projectleider
+G7F330F1A	Functionele taaltesters
+G731958CD	Taaltesters
+G7005C763	Klantkwaliteitscontrole
+GCC3D24EF	CQC-manager
+G0FF24E54	CQC-supervisor
+G7498FE74	CQC-afdelingsleider
+G5AB35ED0	CQC-productanalisten
+G6E529086	Mastering Lab
+G0229B6F3	Directeur internationale productontwikkeling
+G6B435E81	Projectmanager lokalisatie
+GF8BA9878	Projectcoördinator lokalisatie
+G906896D8	Manager partnergoedkeuringen
+G860EDA13	Zakelijke zaken
+G7AC94AC6	Juridische zaken
+GFDF965B3	Studio-operaties
+G9FF9799E	Coördinator studiocontracten
+G9E24FEC0	Marketingdirecteur
+G44C57DC5	Productmanager
+GE1A6D911	Public relations
+GA5ADE5FF	Documentatie
+G4C2A256D	Documentatie-opmaak
+G279BA159	Projectmanagement verpakking
+G482E9235	Verpakkingsontwerp
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Filmteam In de ban van de ring
+GE196FA55	Regisseur
+GE364782E	Uitvoerend producenten
+GB11B5F1A	Coproducenten
+GDDE9A104	Archivaris
+G73D53EB3	Assetbeheerder
+G4616CF92	Assistent van de producenten
+GD98C077D	Postproductiesupervisors
+G26FFE43A	Eerste assistent-editor
+GFAE3387C	Beheerder miniaturen
+G0D7D1A1D	Exec VP wereldwijde licenties en merchandising
+GD58105C6	Creatief directeur
+GB0E8D9D5	Filmacteurs
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwijs
+G4A7482A5	Gollem
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	VP zakelijke zaken muziek
+G96EBB4D8	Uitvoerend verantwoordelijke muziek
+G2728DB7D	Muziekdirecteur
+GFE08F13A	3Foot6
+GCFF1286B	Coördinator merchandising
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Vicepresident
+GE58F283A	Producent/productiemanager
+G97C336EB	Animatiesupervisor
+G96FF4CEA	Senior technisch directeur
+GE816CF3D	Hoofd technische set-up
+G22B756F5	Animators
+G86F5B2D9	Matte painter
+GBC50C796	Officemanager
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Lijnproducent
+G14C96B5C	Hoofd-CG-artiest
+GD9742A3C	CG-artiesten/animators
+GBA7D6969	Arnson Communications
+G22C5AB99	Uitvoerend producent/creatief directeur
+G45C5172D	Schrijver/producent
+GDCC6F23E	Art director/animator
+G9C4F3B3B	DS-artiest
+GF0F58DD3	SPECIALE DANK VAN EA
+G895C842A	SPECIALE DANK VAN STORMFRONT STUDIOS
+G9D4DD21A	In de landen van Midden-aarde vertelt de legende over de Duistere Heerser Sauron,
+G6CFA90F6	en over de Ring die hem de macht zou geven om de wereld te onderwerpen.
+G18F2969C	En nu is hij beland in de handen van de meest onwaarschijnlijke persoon denkbaar.
+G378C79D6	Ik ben echt een gamefanaat, dus ik wilde natuurlijk alles weten over een In de ban van de ring-videogame.
+GDCF04190	Ik kom dan in een modus waarin ik de hele tijd speel,
+G977EBA13	en dat is meestal als ik een soort avonturengame speel, dan zit mijn hoofd daar helemaal in.
+G49C9AB1A	Als ik er eenmaal in zit, kan ik er niet meer mee ophouden en moet ik mijn personage tot het einde brengen.
+GD2647A40	Deze taak is jou opgedragen, en als jij geen weg vindt, zal niemand het doen.
+G3AC8371A	Zoek dekking!
+GAD82B19D	Ik heb dus wat rondgevraagd over dit ding en nu mag ik het eindelijk spelen, en het is ongelooflijk.
+G8DE86872	Het is gewoon prachtig om naar te kijken.
+G72E74697	O, dat is zo gaaf!
+GF9824FCA	Ja, kom op, Aragorn! Kom op!
+G2EE7D5D4	Ze komen eraan.
+G61F7CD7D	Het is een soort bonus dat je een videogame kunt aanzetten en mij daar kunt zien rondrennen.
+G57A5BC04	Ik krijg flink op mijn donder.
+G1F85273D	Frodo lijkt op mij! Is dat niet gaaf?
+G1FFE0A40	Zo gaaf.
+GE6E563F9	Ze zullen de Ring vinden,
+GD135555F	en hem doden die hem draagt.
+G18844D24	Ga! Ga, Frodo!
+G525D5AD9	Ze willen de Ring! Ze mogen hem niet krijgen.
+GB99DAE56	Het verschil tussen ADR voor een film en het inspreken van een game is dat ADR voor een film meestal op beeld gebeurt.
+G7558081F	Je kijkt naar de film en probeert de dialoog die je eerder hebt gedaan na te doen en synchroon te krijgen met de dialoog in de film.
+GDD3F428F	Wie ben jij?
+GE906BA5B	Ben je bang?
+G9BDAB30C	Ja.
+G3B07B1B1	Lang niet bang genoeg.
+GFBD6613D	Voor de game is er geen beeld, en zijn het vooral een heleboel sfeerelementen die je erin gooit.
+G0EE06D0F	Gevaar, help, dat soort dingen.
+G2F9FC8E2	Aragorn! Help! Aragorn! Aragorn!
+G289F7C03	Ik ben fan van actiefiguren en fan van games, en als ik daarin mag meedoen, is dat gewoon een totale nerdbonus en dat vind ik geweldig.
+G67346E61	Zelfs de kleinste persoon kan de loop van de toekomst veranderen.
+G16420686	Ik ben zo opgewonden - ik kan niet wachten tot ik mijn exemplaar heb. Het is te gek.
+GDBA69463	Moria.
+G1D429D96	Je bent bang om die mijnen in te gaan.
+G372C9F91	Je weet wat ze in de duisternis hebben gewekt.
+G34515230	Ik vond het echt leuk om de game te maken, want je hoeft lang niet zo verdomd hard te werken
+G93AEF9C3	als wanneer je het personage oorspronkelijk creëert.
+GA9883FB4	Een film opnemen gaat noodzakelijkerwijs heel langzaam.
+G0C1E0E8C	Het mooie aan een computergame is natuurlijk dat ik niet in de make-up hoef.
+GA5F1044B	Als je de game doet, sta je in een studio
+GCE4A81AD	en zeg je: nou, ik vind dat je dit en dit en dit moet zeggen
+G049A3A66	en ze hebben een stapel scripts en je zegt al die prachtige zinnen.
+G70F1359D	Hinderlaag! Hinderlaag!
+G65325B21	En dan nemen ze dat allemaal, verwerken het in de game, en jij krijgt een deel van de eer.
+G39F1D126	Die explosieven moeten vernietigd worden!
+GEB33699E	Ik ben dol op dit model van mij als Gimli.
+GD9A0C650	Ik vind het zo'n krachtig, viriel, aantrekkelijk personage.
+G43591DCA	Hij is echt het enige personage dat je zou willen spelen.
+G5C0A6C1E	Ik bedoel de rest, weet je, de Aragorns, weet je, de Legolassen, weet je, knappe, goed uitziende kerels en zo,
+G3D52D95F	maar voor echte, kwalitatieve oorlogvoering moet je voor Gimli gaan.
+G8E74524F	We hebben veertien maanden op de mooiste locaties ter wereld in Nieuw-Zeeland doorgebracht om de juiste look voor de film te krijgen.
+GAD562976	De game is een oorlogs- en gevechtssituatie, en hij is prachtig en briljant gemaakt.
+G7F21BCD6	Ik kan hem daar niet achterlaten! God!
+G9AA947F5	Wat zal dat een hoop tijd kosten.
+G669C44C6	Ik bedoel, het is een nieuwe verslaving die ik heb ontdekt.
+G63540AD1	Dus, gamers, goed gedaan, gefeliciteerd dat jullie in dit kleine hoekje zijn beland waar je het interview krijgt.
+G925FED56	Ik wou dat ik jullie kon vertellen hoe je de game beter speelt, maar eigenlijk ben ik nooit tot dit level gekomen.
+GC3162ADB	Veel succes ermee en blijf spelen.
+GA3572714	Het lot van de wereld zal spoedig beslist worden.
+G922859CB	Het hele proces van de constructie of de bouw van de videogame
+GD9B03397	is vooral dat je tegen dingen vecht en ninjadingen... ik weet niet wat.
+G24326AFA	Ik was verrast en het ziet er veel realistischer uit,
+G3E302C15	het lijkt alsof het naar een hoger niveau gaat.
+GBD830A87	Ik denk dat Aragorn in de videogame beter mikt dan ikzelf...
+GF76948D6	maar daar ga ik niet over klagen.
+GD27FED3E	Als ik je met mijn leven of dood kan beschermen, zal ik het doen.
+G56368F53	U hebt mijn zwaard.
+G8D6DAFD1	Wat ik van de videogame heb gezien, lijkt weer te geven
+G970D4AB6	dat de tweede film - in tegenstelling tot de eerste - op grotere schaal is
+GFD0BADCA	en ik kijk ernaar uit om die te zien, net zoals ik ernaar uitkijk om de rest van deze game te zien.
+G1F48F697	Ik heb vandaag alleen een voorproefje gezien.
+GB689F1B9	Ik ben blij om te zien dat Aragorn bijvoorbeeld soms omver wordt geslagen, of valt, of over de grond rolt,
+G6F6072BC	en dat zijn vechtstijl verandert, weet je, om bij de situatie te passen.
+GA3A3F7A1	Dat is niet altijd netjes en keurig, weet je, het is een beetje...
+G28095E46	soms kan hij een beetje een vechtersbaas zijn - zo deed hij het tenminste in de film - en de game weerspiegelt dat, denk ik.
+G43AA6A0B	Het is indrukwekkend.
+G8559FF90	Vreemdelingen uit verre landen, jullie zijn hierheen geroepen om de dreiging van Mordor te beantwoorden.
+GC2A75F48	Midden-aarde staat aan de rand van de vernietiging.
+GFE143A07	Niemand kan eraan ontkomen. Verenig je, of jullie zullen vallen.
+GF59E5460	Ik sta altijd versteld als ik zie hoe de technologie en zo vooruitgaat
+GAD5CBAE4	en hoe dicht het bij het echte werk is gekomen.
+GF96BCD4B	Ik moet naar Boromir, nu!
+GD262135E	Als je de ADR voor een film opneemt, kijk je natuurlijk naar het scherm,
+G83EECB7A	en zie je de actie voor je afspelen zoals je die op de dag zelf speelde.
+G3C0B6913	Als je hiervoor de opname inspreekt,
+G2A8B6AD2	staat er geen camera op je gericht,
+G52F7D105	en probeer je niet te lipsyncen met een beeld voor je,
+G8EE2279F	dus je kunt echt een stapje verder gaan en een beetje
+GA5BE0F5A	benadrukken en uitwerken wat er op papier staat.
+G51E230FB	Terug naar de holen waar je uit gekropen bent!
+G97400E1E	Ze zijn sterker aangezet dan je in de film zou krijgen.
+GC26338C3	Snap je wat ik bedoel?
+G40EB5D5C	Ze zijn een beetje belachelijk, en dat is leuk.
+G52FECFA2	Het was best leuk om er op die manier echt mee te spelen.
+G91D69630	Kom!
+G87873143	Dat gevecht kun je niet winnen!
+G47AECCC4	Ik denk dat als ik de game speelde,
+GB0CCD2A6	het fijn zou zijn om te weten dat de echte acteurs de actie hebben ingesproken die het computerpersonage speelde,
+GC1719889	en ik denk dat hoe meer realiteit je in de computerwereld hebt, hoe spannender het is voor de speler.
+G77ECFBF0	Je kunt hem niet gebruiken. Niemand van ons kan dat.
+GB42EC53B	De Ring moet vernietigd worden.
+G43E793ED	Het gevaar voor de Ringdrager wordt groter.
+G6E2FF8E0	Want er is nog iemand die op de Ring jaagt.
+GDD26CBEC	Ik heb van mijn leven nog nooit een videogame gespeeld.
+GF783F574	Ik snap de regels nooit.
+G573BC826	Ik heb heel grote, onhandige handen en niet helemaal de coördinatie tussen hand en hoofd die volgens mij nodig is
+GFBB68CB5	en die iedereen onder de zes jaar lijkt te hebben.
+G8D9D9F75	Wat er zo geweldig is aan deze game, In de ban van de ring,
+G81AEE08E	is dat je de stemmen van de originele acteurs krijgt - allemaal.
+GAE3BFBD7	En vandaag heb ik de opnames gedaan van Gandalf de Grijze en Gandalf de Witte,
+G21F22F52	de twee personages die ik speel in In de ban van de ring.
+GCED01E94	Wat zie je?
+GB4F26455	Er staan tekens op.
+G5C7EB8BC	Het is een soort Elfs.
+G27A03C42	Ik kan het niet lezen.
+G8E22513B	Er zijn er maar weinig die dat kunnen.
+G4B2817A2	Er is nu een verbond tussen de Twee Torens: Orthanc en Barad-dûr.
+GC69D576A	Voor de game is het wat ruwer, wat rauwer, wat directer misschien.
+G363960EA	Een van jullie moet naar binnen.
+GFFCB2D5D	Help de dorpelingen die nog leven.
+GF4DAF5B8	Kortom, dit is een agressief stuk vechten.
+G00009069	Het is de militaire kant van Gandalf die naar boven komt: de bevelhebber, de samoerai, de leider.
+G4519FC71	Jij komt er niet voorbij!
+G066F3360	Dus wat je op het scherm ziet, komt zo dicht mogelijk - verdorie -
+GF4CF848B	bij de Gandalf die je in de films ziet. En ik wou dat ik de game met jullie kon komen spelen.
+G699B7BF2	In deze Ring goot hij zijn wreedheid, zijn boosaardigheid en zijn wil om al het leven te overheersen.
+GA1469225	Eén Ring om allen te regeren.
+G01090CE9	Wat we gedaan hebben, is het hoogtepunt van een enorme hoeveelheid werk van duizenden mensen.
+G74E1F68D	De titel, De Twee Torens, verwijst naar de Toren van Orthanc, 
+G0AE01FA9	waar Saruman, het personage van Christopher Lee, zetelt,
+GD9642178	en de Toren van Barad-dûr in Mordor, de woonplaats van Sauron.
+G573418F9	Film twee is, zoals elke film in deze trilogie, een uitdaging. En dat blijft zo tot we hem afleveren.
+GB2A31EA0	Het is een geweldige film. Hij wordt groter dan film één.
+GB831FA3A	Ik denk zeker dat er zoveel zorg is gestoken in het maken van deze films,
+GCCFC11FE	en het is geweldig om die informatie te kunnen doorgeven aan het team dat de games bouwt, 
+G327C2028	want ik weet dat zij evenveel zorg en moeite steken in het brengen van een echt rijke game voor het publiek.
+G2C4A352E	Tolkien beschrijft Edoras heel levendig in de boeken
+G10EFB23A	als een stad van houten gebouwen op een soort heuvel voor een besneeuwde bergketen.
+G50D180A4	Toen we oorspronkelijk op locatiejacht gingen, zei ik: kijk, we moeten ergens in Nieuw-Zeeland
+GDA11996F	zo'n heuvel vinden die voor de bergen ligt.
+GD6F61F77	Dus ze vlogen per helikopter het hele land rond en kwamen terug met een foto van de absoluut perfecte heuvel.
+GC56228ED	Hij lag zo'n honderd tot honderdtwintig kilometer van het dichtstbijzijnde stadje.
+GF796DA0F	Hij lag midden op het Zuidereiland; het was erg afgelegen.
+GFA1CD969	We zijn zo'n zeven of acht maanden bezig geweest met het bouwen van die enorme gebouwen.
+GC2D0BAAA	Het eindresultaat was dat we in de film een Edoras hebben dat volkomen geloofwaardig is.
+GC2774958	Ik kon erheen gaan en gewoon filmen alsof het een bestaande locatie was.
+G99F69515	Een van de spannende dingen aan de EA-games en wat ik heb gezien aan de modellen terwijl ze gebouwd werden,
+G6B3554D6	is de geweldige nabootsing van onze sets en onze personages,
+GB997C9B4	tot op het punt dat EA een deal sloot met onze acteurs, zodat ze langskwamen om hun eigen dialogen op te nemen.
+G815CAC49	De acteurs waren er behoorlijk enthousiast over.
+GA1640DEB	De Slag om Helmsdiep is voorbij.
+G93BD7122	De Slag om Midden-aarde gaat beginnen.
+G958468DE	We bouwden een miniatuur van Helmsdiep, maar wat interessant was, is dat het niet zomaar een model was. 
+G1BC58576	Het was een enorme miniatuur. Op kwartschaal, maar op zich zo'n tien tot twaalf meter breed.
+GFA4F689B	Hij was zo groot dat we hem gewoon met onze camera's konden filmen zonder dat het op een miniatuur leek.
+G2571B991	Het zag er gewoon volkomen geloofwaardig uit.
+G31C24FB0	Wat een geweldige film maakt, is eigenlijk een geweldig script en een geweldige cast.
+G9C04D37F	Ik kan me voorstellen dat je bij een game voor veel van dezelfde uitdagingen staat.
+GA0B86A25	Je moet het juiste talent naar de game trekken.
+G0B7DC714	Je moet een verhaal hebben dat een publiek aantrekt dat vervolgens enthousiast wordt van dat verhaal
+G5E1101AB	en door dat verhaal gedreven wordt om het echt tot leven te zien komen.
+G87FC774C	We kunnen niets voor Frodo doen.
+G3C9AA8BC	De tocht zal hem het leven kosten.
+G98F7C221	Rohan is zwak en klaar om te vallen
+GA01F7D34	en dus zal hij hard en snel toeslaan op de wereld der Mensen.
+GA8723617	De oorlog is begonnen.
+GE1AF4B03	Ze hebben onze schat gestolen en we wil hem hebben.
+G6A5F57B3	Het meest intimiderende aan het beginnen aan dit project was waarschijnlijk
+GDE1DC635	het gevoel dat we de ongelooflijke verantwoordelijkheid hadden om
+GCFDFC743	in een interactieve vorm net zo te presteren als Peter Jackson dat met film had gedaan.
+GC87068A6	Hij heeft een paar van de geliefdste literaire werken aller tijden genomen
+G423C7E0C	en ze vertaald naar een episch filmmeesterwerk dat wereldwijd miljoenen en miljoenen fans heeft gekregen.
+GC8F29411	Aan het begin van een project werk je aan de conceptuele kant en de ontwerpkant.
+GBACB2DE5	Naarmate het project vordert, denken programmeurs, artiesten, animators, omgevingsartiesten,
+G047AC48F	modelleerspecialisten, texturespecialisten - al deze mensen na over hun eigen deel van de game,
+GB60517EB	maar dan in termen van de totale ervaring.
+G13170460	Een van de voordelen van zo nauw kunnen samenwerken met de filmmakers
+GA03610FF	is dat we de modellen en rekwisieten die ze voor de film hadden gemaakt konden gebruiken
+G9DADDEE4	als referentie voor de dingen die we in onze game moesten maken.
+GF0D449E5	Schaduw beweegt in het duister.
+GEC940136	Bij het ontwerpen van Aragorn moesten we echt aan alle drie de speelbare personages tegelijk denken.
+GBB381F7C	Legolas is bijvoorbeeld veel meer een personage dat draait om snelheid en finesse.
+G4CE351A9	Gimli is een kleine gevechtstank.
+G21025B26	Aragorn is meer een mengeling van die twee.
+G3ADE6E66	We bekeken de bewegingen van elk personage - beeld voor beeld - voordat we ook maar iets begonnen te bouwen.
+G80ADBA8B	Daarna maakten we een draadmodel van het personage. Dat zijn de basisverhoudingen, grootte en schaal.
+G85E5A400	Daarna voegden we textures en belichting toe om hun kleding af te maken en de fijne details van hun personage toe te voegen.
+GCD3CDD42	De acteurs wilden heel graag met ons samenwerken.
+G092B49A0	Viggo Mortensen liet ons bijvoorbeeld een paar van zijn actiebewegingen zien.
+G915A1A70	Hij en zijn stuntdubbel maakten een kist met zwaarden open en begonnen met elkaar te sparren.
+G215B5E15	Dat werd de basis voor veel van Aragorns bewegingen.
+G7126178B	Hij wil gevonden worden.
+G7E02AF05	Toen we scènes uit de film kozen voor onze gameplay, sprong het Graf van Balin er echt uit als sterke kandidaat.
+GF4146E18	Het is een van de meest memorabele momenten uit de eerste film.
+GE152213A	We wilden de sfeer nabootsen van die heel sterke lichtstraal op het graf zelf.
+GB236432D	Het was een uitdaging voor onze omgevingsmodelleurs en belichtingsspecialisten.
+GD3C26DBB	De levels in het dorp in Rohan zijn uniek omdat ze ons de kans gaven gebieden uit de film uit te breiden.
+G8669E69D	Het level zelf ziet eruit en voelt aan als de filmlocaties qua belichting,
+GF9B205CF	de vorm van de architectuur, de mensen die er zijn, maar in dit geval bouwen we daarop voort
+GB285B32E	en maken we delen van het level waarin de speler kan verkennen en vechten, die ze in de film misschien niet zagen.
+G5E5F1D1C	Wat er zo geweldig is aan deze game, In de ban van de ring,
+G610E0BE4	is dat je op je eigen scherm de stemmen van de originele acteurs krijgt - allemaal.
+GC6FCAA65	Help! Aragorn! Aragorn! Help!
+G20165D69	Het is ongelooflijk authentiek en ik denk dat het echt moeilijk is om een game te maken die op een film is gebaseerd.
+GBF3A0A5B	Deze game doet het. Hij lijkt heel erg op de film.
+GDD010A37	We hebben een heel dynamisch muzieksysteem ontworpen dat de sfeer van de gebeurtenissen in de game weerspiegelt.
+G96BEDA9C	Eén Ring om hen te brengen en in de duisternis te binden.
+G91629050	In de film valt Saruman Helmsdiep aan met tienduizend Uruk-hai.
+G3B702B98	Dus moesten we andere middelen inzetten om het gevoel van een veldslag te creëren.
+GDEFA604D	Met geluidseffecten en audio laten we het echt voelen alsof er duizenden Orks op die plek zijn.
+G204351C8	Als iemand de game aanzet en bij zichzelf zegt:
+GEC81BA2D	O mijn god! Dit is de film! Dan hebben we precies bereikt wat we wilden.
+G52BF957B	Dit is de plek die ik me herinner uit de film.
+G571B482E	Ik ben er. Ik kan iets doen. Nu ben ik aan de beurt.
+G625B0A6D	Zo willen we dat de speler zich voelt.
+GB222979D	Waar is het paard en de ruiter?
+G2457FF85	Waar is de hoorn die blies?
+G8B36CA83	Ze zijn voorbijgegaan als regen op de bergen;
+G50095CA7	als wind in de weide.
+G10EB8BCF	De dagen zijn ondergegaan in het Westen,
+G109A0CCE	achter de heuvels,
+G02628501	de schaduw in.
+G80A942D2	Aragorn!
+GDDEA48AC	Help
+G4C40E774	Druk op START
+GEE711094	Doorgaan
+GF9202936	Opnieuw spelen
+G2E427514	Aan
+GFC4343CA	Uit
+G52E4CD32	Navigeren
+G39D074FD	Selecteren
+GAC3A8B6E	Terug
+G42B46F3C	 2002 New Line Productions, Inc.  The Lord of The Rings en de personages, namen en plaatsen daarin,  The Saul Zaentz Company d/b/a Tolkien Enterprises onder licentie aan New Line Productions, Inc.  Alle rechten voorbehouden.
+G035F710A	EA GAMES is een merk van Electronic Arts.
+GBAC3ED5F	Gamecode en bepaalde audiovisuele elementen  2002 Electronic Arts Inc. Alle rechten voorbehouden.
+G0EF5F91F	Nieuw spel
+GB8D9D2FD	Spel laden
+G0BE2A075	Opties
+G5D6AEEF7	Debugmodus
+G83335327	Extra's
+G731194FA	Spel opslaan
+G7BA082D0	Druk op START om verder te gaan
+G755B3BA1	Controllerconfiguratie
+G03961FD4	Spelinstellingen
+GABEE6EA4	Moeilijkheid:
+GF065116B	Makkelijk
+G8D3A16F6	Normaal
+GACDD0363	Expert
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Stemvolume:
+G7F04050E	Muziekvolume:
+GF30A57F8	Ondertitels:
+G64752D2D	Trilling:
+GB3F78571	Spelvolume:
+GED3C9F14	Geluid:
+GB065D5A4	Kies spel om te laden:
+G00FF7920	Kies opslaglocatie:
+GC99B6C1E	Kies MEMORY CARD-sleuf:
+GFB5C0BA2	Xbox-harde schijf
+GD2F916B6	MEMORY CARD-sleuf 2
+GAEFBDEF3	Annuleren
+GDA714102	Ja
+GB893E04C	Nee
+GE506E266	Weet je het zeker?
+G574C52F2	Weet je zeker dat je deze upgrade wilt kopen?
+G0D91D779	Weet je het zeker? De resultaten van je laatste poging in deze missie gaan verloren.
+G1CF7123A	Weet je het zeker? Alle niet-opgeslagen voortgang in dit spel gaat verloren.
+GEF04DC5D	Weet je het zeker? De voortgang in deze missie gaat verloren.
+GEDF6F861	Weet je zeker dat je dit spel wilt overschrijven?
+GF44D8878	Ben je klaar met het kopen van upgrades?
+G1EF3EFE3	Spel opslaan op harde schijf
+G05163971	Spel laden van harde schijf
+G8F93A6FE	Kies moeilijkheid
+G654484DF	Vergrendeld
+G5A7CB330	Voltooid
+G8D6AAF13	Niet gespeeld
+GBE8C099C	Proloog
+GF4FBBE46	Weertop
+GE7EA3020	Poorten van Moria
+GE13A531D	Graf van Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Fangornwoud
+G35CCE51F	Vlakten van Rohan
+GAD341B58	De Westfold
+G94ADD008	Gat van Rohan
+G9760067E	De Diepingmuur
+GF8B38ED5	Doorbroken muur
+G644C89AD	Binnenplaats Hoornburg
+G69B8B4C2	Toren van Orthanc
+GBF00F963	Helmsdiep:
+GE34AB2FD	New Line Zoo
+GE132F5FF	Kies een FMV om af te spelen:
+G4B3C17B9	Opening
+GAD303F2A	Einde
+G668B98BD	Vloer
+G9C7A95F0	Upgradepunten:
+G4AE44639	4) Voer de opgegeven codereeks in.
+G5374B3F5	Geheime codes
+GDF7B6B3A	Altijd verwoestend:
+GFECB245B	2 spelers:
+GCAB16744	Kleine vijanden:
+G587D657D	Alle upgrades:
+G58E34314	Onkwetsbaar:
+GF0336180	Slow motion:
+G5A122CB0	Een code invoeren:
+G35BC6746	1) Start een missie.
+G46DF9919	2) Druk op START om te pauzeren.
+G5A1291EE	3) Houd ingedrukt:
+GEB88B42D	Oneindige gezondheid:
+G6AE6FFFE	Oneindige projectielen:
+GAA29A634	Missie beëindigen:
+GB2AE1BCE	Pauzemodus:
+GAA467E08	Ervaring toevoegen:
+GEA42298C	Level omhoog:
+G6BA0C403	Gezondheid herstellen:
+G41D871E0	Projectielen herstellen:
+G04DBD06B	Projectielupgrade:
+GA7A50BB5	Upgrades tonen
+GA67DF58D	Naar menu
+G773B79A5	Naar volgende missie
+G96540044	Je hebt de missie niet gehaald.
+G5ADDCAC2	Missie opnieuw spelen
+G9DD85D6D	Naar menu
+G730918CA	Opnieuw proberen
+GB437BA93	Aftiteling
+G798A44A2	Missie opnieuw spelen
+G6F46B26E	Kies een taal.
+G2809E047	English
+GE3AAFF7A	Snel
+GD0DB46DB	Woest
+G9AD854EF	Doden
+GE83BE834	Speciaal
+GDB34AED9	Combo
+GDACF8DCA	Gekocht
+G125CAC9A	Nog niet vrijgespeeld. Druk op de A-knop om door te gaan.
+GDA9711D2	Je hebt niet genoeg upgradepunten verzameld om deze upgrade te kopen. Druk op de A-knop om door te gaan.
+GEB0E0008	of
+G90A54691	na pareren
+GF5F43483	als je ligt
+GFC1C2104	Lege plek
+GB8BCCCB9	Spel 2
+G92BA5250	Spel 3
+G9CCBAB2F	Spel 4
+G76C930C6	Spel 5
+G50C6B65D	Spel 6
+G2AC43BF4	Spel 7
+G34D594D3	Spel 8
+G0ED31A6A	Spel 9
+GBE76BA62	Spel 10
+GE47934CB	Spel 11
+G6ED86859	Er is geen Memory Card (PS2) geplaatst. Er is minstens 80 KB nodig om deze spelgegevens op te slaan. Wil je doorgaan?
+G87DE26DA	Onvoldoende ruimte op de Memory Card (PS2) in MEMORY CARD-sleuf 1.  Er is minstens 80 KB nodig om deze gegevens op te slaan. Wil je doorgaan?
+G7118C569	Onvoldoende ruimte op de Memory Card (PS2) in MEMORY CARD-sleuf 2.  Er is minstens 80 KB nodig om deze gegevens op te slaan. Wil je doorgaan?
+G6804B4C2	Onvoldoende ruimte op de Memory Cards (PS2) in de MEMORY CARD-sleuven. Er is minstens 80 KB nodig om deze gegevens op te slaan. Wil je doorgaan?
+G849021EA	Geen Memory Card (PS2) geplaatst in MEMORY CARD-sleuf 1. Druk op de X-knop om door te gaan.
+G59CE2129	Geen Memory Card (PS2) geplaatst in MEMORY CARD-sleuf 2. Druk op de X-knop om door te gaan.
+GC5BD8B5F	Sluit de controller opnieuw aan en druk op START om door te gaan.
+GC2BDD02C	De Memory Card (PS2) in MEMORY CARD-sleuf 2 is niet geformatteerd. Memory Card (PS2) formatteren?
+G6B64948C	Je Xbox heeft niet genoeg vrije blokken om spellen op te slaan.  Druk op A om door te gaan zonder op te slaan of op B om vrij te maken: minstens
+GEDAB4EA9	Sluit de controller opnieuw aan en druk op START om door te gaan
+G00E55934	De harde schijf heeft niet genoeg vrije blokken voor dit opgeslagen spel.
+G20A17FB1	blokken moeten worden vrijgemaakt.
+G353AAE58	Formatteren mislukt! Fout met Memory Card (PS2) in MEMORY CARD-sleuf 2! Druk op de X-knop om door te gaan.
+G9CAF03E3	Kan spel niet opslaan. Druk op de A-knop om door te gaan.
+GCB03752D	Spel opgeslagen.  Druk op de A-knop om door te gaan.
+GACBFB64F	Opslaan op Memory Card (PS2) in MEMORY CARD-sleuf 2 gelukt! Druk op de X-knop om door te gaan.
+GC7C0454F	Gegevens worden opgeslagen op Memory Card (PS2) in MEMORY CARD-sleuf 1. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+G4B14AAB4	Gegevens worden opgeslagen op Memory Card (PS2) in MEMORY CARD-sleuf 2. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+G53DAC278	Gegevens worden geladen van Memory Card (PS2) in MEMORY CARD-sleuf 1. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+GF144B8B3	Gegevens worden geladen van Memory Card (PS2) in MEMORY CARD-sleuf 2. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+G063DD8CC	Kan spel niet laden. Druk op de A-knop om door te gaan.
+GE5BDAC0B	Wil je je spel opslaan?
+GED3A9CCF	Geen opgeslagen spellen. Druk op de A-knop om door te gaan.
+GAF453999	blokken.
+GEE649E5A	De Memory Card (PS2) in MEMORY CARD-sleuf 1 is niet geformatteerd. Druk op de X-knop om door te gaan.
+G81447581	De Memory Card (PS2) in MEMORY CARD-sleuf 2 is niet geformatteerd. Druk op de X-knop om door te gaan.
+GB36F8F0C	Gegevens worden gelezen van Memory Card (PS2) in MEMORY CARD-sleuf 1. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+G97EC5687	Gegevens worden gelezen van Memory Card (PS2) in MEMORY CARD-sleuf 2. Verwijder de Memory Card (PS2) niet, reset de console niet en zet hem niet uit.
+G8E8AF6C1	Er is een probleem met de disc die je gebruikt. Hij is mogelijk vuil of beschadigd.
+G9CB8DFF0	Missie 1
+G0EC04F2B	Missie 2
+GE8BDD4C2	Missie 3
+G5AC543FD	Missie 4
+G34C2C994	Missie 5
+GA6CA38CF	Missie 6
+G80C7BE66	Missie 7
+GF2CF2DA1	Missie 8
+GCCCCB338	Missie 9
+GA1F545C0	Missie 10
+GC7F7C029	Missie 11
+GEDFA3A92	Missie 12
+G13FCB4FB	Missie 13
+GFBA35200	Missie A
+G6DAAC13B	Missie B
+G47A846D2	Missie C
+GB9AFB60D	Missie D
+G0111B4C5	Missie-ervaring:
+G10CB2024	Missiebeoordeling:
+GB8F11F62	Totaal upgradepunten:
+G94649BD6	Perfect
+GE424E811	Uitstekend
+G70E9184E	Goed
+GE98543F1	Redelijk
+GF9792B5F	Zwak
+G4DE9139C	Vaardigheid
+GB525F096	Sterk
+G5F8C23CD	Verdedigen
+G8673311D	Aanvallen
+G7829DFB2	Een snelle combinatie.  Effectief tegen kleinere vijanden zonder schild.
+G63E6B4FD	Een vernietigende combinatie om door obstakels te breken of vijandelijke schilden te verbrijzelen.
+G406CD62A	Houd de linkertrekker ingedrukt om te gebruiken.  Vuur met de A-knop (ingedrukt houden voor meer schade).
+G7651B078	Deze stoot maakt elke neergeslagen vijand af.
+G09258F36	Sla vijanden van je weg en buiten slagafstand.
+G36E84E05	Blokkeert vijandelijke aanvallen en projectielen.
+G074FC78D	Een verwoestende aanval.  Houd de Y-knop ingedrukt om te gebruiken.
+GE5C8740D	Verhoogt je gezondheid permanent.
+G791AEDAB	Storm naar voren en werp vijanden zonder schild tegen de grond.
+GF4A5485B	Val aan terwijl je overeind komt en verras je vijanden.
+GC0B8F80A	Een zeer effectieve combo om vijanden zonder schild uit te schakelen.
+G6CBE68E9	Zeer effectief om vijanden met schild zo snel mogelijk af te maken.
+GD7BB121B	GEKOPPELDE ACTIE: Dood direct een aanvallende aardman.
+G4A59663E	De pijlen met weerhaken van de Rohirrim worden afgeschoten zoals met de Dúnedain-boog en richten zware schade aan.
+G96A8AB86	Verhoogt je gezondheid permanent.  (Vereist Kracht der Stadhouders)
+GED26DEB8	Storm van grote afstand naar voren en werp vijanden zonder schild tegen de grond. (Vereist Stormaanval)
+GB4790643	Verwond, werp neer en tref je vijand met deze combinatieaanval.
+G9709901B	Gebruik deze combo om een vijand zonder schild te treffen, af te maken en snel een volgende te raken.
+G066B80A4	GEKOPPELDE ACTIE: Dood direct een aanvallende Ork.
+GB54F0B8A	Verhoogt je gezondheid permanent.  (Vereist Kracht van Isildur)
+G1C742C09	Een nog verwoestender aanval.  (Vereist Dolerswoede)
+G9F299E6A	Verhoogt de schade van je snelle aanval.
+G2A888253	Verwond, werp neer en maak krachtige vijanden af met deze combo.
+GEF4043FD	Verhoogt je gezondheid permanent.  (Vereist Kracht van Elendil)
+GF3D48718	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Wildernisrazernij)
+GDAE09290	De ijzeren pijlen van Gondor richten vreselijke schade aan.  (Vereist Rohan-boog)
+GBD1ED2AE	GEKOPPELDE ACTIE: Dood direct een aanvallende Uruk-hai.
+G6DF8DC34	Gebruik tegen een krachtige vijand om zijn schild te verbrijzelen, hem tegen de grond te werken en te treffen.
+GB1BCB280	Niets
+GE225A1EC	Houd de linkertrekker ingedrukt om te gebruiken.  Gooi met de A-knop (ingedrukt houden voor meer schade).
+GFF3FB1CE	Deze bijlslag maakt elke neergeslagen vijand af.
+G81A89461	Verhoogt je gezondheid permanent.  (Vereist Macht van Rots)
+GF266C7E6	Verhoogt je gezondheid permanent.  (Vereist Macht van IJzer)
+G2FCD00C0	Storm van grote afstand naar voren en werp vijanden zonder schild tegen de grond.  (Vereist Stormaanval)
+G00247254	Verhoogt je gezondheid permanent.  (Vereist Rune der Bescherming)
+GA505D28C	Verhoogt je gezondheid permanent.  (Vereist Macht van Balin)
+G34C62FC4	De vlijmscherpe Moria-bijlen worden gegooid zoals Erebor-bijlen en richten nog meer schade aan.
+G57901BB9	Een nog verwoestender aanval.  (Vereist Dwergenwoede)
+G8840F62F	Verhoogt je gezondheid permanent.  (Vereist Macht van Glóin)
+G361F0511	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Bergrazernij)
+G219C0125	Deze bijlen met mithrilsnede richten vreselijke schade aan.  (Vereist Moria-bijlen)
+G9986DAAB	Verhoogt de schade van je woeste aanval.
+G11BF2FC5	De essenhouten pijlen van Rivendel worden afgeschoten zoals met de Demsterwold-handboog en richten nog meer schade aan.
+G7A9893BB	De betoverde pijlen van Lothlórien richten gruwelijke schade aan.  (Vereist Rivendel-handboog)
+G42E47239	Deze magische pijlen steken je vijanden in brand.  (Vereist Lothlórien-handboog)
+G5BAB8220	Verhoogt je gezondheid permanent.  (Vereist Kracht van Celeborn)
+G39265CB0	Een nog verwoestender aanval.  (Vereist Elfenwoede)
+G084B6AEF	Deze pijlen dringen door alle vijanden op hun pad en beschadigen ze.  (Vereist Drakenvuurpijlen)
+GB1D19C39	Verhoogt de schade van elke pijl die je afschiet.
+G06E26BE1	Drievoudige slag
+G20A303C1	Dubbele houw
+GCB8F4087	Dúnedain-boog
+G3F6F3751	Schaduwslag
+GBE8C73E9	Gevechtstrap
+G5660E3B0	Zwaardparade
+GDF332280	Dolerswoede
+GB8AB07B9	Kracht der Stadhouders
+G187F8CC1	Stormaanval
+G86E487F5	Opstaande aanval
+GF7D6DC76	Isildurs Snelle Terreur
+GB34DCC39	Isildurs Verlossing
+GC9303634	Aardmannenverderf
+G3A0786A5	Rohan-boog
+G8B17B5C5	Kracht van Isildur
+G579A1927	Charge-aanval
+G207C1523	Isildurs Dodelijke Charge
+G6C2653E9	Isildurs Gambiet
+G2A3BA153	Orkenverderf
+GA28B29AA	Kracht van Elendil
+G7D213CCE	Wildernisrazernij
+G006BF315	Meesterzwaardvechter
+G6B68444D	Isildurs Oorlogsstorm
+G3B0A3720	Kracht van de Argonath
+G78BAB3BC	Toorn van Númenor
+GCEDAD8B0	Gondor-boog
+G3BE146BB	Verderf van Saruman
+G701FD063	Isildurs Oordeel
+G0251EC9F	Erebor-bijlen
+G96C77DAD	Bijlstoot
+GDD4B6691	Bijlparade
+GADD20DD0	Dwergenwoede
+GB0D95BC6	Macht van Rots
+G4FB6CF69	Macht van IJzer
+G5F017E32	Balins Snelle Terreur
+GDFD7CADD	Balins Verlossing
+GDF1B571B	Rune der Bescherming
+G9B37EDE7	Balins Dodelijke Charge
+GCDB1A82D	Balins Gambiet
+G2DEF1D03	Macht van Balin
+GE89D3658	Macht van Glóin
+G31B06C3A	Moria-bijlen
+GADFB76EF	Bergrazernij
+G75612F09	Balins Oorlogsstorm
+G8CE2E527	Macht van Khazad-dûm
+GE4E87FCC	Toorn van Moria
+GA16173AB	Nevelgebergte-bijlen
+G24288EA5	Bijlmeesterschap der Koningen
+G45AAD667	Balins Oordeel
+GB752504B	Demsterwold-handboog
+GA018F71A	Mesparade
+G0DCE9941	Elfenwoede
+G4A27D7DF	Kracht van Celeborn
+GE0EC06AA	Rivendel-handboog
+G76059454	Elronds Snelle Terreur
+GE8C0678B	Elronds Verlossing
+GE9F2F2C9	Lothlórien-handboog
+G5FE47D01	Elronds Dodelijke Charge
+G4B1902CB	Elronds Gambiet
+GB3FB8DDE	Drakenvuurpijlen
+G4A61DECC	Kracht van Galadriel
+G204DE538	Gil-galads Razernij
+G5B85BC6F	Elronds Oorlogsstorm
+GBDF43860	Mithrilpijlen
+G4B69DAC6	Elfenboogmeesterschap
+G43AB31C1	Elronds Oordeel
+GEAA8149B	Level
+G11886F39	Pareer om vijandelijke aanvallen te blokkeren en pijlen af te weren.
+GE4E78CFD	Pareren
+G3226B277	Houd de linkertrekker ingedrukt om naar je afstandswapen te wisselen.  Druk op de A-knop om te vuren.  Richt met de linkerthumbstick.
+GFF931564	Afstandswapen
+G9A309E3D	Vuren
+GC4AB2A6D	Gebruik een snelle aanval om vijanden zonder schild te treffen.
+G5C64BDED	Gebruik de woeste aanval om vijandelijke schilden te breken.
+G4B1F5E2B	Woeste aanval
+G12993772	Snelle aanval
+G5550F308	Verdien ervaringspunten om het level van je personage te verhogen en waardevolle upgrades te kopen.
+GD5F0D645	Verdiende ervaringspunten
+G109A17A7	Gebruik geavanceerde combinaties en voorkom dat vijanden je raken om de vaardigheidsmeter te vullen en maximale ervaringspunten te verdienen.
+GDB22979F	Vaardigheidsmeter
+GF7AF01B8	Richten
+G552324EC	Terugspringen
+G3962B27E	Doodslag
+G819AB384	Terugslaan
+GB5FE5915	Vuren/snelle aanval
+G1438BF1E	Bewegen/richten
+GCDD8B9EF	Pauze
+G63E0263C	Interview
+GA970F7F6	Peter Jackson en Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	In de ban van de ring
+GF0462ED4	Het maken van de videogame
+G0DB34230	Exclusieve filmfragmenten
+G9DF19E57	'De Reisgenoten'
+G1704CE51	Productiefoto's
+G330E63EE	Fangorn en Orthanc
+GD722C1B8	Rohan en Helmsdiep
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Speel als Aragorn
+GA8934934	Speel als Legolas
+G84C57E95	Speel als Gimli
+G46EA0007	Speel als Isildur
+G5689E41F	Geheime missie
+G7F2C7A4C	Speel als geheim personage
+G96AF0882	Conceptart
+G8813AE29	Versla Poorten van Moria om vrij te spelen
+G4EEEB554	Versla Graf van Balin om vrij te spelen
+G3182CC3A	Versla Amon Hen om vrij te spelen
+G54747798	Versla Fangornwoud om vrij te spelen
+G5D796BA6	Versla Vlakten van Rohan om vrij te spelen
+G758A2B31	Versla De Westfold om vrij te spelen
+GD1B66361	Versla Gat van Rohan om vrij te spelen
+GEC95C099	Versla Helmsdiep: De Diepingmuur om vrij te spelen
+G4F6E6B62	Versla Helmsdiep: Doorbroken muur om vrij te spelen
+G7E4B2F5F	Bereik level 5 met Aragorn
+GA825B93E	Bereik level 5 met Legolas
+GD08EF3EF	Bereik level 5 met Gimli
+G060F3A0C	Versla Helmsdiep: Binnenplaats Hoornburg en bereik level 10 met Aragorn
+G9C00EBDD	Versla Helmsdiep: Binnenplaats Hoornburg en bereik level 10 met Legolas
+GCA301FEC	Versla Helmsdiep: Binnenplaats Hoornburg en bereik level 10 met Gimli
+G2A4097F8	Versla de geheime missie met een willekeurig personage
+GF80714A8	Versla de geheime missie met het geheime personage
+GF281A415	Peter Jackson en Barrie Osborne praten over de film en de game
+GEF6D5A30	Elijah Wood vertelt over het spelen van Frodo in de 'In de ban van de ring'-videogame
+G1B7C2E20	Ian McKellen praat over het spelen van Gandalf in de 'In de ban van de ring'-videogame
+G100A11D4	Een blik achter de schermen bij het maken van de 'In de ban van de ring'-videogame
+G14A8622F	Foto's van personages en decors uit 'De Reisgenoten'
+G228511D6	Foto's van personages en decors van Fangorn en Orthanc
+GFDF064C7	Art geïnspireerd door 'In de ban van de ring' van John Howe en Alan Lee
+GAAE1A0C0	Foto's van personages en decors van Rohan en Helmsdiep
+G6CEBDAE1	Viggo Mortensen vertelt over het spelen van Aragorn in de 'In de ban van de ring'-videogame
+G6824CF13	Orlando Bloom praat over het spelen van Legolas in de 'In de ban van de ring'-videogame
+G84770794	John Rhys-Davies vertelt over het spelen van Gimli in de 'In de ban van de ring'-videogame
+G775EAFA1	Geheime codes om de verborgen extra's van de 'In de ban van de ring'-videogame vrij te spelen
+G640E4463	Selectie wijzigen
+G6D02770F	Selecteren
+GE5EE10E6	Terug
+GA75BE7EE	Selectie wijzigen of aanpassen
+GE7B4EE86	Naar hoofdmenu
+G47C91DD4	Andere afbeelding
+GE445F6CE	Gebruik je upgradepunten om verbeteringen voor je personage te kopen.
+GB2D2B6DB	Dood ze allemaal!
+GFD9FFC0E	Versla dit wezen met snelle aanvallen!
+G7BD97E94	Gebruik je woeste aanval om zijn schild te vernietigen!
+G62FC14DC	Daar komen ze! Dood ze allemaal!
+GA3F97A90	Leen me jullie zwaarden!
+G88F3FEA7	Ugh! Sterf, schepsel van Mordor!
+G4888927E	Voor de Witte Stad!
+GB5DB8B33	Het is met je gedaan!
+G91F156A0	Weg met je, schepsel van de schaduw!
+G8F5E1C57	Sterf, gebroed van Sauron! Sterf!
+GEF59BEBD	Drijf ze terug!
+G263E18E0	Naar voren!
+G8715790C	Houd stand!
+G09E491AC	Sterf!
+GC9D8887A	Uitschot van Gondor!
+GD909145B	Jij, sterf!
+G8524085B	Je kunt ons niet allemaal doden!
+GFA0F31A8	Sterf, uitschot!
+G6949F8FB	Het zijn er te veel, je moet je verdedigen!
+GAB41028F	Verdedig u, heer.
+GC99D9EF1	Snelle aanvallen zullen deze verslaan.
+G8BC62719	Woeste aanvallen zullen die schilden breken.
+G24319240	De wereld is veranderd.
+G6FC7E51E	Ik voel het in het water.
+G586AE929	Ik voel het in de aarde.
+GA0D1D398	Ik ruik het in de lucht.
+G20A7EC8F	Veel van wat ooit was, is verloren,
+G9A5EEA48	want niemand die het zich herinnert leeft nog.
+G991F588A	Het begon met het smeden van de Grote Ringen.
+GDCCA686B	Drie werden gegeven aan de Elfen -
+G64D4928C	onsterfelijk, de wijsten en schoonsten van alle wezens.
+GC38B0B40	Zeven aan de Dwergenheersers,
+GE4E9DA85	grote mijnwerkers en ambachtslieden van de berghallen.
+G8EA28015	En negen... negen Ringen werden geschonken aan het ras der Mensen,
+G5415D8A9	die boven alles naar macht verlangen.
+GCAF2B8E3	Want in deze Ringen waren de kracht en de wil gebonden om elk volk te besturen.
+GEAB51D48	Maar ze werden allemaal misleid...
+G9968C959	want er werd nog een Ring gemaakt.
+G6DF9A86C	In het Land Mordor, in de vuren van de Doemberg,
+GD5CC3D06	smeedde de Duistere Heerser Sauron in het geheim een Meesterring om alle andere te beheersen.
+GA5AF65D9	En in deze Ring goot hij zijn wreedheid, zijn boosaardigheid en zijn wil om al het leven te overheersen...
+GF9C8C37E	Een voor een vielen de vrije landen van Midden-aarde ten prooi aan de macht van de Ring.
+GD7B567A4	Maar er waren er die zich verzetten.
+G9673067D	Een Laatste Bondgenootschap van Mensen en Elfen trok op tegen de legers van Mordor,
+G9292CF8B	en op de hellingen van de Doemberg vochten zij voor de vrijheid van Midden-aarde.
+G9C449910	Het was op dat moment,
+G4E624CE3	toen alle hoop was vervlogen...
+G8B971AFC	...dat Isildur, zoon van de Koning, het zwaard van zijn vader opnam.
+GA0976A20	Sauron, de vijand van de vrije volken van Midden-aarde, werd verslagen.
+GCE1FEBD6	De Ring kwam in handen van Isildur, die deze ene kans had om het kwaad voorgoed te vernietigen.
+G4653B8E6	Maar de harten van Mensen zijn gemakkelijk te verderven.
+GF1F12CD3	Vernietig hem!
+G7A59BC32	Nee.
+GEDAFB589	Ik ben Isildurs erfgenaam, niet Isildur zelf. Mijn lot is het mijne.
+GECD0FC9B	Naar Helmsdiep! Brego, ga!
+GE526C94A	Frodo! Blijf bij ze weg!
+GE5AC368C	Help! Ze zijn overal!
+GE18CFED5	We zullen je vinden.
+G754CEC13	Terug, smerig ding!
+G0EE492EC	Ze zoeken de Ringdrager! Blijf dichtbij!
+GA236A198	Je kunt geen weerstand bieden, Halfling.
+GB0F6888B	We zijn verloren.
+GABCB70B5	Heel Isengard is leeggelopen.
+GD4A9E9B3	Het is een leger gefokt met één doel: de wereld der Mensen vernietigen.
+G65599300	De Duistere Heerser komt naderbij.
+GC6B5C82C	Balings...
+GDE3725D0	Ringgeesten! Terug!
+GDB2A2A63	Stapper!
+GDF3A925F	Laat hij gespaard worden. Red hem.
+G4867AD04	In het toevluchtsoord Rivendel toonde de kleinste van ons de grootste moed.
+G3505351D	Ik zal hem nemen!
+G5B8CB3F8	En een Reisgenootschap werd gesmeed.
+GF6138FE1	Ik zal de Ring naar Mordor brengen!
+GA7DC204A	Al...
+G2FFEE7D1	...weet ik de weg niet.
+GD051F7C5	Ik zal je helpen deze last te dragen, Frodo Balings...
+G82079845	...zolang het aan jou is om hem te dragen.
+G8308B082	Jij draagt ons aller lot, kleine.
+G32030F3F	En je hebt mijn boog.
+G7A19CD10	En mijn bijl.
+G18A439E8	Geef ons de ring, halfling.
+G5E09B681	De ring is van ons.
+GC7625599	Kom naar ons, halfling.
+GB2DCED15	Help me!
+GF8B88DB9	Kom me helpen!
+G111D0DD5	Ik ga dood.
+G439D87CA	Dit land is veranderd.
+GB5DB841A	We wachten hier tot de weg verderop veilig lijkt.
+GF0EB3761	We hebben al jaren niets meer uit Moria gehoord.
+G3A9580D6	We kunnen door de Mijnen van Moria gaan.
+G852B83DE	Mijn neef Balin zou ons koninklijk ontvangen.
+G48D6F333	Kijk uit!
+G20BEF03C	Snel! Hierheen!
+G37B7E741	Gruwelijk beest.
+G70A83B75	Dit is de Deur van Durin, Heer van Moria.
+GE6E19D64	Zo, Gandalf, je probeert ze over de Caradhras te leiden.
+GF7BC40D4	En als dat mislukt -
+GC7F3ECF5	waar ga je dan heen?
+G4F7AA217	Naar Moria!
+G0F8A9576	Spreek, vriend, en treed binnen.
+GCB3668DA	Mellon.
+G64134F99	We hebben nu nog maar één keus.
+GE57BDBA1	We moeten de lange duisternis van Moria trotseren.
+G3CA10A85	Mordor-uitschot!
+GC753F514	Hinderlaag!
+G66D5EE9E	Er zijn Orks. Heel veel.
+G8AB8C148	Als er moeilijkheden zijn, stuur dan een dwerg!
+G6F4359B4	Goed geslagen, Gimli!
+G43E71D7A	Ik ga vooruit om een weg te vinden.
+G0F5D4F40	Schepsel.
+G0BFC06A5	Het was hier dat we veel meer zouden vinden dan het Graf van Balin, Heer van Moria.
+G79CBD185	We hebben de poorten versperd. Trommels in de diepte.
+G676CE560	We kunnen er niet uit.
+GC2C2532E	Terug, zielloze beesten!
+G41169039	Legolas! We hebben je boog nodig!
+GED8A660A	Schiet op, Gimli!
+G548B1E16	Weg met je, gruwelijk beest!
+G8B6C996D	Ik neem hem!
+GD624A593	Achter je!
+G22876487	Houd stand!
+G6E72BC38	Terug, schepsels!
+G98FB35D8	Hierheen!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Het zijn er te veel!
+GEB38BB38	Hoe kunnen we ze tegenhouden?
+GDB1D4894	Ik kan niet tegen ze vechten!
+GCA82C10C	Ik kan ze niet op afstand houden!
+G839F36D1	Schakel ze uit met je boog!
+G426819B7	Voor Balin!
+G32A709EE	Ik kom je halen!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Het zijn er te veel!
+GB502E0B9	Voor Demsterwold!
+G5C8B1856	Ik ga madengaten in je buik snijden!
+GF8D92047	Pak ze allemaal!
+GDFB1C64C	Verpletter ze!
+G5AF9060B	Terug naar de schaduw!
+GF1BFC8A0	Aragorn! Ik heb je zwaard nodig!
+GF83070F8	Naar mij, Gimli! Hierheen!
+G2EC65D74	Zet je schrap!
+GCD82317C	Vuur!
+GCEA41230	Verspreid je! Ze mogen ons niet omsingelen!
+G3AD812AF	Vind de Halfling!
+G6B59AA20	Frodo draagt ons aller lot!
+G4B4B5CA5	We moeten hem verdedigen!
+G1881769E	Op zijn eer, je zult boeten!
+G743E1105	Moria was een duistere reis geweest voor ons Reisgenootschap.
+G32DCF8A9	Vlucht, dwazen!
+G10D542AD	Neeeeeeee!
+GD10EAA8A	De tocht staat op het scherp van de snede.
+GF997012E	Dwaal maar even af, en hij zal mislukken.
+G01C6A95F	Maar het zou nog duisterder worden, want ons Reisgenootschap viel uiteen.
+G212FEF60	Ik zou met je zijn meegegaan tot het einde, tot in de vuren van Mordor.
+G960898CD	Rennen!
+GD941582B	Vind rust...
+G9D8421F1	...zoon van Gondor.
+G60BC6BA4	We moeten deze Uruk-hai verslaan zodat Frodo kan ontsnappen!
+GF0E0DD02	Boromir!
+G1C9C2949	Een beetje hulp hier, Elf!
+GB1E7FF01	Uruk-hai! Aanvallen!
+G62308F86	Hier ga ik van genieten!
+GA7F87EAC	Terug naar de holen waar je uit gekropen bent.
+G06BA8520	Ze zijn hierlangs gegaan, kom.
+G817C5460	Maar hier houdt hun spoor op. We moeten ons opsplitsen om ze snel te vinden.
+G934A6365	Aragorn, er is daar iets.
+G32456D68	Wat zie je, Legolas?
+G090A57A6	De Witte Tovenaar.
+G3BE10384	Saruman.
+GF471A310	Ondanks Boromirs heldenmoed namen de dienaren van Saruman leden van ons Gezelschap gevangen.
+G9EB3E2D9	Maar we zouden onze metgezellen niet aan marteling en dood overlaten.
+GC9337F85	Dagenlang volgden we hun spoor...
+G1A87CFBD	...tot het ons uiteindelijk naar het Fangornwoud leidde.
+G7754D2C1	Dit woud is oud...
+G9261B17A	...heel oud.
+GF7DCBBD1	Het zit vol herinneringen...
+GC4192431	...en woede.
+G92086B9D	In dat grote woud kwamen vele paden samen.
+G6F680400	Dat kan niet.
+G7A0AC815	Er is nu een verbond tussen de twee torens - Orthanc en Barad-dûr.
+GF36A1977	Je bent elders nodig.
+GA926AFE5	Er komt oorlog naar Rohan.
+GC5293984	Nu wordt het leuk!
+GCF6954E1	Ik heb het eerder gezien, maar nooit zo.
+G2E930B75	Onze enige hoop is samen standhouden!
+GFD82D6F4	Sarumans troepen voeren vreemde explosieven door dit dorp. Help ons ze te vernietigen!
+G86FA279C	Houd ze tegen bij de poort!
+G7B48AD72	De weinigen van ons die kunnen vechten, trekken naar Helmsdiep.
+GD55B6BE3	Daar zal de toekomst van Rohan leven of sterven.
+G2256A18D	Pas op voor de explosieven!
+GE0BD0D44	Ja! Laat ze maar eens vuur proeven!
+G82C8009F	Dat zou ze moeten ophouden!
+GA0C82879	Wat hebben we hier?
+G751859FC	Wat is dit?
+G06637EF0	We moeten deze explosieven vernietigen!
+GABF94061	Die explosieven moeten vernietigd worden.
+G13114F1E	Wat zou dit kunnen zijn?
+G5B2AF650	Dit kan van pas komen.
+G14659B9A	Dit lijkt waardevol.
+G418ECC01	Hier. Dit houd ik.
+G136EC46C	Dit is het meenemen waard.
+G360BBC1D	Ze worden gedreven door Sarumans waanzin en de wil van de Duistere Heerser.
+G4840EFEC	Nog meer vuurwerk? Ha! Ze willen van ons allemaal lijken maken!
+G19910876	Nu komen ze voor ons!
+G08EB8FDB	Het is onbegaanbaar.
+G6FED1000	Ik zal een andere weg moeten vinden.
+G68F91872	Dit dorp brandt als droog aanmaakhout!
+G57BD9573	Heel nuttig.
+G424E3FF5	Dat moet het doen!
+G501ABC20	Houd vol!
+G31FDA576	Ze overspoelen ook dit gebied!
+GB60A7265	We stonden niet alleen in de verdediging van Rohan.
+GA48B596C	Ook de Koninklijke Garde vocht zich een weg naar Helmsdiep.
+G65866A2E	Je hebt hier alles gedaan wat je kon.
+G115A6D12	De overlevenden zullen naar Helmsdiep trekken.
+GC07CBB0E	Je hebt nog werk te doen. Ik kom bij je terug als het tij keert.
+G63B48C52	Ze zijn doorgebroken!
+GAAD29572	Alsjeblieft! Nee! Nee! Nee!
+G589F2E2F	We moeten iedereen redden die we kunnen, anders valt dit dorp.
+GE1654ECA	Voordat onze lange reis ons naar Edoras bracht...
+G97FC9F74	...verkeerde uw volk al in groot gevaar.
+GB52DB0C9	Spaar me!
+GDDA274AE	Alsjeblieft! Spaar me!
+GA354A5CD	Aaah! Nee!
+G1C74FEB5	Nee!
+G946E2F3A	Nee! Nee! Niet doen!
+GF46D4AC5	Nee! Nee! Nee!
+G1BD76207	Haal ons eruit! Snel!
+GE57CB50F	Spaar me, ik smeek je!
+G716689E1	Bescherm ons!
+G6295F93F	Red me! Alsjeblieft, red me!
+GFA27E38F	Aaaaaah! Ze verbranden ons levend!
+G25B702F8	Laat me leven! Alsjeblieft!
+GDE034FBB	Je moet doorgaan.  Ik ben elders nodig.
+G898F1CFF	Laat ze de wolven van Isengard vrezen!
+G04FC403B	We konden deze schepsels de vluchtelingen niet laten bereiken.
+GD8C5307E	Uw volk werd verdedigd, maar we betaalden er met vele levens voor.
+G4FD6FE99	Ik verloor bijna het mijne.
+G753DFA73	Zo komt het dat we langs verschillende wegen allemaal naar de vesting Helmsdiep zijn gekomen, voor een laatste verzet.
+G932478E9	Nu, dood die daar!
+GF940F960	Ja, mijn lieverdjes!
+G646F5FC4	Onze wargs zullen vannacht feestmalen!
+G948FC6FF	Speel niet met hem!  Dood hem!
+G99617AA4	Ze hebben zich teruggetrokken.  Het is voorlopig voorbij.
+G4A0F838F	Ik heb er negentien!
+GC16105A6	Dan staan we gelijk.
+GAC4FD1F9	Dat zullen we nog wel zien.
+GF71FBCA2	Ik heb er twee.
+G641CA89C	Er zijn er genoeg voor ons allebei, Gimli!
+GF4B76D82	We moeten Saurons blik op ons gericht houden - houd hem blind voor al het andere dat in beweging is!
+G5B04C967	Terug!
+G3487D102	Van de muur af!
+G8B575855	De Orks zijn op de muur!
+GCE3C16C0	Ik zit op zeventien!
+G3D052135	Zoek dekking!
+G05C9D273	Ze schieten weer op ons!
+G4941BF74	Haal die ladder neer voordat we onder de voet gelopen worden!
+G265760A3	Bukken!  Naar beneden!
+G2E8173A8	We mogen ze niet bij de Glinsterende Grotten laten komen!
+G36DE1341	Nooit heb ik zulk bijlwerk gezien, meester Dwerg.
+G80FBF437	En ik niet zulke boogkunst.
+G3F35FF0E	Maar die van mij staan nooit meer op als ik ze geraakt heb.
+GEC633822	Onze verdediging is overrompeld! De vrouwen en kinderen raken ingesloten!
+G17070638	Breng ze naar de Grote Zaal!
+G5CAB82D3	We houden ze hier tegen, of bij de Burcht!
+GFFC47594	We hebben ze tegengehouden. De vrouwen en kinderen zijn veilig - voorlopig.
+GBD5794D5	We kunnen ze niet langer tegenhouden! De Grote Zaal in!
+G088ED5E4	We kunnen ze niet tegenhouden!
+G7C6E3511	Sauron en Saruman trekken de strop aan.
+G7B236705	Maar ondanks al hun sluwheid hebben wij één voordeel.
+GFCAC9515	De Ring blijft verborgen.
+G1C7DF558	En dat wij zouden proberen hem te vernietigen, is nog niet in hun duisterste dromen opgekomen.
+GB72B409D	En zo gaat het wapen van de vijand richting Mordor in de handen van een Hobbit -
+G86CED6F6	elke dag brengt het dichter bij de vuren van de Doemberg.
+GD9BB4CD5	Sauron vreest je, Aragorn.
+GDD966B5E	Boogschutters op de muur!
+G6A122B51	Achteruit! De barricade staat op instorten!
+G427F5206	Schiet op, meester Dwerg!
+G113213B2	Ga naar Legolas, ik houd ze hier tegen!
+GA7B95A20	Voor Gondor!
+G7C696E8A	Aragorn wordt overmand! Naar hem toe!
+GFC98A99D	Onze Elfenvriend kan wel een handje gebruiken.
+G66A680C0	Uruk-hai!
+G8968245E	Ze staan op het punt de barricade te verbrijzelen!
+G428EE07E	Ze zijn in de burcht. We zijn verloren!
+GFAE8490C	NEEEEEEE!!
+G63F31F0F	Je einde is nabij.
+GE8B9DB2E	Je hebt gekozen voor de weg van de pijn!
+G910D7B12	Dwaas.
+G58E8BBAA	Het is tijd dat je ophoudt.
+GD8425223	Je dacht toch niet dat een haveloze doler mijn wil kon weerstaan? Ik ben buiten je macht.
+G1A989E68	Je zult boeten voor je arrogantie.
+G0079D300	Je dacht toch niet dat een Dwerg de wil van Saruman kon weerstaan. Niemand kan dat.
+GFB1E1C33	Je dacht toch niet serieus dat een Elf Saruman kon weerstaan? Niemand kan dat, of zou het zelfs maar durven.
+GCB4F521C	De pijlen met weerhaken van de Rohirrim worden afgeschoten zoals met de Stadhoudersboog en richten zware schade aan.
+G906620AF	Verhoogt je gezondheid permanent.  (Vereist Macht van Denethor)
+GE4F990F3	Een nog verwoestender aanval.  (Vereist Gondorwoede)
+G55B83821	Verhoogt je gezondheid permanent.  (Vereist Kracht van Gondor)
+GD4900EBD	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Toorn van Gondor)
+GF1EE1785	Stadhoudersboog
+GC7DFC68A	Gondorwoede
+G26838C80	Hoorn van Gondor
+G948EF2DD	Stand van de Kapitein
+GC354B788	Macht van Denethor
+G2675AC6D	Charge van Minas Tirith
+G3A16134F	Gambiet van de Stadhouder
+G7C6E9536	Kracht van Gondor
+G909BDBD3	Toorn van Gondor
+GBCA2DB1D	Storm van de Witte Toren
+GA70E206F	Stand op Amon Hen
+GECE9E935	Speel als Boromir
+G2BAAD5AF	Houd de linkertrekker ingedrukt om te gebruiken.  Spreek uit met de A-knop (ingedrukt houden voor meer schade).
+GF2DB6139	De vlam van Narya wordt uitgesproken zoals Tovenaarslicht en verbrandt vijanden met zware schade.
+G4E51B4E3	Verhoogt je gezondheid permanent.  (Vereist Kracht der Istari)
+G701450DF	Verhoogt je gezondheid permanent.  (Vereist Kracht van Olórin)
+G876BFE80	Een nog verwoestender aanval.  (Vereist Maiawoede)
+G554AF8D3	Verhoogt je gezondheid permanent.  (Vereist Kracht van Narya)
+GF20F1105	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Tovenaarsrazernij)
+GE86497FB	Het witte vuur van de Istari brandt vreselijk. (Vereist Ringvuur)
+G5D1DA1B0	Tovenaarslicht
+GE4245C5B	Stafparade
+G68852FD1	Maiawoede
+G63891384	Kracht der Istari
+G3023E8DD	Vlam van Anor
+G03053C48	Jij komt er niet voorbij
+G44E88937	Ringvuur
+G31781C88	Kracht van Olórin
+GC67FABAE	Charge van Schaduwvacht
+GB28BAB38	Grijze Pelgrim
+GBB647C84	Kracht van Narya
+G3A1959EB	Tovenaarsrazernij
+G910A4D18	Meester van Glamdring
+GE54BB6DF	Mithrandirs Storm
+G80CB05F7	Kracht van de Witte
+G5500602D	Toorn van Olórin
+GB3B8BA9A	Wit Vuur
+G4D3F3799	Toorn van de Maia
+GB06CD44C	Speel als Gandalf
+GD63AEB69	Houd de linkertrekker ingedrukt om te gebruiken.  Werp met de A-knop (ingedrukt houden voor meer schade).
+GF1500B18	De scherpe vuurstenen van de Brandewijn worden geworpen zoals Gouwstenen en richten zware schade aan.
+G1594107A	Verhoogt je gezondheid permanent.  (Vereist Kracht van de Gouw)
+G223FB1F4	Verhoogt je gezondheid permanent.  (Vereist Kracht van Bilbo)
+G419FBE06	Een nog verwoestender aanval.  (Vereist Hobbitwoede)
+G549E8839	Verhoogt je gezondheid permanent.  (Vereist Kracht van Samwijs)
+G3E7B6E97	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Gouwrazernij)
+G5DBA6F26	Door Elfen gezegende stenen richten vreselijke schade aan.  (Vereist Vuursteenschot)
+G586DFFA8	Gouwstenen
+GAF333BB7	Hobbitwoede
+GA30AB0B5	Kracht van de Gouw
+G5B952654	Beet van Prik
+G3F0B7A46	Wil van de Ringdrager
+GE7A5F0EC	Vuursteenschot
+G97512A2B	Kracht van Bilbo
+G4F6E34B0	Balings-charge
+G8AFDEEE2	Hobbitgeluk
+G9AE8326E	Kracht van Samwijs
+G5FECDC01	Gouwrazernij
+GB7F9A847	Meesterschap over Prik
+GD629F714	Toekse Storm
+G31486B52	Kracht van Zakeinde
+G4023054B	Toorn van Prik
+GD48B81F2	Elfenstenen
+G371FFFDE	Mithrilen Wilskracht
+G031E765B	Speel als Frodo
+G63C78123	De pijlen met weerhaken van Orthanc worden afgeschoten zoals met de Isengard-boog en richten zware schade aan.
+G266F9F27	Verhoogt je gezondheid permanent.  (Vereist Kracht van Isengard)
+G4451D279	Verhoogt je gezondheid permanent.  (Vereist Kracht van Saruman)
+G2DE635F5	Een nog verwoestender aanval.  (Vereist Urukwoede)
+G4D25FA2B	Verhoogt je gezondheid permanent.  (Vereist Kracht van Orthanc)
+G055C2C2B	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Isengard-razernij)
+G478E4DB1	Zwarte pijlen van Isengard richten vreselijke schade aan.  (Vereist Uruk-boog)
+GB0EED2A6	Isengard-boog
+G13D5F1B3	Klingparade
+GCC2F9E7C	Urukwoede
+GF496EAA0	Kracht van Isengard
+GC727C10B	Jacht van Lurtz
+G73D0C070	Sarumans Wil
+GD64B9B56	Uruk-boog
+G9E8D350E	Kracht van Saruman
+G6426C642	Charge van de Vechtende Uruk
+GCC3C5342	Slagersgambiet
+G0DEF3FCC	Kracht van Orthanc
+G0EBAA8C5	Isengard-razernij
+GFC62112E	Meesterslager
+GEE7780E5	Stormloop van Isengard
+G838B10AC	Kracht der Uruk-hai
+GF44614A3	Toorn van Saruman
+G45DC8B08	Zwarte Boog
+G4F638CF6	Verderf van Rohan
+G9E606E3B	Doem van de Eerste Uruk
+GE31550F8	Lurtz
+G981416DE	Speel als Lurtz
+G6F22BB2E	De pijlen van Rivendel worden afgeschoten zoals met de Elfenboog en richten zware schade aan.
+GCA4A15A1	Verhoogt je gezondheid permanent.  (Vereist Kracht van Rivendel)
+G75BCF244	Verhoogt je gezondheid permanent.  (Vereist Macht van Gil-galad)
+G216AF74D	Verhoogt je gezondheid permanent.  (Vereist Kracht van Vilya)
+G0B6CC0B6	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Noldor-razernij)
+G0355C5D7	Zilveren pijlen van de Eldar richten vreselijke schade aan. (Vereist Vanya-boog)
+GD3F16BA3	Elfenboog
+G710A6666	Kracht van Rivendel
+G96D9F158	Genade van Vilya
+GF127A06E	Laatste Bondgenootschap
+GB426C696	Vanya-boog
+G71620C4B	Macht van Gil-galad
+GFBF3A490	Charge van Lindon
+G00542D8B	Gambiet van de Heraut
+G5104305A	Kracht van Vilya
+G221633E0	Noldor-razernij
+G11A9FF39	Oorlogsstorm der Noldor
+GDE2839BE	Kracht der Eldar
+GB0E7C432	Toorn van Lindon
+G008B68D9	Eldar-boog
+G10607364	Heer van Imladris
+G0BA28B85	Speel als Elrond
+GD6BB77A1	Het vuur van Barad-dûr wordt uitgesproken zoals de Duistere Schicht en richt zware schade aan.
+G113CAFFC	Verhoogt je gezondheid permanent.  (Vereist Kracht van Barad-dûr)
+G2F14F0F7	Verhoogt je gezondheid permanent.  (Vereist Kracht van Mordor)
+G573FFFF8	Een nog verwoestender aanval.  (Vereist Duistere Woede)
+G6AE28C4F	Verhoogt je gezondheid permanent.  (Vereist Macht van de Ring)
+GC4B7E7DB	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Mordor-razernij)
+G5FEE9C56	De vlammen van de Doemberg richten vreselijke schade aan.  (Vereist Hellevuur)
+GA07FAB7C	Duistere Schicht
+G59838F7F	Knotsparade
+G0ACE1349	Duistere Woede
+GD97CF863	Kracht van Barad-dûr
+GF62B2130	Saurons Dans
+G53F430F0	Wil van de Ene Ring
+GB60C89B8	Hellevuur
+GC26DDD50	Kracht van Mordor
+G29856B22	Charge van de Duistere Heerser
+G27C67462	Annatars Gambiet
+G66205DC8	Macht van de Ring
+GA64C9515	Mordor-razernij
+G278CB8C1	Meester der Knotsen
+G4B8493DC	Oorlogsstorm van Mordor
+G5487C52D	Kracht van de Doemberg
+GE9A37F55	Toorn van Mordor
+G3F70A0C4	Doemvuur
+GBB8776B5	Verderf der Elfen
+G6E2AA149	Oog van Sauron
+G1C11BF19	Sauron
+G3057B52F	Speel als Sauron
+GB76B50B9	Deze stenen uit de putten worden gegooid zoals Rotsblokken en richten zware schade aan.
+GECFE6FA3	Verhoogt je gezondheid permanent.  (Vereist Macht van de Putten)
+G47753157	Deze verwoestende aanval steekt meerdere vijanden in brand.  (Vereist Berserkerrazernij)
+GF2D43E42	Gesmolten stenen richten vreselijke schade aan.  (Vereist Oorlogsstenen)
+GC390874C	Rotsblokken
+G035878D4	Berserkerroes
+GC2D0B8DB	Fakkel van de Diepte
+GFF1647F7	Oorlogsstenen
+G98869254	Macht van de Putten
+GC4A495AD	Charge op de Diepingmuur
+GE0FB4F25	Uruk-hai-gambiet
+G8925F4A1	Berserkerrazernij
+G468B4A5C	Meesterberserker
+GB0E58D9C	Belegeringsstorm
+GD5AF6DD1	Toorn van Orthanc
+G01AF5769	Lavastenen
+G18494AB3	Toorn van de Putten
+GB3AAE2E1	Uruk-hai
+G683077D7	Speel als Uruk-hai
+P:Frame Rate:	Framerate:
+P:Unlocked	Onbeperkt
+P:Display Mode:	Weergavemodus:
+P:Window	Venster
+P:Full Screen	Volledig scherm
+P:Window Size:	Venstergrootte:
+P:Automatic	Automatisch
+P:Aspect Ratio:	Beeldverhouding:
+P:Custom	Aangepast
+P:Resolution:	Resolutie:
+P:Anisotropic:	Anisotroop:
+P:Mipmaps:	Mipmaps:
+P:Off	Uit
+P:On	Aan
+P:Ultra Textures:	Ultra-textures:
+P:Wide Cutscenes:	Brede tussenfilmpjes:
+P:Anti-aliasing:	Anti-aliasing:
+P:VSync:	VSync:
+P:Picture:	Beeld:
+P:Keep Shape	Vorm behouden
+P:Stretch	Uitrekken
+P:Vertex Programs:	Vertexprogramma's:
+P:Brightness:	Helderheid:
+P:Sharpening:	Verscherping:
+P:Colour:	Kleur:
+P:Original	Origineel
+P:Vivid	Levendig
+P:Muted	Gedempt
+P:HUD Widescreen:	HUD breedbeeld:
+P:Edges	Randen
+P:Centred	Gecentreerd
+P:Menus:	Menu's:
+P:Fill	Vullen
+P:Movies:	Filmpjes:
+P:As Made	Zoals gemaakt
+P:Button Prompts:	Knopaanwijzingen:
+P:Keyboard	Toetsenbord
+P:Mouse Pointer:	Muisaanwijzer:
+P:Sensitivity:	Gevoeligheid:
+P:Pointer Size:	Aanwijzergrootte:
+P:Mouse Aiming:	Richten met muis:
+P:Invert Aiming:	Richten omkeren:
+P:Up/Down	Omhoog/omlaag
+P:Left/Right	Links/rechts
+P:Both	Beide
+P:Mouse Steering:	Sturen met muis:
+P:A Button:	A-knop:
+P:B Button:	B-knop:
+P:X Button:	X-knop:
+P:Y Button:	Y-knop:
+P:Black Button:	Zwarte knop:
+P:White Button:	Witte knop:
+P:Left Trigger:	Linkertrekker:
+P:Right Trigger:	Rechtertrekker:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad omhoog:
+P:D-pad Down:	D-pad omlaag:
+P:D-pad Left:	D-pad links:
+P:D-pad Right:	D-pad rechts:
+P:L Stick Click:	L-stick klik:
+P:R Stick Click:	R-stick klik:
+P:Move Forward:	Vooruit:
+P:Move Back:	Achteruit:
+P:Move Left:	Naar links:
+P:Move Right:	Naar rechts:
+P:Look Up:	Omhoog kijken:
+P:Look Down:	Omlaag kijken:
+P:Look Left:	Links kijken:
+P:Look Right:	Rechts kijken:
+P:Walk:	Lopen:
+P:General Options	Algemene opties
+P:Display Options	Weergaveopties
+P:Controls	Besturing
+P:Reset Controls	Besturing herstellen
+P:Press a key...  (Esc: cancel, Delete: clear)	Druk op een toets...  (Esc: annuleren, Delete: wissen)
+P:R Stick	R-stick
+P:Stick	Stick
+P:L Stick	L-stick
+P:Black button	Zwarte knop
+P:White button	Witte knop
+P:Left trigger	Linkertrekker
+P:Right trigger	Rechtertrekker
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad omhoog
+P:D-pad down	D-pad omlaag
+P:D-pad left	D-pad links
+P:D-pad right	D-pad rechts
+P:Left stick click	Linkerstick klik
+P:Right stick click	Rechterstick klik
+P:Move forward	Vooruit
+P:Move back	Achteruit
+P:Move left	Naar links
+P:Move right	Naar rechts
+P:Right stick up	Rechterstick omhoog
+P:Right stick down	Rechterstick omlaag
+P:Right stick left	Rechterstick links
+P:Right stick right	Rechterstick rechts
+P:Walk	Lopen
+P:None	Geen
+P:LS click	LS-klik
+P:RS click	RS-klik
+P:Mouse Left	Muis links
+P:Mouse Right	Muis rechts
+P:Mouse Middle	Muis midden
+P:Mouse 4	Muis 4
+P:Mouse 5	Muis 5
+P:Space	Spatie
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Omhoog
+P:Down	Omlaag
+P:Left	Links
+P:Right	Rechts
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Puntkomma
+P:Equals	Is-teken
+P:Comma	Komma
+P:Minus	Min
+P:Period	Punt
+P:Slash	Slash
+P:Backquote	Accent grave
+P:Backslash	Backslash
+P:Quote	Apostrof
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Houd {6} ingedrukt om naar je afstandswapen te wisselen.  Druk op {0} om te vuren.  Richt met {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Houd {6} ingedrukt om naar je afstandswapen te wisselen.  Druk op {0} om te vuren.  Richt met {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Houd {6} ingedrukt om te gebruiken.  Vuur met {0} (ingedrukt houden voor meer schade).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Houd {6} ingedrukt om te gebruiken.  Vuur met {0} (ingedrukt houden voor meer schade).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Houd {6} ingedrukt om te gebruiken.  Gooi met {0} (ingedrukt houden voor meer schade).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Houd {6} ingedrukt om te gebruiken.  Gooi met {0} (ingedrukt houden voor meer schade).
+P:A devastating attack.  Press and hold {3} to use.	Een verwoestende aanval.  Houd {3} ingedrukt om te gebruiken.
+P:Game Saved.  Press {8} to continue.	Spel opgeslagen.  Druk op {8} om door te gaan.
+P:Game Saved.  Press {0} to continue.	Spel opgeslagen.  Druk op {0} om door te gaan.
+P:Unable to save game. Press {8} to continue.	Kan spel niet opslaan. Druk op {8} om door te gaan.
+P:Unable to save game. Press {0} to continue.	Kan spel niet opslaan. Druk op {0} om door te gaan.
+P:Unable to load game. Press {8} to continue.	Kan spel niet laden. Druk op {8} om door te gaan.
+P:Unable to load game. Press {0} to continue.	Kan spel niet laden. Druk op {0} om door te gaan.
+P:No saved games. Press {8} to continue.	Geen opgeslagen spellen. Druk op {8} om door te gaan.
+P:No saved games. Press {0} to continue.	Geen opgeslagen spellen. Druk op {0} om door te gaan.
+P:Not unlocked yet. Press {8} to continue.	Nog niet vrijgespeeld. Druk op {8} om door te gaan.
+P:Not unlocked yet. Press {0} to continue.	Nog niet vrijgespeeld. Druk op {0} om door te gaan.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Je hebt niet genoeg upgradepunten verzameld om deze upgrade te kopen. Druk op {8} om door te gaan.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Je hebt niet genoeg upgradepunten verzameld om deze upgrade te kopen. Druk op {0} om door te gaan.
+P:Press {8} to resume	Druk op {8} om verder te gaan
+P:the left mouse button	de linkermuisknop
+P:the right mouse button	de rechtermuisknop
+P:the middle mouse button	de middelste muisknop
+P:mouse button 4	muisknop 4
+P:mouse button 5	muisknop 5
+P:the A button	de A-knop
+P:the B button	de B-knop
+P:the X button	de X-knop
+P:the Y button	de Y-knop
+P:the Black button	de zwarte knop
+P:the White button	de witte knop
+P:the left trigger	de linkertrekker
+P:the right trigger	de rechtertrekker
+P:up on the d-pad	omhoog op de D-pad
+P:down on the d-pad	omlaag op de D-pad
+P:left on the d-pad	links op de D-pad
+P:right on the d-pad	rechts op de D-pad
+P:the left thumbstick button	de linkerthumbstickknop
+P:the right thumbstick button	de rechterthumbstickknop
+P:the Menu button	de menuknop
+P:the View button	de weergaveknop
+P:the cross button	de kruisknop
+P:the circle button	de rondjesknop
+P:the square button	de vierkantknop
+P:the triangle button	de driehoekknop
+P:Left Click	Linksklik
+P:Right Click	Rechtsklik
+P:Middle Click	Middelklik
+P: or 	 of 
+P:Exit	Afsluiten
+P:Press {k}	Druk op {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	de linkerthumbstick

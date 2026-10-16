@@ -1,0 +1,1749 @@
+# Magyar -- made by tools/lang/build_lang.py
+GA81157BF	A GYŰRŰK URA:  A KÉT TORONY
+G20EBC61E	Peter Jackson filmje
+G2D8D3B98	Producer
+G7EDB1AE9	Társproducer
+G90AF53E8	Különleges effektusok
+G893165F0	Weta Digital
+GD9523953	Zene: Howard Shore
+G7B677F6E	Játékbeli hangok
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodó
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX CSAPAT
+GAAA9253B	Projektmenedzsment
+G2E65B2E4	Programozás
+G1E165282	Grafika
+G4CFF767B	Hang
+G1B12D0CA	EREDETI FEJLESZTŐCSAPAT
+G5BB408B8	Projektigazgató
+GA9D987DE	Technikai igazgató
+GA4E53836	Fejlesztési igazgató
+GCBF9A863	Hangigazgató
+G71D27F1C	Vezető tervező
+GABE6171F	Vezető programozó
+GB6AEE806	Vezető környezettervező grafikusok
+G0FAA1BD8	Vezető átvezetőgrafikus
+G93A039A2	Vezető animátor
+G85851417	Művészeti irányítás
+GEC5EB699	Társproducer
+G1E1B7E49	Effektgrafikus
+GE457B26A	Környezettervező grafikusok
+G09AFDB2B	Játékbeli átvezetők grafikusai
+GC6201467	Koncepciógrafikusok
+GCE12C680	Karaktermodellezők/animátorok
+G958F64A1	Kezelőfelület-grafikus
+G5817028D	Grafikus programozók
+G8E313DB8	MI-programozók
+G7559A05A	Játékmenet-programozók
+G47FDFA0D	Játéktervezők
+G2A1A4D1F	Hangtervezés és zenei vágás
+GD6AC199C	Hangtervezés
+G83731102	További fejlesztési irányítás
+G9B9AC6A2	További projektmenedzsment
+G2C8B85F3	További grafika
+G154B3F75	További programozás
+GEC34AAA5	További hangtervezés
+GE9E2F454	További szöveg
+G8B63E4D8	Üzletfejlesztés
+G8E754AFA	Fejlesztésért felelős vezető
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Vezető producer
+GF944BB31	Rangidős producer
+G49F95533	Lokalizációs társproducer
+GE5AAA381	Producerasszisztens
+G20A463E8	Szoftvermérnökök
+GEDDCFA70	Vezető tesztelő
+G6EC637F4	Vezető tesztelő asszisztense
+GA9C92124	Fő tesztelők
+GDDEFB046	Producerek
+G5F4C2C91	Játékfejlesztési igazgató
+G53E62C46	Pályatervező
+G4019279E	Művészeti társigazgató
+G3548CB79	Játékbeli átvezetők
+G5BF26924	Grafikai tervezés (kezelőfelület)
+GF5E6331B	Lokalizációs producerasszisztens
+GB9029242	Producerasszisztensek
+G81160EAA	Rangidős animátor
+GB1B5EEDE	Animátor
+G1D384099	Környezetmodellezők
+GD670D187	Videobejátszások
+GB4300D0E	Gyártásfelügyelő
+GDB61FEB0	Videógyártási menedzser
+G13204F99	Technikai művészeti igazgató
+G8774AEB2	Művészeti igazgató
+G2EDA5AA3	Animációs igazgató
+G4761EC6C	Karakter TD
+GC40AEB65	Vezető környezettervező grafikus
+G04B7AD9A	Író
+GCCDC1EDE	Karaktergrafikusok
+G765B2120	Rangidős karakteranimátorok
+GDB98BF7E	Rangidős világítási grafikus
+G8AEFA15C	Rangidős effektanimátor
+GB64D9748	Effektanimátor
+GB770287B	Rigger/CG-modellezők
+GA89434BE	Kameraelrendezés
+GBAA388EF	Vágók
+GA79B5345	Hangtervező/utószinkron-hangmérnök
+GE2D38E72	Grafikai gyártásvezető
+G29C8EC71	Ügyvezetői asszisztens
+GB01B1D73	Rendszergazda
+G257D0532	Gyártási asszisztens
+GB2965969	Párbeszédvágás
+G2ACF75E1	További hangfeldolgozás
+G821EF7A5	Szinkronhangok
+G3CCB3DF3	EA minőségbiztosítás
+G2851776E	Minőségbiztosítási menedzser
+G3D43CCDD	Minőségbiztosítási felügyelő
+G997D9582	Minőségbiztosítási vezetők
+G5B5CE9C6	Minőségbiztosítási vezetőhelyettesek
+GE0B33004	Minőségbiztosítási fő tesztelők
+GBBB3A592	FLT projektvezető
+G7F330F1A	Funkcionális nyelvi tesztelők
+G731958CD	Nyelvi tesztelők
+G7005C763	Ügyféloldali minőségellenőrzés
+GCC3D24EF	CQC menedzser
+G0FF24E54	CQC felügyelő
+G7498FE74	CQC részlegvezető
+G5AB35ED0	CQC termékelemzők
+G6E529086	Mastering labor
+G0229B6F3	Igazgató, nemzetközi termékfejlesztés
+G6B435E81	Lokalizációs projektmenedzser
+GF8BA9878	Lokalizációs projektkoordinátor
+G906896D8	Menedzser, partneri engedélyek és jóváhagyások
+G860EDA13	Üzleti ügyek
+G7AC94AC6	Jogi osztály
+GFDF965B3	Stúdióműveletek
+G9FF9799E	Stúdiószerződési koordinátor
+G9E24FEC0	Marketingigazgató
+G44C57DC5	Termékmenedzser
+GE1A6D911	Közönségkapcsolat
+GA5ADE5FF	Dokumentáció
+G4C2A256D	Dokumentáció tördelése
+G279BA159	Csomagolás projektmenedzsment
+G482E9235	Csomagolástervezés
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	A Gyűrűk Ura filmes csapat
+GE196FA55	Rendező
+GE364782E	Vezető producerek
+GB11B5F1A	Társproducerek
+GDDE9A104	Archivátor
+G73D53EB3	Anyagkezelő
+G4616CF92	Producerek asszisztense
+GD98C077D	Utómunka-felügyelők
+G26FFE43A	Első vágóasszisztens
+GFAE3387C	Makettkezelő
+G0D7D1A1D	Ügyvezető alelnök, világméretű licencelés és merchandising
+GD58105C6	Kreatív igazgató
+GB0E8D9D5	Filmszínészek
+G4267BE40	Galadriel
+GD1604ECA	Szarumán
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samu
+G4A7482A5	Gollam
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Alelnök, zenei üzleti ügyek
+G96EBB4D8	Zenéért felelős vezető
+G2728DB7D	Zenei igazgató
+GFE08F13A	3Foot6
+GCFF1286B	Merchandising-koordinátor
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Alelnök
+GE58F283A	Producer/gyártásvezető
+G97C336EB	Animációs felügyelő
+G96FF4CEA	Rangidős technikai igazgató
+GE816CF3D	Vezető technikai beállítás
+G22B756F5	Animátorok
+G86F5B2D9	Háttérfestő
+GBC50C796	Irodavezető
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Gyártási producer
+G14C96B5C	Vezető CG-grafikus
+GD9742A3C	CG-grafikusok/animátorok
+GBA7D6969	Arnson Communications
+G22C5AB99	Vezető producer/kreatív igazgató
+G45C5172D	Író/producer
+GDCC6F23E	Művészeti igazgató/animátor
+G9C4F3B3B	DS-grafikus
+GF0F58DD3	AZ EA KÜLÖN KÖSZÖNETE
+G895C842A	A STORMFRONT STUDIOS KÜLÖN KÖSZÖNETE
+G9D4DD21A	Középfölde országaiban a legenda Szauronról, a Sötét Úrról beszél,
+G6CFA90F6	és a Gyűrűről, mely hatalmat adna neki, hogy leigázza a világot.
+G18F2969C	S most a legvalószínűtlenebb személy kezébe került, akit csak el lehet képzelni.
+G378C79D6	Nagy játékrajongó vagyok, úgyhogy persze mindent tudni akartam a Gyűrűk Ura videojátékról.
+GDCF04190	Ha belejövök, folyton csak játszom,
+G977EBA13	és általában a kalandjátékok azok, amikbe igazán beleélem magam.
+G49C9AB1A	Ha egyszer belekezdek, nem tudok másra gondolni, és végig kell vinnem a karakteremet.
+GD2647A40	Ez a feladat neked rendeltetett, és ha te nem találsz módot, senki sem fog.
+G3AC8371A	Fedezékbe!
+GAD82B19D	Szóval kérdezősködtem erről a dologról, és végre játszhattam vele, és hihetetlen.
+G8DE86872	Egyszerűen gyönyörű nézni.
+G72E74697	Ó, ez nagyon menő!
+GF9824FCA	Ez az, rajta, Aragorn! Gyerünk!
+G2EE7D5D4	Jönnek.
+G61F7CD7D	Elég jó bónusz, hogy bekapcsolhatok egy videojátékot, és én rohangálok benne.
+G57A5BC04	Jól elpáholnak.
+G1F85273D	Frodó úgy néz ki, mint én! Hát nem menő?
+G1FFE0A40	Nagyon menő.
+GE6E563F9	Megtalálják a Gyűrűt,
+GD135555F	és megölik azt, aki viseli.
+G18844D24	Rajta! Gyerünk, Frodó!
+G525D5AD9	A Gyűrűt akarják! Nem vehetik el!
+GB99DAE56	A különbség a filmes utószinkron és egy játék szinkronizálása között az, hogy a filmes utószinkron általában képre készül.
+G7558081F	Nézed a filmet, és próbálod utánozni a korábban felvett szöveget, és szinkronba hozni a film párbeszédével.
+GDD3F428F	Ki vagy te?
+GE906BA5B	Félsz?
+G9BDAB30C	Igen.
+G3B07B1B1	Közel sem eléggé.
+GFBD6613D	A játéknál nincs kép, csak egy csomó hangulati elem, amit úgymond beledobsz.
+G0EE06D0F	Veszély, segítség, ilyesmi.
+G2F9FC8E2	Aragorn! Segítség! Aragorn! Aragorn!
+G289F7C03	Szeretem az akciófigurákat és a játékokat, és ha engem is belevesznek, az egy igazi kocka bónusz, és bírom.
+G67346E61	A legkisebb személy is megváltoztathatja a jövő folyását.
+G16420686	Annyira izgatott vagyok, alig várom, hogy meglegyen a saját példányom. Állati.
+GDBA69463	Mória.
+G1D429D96	Félsz bemenni a bányákba.
+G372C9F91	Tudod, mit ébresztettek fel a sötétségben.
+G34515230	Nagyon élveztem a játék elkészítését, mert nem kell annyi átkozottul nehéz munkát végezni,
+G93AEF9C3	mint amikor eredetileg megalkotod a karaktert.
+GA9883FB4	Egy film forgatása szükségszerűen nagyon lassú.
+G0C1E0E8C	A számítógépes játékban persze az a csodálatos, hogy nem kell sminkelni.
+GA5F1044B	Amikor a játékot csinálod, egy stúdióban állsz,
+GCE4A81AD	és azt mondod, hát, szerintem ezt meg ezt meg ezt kellene mondanod,
+G049A3A66	és van egy halom forgatókönyvük, és elmondod ezeket a csodás mondatokat.
+G70F1359D	Csapda! Csapda!
+G65325B21	Aztán fogják az egészet, beépítik a játékba, és te is kapsz egy kis elismerést.
+G39F1D126	Azokat a robbanószerkezeteket el kell pusztítani!
+GEB33699E	Imádom ezt a modellt rólam Gimliként.
+GD9A0C650	Szerintem ez egy olyan erőteljes, férfias, vonzó karakter.
+G43591DCA	Igazából ő az egyetlen karakter, akivel játszani akarnál.
+G5C0A6C1E	Mármint a többiek, tudod, az Aragornok, a Legolasok, jóképű, csinos fickók, meg minden,
+G3D52D95F	de az igazi, minőségi hadviseléshez Gimlit kell választanod.
+G8E74524F	Tizennégy hónapot töltöttünk a világ legszebb helyszínein Új-Zélandon, hogy a film a megfelelő látványt kapja.
+GAD562976	A játék háborús, harci helyzet, és csodálatosan, zseniálisan van megalkotva.
+G7F21BCD6	Nem hagyhatom ott! Istenem!
+G9AA947F5	Micsoda időrabló dolog lesz ez.
+G669C44C6	Úgy értem, ez egy új szenvedély, amit felfedeztem.
+G63540AD1	Szóval, játékosok, szép munka, gratulálok, hogy eljutottatok ehhez a kis zughoz, ahol ez az interjú vár.
+G925FED56	Bárcsak meg tudnám mondani, hogyan játsszatok jobban, de valójában én sosem jutottam el erre a szintre.
+GC3162ADB	Sok sikert hozzá, és csak játsszatok tovább.
+GA3572714	A világ sorsa hamarosan eldől.
+G922859CB	A videojáték megalkotásának, felépítésének egész folyamata
+GD9B03397	főleg arról szól, hogy dolgokkal meg nindzsa dolgokkal harcolsz... nem is tudom, mivel.
+G24326AFA	Meglepődtem, sokkal valósághűbbnek tűnik,
+G3E302C15	mintha egy másik szintre lépne.
+GBD830A87	Szerintem Aragorn jobban céloz a videojátékban, mint én...
+GF76948D6	de emiatt nem fogok panaszkodni.
+GD27FED3E	Ha életemmel vagy halálommal megvédhetlek, megteszem.
+G56368F53	Számíthatsz a kardomra.
+G8D6DAFD1	Amit a videojátékból láttam, az tükrözni látszik azt a tényt,
+G970D4AB6	hogy a második film – az elsővel ellentétben – nagyobb léptékű,
+GFD0BADCA	és ugyanúgy várom, hogy lássam őket, mint ahogy a játék többi részét.
+G1F48F697	Ma csak egy ízelítőt láttam.
+GB689F1B9	Örülök, hogy például Aragornt néha leütik, vagy elesik, vagy hempereg,
+G6F6072BC	és hogy a harcmodora változik, tudod, a helyzethez igazodva.
+GA3A3F7A1	Ez nem mindig szép és rendezett, tudod, inkább olyan...
+G28095E46	néha egy kicsit verekedős tud lenni – legalábbis a filmben így csinálta –, és szerintem a játék ezt tükrözi.
+G43AA6A0B	Lenyűgöző.
+G8559FF90	Távoli földek idegenei, azért hívattalak ide benneteket, hogy feleljetek Mordor fenyegetésére.
+GC2A75F48	Középfölde a pusztulás szélén áll.
+GFE143A07	Senki sem kerülheti el. Egyesüljetek, vagy elbuktok.
+GF59E5460	Mindig elámulok, amikor látom a technológia fejlődését meg ilyesmit,
+GAD5CBAE4	és hogy mennyire közel került a valósághoz.
+GF96BCD4B	El kell jutnom Boromirhoz, most!
+GD262135E	Amikor a filmes utószinkront veszed fel, tudod, nyilván a vásznat nézed,
+G83EECB7A	ahogy előtted játszódik az akció, ahogy a forgatás napján eljátszottad.
+G3C0B6913	Amikor ehhez veszed fel a hangsávot,
+G2A8B6AD2	nincs rajtad kamera,
+G52F7D105	és nem próbálod szájra szinkronizálni egy előtted lévő képhez,
+G8EE2279F	úgyhogy tényleg tehetsz egy lépéssel többet, és úgymond
+GA5BE0F5A	kihangsúlyozhatod és kibonthatod azt, ami a papíron áll.
+G51E230FB	Vissza a vermekbe, ahol születtetek!
+G97400E1E	Ezek felfokozottabbak, mint amit a filmben kapnál.
+GC26338C3	Érted, mire gondolok?
+G40EB5D5C	Kicsit nevetségesek, és ez szórakoztató.
+G52FECFA2	Elég mókás volt így igazán játszani vele.
+G91D69630	Gyertek!
+G87873143	Ezt a harcot nem nyerhetitek meg!
+G47AECCC4	Szerintem ha én játszanék a játékkal,
+GB0CCD2A6	jó lenne tudni, hogy az igazi színészek adták a hangjukat ahhoz, amit a számítógéppel készült karakter csinál,
+GC1719889	és gondolom, minél több valóság van a számítógépes világban, annál izgalmasabb a játékosnak.
+G77ECFBF0	Nem használhatod. Egyikünk sem.
+GB42EC53B	A Gyűrűt el kell pusztítani.
+G43E793ED	A Gyűrűhordozó veszélye egyre nő.
+G6E2FF8E0	Mert van még valaki, aki a Gyűrűre vadászik.
+GDD26CBEC	Életemben nem játszottam videojátékkal.
+GF783F574	Sosem értem a szabályokat.
+G573BC826	Nagyon nagy és ügyetlen kezem van, és nincs meg az a kéz-agy koordinációm, ami szerintem kell hozzá,
+GFBB68CB5	és ami úgy tűnik, minden hat év alattinak megvan.
+G8D9D9F75	Az a csodálatos ebben a játékban, A Gyűrűk Urában,
+G81AEE08E	hogy az eredeti színészek hangját halljátok – mindegyikükét.
+GAE3BFBD7	Ma pedig Szürke Gandalf és Fehér Gandalf hangját vettem fel,
+G21F22F52	azt a két karaktert, akit A Gyűrűk Urában játszom.
+GCED01E94	Mit látsz?
+GB4F26455	Jelek vannak rajta.
+G5C7EB8BC	Valamilyen tünde írás.
+G27A03C42	Nem tudom elolvasni.
+G8E22513B	Kevesen tudják.
+G4B2817A2	Most szövetség köttetett a Két Torony között: Orthanc és Barad-dûr között.
+GC69D576A	A játékhoz kicsit nyersebb, kicsit készenlétibb, talán kicsit közvetlenebb.
+G363960EA	Egyikőtöknek be kell lépnie.
+GFFCB2D5D	Segítsetek a még élő falusiaknak.
+GF4DAF5B8	Alapvetően ez egy agresszív harci jelenet.
+G00009069	Gandalf katonai oldala kerül előtérbe: a hadvezér, a szamuráj, a vezető.
+G4519FC71	Nem mehetsz át!
+G066F3360	Szóval amit a képernyőn láttok, az a lehető legközelebb áll – a fenébe is –
+GF4CF848B	ahhoz a Gandalfhoz, akit a filmekben láttok. És bárcsak eljöhetnék, hogy veletek játsszak.
+G699B7BF2	Ebbe a Gyűrűbe öntötte kegyetlenségét, gonoszságát és akaratát, hogy uralma alá hajtson minden életet.
+GA1469225	Egy Gyűrű mind fölött.
+G01090CE9	Amit elkészítettünk, az több ezer ember hatalmas munkájának csúcspontja.
+G74E1F68D	A cím, A két torony, az Orthanc tornyára utal, 
+G0AE01FA9	ahol Szarumán, Christopher Lee karaktere székel,
+GD9642178	és Barad-dûr tornyára Mordorban, Szauron otthonára.
+G573418F9	A második film, mint a trilógia minden filmje, kihívás. És az is marad, amíg el nem készül.
+GB2A31EA0	Nagyszerű film. Nagyobb lesz, mint az első.
+GB831FA3A	Szerintem határozottan olyan nagy gonddal készültek ezek a filmek,
+GCCFC11FE	és nagyszerű, hogy ezt a tudást át tudjuk adni a játékot készítő csapatnak, 
+G327C2028	mert tudom, hogy ők is ugyanannyi gondot és erőfeszítést fektetnek abba, hogy igazán gazdag játékot adjanak a közönségnek.
+G2C4A352E	Tolkien a könyvekben nagyon élénken írja le Edorast,
+G10EFB23A	mint fából épült várost egy dombon, egy havas hegylánc előtt.
+G50D180A4	Amikor eredetileg helyszínt kerestünk, mondtam, figyeljetek, találnunk kell valahol Új-Zélandon,
+GDA11996F	egy ilyen dombot, ami a hegyek előtt áll.
+GD6F61F77	Úgyhogy helikopterrel bejárták az egész országot, és egy fényképpel jöttek vissza a tökéletes dombról.
+GC56228ED	Úgy száz-száztíz kilométerre volt a legközelebbi várostól.
+GF796DA0F	A Déli-sziget közepén volt; nagyon félreeső hely.
+GFA1CD969	Nagyjából hét-nyolc hónapig építettük ezeket a hatalmas épületeket.
+GC2D0BAAA	Az eredmény az lett, hogy a filmben teljesen hihető Edoras látható.
+GC2774958	Odamehettem, és úgy forgathattam, mintha létező helyszín volna.
+G99F69515	Az EA játékaiban az egyik izgalmas dolog, és amit a modelleken láttam, ahogy készültek,
+G6B3554D6	az a díszleteink és szereplőink kiváló lemásolása,
+GB997C9B4	egészen odáig, hogy az EA megegyezett a színészeinkkel, hogy eljönnek és felveszik a saját szövegüket.
+G815CAC49	A színészek nagyon lelkesek voltak emiatt.
+GA1640DEB	A Helm-szurdoki csata véget ért.
+G93BD7122	A Középföldéért vívott csata most kezdődik.
+G958468DE	Építettünk egy makettet Helm-szurdokról, de az volt az érdekes, hogy nem csak egy modell volt. 
+G1BC58576	Hatalmas makett volt. Negyedes léptékű, de már így is tíz-tizenkét méter széles.
+GFA4F689B	Olyan nagy volt, hogy egyszerűen lefényképezhettük a kameráinkkal, és nem tűnt makettnek.
+G2571B991	Teljesen hihetőnek tűnt.
+G31C24FB0	Egy nagyszerű filmhez valójában nagyszerű forgatókönyv és nagyszerű szereposztás kell.
+G9C04D37F	Gondolom, egy játéknál is sok ugyanilyen kihívás van.
+GA0B86A25	A megfelelő tehetségeket kell megnyerni a játéknak.
+G0B7DC714	Olyan történet kell, ami vonzza a közönséget, és ami fellelkesíti őket,
+G5E1101AB	és arra készteti őket, hogy életre kelni lássák.
+G87FC774C	Semmit sem tehetünk Frodóért.
+G3C9AA8BC	A küldetés az életébe kerül.
+G98F7C221	Rohan gyenge, és kész az elbukásra,
+GA01F7D34	így hát keményen és gyorsan csap le az Emberek világára.
+GA8723617	Ránk tört a háború.
+GE1AF4B03	Ellopták az én drágaszágomat, és mi akarjuk.
+G6A5F57B3	A projektbe vágva talán az volt a legijesztőbb,
+GDE1DC635	hogy éreztük: hihetetlen felelősség nyugszik rajtunk, hogy
+GCFDFC743	interaktív formában ugyanazt nyújtsuk, amit Peter Jackson a filmmel.
+GC87068A6	Minden idők egyik legszeretettebb irodalmi művét vette,
+G423C7E0C	és epikus filmes mesterművé formálta, ami milliókat és milliókat tett rajongóvá világszerte.
+GC8F29411	Egy projekt elején a koncepción és a tervezésen dolgozik az ember.
+GBACB2DE5	Ahogy a projekt halad – programozók, grafikusok, animátorok, környezettervezők,
+G047AC48F	modellező szakemberek, textúraszakemberek – mindannyian a játék saját területén gondolkodnak,
+GB60517EB	de az összélmény szempontjából.
+G13170460	Annak egyik előnye, hogy ilyen szorosan együtt dolgozhattunk a filmesekkel,
+GA03610FF	hogy a film számára készített modelleket és kellékeket
+G9DADDEE4	referenciaként használhattuk ahhoz, amit a játékunkban meg kellett alkotnunk.
+GF0D449E5	Árny mozog a sötétben.
+GEC940136	Aragorn tervezésekor mindhárom játszható karakterre egyszerre kellett gondolnunk.
+GBB381F7C	Legolas például sokkal inkább a gyorsaságra és a kifinomultságra épülő karakter.
+G4CE351A9	Gimli egy kis harckocsi.
+G21025B26	Aragorn inkább a kettő keveréke.
+G3ADE6E66	Mielőtt bármit építeni kezdtünk, képkockáról képkockára megnéztük az egyes karakterek mozdulatait.
+G80ADBA8B	Aztán elkészítettük a karakter drótvázát. Ez adja meg az alapvető arányait, méretét és léptékét.
+G85E5A400	Aztán textúrákat és világítást adtunk hozzá, hogy teljes legyen az öltözetük, és kidolgoztuk a karakter finom részleteit.
+GCD3CDD42	A színészeket nagyon érdekelte a velünk való munka.
+G092B49A0	Egy esetben Viggo Mortensen megmutatta nekünk néhány akciómozdulatát.
+G915A1A70	Ő és a kaszkadőr dublőre kinyitottak egy láda kardot, és vívni kezdtek egymással.
+G215B5E15	Ez lett Aragorn sok mozdulatának alapja.
+G7126178B	Azt akarja, hogy megtalálják.
+G7E02AF05	Amikor a filmből jeleneteket választottunk a játékmenetbe, Balin sírja kiemelkedően erős jelöltnek bizonyult.
+GF4146E18	Ez az első film egyik legemlékezetesebb pillanata.
+GE152213A	Újra akartuk teremteni azt a hangulatot, amit a sírra eső nagyon erős fénysugár ad.
+GB236432D	Ez kihívás volt a környezetmodellezőinknek és világítási szakembereinknek.
+GD3C26DBB	A rohani falu pályái egyediek abban az értelemben, hogy lehetőséget adtak a film egyes területeinek kibővítésére.
+G8669E69D	Maga a játékpálya kinézetre és hangulatra nagyon hasonlít a film helyszíneire, ami a világítást,
+GF9B205CF	az építészet formáját, az ott élő embereket illeti, de ebben az esetben építettünk is rá,
+GB285B32E	és olyan területeket hoztunk létre a pályán, ahol a játékos felfedezhet és harcolhat, és amiket talán nem látott a filmben.
+G5E5F1D1C	Az a csodálatos ebben a játékban, A Gyűrűk Urában,
+G610E0BE4	hogy a saját képernyőtökön halljátok az eredeti színészek hangját – mindegyikükét.
+GC6FCAA65	Segítség! Aragorn! Aragorn! Segítség!
+G20165D69	Hihetetlenül hiteles, és szerintem tényleg nehéz filmen alapuló játékot készíteni.
+GBF3A0A5B	Ennek a játéknak sikerül. Nagyon hasonlít a filmre.
+GDD010A37	Egy nagyon dinamikus zenei rendszert terveztünk, ami a játékbeli események hangulatát tükrözi.
+G96BEDA9C	Egy Gyűrű, hogy egybegyűjtse, és a sötétben egybezárja.
+G91629050	A filmben Szarumán tízezer uruk-haival támadja meg Helm-szurdokot.
+G3B702B98	Így más rendelkezésünkre álló eszközökkel kellett megteremtenünk a csata érzését.
+GDEFA604D	A hangeffektusokkal és a hanggal tényleg elérjük, hogy úgy érezd, ezernyi ork van a helyszínen.
+G204351C8	Ha valaki elindítja a játékot, és azt mondja magában:
+GEC81BA2D	Te jó ég! Ez a film! – akkor pontosan azt értük el, amit elterveztünk.
+G52BF957B	Ez az a hely, amire a filmből emlékszem.
+G571B482E	Ott vagyok. Tehetek valamit. Most én jövök.
+G625B0A6D	Ezt akarjuk, hogy a játékos érezze.
+GB222979D	Hol van a ló és a lovas?
+G2457FF85	Hol van a kürt, mely egykor zengett?
+G8B36CA83	Elmúltak, mint eső a hegyeken,
+G50095CA7	mint szél a réten.
+G10EB8BCF	A napok lehanyatlottak nyugaton,
+G109A0CCE	a dombok mögött,
+G02628501	az árnyékba.
+G80A942D2	Aragorn!
+GDDEA48AC	Súgó
+G4C40E774	Nyomd meg a START gombot
+GEE711094	Folytatás
+GF9202936	Újrajátszás
+G2E427514	Be
+GFC4343CA	Ki
+G52E4CD32	Navigálás
+G39D074FD	Kiválasztás
+GAC3A8B6E	Vissza
+G42B46F3C	@ 2002 New Line Productions, Inc.  A Gyűrűk Ura és a benne szereplő karakterek, nevek és helyek, * The Saul Zaentz Company d/b/a Tolkien Enterprises, a New Line Productions, Inc. licence alapján.  Minden jog fenntartva.
+G035F710A	Az EA GAMES* az Electronic Arts* márkája.
+GBAC3ED5F	A játék kódja és bizonyos audiovizuális elemei @ 2002 Electronic Arts Inc. Minden jog fenntartva.
+G0EF5F91F	Új játék
+GB8D9D2FD	Játék betöltése
+G0BE2A075	Beállítások
+G5D6AEEF7	Hibakereső mód
+G83335327	Extrák
+G731194FA	Játék mentése
+G7BA082D0	A folytatáshoz nyomd meg a START gombot
+G755B3BA1	Kontroller beállítása
+G03961FD4	Játékbeállítás
+GABEE6EA4	Nehézség:
+GF065116B	Könnyű
+G8D3A16F6	Normál
+GACDD0363	Szakértő
+GAEA05F86	Monó
+G913A11F7	Sztereó
+G2A253083	Térhatású
+GA10C5C21	Beszéd hangereje:
+G7F04050E	Zene hangereje:
+GF30A57F8	Feliratok:
+G64752D2D	Rezgés:
+GB3F78571	Játék hangereje:
+GED3C9F14	Hang:
+GB065D5A4	Válaszd ki a betöltendő játékot:
+G00FF7920	Válaszd ki a mentés helyét:
+GC99B6C1E	Válassz MEMÓRIAKÁRTYA-helyet:
+GFB5C0BA2	Xbox merevlemez
+GD2F916B6	2. MEMÓRIAKÁRTYA-hely
+GAEFBDEF3	Mégse
+GDA714102	Igen
+GB893E04C	Nem
+GE506E266	Biztos vagy benne?
+G574C52F2	Biztosan megveszed ezt a fejlesztést?
+G0D91D779	Biztos vagy benne? A küldetés legutóbbi végigjátszásának eredményei elvesznek.
+G1CF7123A	Biztos vagy benne? A játék minden nem mentett előrehaladása elvész.
+GEF04DC5D	Biztos vagy benne? A küldetésben elért előrehaladás elvész.
+GEDF6F861	Biztosan felülírod ezt a játékot?
+GF44D8878	Befejezted a fejlesztések vásárlását?
+G1EF3EFE3	Játék mentése merevlemezre
+G05163971	Játék betöltése merevlemezről
+G8F93A6FE	Válassz nehézséget
+G654484DF	Zárolva
+G5A7CB330	Teljesítve
+G8D6AAF13	Nem játszott
+GBE8C099C	Előjáték
+GF4FBBE46	Széltető
+GE7EA3020	Mória kapui
+GE13A531D	Balin sírja
+G79C1EAD3	Amon Hen
+G51C82E11	Fangorn erdő
+G35CCE51F	Rohan síkságai
+GAD341B58	Nyugatvidék
+G94ADD008	Rohani-hágó
+G9760067E	A Szurdokfal
+GF8B38ED5	Áttört fal
+G644C89AD	A Kürtvár udvara
+G69B8B4C2	Orthanc tornya
+GBF00F963	Helm-szurdok:
+GE34AB2FD	New Line állatkert
+GE132F5FF	Válaszd ki a lejátszandó videót:
+G4B3C17B9	Nyitány
+GAD303F2A	Befejezés
+G668B98BD	Szint
+G9C7A95F0	Fejlesztési pontok:
+G4AE44639	4) Írd be a megadott kódsorozatot.
+G5374B3F5	Titkos kódok
+GDF7B6B3A	Mindig pusztító:
+GFECB245B	Kétjátékos:
+GCAB16744	Kis ellenségek:
+G587D657D	Minden fejlesztés:
+G58E34314	Sebezhetetlenség:
+GF0336180	Lassítás:
+G5A122CB0	Kód beírása:
+G35BC6746	1) Indíts el egy küldetést.
+G46DF9919	2) A szüneteltetéshez nyomd meg a START gombot.
+G5A1291EE	3) Húzd meg és tartsd lenyomva:
+GEB88B42D	Végtelen életerő:
+G6AE6FFFE	Végtelen lövedék:
+GAA29A634	Küldetés vége:
+GB2AE1BCE	Szünet mód:
+GAA467E08	Tapasztalat hozzáadása:
+GEA42298C	Szintlépés:
+G6BA0C403	Életerő visszaállítása:
+G41D871E0	Lövedékek visszaállítása:
+G04DBD06B	Lövedékfejlesztés:
+GA7A50BB5	Fejlesztések mutatása
+GA67DF58D	Kilépés a menübe
+G773B79A5	Tovább a következő küldetésre
+G96540044	A küldetés nem sikerült.
+G5ADDCAC2	Küldetés újrajátszása
+G9DD85D6D	Kilépés a menübe
+G730918CA	Újrapróbálás
+GB437BA93	Stáblista
+G798A44A2	Küldetés újrajátszása
+G6F46B26E	Válassz nyelvet.
+G2809E047	English
+GE3AAFF7A	Gyors
+GD0DB46DB	Heves
+G9AD854EF	Ölés
+GE83BE834	Különleges
+GDB34AED9	Kombó
+GDACF8DCA	Megvásárolva
+G125CAC9A	Még nincs feloldva. A folytatáshoz nyomd meg az A gombot.
+GDA9711D2	Nem gyűjtöttél elég fejlesztési pontot ennek a fejlesztésnek a megvásárlásához. A folytatáshoz nyomd meg az A gombot.
+GEB0E0008	vagy
+G90A54691	hárítás után
+GF5F43483	földön fekve
+GFC1C2104	Üres hely
+GB8BCCCB9	2. játék
+G92BA5250	3. játék
+G9CCBAB2F	4. játék
+G76C930C6	5. játék
+G50C6B65D	6. játék
+G2AC43BF4	7. játék
+G34D594D3	8. játék
+G0ED31A6A	9. játék
+GBE76BA62	10. játék
+GE47934CB	11. játék
+G6ED86859	Nincs behelyezve memóriakártya (PS2). A játékadatok mentéséhez legalább 80 KB szükséges. Folytatod?
+G87DE26DA	Nincs elég hely az 1. MEMÓRIAKÁRTYA-helyen lévő memóriakártyán (PS2).  Az alkalmazás adatainak mentéséhez legalább 80 KB szükséges. Folytatod?
+G7118C569	Nincs elég hely a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyán (PS2).  Az alkalmazás adatainak mentéséhez legalább 80 KB szükséges. Folytatod?
+G6804B4C2	Nincs elég hely a MEMÓRIAKÁRTYA-helyeken lévő memóriakártyákon (PS2). Az alkalmazás adatainak mentéséhez legalább 80 KB szükséges. Folytatod?
+G849021EA	Az 1. MEMÓRIAKÁRTYA-helyen nincs memóriakártya (PS2). A folytatáshoz nyomd meg az X gombot.
+G59CE2129	A 2. MEMÓRIAKÁRTYA-helyen nincs memóriakártya (PS2). A folytatáshoz nyomd meg az X gombot.
+GC5BD8B5F	Csatlakoztasd újra a kontrollert, és a folytatáshoz nyomd meg a START gombot.
+GC2BDD02C	A 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártya (PS2) nincs formázva. Formázod a memóriakártyát (PS2)?
+G6B64948C	Az Xboxodon nincs elég szabad blokk a játékok mentéséhez.  Nyomd meg az A gombot a mentés nélküli folytatáshoz, vagy a B gombot, hogy felszabadíts legalább
+GEDAB4EA9	Csatlakoztasd újra a kontrollert, és a folytatáshoz nyomd meg a START gombot
+G00E55934	A merevlemezen nincs elég szabad blokk ehhez a mentett játékhoz.
+G20A17FB1	blokkot kell felszabadítani.
+G353AAE58	A formázás nem sikerült! Hiba a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyával (PS2)! A folytatáshoz nyomd meg az X gombot.
+G9CAF03E3	Nem sikerült menteni a játékot. A folytatáshoz nyomd meg az A gombot.
+GCB03752D	Játék elmentve.  A folytatáshoz nyomd meg az A gombot.
+GACBFB64F	A mentés a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyára (PS2) sikerült! A folytatáshoz nyomd meg az X gombot.
+GC7C0454F	Adatok mentése az 1. MEMÓRIAKÁRTYA-helyen lévő memóriakártyára (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+G4B14AAB4	Adatok mentése a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyára (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+G53DAC278	Adatok betöltése az 1. MEMÓRIAKÁRTYA-helyen lévő memóriakártyáról (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+GF144B8B3	Adatok betöltése a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyáról (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+G063DD8CC	Nem sikerült betölteni a játékot. A folytatáshoz nyomd meg az A gombot.
+GE5BDAC0B	Szeretnéd menteni a játékot?
+GED3A9CCF	Nincsenek mentett játékok. A folytatáshoz nyomd meg az A gombot.
+GAF453999	blokkot.
+GEE649E5A	Az 1. MEMÓRIAKÁRTYA-helyen lévő memóriakártya (PS2) nincs formázva. A folytatáshoz nyomd meg az X gombot.
+G81447581	A 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártya (PS2) nincs formázva. A folytatáshoz nyomd meg az X gombot.
+GB36F8F0C	Adatok olvasása az 1. MEMÓRIAKÁRTYA-helyen lévő memóriakártyáról (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+G97EC5687	Adatok olvasása a 2. MEMÓRIAKÁRTYA-helyen lévő memóriakártyáról (PS2). Ne vedd ki a memóriakártyát (PS2), ne indítsd újra és ne kapcsold ki a konzolt.
+G8E8AF6C1	Probléma van a használt lemezzel. Lehet, hogy piszkos vagy sérült.
+G9CB8DFF0	1. küldetés
+G0EC04F2B	2. küldetés
+GE8BDD4C2	3. küldetés
+G5AC543FD	4. küldetés
+G34C2C994	5. küldetés
+GA6CA38CF	6. küldetés
+G80C7BE66	7. küldetés
+GF2CF2DA1	8. küldetés
+GCCCCB338	9. küldetés
+GA1F545C0	10. küldetés
+GC7F7C029	11. küldetés
+GEDFA3A92	12. küldetés
+G13FCB4FB	13. küldetés
+GFBA35200	A küldetés
+G6DAAC13B	B küldetés
+G47A846D2	C küldetés
+GB9AFB60D	D küldetés
+G0111B4C5	Küldetés tapasztalata:
+G10CB2024	Küldetés értékelése:
+GB8F11F62	Összes fejlesztési pont:
+G94649BD6	Tökéletes
+GE424E811	Kiváló
+G70E9184E	Jó
+GE98543F1	Közepes
+GF9792B5F	Gyenge
+G4DE9139C	Ügyesség
+GB525F096	Erős
+G5F8C23CD	Védekezés
+G8673311D	Támadás
+G7829DFB2	Gyors kombináció.  Hatásos a kisebb, pajzs nélküli ellenfelek ellen.
+G63E6B4FD	Pusztító kombináció akadályok áttöréséhez vagy az ellenséges pajzsok szétzúzásához.
+G406CD62A	Használatához húzd meg és tartsd lenyomva a bal ravaszt.  Tüzelés az A gombbal (tartsd lenyomva a nagyobb sebzésért).
+G7651B078	Ez a döfés végez bármely leütött ellenféllel.
+G09258F36	Ellökheted magadtól az ellenségeket, ki a csapástávolságból.
+G36E84E05	Hárítja az ellenséges támadásokat és lövedékeket.
+G074FC78D	Pusztító támadás.  Használatához nyomd meg és tartsd lenyomva az Y gombot.
+GE5C8740D	Végleg megnöveli az életerődet.
+G791AEDAB	Előrerontva a földre taszítod a pajzs nélküli ellenségeket.
+GF4A5485B	Támadj, miközben talpra állsz, és lepd meg az ellenséget.
+GC0B8F80A	Nagyon hatásos kombó a pajzs nélküli ellenfelek leterítésére.
+G6CBE68E9	Nagyon hatásos a pajzsos ellenségek lehető leggyorsabb leterítésére.
+GD7BB121B	LÁNCOLT MOZDULAT: Azonnal végez egy támadó goblinnal.
+G4A59663E	A Dúnadan íjhoz hasonlóan kilőve a rohírok szakállas nyilai súlyos sebzést okoznak.
+G96A8AB86	Végleg megnöveli az életerődet.  (Feltétel: A helytartók ereje)
+GED26DEB8	Messziről előrerontva a földre taszítod a pajzs nélküli ellenfeleket. (Feltétel: Rohamtámadás)
+GB4790643	Ezzel a kombinált támadással megsebzed, leütöd és lesújtasz az ellenfeledre.
+G9709901B	Ezzel a kombóval lesújtasz egy pajzs nélküli ellenfélre, végzel vele, és gyorsan lecsapsz a következőre.
+G066B80A4	LÁNCOLT MOZDULAT: Azonnal végez egy támadó orkkal.
+GB54F0B8A	Végleg megnöveli az életerődet.  (Feltétel: Isildur ereje)
+G1C742C09	Még pusztítóbb támadás.  (Feltétel: Kószatombolás)
+G9F299E6A	Megnöveli a Gyors támadásod sebzését.
+G2A888253	Ezzel a kombóval megsebzed, leütöd, majd végzel az erős ellenfelekkel.
+GEF4043FD	Végleg megnöveli az életerődet.  (Feltétel: Elendil ereje)
+GF3D48718	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: A vadon dühe)
+GDAE09290	Gondor vasnyilai rettenetes sebzést okoznak.  (Feltétel: Rohani íj)
+GBD1ED2AE	LÁNCOLT MOZDULAT: Azonnal végez egy támadó uruk-haival.
+G6DF8DC34	Erős ellenfél ellen használd: szétzúzza a pajzsát, a földre dönti, és lesújt rá.
+GB1BCB280	Semmi
+GE225A1EC	Használatához húzd meg és tartsd lenyomva a bal ravaszt.  Dobás az A gombbal (tartsd lenyomva a nagyobb sebzésért).
+GFF3FB1CE	Ez a fejszecsapás végez bármely leütött ellenféllel.
+G81A89461	Végleg megnöveli az életerődet.  (Feltétel: A szikla hatalma)
+GF266C7E6	Végleg megnöveli az életerődet.  (Feltétel: A vas hatalma)
+G2FCD00C0	Messziről előrerontva a földre taszítod a pajzs nélküli ellenfeleket.  (Feltétel: Rohamtámadás)
+G00247254	Végleg megnöveli az életerődet.  (Feltétel: Védelmi rúna)
+GA505D28C	Végleg megnöveli az életerődet.  (Feltétel: Balin hatalma)
+G34C62FC4	Az Erebori fejszékhez hasonlóan dobva a borotvaéles Móriai fejszék még nagyobb sebzést okoznak.
+G57901BB9	Még pusztítóbb támadás.  (Feltétel: Törptombolás)
+G8840F62F	Végleg megnöveli az életerődet.  (Feltétel: Glóin hatalma)
+G361F0511	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: A hegyek dühe)
+G219C0125	Ezek a mithrilélű pengék rettenetes sebzést okoznak.  (Feltétel: Móriai fejszék)
+G9986DAAB	Megnöveli a Heves támadásod sebzését.
+G11BF2FC5	A Bakacsinerdei hosszúíjhoz hasonlóan kilőve Völgyzugoly kőrisfa nyilai még nagyobb sebzést okoznak.
+G7A9893BB	Lothlórien bűvös nyilai iszonyú sebzést okoznak.  (Feltétel: Völgyzugolyi hosszúíj)
+G42E47239	Ezek a varázsnyilak lángba borítják az ellenségeidet.  (Feltétel: Lothlórieni hosszúíj)
+G5BAB8220	Végleg megnöveli az életerődet.  (Feltétel: Celeborn ereje)
+G39265CB0	Még pusztítóbb támadás.  (Feltétel: Tündetombolás)
+G084B6AEF	Ezek a nyilak átütnek és megsebeznek minden ellenséget az útjukban.  (Feltétel: Sárkánytűz-nyilak)
+GB1D19C39	Megnöveli minden kilőtt nyilad sebzését.
+G06E26BE1	Hármas csapás
+G20A303C1	Kettős vágás
+GCB8F4087	Dúnadan íj
+G3F6F3751	Árnycsapás
+GBE8C73E9	Harci rúgás
+G5660E3B0	Kardhárítás
+GDF332280	Kószatombolás
+GB8AB07B9	A helytartók ereje
+G187F8CC1	Rohamtámadás
+G86E487F5	Felálló támadás
+GF7D6DC76	Isildur sebes rettenete
+GB34DCC39	Isildur szabadítása
+GC9303634	Goblinvész
+G3A0786A5	Rohani íj
+G8B17B5C5	Isildur ereje
+G579A1927	Nekirontás
+G207C1523	Isildur halálrohama
+G6C2653E9	Isildur csele
+G2A3BA153	Orkvész
+GA28B29AA	Elendil ereje
+G7D213CCE	A vadon dühe
+G006BF315	Kardforgató mester
+G6B68444D	Isildur harci rohama
+G3B0A3720	Az Argonath ereje
+G78BAB3BC	Númenor haragja
+GCEDAD8B0	Gondori íj
+G3BE146BB	Szarumán veszte
+G701FD063	Isildur ítélete
+G0251EC9F	Erebori fejszék
+G96C77DAD	Fejszedöfés
+GDD4B6691	Fejszehárítás
+GADD20DD0	Törptombolás
+GB0D95BC6	A szikla hatalma
+G4FB6CF69	A vas hatalma
+G5F017E32	Balin sebes rettenete
+GDFD7CADD	Balin szabadítása
+GDF1B571B	Védelmi rúna
+G9B37EDE7	Balin halálrohama
+GCDB1A82D	Balin csele
+G2DEF1D03	Balin hatalma
+GE89D3658	Glóin hatalma
+G31B06C3A	Móriai fejszék
+GADFB76EF	A hegyek dühe
+G75612F09	Balin harci rohama
+G8CE2E527	Khazad-dûm hatalma
+GE4E87FCC	Mória haragja
+GA16173AB	Ködhegységi fejszék
+G24288EA5	Királyi fejszemesterség
+G45AAD667	Balin ítélete
+GB752504B	Bakacsinerdei hosszúíj
+GA018F71A	Késhárítás
+G0DCE9941	Tündetombolás
+G4A27D7DF	Celeborn ereje
+GE0EC06AA	Völgyzugolyi hosszúíj
+G76059454	Elrond sebes rettenete
+GE8C0678B	Elrond szabadítása
+GE9F2F2C9	Lothlórieni hosszúíj
+G5FE47D01	Elrond halálrohama
+G4B1902CB	Elrond csele
+GB3FB8DDE	Sárkánytűz-nyilak
+G4A61DECC	Galadriel ereje
+G204DE538	Gil-galad dühe
+G5B85BC6F	Elrond harci rohama
+GBDF43860	Mithrilnyilak
+G4B69DAC6	Tünde íjászmesterség
+G43AB31C1	Elrond ítélete
+GEAA8149B	Szint
+G11886F39	Hárítással kivédheted az ellenséges támadásokat, és eltérítheted a nyilakat.
+GE4E78CFD	Hárítás
+G3226B277	A Távolsági fegyverre váltáshoz húzd meg és tartsd lenyomva a bal ravaszt.  Tüzeléshez nyomd meg az A gombot.  Célzás a bal hüvelykujj-karral.
+GFF931564	Távolsági fegyver
+G9A309E3D	Tüzelés
+GC4AB2A6D	Gyors támadással sújts le a pajzs nélküli ellenségekre.
+G5C64BDED	Heves támadással törd szét az ellenséges pajzsokat.
+G4B1F5E2B	Heves támadás
+G12993772	Gyors támadás
+G5550F308	Gyűjts tapasztalati pontokat, hogy növeld karaktered szintjét, és értékes fejlesztéseket vásárolj.
+GD5F0D645	Szerzett tapasztalati pontok
+G109A17A7	Használj haladó kombinációkat, és kerüld az ellenséges találatokat, hogy feltöltsd az Ügyességmérőt, és maximális tapasztalati pontot szerezz.
+GDB22979F	Ügyességmérő
+GF7AF01B8	Célzás
+G552324EC	Hátraugrás
+G3962B27E	Végső csapás
+G819AB384	Visszalökés
+GB5FE5915	Tüzelés/Gyors támadás
+G1438BF1E	Mozgás/Célzás
+GCDD8B9EF	Szünet
+G63E0263C	Interjú
+GA970F7F6	Peter Jackson és Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	A Gyűrűk Ura
+GF0462ED4	A videojáték készítése
+G0DB34230	Exkluzív filmrészletek
+G9DF19E57	'A Gyűrű Szövetsége'
+G1704CE51	Forgatási fotók
+G330E63EE	Fangorn és Orthanc
+GD722C1B8	Rohan és Helm-szurdok
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Játék Aragornnal
+GA8934934	Játék Legolasszal
+G84C57E95	Játék Gimlivel
+G46EA0007	Játék Isildurral
+G5689E41F	Titkos küldetés
+G7F2C7A4C	Játék a titkos karakterrel
+G96AF0882	Koncepciórajzok
+G8813AE29	Feloldás: teljesítsd a Mória kapui pályát
+G4EEEB554	Feloldás: teljesítsd a Balin sírja pályát
+G3182CC3A	Feloldás: teljesítsd az Amon Hen pályát
+G54747798	Feloldás: teljesítsd a Fangorn erdő pályát
+G5D796BA6	Feloldás: teljesítsd a Rohan síkságai pályát
+G758A2B31	Feloldás: teljesítsd a Nyugatvidék pályát
+GD1B66361	Feloldás: teljesítsd a Rohani-hágó pályát
+GEC95C099	Feloldás: teljesítsd a Helm-szurdok: A Szurdokfal pályát
+G4F6E6B62	Feloldás: teljesítsd a Helm-szurdok: Áttört fal pályát
+G7E4B2F5F	Érd el az 5. szintet Aragornnal
+GA825B93E	Érd el az 5. szintet Legolasszal
+GD08EF3EF	Érd el az 5. szintet Gimlivel
+G060F3A0C	Teljesítsd a Helm-szurdok: A Kürtvár udvara pályát, és érd el a 10. szintet Aragornnal
+G9C00EBDD	Teljesítsd a Helm-szurdok: A Kürtvár udvara pályát, és érd el a 10. szintet Legolasszal
+GCA301FEC	Teljesítsd a Helm-szurdok: A Kürtvár udvara pályát, és érd el a 10. szintet Gimlivel
+G2A4097F8	Teljesítsd a Titkos küldetést bármelyik karakterrel
+GF80714A8	Teljesítsd a Titkos küldetést a titkos karakterrel
+GF281A415	Peter Jackson és Barrie Osborne a filmről és a játékról beszél
+GEF6D5A30	Elijah Wood arról beszél, milyen Frodót játszani A Gyűrűk Ura videojátékban
+G1B7C2E20	Ian McKellen arról beszél, milyen Gandalfot játszani A Gyűrűk Ura videojátékban
+G100A11D4	Kulisszatitkok: így készült A Gyűrűk Ura videojáték
+G14A8622F	Fotók A Gyűrű Szövetsége szereplőiről és helyszíneiről
+G228511D6	Fotók Fangorn és Orthanc szereplőiről és helyszíneiről
+GFDF064C7	A Gyűrűk Ura által ihletett rajzok John Howe-tól és Alan Lee-től
+GAAE1A0C0	Fotók Rohan és Helm-szurdok szereplőiről és helyszíneiről
+G6CEBDAE1	Viggo Mortensen arról beszél, milyen Aragornt játszani A Gyűrűk Ura videojátékban
+G6824CF13	Orlando Bloom arról beszél, milyen Legolast játszani A Gyűrűk Ura videojátékban
+G84770794	John Rhys-Davies arról beszél, milyen Gimlit játszani A Gyűrűk Ura videojátékban
+G775EAFA1	Titkos kódok A Gyűrűk Ura videojáték rejtett funkcióinak feloldásához
+G640E4463	Kiválasztás módosítása
+G6D02770F	Kiválasztás
+GE5EE10E6	Vissza
+GA75BE7EE	Kiválasztás módosítása vagy változtatása
+GE7B4EE86	Kilépés a főmenübe
+G47C91DD4	Kép váltása
+GE445F6CE	Fejlesztési pontjaidból fejlesztéseket vásárolhatsz a karakterednek.
+GB2D2B6DB	Öljétek meg mind!
+GFD9FFC0E	Gyors támadásokkal terítsd le ezt a lényt!
+G7BD97E94	Heves támadással zúzd szét a pajzsát!
+G62FC14DC	Itt jönnek! Öljétek meg mind!
+GA3F97A90	Kölcsönözzétek nekem kardotokat!
+G88F3FEA7	Ahh! Halj meg, Mordor fattya!
+G4888927E	A Fehér Városért!
+GB5DB8B33	Véged van!
+G91F156A0	Takarodj, árnyék teremtménye!
+G8F5E1C57	Halj meg, Szauron ivadéka! Halj meg!
+GEF59BEBD	Szorítsátok vissza őket!
+G263E18E0	Előre!
+G8715790C	Tartsátok az állást!
+G09E491AC	Halál!
+GC9D8887A	Gondori söpredék!
+GD909145B	Te, meghalsz!
+G8524085B	Mindannyiunkat nem ölhetsz meg!
+GFA0F31A8	Dögölj meg, söpredék!
+G6949F8FB	Túl sokan vannak, védekezned kell!
+GAB41028F	Védd magad, uram.
+GC99D9EF1	Ezt gyors támadásokkal legyőzheted.
+G8BC62719	A heves támadások széttörik azokat a pajzsokat.
+G24319240	A világ megváltozott.
+G6FC7E51E	Érzem a vízben.
+G586AE929	Érzem a földben.
+GA0D1D398	Érzem a levegőben.
+G20A7EC8F	Sok minden, ami egykor volt, elveszett,
+G9A5EEA48	mert nem él már senki, aki emlékezne rá.
+G991F588A	Minden a Hatalom Gyűrűinek kovácsolásával kezdődött.
+GDCCA686B	Hármat a tündék kaptak –
+G64D4928C	a halhatatlanok, a legbölcsebb és legszebb lények mind közül.
+GC38B0B40	Hetet a törpök urai,
+GE4E9DA85	a hegyi csarnokok nagy bányászai és mesterei.
+G8EA28015	És kilencet... kilenc Gyűrűt kapott ajándékba az Emberek nemzetsége,
+G5415D8A9	akik mindennél jobban vágynak a hatalomra.
+GCAF2B8E3	Mert e Gyűrűkbe zárták az erőt és az akaratot, hogy kormányozzák népüket.
+GEAB51D48	De mindannyiukat becsapták...
+G9968C959	mert készült még egy Gyűrű.
+G6DF9A86C	Mordor földjén, a Végzet-hegy tüzében
+GD5CC3D06	Szauron, a Sötét Úr titokban kovácsolt egy Mestergyűrűt, hogy az összes többit uralja.
+GA5AF65D9	És ebbe a Gyűrűbe öntötte kegyetlenségét, gonoszságát és akaratát, hogy uralma alá hajtson minden életet...
+GF9C8C37E	Középfölde szabad országai egymás után estek el a Gyűrű hatalma előtt.
+GD7B567A4	De voltak, akik ellenálltak.
+G9673067D	Az Emberek és Tündék Utolsó Szövetsége Mordor seregei ellen vonult,
+G9292CF8B	és a Végzet-hegy lejtőin Középfölde szabadságáért harcoltak.
+G9C449910	Ebben a pillanatban,
+G4E624CE3	amikor már minden remény szertefoszlott...
+G8B971AFC	...Isildur, a király fia, felvette apja kardját.
+GA0976A20	Szauron, Középfölde szabad népeinek ellensége vereséget szenvedett.
+GCE1FEBD6	A Gyűrű Isildurhoz került, akinek ez volt az egyetlen esélye, hogy örökre elpusztítsa a gonoszt.
+G4653B8E6	De az Emberek szíve könnyen megrontható.
+GF1F12CD3	Pusztítsd el!
+G7A59BC32	Nem.
+GEDAFB589	Isildur örököse vagyok, nem maga Isildur. A sorsom a saját kezemben van.
+GECD0FC9B	Helm-szurdokba! Brego, menj!
+GE526C94A	Frodó! Maradj távol tőlük!
+GE5AC368C	Segítség! Mindenhol ott vannak!
+GE18CFED5	Megtalálunk.
+G754CEC13	Vissza, te mocskos lény!
+G0EE492EC	A Gyűrűhordozót keresik! Maradjatok közel!
+GA236A198	Nem állhatsz ellen, félszerzet.
+GB0F6888B	Elvesztünk.
+GABCB70B5	Egész Vasudvard kiürült.
+GD4A9E9B3	Ezt a sereget egyetlen célra tenyésztették: hogy elpusztítsa az Emberek világát.
+G65599300	A Sötét Úr közeledik.
+GC6B5C82C	Zsákos...
+GDE3725D0	Gyűrűlidércek! Hátra!
+GDB2A2A63	Vándor!
+GDF3A925F	Kíméljék meg az életét. Mentsd meg.
+G4867AD04	Völgyzugoly menedékében a legkisebb közülünk mutatta a legnagyobb bátorságot.
+G3505351D	Elviszem én!
+G5B8CB3F8	És megszületett a Szövetség.
+GF6138FE1	Elviszem a Gyűrűt Mordorba!
+GA7DC204A	Bár...
+G2FFEE7D1	...nem ismerem az utat.
+GD051F7C5	Segítek neked viselni ezt a terhet, Zsákos Frodó...
+G82079845	...amíg a tiéd ez a teher.
+G8308B082	Mindannyiunk sorsát viszed, kicsikém.
+G32030F3F	És számíthatsz az íjamra.
+G7A19CD10	És a fejszémre.
+G18A439E8	Add nekünk a gyűrűt, félszerzet.
+G5E09B681	A gyűrű a miénk.
+GC7625599	Gyere hozzánk, félszerzet.
+GB2DCED15	Segítség!
+GF8B88DB9	Gyertek, segítsetek!
+G111D0DD5	Haldoklom.
+G439D87CA	Ez a vidék megváltozott.
+GB5DB841A	Itt várunk, amíg a túloldali út biztonságosnak nem látszik.
+GF0EB3761	Évek óta nem jött hír Móriából.
+G3A9580D6	Átkelhetnénk Mória bányáin.
+G852B83DE	Az unokatestvérem, Balin, királyi fogadtatásban részesítene minket.
+G48D6F333	Vigyázz!
+G20BEF03C	Gyorsan! Erre!
+G37B7E741	Rémséges fenevad.
+G70A83B75	Ez Durin kapuja, Mória uráé.
+GE6E19D64	Szóval, Gandalf, a Caradhrason át próbálod vezetni őket.
+GF7BC40D4	És ha az nem sikerül –
+GC7F3ECF5	akkor hová mész?
+G4F7AA217	Móriába!
+G0F8A9576	Szólj, barát, és belépsz.
+GCB3668DA	Mellon.
+G64134F99	Most már csak egy választásunk maradt.
+GE57BDBA1	Szembe kell néznünk Mória hosszú sötétségével.
+G3CA10A85	Mordori söpredék!
+GC753F514	Csapda!
+G66D5EE9E	Orkok. Rengetegen.
+G8AB8C148	Ha baj van, küldj be egy törpöt!
+G6F4359B4	Szép csapás, Gimli!
+G43E71D7A	Előremegyek, és utat keresek.
+G0F5D4F40	Lény.
+G0BFC06A5	Itt sokkal többet találtunk, mint Balinnak, Mória urának sírját.
+G79CBD185	Elbarikádoztuk a kapukat. Dobok a mélyben.
+G676CE560	Nem tudunk kijutni.
+GC2C2532E	Vissza, lélektelen dögök!
+G41169039	Legolas! Szükségünk van az íjadra!
+GED8A660A	Siess, Gimli!
+G548B1E16	Takarodj, rémséges fenevad!
+G8B6C996D	Ő az enyém!
+GD624A593	Mögötted!
+G22876487	Tartsd az állást!
+G6E72BC38	Vissza, ti dögök!
+G98FB35D8	Ide!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Túl sokan vannak!
+GEB38BB38	Hogyan állíthatnánk meg őket?
+GDB1D4894	Nem bírok velük!
+GCA82C10C	Nem tudom távol tartani őket!
+G839F36D1	Végezz velük az íjaddal!
+G426819B7	Balinért!
+G32A709EE	Rajtad vagyok!
+G7BC2A45C	Frodó!
+GE0A9DD2D	Túl sokan vannak!
+GB502E0B9	Bakacsinerdőért!
+G5C8B1856	Kukacjáratokat vágok a hasadba!
+GF8D92047	Kapjátok el mind!
+GDFB1C64C	Zúzzátok szét őket!
+G5AF9060B	Vissza az árnyékba!
+GF1BFC8A0	Aragorn! Szükségem van a pengédre!
+GF83070F8	Hozzám, Gimli! Ide!
+G2EC65D74	Készüljetek!
+GCD82317C	Tűz!
+GCEA41230	Szóródjatok szét! Nem keríthetnek be minket!
+G3AD812AF	Keressétek meg a félszerzetet!
+G6B59AA20	Frodó mindannyiunk sorsát viszi!
+G4B4B5CA5	Meg kell védenünk!
+G1881769E	Az ő becsületéért megfizetsz!
+G743E1105	Mória sötét utat jelentett Szövetségünknek.
+G32DCF8A9	Fussatok, bolondok!
+G10D542AD	Neeeeeee!
+GD10EAA8A	A küldetés borotvaélen táncol.
+GF997012E	Elég egy kis tévedés, és kudarcba fullad.
+G01C6A95F	De még sötétebb lett, mert Szövetségünk széthullóban volt.
+G212FEF60	Veled tartottam volna mindvégig, egészen Mordor tüzéig.
+G960898CD	Fuss!
+GD941582B	Nyugodj békében...
+G9D8421F1	...Gondor fia.
+G60BC6BA4	Le kell győznünk ezeket az uruk-haiokat, hogy Frodó megmenekülhessen!
+GF0E0DD02	Boromir!
+G1C9C2949	Egy kis segítséget ide, tünde!
+GB1E7FF01	Uruk-hai! Támadás!
+G62308F86	Ezt élvezni fogom!
+GA7F87EAC	Vissza a vermekbe, ahol születtetek.
+G06BA8520	Erre jöttek, gyertek.
+G817C5460	De itt véget ér a nyomuk. Szét kell válnunk, hogy gyorsan megtaláljuk őket.
+G934A6365	Aragorn, van ott valami.
+G32456D68	Mit látsz, Legolas?
+G090A57A6	A Fehér Varázsló.
+G3BE10384	Szarumán.
+GF471A310	Boromir hősiessége ellenére Szarumán szolgái foglyul ejtették Csapatunk néhány tagját.
+G9EB3E2D9	De nem hagytuk társainkat kínszenvedésre és halálra.
+GC9337F85	Napokig követtük a nyomukat...
+G1A87CFBD	...végül Fangorn erdejébe vezetett minket.
+G7754D2C1	Ez az erdő öreg...
+G9261B17A	...nagyon öreg.
+GF7DCBBD1	Tele van emlékekkel...
+GC4192431	...és haraggal.
+G92086B9D	Abban a nagy erdőben sok ösvény futott össze.
+G6F680400	Ez nem lehet.
+G7A0AC815	Most szövetség köttetett a két torony között – Orthanc és Barad-dûr között.
+GF36A1977	Máshol van rád szükség.
+GA926AFE5	Háború közeleg Rohanra.
+GC5293984	Na, most lesz egy kis mulatság!
+GCF6954E1	Láttam már ilyet, de soha nem így.
+G2E930B75	Egyetlen reményünk, ha kitartunk egymás mellett!
+GFD82D6F4	Szarumán erői különös robbanószerkezeteket szállítanak át a városon. Segíts elpusztítani őket!
+G86FA279C	Tartsátok fel őket a kapunál!
+G7B48AD72	Azon kevesek közülünk, akik harcolni tudnak, Helm-szurdokba vonulnak.
+GD55B6BE3	Ott dől el, hogy Rohan jövője él vagy hal.
+G2256A18D	Vigyázzatok a robbanószerekkel!
+GE0BD0D44	Igen! Kóstolják meg a tüzet!
+G82C8009F	Ez majd lelassítja őket!
+GA0C82879	Mi van itt?
+G751859FC	Mi ez?
+G06637EF0	El kell pusztítanunk ezeket a robbanószerkezeteket!
+GABF94061	Azokat a robbanószerkezeteket el kell pusztítani.
+G13114F1E	Vajon mi lehet ez?
+G5B2AF650	Ez még hasznos lehet.
+G14659B9A	Ez értékesnek tűnik.
+G418ECC01	Íme. Ezt megtartom.
+G136EC46C	Ezt érdemes magammal vinni.
+G360BBC1D	Szarumán őrülete és a Sötét Úr akarata hajtja őket.
+G4840EFEC	Még több tűzijáték? Ha! Mindannyiunkból hullát akarnak csinálni!
+G19910876	Most értünk jönnek!
+G08EB8FDB	Ez járhatatlan.
+G6FED1000	Más utat kell találnom.
+G68F91872	Ez a falu úgy ég, mint a száraz tapló!
+G57BD9573	Igen hasznos.
+G424E3FF5	Ez megteszi!
+G501ABC20	Álljatok szilárdan!
+G31FDA576	Ezt a területet is elárasztják!
+GB60A7265	Nem egyedül védtük Rohant.
+GA48B596C	A király testőrsége is Helm-szurdok felé küzdötte át magát.
+G65866A2E	Mindent megtettél, amit itt lehetett.
+G115A6D12	A túlélők Helm-szurdok felé indulnak.
+GC07CBB0E	Neked még dolgod van. Visszatérek hozzád, amikor fordul a kocka.
+G63B48C52	Áttörtek!
+GAAD29572	Kérem! Ne! Ne! Ne!
+G589F2E2F	Mindenkit meg kell mentenünk, akit csak tudunk, különben ez a falu elesik.
+GE1654ECA	Mielőtt hosszú utunk Edorasba vezetett volna...
+G97FC9F74	...a népetek már nagy veszélyben volt.
+GB52DB0C9	Kímélj meg!
+GDDA274AE	Kérlek! Kímélj meg!
+GA354A5CD	Ahhh! Ne!
+G1C74FEB5	Ne!
+G946E2F3A	Ne! Ne! Ne tedd!
+GF46D4AC5	Ne! Ne! Ne!
+G1BD76207	Vigyetek ki minket! Gyorsan!
+GE57CB50F	Kímélj meg, könyörgöm!
+G716689E1	Védjetek meg minket!
+G6295F93F	Ments meg! Kérlek, ments meg!
+GFA27E38F	Aaaaaah! Élve elégetnek minket!
+G25B702F8	Hagyj élni! Kérlek!
+GDE034FBB	Tovább kell haladnod.  Máshol van rám szükség.
+G898F1CFF	Hadd féljenek Vasudvard farkasaitól!
+G04FC403B	Nem engedhettük, hogy ezek a lények elérjék a menekülteket.
+GD8C5307E	Megvédtük a népeteket, de sok élettel fizettünk érte.
+G4FD6FE99	Majdnem a sajátomat is elvesztettem.
+G753DFA73	Így hát különféle utakon mindannyian Helm-szurdok erődjébe érkeztünk, hogy végső ellenállást tanúsítsunk.
+G932478E9	Most öljétek meg azt ott!
+GF940F960	Igen, kedveseim!
+G646F5FC4	A vargjaink ma éjjel lakomáznak!
+G948FC6FF	Ne játssz vele!  Öld meg!
+G99617AA4	Visszavonultak.  Egyelőre vége.
+G4A0F838F	Tizenkilenc!
+GC16105A6	Akkor döntetlen.
+GAC4FD1F9	Azt majd meglátjuk.
+GF71FBCA2	Kettő.
+G641CA89C	Jut mindkettőnknek, Gimli!
+GF4B76D82	Szauron tekintetét magunkon kell tartanunk – hogy vak maradjon minden másra, ami mozgásban van!
+G5B04C967	Vissza!
+G3487D102	Le a falról!
+G8B575855	Az orkok a falon vannak!
+GCE3C16C0	Már tizenhétnél tartok!
+G3D052135	Fedezékbe!
+G05C9D273	Újra tüzelnek ránk!
+G4941BF74	Döntsétek le azt a létrát, mielőtt elárasztanak minket!
+G265760A3	Le!  Hasra!
+G2E8173A8	Nem engedhetjük őket a Csillogó-barlangok közelébe!
+G36DE1341	Sosem láttam még ilyen fejszeforgatást, törp uram.
+G80FBF437	Én sem ilyen íjásztudományt.
+G3F35FF0E	De ők sosem állnak fel többé, miután eltaláltam őket.
+GEC633822	A védelmünket elsöpörték! Az asszonyok és a gyermekek csapdába esnek!
+G17070638	Vigyétek őket a Nagyterembe!
+G5CAB82D3	Itt tartjuk fel őket, vagy a toronyerődben!
+GFFC47594	Feltartottuk őket. Az asszonyok és a gyermekek biztonságban vannak – egyelőre.
+GBD5794D5	Nem tudjuk tovább feltartani őket! Be a Nagyterembe!
+G088ED5E4	Nem tudjuk feltartani őket!
+G7C6E3511	Szauron és Szarumán egyre szorosabbra húzza a hurkot.
+G7B236705	De minden ravaszságuk ellenére van egy előnyünk.
+GFCAC9515	A Gyűrű rejtve marad.
+G1C7DF558	S hogy mi el akarjuk pusztítani, az még legsötétebb álmaikban sem fordult meg.
+GB72B409D	Így hát az ellenség fegyvere egy hobbit kezében halad Mordor felé –
+G86CED6F6	minden nap közelebb viszi a Végzet-hegy tüzéhez.
+GD9BB4CD5	Szauron fél tőled, Aragorn.
+GDD966B5E	Íjászok a falra!
+G6A122B51	Hátrébb! A barikád mindjárt leomlik!
+G427F5206	Siess, törp uram!
+G113213B2	Menj Legolashoz, én itt feltartom őket!
+GA7B95A20	Gondorért!
+G7C696E8A	Aragorn túlerővel küzd! Hozzá!
+GFC98A99D	Tünde barátunknak segítség kell.
+G66A680C0	Uruk-hai!
+G8968245E	Mindjárt szétzúzzák a barikádot!
+G428EE07E	Bent vannak a toronyerődben. Végünk!
+GFAE8490C	NEEEEEE!!
+G63F31F0F	Közel a véged.
+GE8B9DB2E	A fájdalom útját választottad!
+G910D7B12	Te bolond.
+G58E8BBAA	Itt az ideje, hogy megállj.
+GD8425223	Csak nem hitted, hogy egy toprongyos kósza szembeszállhat az akaratommal? Hatalmad felett állok.
+G1A989E68	Megfizetsz a gőgödért.
+G0079D300	Nem gondoltad, hogy egy törp szembeszállhat Szarumán akaratával. Senki sem képes rá.
+GFB1E1C33	Csak nem gondoltad komolyan, hogy egy tünde szembeszállhat Szarumánnal? Senki sem képes rá, sőt meg sem merészelheti.
+GCB4F521C	A Helytartói íjhoz hasonlóan kilőve a rohírok szakállas nyilai súlyos sebzést okoznak.
+G906620AF	Végleg megnöveli az életerődet.  (Feltétel: Denethor hatalma)
+GE4F990F3	Még pusztítóbb támadás.  (Feltétel: Gondori tombolás)
+G55B83821	Végleg megnöveli az életerődet.  (Feltétel: Gondor ereje)
+GD4900EBD	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: Gondor haragja)
+GF1EE1785	Helytartói íj
+GC7DFC68A	Gondori tombolás
+G26838C80	Gondor kürtje
+G948EF2DD	A kapitány kiállása
+GC354B788	Denethor hatalma
+G2675AC6D	Minas Tirith-i roham
+G3A16134F	A helytartó csele
+G7C6E9536	Gondor ereje
+G909BDBD3	Gondor haragja
+GBCA2DB1D	A Fehér Torony rohama
+GA70E206F	Amon Hen-i kiállás
+GECE9E935	Játék Boromirral
+G2BAAD5AF	Használatához húzd meg és tartsd lenyomva a bal ravaszt.  Varázslás az A gombbal (tartsd lenyomva a nagyobb sebzésért).
+GF2DB6139	A Varázslófényhez hasonlóan Narya lángja is súlyos sebzést okozva égeti az ellenséget.
+G4E51B4E3	Végleg megnöveli az életerődet.  (Feltétel: Az isztarik ereje)
+G701450DF	Végleg megnöveli az életerődet.  (Feltétel: Olórin ereje)
+G876BFE80	Még pusztítóbb támadás.  (Feltétel: Maia tombolás)
+G554AF8D3	Végleg megnöveli az életerődet.  (Feltétel: Narya ereje)
+GF20F1105	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: A varázsló dühe)
+GE86497FB	Az isztarik fehér tüze rettenetesen éget. (Feltétel: Gyűrűtűz)
+G5D1DA1B0	Varázslófény
+GE4245C5B	Botos hárítás
+G68852FD1	Maia tombolás
+G63891384	Az isztarik ereje
+G3023E8DD	Anor lángja
+G03053C48	Nem mehetsz át
+G44E88937	Gyűrűtűz
+G31781C88	Olórin ereje
+GC67FABAE	Árnyék rohama
+GB28BAB38	Szürke Zarándok
+GBB647C84	Narya ereje
+G3A1959EB	A varázsló dühe
+G910A4D18	Glamdring mestere
+GE54BB6DF	Mithrandir rohama
+G80CB05F7	A Fehér ereje
+G5500602D	Olórin haragja
+GB3B8BA9A	Fehér tűz
+G4D3F3799	A maia haragja
+GB06CD44C	Játék Gandalffal
+GD63AEB69	Használatához húzd meg és tartsd lenyomva a bal ravaszt.  Hajítás az A gombbal (tartsd lenyomva a nagyobb sebzésért).
+GF1500B18	A Megyei kövekhez hasonlóan hajítva a Brandybor éles kovakövei súlyos sebzést okoznak.
+G1594107A	Végleg megnöveli az életerődet.  (Feltétel: A Megye ereje)
+G223FB1F4	Végleg megnöveli az életerődet.  (Feltétel: Bilbó ereje)
+G419FBE06	Még pusztítóbb támadás.  (Feltétel: Hobbittombolás)
+G549E8839	Végleg megnöveli az életerődet.  (Feltétel: Samu ereje)
+G3E7B6E97	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: A Megye dühe)
+G5DBA6F26	A tündék által megáldott kövek rettenetes sebzést okoznak.  (Feltétel: Kovalövés)
+G586DFFA8	Megyei kövek
+GAF333BB7	Hobbittombolás
+GA30AB0B5	A Megye ereje
+G5B952654	Fullánk harapása
+G3F0B7A46	A Gyűrűhordozó akarata
+GE7A5F0EC	Kovalövés
+G97512A2B	Bilbó ereje
+G4F6E34B0	Zsákos-roham
+G8AFDEEE2	Hobbitszerencse
+G9AE8326E	Samu ereje
+G5FECDC01	A Megye dühe
+GB7F9A847	Fullánk mestere
+GD629F714	Tukos roham
+G31486B52	Zsákos-domb ereje
+G4023054B	Fullánk haragja
+GD48B81F2	Tündekövek
+G371FFFDE	Mithril-elszántság
+G031E765B	Játék Frodóval
+G63C78123	A Vasudvardi íjhoz hasonlóan kilőve Orthanc szakállas nyilai súlyos sebzést okoznak.
+G266F9F27	Végleg megnöveli az életerődet.  (Feltétel: Vasudvard ereje)
+G4451D279	Végleg megnöveli az életerődet.  (Feltétel: Szarumán ereje)
+G2DE635F5	Még pusztítóbb támadás.  (Feltétel: Uruktombolás)
+G4D25FA2B	Végleg megnöveli az életerődet.  (Feltétel: Orthanc ereje)
+G055C2C2B	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: Vasudvard dühe)
+G478E4DB1	Vasudvard fekete nyilai rettenetes sebzést okoznak.  (Feltétel: Uruk-íj)
+GB0EED2A6	Vasudvardi íj
+G13D5F1B3	Pengehárítás
+GCC2F9E7C	Uruktombolás
+GF496EAA0	Vasudvard ereje
+GC727C10B	Lurtz vadászata
+G73D0C070	Szarumán akarata
+GD64B9B56	Uruk-íj
+G9E8D350E	Szarumán ereje
+G6426C642	Harcos urukok rohama
+GCC3C5342	A mészáros csele
+G0DEF3FCC	Orthanc ereje
+G0EBAA8C5	Vasudvard dühe
+GFC62112E	Mestermészáros
+GEE7780E5	Vasudvardi rohamár
+G838B10AC	Az uruk-haiok ereje
+GF44614A3	Szarumán haragja
+G45DC8B08	Fekete íj
+G4F638CF6	Rohan veszte
+G9E606E3B	Az első uruk végzete
+GE31550F8	Lurtz
+G981416DE	Játék Lurtzcel
+G6F22BB2E	A Tündeíjhoz hasonlóan kilőve Völgyzugoly nyilai súlyos sebzést okoznak.
+GCA4A15A1	Végleg megnöveli az életerődet.  (Feltétel: Völgyzugoly ereje)
+G75BCF244	Végleg megnöveli az életerődet.  (Feltétel: Gil-galad hatalma)
+G216AF74D	Végleg megnöveli az életerődet.  (Feltétel: Vilya ereje)
+G0B6CC0B6	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: Noldor düh)
+G0355C5D7	Az eldák ezüstnyilai rettenetes sebzést okoznak. (Feltétel: Vanya íj)
+GD3F16BA3	Tündeíj
+G710A6666	Völgyzugoly ereje
+G96D9F158	Vilya kegye
+GF127A06E	Utolsó Szövetség
+GB426C696	Vanya íj
+G71620C4B	Gil-galad hatalma
+GFBF3A490	Lindon rohama
+G00542D8B	A hírnök csele
+G5104305A	Vilya ereje
+G221633E0	Noldor düh
+G11A9FF39	Noldor harci roham
+GDE2839BE	Az eldák ereje
+GB0E7C432	Lindon haragja
+G008B68D9	Elda íj
+G10607364	Imladris ura
+G0BA28B85	Játék Elronddal
+GD6BB77A1	A Sötét villámhoz hasonlóan varázsolva Barad-dûr tüze súlyos sebzést okoz.
+G113CAFFC	Végleg megnöveli az életerődet.  (Feltétel: Barad-dûr ereje)
+G2F14F0F7	Végleg megnöveli az életerődet.  (Feltétel: Mordor ereje)
+G573FFFF8	Még pusztítóbb támadás.  (Feltétel: Sötét tombolás)
+G6AE28C4F	Végleg megnöveli az életerődet.  (Feltétel: A Gyűrű hatalma)
+GC4B7E7DB	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: Mordor dühe)
+G5FEE9C56	A Végzet-hegy lángjai rettenetes sebzést okoznak.  (Feltétel: Pokoltűz)
+GA07FAB7C	Sötét villám
+G59838F7F	Buzogányhárítás
+G0ACE1349	Sötét tombolás
+GD97CF863	Barad-dûr ereje
+GF62B2130	Szauron tánca
+G53F430F0	Az Egy Gyűrű akarata
+GB60C89B8	Pokoltűz
+GC26DDD50	Mordor ereje
+G29856B22	A Sötét Úr rohama
+G27C67462	Annatar csele
+G66205DC8	A Gyűrű hatalma
+GA64C9515	Mordor dühe
+G278CB8C1	A buzogány mestere
+G4B8493DC	Mordori harci roham
+G5487C52D	A Végzet-hegy ereje
+GE9A37F55	Mordor haragja
+G3F70A0C4	Végzettűz
+GBB8776B5	Tündék veszte
+G6E2AA149	Szauron Szeme
+G1C11BF19	Szauron
+G3057B52F	Játék Szauronnal
+GB76B50B9	A Sziklakövekhez hasonlóan hajítva a vermek kövei súlyos sebzést okoznak.
+GECFE6FA3	Végleg megnöveli az életerődet.  (Feltétel: A vermek hatalma)
+G47753157	Ez a pusztító támadás több ellenfelet is lángba borít.  (Feltétel: Berzerkerdüh)
+GF2D43E42	Az izzó kövek rettenetes sebzést okoznak.  (Feltétel: Harci kövek)
+GC390874C	Sziklakövek
+G035878D4	Berzerkerőrjöngés
+GC2D0B8DB	A Szurdok fáklyája
+GFF1647F7	Harci kövek
+G98869254	A vermek hatalma
+GC4A495AD	Szurdokfali roham
+GE0FB4F25	Uruk-hai csel
+G8925F4A1	Berzerkerdüh
+G468B4A5C	Berzerkermester
+GB0E58D9C	Ostromroham
+GD5AF6DD1	Orthanc haragja
+G01AF5769	Lávakövek
+G18494AB3	A vermek haragja
+GB3AAE2E1	Uruk-hai
+G683077D7	Játék uruk-haival
+P:Frame Rate:	Képfrissítés:
+P:Unlocked	Korlátlan
+P:Display Mode:	Megjelenítés:
+P:Window	Ablak
+P:Full Screen	Teljes képernyő
+P:Window Size:	Ablakméret:
+P:Automatic	Automatikus
+P:Aspect Ratio:	Képarány:
+P:Custom	Egyéni
+P:Resolution:	Felbontás:
+P:Anisotropic:	Anizotróp:
+P:Mipmaps:	Mipmapek:
+P:Off	Ki
+P:On	Be
+P:Ultra Textures:	Ultra textúrák:
+P:Wide Cutscenes:	Széles átvezetők:
+P:Anti-aliasing:	Élsimítás:
+P:VSync:	VSync:
+P:Picture:	Kép:
+P:Keep Shape	Arányos
+P:Stretch	Nyújtott
+P:Vertex Programs:	Vertexprogramok:
+P:Brightness:	Fényerő:
+P:Sharpening:	Élesítés:
+P:Colour:	Színek:
+P:Original	Eredeti
+P:Vivid	Élénk
+P:Muted	Tompa
+P:HUD Widescreen:	Széles HUD:
+P:Edges	Széleken
+P:Centred	Középen
+P:Menus:	Menük:
+P:Fill	Kitöltés
+P:Movies:	Videók:
+P:As Made	Eredeti
+P:Button Prompts:	Gombjelzések:
+P:Keyboard	Billentyűzet
+P:Mouse Pointer:	Egérmutató:
+P:Sensitivity:	Érzékenység:
+P:Pointer Size:	Mutatóméret:
+P:Mouse Aiming:	Egeres célzás:
+P:Invert Aiming:	Célzás fordítása:
+P:Up/Down	Fel/le
+P:Left/Right	Balra/jobbra
+P:Both	Mindkettő
+P:Mouse Steering:	Egeres irányítás:
+P:A Button:	A gomb:
+P:B Button:	B gomb:
+P:X Button:	X gomb:
+P:Y Button:	Y gomb:
+P:Black Button:	Fekete gomb:
+P:White Button:	Fehér gomb:
+P:Left Trigger:	Bal ravasz:
+P:Right Trigger:	Jobb ravasz:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad fel:
+P:D-pad Down:	D-pad le:
+P:D-pad Left:	D-pad balra:
+P:D-pad Right:	D-pad jobbra:
+P:L Stick Click:	Bal kar nyomás:
+P:R Stick Click:	Jobb kar nyomás:
+P:Move Forward:	Előre:
+P:Move Back:	Hátra:
+P:Move Left:	Balra:
+P:Move Right:	Jobbra:
+P:Look Up:	Nézés fel:
+P:Look Down:	Nézés le:
+P:Look Left:	Nézés balra:
+P:Look Right:	Nézés jobbra:
+P:Walk:	Séta:
+P:General Options	Általános
+P:Display Options	Megjelenítés
+P:Controls	Irányítás
+P:Reset Controls	Irányítás visszaállítása
+P:Press a key...  (Esc: cancel, Delete: clear)	Nyomj meg egy billentyűt...  (Esc: mégse, Delete: törlés)
+P:R Stick	Jobb kar
+P:Stick	Kar
+P:L Stick	Bal kar
+P:Black button	Fekete gomb
+P:White button	Fehér gomb
+P:Left trigger	Bal ravasz
+P:Right trigger	Jobb ravasz
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad fel
+P:D-pad down	D-pad le
+P:D-pad left	D-pad balra
+P:D-pad right	D-pad jobbra
+P:Left stick click	Bal kar nyomás
+P:Right stick click	Jobb kar nyomás
+P:Move forward	Előre
+P:Move back	Hátra
+P:Move left	Balra
+P:Move right	Jobbra
+P:Right stick up	Jobb kar fel
+P:Right stick down	Jobb kar le
+P:Right stick left	Jobb kar balra
+P:Right stick right	Jobb kar jobbra
+P:Walk	Séta
+P:None	Nincs
+P:LS click	BK nyomás
+P:RS click	JK nyomás
+P:Mouse Left	Bal egérgomb
+P:Mouse Right	Jobb egérgomb
+P:Mouse Middle	Középső egérgomb
+P:Mouse 4	4. egérgomb
+P:Mouse 5	5. egérgomb
+P:Space	Szóköz
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Fel
+P:Down	Le
+P:Left	Balra
+P:Right	Jobbra
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num szorzás
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Pontosvessző
+P:Equals	Egyenlőségjel
+P:Comma	Vessző
+P:Minus	Mínusz
+P:Period	Pont
+P:Slash	Perjel
+P:Backquote	Visszafelé aposztróf
+P:Backslash	Fordított perjel
+P:Quote	Aposztróf
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Tartsd lenyomva ({6}) a Távolsági fegyverre váltáshoz.  Tüzelés: {0}.  Célzás: {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Húzd meg és tartsd lenyomva ({6}) a Távolsági fegyverre váltáshoz.  Tüzelés: {0}.  Célzás: {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Használat: tartsd lenyomva ({6}).  Tüzelés: {0} (tartsd lenyomva a nagyobb sebzésért).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Használat: húzd meg és tartsd lenyomva ({6}).  Tüzelés: {0} (tartsd lenyomva a nagyobb sebzésért).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Használat: tartsd lenyomva ({6}).  Dobás: {0} (tartsd lenyomva a nagyobb sebzésért).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Használat: húzd meg és tartsd lenyomva ({6}).  Dobás: {0} (tartsd lenyomva a nagyobb sebzésért).
+P:A devastating attack.  Press and hold {3} to use.	Pusztító támadás.  Használat: nyomd meg és tartsd lenyomva ({3}).
+P:Game Saved.  Press {8} to continue.	Játék elmentve.  Folytatás: {8}.
+P:Game Saved.  Press {0} to continue.	Játék elmentve.  Folytatás: {0}.
+P:Unable to save game. Press {8} to continue.	Nem sikerült menteni a játékot. Folytatás: {8}.
+P:Unable to save game. Press {0} to continue.	Nem sikerült menteni a játékot. Folytatás: {0}.
+P:Unable to load game. Press {8} to continue.	Nem sikerült betölteni a játékot. Folytatás: {8}.
+P:Unable to load game. Press {0} to continue.	Nem sikerült betölteni a játékot. Folytatás: {0}.
+P:No saved games. Press {8} to continue.	Nincsenek mentett játékok. Folytatás: {8}.
+P:No saved games. Press {0} to continue.	Nincsenek mentett játékok. Folytatás: {0}.
+P:Not unlocked yet. Press {8} to continue.	Még nincs feloldva. Folytatás: {8}.
+P:Not unlocked yet. Press {0} to continue.	Még nincs feloldva. Folytatás: {0}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Nem gyűjtöttél elég fejlesztési pontot ennek a fejlesztésnek a megvásárlásához. Folytatás: {8}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Nem gyűjtöttél elég fejlesztési pontot ennek a fejlesztésnek a megvásárlásához. Folytatás: {0}.
+P:Press {8} to resume	Folytatás: {8}
+P:the left mouse button	bal egérgomb
+P:the right mouse button	jobb egérgomb
+P:the middle mouse button	középső egérgomb
+P:mouse button 4	4. egérgomb
+P:mouse button 5	5. egérgomb
+P:the A button	A gomb
+P:the B button	B gomb
+P:the X button	X gomb
+P:the Y button	Y gomb
+P:the Black button	Fekete gomb
+P:the White button	Fehér gomb
+P:the left trigger	bal ravasz
+P:the right trigger	jobb ravasz
+P:up on the d-pad	D-pad fel
+P:down on the d-pad	D-pad le
+P:left on the d-pad	D-pad balra
+P:right on the d-pad	D-pad jobbra
+P:the left thumbstick button	bal kar gombja
+P:the right thumbstick button	jobb kar gombja
+P:the Menu button	Menü gomb
+P:the View button	Nézet gomb
+P:the cross button	kereszt gomb
+P:the circle button	kör gomb
+P:the square button	négyzet gomb
+P:the triangle button	háromszög gomb
+P:Left Click	Bal katt
+P:Right Click	Jobb katt
+P:Middle Click	Középső katt
+P: or 	 vagy 
+P:Exit	Kilépés
+P:Press {k}	Nyomd meg: {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodó
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Szauron
+P:Uruk-hai	Uruk-hai
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	Elérési utak
+L:Game files ready:  	A játékfájlok készen állnak:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	A játékfájlok még nincsenek telepítve. Válaszd ki a The Two Towers (USA) Xbox ISO-fájlt vagy a kibontott lemez mappáját.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Az Ultra textúrák elkészítése a GLOS69 csomagból (egyszeri; néhány perc)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Xbox lemezkép (*.iso;*.xiso)\\0*.iso;*.xiso\\0Minden fájl\\0*.*\\0
+L:Checking disc...	Lemez ellenőrzése...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Válaszd ki a The Two Towers kibontott lemezmappáját (tartalmazza a default.xbe fájlt)
+L:Display	Megjelenítés
+L:Developer	Fejlesztői
+L:Renderer	Megjelenítő
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, a dxvk mappába téve)
+L:Software (no graphics card)	Szoftveres (videokártya nélkül)
+L:Frame rate	Képfrissítés
+L:30 fps (as on the Xbox)	30 fps (mint az Xboxon)
+L:60 fps (experimental)	60 fps (kísérleti)
+L:Unlocked (experimental)	Korlátlan (kísérleti)
+L:Display mode	Megjelenítési mód
+L:Windowed	Ablakos
+L:Full screen (borderless)	Teljes képernyő (keret nélküli)
+L:Window size	Ablakméret
+L:Automatic	Automatikus
+L:Aspect ratio	Képarány
+L:4:3 (original)	4:3 (eredeti)
+L:16:9 widescreen	16:9 széles
+L:21:9 ultrawide	21:9 ultraszéles
+L:32:9 super ultrawide	32:9 szuper ultraszéles
+L:HUD in widescreen	HUD széles képen
+L:At the screen's edges	A képernyő szélein
+L:Centred (4:3)	Középen (4:3)
+L:Menus	Menük
+L:Fill the screen (past the old TV margin)	Képernyő kitöltése (a régi tévés margón túl)
+L:Original (with a margin)	Eredeti (margóval)
+L:Movies in widescreen	Videók széles képen
+L:As made (4:3)	Eredeti (4:3)
+L:Fill the width (black bands cut off)	Szélesség kitöltése (fekete sávok levágva)
+L:Widescreen cutscenes	Széles átvezetők
+L:Off (4:3, side bars)	Ki (4:3, oldalsávok)
+L:On (the sky's edges can show)	Be (az égbolt széle látszódhat)
+L:Ultra textures	Ultra textúrák
+L:Off	Ki
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	Be (élesebb menük és HUD; a GLOS69 csomaggal minden)
+L:Internal resolution	Belső felbontás
+L:1x  (640 x 480, original)	1x  (640 x 480, eredeti)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 sor: 3840 x 2160 16:9 esetén)
+L:Anisotropic filtering	Anizotróp szűrés
+L:Mipmaps	Mipmapek
+L:On (less shimmer)	Be (kevesebb vibrálás)
+L:Anti-aliasing	Élsimítás
+L:FXAA (the finished picture)	FXAA (a kész képen)
+L:VSync	VSync
+L:On (no tearing)	Be (nincs képszakadás)
+L:Picture shape	Képforma
+L:Keep aspect (black bars)	Arány megtartása (fekete sávok)
+L:Stretch to fill	Nyújtás kitöltésre
+L:Vertex programs	Vertexprogramok
+L:Graphics card (faster)	Videokártya (gyorsabb)
+L:CPU (old method)	CPU (régi módszer)
+L:Brightness	Fényerő
+L:Darker	Sötétebb
+L:Original	Eredeti
+L:Brighter	Világosabb
+L:Brighter +	Világosabb +
+L:Brightest	Legvilágosabb
+L:Sharpening	Élesítés
+L:Low	Alacsony
+L:Medium	Közepes
+L:High	Magas
+L:Colour	Színek
+L:Vivid	Élénk
+L:Muted	Tompa
+L:Button prompts	Gombjelzések
+L:Automatic (follows the pad or keys you use)	Automatikus (a használt kontrollert vagy billentyűket követi)
+L:Keyboard / mouse (your bound keys)	Billentyűzet / egér (a kiosztott billentyűid)
+L:Input	Bemenet
+L:Mouse pointer in menus	Egérmutató a menükben
+L:On (point and click in the menus)	Be (kattintás a menükben)
+L:Off (mouse buttons as bound)	Ki (egérgombok a kiosztás szerint)
+L:Mouse sensitivity	Egérérzékenység
+L:Normal	Normál
+L:Very high	Nagyon magas
+L:Pointer size	Mutatóméret
+L:Small	Kicsi
+L:Large	Nagy
+L:Extra large	Extra nagy
+L:Mouse aiming (ranged)	Egeres célzás (távolsági)
+L:On (hold the ranged button, move the mouse)	Be (tartsd lenyomva a távolsági gombot, mozgasd az egeret)
+L:Mouse aiming: invert	Egeres célzás: fordítás
+L:Up / down	Fel / le
+L:Left / right	Balra / jobbra
+L:Both	Mindkettő
+L:Mouse steering (movement)	Egeres irányítás (mozgás)
+L:On (the mouse sets the way; W A S D move by it)	Be (az egér adja az irányt; a W A S D ehhez képest mozgat)
+L:Mod: ECTS 2002 HUD (experimental)	Mod: ECTS 2002 HUD (kísérleti)
+L:Off (retail HUD)	Ki (kiadott HUD)
+L:On (ECTS 2002 demo HUD)	Be (ECTS 2002 demó HUD)
+L:Mods	Modok
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Mod: Narancs életerő-felvehetők (a megjelenés előtti és kulisszavideókból)
+L:Off (green, as retail)	Ki (zöld, mint a kiadásban)
+L:On (orange health pickups)	Be (narancs életerő-felvehetők)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Mod: Extra hősök (Boromir, Gandalf, Frodó, Lurtz, Elrond, uruk-hai, Szauron; Isildurral oldhatók fel)
+L:Off (four heroes, as retail)	Ki (négy hős, mint a kiadásban)
+L:On (eleven heroes)	Be (tizenegy hős)
+L:On, unlocked for testing (save not changed)	Be, teszteléshez feloldva (a mentés nem változik)
+L:Custom: 	Egyéni: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Az Ultra textúrák be vannak kapcsolva: a menük, a pályaválasztó és a HUD élesebb.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	Az összes textúrához töltsd le a GameCube nagy felbontású textúracsomagot (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	a készítőjétől, és tedd a GLOS69 mappáját ide:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nAz indító a Játék gomb következő megnyomásakor előkészíti (egyszer; néhány perc).
+L:Graphics settings	Grafikai beállítások
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	A modok kivételével minden játék közben is módosítható: nyomd meg az F10-et (vagy tartsd lenyomva a Back gombot, és nyomd meg a Startot). 
+L:The mods are set here and take effect when the game starts.	A modokat itt lehet beállítani, és a játék indulásakor lépnek életbe.
+L:Defaults	Alapértékek
+L:Cancel	Mégse
+L:A button	A gomb
+L:B button	B gomb
+L:X button	X gomb
+L:Y button	Y gomb
+L:Black button	Fekete gomb
+L:White button	Fehér gomb
+L:Left trigger	Bal ravasz
+L:Right trigger	Jobb ravasz
+L:Start	Start
+L:Back	Back
+L:D-pad up	D-pad fel
+L:D-pad down	D-pad le
+L:D-pad left	D-pad balra
+L:D-pad right	D-pad jobbra
+L:Left stick click	Bal kar nyomás
+L:Right stick click	Jobb kar nyomás
+L:Move forward	Előre
+L:Move back	Hátra
+L:Move left	Balra
+L:Move right	Jobbra
+L:Right stick up	Jobb kar fel
+L:Right stick down	Jobb kar le
+L:Right stick left	Jobb kar balra
+L:Right stick right	Jobb kar jobbra
+L:Walk (hold)	Séta (nyomva tartva)
+L:None	Nincs
+L:LS click	BK nyomás
+L:RS click	JK nyomás
+L:Mouse Left	Bal egérgomb
+L:Mouse Right	Jobb egérgomb
+L:Mouse Middle	Középső egérgomb
+L:Mouse 4	4. egérgomb
+L:Mouse 5	5. egérgomb
+L:Space	Szóköz
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Fel
+L:Down	Le
+L:Left	Balra
+L:Right	Jobbra
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num szorzás
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Pontosvessző
+L:Equals	Egyenlőségjel
+L:Comma	Vessző
+L:Minus	Mínusz
+L:Period	Pont
+L:Slash	Perjel
+L:Backquote	Visszafelé aposztróf
+L:Backslash	Fordított perjel
+L:Quote	Aposztróf
+L:Key 	Billentyű 
+L:Controls	Irányítás
+L:press a key or mouse button…	nyomj meg egy billentyűt vagy egérgombot…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Nyomd meg a művelethez tartozó billentyűt vagy egérgombot (Esc: mégse). Ez lecseréli a művelet első billentyűjét; a többi művelettől elvész.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Kattints egy billentyűmezőre, majd nyomj meg egy billentyűt vagy egérgombot. A legördülő listákban választhatod ki, hogy a kontroller melyik gombja melyik műveletet végzi. Ezek játék közben is módosíthatók: F10, Irányítás oldal.
+L:Action	Művelet
+L:Keyboard / mouse	Billentyűzet / egér
+L:Controller	Kontroller
+L:stick part way	kar félig kitérítve
+L:right stick	jobb kar
+L:left stick	bal kar
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Még dolgozik (telepítés vagy az Ultra textúrák készítése). Mégis kilépsz?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	A Gyűrűk Ura: A két torony  -  natív PC-s újrafordítás
+L:Install from ISO…	Telepítés ISO-ból…
+L:Use extracted folder…	Kibontott mappa használata…
+L:Show the game window	Játékablak megjelenítése
+L:Write a log file (for bug reports)	Naplófájl írása (hibajelentésekhez)
+L:Graphics settings…	Grafikai beállítások…
+L:Controls…	Irányítás…
+L:Play	Játék
+L:Open folder	Mappa megnyitása
+L:30 fps (original)	30 fps (eredeti)
+L:60 / unlocked can run some scenes faster than normal	60 / korlátlan módban egyes jelenetek a szokásosnál gyorsabban futhatnak
+L:Full screen	Teljes képernyő
+L:Alt+Enter or F11 also switches	Az Alt+Enter vagy az F11 is vált
+L:The 3D view widens fully after the next load	A 3D-s nézet a következő betöltés után szélesedik ki teljesen
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Élesebb, de erősebb videokártya kell hozzá (9x és fölötte: sok videomemória)
+L:On	Be
+L:Less shimmer on distant textures	Kevesebb vibrálás a távoli textúrákon
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	Az MSAA rajzolás közben simítja a 3D éleit; az FXAA a kész képet
+L:Waits for the monitor: no tearing	Megvárja a monitort: nincs képszakadás
+L:Picture	Kép
+L:Keep shape	Arányos
+L:Graphics card	Videokártya
+L:Graphics card is much faster	A videokártya sokkal gyorsabb
+L:Lifts the dark areas (gamma)	Világosítja a sötét részeket (gamma)
+L:Crisper textures, best with a higher internal resolution	Élesebb textúrák, magasabb belső felbontással a legjobb
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Automatikus: azt követi, amivel utoljára játszottál (kontroller, PlayStation kontroller, billentyűk)
+L:Where the HUD sits when the picture is wider than 4:3	Hol legyen a HUD, ha a kép szélesebb 4:3-nál
+L:Fill the screen	Képernyő kitöltése
+L:Menus, loading and upgrade screens: past the old TV margin	Menük, töltő- és fejlesztési képernyők: a régi tévés margón túl
+L:Fill the width	Szélesség kitöltése
+L:Fill: the films' black bands cut off, a little closer	Kitöltés: a videók fekete sávjai levágva, kicsit közelebbről
+L:Point and click in the menus (Off: the mouse buttons act as before)	Kattintás a menükben (Ki: az egérgombok a korábbiak szerint működnek)
+L:The pointer's speed and the mouse aiming's	A mutató és az egeres célzás sebessége
+L:Hold the ranged button and move the mouse to aim	Célzáshoz tartsd lenyomva a távolsági gombot, és mozgasd az egeret
+L:Press to toggle	Váltás nyomásra
+L:Hold	Nyomva tartás
+L:Windowed mode	Ablakos mód
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	A nagy felbontású textúracsomag (GLOS69 és textures_ultra a játék mellett)
+L:Off (4:3)	Ki (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	Be: a motorban futó jelenetek is szélesek (az égbolt széle látszódhat)
+L:Mod: ECTS 2002 HUD	Mod: ECTS 2002 HUD
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Az ECTS 2002 demó portréja, rúnagömbje és tapasztalatkijelzője
+L:Mod: Orange health pickups	Mod: Narancs életerő-felvehetők
+L:Health pickups are orange, as in pre-release and making-of videos	Az életerő-felvehetők narancsszínűek, mint a megjelenés előtti és kulisszavideókban
+L:Custom (%.2f:1)	Egyéni (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	GRAFIKAI BEÁLLÍTÁSOK
+L:Page	Oldal
+L:Graphics	Grafika
+L:Left/Right: switch to the Controls page	Balra/jobbra: váltás az Irányítás oldalra
+L:press a key...	nyomj meg egy billentyűt...
+L:Reset all controls to the defaults	Minden irányítás visszaállítása alapértékre
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Nyomd meg a billentyűt vagy egérgombot.  Esc: mégse.  Delete: törlés.
+L:A / Enter: reset	A / Enter: visszaállítás
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: billentyű beállítása.   Balra/jobbra: kontrollergomb.
+L:Left/Right: switch to the Graphics page	Balra/jobbra: váltás a Grafika oldalra
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Fel/le: választás     Balra/jobbra vagy A: módosítás     B / Esc / F10: bezárás
+L:Changes are saved automatically	A módosítások automatikusan mentődnek
+L:Language	Nyelv
+L:Restart the game for the language to change	A nyelv módosításához indítsd újra a játékot
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Az egér adja az előre irányt; a W, A, S és D ehhez képest mozgat (a Séta továbbra is sétál)
+L:Language (game and launcher):	Nyelv (játék és indító):
+L:CONTROLS	IRÁNYÍTÁS
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Extra hősök: Szauron a bal kar lenyomásával sprintel (billentyűzeten Shift)
+L:Sauron's sprint	Szauron sprintje
+L:hold	nyomva tartás
+L:toggle	kapcsoló
+L:Combo Runes	Kombórúnák
+L:Speed	Gyors
+L:Fierce	Heves
+L:Special	Különleges
+L:Each attack fills a quarter	Minden támadás egy negyedet tölt
+L:OK	OK
+L:Could not start twotowers_recomp.exe.	Nem sikerült elindítani a twotowers_recomp.exe fájlt.
+P:the left thumbstick	a bal kart
+L:default.xbe was not found in that folder.	A default.xbe nem található abban a mappában.
+L:That default.xbe is not the USA retail release this port was built from.	Ez a default.xbe nem az amerikai (USA) bolti kiadásból származik, amelyből ez a port készült.
+L:Error: 	Hiba: 
+L:Error: the disc has no default.xbe.	Hiba: a lemezen nincs default.xbe.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Hiba: ez az ISO nem a The Two Towers amerikai (USA) bolti lemeze, amelyet ez a port támogat.
+L:Extracting 	Kibontás: 
+L:Ultra textures (once): 	Ultra textúrák (egyszeri): 
+L:Ultra textures: 	Ultra textúrák: 
+L:Converting 	Konvertálás: 
+L:Softening the edges of 	Élek lágyítása: 
+L:Fixing the transparency of 	Átlátszóság javítása: 
+L:Writing the index	Az index írása
+L:Ultra textures ready: 	Ultra textúrák készen: 
+L: pictures	 kép
+L: could not be made	 nem készülhetett el
+L:The GLOS69 texture pack is not in the game's folder.	A GLOS69 textúracsomag nincs a játék mappájában.
+L:Could not write textures_ultra/index.bin.	Nem sikerült írni a textures_ultra/index.bin fájlt.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	Be (W nyomva tartva: arra fut, amerre az egér tolja; a Séta sétál)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	W nyomva tartva: arra fut, amerre az egér tolja (a Séta sétál)

@@ -1,0 +1,2 @@
+name=Français
+rtl=0

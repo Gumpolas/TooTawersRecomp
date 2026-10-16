@@ -1,0 +1,1454 @@
+# Română, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	STPÂNUL INELELOR:  CELE DOU TURNURI
+G20EBC61E	Un film de Peter Jackson
+G2D8D3B98	Productori
+G7EDB1AE9	Coproductori
+G90AF53E8	Efecte speciale
+G893165F0	Weta Digital
+GD9523953	Muzica: Howard Shore
+G7B677F6E	Voci în joc
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	ECHIPA XBOX
+GAAA9253B	Management de proiect
+G2E65B2E4	Programare
+G1E165282	Grafic
+G4CFF767B	Audio
+G1B12D0CA	ECHIPA DE DEZVOLTARE ORIGINAL
+G5BB408B8	Director de proiect
+GA9D987DE	Director tehnic
+GA4E53836	Director de dezvoltare
+GCBF9A863	Director audio
+G71D27F1C	Designer principal
+GABE6171F	Programator principal
+GB6AEE806	Artiti principali de decoruri
+G0FAA1BD8	Artist principal secvene cinematice
+G93A039A2	Animator principal
+G85851417	Direcie artistic
+GEC5EB699	Productor asociat
+G1E1B7E49	Artist efecte speciale
+GE457B26A	Artiti decoruri
+G09AFDB2B	Artiti secvene cinematice în joc
+GC6201467	Artiti concept
+GCE12C680	Modelatori/animatori personaje
+G958F64A1	Artist interfa
+G5817028D	Programatori grafic
+G8E313DB8	Programatori IA
+G7559A05A	Programatori gameplay
+G47FDFA0D	Designeri de joc
+G2A1A4D1F	Design sonor i editare muzic
+GD6AC199C	Design sonor
+G83731102	Direcie de dezvoltare suplimentar
+G9B9AC6A2	Management de proiect suplimentar
+G2C8B85F3	Grafic suplimentar
+G154B3F75	Programare suplimentar
+GEC34AAA5	Design sonor suplimentar
+GE9E2F454	Texte suplimentare
+G8B63E4D8	Dezvoltare comercial
+G8E754AFA	Director executiv responsabil cu dezvoltarea
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Productor executiv
+GF944BB31	Productor senior
+G49F95533	Productor asociat localizare
+GE5AAA381	Productor asistent
+G20A463E8	Ingineri software
+GEDDCFA70	Tester principal
+G6EC637F4	Tester principal asistent
+GA9C92124	Testeri de baz
+GDDEFB046	Productori
+G5F4C2C91	Director dezvoltare jocuri
+G53E62C46	Designer de niveluri
+G4019279E	Director artistic asociat
+G3548CB79	Secvene cinematice în joc
+G5BF26924	Design grafic (interfa)
+GF5E6331B	Productor asistent localizare
+GB9029242	Productori asisteni
+G81160EAA	Animator senior
+GB1B5EEDE	Animator
+G1D384099	Modelatori decoruri
+GD670D187	Secvene video
+GB4300D0E	Supervizor producie
+GDB61FEB0	Manager producie secvene video
+G13204F99	Director artistic tehnic
+G8774AEB2	Director artistic
+G2EDA5AA3	Director de animaie
+G4761EC6C	Director tehnic personaje
+GC40AEB65	Artist principal decoruri
+G04B7AD9A	Scenarist
+GCCDC1EDE	Artiti personaje
+G765B2120	Animatori seniori personaje
+GDB98BF7E	Artist senior iluminare
+G8AEFA15C	Animator senior efecte
+GB64D9748	Animator efecte
+GB770287B	Rigger/modelatori CG
+GA89434BE	Aezare camer
+GBAA388EF	Editori
+GA79B5345	Designer sonor/reînregistrare
+GE2D38E72	Manager producie grafic
+G29C8EC71	Asistent executiv
+GB01B1D73	Administrator de sistem
+G257D0532	Asistent de producie
+GB2965969	Editare dialoguri
+G2ACF75E1	Procesare audio suplimentar
+G821EF7A5	Voci
+G3CCB3DF3	Asigurarea calitii EA
+G2851776E	Manager QA
+G3D43CCDD	Supervizor QA
+G997D9582	Coordonatori QA
+G5B5CE9C6	Coordonatori asisteni QA
+GE0B33004	Testeri de baz QA
+GBBB3A592	Coordonator proiect FLT
+G7F330F1A	Testeri funcionali de limb
+G731958CD	Testeri de limb
+G7005C763	Controlul calitii pentru clieni
+GCC3D24EF	Manager CQC
+G0FF24E54	Supervizor CQC
+G7498FE74	Coordonator departament CQC
+G5AB35ED0	Analiti de produs CQC
+G6E529086	Laborator de mastering
+G0229B6F3	Director, dezvoltare internaional de produse
+G6B435E81	Manager proiect localizare
+GF8BA9878	Coordonator proiect localizare
+G906896D8	Manager, autorizri i aprobri parteneri
+G860EDA13	Afaceri comerciale
+G7AC94AC6	Departament juridic
+GFDF965B3	Operaiuni studio
+G9FF9799E	Coordonator contracte studio
+G9E24FEC0	Director de marketing
+G44C57DC5	Manager de produs
+GE1A6D911	Relaii publice
+GA5ADE5FF	Documentaie
+G4C2A256D	Machetare documentaie
+G279BA159	Management proiect ambalaj
+G482E9235	Design ambalaj
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Echipa filmului Stpânul Inelelor
+GE196FA55	Regizor
+GE364782E	Productori executivi
+GB11B5F1A	Coproductori
+GDDE9A104	Arhivist
+G73D53EB3	Gestionar materiale
+G4616CF92	Asistent productori
+GD98C077D	Supervizori postproducie
+G26FFE43A	Prim-asistent montaj
+GFAE3387C	Gestionar machete
+G0D7D1A1D	Vicepreedinte executiv liceniere i merchandising mondial
+GD58105C6	Director de creaie
+GB0E8D9D5	Actori din film
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Vicepreedinte afaceri muzicale
+G96EBB4D8	Director executiv responsabil cu muzica
+G2728DB7D	Director muzical
+GFE08F13A	3Foot6
+GCFF1286B	Coordonator merchandising
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Vicepreedinte
+GE58F283A	Productor/manager de producie
+G97C336EB	Supervizor animaie
+G96FF4CEA	Director tehnic senior
+GE816CF3D	Responsabil principal configurare tehnic
+G22B756F5	Animatori
+G86F5B2D9	Pictor de decoruri
+GBC50C796	Administrator birou
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Productor delegat
+G14C96B5C	Artist principal CG
+GD9742A3C	Artiti/animatori CG
+GBA7D6969	Arnson Communications
+G22C5AB99	Productor executiv/director de creaie
+G45C5172D	Scenarist/productor
+GDCC6F23E	Director artistic/animator
+G9C4F3B3B	Artist DS
+GF0F58DD3	MULUMIRI SPECIALE EA
+G895C842A	MULUMIRI SPECIALE STORMFRONT STUDIOS
+G9D4DD21A	În inuturile Pmântului de Mijloc, legenda vorbete despre Stpânul Întunericului, Sauron,
+G6CFA90F6	i despre Inelul care i-ar da puterea de a înrobi lumea.
+G18F2969C	i care a ajuns acum în mâinile celei mai neateptate fiine cu putin.
+G378C79D6	Sunt un mare fan al jocurilor, aa c, evident, am vrut s aflu toate detaliile despre un joc video Stpânul Inelelor.
+GDCF04190	Intru într-o stare în care joc tot timpul,
+G977EBA13	i de obicei mi se întâmpl când joc, s zicem, un joc de aventur care m prinde.
+G49C9AB1A	Odat ce intru, nu m mai pot opri s m gândesc la el i trebuie s-mi duc personajul pân la capt.
+GD2647A40	Aceast sarcin i-a fost încredinat ie, iar dac tu nu gseti o cale, nimeni nu o va gsi.
+G3AC8371A	Adpostii-v!
+GAD82B19D	Am tot întrebat în stânga i-n dreapta despre jocul sta i în sfârit am apucat s-l joc i e incredibil.
+G8DE86872	E pur i simplu frumos de privit.
+G72E74697	Vai, ce tare e!
+GF9824FCA	Da, hai, Aragorn! Haide!
+G2EE7D5D4	Vin.
+G61F7CD7D	E un fel de bonus s poi porni un joc video i s m vezi alergând de colo-colo.
+G57A5BC04	Iau o btaie zdravn.
+G1F85273D	Frodo seamn cu mine! Nu-i grozav?
+G1FFE0A40	Ce tare.
+GE6E563F9	Vor gsi Inelul
+GD135555F	i îl vor ucide pe cel care îl poart.
+G18844D24	Fugi! Hai, Frodo!
+G525D5AD9	Vor Inelul! Nu trebuie s-l ia.
+GB99DAE56	Diferena dintre postsincronizarea pentru un film i dublajul pentru un joc este c la film postsincronizarea se face, de regul, pe imagine.
+G7558081F	Te uii la film i încerci s reproduci replicile pe care le-ai spus înainte i s le sincronizezi cu dialogul din film.
+GDD3F428F	Cine eti?
+GE906BA5B	i-e fric?
+G9BDAB30C	Da.
+G3B07B1B1	Nici pe departe destul.
+GFBD6613D	Pentru joc nu exist imagine, sunt doar o mulime de elemente de atmosfer pe care le arunci acolo.
+G0EE06D0F	Pericol, ajutor, chestii de genul sta.
+G2F9FC8E2	Aragorn! Ajutor! Aragorn! Aragorn!
+G289F7C03	Sunt fan al figurinelor i al jocurilor, iar dac ajung s fiu inclus, e un bonus total de pasionat i îmi place la nebunie.
+G67346E61	Chiar i cea mai mic fiin poate schimba cursul viitorului.
+G16420686	Sunt atât de entuziasmat... abia atept s am exemplarul meu. E beton.
+GDBA69463	Moria.
+G1D429D96	i-e team s intri în minele acelea.
+G372C9F91	tii ce au trezit în întuneric.
+G34515230	Mi-a plcut mult s fac jocul, pentru c nu trebuie s munceti atât de al naibii de mult
+G93AEF9C3	cum munceti când creezi personajul de la zero.
+GA9883FB4	Filmrile sunt, inevitabil, foarte lente.
+G0C1E0E8C	Un lucru minunat la jocul pe calculator este, desigur, c nu trebuie s m machiez.
+GA5F1044B	Când faci jocul, stai într-un studio
+GCE4A81AD	i zici: ei bine, cred c ar trebui s spui asta i asta i asta,
+G049A3A66	iar ei au un teanc de scenarii i tu spui toate replicile acelea minunate.
+G70F1359D	Ambuscad! Ambuscad!
+G65325B21	Apoi iau tot materialul, îl integreaz în joc i primeti i tu o parte din merite.
+G39F1D126	Dispozitivele acelea explozive trebuie distruse!
+GEB33699E	Ador modelul sta cu mine în rolul lui Gimli.
+GD9A0C650	Cred c e un personaj atât de viguros, de viril, de atrgtor.
+G43591DCA	E singurul personaj pe care ai vrea s-l joci.
+G5C0A6C1E	Adic restul, tii, Aragornii, tii, Legolaii, tii, tipi chipei, artoi i toate alea,
+G3D52D95F	dar pentru o lupt adevrat, de calitate, trebuie s-l alegi pe Gimli.
+G8E74524F	Am petrecut paisprezece luni în cele mai frumoase locuri din lume, în Noua Zeeland, ca s obinem aspectul potrivit pentru film.
+GAD562976	Jocul e o situaie de rzboi, de lupt, i e creat minunat i strlucit.
+G7F21BCD6	Nu-l pot lsa acolo! Doamne!
+G9AA947F5	Ce de timp o s ne mnânce.
+G669C44C6	Adic e o nou dependen pe care am descoperit-o.
+G63540AD1	Aadar, gameri, bravo, felicitri c ai ajuns în coliorul sta care v ofer interviul.
+G925FED56	A vrea s v pot spune cum s jucai mai bine, dar de fapt n-am reuit niciodat s ajung la nivelul sta.
+GC3162ADB	Mult noroc i jucai mai departe.
+GA3572714	Soarta lumii se va hotrî în curând.
+G922859CB	Tot procesul de construire, de realizare a jocului video
+GD9B03397	înseamn în principal c te lupi cu tot felul de chestii i chestii ninja... nu tiu ce.
+G24326AFA	Am fost surprins, arat mult mai realist,
+G3E302C15	parc trece la alt nivel.
+GBD830A87	Cred c Aragorn din jocul video ochete mai bine decât mine...
+GF76948D6	dar n-o s m plâng de asta.
+GD27FED3E	Dac prin viaa sau moartea mea te pot apra, o voi face.
+G56368F53	Ai sabia mea.
+G8D6DAFD1	Ce am vzut din jocul video pare s reflecte faptul c
+G970D4AB6	al doilea film, spre deosebire de primul, e la o scar mai mare
+GFD0BADCA	i atept cu nerbdare s le vd, la fel cum atept s vd restul jocului.
+G1F48F697	Azi am vzut doar o mostr.
+GB689F1B9	M bucur s vd, de exemplu, c uneori Aragorn e doborât, sau cade, sau se rostogolete,
+G6F6072BC	i c stilul lui de lupt se schimb, tii, ca s se potriveasc situaiei.
+GA3A3F7A1	Nu e mereu curat i ordonat, tii, e cumva...
+G28095E46	uneori poate fi un pic btu, cel puin aa a fcut-o în film, iar jocul reflect asta, cred.
+G43AA6A0B	E impresionant.
+G8559FF90	Strini din inuturi îndeprtate, ai fost chemai aici pentru a rspunde ameninrii Mordorului.
+GC2A75F48	Pmântul de Mijloc se afl în pragul distrugerii.
+GFE143A07	Nimeni nu poate scpa. Unii-v, sau vei cdea.
+GF59E5460	Mereu m uimete când vd progresul tehnologiei i toate astea
+GAD5CBAE4	i cât de aproape a ajuns de lucrul adevrat.
+GF96BCD4B	Trebuie s ajung la Boromir, acum!
+GD262135E	Când înregistrezi postsincronizarea pentru un film, evident, te uii la ecran,
+G83EECB7A	vezi aciunea derulându-se în faa ta exact cum ai jucat-o în ziua aceea.
+G3C0B6913	Când înregistrezi pentru asta,
+G2A8B6AD2	nu e nicio camer îndreptat spre tine
+G52F7D105	i nu încerci s sincronizezi buzele cu o imagine din faa ta,
+G8EE2279F	aa c poi chiar s faci un efort în plus i s
+GA5BE0F5A	accentuezi i s dezvoli ce scrie pe pagin.
+G51E230FB	Înapoi în gropile care v-au zmislit!
+G97400E1E	Sunt mai intense decât ar fi în film.
+GC26338C3	Înelegi ce vreau s spun?
+G40EB5D5C	Sunt oarecum uor ridicole, i e amuzant.
+G52FECFA2	A fost amuzant s m joc cu ele în felul sta.
+G91D69630	Haide!
+G87873143	Nu poi câtiga lupta asta!
+G47AECCC4	Cred c dac a juca jocul,
+GB0CCD2A6	mi-ar plcea s tiu c actorii adevrai au dat glas aciunii pe care o juca personajul generat pe calculator,
+GC1719889	i cred c, cu cât e mai mult realitate în lumea calculatorului, cu atât e mai palpitant pentru juctor.
+G77ECFBF0	Nu-l poi folosi. Niciunul dintre noi nu poate.
+GB42EC53B	Inelul trebuie distrus.
+G43E793ED	Primejdia Purttorului Inelului se adâncete.
+G6E2FF8E0	Cci mai e cineva care vâneaz Inelul.
+GDD26CBEC	N-am jucat niciodat un joc video în viaa mea.
+GF783F574	Nu reuesc niciodat s îneleg regulile.
+G573BC826	Am mâini foarte mari i stângace i nu tocmai coordonarea mân-minte care cred c e necesar
+GFBB68CB5	i pe care pare s-o aib oricine sub vârsta de ase ani.
+G8D9D9F75	Ce e atât de minunat la jocul sta, Stpânul Inelelor,
+G81AEE08E	e c ai vocile actorilor originali, ale tuturor.
+GAE3BFBD7	i azi am înregistrat pentru Gandalf Surul i Gandalf cel Alb,
+G21F22F52	cele dou personaje pe care le interpretez în Stpânul Inelelor.
+GCED01E94	Ce vezi?
+GB4F26455	Sunt nite semne.
+G5C7EB8BC	E un fel de scriere elfic.
+G27A03C42	Nu pot s-o citesc.
+G8E22513B	Puini sunt cei care pot.
+G4B2817A2	Acum exist o alian între Cele Dou Turnuri: Orthanc i Barad-dûr.
+GC69D576A	Pentru joc e un pic mai brut, un pic mai spontan, un pic mai direct, poate.
+G363960EA	Unul dintre voi trebuie s intre.
+GFFCB2D5D	Ajutai-i pe stenii care mai sunt în via.
+GF4DAF5B8	Practic, asta e o secven de lupt agresiv.
+G00009069	Iese la iveal latura militar a lui Gandalf: comandantul, samuraiul, conductorul.
+G4519FC71	Nu vei trece!
+G066F3360	Aa c ce vedei pe ecran e cât se poate de aproape, la naiba,
+GF4CF848B	de Gandalf pe care îl vedei în filme. i a vrea s pot veni s joc jocul cu voi.
+G699B7BF2	În acest Inel i-a revrsat cruzimea, rutatea i voina de a stpâni orice via.
+GA1469225	Un Inel s le stpâneasc pe toate.
+G01090CE9	Ce am fcut este încununarea unei cantiti uriae de munc la care au participat mii de oameni.
+G74E1F68D	Titlul, Cele Dou Turnuri, se refer la Turnul Orthanc, 
+G0AE01FA9	unde îi are sediul Saruman, personajul lui Christopher Lee,
+GD9642178	i la Turnul Barad-dûr din Mordor, casa lui Sauron.
+G573418F9	Filmul doi, ca fiecare film din aceast trilogie, e o provocare. i va rmâne aa pân îl vom termina.
+GB2A31EA0	E un film grozav. O s fie mai mare decât primul film.
+GB831FA3A	Cred c s-a pus cu siguran atâta grij în realizarea acestor filme,
+GCCFC11FE	iar faptul c putem transmite aceste informaii echipei care construiete jocurile e grozav, 
+G327C2028	pentru c tiu c pun la fel de mult grij i efort ca s ofere publicului un joc cu adevrat bogat.
+G2C4A352E	Tolkien descrie Edoras foarte viu în cri
+G10EFB23A	ca pe o cetate cu cldiri de lemn pe un deal în faa unui lan de muni înzpezii.
+G50D180A4	Când fceam iniial recunoaterea locaiilor, am zis: uite, trebuie s gsim un loc în Noua Zeeland,
+GDA11996F	trebuie s existe un deal ca sta în faa munilor.
+GD6F61F77	Aa c au zburat cu elicopterul prin toat ara i s-au întors cu fotografia dealului absolut perfect.
+GC56228ED	Era la vreo sut de kilometri de cel mai apropiat ora.
+GF796DA0F	Era în mijlocul Insulei de Sud; era foarte izolat.
+GFA1CD969	Am petrecut vreo apte-opt luni construind efectiv aceste cldiri uriae.
+GC2D0BAAA	Rezultatul final a fost c în film avem un Edoras absolut credibil.
+GC2774958	Am putut s merg acolo i s filmez ca i cum ar fi fost o locaie real.
+G99F69515	Unul dintre lucrurile palpitante la jocurile EA i la ce am vzut în modele pe msur ce erau construite
+G6B3554D6	este reproducerea excelent a decorurilor i personajelor noastre,
+GB997C9B4	pân într-acolo încât EA a ajuns la o înelegere cu actorii notri ca s vin s-i înregistreze propriile replici.
+G815CAC49	Actorii au fost destul de entuziasmai.
+GA1640DEB	Btlia de la Trectoarea lui Helm s-a încheiat.
+G93BD7122	Btlia pentru Pmântul de Mijloc st s înceap.
+G958468DE	Am construit o machet a Trectorii lui Helm, dar interesant a fost c nu era doar o machet. 
+G1BC58576	Era o machet uria. Era la scara de un sfert, dar avea ea însi vreo zece-doisprezece metri lime.
+GFA4F689B	Era atât de mare încât puteam pur i simplu s-o filmm cu camerele noastre i nu arta ca o machet.
+G2571B991	Arta absolut credibil.
+G31C24FB0	Ce face un film grozav e de fapt un scenariu grozav i o distribuie grozav.
+G9C04D37F	Îmi imaginez c atunci când faci un joc sunt multe dintre aceleai provocri.
+GA0B86A25	Trebuie s atragi talentele potrivite în joc.
+G0B7DC714	Trebuie s ai o poveste care s atrag un public care apoi s se entuziasmeze de poveste
+G5E1101AB	i s fie captivat de ea încât s vrea s-o vad prinzând via.
+G87FC774C	Nu putem face nimic pentru Frodo.
+G3C9AA8BC	Misiunea îl va costa viaa.
+G98F7C221	Rohanul e slab i gata s cad,
+GA01F7D34	aa c va lovi tare i repede lumea Oamenilor.
+GA8723617	Rzboiul e peste noi.
+GE1AF4B03	Ne-au furat comoara i noi o vrem.
+G6A5F57B3	Probabil cel mai intimidant aspect al începerii acestui proiect a fost
+GDE1DC635	sentimentul c aveam responsabilitatea incredibil de a reui
+GCFDFC743	într-un format interactiv la fel cum reuise Peter Jackson în film.
+GC87068A6	El a luat unele dintre cele mai îndrgite opere literare din toate timpurile
+G423C7E0C	i le-a transpus într-o capodoper cinematografic epic ce a creat milioane i milioane de fani în toat lumea.
+GC8F29411	La începutul unui proiect lucrezi la partea de concept i la partea de design.
+GBACB2DE5	Pe msur ce proiectul avanseaz, programatori, artiti, animatori, artiti de decoruri,
+G047AC48F	specialiti în modelare, specialiti în texturi, toi aceti oameni se gândesc la zona lor din joc,
+GB60517EB	dar din perspectiva experienei de ansamblu.
+G13170460	Unul dintre avantajele faptului c am putut lucra atât de strâns cu cineatii
+GA03610FF	este c am putut folosi machetele i recuzita pe care le-au creat pentru film
+G9DADDEE4	drept referin pentru ce trebuia s crem în jocul nostru.
+GF0D449E5	Umbra se mic în întuneric.
+GEC940136	Când l-am conceput pe Aragorn, a trebuit s ne gândim la toate cele trei personaje jucabile în acelai timp.
+GBB381F7C	De exemplu, Legolas e un personaj axat mult mai mult pe vitez i finee.
+G4CE351A9	Gimli e un mic tanc de lupt.
+G21025B26	Aragorn e mai degrab un amestec al celor doi.
+G3ADE6E66	Am studiat micrile fiecrui personaj, cadru cu cadru, înainte s începem s construim ceva.
+G80ADBA8B	Apoi crem un model wireframe al personajului. Acestea sunt proporiile, mrimea i scara lui de baz.
+G85E5A400	Apoi adugm texturi i iluminare ca s-i completm costumaia i s adugm detaliile fine ale personajului.
+GCD3CDD42	Actorii au fost foarte interesai s lucreze cu noi.
+G092B49A0	Într-un caz, Viggo Mortensen ne-a artat câteva dintre micrile lui de aciune.
+G915A1A70	El i dublura lui de cascadorii au deschis o lad cu sbii i au început s se antreneze unul cu altul.
+G215B5E15	Asta a devenit baza pentru multe dintre micrile lui Aragorn.
+G7126178B	Vrea s fie gsit.
+G7E02AF05	Când alegeam scene din film pentru jocul nostru, Mormântul lui Balin s-a remarcat ca un candidat puternic.
+GF4146E18	E unul dintre cele mai memorabile momente din primul film.
+GE152213A	Am vrut s recrem atmosfera din acel fascicul de lumin foarte puternic care cade pe mormânt.
+GB236432D	A fost o provocare pentru modelatorii de decoruri i specialitii în iluminare.
+GD3C26DBB	Nivelurile din Satul din Rohan sunt unice în sensul c ne-au dat ocazia s extindem zone din film.
+G8669E69D	Nivelul de joc în sine arat i se simte foarte asemntor cu locaiile din film în ceea ce privete iluminarea,
+GF9B205CF	forma arhitecturii, oamenii de acolo, dar în cazul acesta am construit pe baza lor
+GB285B32E	i am creat zone ale nivelului în care juctorul s exploreze i s lupte i pe care poate nu le-a vzut în film.
+G5E5F1D1C	Ce e atât de minunat la jocul sta, Stpânul Inelelor,
+G610E0BE4	e c ai pe propriul ecran vocile actorilor originali, ale tuturor.
+GC6FCAA65	Ajutor! Aragorn! Aragorn! Ajutor!
+G20165D69	E incredibil de autentic i cred c e foarte greu s faci un joc dup un film.
+GBF3A0A5B	Jocul sta reuete. Seamn foarte mult cu filmul.
+GDD010A37	Am conceput un sistem muzical foarte dinamic care reflect starea evenimentelor din joc.
+G96BEDA9C	Un Inel s le adune pe toate i-n întuneric s le lege.
+G91629050	În film, Saruman atac Trectoarea lui Helm cu zece mii de Uruk-hai.
+G3B702B98	Aa c a trebuit s folosim alte elemente de care dispuneam ca s crem senzaia de btlie.
+GDEFA604D	Prin efecte sonore i audio, chiar dm senzaia c sunt mii de orci în acel loc.
+G204351C8	Dac cineva pornete jocul i îi spune:
+GEC81BA2D	Doamne! sta e filmul! Atunci am realizat exact ce ne-am propus.
+G52BF957B	sta e locul pe care mi-l amintesc din film.
+G571B482E	Sunt acolo. Pot face ceva. Acum e rândul meu.
+G625B0A6D	Aa vrem s se simt juctorul.
+GB222979D	Unde e calul i clreul?
+G2457FF85	Unde e cornul care suna?
+G8B36CA83	Au trecut ca ploaia pe muni,
+G50095CA7	ca vântul pe pajite.
+G10EB8BCF	Zilele au apus în Apus,
+G109A0CCE	dincolo de dealuri,
+G02628501	în umbr.
+G80A942D2	Aragorn!
+GDDEA48AC	Ajutor
+G4C40E774	Apas butonul START
+GEE711094	Continu
+GF9202936	Reia
+G2E427514	Activat
+GFC4343CA	Dezactivat
+G52E4CD32	Navigare
+G39D074FD	Selectare
+GAC3A8B6E	Înapoi
+G42B46F3C	 2002 New Line Productions, Inc.  The Lord of The Rings i personajele, numele i locurile din acesta,  The Saul Zaentz Company d/b/a Tolkien Enterprises sub licen acordat New Line Productions, Inc.  Toate drepturile rezervate.
+G035F710A	EA GAMES este o marc Electronic Arts.
+GBAC3ED5F	Codul jocului i anumite elemente audio/vizuale  2002 Electronic Arts Inc. Toate drepturile rezervate.
+G0EF5F91F	Joc nou
+GB8D9D2FD	Încarc jocul
+G0BE2A075	Opiuni
+G5D6AEEF7	Mod depanare
+G83335327	Materiale bonus
+G731194FA	Salveaz jocul
+G7BA082D0	Apas START pentru a continua
+G755B3BA1	Configurare controler
+G03961FD4	Setri joc
+GABEE6EA4	Dificultate:
+GF065116B	Uor
+G8D3A16F6	Normal
+GACDD0363	Expert
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Volum voci:
+G7F04050E	Volum muzic:
+GF30A57F8	Subtitrri:
+G64752D2D	Vibraii:
+GB3F78571	Volum joc:
+GED3C9F14	Sunet:
+GB065D5A4	Alege jocul de încrcat:
+G00FF7920	Alege locul de salvare:
+GC99B6C1E	Alege slotul MEMORY CARD:
+GFB5C0BA2	Hard diskul Xbox
+GD2F916B6	Slotul MEMORY CARD 2
+GAEFBDEF3	Anuleaz
+GDA714102	Da
+GB893E04C	Nu
+GE506E266	Eti sigur?
+G574C52F2	Sigur vrei s cumperi aceast îmbuntire?
+G0D91D779	Eti sigur? Rezultatele ultimei tale parcurgeri a acestei misiuni se vor pierde.
+G1CF7123A	Eti sigur? Tot progresul nesalvat din acest joc se va pierde.
+GEF04DC5D	Eti sigur? Progresul din aceast misiune se va pierde.
+GEDF6F861	Sigur vrei s suprascrii acest joc?
+GF44D8878	Ai terminat de cumprat îmbuntiri?
+G1EF3EFE3	Salveaz jocul pe hard disk
+G05163971	Încarc jocul de pe hard disk
+G8F93A6FE	Alege dificultatea
+G654484DF	Blocat
+G5A7CB330	Terminat
+G8D6AAF13	Nejucat
+GBE8C099C	Prolog
+GF4FBBE46	Vârful Vremii
+GE7EA3020	Porile Moriei
+GE13A531D	Mormântul lui Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Pdurea Fangorn
+G35CCE51F	Câmpiile Rohanului
+GAD341B58	Westfold
+G94ADD008	Strâmtoarea Rohanului
+G9760067E	Zidul Trectorii
+GF8B38ED5	Zidul spart
+G644C89AD	Curtea Hornburgului
+G69B8B4C2	Turnul Orthanc
+GBF00F963	Trectoarea lui Helm:
+GE34AB2FD	Grdina zoologic New Line
+GE132F5FF	Alege un film de redat:
+G4B3C17B9	Început
+GAD303F2A	Final
+G668B98BD	Etajul
+G9C7A95F0	Puncte de îmbuntire:
+G4AE44639	4) Introdu secvena de cod indicat.
+G5374B3F5	Coduri secrete
+GDF7B6B3A	Mereu devastator:
+GFECB245B	2 juctori:
+GCAB16744	Inamici mici:
+G587D657D	Toate îmbuntirile:
+G58E34314	Invulnerabil:
+GF0336180	Încetinitorul:
+G5A122CB0	Pentru a introduce un cod:
+G35BC6746	1) Începe o misiune.
+G46DF9919	2) Apas butonul START ca s pui pauz.
+G5A1291EE	3) Apas i ine apsat
+GEB88B42D	Via infinit:
+G6AE6FFFE	Proiectile infinite:
+GAA29A634	Încheie misiunea:
+GB2AE1BCE	Mod pauz:
+GAA467E08	Adaug experien:
+GEA42298C	Avanseaz nivelul:
+G6BA0C403	Ref viaa:
+G41D871E0	Ref proiectilele:
+G04DBD06B	Îmbuntire proiectile:
+GA7A50BB5	Arat îmbuntirile
+GA67DF58D	Ieire în meniu
+G773B79A5	Misiunea urmtoare
+G96540044	Ai euat în misiune.
+G5ADDCAC2	Reia misiunea
+G9DD85D6D	Ieire în meniu
+G730918CA	Mai încearc
+GB437BA93	Generic
+G798A44A2	Reia misiunea
+G6F46B26E	Alege o limb.
+G2809E047	English
+GE3AAFF7A	Rapid
+GD0DB46DB	Feroce
+G9AD854EF	Ucidere
+GE83BE834	Special
+GDB34AED9	Combo
+GDACF8DCA	Cumprat
+G125CAC9A	Înc nu e deblocat. Apas butonul A pentru a continua.
+GDA9711D2	Nu ai strâns destule puncte de îmbuntire pentru a cumpra aceast îmbuntire. Apas butonul A pentru a continua.
+GEB0E0008	sau
+G90A54691	dup parare
+GF5F43483	când e la pmânt
+GFC1C2104	Spaiu gol
+GB8BCCCB9	Joc 2
+G92BA5250	Joc 3
+G9CCBAB2F	Joc 4
+G76C930C6	Joc 5
+G50C6B65D	Joc 6
+G2AC43BF4	Joc 7
+G34D594D3	Joc 8
+G0ED31A6A	Joc 9
+GBE76BA62	Joc 10
+GE47934CB	Joc 11
+G6ED86859	Nu este introdus niciun Memory Card (PS2). Sunt necesari cel puin 80 KB pentru a salva datele acestui joc. Vrei s continui?
+G87DE26DA	Spaiu insuficient pe Memory Card (PS2) din slotul MEMORY CARD 1.  Sunt necesari cel puin 80 KB pentru a salva datele aplicaiei. Vrei s continui?
+G7118C569	Spaiu insuficient pe Memory Card (PS2) din slotul MEMORY CARD 2.  Sunt necesari cel puin 80 KB pentru a salva datele aplicaiei. Vrei s continui?
+G6804B4C2	Spaiu insuficient pe Memory Card (PS2) din sloturile MEMORY CARD. Sunt necesari cel puin 80 KB pentru a salva datele aplicaiei. Vrei s continui?
+G849021EA	Nu exist Memory Card (PS2) în slotul MEMORY CARD 1. Apas butonul X pentru a continua.
+G59CE2129	Nu exist Memory Card (PS2) în slotul MEMORY CARD 2. Apas butonul X pentru a continua.
+GC5BD8B5F	Reconecteaz controlerul i apas START pentru a continua.
+GC2BDD02C	Memory Card (PS2) din slotul MEMORY CARD 2 nu este formatat. Formatezi Memory Card (PS2)?
+G6B64948C	Xbox-ul tu nu are destule blocuri libere pentru a salva jocuri.  Apas A pentru a continua fr salvare sau B pentru a elibera cel puin
+GEDAB4EA9	Reconecteaz controlerul i apas START pentru a continua
+G00E55934	Hard diskul nu are destule blocuri libere pentru acest joc salvat.
+G20A17FB1	blocuri trebuie eliberate.
+G353AAE58	Formatarea a euat! Eroare la Memory Card (PS2) din slotul MEMORY CARD 2! Apas butonul X pentru a continua.
+G9CAF03E3	Jocul nu poate fi salvat. Apas butonul A pentru a continua.
+GCB03752D	Joc salvat.  Apas butonul A pentru a continua.
+GACBFB64F	Salvarea pe Memory Card (PS2) din slotul MEMORY CARD 2 a reuit! Apas butonul X pentru a continua.
+GC7C0454F	Se salveaz datele pe Memory Card (PS2) din slotul MEMORY CARD 1. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+G4B14AAB4	Se salveaz datele pe Memory Card (PS2) din slotul MEMORY CARD 2. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+G53DAC278	Se încarc datele de pe Memory Card (PS2) din slotul MEMORY CARD 1. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+GF144B8B3	Se încarc datele de pe Memory Card (PS2) din slotul MEMORY CARD 2. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+G063DD8CC	Jocul nu poate fi încrcat. Apas butonul A pentru a continua.
+GE5BDAC0B	Vrei s salvezi jocul?
+GED3A9CCF	Nu exist jocuri salvate. Apas butonul A pentru a continua.
+GAF453999	blocuri.
+GEE649E5A	Memory Card (PS2) din slotul MEMORY CARD 1 nu este formatat. Apas butonul X pentru a continua.
+G81447581	Memory Card (PS2) din slotul MEMORY CARD 2 nu este formatat. Apas butonul X pentru a continua.
+GB36F8F0C	Se citesc datele de pe Memory Card (PS2) din slotul MEMORY CARD 1. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+G97EC5687	Se citesc datele de pe Memory Card (PS2) din slotul MEMORY CARD 2. Nu scoate Memory Card (PS2), nu reseta i nu opri consola.
+G8E8AF6C1	Exist o problem cu discul pe care îl foloseti. Poate fi murdar sau deteriorat.
+G9CB8DFF0	Misiunea 1
+G0EC04F2B	Misiunea 2
+GE8BDD4C2	Misiunea 3
+G5AC543FD	Misiunea 4
+G34C2C994	Misiunea 5
+GA6CA38CF	Misiunea 6
+G80C7BE66	Misiunea 7
+GF2CF2DA1	Misiunea 8
+GCCCCB338	Misiunea 9
+GA1F545C0	Misiunea 10
+GC7F7C029	Misiunea 11
+GEDFA3A92	Misiunea 12
+G13FCB4FB	Misiunea 13
+GFBA35200	Misiunea A
+G6DAAC13B	Misiunea B
+G47A846D2	Misiunea C
+GB9AFB60D	Misiunea D
+G0111B4C5	Experien misiune:
+G10CB2024	Calificativ misiune:
+GB8F11F62	Total puncte de îmbuntire:
+G94649BD6	Perfect
+GE424E811	Excelent
+G70E9184E	Bine
+GE98543F1	Acceptabil
+GF9792B5F	Slab
+G4DE9139C	Îndemânare
+GB525F096	Puternic
+G5F8C23CD	Aprare
+G8673311D	Atac
+G7829DFB2	O combinaie rapid.  Eficient împotriva inamicilor mai mici, fr scut.
+G63E6B4FD	O combinaie puternic pentru a sparge obstacole sau a face ndri scuturile inamice.
+G406CD62A	Apas i ine apsat trgaciul stâng pentru a folosi.  Trage cu butonul A (ine apsat pentru a crete daunele).
+G7651B078	Aceast împunstur termin orice inamic doborât.
+G09258F36	Arunc inamicii departe de tine, în afara razei lor de lovire.
+G36E84E05	Blocheaz atacurile i proiectilele inamice.
+G074FC78D	Un atac devastator.  Apas i ine apsat butonul Y pentru a-l folosi.
+GE5C8740D	Îi crete permanent viaa.
+G791AEDAB	Nvlete înainte i trântete la pmânt inamicii fr scut.
+GF4A5485B	Atac în timp ce te ridici, luând inamicii prin surprindere.
+GC0B8F80A	Un combo foarte eficient pentru a doborî inamicii fr scut.
+G6CBE68E9	Foarte eficient pentru a rpune cât mai repede inamicii cu scut.
+GD7BB121B	MICARE ÎNLNUIT: ucide instantaneu un goblin care atac.
+G4A59663E	Trase la fel ca din Arcul Dúnedain, sgeile ghimpate ale Rohirrimilor provoac daune serioase.
+G96A8AB86	Îi crete permanent viaa.  (Necesit Puterea Regenilor)
+GED26DEB8	Nvlete de la distan mare pentru a trânti la pmânt inamicii fr scut. (Necesit Atac nvalnic)
+GB4790643	Rnete, doboar i lovete-i inamicul cu acest atac combinat.
+G9709901B	Folosete acest combo pentru a lovi un inamic fr scut, a-l rpune i a lovi repede pe altul.
+G066B80A4	MICARE ÎNLNUIT: ucide instantaneu un orc care atac.
+GB54F0B8A	Îi crete permanent viaa.  (Necesit Puterea lui Isildur)
+G1C742C09	Un atac i mai devastator.  (Necesit Furia Pribeagului)
+G9F299E6A	Crete daunele atacului rapid.
+G2A888253	Rnete, doboar, apoi termin inamicii puternici cu acest combo.
+GEF4043FD	Îi crete permanent viaa.  (Necesit Puterea lui Elendil)
+GF3D48718	Acest atac devastator d foc mai multor inamici.  (Necesit Furia slbticiei)
+GDAE09290	Sgeile de fier ale Gondorului provoac daune cumplite.  (Necesit Arcul Rohanului)
+GBD1ED2AE	MICARE ÎNLNUIT: ucide instantaneu un Uruk-hai care atac.
+G6DF8DC34	Folosete-l împotriva unui inamic puternic pentru a-i sparge scutul, a-l trânti la pmânt i a-l lovi.
+GB1BCB280	Nimic
+GE225A1EC	Apas i ine apsat trgaciul stâng pentru a folosi.  Arunc cu butonul A (ine apsat pentru a crete daunele).
+GFF3FB1CE	Aceast lovitur de topor termin orice inamic doborât.
+G81A89461	Îi crete permanent viaa.  (Necesit Tria stâncii)
+GF266C7E6	Îi crete permanent viaa.  (Necesit Tria fierului)
+G2FCD00C0	Nvlete de la distan mare pentru a trânti la pmânt inamicii fr scut.  (Necesit Atac nvalnic)
+G00247254	Îi crete permanent viaa.  (Necesit Runa ocrotirii)
+GA505D28C	Îi crete permanent viaa.  (Necesit Tria lui Balin)
+G34C62FC4	Aruncate la fel ca Topoarele din Erebor, topoarele din Moria, ascuite ca briciul, provoac daune i mai mari.
+G57901BB9	Un atac i mai devastator.  (Necesit Furia piticilor)
+G8840F62F	Îi crete permanent viaa.  (Necesit Tria lui Glóin)
+G361F0511	Acest atac devastator d foc mai multor inamici.  (Necesit Furia muntelui)
+G219C0125	Aceste lame cu ti de mithril provoac daune cumplite.  (Necesit Topoarele din Moria)
+G9986DAAB	Crete daunele atacului feroce.
+G11BF2FC5	Trase la fel ca din Arcul lung din Codrul Întunecat, sgeile de frasin din Vleni provoac daune i mai mari.
+G7A9893BB	Sgeile fermecate din Lothlórien provoac daune înfiortoare.  (Necesit Arcul lung din Vleni)
+G42E47239	Aceste sgei magice îi vor da foc inamicilor.  (Necesit Arcul lung din Lothlórien)
+G5BAB8220	Îi crete permanent viaa.  (Necesit Fora lui Celeborn)
+G39265CB0	Un atac i mai devastator.  (Necesit Furia elfilor)
+G084B6AEF	Aceste sgei îi strpung i îi rnesc pe toi inamicii din calea lor.  (Necesit Sgeile focului de dragon)
+GB1D19C39	Crete daunele fiecrei sgei pe care o tragi.
+G06E26BE1	Lovitur tripl
+G20A303C1	Tietur dubl
+GCB8F4087	Arcul Dúnedain
+G3F6F3751	Lovitura umbrei
+GBE8C73E9	Lovitur de picior
+G5660E3B0	Parare cu sabia
+GDF332280	Furia Pribeagului
+GB8AB07B9	Puterea Regenilor
+G187F8CC1	Atac nvalnic
+G86E487F5	Atac din ridicare
+GF7D6DC76	Groaza iute a lui Isildur
+GB34DCC39	Izbvirea lui Isildur
+GC9303634	Pieirea goblinilor
+G3A0786A5	Arcul Rohanului
+G8B17B5C5	Puterea lui Isildur
+G579A1927	Atac în arj
+G207C1523	arja mortal a lui Isildur
+G6C2653E9	Gambitul lui Isildur
+G2A3BA153	Pieirea orcilor
+GA28B29AA	Puterea lui Elendil
+G7D213CCE	Furia slbticiei
+G006BF315	Maestru spadasin
+G6B68444D	Nvala de rzboi a lui Isildur
+G3B0A3720	Puterea Argonathului
+G78BAB3BC	Mânia Númenorului
+GCEDAD8B0	Arcul Gondorului
+G3BE146BB	Pieirea lui Saruman
+G701FD063	Judecata lui Isildur
+G0251EC9F	Topoarele din Erebor
+G96C77DAD	Împunstur cu toporul
+GDD4B6691	Parare cu toporul
+GADD20DD0	Furia piticilor
+GB0D95BC6	Tria stâncii
+G4FB6CF69	Tria fierului
+G5F017E32	Groaza iute a lui Balin
+GDFD7CADD	Izbvirea lui Balin
+GDF1B571B	Runa ocrotirii
+G9B37EDE7	arja mortal a lui Balin
+GCDB1A82D	Gambitul lui Balin
+G2DEF1D03	Tria lui Balin
+GE89D3658	Tria lui Glóin
+G31B06C3A	Topoarele din Moria
+GADFB76EF	Furia muntelui
+G75612F09	Nvala de rzboi a lui Balin
+G8CE2E527	Tria din Khazad-dûm
+GE4E87FCC	Mânia Moriei
+GA16173AB	Topoarele din Munii Ceoi
+G24288EA5	Miestria regilor cu toporul
+G45AAD667	Judecata lui Balin
+GB752504B	Arcul lung din Codrul Întunecat
+GA018F71A	Parare cu cuitul
+G0DCE9941	Furia elfilor
+G4A27D7DF	Fora lui Celeborn
+GE0EC06AA	Arcul lung din Vleni
+G76059454	Groaza iute a lui Elrond
+GE8C0678B	Izbvirea lui Elrond
+GE9F2F2C9	Arcul lung din Lothlórien
+G5FE47D01	arja mortal a lui Elrond
+G4B1902CB	Gambitul lui Elrond
+GB3FB8DDE	Sgeile focului de dragon
+G4A61DECC	Fora Galadrielei
+G204DE538	Furia lui Gil-galad
+G5B85BC6F	Nvala de rzboi a lui Elrond
+GBDF43860	Sgeile de mithril
+G4B69DAC6	Miestria elfic cu arcul
+G43AB31C1	Judecata lui Elrond
+GEAA8149B	Nivel
+G11886F39	Pareaz pentru a bloca atacurile inamice i a devia sgeile.
+GE4E78CFD	Parare
+G3226B277	Apas i ine apsat trgaciul stâng pentru a trece la arma de la distan.  Apas butonul A pentru a trage.  Folosete stickul stâng pentru a inti.
+GFF931564	Arm de la distan
+G9A309E3D	Trage
+GC4AB2A6D	Folosete un atac rapid pentru a lovi inamicii fr scut.
+G5C64BDED	Folosete atacul feroce pentru a sparge scuturile inamicilor.
+G4B1F5E2B	Atac feroce
+G12993772	Atac rapid
+G5550F308	Câtig puncte de experien pentru a crete nivelul personajului i a cumpra îmbuntiri valoroase.
+GD5F0D645	Puncte de experien câtigate
+G109A17A7	Folosete combinaii avansate i evit loviturile inamicilor pentru a umple indicatorul de îndemânare i a câtiga maximum de puncte de experien.
+GDB22979F	Indicator de îndemânare
+GF7AF01B8	intete
+G552324EC	Salt înapoi
+G3962B27E	Lovitur de graie
+G819AB384	Respingere
+GB5FE5915	Trage/Atac rapid
+G1438BF1E	Micare/intire
+GCDD8B9EF	Pauz
+G63E0263C	Interviu
+GA970F7F6	Peter Jackson i Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Stpânul Inelelor
+GF0462ED4	Cum s-a fcut jocul video
+G0DB34230	Fragmente exclusive din film
+G9DF19E57	Fria Inelului
+G1704CE51	Fotografii de producie
+G330E63EE	Fangorn i Orthanc
+GD722C1B8	Rohan i Trectoarea lui Helm
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Joac cu Aragorn
+GA8934934	Joac cu Legolas
+G84C57E95	Joac cu Gimli
+G46EA0007	Joac cu Isildur
+G5689E41F	Misiune secret
+G7F2C7A4C	Joac cu personajul secret
+G96AF0882	Schie de concept
+G8813AE29	Termin Porile Moriei pentru a debloca
+G4EEEB554	Termin Mormântul lui Balin pentru a debloca
+G3182CC3A	Termin Amon Hen pentru a debloca
+G54747798	Termin Pdurea Fangorn pentru a debloca
+G5D796BA6	Termin Câmpiile Rohanului pentru a debloca
+G758A2B31	Termin Westfold pentru a debloca
+GD1B66361	Termin Strâmtoarea Rohanului pentru a debloca
+GEC95C099	Termin Trectoarea lui Helm: Zidul Trectorii pentru a debloca
+G4F6E6B62	Termin Trectoarea lui Helm: Zidul spart pentru a debloca
+G7E4B2F5F	Atinge nivelul 5 cu Aragorn
+GA825B93E	Atinge nivelul 5 cu Legolas
+GD08EF3EF	Atinge nivelul 5 cu Gimli
+G060F3A0C	Termin Trectoarea lui Helm: Curtea Hornburgului i atinge nivelul 10 cu Aragorn
+G9C00EBDD	Termin Trectoarea lui Helm: Curtea Hornburgului i atinge nivelul 10 cu Legolas
+GCA301FEC	Termin Trectoarea lui Helm: Curtea Hornburgului i atinge nivelul 10 cu Gimli
+G2A4097F8	Termin misiunea secret cu orice personaj
+GF80714A8	Termin misiunea secret cu personajul secret
+GF281A415	Peter Jackson i Barrie Osborne vorbesc despre film i joc
+GEF6D5A30	Elijah Wood vorbete despre rolul lui Frodo în jocul video Stpânul Inelelor
+G1B7C2E20	Ian McKellen vorbete despre rolul lui Gandalf în jocul video Stpânul Inelelor
+G100A11D4	O privire în culisele realizrii jocului video Stpânul Inelelor
+G14A8622F	Fotografii cu personaje i peisaje din Fria Inelului
+G228511D6	Fotografii cu personaje i peisaje din Fangorn i Orthanc
+GFDF064C7	Ilustraii inspirate de Stpânul Inelelor, de John Howe i Alan Lee
+GAAE1A0C0	Fotografii cu personaje i peisaje din Rohan i Trectoarea lui Helm
+G6CEBDAE1	Viggo Mortensen vorbete despre rolul lui Aragorn în jocul video Stpânul Inelelor
+G6824CF13	Orlando Bloom vorbete despre rolul lui Legolas în jocul video Stpânul Inelelor
+G84770794	John Rhys-Davies vorbete despre rolul lui Gimli în jocul video Stpânul Inelelor
+G775EAFA1	Coduri secrete pentru deblocarea funciilor ascunse ale jocului video Stpânul Inelelor
+G640E4463	Schimb selecia
+G6D02770F	Selecteaz
+GE5EE10E6	Înapoi
+GA75BE7EE	Schimb sau modific selecia
+GE7B4EE86	Ieire în meniul principal
+G47C91DD4	Schimb imaginea
+GE445F6CE	Folosete punctele de îmbuntire pentru a cumpra îmbuntiri pentru personajul tu.
+GB2D2B6DB	Ucidei-i pe toi!
+GFD9FFC0E	Doboar creatura asta cu atacuri rapide!
+G7BD97E94	Folosete atacul feroce ca s-i distrugi scutul!
+G62FC14DC	Vin! Ucidei-i pe toi!
+GA3F97A90	Dai-mi sbiile voastre!
+G88F3FEA7	Ahh! Mori, creatur a Mordorului!
+G4888927E	Pentru Cetatea Alb!
+GB5DB8B33	S-a zis cu tine!
+G91F156A0	Piei, creatur a umbrei!
+G8F5E1C57	Mori, odrasl a lui Sauron! Mori!
+GEF59BEBD	Respingei-i!
+G263E18E0	Înaintai!
+G8715790C	inei poziia!
+G09E491AC	Mori!
+GC9D8887A	Pleava Gondorului!
+GD909145B	Tu, mori!
+G8524085B	Nu ne poi ucide pe toi!
+GFA0F31A8	Mori, pleav!
+G6949F8FB	Sunt prea muli, trebuie s te aperi!
+GAB41028F	Aprai-v, stpâne.
+GC99D9EF1	Atacurile rapide îl vor birui pe acesta.
+G8BC62719	Atacurile feroce vor crpa scuturile acelea.
+G24319240	Lumea s-a schimbat.
+G6FC7E51E	O simt în ap.
+G586AE929	O simt în pmânt.
+GA0D1D398	O adulmec în aer.
+G20A7EC8F	Mult din ce a fost odat s-a pierdut,
+G9A5EEA48	cci nu mai triete nimeni care s-i aminteasc.
+G991F588A	Totul a început cu furirea Marilor Inele.
+GDCCA686B	Trei le-au fost date elfilor,
+G64D4928C	nemuritori, cei mai înelepi i mai frumoi dintre toate fiinele.
+GC38B0B40	apte, stpânilor pitici,
+GE4E9DA85	mari mineri i meteugari ai slilor din muni.
+G8EA28015	i nou... nou Inele au fost druite neamului Oamenilor,
+G5415D8A9	care, mai presus de orice, doresc puterea.
+GCAF2B8E3	Cci în aceste Inele erau legate tria i voina de a cârmui fiecare neam.
+GEAB51D48	Dar toi au fost înelai...
+G9968C959	cci a mai fost furit un Inel.
+G6DF9A86C	În ara Mordorului, în focurile Muntelui Osândei,
+GD5CC3D06	Stpânul Întunericului, Sauron, a furit în tain un Inel Suprem ca s le stpâneasc pe toate celelalte.
+GA5AF65D9	i în acest Inel i-a revrsat cruzimea, rutatea i voina de a stpâni orice via...
+GF9C8C37E	Unul câte unul, inuturile libere ale Pmântului de Mijloc au czut în faa puterii Inelului.
+GD7B567A4	Dar au fost unii care s-au împotrivit.
+G9673067D	O Ultim Alian a Oamenilor i Elfilor a pornit împotriva otilor Mordorului,
+G9292CF8B	iar pe pantele Muntelui Osândei au luptat pentru libertatea Pmântului de Mijloc.
+G9C449910	Chiar în acel moment,
+G4E624CE3	când orice speran se stinsese...
+G8B971AFC	...Isildur, fiul regelui, a ridicat sabia tatlui su.
+GA0976A20	Sauron, dumanul popoarelor libere ale Pmântului de Mijloc, a fost înfrânt.
+GCE1FEBD6	Inelul a trecut la Isildur, care avea aceast unic ans de a nimici rul pentru totdeauna.
+G4653B8E6	Dar inimile Oamenilor se corup uor.
+GF1F12CD3	Distruge-l!
+G7A59BC32	Nu.
+GEDAFB589	Sunt motenitorul lui Isildur, nu Isildur însui. Soarta mea îmi aparine.
+GECD0FC9B	La Trectoarea lui Helm! Brego, fugi!
+GE526C94A	Frodo! Stai departe de ei!
+GE5AC368C	Ajutor! Sunt peste tot!
+GE18CFED5	Te vom gsi.
+G754CEC13	Înapoi, fptur spurcat!
+G0EE492EC	Îl caut pe Purttorul Inelului! Stai aproape!
+GA236A198	Nu te poi împotrivi, semiomule.
+GB0F6888B	Suntem pierdui.
+GABCB70B5	Întregul Isengard s-a golit.
+GD4A9E9B3	E o armat crescut cu un singur scop: s distrug lumea Oamenilor.
+G65599300	Stpânul Întunericului se apropie.
+GC6B5C82C	Baggins...
+GDE3725D0	Duhurile Inelului! Înapoi!
+GDB2A2A63	Pas-Mare!
+GDF3A925F	S fie cruat. Salveaz-l.
+G4867AD04	În sanctuarul din Vleni, cel mai mic dintre noi a artat cel mai mare curaj.
+G3505351D	Îl voi lua eu!
+G5B8CB3F8	i s-a închegat o Frie.
+GF6138FE1	Voi duce Inelul în Mordor!
+GA7DC204A	Dei...
+G2FFEE7D1	...nu tiu drumul.
+GD051F7C5	Te voi ajuta s pori aceast povar, Frodo Baggins...
+G82079845	...atâta vreme cât e a ta de purtat.
+G8308B082	Pori soarta noastr, a tuturor, micuule.
+G32030F3F	i ai arcul meu.
+G7A19CD10	i toporul meu.
+G18A439E8	D-ne inelul, semiomule.
+G5E09B681	Inelul e al nostru.
+GC7625599	Vino la noi, semiomule.
+GB2DCED15	Ajut-m!
+GF8B88DB9	Vino s m ajui!
+G111D0DD5	Mor.
+G439D87CA	inutul acesta s-a schimbat.
+GB5DB841A	Vom atepta aici pân când drumul de dincolo pare sigur.
+GF0EB3761	N-am mai avut veti din Moria de muli ani.
+G3A9580D6	Am putea trece prin Minele Moriei.
+G852B83DE	Vrul meu, Balin, ne-ar face o primire regeasc.
+G48D6F333	Atenie!
+G20BEF03C	Repede! Pe aici!
+G37B7E741	Fiar blestemat.
+G70A83B75	Aceasta e Poarta lui Durin, Stpânul Moriei.
+GE6E19D64	Deci, Gandalf, încerci s-i duci peste Caradhras.
+GF7BC40D4	Iar dac nu reueti,
+GC7F3ECF5	unde te vei duce atunci?
+G4F7AA217	În Moria!
+G0F8A9576	Rostete, prietene, i intr.
+GCB3668DA	Mellon.
+G64134F99	Acum nu mai avem decât o singur alegere.
+GE57BDBA1	Trebuie s înfruntm lungul întuneric al Moriei.
+G3CA10A85	Pleav a Mordorului!
+GC753F514	Ambuscad!
+G66D5EE9E	Sunt orci. Muli.
+G8AB8C148	Când ai necazuri, trimite un pitic!
+G6F4359B4	Bun lovitur, Gimli!
+G43E71D7A	Voi cerceta înainte ca s gsesc o cale de trecere.
+G0F5D4F40	Creatur.
+G0BFC06A5	Aici aveam s gsim mult mai mult decât Mormântul lui Balin, Stpânul Moriei.
+G79CBD185	Am zvorât porile. Tobe în adânc.
+G676CE560	Nu putem iei.
+GC2C2532E	Înapoi, fiare fr suflet!
+G41169039	Legolas! Avem nevoie de arcul tu!
+GED8A660A	Grbete-te, Gimli!
+G548B1E16	Piei, fiar blestemat!
+G8B6C996D	M ocup eu de el!
+GD624A593	În spatele tu!
+G22876487	ine-i poziia!
+G6E72BC38	Înapoi, creaturilor!
+G98FB35D8	Aici!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Sunt prea muli!
+GEB38BB38	Cum s-i oprim?
+GDB1D4894	Nu m pot lupta cu ei!
+GCA82C10C	Nu-i pot ine la distan!
+G839F36D1	Rpune-i cu arcul!
+G426819B7	Pentru Balin!
+G32A709EE	Vin dup tine!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Sunt prea muli!
+GB502E0B9	Pentru Codrul Întunecat!
+G5C8B1856	O s-i fac guri de viermi în burt!
+GF8D92047	Prindei-i pe toi!
+GDFB1C64C	Zdrobii-i!
+G5AF9060B	Înapoi în umbr!
+GF1BFC8A0	Aragorn! Am nevoie de sabia ta!
+GF83070F8	La mine, Gimli! Aici!
+G2EC65D74	Fii tari!
+GCD82317C	Tragei!
+GCEA41230	Rspândii-v! Nu trebuie s ne încercuiasc!
+G3AD812AF	Gsii-l pe semiom!
+G6B59AA20	Frodo poart soarta noastr, a tuturor!
+G4B4B5CA5	Trebuie s-l aprm!
+G1881769E	Pe onoarea lui, vei plti!
+G743E1105	Moria fusese o cltorie întunecat pentru Fria noastr.
+G32DCF8A9	Fugii, nebunilor!
+G10D542AD	Nuuuuuuu!
+GD10EAA8A	Misiunea st pe tiul unui cuit.
+GF997012E	Abate-te doar puin i va eua.
+G01C6A95F	Dar avea s se întunece i mai mult, cci Fria noastr se destrma.
+G212FEF60	A fi mers cu tine pân la capt, chiar în focurile Mordorului.
+G960898CD	Fugi!
+GD941582B	Odihnete-te în pace...
+G9D8421F1	...fiu al Gondorului.
+G60BC6BA4	Trebuie s-i înfrângem pe aceti Uruk-hai ca s scape Frodo!
+GF0E0DD02	Boromir!
+G1C9C2949	Un pic de ajutor aici, elfule!
+GB1E7FF01	Uruk-hai! La atac!
+G62308F86	O s-mi plac asta!
+GA7F87EAC	Înapoi în gropile care v-au zmislit.
+G06BA8520	Au venit pe aici, haidei.
+G817C5460	Dar urma lor se termin aici. Trebuie s ne desprim ca s-i gsim repede.
+G934A6365	Aragorn, e ceva acolo.
+G32456D68	Ce vezi, Legolas?
+G090A57A6	Vrjitorul Alb.
+G3BE10384	Saruman.
+GF471A310	În ciuda eroismului lui Boromir, slugile lui Saruman au capturat membri ai Companiei noastre.
+G9EB3E2D9	Dar nu aveam s ne lsm tovarii prad chinului i morii.
+GC9337F85	Zile întregi le-am urmat urma...
+G1A87CFBD	...pân ce ne-a dus în Pdurea Fangorn.
+G7754D2C1	Pdurea asta e veche...
+G9261B17A	...foarte veche.
+GF7DCBBD1	E plin de amintiri...
+GC4192431	...i de mânie.
+G92086B9D	În acea mare pdure s-au întâlnit multe crri.
+G6F680400	Nu se poate.
+G7A0AC815	Acum exist o alian între cele dou turnuri: Orthanc i Barad-dûr.
+GF36A1977	Eti ateptat în alt parte.
+GA926AFE5	Rzboiul vine peste Rohan.
+GC5293984	Acum ne distrm i noi!
+GCF6954E1	Am mai vzut asta, dar niciodat aa.
+G2E930B75	Singura noastr speran e s stm unii!
+GFD82D6F4	Forele lui Saruman mut dispozitive explozive ciudate prin acest ora. Ajutai-ne s le distrugem!
+G86FA279C	Oprii-i la poart!
+G7B48AD72	Cei puini dintre noi care pot lupta pornesc spre Trectoarea lui Helm.
+GD55B6BE3	Acolo viitorul Rohanului va tri sau va pieri.
+G2256A18D	Atenie la explozibili!
+GE0BD0D44	Da! Dai-le s guste focul!
+G82C8009F	Asta ar trebui s-i încetineasc!
+GA0C82879	Ia s vedem ce avem aici?
+G751859FC	Ce-i asta?
+G06637EF0	Trebuie s distrugem aceste dispozitive explozive!
+GABF94061	Dispozitivele acelea explozive trebuie distruse.
+G13114F1E	Ce-o fi asta?
+G5B2AF650	Asta s-ar putea dovedi folositor.
+G14659B9A	Asta pare de valoare.
+G418ECC01	Iat. Pstrez asta.
+G136EC46C	Merit s car asta cu mine.
+G360BBC1D	Sunt mânai de nebunia lui Saruman i de voina Stpânului Întunericului.
+G4840EFEC	Alte artificii? Ha! Vor s ne fac pe toi leuri!
+G19910876	Acum vin dup noi!
+G08EB8FDB	E de netrecut.
+G6FED1000	Va trebui s gsesc alt cale.
+G68F91872	Satul sta arde ca iasca!
+G57BD9573	Destul de folositor.
+G424E3FF5	Asta o s mearg!
+G501ABC20	inei piept!
+G31FDA576	Npdesc i zona asta!
+GB60A7265	Nu eram singuri în aprarea Rohanului.
+GA48B596C	Garda Regelui îi croia i ea drum spre Trectoarea lui Helm.
+G65866A2E	Ai fcut tot ce ai putut aici.
+G115A6D12	Supravieuitorii se vor îndrepta spre Trectoarea lui Helm.
+GC07CBB0E	Mai ai de lucru. M voi întoarce la tine când se va întoarce valul.
+G63B48C52	Au strpuns aprarea!
+GAAD29572	V rog! Nu! Nu! Nu!
+G589F2E2F	Trebuie s-i salvm pe toi cei pe care îi putem salva, altfel satul acesta va cdea.
+GE1654ECA	Înainte ca lunga noastr cltorie s ne aduc la Edoras...
+G97FC9F74	...poporul tu era deja în mare primejdie.
+GB52DB0C9	Cru-m!
+GDDA274AE	Te rog! Cru-m!
+GA354A5CD	Ahhh! Nu!
+G1C74FEB5	Nu!
+G946E2F3A	Nu! Nu! Nu face asta!
+GF46D4AC5	Nu! Nu! Nu!
+G1BD76207	Scoatei-ne de aici! Repede!
+GE57CB50F	Cru-m, te implor!
+G716689E1	Aprai-ne!
+G6295F93F	Salveaz-m! Te rog, salveaz-m!
+GFA27E38F	Aaaaaah! Ne ard de vii!
+G25B702F8	Las-m s triesc! Te rog!
+GDE034FBB	Trebuie s mergi mai departe.  Sunt ateptat în alt parte.
+G898F1CFF	Facei-i s se team de lupii Isengardului!
+G04FC403B	Nu puteam lsa aceste creaturi s ajung la refugiai.
+GD8C5307E	Poporul tu a fost aprat, dar am pltit pentru asta cu multe viei.
+G4FD6FE99	Aproape c mi-am pierdut-o pe a mea.
+G753DFA73	Aa se face c, pe ci diferite, am ajuns cu toii la fortreaa de la Trectoarea lui Helm, pentru o ultim rezisten.
+G932478E9	Acum, ucide-l pe la!
+GF940F960	Da, dragii mei!
+G646F5FC4	Wargii notri se vor ospta în noaptea asta!
+G948FC6FF	Nu te juca cu el!  Ucide-l!
+G99617AA4	S-au retras.  Deocamdat s-a terminat.
+G4A0F838F	Eu am nousprezece!
+GC16105A6	Atunci suntem la egalitate.
+GAC4FD1F9	Asta rmâne de vzut.
+GF71FBCA2	Eu am doi.
+G641CA89C	Sunt destui pentru amândoi, Gimli!
+GF4B76D82	Trebuie s inem privirea lui Sauron aintit asupra noastr, s-l inem orb la tot ce se mai mic!
+G5B04C967	Înapoi!
+G3487D102	Jos de pe zid!
+G8B575855	Orcii sunt pe zid!
+GCE3C16C0	Am ajuns la aptesprezece!
+G3D052135	Adpostii-v!
+G05C9D273	Trag din nou în noi!
+G4941BF74	Dai jos scara aceea pân nu ne copleesc!
+G265760A3	Jos!  Culcat!
+G2E8173A8	Nu-i putem lsa s se apropie de Peterile Scânteietoare!
+G36DE1341	N-am mai vzut asemenea mânuire a toporului, jupâne pitic.
+G80FBF437	Nici eu asemenea iscusin cu arcul.
+G3F35FF0E	Dar ei nu se mai ridic niciodat dup ce i-am lovit eu.
+GEC633822	Aprarea noastr e copleit! Femeile i copiii sunt prini în capcan!
+G17070638	Ducei-i în Sala Mare!
+G5CAB82D3	Îi vom ine pe loc aici sau la fortrea!
+GFFC47594	I-am oprit. Femeile i copiii sunt în siguran, deocamdat.
+GBD5794D5	Nu-i mai putem ine pe loc! În Sala Mare!
+G088ED5E4	Nu-i putem ine pe loc!
+G7C6E3511	Sauron i Saruman strâng laul.
+G7B236705	Dar, cu toat viclenia lor, avem un avantaj.
+GFCAC9515	Inelul rmâne ascuns.
+G1C7DF558	Iar faptul c am încerca s-l distrugem nu le-a trecut înc prin cele mai negre vise.
+GB72B409D	i astfel arma dumanului se îndreapt spre Mordor în mâinile unui hobbit;
+G86CED6F6	fiecare zi o aduce mai aproape de focurile Muntelui Osândei.
+GD9BB4CD5	Sauron se teme de tine, Aragorn.
+GDD966B5E	Arcaii pe zid!
+G6A122B51	Înapoi! Baricada st s cad!
+G427F5206	Grbete-te, jupâne pitic!
+G113213B2	Du-te la Legolas, eu îi in aici!
+GA7B95A20	Pentru Gondor!
+G7C696E8A	Aragorn e copleit! La el!
+GFC98A99D	Prietenul nostru elf are nevoie de ajutor.
+G66A680C0	Uruk-hai!
+G8968245E	Stau s sparg baricada!
+G428EE07E	Sunt în fortrea. Suntem pierdui!
+GFAE8490C	NUUUUUUU!!
+G63F31F0F	Sfâritul tu e aproape.
+GE8B9DB2E	Ai ales calea durerii!
+G910D7B12	Nebunule.
+G58E8BBAA	E vremea s te opreti.
+GD8425223	Doar n-ai crezut c un pribeag zdrenros se poate msura cu voina mea, nu? Sunt dincolo de puterea ta.
+G1A989E68	Vei plti pentru arogana ta.
+G0079D300	N-ai crezut c un pitic se poate msura cu voina lui Saruman. Nu exist nimeni care s poat.
+GFB1E1C33	Chiar ai crezut c un elf se poate msura cu Saruman? Nimeni nu poate i nici n-ar trebui s îndrzneasc.
+GCB4F521C	Trase la fel ca din Arcul Regentului, sgeile ghimpate ale Rohirrimilor provoac daune serioase.
+G906620AF	Îi crete permanent viaa.  (Necesit Tria lui Denethor)
+GE4F990F3	Un atac i mai devastator.  (Necesit Furia Gondorului)
+G55B83821	Îi crete permanent viaa.  (Necesit Puterea Gondorului)
+GD4900EBD	Acest atac devastator d foc mai multor inamici.  (Necesit Mânia Gondorului)
+GF1EE1785	Arcul Regentului
+GC7DFC68A	Furia Gondorului
+G26838C80	Cornul Gondorului
+G948EF2DD	Rezistena cpitanului
+GC354B788	Tria lui Denethor
+G2675AC6D	arja din Minas Tirith
+G3A16134F	Gambitul Regentului
+G7C6E9536	Puterea Gondorului
+G909BDBD3	Mânia Gondorului
+GBCA2DB1D	Nvala Turnului Alb
+GA70E206F	Rezistena de la Amon Hen
+GECE9E935	Joac cu Boromir
+G2BAAD5AF	Apas i ine apsat trgaciul stâng pentru a folosi.  Lanseaz cu butonul A (ine apsat pentru a crete daunele).
+GF2DB6139	Lansat la fel ca Lumina vrjitorului, flacra Naryei arde inamicii, provocând daune serioase.
+G4E51B4E3	Îi crete permanent viaa.  (Necesit Puterea Istarilor)
+G701450DF	Îi crete permanent viaa.  (Necesit Puterea lui Olórin)
+G876BFE80	Un atac i mai devastator.  (Necesit Furia Maiarului)
+G554AF8D3	Îi crete permanent viaa.  (Necesit Puterea Naryei)
+GF20F1105	Acest atac devastator d foc mai multor inamici.  (Necesit Furia vrjitorului)
+GE86497FB	Focul alb al Istarilor arde cumplit. (Necesit Focul Inelului)
+G5D1DA1B0	Lumina vrjitorului
+GE4245C5B	Parare cu toiagul
+G68852FD1	Furia Maiarului
+G63891384	Puterea Istarilor
+G3023E8DD	Flacra din Anor
+G03053C48	Nu vei trece
+G44E88937	Focul Inelului
+G31781C88	Puterea lui Olórin
+GC67FABAE	arja lui Shadowfax
+GB28BAB38	Pelerinul Sur
+GBB647C84	Puterea Naryei
+G3A1959EB	Furia vrjitorului
+G910A4D18	Maestrul Glamdringului
+GE54BB6DF	Nvala lui Mithrandir
+G80CB05F7	Puterea Albului
+G5500602D	Mânia lui Olórin
+GB3B8BA9A	Focul alb
+G4D3F3799	Mânia Maiarului
+GB06CD44C	Joac cu Gandalf
+GD63AEB69	Apas i ine apsat trgaciul stâng pentru a folosi.  Azvârle cu butonul A (ine apsat pentru a crete daunele).
+GF1500B18	Aruncate la fel ca Pietrele Comitatului, cremenile ascuite din Brandywine provoac daune serioase.
+G1594107A	Îi crete permanent viaa.  (Necesit Puterea Comitatului)
+G223FB1F4	Îi crete permanent viaa.  (Necesit Puterea lui Bilbo)
+G419FBE06	Un atac i mai devastator.  (Necesit Furia hobbitului)
+G549E8839	Îi crete permanent viaa.  (Necesit Puterea lui Samwise)
+G3E7B6E97	Acest atac devastator d foc mai multor inamici.  (Necesit Furia Comitatului)
+G5DBA6F26	Pietrele binecuvântate de elfi provoac daune cumplite.  (Necesit Lovitura de cremene)
+G586DFFA8	Pietrele Comitatului
+GAF333BB7	Furia hobbitului
+GA30AB0B5	Puterea Comitatului
+G5B952654	Muctura lui Sting
+G3F0B7A46	Voina Purttorului Inelului
+GE7A5F0EC	Lovitura de cremene
+G97512A2B	Puterea lui Bilbo
+G4F6E34B0	arja Baggins
+G8AFDEEE2	Norocul hobbitului
+G9AE8326E	Puterea lui Samwise
+G5FECDC01	Furia Comitatului
+GB7F9A847	Miestria cu Sting
+GD629F714	Nvala neamului Took
+G31486B52	Puterea din Fundul Sacului
+G4023054B	Mânia lui Sting
+GD48B81F2	Pietrele elfilor
+G371FFFDE	Hotrârea de mithril
+G031E765B	Joac cu Frodo
+G63C78123	Trase la fel ca din Arcul Isengardului, sgeile ghimpate din Orthanc provoac daune serioase.
+G266F9F27	Îi crete permanent viaa.  (Necesit Puterea Isengardului)
+G4451D279	Îi crete permanent viaa.  (Necesit Puterea lui Saruman)
+G2DE635F5	Un atac i mai devastator.  (Necesit Furia Uruk)
+G4D25FA2B	Îi crete permanent viaa.  (Necesit Puterea Orthancului)
+G055C2C2B	Acest atac devastator d foc mai multor inamici.  (Necesit Furia Isengardului)
+G478E4DB1	Sgeile negre ale Isengardului provoac daune cumplite.  (Necesit Arcul Uruk)
+GB0EED2A6	Arcul Isengardului
+G13D5F1B3	Parare cu lama
+GCC2F9E7C	Furia Uruk
+GF496EAA0	Puterea Isengardului
+GC727C10B	Vântoarea lui Lurtz
+G73D0C070	Voina lui Saruman
+GD64B9B56	Arcul Uruk
+G9E8D350E	Puterea lui Saruman
+G6426C642	arja lupttorilor Uruk
+GCC3C5342	Gambitul mcelarului
+G0DEF3FCC	Puterea Orthancului
+G0EBAA8C5	Furia Isengardului
+GFC62112E	Maestru mcelar
+GEE7780E5	Asaltul Isengardului
+G838B10AC	Puterea Uruk-hai
+GF44614A3	Mânia lui Saruman
+G45DC8B08	Arcul negru
+G4F638CF6	Pieirea Rohanului
+G9E606E3B	Osânda primului Uruk
+GE31550F8	Lurtz
+G981416DE	Joac cu Lurtz
+G6F22BB2E	Trase la fel ca din Arcul elfic, sgeile din Vleni provoac daune serioase.
+GCA4A15A1	Îi crete permanent viaa.  (Necesit Puterea din Vleni)
+G75BCF244	Îi crete permanent viaa.  (Necesit Tria lui Gil-galad)
+G216AF74D	Îi crete permanent viaa.  (Necesit Puterea Vilyei)
+G0B6CC0B6	Acest atac devastator d foc mai multor inamici.  (Necesit Furia Noldorilor)
+G0355C5D7	Sgeile de argint ale Eldarilor provoac daune cumplite. (Necesit Arcul Vanyar)
+GD3F16BA3	Arcul elfic
+G710A6666	Puterea din Vleni
+G96D9F158	Harul Vilyei
+GF127A06E	Ultima Alian
+GB426C696	Arcul Vanyar
+G71620C4B	Tria lui Gil-galad
+GFBF3A490	arja din Lindon
+G00542D8B	Gambitul Vestitorului
+G5104305A	Puterea Vilyei
+G221633E0	Furia Noldorilor
+G11A9FF39	Nvala de rzboi a Noldorilor
+GDE2839BE	Puterea Eldarilor
+GB0E7C432	Mânia Lindonului
+G008B68D9	Arcul Eldar
+G10607364	Stpânul din Imladris
+G0BA28B85	Joac cu Elrond
+GD6BB77A1	Lansat la fel ca Fulgerul întunecat, focul din Barad-dûr provoac daune serioase.
+G113CAFFC	Îi crete permanent viaa.  (Necesit Puterea din Barad-dûr)
+G2F14F0F7	Îi crete permanent viaa.  (Necesit Puterea Mordorului)
+G573FFFF8	Un atac i mai devastator.  (Necesit Furia întunecat)
+G6AE28C4F	Îi crete permanent viaa.  (Necesit Tria Inelului)
+GC4B7E7DB	Acest atac devastator d foc mai multor inamici.  (Necesit Furia Mordorului)
+G5FEE9C56	Flcrile Muntelui Osândei provoac daune cumplite.  (Necesit Focul iadului)
+GA07FAB7C	Fulgerul întunecat
+G59838F7F	Parare cu buzduganul
+G0ACE1349	Furia întunecat
+GD97CF863	Puterea din Barad-dûr
+GF62B2130	Dansul lui Sauron
+G53F430F0	Voina Inelului Suprem
+GB60C89B8	Focul iadului
+GC26DDD50	Puterea Mordorului
+G29856B22	arja Stpânului Întunericului
+G27C67462	Gambitul lui Annatar
+G66205DC8	Tria Inelului
+GA64C9515	Furia Mordorului
+G278CB8C1	Maestrul buzduganelor
+G4B8493DC	Nvala de rzboi a Mordorului
+G5487C52D	Puterea Muntelui Osândei
+GE9A37F55	Mânia Mordorului
+G3F70A0C4	Focul osândei
+GBB8776B5	Pieirea elfilor
+G6E2AA149	Ochiul lui Sauron
+G1C11BF19	Sauron
+G3057B52F	Joac cu Sauron
+GB76B50B9	Aruncai la fel ca Bolovanii de stânc, aceti bolovani din gropi provoac daune serioase.
+GECFE6FA3	Îi crete permanent viaa.  (Necesit Tria gropilor)
+G47753157	Acest atac devastator d foc mai multor inamici.  (Necesit Furia berserkerului)
+GF2D43E42	Bolovanii topii provoac daune cumplite.  (Necesit Bolovanii de rzboi)
+GC390874C	Bolovanii de stânc
+G035878D4	Frenezia berserkerului
+GC2D0B8DB	Tora din adânc
+GFF1647F7	Bolovanii de rzboi
+G98869254	Tria gropilor
+GC4A495AD	arja de la Zidul Trectorii
+GE0FB4F25	Gambitul Uruk-hai
+G8925F4A1	Furia berserkerului
+G468B4A5C	Maestru berserker
+GB0E58D9C	Nvala asediului
+GD5AF6DD1	Mânia Orthancului
+G01AF5769	Bolovanii de lav
+G18494AB3	Mânia gropilor
+GB3AAE2E1	Uruk-hai
+G683077D7	Joac cu Uruk-hai
+P:Frame Rate:	Cadre/s:
+P:Unlocked	Nelimitat
+P:Display Mode:	Mod afiare:
+P:Window	Fereastr
+P:Full Screen	Ecran complet
+P:Window Size:	Mrime fereastr:
+P:Automatic	Automat
+P:Aspect Ratio:	Raport aspect:
+P:Custom	Personalizat
+P:Resolution:	Rezoluie:
+P:Anisotropic:	Anizotropic:
+P:Mipmaps:	Mipmapuri:
+P:Off	Dezactivat
+P:On	Activat
+P:Ultra Textures:	Texturi Ultra:
+P:Wide Cutscenes:	Scene late:
+P:Anti-aliasing:	Antialiasing:
+P:VSync:	VSync:
+P:Picture:	Imagine:
+P:Keep Shape	Pstreaz forma
+P:Stretch	Întinde
+P:Vertex Programs:	Programe vertex:
+P:Brightness:	Luminozitate:
+P:Sharpening:	Claritate:
+P:Colour:	Culoare:
+P:Original	Original
+P:Vivid	Vie
+P:Muted	Estompat
+P:HUD Widescreen:	HUD lat:
+P:Edges	Margini
+P:Centred	Centrat
+P:Menus:	Meniuri:
+P:Fill	Umple
+P:Movies:	Filme:
+P:As Made	Original
+P:Button Prompts:	Indicaii butoane:
+P:Keyboard	Tastatur
+P:Mouse Pointer:	Cursor mouse:
+P:Sensitivity:	Sensibilitate:
+P:Pointer Size:	Mrime cursor:
+P:Mouse Aiming:	intire cu mouse:
+P:Invert Aiming:	Inversare intire:
+P:Up/Down	Sus/Jos
+P:Left/Right	Stânga/Dreapta
+P:Both	Ambele
+P:Mouse Steering:	Direcie cu mouse:
+P:A Button:	Butonul A:
+P:B Button:	Butonul B:
+P:X Button:	Butonul X:
+P:Y Button:	Butonul Y:
+P:Black Button:	Butonul Black:
+P:White Button:	Butonul White:
+P:Left Trigger:	Trgaci stâng:
+P:Right Trigger:	Trgaci drept:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad sus:
+P:D-pad Down:	D-pad jos:
+P:D-pad Left:	D-pad stânga:
+P:D-pad Right:	D-pad dreapta:
+P:L Stick Click:	Apsare stick S:
+P:R Stick Click:	Apsare stick D:
+P:Move Forward:	Înainte:
+P:Move Back:	Înapoi:
+P:Move Left:	Stânga:
+P:Move Right:	Dreapta:
+P:Look Up:	Privire sus:
+P:Look Down:	Privire jos:
+P:Look Left:	Privire stânga:
+P:Look Right:	Privire dreapta:
+P:Walk:	Mers:
+P:General Options	Opiuni generale
+P:Display Options	Opiuni afiare
+P:Controls	Comenzi
+P:Reset Controls	Reseteaz comenzile
+P:Press a key...  (Esc: cancel, Delete: clear)	Apas o tast...  (Esc: anulare, Delete: tergere)
+P:R Stick	Stick D
+P:Stick	Stick
+P:L Stick	Stick S
+P:Black button	Butonul Black
+P:White button	Butonul White
+P:Left trigger	Trgaci stâng
+P:Right trigger	Trgaci drept
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad sus
+P:D-pad down	D-pad jos
+P:D-pad left	D-pad stânga
+P:D-pad right	D-pad dreapta
+P:Left stick click	Apsare stick stâng
+P:Right stick click	Apsare stick drept
+P:Move forward	Înainte
+P:Move back	Înapoi
+P:Move left	Stânga
+P:Move right	Dreapta
+P:Right stick up	Stick drept sus
+P:Right stick down	Stick drept jos
+P:Right stick left	Stick drept stânga
+P:Right stick right	Stick drept dreapta
+P:Walk	Mers
+P:None	Niciuna
+P:LS click	Apsare LS
+P:RS click	Apsare RS
+P:Mouse Left	Mouse stânga
+P:Mouse Right	Mouse dreapta
+P:Mouse Middle	Mouse mijloc
+P:Mouse 4	Mouse 4
+P:Mouse 5	Mouse 5
+P:Space	Spaiu
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Sus
+P:Down	Jos
+P:Left	Stânga
+P:Right	Dreapta
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Punct i virgul
+P:Equals	Egal
+P:Comma	Virgul
+P:Minus	Minus
+P:Period	Punct
+P:Slash	Slash
+P:Backquote	Apostrof invers
+P:Backslash	Backslash
+P:Quote	Apostrof
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	ine apsat {6} pentru a trece la arma de la distan.  Apas {0} pentru a trage.  Folosete {M} pentru a inti.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Apas i ine apsat {6} pentru a trece la arma de la distan.  Apas {0} pentru a trage.  Folosete {M} pentru a inti.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	ine apsat {6} pentru a folosi.  Trage cu {0} (ine apsat pentru a crete daunele).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Apas i ine apsat {6} pentru a folosi.  Trage cu {0} (ine apsat pentru a crete daunele).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	ine apsat {6} pentru a folosi.  Arunc cu {0} (ine apsat pentru a crete daunele).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Apas i ine apsat {6} pentru a folosi.  Arunc cu {0} (ine apsat pentru a crete daunele).
+P:A devastating attack.  Press and hold {3} to use.	Un atac devastator.  Apas i ine apsat {3} pentru a-l folosi.
+P:Game Saved.  Press {8} to continue.	Joc salvat.  Apas {8} pentru a continua.
+P:Game Saved.  Press {0} to continue.	Joc salvat.  Apas {0} pentru a continua.
+P:Unable to save game. Press {8} to continue.	Jocul nu poate fi salvat. Apas {8} pentru a continua.
+P:Unable to save game. Press {0} to continue.	Jocul nu poate fi salvat. Apas {0} pentru a continua.
+P:Unable to load game. Press {8} to continue.	Jocul nu poate fi încrcat. Apas {8} pentru a continua.
+P:Unable to load game. Press {0} to continue.	Jocul nu poate fi încrcat. Apas {0} pentru a continua.
+P:No saved games. Press {8} to continue.	Nu exist jocuri salvate. Apas {8} pentru a continua.
+P:No saved games. Press {0} to continue.	Nu exist jocuri salvate. Apas {0} pentru a continua.
+P:Not unlocked yet. Press {8} to continue.	Înc nu e deblocat. Apas {8} pentru a continua.
+P:Not unlocked yet. Press {0} to continue.	Înc nu e deblocat. Apas {0} pentru a continua.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Nu ai strâns destule puncte de îmbuntire pentru a cumpra aceast îmbuntire. Apas {8} pentru a continua.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Nu ai strâns destule puncte de îmbuntire pentru a cumpra aceast îmbuntire. Apas {0} pentru a continua.
+P:Press {8} to resume	Apas {8} pentru a continua
+P:the left mouse button	butonul stâng al mouse-ului
+P:the right mouse button	butonul drept al mouse-ului
+P:the middle mouse button	butonul din mijloc al mouse-ului
+P:mouse button 4	butonul 4 al mouse-ului
+P:mouse button 5	butonul 5 al mouse-ului
+P:the A button	butonul A
+P:the B button	butonul B
+P:the X button	butonul X
+P:the Y button	butonul Y
+P:the Black button	butonul Black
+P:the White button	butonul White
+P:the left trigger	trgaciul stâng
+P:the right trigger	trgaciul drept
+P:up on the d-pad	sus pe D-pad
+P:down on the d-pad	jos pe D-pad
+P:left on the d-pad	stânga pe D-pad
+P:right on the d-pad	dreapta pe D-pad
+P:the left thumbstick button	butonul stickului stâng
+P:the right thumbstick button	butonul stickului drept
+P:the Menu button	butonul Menu
+P:the View button	butonul View
+P:the cross button	butonul cruce
+P:the circle button	butonul cerc
+P:the square button	butonul ptrat
+P:the triangle button	butonul triunghi
+P:Left Click	Clic stânga
+P:Right Click	Clic dreapta
+P:Middle Click	Clic mijloc
+P: or 	 sau 
+P:Exit	Ieire
+P:Press {k}	Apas {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	stickul stâng

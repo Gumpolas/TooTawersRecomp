@@ -1,0 +1,1749 @@
+# 简体中文 -- made by tools/lang/build_lang.py
+GA81157BF	指环王：双塔奇兵
+G20EBC61E	彼得·杰克逊 作品
+G2D8D3B98	制片人
+G7EDB1AE9	联合制片人
+G90AF53E8	特效
+G893165F0	Weta Digital
+GD9523953	音乐：霍华德·肖
+G7B677F6E	游戏配音
+G566C1E23	阿拉贡
+GCD74F192	莱戈拉斯
+G78602DD3	金雳
+G74CA5DDD	佛罗多
+G025D44AA	甘道夫
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX 团队
+GAAA9253B	项目管理
+G2E65B2E4	程序设计
+G1E165282	美术
+G4CFF767B	音频
+G1B12D0CA	原开发团队
+G5BB408B8	项目总监
+GA9D987DE	技术总监
+GA4E53836	开发总监
+GCBF9A863	音频总监
+G71D27F1C	首席设计师
+GABE6171F	首席程序员
+GB6AEE806	首席场景美术师
+G0FAA1BD8	首席过场动画美术师
+G93A039A2	首席动画师
+G85851417	美术指导
+GEC5EB699	副制片人
+G1E1B7E49	特效美术师
+GE457B26A	场景美术师
+G09AFDB2B	游戏内过场动画美术师
+GC6201467	概念美术师
+GCE12C680	角色建模师/动画师
+G958F64A1	界面美术师
+G5817028D	图形程序员
+G8E313DB8	AI 程序员
+G7559A05A	玩法程序员
+G47FDFA0D	游戏设计师
+G2A1A4D1F	音效设计与音乐剪辑
+GD6AC199C	音效设计
+G83731102	其他开发指导
+G9B9AC6A2	其他项目管理
+G2C8B85F3	其他美术
+G154B3F75	其他程序设计
+GEC34AAA5	其他音效设计
+GE9E2F454	其他文案
+G8B63E4D8	业务拓展
+G8E754AFA	开发主管
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	执行制片人
+GF944BB31	高级制片人
+G49F95533	本地化副制片人
+GE5AAA381	助理制片人
+G20A463E8	软件工程师
+GEDDCFA70	首席测试员
+G6EC637F4	助理首席测试员
+GA9C92124	核心测试员
+GDDEFB046	制片人
+G5F4C2C91	游戏开发总监
+G53E62C46	关卡设计师
+G4019279E	副美术总监
+G3548CB79	游戏内过场动画
+G5BF26924	图形设计（界面）
+GF5E6331B	本地化助理制片人
+GB9029242	助理制片人
+G81160EAA	高级动画师
+GB1B5EEDE	动画师
+G1D384099	场景建模师
+GD670D187	全动态影像
+GB4300D0E	制作监督
+GDB61FEB0	FMV 制作经理
+G13204F99	技术美术总监
+G8774AEB2	美术总监
+G2EDA5AA3	动画总监
+G4761EC6C	角色技术指导
+GC40AEB65	首席场景美术师
+G04B7AD9A	编剧
+GCCDC1EDE	角色美术师
+G765B2120	高级角色动画师
+GDB98BF7E	高级灯光美术师
+G8AEFA15C	高级特效动画师
+GB64D9748	特效动画师
+GB770287B	绑定师/CG 建模师
+GA89434BE	镜头布局
+GBAA388EF	剪辑
+GA79B5345	音效设计/混录师
+GE2D38E72	美术制作经理
+G29C8EC71	行政助理
+GB01B1D73	系统管理员
+G257D0532	制作助理
+GB2965969	对白剪辑
+G2ACF75E1	其他音频处理
+G821EF7A5	配音演员
+G3CCB3DF3	EA 质量保证
+G2851776E	质量保证经理
+G3D43CCDD	质量保证主管
+G997D9582	质量保证组长
+G5B5CE9C6	质量保证助理组长
+GE0B33004	质量保证核心测试员
+GBBB3A592	FLT 项目负责人
+G7F330F1A	功能语言测试员
+G731958CD	语言测试员
+G7005C763	客户质量控制
+GCC3D24EF	CQC 经理
+G0FF24E54	CQC 主管
+G7498FE74	CQC 部门负责人
+G5AB35ED0	CQC 产品分析师
+G6E529086	母盘制作实验室
+G0229B6F3	国际产品开发总监
+G6B435E81	本地化项目经理
+GF8BA9878	本地化项目协调员
+G906896D8	合作方审核与批准经理
+G860EDA13	商务事务
+G7AC94AC6	法务
+GFDF965B3	工作室运营
+G9FF9799E	工作室合同协调员
+G9E24FEC0	市场总监
+G44C57DC5	产品经理
+GE1A6D911	公共关系
+GA5ADE5FF	说明书
+G4C2A256D	说明书排版
+G279BA159	包装项目管理
+G482E9235	包装设计
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	指环王电影团队
+GE196FA55	导演
+GE364782E	执行制片人
+GB11B5F1A	联合制片人
+GDDE9A104	档案管理员
+G73D53EB3	素材管理
+G4616CF92	制片人助理
+GD98C077D	后期制作监督
+G26FFE43A	第一助理剪辑
+GFAE3387C	微缩模型管理
+G0D7D1A1D	全球授权与商品执行副总裁
+GD58105C6	创意总监
+GB0E8D9D5	电影演员
+G4267BE40	凯兰崔尔
+GD1604ECA	萨鲁曼
+GA16F6333	埃尔隆德
+GE1DA74FC	希优顿
+G147FCF02	阿尔玟
+GDEEF44C1	伊西铎
+G4C33F9AA	山姆怀斯
+G4A7482A5	咕噜
+GC771C093	波罗米尔
+GF440E316	New Line Music
+GB9E9E9DC	音乐商务副总裁
+G96EBB4D8	音乐主管
+G2728DB7D	音乐总监
+GFE08F13A	3Foot6
+GCFF1286B	商品协调员
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	副总裁
+GE58F283A	制片人/制作经理
+G97C336EB	动画监督
+G96FF4CEA	高级技术总监
+GE816CF3D	首席技术设置
+G22B756F5	动画师
+G86F5B2D9	绘景师
+GBC50C796	办公室经理
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	执行制片
+G14C96B5C	首席 CG 美术师
+GD9742A3C	CG 美术师/动画师
+GBA7D6969	Arnson Communications
+G22C5AB99	执行制片人/创意总监
+G45C5172D	编剧/制片人
+GDCC6F23E	美术总监/动画师
+G9C4F3B3B	DS 美术师
+GF0F58DD3	EA 特别鸣谢
+G895C842A	STORMFRONT STUDIOS 特别鸣谢
+G9D4DD21A	在中土大陆，传说中有一位黑暗魔君索伦，
+G6CFA90F6	以及一枚能让他奴役世界的魔戒。
+G18F2969C	而如今，它落入了一个谁也想不到的人手中。
+G378C79D6	我是个超级游戏迷，所以我当然想了解指环王电子游戏的所有细节。
+GDCF04190	我会进入一种一直玩下去的状态，
+G977EBA13	通常是在玩冒险游戏的时候，我的脑子就全在里面了。
+G49C9AB1A	一旦进去了，我就停不下来，非得把我的角色带到结局不可。
+GD2647A40	这个任务是交给你的，如果你找不到办法，就没人能找到了。
+G3AC8371A	快躲起来！
+GAD82B19D	所以我一直在四处打听这个游戏，终于玩到了，简直难以置信。
+G8DE86872	画面真是太美了。
+G72E74697	哦，太酷了！
+GF9824FCA	对，上啊，阿拉贡！加油！
+G2EE7D5D4	它们来了。
+G61F7CD7D	能打开一个电子游戏看到自己在里面跑来跑去，算是一种额外的惊喜吧。
+G57A5BC04	我被揍得好惨。
+G1F85273D	佛罗多长得像我！是不是很酷？
+G1FFE0A40	太酷了。
+GE6E563F9	他们会找到魔戒，
+GD135555F	然后杀掉带着它的人。
+G18844D24	快跑！快跑，佛罗多！
+G525D5AD9	他们想要魔戒！绝不能让他们夺走。
+GB99DAE56	给电影做 ADR 和给游戏配音的区别在于，电影的 ADR 通常是对着画面配的。
+G7558081F	你看着电影画面，努力模仿你之前说过的台词，让它和电影里的对白同步。
+GDD3F428F	你是谁？
+GE906BA5B	你害怕吗？
+G9BDAB30C	是的。
+G3B07B1B1	还不够害怕。
+GFBD6613D	游戏就没有画面，只是一些你随便加进去的氛围性的东西。
+G0EE06D0F	危险啊、救命啊之类的。
+G2F9FC8E2	阿拉贡！救命！阿拉贡！阿拉贡！
+G289F7C03	我喜欢可动人偶，也喜欢游戏，能被收录进去，简直是宅男的终极福利，我很喜欢。
+G67346E61	即使是最渺小的人也能改变未来的走向。
+G16420686	我太激动了，等不及要拿到我的那一份了。太棒了。
+GDBA69463	墨瑞亚。
+G1D429D96	你害怕进入那些矿坑。
+G372C9F91	你知道他们在黑暗中唤醒了什么。
+G34515230	我真的很享受做这个游戏，因为不用像最初塑造角色时
+G93AEF9C3	那样下那么多苦功夫。
+GA9883FB4	拍电影必然是非常慢的。
+G0C1E0E8C	电脑游戏的一大好处当然是，我不用化妆。
+GA5F1044B	做游戏的时候，你站在录音棚里，
+GCE4A81AD	然后说，嗯，我觉得你应该这么说、这么说、再这么说，
+G049A3A66	他们有一大堆剧本，你就把这些精彩的台词都说出来。
+G70F1359D	埋伏！有埋伏！
+G65325B21	然后他们把这些全部用到游戏里，你也能分到一些功劳。
+G39F1D126	那些爆炸装置必须摧毁！
+GEB33699E	我太爱这个金雳造型的模型了。
+GD9A0C650	我觉得这是个精力充沛、雄赳赳、很有魅力的角色。
+G43591DCA	他真的是你唯一会想玩的角色。
+G5C0A6C1E	我是说其他的那些，你知道，什么阿拉贡啊、莱戈拉斯啊，都是英俊帅气的家伙，
+G3D52D95F	但要来真正高质量的战斗，你就得选金雳。
+G8E74524F	为了让电影呈现出合适的样貌，我们在新西兰全世界最美的外景地待了十四个月。
+GAD562976	这个游戏是战时的战斗场面，制作得非常精彩出色。
+G7F21BCD6	我不能把他丢在那儿！天哪！
+G9AA947F5	这可太费时间了。
+G669C44C6	我是说，这是我发现的一种新瘾。
+G63540AD1	所以，玩家们，干得好，恭喜你们打进了这个能看到采访的小角落。
+G925FED56	真希望我能告诉你们怎么把游戏玩得更好，可实际上我从来都打不到这一关。
+GC3162ADB	祝你们好运，继续玩下去吧。
+GA3572714	世界的命运很快就会决定。
+G922859CB	整个电子游戏的构建或者说制作过程，
+GD9B03397	主要就是你跟各种东西打，还有忍者之类的……我也不知道是什么。
+G24326AFA	我很惊讶，它看起来逼真多了，
+G3E302C15	感觉像是上了一个新的层次。
+GBD830A87	我觉得游戏里阿拉贡的准头比我自己还好……
+GF76948D6	不过，我不打算抱怨这个。
+GD27FED3E	无论生死，只要能保护你，我都会去做。
+G56368F53	我的剑听你差遣。
+G8D6DAFD1	就我所看到的游戏而言，它似乎反映出
+G970D4AB6	第二部电影比第一部规模更大，
+GFD0BADCA	我很期待看到它们，就像我期待看到这款游戏的其余部分一样。
+G1F48F697	我今天只看了一小段样片。
+GB689F1B9	比如，我很高兴看到阿拉贡有时会被撞倒、摔倒或者在地上翻滚，
+G6F6072BC	而且他的战斗风格会随着情况变化。
+GA3A3F7A1	那并不总是干净利落的，你知道，有点像是……
+G28095E46	有时候他会有点像个打架斗殴的人——至少电影里他是这么演的——我觉得游戏也体现了这一点。
+G43AA6A0B	令人印象深刻。
+G8559FF90	来自远方的陌生人，你们被召集到这里，是为了应对魔多的威胁。
+GC2A75F48	中土正处在毁灭的边缘。
+GFE143A07	谁也无法逃脱。团结起来，否则你们都会灭亡。
+GF59E5460	每次看到科技之类的进步，我总是很惊叹，
+GAD5CBAE4	它已经那么接近真实了。
+GF96BCD4B	我得马上去找波罗米尔！
+GD262135E	给电影录 ADR 的时候，你当然是看着屏幕的，
+G83EECB7A	看着眼前的动作，就像你拍摄那天演的那样。
+G3C0B6913	而给这个录音的时候，
+G2A8B6AD2	没有摄像机对着你，
+G52F7D105	你也不用对着眼前的画面对口型，
+G8EE2279F	所以你可以真正多花一份力气，
+GA5BE0F5A	去强调和发挥剧本上写的东西。
+G51E230FB	滚回生你们的深坑里去！
+G97400E1E	它们比电影里的要夸张一些。
+GC26338C3	你明白我的意思吗？
+G40EB5D5C	有点荒唐，但很好玩。
+G52FECFA2	能那样尽情地去玩，还挺有意思的。
+G91D69630	来吧！
+G87873143	这场仗你赢不了！
+G47AECCC4	我想，如果我在玩这个游戏，
+GB0CCD2A6	知道那个电脑生成的角色所做的动作是由真正的演员配音的，会很不错，
+GC1719889	而且我想电脑世界里的真实感越强，玩家就越兴奋。
+G77ECFBF0	你无法驾驭它。我们谁都不能。
+GB42EC53B	魔戒必须被摧毁。
+G43E793ED	持戒人的危险越来越大。
+G6E2FF8E0	因为还有另一个人在追猎魔戒。
+GDD26CBEC	我这辈子从来没玩过电子游戏。
+GF783F574	我永远搞不懂规则。
+G573BC826	我的手又大又笨，也没有我觉得玩游戏必需的那种手脑协调能力，
+GFBB68CB5	而这种能力好像六岁以下的人人都有。
+G8D9D9F75	《指环王》这款游戏最精彩的地方在于，
+G81AEE08E	你听到的是原班演员的声音——全都是。
+GAE3BFBD7	今天我录的是灰袍甘道夫和白袍甘道夫，
+G21F22F52	也就是我在《指环王》里扮演的两个角色。
+GCED01E94	你看到了什么？
+GB4F26455	有些刻痕。
+G5C7EB8BC	是某种精灵文字。
+G27A03C42	我看不懂。
+G8E22513B	很少有人能看懂。
+G4B2817A2	现在双塔已经结盟了：欧散克和巴拉督尔。
+GC69D576A	游戏里的要粗犷一点，更直接一点，也许更有临场感一点。
+G363960EA	你们之中必须有一个人进去。
+GFFCB2D5D	帮助那些还活着的村民。
+GF4DAF5B8	基本上，这是一段很激烈的战斗。
+G00009069	展现出来的是甘道夫的军人一面：指挥官、武士、领袖。
+G4519FC71	你不能过去！
+G066F3360	所以你在屏幕上看到的，已经非常接近——该死的——
+GF4CF848B	你在电影里看到的那个甘道夫了。真希望我能来和你们一起玩这个游戏。
+G699B7BF2	他在这枚戒指里倾注了他的残暴、他的恶意和他统治一切生灵的意志。
+GA1469225	至尊魔戒驭众戒。
+G01090CE9	我们所做的，是数千人大量工作的结晶。
+G74E1F68D	片名《双塔奇兵》指的是欧散克塔， 
+G0AE01FA9	也就是克里斯托弗·李饰演的萨鲁曼的据点，
+GD9642178	以及魔多的巴拉督尔塔，索伦的老巢。
+G573418F9	第二部电影和这个三部曲里的每一部一样，都是一项挑战。在我们完成交付之前，它会一直是个挑战。
+GB2A31EA0	这是一部了不起的电影。它会比第一部更宏大。
+GB831FA3A	我觉得拍这些电影的时候确实倾注了极大的心血，
+GCCFC11FE	能把这些资料传递给制作游戏的团队，真是太好了， 
+G327C2028	因为我知道他们也投入了同样多的心血和努力，要给大众带来一款真正内容丰富的游戏。
+G2C4A352E	托尔金在书中把埃多拉斯描写得非常生动，
+G10EFB23A	说它是一座由木头建筑组成的城市，坐落在一片雪山前的山丘上。
+G50D180A4	我们最初勘景的时候，我说，听着，我们必须在新西兰找到这么一个地方，
+GDA11996F	肯定有一座这样的山丘，就在群山前面。
+GD6F61F77	于是他们坐着直升机飞遍了全国，带回来一张绝对完美的山丘照片。
+GC56228ED	它离最近的城镇大约有六七十英里。
+GF796DA0F	它在南岛的中部，非常偏远。
+GFA1CD969	我们实际上花了大约七八个月来建造这些巨大的建筑。
+GC2D0BAAA	最终的结果是，电影里的埃多拉斯完全真实可信。
+GC2774958	我可以去那里，就像在一个真实存在的地方一样直接拍摄。
+G99F69515	EA 游戏令人兴奋的一点，也是我在他们制作的模型里看到的，
+G6B3554D6	就是他们对我们的布景和角色做了极好的还原，
+GB997C9B4	甚至 EA 还和我们的演员达成了协议，让他们亲自来录制自己的台词。
+G815CAC49	演员们对此都相当兴奋。
+GA1640DEB	海尔姆深谷之战已经结束。
+G93BD7122	中土之战即将开始。
+G958468DE	我们做了一个海尔姆深谷的微缩模型，但有意思的是，它不只是个模型。 
+G1BC58576	它是个巨大的微缩模型。比例是四分之一，但它本身就有三四十英尺宽。
+GFA4F689B	它大到我们可以直接用摄影机拍，看起来一点也不像微缩模型。
+G2571B991	看起来完全真实可信。
+G31C24FB0	成就一部伟大电影的，其实是一个出色的剧本和一个出色的演员阵容。
+G9C04D37F	我想做游戏的时候，很多挑战也是一样的。
+GA0B86A25	你得为游戏吸引合适的人才。
+G0B7DC714	你得有一个能吸引观众的故事，然后让大家为这个故事而兴奋，
+G5E1101AB	被这个故事打动，真正想看到它变成现实。
+G87FC774C	我们帮不了佛罗多了。
+G3C9AA8BC	这趟任务会要了他的命。
+G98F7C221	洛汗国力衰弱，即将倾覆，
+GA01F7D34	所以他会对人类世界发动迅猛的打击。
+GA8723617	战争已经降临。
+GE1AF4B03	他们偷走了我们的宝贝，我们想要它。
+G6A5F57B3	开始这个项目时，最让人畏惧的大概是
+GDE1DC635	我们感到肩负着难以置信的重任，必须在互动形式上
+GCFDFC743	做出彼得·杰克逊在电影上所做到的那种成就。
+GC87068A6	他把史上最受喜爱的一些文学作品
+G423C7E0C	改编成了史诗级的电影杰作，在全世界赢得了千千万万的影迷。
+GC8F29411	项目开始时，你做的是概念和设计方面的工作。
+GBACB2DE5	随着项目推进——程序员、美术师、动画师、场景美术师、
+G047AC48F	建模专家、贴图专家——所有这些人都在考虑自己负责的那部分游戏，
+GB60517EB	但着眼于整体的体验。
+G13170460	能和电影制作者如此密切合作的一个好处是，
+GA03610FF	我们可以用他们为电影制作的模型和道具
+G9DADDEE4	作为我们游戏中需要制作的东西的参考。
+GF0D449E5	暗影在黑暗中移动。
+GEC940136	在设计阿拉贡时，我们必须同时考虑全部三个可操作角色。
+GBB381F7C	比如，莱戈拉斯更偏向速度和技巧型的角色。
+G4CE351A9	金雳是一辆小小的坦克。
+G21025B26	阿拉贡则是两者的结合。
+G3ADE6E66	在开始制作任何东西之前，我们逐帧研究了每个角色的动作。
+G80ADBA8B	然后我们会制作角色的线框模型，也就是他们的基本比例、大小和尺寸。
+G85E5A400	然后我们会加上贴图和光照，完成他们的服装，并加上角色的精细细节。
+GCD3CDD42	演员们都很有兴趣和我们合作。
+G092B49A0	有一次，维果·莫腾森给我们展示了他的一些动作招式。
+G915A1A70	他和他的替身打开了一箱剑，开始互相对练。
+G215B5E15	这成了阿拉贡许多招式的基础。
+G7126178B	它想要被找到。
+G7E02AF05	在挑选电影场景放进游戏时，巴林之墓非常突出，是个有力的候选。
+GF4146E18	那是第一部电影中最令人难忘的时刻之一。
+GE152213A	我们想重现那道照在墓上的强烈光束所营造的氛围。
+GB236432D	这对我们的场景建模师和灯光专家来说是个挑战。
+GD3C26DBB	洛汗村庄的关卡很独特，因为它们让我们有机会扩展电影中的区域。
+G8669E69D	游戏关卡本身在光照、建筑形状、里面的人物方面，看起来和感觉起来都非常像电影的外景地，
+GF9B205CF	但在这个关卡里，我们实际上在此基础上进行了扩展，
+GB285B32E	为玩家打造了一些可能在电影里没见过的区域，供他们探索和战斗。
+G5E5F1D1C	《指环王》这款游戏最精彩的地方在于，
+G610E0BE4	你能在自己的屏幕上听到原班演员的声音——全都是。
+GC6FCAA65	救命！阿拉贡！阿拉贡！救命！
+G20165D69	它真实得不可思议，而且我觉得根据电影改编游戏真的很难。
+GBF3A0A5B	这款游戏做到了。它和电影非常像。
+GDD010A37	我们设计了一套非常动态的音乐系统，能反映游戏中实际事件的气氛。
+G96BEDA9C	至尊魔戒寻众戒，魔戒至尊引众戒，禁锢众戒黑暗中。
+G91629050	在电影里，萨鲁曼派了一万强兽人进攻海尔姆深谷。
+G3B702B98	所以我们必须利用手头的其他元素来营造战斗的感觉。
+GDEFA604D	通过音效和音频，我们真正让人感觉到那里有成千上万的半兽人。
+G204351C8	如果有人打开游戏，对自己说：
+GEC81BA2D	天哪！这就是电影啊！那我们就完全达成了我们的目标。
+G52BF957B	这就是我在电影里记得的那个地方。
+G571B482E	我身临其境。我能做点什么。现在轮到我了。
+G625B0A6D	这就是我们想让玩家有的感觉。
+GB222979D	战马和骑手去了哪里？
+G2457FF85	吹响的号角去了哪里？
+G8B36CA83	它们如山间的雨般逝去；
+G50095CA7	如草原上的风。
+G10EB8BCF	岁月已沉入西方，
+G109A0CCE	在山丘之后，
+G02628501	没入阴影。
+G80A942D2	阿拉贡！
+GDDEA48AC	帮助
+G4C40E774	按 START 键
+GEE711094	继续
+GF9202936	重玩
+G2E427514	开
+GFC4343CA	关
+G52E4CD32	浏览
+G39D074FD	选择
+GAC3A8B6E	返回
+G42B46F3C	@ 2002 New Line Productions, Inc.  The Lord of The Rings and the characters, names, and places therein, * The Saul Zaentz Company d/b/a Tolkien Enterprises under license to New Line Productions, Inc.  All Rights Reserved.
+G035F710A	EA GAMES* 是 Electronic Arts* 旗下品牌。
+GBAC3ED5F	游戏代码及部分音频/视觉元素 @ 2002 Electronic Arts Inc. 保留所有权利。
+G0EF5F91F	新游戏
+GB8D9D2FD	读取游戏
+G0BE2A075	选项
+G5D6AEEF7	调试模式
+G83335327	特别内容
+G731194FA	保存游戏
+G7BA082D0	按 START 继续
+G755B3BA1	控制器设置
+G03961FD4	游戏设置
+GABEE6EA4	难度：
+GF065116B	简单
+G8D3A16F6	普通
+GACDD0363	专家
+GAEA05F86	单声道
+G913A11F7	立体声
+G2A253083	环绕声
+GA10C5C21	语音音量：
+G7F04050E	音乐音量：
+GF30A57F8	字幕：
+G64752D2D	震动：
+GB3F78571	游戏音量：
+GED3C9F14	声音：
+GB065D5A4	选择要读取的游戏：
+G00FF7920	选择保存位置：
+GC99B6C1E	选择记忆卡插槽：
+GFB5C0BA2	Xbox 硬盘
+GD2F916B6	记忆卡插槽 2
+GAEFBDEF3	取消
+GDA714102	是
+GB893E04C	否
+GE506E266	确定吗？
+G574C52F2	确定要购买这项升级吗？
+G0D91D779	确定吗？你上次在此任务中的成绩将会丢失。
+G1CF7123A	确定吗？本游戏中所有未保存的进度都将丢失。
+GEF04DC5D	确定吗？此任务中的进度将会丢失。
+GEDF6F861	确定要覆盖此游戏存档吗？
+GF44D8878	升级购买完毕了吗？
+G1EF3EFE3	保存游戏到硬盘
+G05163971	从硬盘读取游戏
+G8F93A6FE	选择难度
+G654484DF	未解锁
+G5A7CB330	已完成
+G8D6AAF13	未进行
+GBE8C099C	序章
+GF4FBBE46	风云顶
+GE7EA3020	墨瑞亚之门
+GE13A531D	巴林之墓
+G79C1EAD3	阿蒙汉
+G51C82E11	范贡森林
+G35CCE51F	洛汗平原
+GAD341B58	西伏尔德
+G94ADD008	洛汗隘口
+G9760067E	深谷宽墙
+GF8B38ED5	城墙失守
+G644C89AD	号角堡庭院
+G69B8B4C2	欧散克塔
+GBF00F963	海尔姆深谷：
+GE34AB2FD	New Line 动物园
+GE132F5FF	选择要播放的动画：
+G4B3C17B9	开场
+GAD303F2A	结局
+G668B98BD	层
+G9C7A95F0	升级点数：
+G4AE44639	4) 输入指定的密码序列。
+G5374B3F5	秘籍
+GDF7B6B3A	总是毁灭性攻击：
+GFECB245B	双人模式：
+GCAB16744	小型敌人：
+G587D657D	全部升级：
+G58E34314	无敌：
+GF0336180	慢动作：
+G5A122CB0	输入密码的方法：
+G35BC6746	1) 开始一个任务。
+G46DF9919	2) 按 START 键暂停。
+G5A1291EE	3) 按住
+GEB88B42D	无限生命：
+G6AE6FFFE	无限飞弹：
+GAA29A634	结束任务：
+GB2AE1BCE	暂停模式：
+GAA467E08	增加经验：
+GEA42298C	升级：
+G6BA0C403	恢复生命：
+G41D871E0	恢复飞弹：
+G04DBD06B	飞弹升级：
+GA7A50BB5	显示升级
+GA67DF58D	退出到菜单
+G773B79A5	进入下一个任务
+G96540044	任务失败。
+G5ADDCAC2	重玩任务
+G9DD85D6D	退出到菜单
+G730918CA	再试一次
+GB437BA93	制作人员
+G798A44A2	重玩任务
+G6F46B26E	请选择语言。
+G2809E047	English
+GE3AAFF7A	迅捷
+GD0DB46DB	猛烈
+G9AD854EF	击杀
+GE83BE834	特殊
+GDB34AED9	连招
+GDACF8DCA	已购买
+G125CAC9A	尚未解锁。按 A 键继续。
+GDA9711D2	你收集的升级点数不足，无法购买这项升级。按 A 键继续。
+GEB0E0008	或
+G90A54691	格挡后
+GF5F43483	倒地时
+GFC1C2104	空位
+GB8BCCCB9	游戏 2
+G92BA5250	游戏 3
+G9CCBAB2F	游戏 4
+G76C930C6	游戏 5
+G50C6B65D	游戏 6
+G2AC43BF4	游戏 7
+G34D594D3	游戏 8
+G0ED31A6A	游戏 9
+GBE76BA62	游戏 10
+GE47934CB	游戏 11
+G6ED86859	未插入记忆卡 (PS2)。保存此游戏数据至少需要 80 KB。要继续吗？
+G87DE26DA	记忆卡插槽 1 中的记忆卡 (PS2) 空间不足。保存此应用程序数据至少需要 80 KB。要继续吗？
+G7118C569	记忆卡插槽 2 中的记忆卡 (PS2) 空间不足。保存此应用程序数据至少需要 80 KB。要继续吗？
+G6804B4C2	记忆卡插槽中的记忆卡 (PS2) 空间不足。保存此应用程序数据至少需要 80 KB。要继续吗？
+G849021EA	记忆卡插槽 1 中未插入记忆卡 (PS2)。按 X 键继续。
+G59CE2129	记忆卡插槽 2 中未插入记忆卡 (PS2)。按 X 键继续。
+GC5BD8B5F	请重新连接控制器，然后按 START 继续。
+GC2BDD02C	记忆卡插槽 2 中的记忆卡 (PS2) 未格式化。要格式化记忆卡 (PS2) 吗？
+G6B64948C	你的 Xbox 没有足够的可用区块来保存游戏。按 A 不保存直接继续，或按 B 释放至少
+GEDAB4EA9	请重新连接控制器，然后按 START 继续
+G00E55934	硬盘没有足够的可用区块来保存此游戏存档。
+G20A17FB1	个区块必须被释放。
+G353AAE58	格式化失败！记忆卡插槽 2 中的记忆卡 (PS2) 出错！按 X 键继续。
+G9CAF03E3	无法保存游戏。按 A 键继续。
+GCB03752D	游戏已保存。按 A 键继续。
+GACBFB64F	已成功保存到记忆卡插槽 2 中的记忆卡 (PS2)！按 X 键继续。
+GC7C0454F	正在将数据保存到记忆卡插槽 1 中的记忆卡 (PS2)。请勿取出记忆卡 (PS2)、重置或关闭主机。
+G4B14AAB4	正在将数据保存到记忆卡插槽 2 中的记忆卡 (PS2)。请勿取出记忆卡 (PS2)、重置或关闭主机。
+G53DAC278	正在从记忆卡插槽 1 中的记忆卡 (PS2) 读取数据。请勿取出记忆卡 (PS2)、重置或关闭主机。
+GF144B8B3	正在从记忆卡插槽 2 中的记忆卡 (PS2) 读取数据。请勿取出记忆卡 (PS2)、重置或关闭主机。
+G063DD8CC	无法读取游戏。按 A 键继续。
+GE5BDAC0B	要保存游戏吗？
+GED3A9CCF	没有游戏存档。按 A 键继续。
+GAF453999	个区块。
+GEE649E5A	记忆卡插槽 1 中的记忆卡 (PS2) 未格式化。按 X 键继续。
+G81447581	记忆卡插槽 2 中的记忆卡 (PS2) 未格式化。按 X 键继续。
+GB36F8F0C	正在从记忆卡插槽 1 中的记忆卡 (PS2) 读取数据。请勿取出记忆卡 (PS2)、重置或关闭主机。
+G97EC5687	正在从记忆卡插槽 2 中的记忆卡 (PS2) 读取数据。请勿取出记忆卡 (PS2)、重置或关闭主机。
+G8E8AF6C1	你使用的光盘有问题。它可能脏了或已损坏。
+G9CB8DFF0	任务 1
+G0EC04F2B	任务 2
+GE8BDD4C2	任务 3
+G5AC543FD	任务 4
+G34C2C994	任务 5
+GA6CA38CF	任务 6
+G80C7BE66	任务 7
+GF2CF2DA1	任务 8
+GCCCCB338	任务 9
+GA1F545C0	任务 10
+GC7F7C029	任务 11
+GEDFA3A92	任务 12
+G13FCB4FB	任务 13
+GFBA35200	任务 A
+G6DAAC13B	任务 B
+G47A846D2	任务 C
+GB9AFB60D	任务 D
+G0111B4C5	任务经验：
+G10CB2024	任务评价：
+GB8F11F62	总升级点数：
+G94649BD6	完美
+GE424E811	优秀
+G70E9184E	良好
+GE98543F1	一般
+GF9792B5F	差
+G4DE9139C	技巧
+GB525F096	强力
+G5F8C23CD	防御
+G8673311D	攻击
+G7829DFB2	快速连招。对较小的、没有盾牌的敌人很有效。
+G63E6B4FD	威力强大的连招，可以击碎障碍物或敌人的盾牌。
+G406CD62A	按住左扳机使用。按 A 键射击（按住可提高伤害）。
+G7651B078	这一刺可以终结任何被击倒的敌人。
+G09258F36	将敌人击退，使其远离你的攻击范围。
+G36E84E05	格挡敌人的攻击和飞行道具。
+G074FC78D	毁灭性的攻击。按住 Y 键使用。
+GE5C8740D	永久提高你的生命值。
+G791AEDAB	向前冲锋，将没有盾牌的敌人撞倒在地。
+GF4A5485B	起身时发动攻击，出其不意地打击敌人。
+GC0B8F80A	对付没有盾牌的敌人非常有效的连招。
+G6CBE68E9	能以最快速度解决持盾敌人，非常有效。
+GD7BB121B	连携招式：立即杀死正在攻击的哥布林。
+G4A59663E	射法与杜内丹之弓相同，洛汗骠骑的倒钩箭能造成严重伤害。
+G96A8AB86	永久提高你的生命值。（需要宰相之力）
+GED26DEB8	从远距离向前冲锋，将没有盾牌的敌人撞倒在地。（需要突进攻击）
+GB4790643	用这套连招将敌人打伤、击倒并追击。
+G9709901B	用这套连招攻击没有盾牌的敌人，解决他，再迅速攻击下一个。
+G066B80A4	连携招式：立即杀死正在攻击的半兽人。
+GB54F0B8A	永久提高你的生命值。（需要伊西铎之力）
+G1C742C09	威力更强的毁灭性攻击。（需要游侠之怒）
+G9F299E6A	提高你的迅捷攻击的伤害。
+G2A888253	用这套连招打伤、击倒并终结强大的敌人。
+GEF4043FD	永久提高你的生命值。（需要埃兰迪尔之力）
+GF3D48718	这一毁灭性攻击能让多个敌人着火。（需要荒野之狂怒）
+GDAE09290	刚铎的铁箭能造成可怕的伤害。（需要洛汗之弓）
+GBD1ED2AE	连携招式：立即杀死正在攻击的强兽人。
+G6DF8DC34	用来对付强大的敌人：击碎他的盾牌，将他打倒在地，再给予打击。
+GB1BCB280	无
+GE225A1EC	按住左扳机使用。按 A 键投掷（按住可提高伤害）。
+GFF3FB1CE	这一斧可以终结任何被击倒的敌人。
+G81A89461	永久提高你的生命值。（需要岩石之威）
+GF266C7E6	永久提高你的生命值。（需要钢铁之威）
+G2FCD00C0	从远距离向前冲锋，将没有盾牌的敌人撞倒在地。（需要突进攻击）
+G00247254	永久提高你的生命值。（需要守护符文）
+GA505D28C	永久提高你的生命值。（需要巴林之威）
+G34C62FC4	投掷方式与埃瑞博之斧相同，锋利无比的墨瑞亚之斧伤害更高。
+G57901BB9	威力更强的毁灭性攻击。（需要矮人之怒）
+G8840F62F	永久提高你的生命值。（需要格罗因之威）
+G361F0511	这一毁灭性攻击能让多个敌人着火。（需要山岳之狂怒）
+G219C0125	这些秘银锋刃能造成可怕的伤害。（需要墨瑞亚之斧）
+G9986DAAB	提高你的猛烈攻击的伤害。
+G11BF2FC5	射法与黑森林长弓相同，瑞文戴尔的白蜡木箭伤害更高。
+G7A9893BB	罗瑞恩的附魔箭能造成恐怖的伤害。（需要瑞文戴尔长弓）
+G42E47239	这些魔法箭能让敌人着火。（需要罗瑞恩长弓）
+G5BAB8220	永久提高你的生命值。（需要凯勒鹏之威能）
+G39265CB0	威力更强的毁灭性攻击。（需要精灵之怒）
+G084B6AEF	这些箭能贯穿并伤害路径上的所有敌人。（需要龙焰箭）
+GB1D19C39	提高你射出的每支箭的伤害。
+G06E26BE1	三连击
+G20A303C1	双重劈砍
+GCB8F4087	杜内丹之弓
+G3F6F3751	暗影打击
+GBE8C73E9	格斗踢
+G5660E3B0	剑格挡
+GDF332280	游侠之怒
+GB8AB07B9	宰相之力
+G187F8CC1	突进攻击
+G86E487F5	起身攻击
+GF7D6DC76	伊西铎的迅捷恐惧
+GB34DCC39	伊西铎的解救
+GC9303634	哥布林克星
+G3A0786A5	洛汗之弓
+G8B17B5C5	伊西铎之力
+G579A1927	冲锋攻击
+G207C1523	伊西铎的死亡冲锋
+G6C2653E9	伊西铎的妙招
+G2A3BA153	半兽人克星
+GA28B29AA	埃兰迪尔之力
+G7D213CCE	荒野之狂怒
+G006BF315	剑术大师
+G6B68444D	伊西铎的战争突袭
+G3B0A3720	阿刚那斯之力
+G78BAB3BC	努门诺尔之怒火
+GCEDAD8B0	刚铎之弓
+G3BE146BB	萨鲁曼克星
+G701FD063	伊西铎的审判
+G0251EC9F	埃瑞博之斧
+G96C77DAD	斧刺
+GDD4B6691	斧格挡
+GADD20DD0	矮人之怒
+GB0D95BC6	岩石之威
+G4FB6CF69	钢铁之威
+G5F017E32	巴林的迅捷恐惧
+GDFD7CADD	巴林的解救
+GDF1B571B	守护符文
+G9B37EDE7	巴林的死亡冲锋
+GCDB1A82D	巴林的妙招
+G2DEF1D03	巴林之威
+GE89D3658	格罗因之威
+G31B06C3A	墨瑞亚之斧
+GADFB76EF	山岳之狂怒
+G75612F09	巴林的战争突袭
+G8CE2E527	卡扎督姆之威
+GE4E87FCC	墨瑞亚之怒火
+GA16173AB	迷雾山脉之斧
+G24288EA5	王者斧艺
+G45AAD667	巴林的审判
+GB752504B	黑森林长弓
+GA018F71A	匕首格挡
+G0DCE9941	精灵之怒
+G4A27D7DF	凯勒鹏之威能
+GE0EC06AA	瑞文戴尔长弓
+G76059454	埃尔隆德的迅捷恐惧
+GE8C0678B	埃尔隆德的解救
+GE9F2F2C9	罗瑞恩长弓
+G5FE47D01	埃尔隆德的死亡冲锋
+G4B1902CB	埃尔隆德的妙招
+GB3FB8DDE	龙焰箭
+G4A61DECC	凯兰崔尔之威能
+G204DE538	吉尔-加拉德之狂怒
+G5B85BC6F	埃尔隆德的战争突袭
+GBDF43860	秘银箭
+G4B69DAC6	精灵弓艺
+G43AB31C1	埃尔隆德的审判
+GEAA8149B	等级
+G11886F39	格挡可以挡住敌人的攻击并弹开箭矢。
+GE4E78CFD	格挡
+G3226B277	按住左扳机切换到远程武器。按 A 键射击。用左摇杆瞄准。
+GFF931564	远程武器
+G9A309E3D	射击
+GC4AB2A6D	用迅捷攻击打击没有盾牌的敌人。
+G5C64BDED	用猛烈攻击击破敌人的盾牌。
+G4B1F5E2B	猛烈攻击
+G12993772	迅捷攻击
+G5550F308	获取经验值来提升角色等级，并购买有用的升级。
+GD5F0D645	获得的经验值
+G109A17A7	使用高级连招并避免被敌人击中，以填满技巧槽并获得最多的经验值。
+GDB22979F	技巧槽
+GF7AF01B8	瞄准
+G552324EC	后跳
+G3962B27E	必杀招式
+G819AB384	击退
+GB5FE5915	射击/迅捷攻击
+G1438BF1E	移动/瞄准
+GCDD8B9EF	暂停
+G63E0263C	采访
+GA970F7F6	彼得·杰克逊与巴里·奥斯本
+G286B72BD	伊利亚·伍德
+GBCE2F8C0	伊恩·麦克莱恩
+GFD2A8768	指环王
+GF0462ED4	电子游戏制作花絮
+G0DB34230	独家电影片段
+G9DF19E57	《护戒使者》
+G1704CE51	制作照片
+G330E63EE	范贡与欧散克
+GD722C1B8	洛汗与海尔姆深谷
+GE704E302	维果·莫腾森
+GDAFCF62B	奥兰多·布鲁姆
+GFE6CEDF7	约翰·瑞斯-戴维斯
+G1192CE25	使用阿拉贡
+GA8934934	使用莱戈拉斯
+G84C57E95	使用金雳
+G46EA0007	使用伊西铎
+G5689E41F	秘密任务
+G7F2C7A4C	使用秘密角色
+G96AF0882	概念美术
+G8813AE29	通关墨瑞亚之门后解锁
+G4EEEB554	通关巴林之墓后解锁
+G3182CC3A	通关阿蒙汉后解锁
+G54747798	通关范贡森林后解锁
+G5D796BA6	通关洛汗平原后解锁
+G758A2B31	通关西伏尔德后解锁
+GD1B66361	通关洛汗隘口后解锁
+GEC95C099	通关海尔姆深谷：深谷宽墙后解锁
+G4F6E6B62	通关海尔姆深谷：城墙失守后解锁
+G7E4B2F5F	阿拉贡达到 5 级
+GA825B93E	莱戈拉斯达到 5 级
+GD08EF3EF	金雳达到 5 级
+G060F3A0C	通关海尔姆深谷：号角堡庭院且阿拉贡达到 10 级
+G9C00EBDD	通关海尔姆深谷：号角堡庭院且莱戈拉斯达到 10 级
+GCA301FEC	通关海尔姆深谷：号角堡庭院且金雳达到 10 级
+G2A4097F8	用任意角色通关秘密任务
+GF80714A8	用秘密角色通关秘密任务
+GF281A415	彼得·杰克逊与巴里·奥斯本谈论电影和游戏
+GEF6D5A30	伊利亚·伍德谈在《指环王》电子游戏中扮演佛罗多
+G1B7C2E20	伊恩·麦克莱恩谈在《指环王》电子游戏中扮演甘道夫
+G100A11D4	《指环王》电子游戏制作幕后一瞥
+G14A8622F	《护戒使者》中的角色和场景照片
+G228511D6	范贡与欧散克的角色和场景照片
+GFDF064C7	约翰·豪和艾伦·李受《指环王》启发创作的美术作品
+GAAE1A0C0	洛汗与海尔姆深谷的角色和场景照片
+G6CEBDAE1	维果·莫腾森谈在《指环王》电子游戏中扮演阿拉贡
+G6824CF13	奥兰多·布鲁姆谈在《指环王》电子游戏中扮演莱戈拉斯
+G84770794	约翰·瑞斯-戴维斯谈在《指环王》电子游戏中扮演金雳
+G775EAFA1	解锁《指环王》电子游戏隐藏内容的秘籍
+G640E4463	更改选择
+G6D02770F	确认选择
+GE5EE10E6	返回
+GA75BE7EE	更改或修改选择
+GE7B4EE86	退出到主菜单
+G47C91DD4	切换图片
+GE445F6CE	用你的升级点数为角色购买强化。
+GB2D2B6DB	把它们全杀了！
+GFD9FFC0E	用迅捷攻击打倒这个怪物！
+G7BD97E94	用猛烈攻击摧毁他的盾牌！
+G62FC14DC	它们来了！全杀了！
+GA3F97A90	把你们的剑借给我！
+G88F3FEA7	呃！去死吧，魔多的怪物！
+G4888927E	为了白城！
+GB5DB8B33	你完蛋了！
+G91F156A0	滚开，暗影的怪物！
+G8F5E1C57	去死吧，索伦的爪牙！去死！
+GEF59BEBD	把它们打回去！
+G263E18E0	往前推进！
+G8715790C	守住阵地！
+G09E491AC	去死！
+GC9D8887A	刚铎的渣滓！
+GD909145B	你，去死！
+G8524085B	你们杀不光我们的！
+GFA0F31A8	去死吧，渣滓！
+G6949F8FB	敌人太多了，你必须防守！
+GAB41028F	保护好自己，大人。
+GC99D9EF1	用迅捷攻击就能制服这个。
+G8BC62719	猛烈攻击能击碎那些盾牌。
+G24319240	世界已经变了。
+G6FC7E51E	我在水中感觉到了。
+G586AE929	我在大地中感觉到了。
+GA0D1D398	我在空气中嗅到了。
+G20A7EC8F	许多往事已湮没，
+G9A5EEA48	因为如今记得它们的人都已不在人世。
+G991F588A	一切始于铸造统御之戒。
+GDCCA686B	三枚给了精灵——
+G64D4928C	最不朽、最睿智、最美丽的种族。
+GC38B0B40	七枚给了矮人领主，
+GE4E9DA85	他们是山中殿堂里伟大的矿工和工匠。
+G8EA28015	而九枚……九枚戒指被赠予了人类，
+G5415D8A9	他们最渴望的就是权力。
+GCAF2B8E3	因为这些戒指中蕴藏着统治各个种族的力量和意志。
+GEAB51D48	但他们全都被骗了……
+G9968C959	因为另一枚戒指被铸造了出来。
+G6DF9A86C	在魔多之地，在末日火山的烈焰中，
+GD5CC3D06	黑暗魔君索伦秘密铸造了一枚至尊魔戒，用来控制其他所有戒指。
+GA5AF65D9	他在这枚戒指里倾注了他的残暴、他的恶意和他统治一切生灵的意志……
+GF9C8C37E	中土的自由之地一个接一个地落入魔戒的力量之下。
+GD7B567A4	但仍有一些人奋起反抗。
+G9673067D	人类与精灵的最后同盟向魔多大军进发，
+G9292CF8B	在末日火山的山坡上，他们为中土的自由而战。
+G9C449910	就在这一刻，
+G4E624CE3	当一切希望都已破灭之时……
+G8B971AFC	……国王之子伊西铎拿起了他父亲的剑。
+GA0976A20	中土自由人民的敌人索伦被打败了。
+GCE1FEBD6	魔戒落入伊西铎之手，他有了这唯一一次永远消灭邪恶的机会。
+G4653B8E6	但人心很容易堕落。
+GF1F12CD3	毁了它！
+G7A59BC32	不。
+GEDAFB589	我是伊西铎的后人，不是伊西铎本人。我的命运由我自己决定。
+GECD0FC9B	去海尔姆深谷！布理高，走！
+GE526C94A	佛罗多！离他们远点！
+GE5AC368C	救命！到处都是它们！
+GE18CFED5	我们会找到你的。
+G754CEC13	退后，肮脏的东西！
+G0EE492EC	它们在找持戒人！跟紧！
+GA236A198	你无法抵抗的，半身人。
+GB0F6888B	我们完了。
+GABCB70B5	整个艾森加德都倾巢而出了。
+GD4A9E9B3	这是一支为了一个目的而培育的军队：毁灭人类的世界。
+G65599300	黑暗魔君正在逼近。
+GC6B5C82C	巴金斯……
+GDE3725D0	戒灵！退后！
+GDB2A2A63	神行客！
+GDF3A925F	饶了他吧。救救他。
+G4867AD04	在瑞文戴尔的庇护所中，我们之中最渺小的人展现了最大的勇气。
+G3505351D	我来带它去！
+G5B8CB3F8	护戒远征队就此结成。
+GF6138FE1	我会把魔戒带到魔多去！
+GA7DC204A	不过……
+G2FFEE7D1	……我不认识路。
+GD051F7C5	我会帮你承担这个重任，佛罗多·巴金斯……
+G82079845	……只要这重任由你来承担。
+G8308B082	你肩负着我们所有人的命运，小家伙。
+G32030F3F	我的弓听你差遣。
+G7A19CD10	还有我的斧头。
+G18A439E8	把魔戒给我们，半身人。
+G5E09B681	魔戒是我们的。
+GC7625599	到我们这儿来，半身人。
+GB2DCED15	救救我！
+GF8B88DB9	快来救我！
+G111D0DD5	我快死了。
+G439D87CA	这片土地已经变了。
+GB5DB841A	我们在这里等着，直到前面的路看起来安全为止。
+GF0EB3761	我们已经很多年没有墨瑞亚的消息了。
+G3A9580D6	我们可以穿过墨瑞亚矿坑。
+G852B83DE	我的表兄巴林会以王室之礼欢迎我们。
+G48D6F333	小心！
+G20BEF03C	快！这边！
+G37B7E741	凶恶的怪兽。
+G70A83B75	这是墨瑞亚之王都灵之门。
+GE6E19D64	那么，甘道夫，你想带他们翻越卡拉兹拉斯。
+GF7BC40D4	如果失败了——
+GC7F3ECF5	那你又要去哪里？
+G4F7AA217	去墨瑞亚！
+G0F8A9576	说出朋友，然后进入。
+GCB3668DA	Mellon。
+G64134F99	我们现在只有一个选择了。
+GE57BDBA1	我们必须面对墨瑞亚漫长的黑暗。
+G3CA10A85	魔多的渣滓！
+GC753F514	有埋伏！
+G66D5EE9E	有半兽人。很多。
+G8AB8C148	遇到麻烦，就派矮人上！
+G6F4359B4	打得好，金雳！
+G43E71D7A	我到前面去侦察，找一条穿过去的路。
+G0F5D4F40	怪物。
+G0BFC06A5	正是在这里，我们发现的远不止墨瑞亚之王巴林之墓。
+G79CBD185	我们封住了大门。深处传来鼓声。
+G676CE560	我们出不去了。
+GC2C2532E	退后，你们这些没有灵魂的畜生！
+G41169039	莱戈拉斯！我们需要你的弓！
+GED8A660A	快点，金雳！
+G548B1E16	滚开，凶恶的怪兽！
+G8B6C996D	他交给我！
+GD624A593	小心背后！
+G22876487	守住阵地！
+G6E72BC38	退后，你们这些怪物！
+G98FB35D8	这边！
+G758C706B	莱戈拉斯！
+G7D3C2C42	金雳！
+G96015B03	甘道夫！
+G2F5D8C59	太多了！
+GEB38BB38	我们怎么才能挡住它们？
+GDB1D4894	我打不过它们！
+GCA82C10C	我挡不住它们了！
+G839F36D1	用你的弓解决它们！
+G426819B7	为了巴林！
+G32A709EE	我来收拾你了！
+G7BC2A45C	佛罗多！
+GE0A9DD2D	它们太多了！
+GB502E0B9	为了黑森林！
+G5C8B1856	我要在你肚子上开几个蛆洞！
+GF8D92047	把它们全干掉！
+GDFB1C64C	砸烂它们！
+G5AF9060B	滚回阴影里去！
+GF1BFC8A0	阿拉贡！我需要你的剑！
+GF83070F8	到我这儿来，金雳！这边！
+G2EC65D74	做好准备！
+GCD82317C	放箭！
+GCEA41230	散开！不能让它们包围我们！
+G3AD812AF	找到那个半身人！
+G6B59AA20	佛罗多肩负着我们所有人的命运！
+G4B4B5CA5	我们必须保护他！
+G1881769E	以他的名誉起誓，你们要付出代价！
+G743E1105	墨瑞亚对我们远征队来说是一段黑暗的旅程。
+G32DCF8A9	快逃，你们这些傻瓜！
+G10D542AD	不——！
+GD10EAA8A	这趟任务就像站在刀锋上。
+GF997012E	稍有差池，就会失败。
+G01C6A95F	但情况还会变得更糟，因为我们的远征队正在瓦解。
+G212FEF60	我本愿意跟随你到最后，直到魔多的烈火之中。
+G960898CD	快跑！
+GD941582B	安息吧……
+G9D8421F1	……刚铎之子。
+G60BC6BA4	我们必须打败这些强兽人，让佛罗多逃走！
+GF0E0DD02	波罗米尔！
+G1C9C2949	帮个忙，精灵！
+GB1E7FF01	强兽人！进攻！
+G62308F86	我会好好享受的！
+GA7F87EAC	滚回生你们的深坑里去。
+G06BA8520	他们往这边走了，来。
+G817C5460	但他们的踪迹在这里断了。我们必须分头去找，才能尽快找到他们。
+G934A6365	阿拉贡，那边有东西。
+G32456D68	你看到了什么，莱戈拉斯？
+G090A57A6	白袍巫师。
+G3BE10384	萨鲁曼。
+GF471A310	尽管波罗米尔英勇奋战，萨鲁曼的爪牙还是抓走了我们队伍中的成员。
+G9EB3E2D9	但我们不会任由同伴遭受折磨和死亡。
+GC9337F85	我们追踪他们的足迹好几天……
+G1A87CFBD	……最终来到了范贡森林。
+G7754D2C1	这片森林很古老……
+G9261B17A	……非常古老。
+GF7DCBBD1	充满了回忆……
+GC4192431	……和愤怒。
+G92086B9D	在那片大森林里，许多道路交汇在一起。
+G6F680400	这不可能。
+G7A0AC815	现在双塔已经结盟了——欧散克和巴拉督尔。
+GF36A1977	别处需要你们。
+GA926AFE5	战争即将降临洛汗。
+GC5293984	这下有好戏看了！
+GCF6954E1	我以前见过，但从没见过这样的。
+G2E930B75	我们唯一的希望就是团结一致！
+GFD82D6F4	萨鲁曼的军队正在运送奇怪的爆炸装置穿过这座村镇。帮我们摧毁它们！
+G86FA279C	在大门挡住它们！
+G7B48AD72	我们中少数还能战斗的人正向海尔姆深谷进发。
+GD55B6BE3	洛汗的未来存亡就在那里决定。
+G2256A18D	小心炸药！
+GE0BD0D44	好！让它们尝尝火的滋味！
+G82C8009F	这应该能拖慢它们！
+GA0C82879	这是什么？
+G751859FC	这是什么东西？
+G06637EF0	我们必须摧毁这些爆炸装置！
+GABF94061	那些爆炸装置必须摧毁。
+G13114F1E	这会是什么呢？
+G5B2AF650	这也许会有用。
+G14659B9A	这似乎很有价值。
+G418ECC01	来。这个我留着。
+G136EC46C	这东西值得带上。
+G360BBC1D	驱使它们的是萨鲁曼的疯狂和黑暗魔君的意志。
+G4840EFEC	又是烟火？哈！它们想把我们全都变成尸体！
+G19910876	它们冲着我们来了！
+G08EB8FDB	过不去。
+G6FED1000	我得另找一条路。
+G68F91872	这村子烧得像干柴一样！
+G57BD9573	很有用。
+G424E3FF5	这就行了！
+G501ABC20	坚守！
+G31FDA576	它们也攻占了这片区域！
+GB60A7265	保卫洛汗的不只是我们。
+GA48B596C	国王的卫队也在一路奋战前往海尔姆深谷。
+G65866A2E	你在这里已经尽力了。
+G115A6D12	幸存者会前往海尔姆深谷。
+GC07CBB0E	你还有任务要完成。潮流转向之时，我会回来找你。
+G63B48C52	它们突破进来了！
+GAAD29572	求求你！不！不！不！
+G589F2E2F	我们必须尽可能救下每一个人，否则这个村子就要沦陷了。
+GE1654ECA	在我们漫长的旅程把我们带到埃多拉斯之前……
+G97FC9F74	……你的人民就已经身处巨大的危险之中了。
+GB52DB0C9	饶了我吧！
+GDDA274AE	求求你！饶了我吧！
+GA354A5CD	啊！不！
+G1C74FEB5	不！
+G946E2F3A	不！不！不要！
+GF46D4AC5	不！不！不！
+G1BD76207	放我们出去！快！
+GE57CB50F	饶了我吧，求求你！
+G716689E1	保护我们！
+G6295F93F	救救我！求求你，救救我！
+GFA27E38F	啊——！它们要把我们活活烧死！
+G25B702F8	让我活下去！求求你！
+GDE034FBB	你必须继续前进。别处需要我。
+G898F1CFF	让他们畏惧艾森加德的狼群！
+G04FC403B	我们不能让这些怪物接近难民。
+GD8C5307E	你的人民得到了保护，但我们为此付出了许多生命。
+G4FD6FE99	我自己也差点丧命。
+G753DFA73	就这样，我们经由不同的道路，都来到了海尔姆深谷要塞，准备做最后的抵抗。
+G932478E9	现在，杀了那个！
+GF940F960	好啊，我的宝贝们！
+G646F5FC4	我们的座狼今晚要饱餐一顿了！
+G948FC6FF	别跟他玩了！杀了他！
+G99617AA4	它们撤退了。暂时结束了。
+G4A0F838F	我杀了十九个！
+GC16105A6	那我们打平了。
+GAC4FD1F9	那可走着瞧。
+GF71FBCA2	我杀了两个。
+G641CA89C	够我们俩分的，金雳！
+GF4B76D82	我们必须让索伦的目光一直盯着我们——让他看不见其他一切动静！
+G5B04C967	退后！
+G3487D102	离开城墙！
+G8B575855	半兽人爬上城墙了！
+GCE3C16C0	我已经杀了十七个！
+G3D052135	找掩护！
+G05C9D273	它们又向我们放箭了！
+G4941BF74	把那架梯子推倒，不然我们就要被攻破了！
+G265760A3	趴下！快趴下！
+G2E8173A8	不能让它们靠近晶辉洞！
+G36DE1341	我从没见过这样的斧法，矮人大师。
+G80FBF437	我也没见过这样的箭术。
+G3F35FF0E	可被我砍过的，就再也站不起来了。
+GEC633822	我们的防线被攻破了！妇女和孩子被困住了！
+G17070638	带他们去大殿！
+G5CAB82D3	我们要在这里或者在要塞挡住它们！
+GFFC47594	我们挡住了它们。妇女和孩子安全了——暂时的。
+GBD5794D5	我们挡不住它们了！进大殿！
+G088ED5E4	我们挡不住它们了！
+G7C6E3511	索伦和萨鲁曼正在收紧绞索。
+G7B236705	但不管他们多么狡猾，我们还有一个优势。
+GFCAC9515	魔戒依然隐藏着。
+G1C7DF558	而我们想要摧毁它这件事，就连在他们最黑暗的梦里也不曾想到过。
+GB72B409D	于是敌人的武器正在一个霍比特人的手中向魔多前进——
+G86CED6F6	每一天都让它更接近末日火山的烈火。
+GD9BB4CD5	索伦害怕你，阿拉贡。
+GDD966B5E	弓箭手上城墙！
+G6A122B51	退后！路障要倒了！
+G427F5206	快点，矮人大师！
+G113213B2	去帮莱戈拉斯，我在这里挡住它们！
+GA7B95A20	为了刚铎！
+G7C696E8A	阿拉贡寡不敌众！快去帮他！
+GFC98A99D	我们的精灵朋友需要帮忙。
+G66A680C0	强兽人！
+G8968245E	它们要砸烂路障了！
+G428EE07E	它们进到要塞里了。我们完了！
+GFAE8490C	不——！！
+G63F31F0F	你的末日近了。
+GE8B9DB2E	你选择了痛苦之路！
+G910D7B12	你这个蠢货。
+G58E8BBAA	你该停手了。
+GD8425223	你不会以为一个衣衫褴褛的游侠能对抗我的意志吧？我超出了你的能力范围。
+G1A989E68	你要为你的傲慢付出代价。
+G0079D300	你没想到一个矮人能对抗萨鲁曼的意志吧。没有人能做到。
+GFB1E1C33	你不会真以为一个精灵能对抗萨鲁曼吧？没人能做到，也没人应该胆敢一试。
+GCB4F521C	射法与宰相之弓相同，洛汗骠骑的倒钩箭能造成严重伤害。
+G906620AF	永久提高你的生命值。（需要迪耐瑟之威）
+GE4F990F3	威力更强的毁灭性攻击。（需要刚铎之怒）
+G55B83821	永久提高你的生命值。（需要刚铎之力）
+GD4900EBD	这一毁灭性攻击能让多个敌人着火。（需要刚铎之怒火）
+GF1EE1785	宰相之弓
+GC7DFC68A	刚铎之怒
+G26838C80	刚铎号角
+G948EF2DD	统帅之守
+GC354B788	迪耐瑟之威
+G2675AC6D	米那斯提力斯冲锋
+G3A16134F	宰相的妙招
+G7C6E9536	刚铎之力
+G909BDBD3	刚铎之怒火
+GBCA2DB1D	白塔突袭
+GA70E206F	阿蒙汉之守
+GECE9E935	使用波罗米尔
+G2BAAD5AF	按住左扳机使用。按 A 键施放（按住可提高伤害）。
+GF2DB6139	施法方式与巫师之光相同，纳雅之焰能灼烧敌人，造成严重伤害。
+G4E51B4E3	永久提高你的生命值。（需要伊斯塔尔之力）
+G701450DF	永久提高你的生命值。（需要欧罗林之力）
+G876BFE80	威力更强的毁灭性攻击。（需要迈雅之怒）
+G554AF8D3	永久提高你的生命值。（需要纳雅之力）
+GF20F1105	这一毁灭性攻击能让多个敌人着火。（需要巫师之狂怒）
+GE86497FB	伊斯塔尔的白焰灼烧力极强。（需要魔戒之火）
+G5D1DA1B0	巫师之光
+GE4245C5B	法杖格挡
+G68852FD1	迈雅之怒
+G63891384	伊斯塔尔之力
+G3023E8DD	阿诺尔之焰
+G03053C48	你不能过去
+G44E88937	魔戒之火
+G31781C88	欧罗林之力
+GC67FABAE	捷影冲锋
+GB28BAB38	灰袍漫游者
+GBB647C84	纳雅之力
+G3A1959EB	巫师之狂怒
+G910A4D18	格兰瑞大师
+GE54BB6DF	米斯兰达突袭
+G80CB05F7	白袍之力
+G5500602D	欧罗林之怒火
+GB3B8BA9A	白焰
+G4D3F3799	迈雅之怒火
+GB06CD44C	使用甘道夫
+GD63AEB69	按住左扳机使用。按 A 键投掷（按住可提高伤害）。
+GF1500B18	投掷方式与夏尔之石相同，锋利的白兰地河燧石能造成严重伤害。
+G1594107A	永久提高你的生命值。（需要夏尔之力）
+G223FB1F4	永久提高你的生命值。（需要比尔博之力）
+G419FBE06	威力更强的毁灭性攻击。（需要霍比特之怒）
+G549E8839	永久提高你的生命值。（需要山姆怀斯之力）
+G3E7B6E97	这一毁灭性攻击能让多个敌人着火。（需要夏尔之狂怒）
+G5DBA6F26	受精灵祝福的石头能造成可怕的伤害。（需要燧石弹）
+G586DFFA8	夏尔之石
+GAF333BB7	霍比特之怒
+GA30AB0B5	夏尔之力
+G5B952654	刺叮之咬
+G3F0B7A46	持戒人之志
+GE7A5F0EC	燧石弹
+G97512A2B	比尔博之力
+G4F6E34B0	巴金斯冲锋
+G8AFDEEE2	霍比特人的好运
+G9AE8326E	山姆怀斯之力
+G5FECDC01	夏尔之狂怒
+GB7F9A847	刺叮大师
+GD629F714	图克家突袭
+G31486B52	袋底洞之力
+G4023054B	刺叮之怒火
+GD48B81F2	精灵之石
+G371FFFDE	秘银之决
+G031E765B	使用佛罗多
+G63C78123	射法与艾森加德之弓相同，欧散克的倒钩箭能造成严重伤害。
+G266F9F27	永久提高你的生命值。（需要艾森加德之力）
+G4451D279	永久提高你的生命值。（需要萨鲁曼之力）
+G2DE635F5	威力更强的毁灭性攻击。（需要强兽人之怒）
+G4D25FA2B	永久提高你的生命值。（需要欧散克之力）
+G055C2C2B	这一毁灭性攻击能让多个敌人着火。（需要艾森加德之狂怒）
+G478E4DB1	艾森加德的黑箭能造成可怕的伤害。（需要强兽人之弓）
+GB0EED2A6	艾森加德之弓
+G13D5F1B3	刀刃格挡
+GCC2F9E7C	强兽人之怒
+GF496EAA0	艾森加德之力
+GC727C10B	勒茨的猎杀
+G73D0C070	萨鲁曼之志
+GD64B9B56	强兽人之弓
+G9E8D350E	萨鲁曼之力
+G6426C642	强兽人战士冲锋
+GCC3C5342	屠夫的妙招
+G0DEF3FCC	欧散克之力
+G0EBAA8C5	艾森加德之狂怒
+GFC62112E	屠夫大师
+GEE7780E5	艾森加德猛攻
+G838B10AC	强兽人之力
+GF44614A3	萨鲁曼之怒火
+G45DC8B08	黑弓
+G4F638CF6	洛汗克星
+G9E606E3B	首个强兽人的厄运
+GE31550F8	勒茨
+G981416DE	使用勒茨
+G6F22BB2E	射法与精灵之弓相同，瑞文戴尔之箭能造成严重伤害。
+GCA4A15A1	永久提高你的生命值。（需要瑞文戴尔之力）
+G75BCF244	永久提高你的生命值。（需要吉尔-加拉德之威）
+G216AF74D	永久提高你的生命值。（需要维雅之力）
+G0B6CC0B6	这一毁灭性攻击能让多个敌人着火。（需要诺多之狂怒）
+G0355C5D7	埃尔达的银箭能造成可怕的伤害。（需要凡雅之弓）
+GD3F16BA3	精灵之弓
+G710A6666	瑞文戴尔之力
+G96D9F158	维雅之恩典
+GF127A06E	最后同盟
+GB426C696	凡雅之弓
+G71620C4B	吉尔-加拉德之威
+GFBF3A490	林顿冲锋
+G00542D8B	传令官的妙招
+G5104305A	维雅之力
+G221633E0	诺多之狂怒
+G11A9FF39	诺多战争突袭
+GDE2839BE	埃尔达之力
+GB0E7C432	林顿之怒火
+G008B68D9	埃尔达之弓
+G10607364	伊姆拉德里斯之主
+G0BA28B85	使用埃尔隆德
+GD6BB77A1	施法方式与黑暗箭相同，巴拉督尔之火能造成严重伤害。
+G113CAFFC	永久提高你的生命值。（需要巴拉督尔之力）
+G2F14F0F7	永久提高你的生命值。（需要魔多之力）
+G573FFFF8	威力更强的毁灭性攻击。（需要黑暗之怒）
+G6AE28C4F	永久提高你的生命值。（需要魔戒之威）
+GC4B7E7DB	这一毁灭性攻击能让多个敌人着火。（需要魔多之狂怒）
+G5FEE9C56	末日火山的烈焰能造成可怕的伤害。（需要地狱之火）
+GA07FAB7C	黑暗箭
+G59838F7F	钉锤格挡
+G0ACE1349	黑暗之怒
+GD97CF863	巴拉督尔之力
+GF62B2130	索伦之舞
+G53F430F0	至尊魔戒之志
+GB60C89B8	地狱之火
+GC26DDD50	魔多之力
+G29856B22	黑暗魔君冲锋
+G27C67462	安纳塔的妙招
+G66205DC8	魔戒之威
+GA64C9515	魔多之狂怒
+G278CB8C1	钉锤大师
+G4B8493DC	魔多战争突袭
+G5487C52D	末日火山之力
+GE9A37F55	魔多之怒火
+G3F70A0C4	末日之火
+GBB8776B5	精灵克星
+G6E2AA149	索伦之眼
+G1C11BF19	索伦
+G3057B52F	使用索伦
+GB76B50B9	投掷方式与峭壁岩石相同，这些来自深坑的岩石能造成严重伤害。
+GECFE6FA3	永久提高你的生命值。（需要深坑之威）
+G47753157	这一毁灭性攻击能让多个敌人着火。（需要狂战士之狂怒）
+GF2D43E42	熔岩石能造成可怕的伤害。（需要战争岩石）
+GC390874C	峭壁岩石
+G035878D4	狂战士之狂热
+GC2D0B8DB	深谷火炬
+GFF1647F7	战争岩石
+G98869254	深坑之威
+GC4A495AD	深谷宽墙冲锋
+GE0FB4F25	强兽人的妙招
+G8925F4A1	狂战士之狂怒
+G468B4A5C	狂战士大师
+GB0E58D9C	攻城突袭
+GD5AF6DD1	欧散克之怒火
+G01AF5769	熔岩石
+G18494AB3	深坑之怒火
+GB3AAE2E1	强兽人
+G683077D7	使用强兽人
+P:Frame Rate:	帧率：
+P:Unlocked	不限制
+P:Display Mode:	显示模式：
+P:Window	窗口
+P:Full Screen	全屏
+P:Window Size:	窗口大小：
+P:Automatic	自动
+P:Aspect Ratio:	宽高比：
+P:Custom	自定义
+P:Resolution:	分辨率：
+P:Anisotropic:	各向异性过滤：
+P:Mipmaps:	Mipmap：
+P:Off	关
+P:On	开
+P:Ultra Textures:	超高清纹理：
+P:Wide Cutscenes:	宽屏过场：
+P:Anti-aliasing:	抗锯齿：
+P:VSync:	垂直同步：
+P:Picture:	画面：
+P:Keep Shape	保持比例
+P:Stretch	拉伸
+P:Vertex Programs:	顶点程序：
+P:Brightness:	亮度：
+P:Sharpening:	锐化：
+P:Colour:	色彩：
+P:Original	原版
+P:Vivid	鲜艳
+P:Muted	柔和
+P:HUD Widescreen:	宽屏 HUD：
+P:Edges	边缘
+P:Centred	居中
+P:Menus:	菜单：
+P:Fill	填充
+P:Movies:	影片：
+P:As Made	原始比例
+P:Button Prompts:	按键提示：
+P:Keyboard	键盘
+P:Mouse Pointer:	鼠标指针：
+P:Sensitivity:	灵敏度：
+P:Pointer Size:	指针大小：
+P:Mouse Aiming:	鼠标瞄准：
+P:Invert Aiming:	反转瞄准：
+P:Up/Down	上/下
+P:Left/Right	左/右
+P:Both	全部
+P:Mouse Steering:	鼠标转向：
+P:A Button:	A 键：
+P:B Button:	B 键：
+P:X Button:	X 键：
+P:Y Button:	Y 键：
+P:Black Button:	黑色键：
+P:White Button:	白色键：
+P:Left Trigger:	左扳机：
+P:Right Trigger:	右扳机：
+P:Start:	Start：
+P:Back:	Back：
+P:D-pad Up:	方向键上：
+P:D-pad Down:	方向键下：
+P:D-pad Left:	方向键左：
+P:D-pad Right:	方向键右：
+P:L Stick Click:	左摇杆按下：
+P:R Stick Click:	右摇杆按下：
+P:Move Forward:	向前移动：
+P:Move Back:	向后移动：
+P:Move Left:	向左移动：
+P:Move Right:	向右移动：
+P:Look Up:	向上看：
+P:Look Down:	向下看：
+P:Look Left:	向左看：
+P:Look Right:	向右看：
+P:Walk:	步行：
+P:General Options	常规选项
+P:Display Options	显示选项
+P:Controls	操作
+P:Reset Controls	重置操作
+P:Press a key...  (Esc: cancel, Delete: clear)	请按一个键……（Esc：取消，Delete：清除）
+P:R Stick	右摇杆
+P:Stick	摇杆
+P:L Stick	左摇杆
+P:Black button	黑色键
+P:White button	白色键
+P:Left trigger	左扳机
+P:Right trigger	右扳机
+P:Start	Start
+P:Back	Back
+P:D-pad up	方向键上
+P:D-pad down	方向键下
+P:D-pad left	方向键左
+P:D-pad right	方向键右
+P:Left stick click	左摇杆按下
+P:Right stick click	右摇杆按下
+P:Move forward	向前移动
+P:Move back	向后移动
+P:Move left	向左移动
+P:Move right	向右移动
+P:Right stick up	右摇杆上
+P:Right stick down	右摇杆下
+P:Right stick left	右摇杆左
+P:Right stick right	右摇杆右
+P:Walk	步行
+P:None	无
+P:LS click	左摇杆按下
+P:RS click	右摇杆按下
+P:Mouse Left	鼠标左键
+P:Mouse Right	鼠标右键
+P:Mouse Middle	鼠标中键
+P:Mouse 4	鼠标键 4
+P:Mouse 5	鼠标键 5
+P:Space	空格
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	上
+P:Down	下
+P:Left	左
+P:Right	右
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	小键盘 0
+P:Num 1	小键盘 1
+P:Num 2	小键盘 2
+P:Num 3	小键盘 3
+P:Num 4	小键盘 4
+P:Num 5	小键盘 5
+P:Num 6	小键盘 6
+P:Num 7	小键盘 7
+P:Num 8	小键盘 8
+P:Num 9	小键盘 9
+P:Num *	小键盘 *
+P:Num +	小键盘 +
+P:Num -	小键盘 -
+P:Num .	小键盘 .
+P:Num /	小键盘 /
+P:Semicolon	分号
+P:Equals	等号
+P:Comma	逗号
+P:Minus	减号
+P:Period	句号
+P:Slash	斜杠
+P:Backquote	反引号
+P:Backslash	反斜杠
+P:Quote	引号
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	按住{6}切换到远程武器。按{0}射击。用{M}瞄准。
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	按住{6}切换到远程武器。按{0}射击。用{M}瞄准。
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	按住{6}使用。按{0}射击（按住可提高伤害）。
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	按住{6}使用。按{0}射击（按住可提高伤害）。
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	按住{6}使用。按{0}投掷（按住可提高伤害）。
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	按住{6}使用。按{0}投掷（按住可提高伤害）。
+P:A devastating attack.  Press and hold {3} to use.	毁灭性的攻击。按住{3}使用。
+P:Game Saved.  Press {8} to continue.	游戏已保存。按{8}继续。
+P:Game Saved.  Press {0} to continue.	游戏已保存。按{0}继续。
+P:Unable to save game. Press {8} to continue.	无法保存游戏。按{8}继续。
+P:Unable to save game. Press {0} to continue.	无法保存游戏。按{0}继续。
+P:Unable to load game. Press {8} to continue.	无法读取游戏。按{8}继续。
+P:Unable to load game. Press {0} to continue.	无法读取游戏。按{0}继续。
+P:No saved games. Press {8} to continue.	没有游戏存档。按{8}继续。
+P:No saved games. Press {0} to continue.	没有游戏存档。按{0}继续。
+P:Not unlocked yet. Press {8} to continue.	尚未解锁。按{8}继续。
+P:Not unlocked yet. Press {0} to continue.	尚未解锁。按{0}继续。
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	你收集的升级点数不足，无法购买这项升级。按{8}继续。
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	你收集的升级点数不足，无法购买这项升级。按{0}继续。
+P:Press {8} to resume	按{8}继续游戏
+P:the left mouse button	鼠标左键
+P:the right mouse button	鼠标右键
+P:the middle mouse button	鼠标中键
+P:mouse button 4	鼠标键 4
+P:mouse button 5	鼠标键 5
+P:the A button	A 键
+P:the B button	B 键
+P:the X button	X 键
+P:the Y button	Y 键
+P:the Black button	黑色键
+P:the White button	白色键
+P:the left trigger	左扳机
+P:the right trigger	右扳机
+P:up on the d-pad	方向键上
+P:down on the d-pad	方向键下
+P:left on the d-pad	方向键左
+P:right on the d-pad	方向键右
+P:the left thumbstick button	左摇杆按键
+P:the right thumbstick button	右摇杆按键
+P:the Menu button	菜单键
+P:the View button	视图键
+P:the cross button	叉键
+P:the circle button	圆圈键
+P:the square button	方块键
+P:the triangle button	三角键
+P:Left Click	左键单击
+P:Right Click	右键单击
+P:Middle Click	中键单击
+P: or 	 或 
+P:Exit	退出
+P:Press {k}	按 {k}
+P:Boromir	波罗米尔
+P:Gandalf	甘道夫
+P:Frodo	佛罗多
+P:Lurtz	勒茨
+P:Elrond	埃尔隆德
+P:Sauron	索伦
+P:Uruk-hai	强兽人
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	路径
+L:Game files ready:  	游戏文件已就绪：  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	尚未安装游戏文件。请选择你的《双塔奇兵》(USA) Xbox ISO 或解压后的光盘文件夹。
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	正在从 GLOS69 包生成超高清纹理（仅一次，需要几分钟）……
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Xbox 光盘镜像 (*.iso;*.xiso)\\0*.iso;*.xiso\\0所有文件\\0*.*\\0
+L:Checking disc...	正在检查光盘……
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	选择解压后的《双塔奇兵》光盘文件夹（包含 default.xbe）
+L:Display	显示
+L:Developer	开发者
+L:Renderer	渲染器
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan（DXVK，放在 dxvk 文件夹中）
+L:Software (no graphics card)	软件渲染（无需显卡）
+L:Frame rate	帧率
+L:30 fps (as on the Xbox)	30 fps（与 Xbox 相同）
+L:60 fps (experimental)	60 fps（实验性）
+L:Unlocked (experimental)	不限制（实验性）
+L:Display mode	显示模式
+L:Windowed	窗口化
+L:Full screen (borderless)	全屏（无边框）
+L:Window size	窗口大小
+L:Automatic	自动
+L:Aspect ratio	宽高比
+L:4:3 (original)	4:3（原版）
+L:16:9 widescreen	16:9 宽屏
+L:21:9 ultrawide	21:9 超宽屏
+L:32:9 super ultrawide	32:9 超级超宽屏
+L:HUD in widescreen	宽屏下的 HUD
+L:At the screen's edges	位于屏幕边缘
+L:Centred (4:3)	居中 (4:3)
+L:Menus	菜单
+L:Fill the screen (past the old TV margin)	填满屏幕（超出旧电视的安全边距）
+L:Original (with a margin)	原版（带边距）
+L:Movies in widescreen	宽屏影片
+L:As made (4:3)	原始比例 (4:3)
+L:Fill the width (black bands cut off)	填满宽度（裁掉黑边）
+L:Widescreen cutscenes	宽屏过场动画
+L:Off (4:3, side bars)	关（4:3，两侧黑边）
+L:On (the sky's edges can show)	开（可能露出天空边缘）
+L:Ultra textures	超高清纹理
+L:Off	关
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	开（菜单和 HUD 更清晰；使用 GLOS69 包时全部更清晰）
+L:Internal resolution	内部分辨率
+L:1x  (640 x 480, original)	1x  (640 x 480，原版)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x（2160 线：16:9 下为 3840 x 2160）
+L:Anisotropic filtering	各向异性过滤
+L:Mipmaps	Mipmap
+L:On (less shimmer)	开（减少闪烁）
+L:Anti-aliasing	抗锯齿
+L:FXAA (the finished picture)	FXAA（处理最终画面）
+L:VSync	垂直同步
+L:On (no tearing)	开（无画面撕裂）
+L:Picture shape	画面比例
+L:Keep aspect (black bars)	保持比例（黑边）
+L:Stretch to fill	拉伸填满
+L:Vertex programs	顶点程序
+L:Graphics card (faster)	显卡（更快）
+L:CPU (old method)	CPU（旧方法）
+L:Brightness	亮度
+L:Darker	较暗
+L:Original	原版
+L:Brighter	较亮
+L:Brighter +	较亮 +
+L:Brightest	最亮
+L:Sharpening	锐化
+L:Low	低
+L:Medium	中
+L:High	高
+L:Colour	色彩
+L:Vivid	鲜艳
+L:Muted	柔和
+L:Button prompts	按键提示
+L:Automatic (follows the pad or keys you use)	自动（跟随你使用的手柄或按键）
+L:Keyboard / mouse (your bound keys)	键盘/鼠标（你绑定的按键）
+L:Input	输入
+L:Mouse pointer in menus	菜单中的鼠标指针
+L:On (point and click in the menus)	开（在菜单中点击操作）
+L:Off (mouse buttons as bound)	关（鼠标按键按绑定执行）
+L:Mouse sensitivity	鼠标灵敏度
+L:Normal	普通
+L:Very high	非常高
+L:Pointer size	指针大小
+L:Small	小
+L:Large	大
+L:Extra large	特大
+L:Mouse aiming (ranged)	鼠标瞄准（远程）
+L:On (hold the ranged button, move the mouse)	开（按住远程键，移动鼠标）
+L:Mouse aiming: invert	鼠标瞄准：反转
+L:Up / down	上/下
+L:Left / right	左/右
+L:Both	全部
+L:Mouse steering (movement)	鼠标转向（移动）
+L:On (the mouse sets the way; W A S D move by it)	开（鼠标决定方向；W A S D 按此方向移动）
+L:Mod: ECTS 2002 HUD (experimental)	模组：ECTS 2002 HUD（实验性）
+L:Off (retail HUD)	关（正式版 HUD）
+L:On (ECTS 2002 demo HUD)	开（ECTS 2002 演示版 HUD）
+L:Mods	模组
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	模组：橙色生命补给（见于预发布版和制作花絮视频）
+L:Off (green, as retail)	关（绿色，与正式版相同）
+L:On (orange health pickups)	开（橙色生命补给）
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	模组：额外英雄（波罗米尔、甘道夫、佛罗多、勒茨、埃尔隆德、强兽人、索伦；随伊西铎一起解锁）
+L:Off (four heroes, as retail)	关（四位英雄，与正式版相同）
+L:On (eleven heroes)	开（十一位英雄）
+L:On, unlocked for testing (save not changed)	开，测试用全部解锁（不改动存档）
+L:Custom: 	自定义： 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	超高清纹理已开启：菜单、关卡选择和 HUD 更加清晰。\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	如需全部纹理，请下载 GameCube 高分辨率纹理包 (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	（从其作者处获取），并将其中的 GLOS69 文件夹放到这里：\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\n启动器会在你下次点击“开始游戏”时完成准备（仅一次，需要几分钟）。
+L:Graphics settings	图形设置
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	除模组外，其余设置均可在游戏中更改：按 F10（或按住 Back 再按 Start）。 
+L:The mods are set here and take effect when the game starts.	模组在此处设置，并在游戏启动时生效。
+L:Defaults	默认值
+L:Cancel	取消
+L:A button	A 键
+L:B button	B 键
+L:X button	X 键
+L:Y button	Y 键
+L:Black button	黑色键
+L:White button	白色键
+L:Left trigger	左扳机
+L:Right trigger	右扳机
+L:Start	Start
+L:Back	Back
+L:D-pad up	方向键上
+L:D-pad down	方向键下
+L:D-pad left	方向键左
+L:D-pad right	方向键右
+L:Left stick click	左摇杆按下
+L:Right stick click	右摇杆按下
+L:Move forward	向前移动
+L:Move back	向后移动
+L:Move left	向左移动
+L:Move right	向右移动
+L:Right stick up	右摇杆上
+L:Right stick down	右摇杆下
+L:Right stick left	右摇杆左
+L:Right stick right	右摇杆右
+L:Walk (hold)	步行（按住）
+L:None	无
+L:LS click	左摇杆按下
+L:RS click	右摇杆按下
+L:Mouse Left	鼠标左键
+L:Mouse Right	鼠标右键
+L:Mouse Middle	鼠标中键
+L:Mouse 4	鼠标键 4
+L:Mouse 5	鼠标键 5
+L:Space	空格
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	上
+L:Down	下
+L:Left	左
+L:Right	右
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	小键盘 0
+L:Num 1	小键盘 1
+L:Num 2	小键盘 2
+L:Num 3	小键盘 3
+L:Num 4	小键盘 4
+L:Num 5	小键盘 5
+L:Num 6	小键盘 6
+L:Num 7	小键盘 7
+L:Num 8	小键盘 8
+L:Num 9	小键盘 9
+L:Num *	小键盘 *
+L:Num +	小键盘 +
+L:Num -	小键盘 -
+L:Num .	小键盘 .
+L:Num /	小键盘 /
+L:Semicolon	分号
+L:Equals	等号
+L:Comma	逗号
+L:Minus	减号
+L:Period	句号
+L:Slash	斜杠
+L:Backquote	反引号
+L:Backslash	反斜杠
+L:Quote	引号
+L:Key 	按键 
+L:Controls	操作
+L:press a key or mouse button…	请按一个键或鼠标按键……
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	请按下用于此操作的键或鼠标按键（Esc 取消）。它会替换该操作的第一个按键；其他操作将失去此按键。
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	点击一个按键框，然后按下一个键或鼠标按键。下拉菜单用于选择手柄上的哪个按键执行各项操作。这些也可以在游戏中更改：F10，操作页面。
+L:Action	操作
+L:Keyboard / mouse	键盘/鼠标
+L:Controller	手柄
+L:stick part way	摇杆半推
+L:right stick	右摇杆
+L:left stick	左摇杆
+L:Still working (installing, or building the Ultra textures). Quit anyway?	仍在进行中（正在安装或生成超高清纹理）。仍要退出吗？
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	指环王：双塔奇兵  -  原生 PC 重编译版
+L:Install from ISO…	从 ISO 安装……
+L:Use extracted folder…	使用已解压的文件夹……
+L:Show the game window	显示游戏窗口
+L:Write a log file (for bug reports)	写入日志文件（用于报告错误）
+L:Graphics settings…	图形设置……
+L:Controls…	操作……
+L:Play	开始游戏
+L:Open folder	打开文件夹
+L:30 fps (original)	30 fps（原版）
+L:60 / unlocked can run some scenes faster than normal	60 帧/不限制时，某些场景可能比正常速度更快
+L:Full screen	全屏
+L:Alt+Enter or F11 also switches	Alt+Enter 或 F11 也可切换
+L:The 3D view widens fully after the next load	下次读取后 3D 视野将完全变宽
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	更清晰，但需要更强的显卡（9x 及以上：需要大量显存）
+L:On	开
+L:Less shimmer on distant textures	减少远处纹理的闪烁
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA 在绘制时平滑 3D 边缘；FXAA 处理最终画面
+L:Waits for the monitor: no tearing	等待显示器刷新：无画面撕裂
+L:Picture	画面
+L:Keep shape	保持比例
+L:Graphics card	显卡
+L:Graphics card is much faster	显卡要快得多
+L:Lifts the dark areas (gamma)	提亮暗部（伽马）
+L:Crisper textures, best with a higher internal resolution	纹理更清晰，配合更高的内部分辨率效果最佳
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	自动：跟随你最近使用的设备（手柄、PlayStation 手柄、键盘）
+L:Where the HUD sits when the picture is wider than 4:3	画面宽于 4:3 时 HUD 的位置
+L:Fill the screen	填满屏幕
+L:Menus, loading and upgrade screens: past the old TV margin	菜单、读取和升级画面：超出旧电视的安全边距
+L:Fill the width	填满宽度
+L:Fill: the films' black bands cut off, a little closer	填满：裁掉影片的黑边，画面稍微放大
+L:Point and click in the menus (Off: the mouse buttons act as before)	在菜单中点击操作（关：鼠标按键照旧）
+L:The pointer's speed and the mouse aiming's	指针速度及鼠标瞄准速度
+L:Hold the ranged button and move the mouse to aim	按住远程键并移动鼠标来瞄准
+L:Press to toggle	按下切换
+L:Hold	按住
+L:Windowed mode	窗口模式
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	高分辨率纹理包（游戏旁的 GLOS69 和 textures_ultra）
+L:Off (4:3)	关 (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	开：引擎内过场也会变宽（可能露出天空边缘）
+L:Mod: ECTS 2002 HUD	模组：ECTS 2002 HUD
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	ECTS 2002 演示版的头像、符文球和经验值显示
+L:Mod: Orange health pickups	模组：橙色生命补给
+L:Health pickups are orange, as in pre-release and making-of videos	生命补给为橙色，与预发布版和制作花絮视频中相同
+L:Custom (%.2f:1)	自定义 (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	图形设置
+L:Page	页面
+L:Graphics	图形
+L:Left/Right: switch to the Controls page	左/右：切换到操作页面
+L:press a key...	请按一个键……
+L:Reset all controls to the defaults	将所有操作重置为默认值
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	请按下键或鼠标按键。Esc：取消。Delete：清除。
+L:A / Enter: reset	A / Enter：重置
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter：设置按键。左/右：手柄按键。
+L:Left/Right: switch to the Graphics page	左/右：切换到图形页面
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	上/下：选择     左/右或 A：更改     B / Esc / F10：关闭
+L:Changes are saved automatically	更改会自动保存
+L:Language	语言
+L:Restart the game for the language to change	重启游戏后语言才会更改
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	鼠标决定前进方向；W、A、S、D 按此方向移动（步行键仍为步行）
+L:Language (game and launcher):	语言（游戏和启动器）：
+L:CONTROLS	操作
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	额外英雄：按下左摇杆让索伦冲刺（键盘为 Shift）
+L:Sauron's sprint	索伦冲刺
+L:hold	按住
+L:toggle	切换
+L:Combo Runes	连招符文
+L:Speed	迅捷
+L:Fierce	猛烈
+L:Special	特殊
+L:Each attack fills a quarter	每次攻击充满四分之一
+L:OK	确定
+L:Could not start twotowers_recomp.exe.	无法启动 twotowers_recomp.exe。
+P:the left thumbstick	左摇杆
+L:default.xbe was not found in that folder.	在该文件夹中找不到 default.xbe。
+L:That default.xbe is not the USA retail release this port was built from.	该 default.xbe 不是本移植版所基于的美版（USA）零售版。
+L:Error: 	错误: 
+L:Error: the disc has no default.xbe.	错误: 光盘中没有 default.xbe。
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	错误: 此 ISO 不是本移植版支持的美版（USA）零售版《双塔奇兵》光盘。
+L:Extracting 	正在解压 
+L:Ultra textures (once): 	超高清纹理（仅一次）: 
+L:Ultra textures: 	超高清纹理: 
+L:Converting 	正在转换 
+L:Softening the edges of 	正在柔化边缘 
+L:Fixing the transparency of 	正在修复透明度 
+L:Writing the index	正在写入索引
+L:Ultra textures ready: 	超高清纹理已就绪: 
+L: pictures	 张图片
+L: could not be made	 张无法生成
+L:The GLOS69 texture pack is not in the game's folder.	GLOS69 纹理包不在游戏文件夹中。
+L:Could not write textures_ultra/index.bin.	无法写入 textures_ultra/index.bin。
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	开（按住 W：朝鼠标推动的方向奔跑；步行键则步行）
+L:Hold W: he runs the way the mouse pushes (Walk walks)	按住 W：朝鼠标推动的方向奔跑（步行键则步行）

@@ -1,0 +1,1749 @@
+# Čeština -- made by tools/lang/build_lang.py
+GA81157BF	PÁN PRSTENŮ:  DVĚ VĚŽE
+G20EBC61E	Film Petera Jacksona
+G2D8D3B98	Produkce
+G7EDB1AE9	Koprodukce
+G90AF53E8	Speciální efekty
+G893165F0	Weta Digital
+GD9523953	Hudba Howard Shore
+G7B677F6E	Hlasy ve hře
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	TÝM XBOX
+GAAA9253B	Řízení projektu
+G2E65B2E4	Programování
+G1E165282	Grafika
+G4CFF767B	Zvuk
+G1B12D0CA	PŮVODNÍ VÝVOJOVÝ TÝM
+G5BB408B8	Ředitel projektu
+GA9D987DE	Technický ředitel
+GA4E53836	Ředitel vývoje
+GCBF9A863	Ředitel zvuku
+G71D27F1C	Hlavní designér
+GABE6171F	Hlavní programátor
+GB6AEE806	Hlavní grafici prostředí
+G0FAA1BD8	Hlavní grafik animačních sekvencí
+G93A039A2	Hlavní animátor
+G85851417	Umělecké vedení
+GEC5EB699	Přidružený producent
+G1E1B7E49	Grafik speciálních efektů
+GE457B26A	Grafici prostředí
+G09AFDB2B	Grafici animačních sekvencí ve hře
+GC6201467	Koncepční grafici
+GCE12C680	Modeláři/animátoři postav
+G958F64A1	Grafik rozhraní
+G5817028D	Programátoři grafiky
+G8E313DB8	Programátoři umělé inteligence
+G7559A05A	Programátoři hratelnosti
+G47FDFA0D	Herní designéři
+G2A1A4D1F	Zvukový design a střih hudby
+GD6AC199C	Zvukový design
+G83731102	Další vedení vývoje
+G9B9AC6A2	Další řízení projektu
+G2C8B85F3	Další grafika
+G154B3F75	Další programování
+GEC34AAA5	Další zvukový design
+GE9E2F454	Další texty
+G8B63E4D8	Obchodní rozvoj
+G8E754AFA	Výkonný ředitel vývoje
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Výkonný producent
+GF944BB31	Hlavní producent
+G49F95533	Přidružený producent lokalizace
+GE5AAA381	Asistent producenta
+G20A463E8	Softwaroví inženýři
+GEDDCFA70	Hlavní tester
+G6EC637F4	Asistent hlavního testera
+GA9C92124	Hlavní testeři
+GDDEFB046	Producenti
+G5F4C2C91	Ředitel vývoje her
+G53E62C46	Level designér
+G4019279E	Přidružený umělecký ředitel
+G3548CB79	Animační sekvence ve hře
+G5BF26924	Grafický design (uživatelské rozhraní)
+GF5E6331B	Asistent producenta lokalizace
+GB9029242	Asistenti producenta
+G81160EAA	Senior animátor
+GB1B5EEDE	Animátor
+G1D384099	Modeláři prostředí
+GD670D187	Videosekvence
+GB4300D0E	Supervizor produkce
+GDB61FEB0	Vedoucí produkce videosekvencí
+G13204F99	Technický umělecký ředitel
+G8774AEB2	Umělecký ředitel
+G2EDA5AA3	Ředitel animace
+G4761EC6C	Technický ředitel postav
+GC40AEB65	Hlavní grafik prostředí
+G04B7AD9A	Scenárista
+GCCDC1EDE	Grafici postav
+G765B2120	Senior animátoři postav
+GDB98BF7E	Senior grafik osvětlení
+G8AEFA15C	Senior animátor efektů
+GB64D9748	Animátor efektů
+GB770287B	Rigger/CG modeláři
+GA89434BE	Rozvržení kamery
+GBAA388EF	Střihači
+GA79B5345	Zvukový designér/mistr přezvučení
+GE2D38E72	Vedoucí produkce grafiky
+G29C8EC71	Výkonný asistent
+GB01B1D73	Správce systému
+G257D0532	Asistent produkce
+GB2965969	Střih dialogů
+G2ACF75E1	Další zpracování zvuku
+G821EF7A5	Hlasy
+G3CCB3DF3	EA Quality Assurance
+G2851776E	Vedoucí QA
+G3D43CCDD	Supervizor QA
+G997D9582	Hlavní testeři QA
+G5B5CE9C6	Asistenti hlavních testerů QA
+GE0B33004	Hlavní testeři QA
+GBBB3A592	Vedoucí projektu FLT
+G7F330F1A	Funkční jazykoví testeři
+G731958CD	Jazykoví testeři
+G7005C763	Kontrola kvality pro zákazníky
+GCC3D24EF	Vedoucí CQC
+G0FF24E54	Supervizor CQC
+G7498FE74	Vedoucí oddělení CQC
+G5AB35ED0	Produktoví analytici CQC
+G6E529086	Masteringová laboratoř
+G0229B6F3	Ředitel mezinárodního vývoje produktů
+G6B435E81	Projektový manažer lokalizace
+GF8BA9878	Koordinátor projektu lokalizace
+G906896D8	Manažer schvalování s partnery
+G860EDA13	Obchodní záležitosti
+G7AC94AC6	Právní oddělení
+GFDF965B3	Provoz studia
+G9FF9799E	Koordinátor smluv studia
+G9E24FEC0	Ředitel marketingu
+G44C57DC5	Produktový manažer
+GE1A6D911	Vztahy s veřejností
+GA5ADE5FF	Dokumentace
+G4C2A256D	Sazba dokumentace
+G279BA159	Řízení projektu balení
+G482E9235	Design balení
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Filmový tým Pána prstenů
+GE196FA55	Režie
+GE364782E	Výkonní producenti
+GB11B5F1A	Koproducenti
+GDDE9A104	Archivář
+G73D53EB3	Správce podkladů
+G4616CF92	Asistent producentů
+GD98C077D	Supervizoři postprodukce
+G26FFE43A	První asistent střihu
+GFAE3387C	Správce miniatur
+G0D7D1A1D	Výkonný viceprezident pro celosvětové licence a merchandising
+GD58105C6	Kreativní ředitel
+GB0E8D9D5	Filmoví herci
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samvěd
+G4A7482A5	Glum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Viceprezident pro hudební obchodní záležitosti
+G96EBB4D8	Výkonný ředitel hudby
+G2728DB7D	Ředitel hudby
+GFE08F13A	3Foot6
+GCFF1286B	Koordinátor merchandisingu
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Viceprezident
+GE58F283A	Producent/vedoucí produkce
+G97C336EB	Supervizor animace
+G96FF4CEA	Senior technický ředitel
+GE816CF3D	Hlavní technické nastavení
+G22B756F5	Animátoři
+G86F5B2D9	Malíř matte paintingů
+GBC50C796	Vedoucí kanceláře
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Výkonný producent
+G14C96B5C	Hlavní CG grafik
+GD9742A3C	CG grafici/animátoři
+GBA7D6969	Arnson Communications
+G22C5AB99	Výkonný producent/kreativní ředitel
+G45C5172D	Scenárista/producent
+GDCC6F23E	Umělecký ředitel/animátor
+G9C4F3B3B	Grafik DS
+GF0F58DD3	ZVLÁŠTNÍ PODĚKOVÁNÍ EA
+G895C842A	ZVLÁŠTNÍ PODĚKOVÁNÍ STORMFRONT STUDIOS
+G9D4DD21A	V zemích Středozemě se vypráví legenda o Temném pánu Sauronovi
+G6CFA90F6	a o Prstenu, který by mu dal moc zotročit svět.
+G18F2969C	A ten se nyní dostal do rukou té nejnepravděpodobnější osoby, jakou si lze představit.
+G378C79D6	Jsem velký fanoušek her, takže jsem samozřejmě chtěl zjistit všechno o videohře Pán prstenů.
+GDCF04190	Dostanu se do takového režimu, že hraju pořád,
+G977EBA13	a většinou je to, když hraju třeba nějakou adventuru, že jsem jí úplně pohlcený.
+G49C9AB1A	Jakmile se do toho dostanu, nemůžu na to přestat myslet a musím svou postavu dovést až do konce.
+GD2647A40	Ten úkol byl svěřen tobě, a když cestu nenajdeš ty, nenajde ji nikdo.
+G3AC8371A	Kryjte se!
+GAD82B19D	Tak jsem se na tu věc tak trochu vyptával a konečně jsem si ji zahrál a je to neuvěřitelné.
+G8DE86872	Je to prostě krásné na pohled.
+G72E74697	Ó, to je tak super!
+GF9824FCA	Jo, do toho, Aragorne! No tak!
+G2EE7D5D4	Už jdou.
+G61F7CD7D	Je to taková příjemná odměna, zapnout si videohru a vidět, jak v ní pobíhám.
+G57A5BC04	Dostávám pořádně na zadek.
+G1F85273D	Frodo vypadá jako já! Není to super?
+G1FFE0A40	Tak super.
+GE6E563F9	Najdou Prsten
+GD135555F	a zabijí toho, kdo ho nese.
+G18844D24	Běž! Běž, Frodo!
+G525D5AD9	Chtějí Prsten! Nesmí ho získat.
+GB99DAE56	Rozdíl mezi postsynchrony pro film a namlouváním hry je ten, že postsynchrony pro film se obvykle dělají k obrazu.
+G7558081F	Díváte se na film a snažíte se zopakovat repliku, kterou jste už jednou řekli, a sladit ji s dialogem ve filmu.
+GDD3F428F	Kdo jsi?
+GE906BA5B	Bojíš se?
+G9BDAB30C	Ano.
+G3B07B1B1	Ani zdaleka ne dost.
+GFBD6613D	Pro hru žádný obraz není, je to spousta takových atmosférických prvků, které tam prostě přihodíte.
+G0EE06D0F	Nebezpečí, pomoc, takové věci.
+G2F9FC8E2	Aragorne! Pomoc! Aragorne! Aragorne!
+G289F7C03	Jsem fanoušek akčních figurek a fanoušek her, a když můžu být jejich součástí, je to pro mě úplný bonus pro šprta a mám to rád.
+G67346E61	I ten nejmenší človíček může změnit běh budoucnosti.
+G16420686	Jsem tak nadšený - nemůžu se dočkat, až budu mít svou kopii. Je to bomba.
+GDBA69463	Morie.
+G1D429D96	Bojíš se vstoupit do těch dolů.
+G372C9F91	Víš, co probudili v temnotě.
+G34515230	Natáčení hry mě opravdu bavilo, protože nemusíte tak strašně tvrdě dřít
+G93AEF9C3	jako při původním vytváření postavy.
+GA9883FB4	Natáčení filmu je nutně velmi pomalé.
+G0C1E0E8C	Skvělé na počítačové hře samozřejmě je, že nemusím do maskérny.
+GA5F1044B	Když děláte hru, stojíte ve studiu
+GCE4A81AD	a říkáte: no, myslím, že bys měl říct tohle a tohle a tohle,
+G049A3A66	a oni mají hromadu scénářů a vy říkáte všechny ty nádherné repliky.
+G70F1359D	Přepadení! Přepadení!
+G65325B21	A pak to všechno vezmou, začlení to do hry a vy za to sklidíte trochu uznání.
+G39F1D126	Ty výbušniny musí být zničeny!
+GEB33699E	Ten můj model jako Gimliho se mi moc líbí.
+GD9A0C650	Myslím, že je to tak energická, mužná a přitažlivá postava.
+G43591DCA	Je to opravdu jediná postava, za kterou byste chtěli hrát.
+G5C0A6C1E	Myslím ti ostatní, víte, ti Aragornové, ti Legolasové, hezcí, dobře vypadající chlapi a tak,
+G3D52D95F	ale na skutečné, kvalitní válčení musíte jít do Gimliho.
+G8E74524F	Strávili jsme čtrnáct měsíců na nejkrásnějších místech světa na Novém Zélandu, abychom filmu dali ten správný vzhled.
+GAD562976	Hra je válečná, bojová situace a je skvěle a brilantně vytvořená.
+G7F21BCD6	Nemůžu ho tam nechat! Bože!
+G9AA947F5	To bude ale žrout času.
+G669C44C6	Chci říct, je to nová závislost, kterou jsem objevil.
+G63540AD1	Takže, hráči, výborně, gratuluji, že jste se dostali do tohohle malého koutku, kde je tenhle rozhovor.
+G925FED56	Přál bych si vám poradit, jak hru hrát lépe, ale ve skutečnosti jsem se nikdy na tuhle úroveň nedostal.
+GC3162ADB	Hodně štěstí a hrajte dál.
+GA3572714	Osud světa bude brzy rozhodnut.
+G922859CB	Celý ten proces vytváření nebo stavění videohry
+GD9B03397	je hlavně o tom, že bojujete s věcmi a nindža věcmi... já nevím s čím.
+G24326AFA	Byl jsem překvapený, vypadá to mnohem realističtěji,
+G3E302C15	zdá se, že je to o úroveň výš.
+GBD830A87	Myslím, že Aragorn ve videohře míří lépe než já...
+GF76948D6	ale stěžovat si na to nebudu.
+GD27FED3E	Mohu-li tě ochránit svým životem či smrtí, učiním tak.
+G56368F53	Můj meč ti patří.
+G8D6DAFD1	Co jsem z videohry viděl, zdá se, že odráží skutečnost,
+G970D4AB6	že druhý film - na rozdíl od prvního - má větší rozměr,
+GFD0BADCA	a těším se, až je uvidím, stejně jako se těším na zbytek této hry.
+G1F48F697	Dnes jsem viděl jen ukázku.
+GB689F1B9	Těší mě například, že Aragorn někdy upadne, spadne nebo se kutálí po zemi
+G6F6072BC	a že se jeho styl boje mění, víte, podle situace.
+GA3A3F7A1	Není to vždycky úhledné a čisté, víte, je to tak trochu...
+G28095E46	někdy umí být trochu rváč - aspoň tak to dělal ve filmu - a hra to podle mě odráží.
+G43AA6A0B	Je to působivé.
+G8559FF90	Cizinci ze vzdálených zemí, byli jste sem povoláni, abyste odpověděli na hrozbu Mordoru.
+GC2A75F48	Středozem stojí na pokraji zkázy.
+GFE143A07	Nikdo jí neunikne. Spojte se, nebo padnete.
+GF59E5460	Vždycky mě ohromí, když vidím pokrok technologií a tak,
+GAD5CBAE4	a jak blízko se to dostalo ke skutečnosti.
+GF96BCD4B	Musím se dostat k Boromirovi, hned!
+GD262135E	Když nahráváte postsynchrony pro film, samozřejmě se díváte na plátno
+G83EECB7A	a vidíte akci před sebou tak, jak jste ji ten den hráli.
+G3C0B6913	Když nahráváte stopu pro tohle,
+G2A8B6AD2	nemíří na vás kamera
+G52F7D105	a nesnažíte se trefit do pohybu rtů na obraze před sebou,
+G8EE2279F	takže můžete opravdu přidat něco navíc a tak nějak
+GA5BE0F5A	zdůraznit a rozvést to, co je napsané na papíře.
+G51E230FB	Zpátky do jam, které vás zplodily!
+G97400E1E	Jsou vyhrocenější, než by byly ve filmu.
+GC26338C3	Víte, jak to myslím?
+G40EB5D5C	Jsou tak trochu směšné a je to zábava.
+G52FECFA2	Byla to docela zábava si s tím takhle opravdu pohrát.
+G91D69630	Pojď!
+G87873143	Ten boj nemůžeš vyhrát!
+G47AECCC4	Myslím, že kdybych tu hru hrál,
+GB0CCD2A6	bylo by fajn vědět, že akci, kterou předvádí počítačová postava, namluvili skuteční herci,
+GC1719889	a řekl bych, že čím víc skutečnosti v počítačovém světě je, tím je to pro hráče napínavější.
+G77ECFBF0	Nemůžeš ho ovládat. Nikdo z nás nemůže.
+GB42EC53B	Prsten musí být zničen.
+G43E793ED	Nebezpečí Prstenonoše se prohlubuje.
+G6E2FF8E0	Neboť je tu ještě jiný, kdo Prsten loví.
+GDD26CBEC	Nikdy v životě jsem nehrál videohru.
+GF783F574	Nikdy nechápu pravidla.
+G573BC826	Mám velmi velké a nemotorné ruce a nemám zrovna tu koordinaci ruky a mysli, která je podle mě nutná
+GFBB68CB5	a kterou má zřejmě každý mladší šesti let.
+G8D9D9F75	Co je na téhle hře, Pánu prstenů, tak úžasné,
+G81AEE08E	je to, že slyšíte hlasy původních herců - všech.
+GAE3BFBD7	A dnes jsem nahrával Gandalfa Šedého a Gandalfa Bílého,
+G21F22F52	dvě postavy, které hraju v Pánu prstenů.
+GCED01E94	Co vidíš?
+GB4F26455	Jsou tam znaky.
+G5C7EB8BC	Je to nějaká forma elfštiny.
+G27A03C42	Neumím to přečíst.
+G8E22513B	Málokdo to umí.
+G4B2817A2	Teď je tu spojenectví mezi Dvěma věžemi: Orthankem a Barad-dûrem.
+GC69D576A	Pro hru je to trochu drsnější, trochu pohotovější, možná trochu bezprostřednější.
+G363960EA	Jeden z vás musí vstoupit.
+GFFCB2D5D	Pomozte vesničanům, kteří jsou ještě naživu.
+GF4DAF5B8	V podstatě je to agresivní kus boje.
+G00009069	Vychází na povrch vojenská stránka Gandalfa: velitel, samuraj, vůdce.
+G4519FC71	Neprojdeš!
+G066F3360	Takže to, co vidíte na obrazovce, je tak blízko - k čertu -
+GF4CF848B	Gandalfovi, kterého vidíte ve filmech. A přál bych si přijít a hrát tu hru s vámi.
+G699B7BF2	Do tohoto Prstenu vložil svou krutost, svou zlobu a svou vůli ovládnout veškerý život.
+GA1469225	Jeden prsten vládne všem.
+G01090CE9	To, co jsme udělali, je vyvrcholení obrovského množství práce tisíců lidí.
+G74E1F68D	Název Dvě věže odkazuje na věž Orthank, 
+G0AE01FA9	kde sídlí Saruman, postava Christophera Leeho,
+GD9642178	a na věž Barad-dûr v Mordoru, sídlo Saurona.
+G573418F9	Druhý film, stejně jako každý film této trilogie, je výzva. A bude jí, dokud ho nedokončíme.
+GB2A31EA0	Je to skvělý film. Bude větší než první film.
+GB831FA3A	Myslím, že rozhodně do natáčení těchto filmů šlo tolik péče,
+GCCFC11FE	a možnost předat tyto informace týmu, který vytváří hry, je skvělá, 
+G327C2028	protože vím, že vkládají stejné množství péče a úsilí do toho, aby lidem přinesli opravdu bohatou hru.
+G2C4A352E	Tolkien v knihách popisuje Edoras velmi živě
+G10EFB23A	jako město dřevěných staveb na kopci před pásmem zasněžených hor.
+G50D180A4	Když jsme původně hledali lokace, řekl jsem: podívejte, musíme na Novém Zélandu najít místo,
+GDA11996F	musí tu být takový kopec, který stojí před horami.
+GD6F61F77	Tak létali vrtulníkem po celé zemi a vrátili se s fotografií naprosto dokonalého kopce.
+GC56228ED	Byl asi sto až sto deset kilometrů od nejbližšího města.
+GF796DA0F	Bylo to uprostřed Jižního ostrova; bylo to velmi odlehlé.
+GFA1CD969	Stavbou těch obrovských budov jsme strávili asi sedm nebo osm měsíců.
+GC2D0BAAA	Výsledkem je, že ve filmu máme Edoras, které je naprosto uvěřitelné.
+GC2774958	Mohl jsem tam jet a prostě točit, jako by to bylo skutečné místo.
+G99F69515	Jedna ze vzrušujících věcí na hrách od EA a na tom, co jsem viděl na modelech, jak vznikaly,
+G6B3554D6	je skvělé napodobení našich kulis a našich postav,
+GB997C9B4	a to až do té míry, že se EA dohodlo s našimi herci, aby přišli a nahráli své vlastní dialogy.
+G815CAC49	Herci z toho byli docela nadšení.
+GA1640DEB	Bitva o Helmův žleb skončila.
+G93BD7122	Bitva o Středozem právě začíná.
+G958468DE	Postavili jsme miniaturu Helmova žlebu, ale zajímavé bylo, že to nebyl jen model. 
+G1BC58576	Byla to obrovská miniatura. V měřítku jedna ku čtyřem, ale sama o sobě měla na šířku asi devět až dvanáct metrů.
+GFA4F689B	Byla tak velká, že jsme ji mohli prostě natočit kamerami a nevypadala jako miniatura.
+G2571B991	Vypadala naprosto uvěřitelně.
+G31C24FB0	Skvělý film dělá opravdu skvělý scénář a skvělé herecké obsazení.
+G9C04D37F	Představuji si, že když děláte hru, máte mnoho stejných výzev.
+GA0B86A25	Musíte pro hru získat ty správné talenty.
+G0B7DC714	Musíte mít příběh, který přiláká publikum, a to se pak pro ten příběh nadchne
+G5E1101AB	a příběh ho přiměje vidět, jak ožívá.
+G87FC774C	Pro Froda nemůžeme nic udělat.
+G3C9AA8BC	Výprava ho bude stát život.
+G98F7C221	Rohan je slabý a připravený padnout,
+GA01F7D34	a tak tvrdě a rychle udeří na svět lidí.
+GA8723617	Válka je tady.
+GE1AF4B03	Ukradli nám miláška a my ho chceme.
+G6A5F57B3	Asi nejvíc zastrašující na tom, pustit se do tohoto projektu, byl
+GDE1DC635	pocit, že máme neuvěřitelnou zodpovědnost dodat
+GCFDFC743	v interaktivní podobě totéž, co Peter Jackson dodal ve filmu.
+GC87068A6	Vzal jedna z nejmilovanějších literárních děl všech dob
+G423C7E0C	a převedl je do epického filmového mistrovského díla, které si získalo miliony a miliony fanoušků po celém světě.
+GC8F29411	Na začátku projektu pracujete na koncepční a designové stránce.
+GBACB2DE5	Jak projekt postupuje - programátoři, grafici, animátoři, grafici prostředí,
+G047AC48F	specialisté na modelování, specialisté na textury - všichni tito lidé přemýšlejí o své jedné oblasti hry,
+GB60517EB	ale z hlediska celkového zážitku.
+G13170460	Jednou z výhod toho, že jsme mohli tak úzce spolupracovat s filmaři,
+GA03610FF	je, že jsme mohli použít modely a rekvizity, které vytvořili pro film,
+G9DADDEE4	jako předlohu pro věci, které jsme potřebovali vytvořit v naší hře.
+GF0D449E5	Ve tmě se pohybuje stín.
+GEC940136	Při návrhu Aragorna jsme opravdu museli myslet na všechny tři hratelné postavy zároveň.
+GBB381F7C	Například Legolas je mnohem víc postava zaměřená na rychlost a eleganci.
+G4CE351A9	Gimli je malý bitevní tank.
+G21025B26	Aragorn je spíš směsí obou.
+G3ADE6E66	Než jsme začali cokoli stavět, prohlédli jsme si pohyby každé z postav - snímek po snímku.
+G80ADBA8B	Pak jsme vytvořili drátěný model postavy. To jsou její základní proporce, velikost a měřítko.
+G85E5A400	Pak jsme přidali textury a osvětlení, abychom dokončili jejich oblečení a dodali jemné detaily jejich postavy.
+GCD3CDD42	Herci měli o spolupráci s námi velký zájem.
+G092B49A0	V jednom případě nám Viggo Mortensen předvedl některé ze svých akčních pohybů.
+G915A1A70	On a jeho kaskadérský dublér otevřeli bednu s meči a začali spolu šermovat.
+G215B5E15	To se stalo základem mnoha Aragornových pohybů.
+G7126178B	Chce být nalezen.
+G7E02AF05	Když jsme vybírali scény z filmu, které zahrneme do hry, Balinova hrobka jasně vyčnívala jako silný kandidát.
+GF4146E18	Je to jeden z nejpamátnějších okamžiků prvního filmu.
+GE152213A	Chtěli jsme znovu vytvořit tu atmosféru s velmi silným paprskem světla dopadajícím přímo na hrobku.
+GB236432D	Pro naše modeláře prostředí a specialisty na osvětlení to byla výzva.
+GD3C26DBB	Úrovně v rohanské vesnici jsou jedinečné v tom, že nám daly příležitost rozšířit oblasti z filmu.
+G8669E69D	Samotná herní úroveň vypadá a působí velmi podobně jako filmové lokace, pokud jde o osvětlení,
+GF9B205CF	tvar architektury, lidi, kteří tam jsou, ale v tomto konkrétním případě na tom stavíme dál
+GB285B32E	a vytváříme oblasti úrovně, které hráč může prozkoumat a bojovat v nich a které možná ve filmu neviděl.
+G5E5F1D1C	Co je na téhle hře, Pánu prstenů, tak úžasné,
+G610E0BE4	je to, že na své vlastní obrazovce slyšíte hlasy původních herců - všech.
+GC6FCAA65	Pomoc! Aragorne! Aragorne! Pomoc!
+G20165D69	Je to neuvěřitelně autentické a myslím, že udělat hru podle filmu je opravdu těžké.
+GBF3A0A5B	Tahle hra to dokáže. Je hodně podobná filmu.
+GDD010A37	Navrhli jsme velmi dynamický hudební systém, který odráží náladu skutečných událostí ve hře.
+G96BEDA9C	Jeden prsten všechny přivede, do temnoty sváže je.
+G91629050	Ve filmu Saruman útočí na Helmův žleb s deseti tisíci Skurut-hai.
+G3B702B98	Takže jsme museli k vytvoření pocitu bitvy použít jiné prvky, které jsme měli k dispozici.
+GDEFA604D	Pomocí zvukových efektů a zvuku opravdu docílíme pocitu, že jsou na místě tisíce skřetů.
+G204351C8	Když si někdo zapne hru a řekne si:
+GEC81BA2D	Panebože! Tohle je ten film! Pak jsme dosáhli přesně toho, co jsme chtěli.
+G52BF957B	Tohle je to místo, které si pamatuji z filmu.
+G571B482E	Jsem tam. Můžu něco udělat. Teď jsem na řadě já.
+G625B0A6D	Přesně tak chceme, aby se hráč cítil.
+GB222979D	Kde je kůň a kde jezdec?
+G2457FF85	Kde je roh, jenž zněl?
+G8B36CA83	Pominuli jako déšť na horách,
+G50095CA7	jako vítr na lukách.
+G10EB8BCF	Dny zapadly na západě
+G109A0CCE	za kopci
+G02628501	do stínu.
+G80A942D2	Aragorne!
+GDDEA48AC	Nápověda
+G4C40E774	Stiskněte tlačítko START
+GEE711094	Pokračovat
+GF9202936	Hrát znovu
+G2E427514	Zapnuto
+GFC4343CA	Vypnuto
+G52E4CD32	Pohyb
+G39D074FD	Vybrat
+GAC3A8B6E	Zpět
+G42B46F3C	@ 2002 New Line Productions, Inc.  The Lord of The Rings a postavy, jména a místa v něm obsažená, * The Saul Zaentz Company d/b/a Tolkien Enterprises v licenci pro New Line Productions, Inc.  Všechna práva vyhrazena.
+G035F710A	EA GAMES* je značka společnosti Electronic Arts*.
+GBAC3ED5F	Herní kód a některé audiovizuální prvky @ 2002 Electronic Arts Inc. Všechna práva vyhrazena.
+G0EF5F91F	Nová hra
+GB8D9D2FD	Nahrát hru
+G0BE2A075	Možnosti
+G5D6AEEF7	Režim ladění
+G83335327	Bonusy
+G731194FA	Uložit hru
+G7BA082D0	Stiskněte START pro pokračování
+G755B3BA1	Nastavení ovladače
+G03961FD4	Nastavení hry
+GABEE6EA4	Obtížnost:
+GF065116B	Lehká
+G8D3A16F6	Normální
+GACDD0363	Expert
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Hlasitost hlasů:
+G7F04050E	Hlasitost hudby:
+GF30A57F8	Titulky:
+G64752D2D	Vibrace:
+GB3F78571	Hlasitost hry:
+GED3C9F14	Zvuk:
+GB065D5A4	Vyberte hru k nahrání:
+G00FF7920	Vyberte místo pro uložení:
+GC99B6C1E	Vyberte slot MEMORY CARD:
+GFB5C0BA2	Pevný disk Xboxu
+GD2F916B6	Slot MEMORY CARD 2
+GAEFBDEF3	Zrušit
+GDA714102	Ano
+GB893E04C	Ne
+GE506E266	Jste si jisti?
+G574C52F2	Opravdu chcete koupit toto vylepšení?
+G0D91D779	Jste si jisti? Výsledky vašeho posledního hraní této mise budou ztraceny.
+G1CF7123A	Jste si jisti? Veškerý neuložený postup v této hře bude ztracen.
+GEF04DC5D	Jste si jisti? Postup v této misi bude ztracen.
+GEDF6F861	Opravdu chcete přepsat tuto hru?
+GF44D8878	Dokončili jste nákup vylepšení?
+G1EF3EFE3	Uložit hru na pevný disk
+G05163971	Nahrát hru z pevného disku
+G8F93A6FE	Vyberte obtížnost
+G654484DF	Zamčeno
+G5A7CB330	Dokončeno
+G8D6AAF13	Nehráno
+GBE8C099C	Prolog
+GF4FBBE46	Větrov
+GE7EA3020	Brány Morie
+GE13A531D	Balinova hrobka
+G79C1EAD3	Amon Hen
+G51C82E11	Fangornský les
+G35CCE51F	Rohanské pláně
+GAD341B58	Západní úval
+G94ADD008	Rohanská brána
+G9760067E	Hlubinná zeď
+GF8B38ED5	Proražená zeď
+G644C89AD	Nádvoří Rohatého hradu
+G69B8B4C2	Věž Orthank
+GBF00F963	Helmův žleb:
+GE34AB2FD	New Line Zoo
+GE132F5FF	Vyberte video k přehrání:
+G4B3C17B9	Úvod
+GAD303F2A	Závěr
+G668B98BD	Podlaží
+G9C7A95F0	Body vylepšení:
+G4AE44639	4) Zadejte uvedenou sekvenci kódu.
+G5374B3F5	Tajné kódy
+GDF7B6B3A	Vždy zničující:
+GFECB245B	2 hráči:
+GCAB16744	Malí nepřátelé:
+G587D657D	Všechna vylepšení:
+G58E34314	Nezranitelnost:
+GF0336180	Zpomalení:
+G5A122CB0	Zadání kódu:
+G35BC6746	1) Spusťte misi.
+G46DF9919	2) Stisknutím tlačítka START hru pozastavte.
+G5A1291EE	3) Stiskněte a držte
+GEB88B42D	Nekonečné zdraví:
+G6AE6FFFE	Nekonečné střely:
+GAA29A634	Ukončit misi:
+GB2AE1BCE	Režim pauzy:
+GAA467E08	Přidat zkušenosti:
+GEA42298C	Další úroveň:
+G6BA0C403	Obnovit zdraví:
+G41D871E0	Obnovit střely:
+G04DBD06B	Vylepšení střel:
+GA7A50BB5	Zobrazit vylepšení
+GA67DF58D	Odejít do nabídky
+G773B79A5	Další mise
+G96540044	Mise se nezdařila.
+G5ADDCAC2	Hrát misi znovu
+G9DD85D6D	Odejít do nabídky
+G730918CA	Zkusit znovu
+GB437BA93	Titulky tvůrců
+G798A44A2	Hrát misi znovu
+G6F46B26E	Vyberte jazyk.
+G2809E047	Čeština
+GE3AAFF7A	Rychlý
+GD0DB46DB	Prudký
+G9AD854EF	Zabití
+GE83BE834	Zvláštní
+GDB34AED9	Kombo
+GDACF8DCA	Zakoupeno
+G125CAC9A	Zatím neodemčeno. Pokračujte stisknutím tlačítka A.
+GDA9711D2	Nemáte dost bodů vylepšení na nákup tohoto vylepšení. Pokračujte stisknutím tlačítka A.
+GEB0E0008	nebo
+G90A54691	po krytu
+GF5F43483	na zemi
+GFC1C2104	Prázdné místo
+GB8BCCCB9	Hra 2
+G92BA5250	Hra 3
+G9CCBAB2F	Hra 4
+G76C930C6	Hra 5
+G50C6B65D	Hra 6
+G2AC43BF4	Hra 7
+G34D594D3	Hra 8
+G0ED31A6A	Hra 9
+GBE76BA62	Hra 10
+GE47934CB	Hra 11
+G6ED86859	Paměťová karta (PS2) není vložena. K uložení dat této hry je potřeba alespoň 80 KB. Chcete pokračovat?
+G87DE26DA	Na paměťové kartě (PS2) ve slotu MEMORY CARD 1 není dost místa. K uložení dat této aplikace je potřeba alespoň 80 KB. Chcete pokračovat?
+G7118C569	Na paměťové kartě (PS2) ve slotu MEMORY CARD 2 není dost místa. K uložení dat této aplikace je potřeba alespoň 80 KB. Chcete pokračovat?
+G6804B4C2	Na paměťových kartách (PS2) ve slotech MEMORY CARD není dost místa. K uložení dat této aplikace je potřeba alespoň 80 KB. Chcete pokračovat?
+G849021EA	Ve slotu MEMORY CARD 1 není vložena paměťová karta (PS2). Pokračujte stisknutím tlačítka X.
+G59CE2129	Ve slotu MEMORY CARD 2 není vložena paměťová karta (PS2). Pokračujte stisknutím tlačítka X.
+GC5BD8B5F	Znovu připojte ovladač a pokračujte stisknutím START.
+GC2BDD02C	Paměťová karta (PS2) ve slotu MEMORY CARD 2 není naformátovaná. Naformátovat paměťovou kartu (PS2)?
+G6B64948C	Váš Xbox nemá dost volných bloků pro uložení hry.  Stiskněte A pro pokračování bez uložení, nebo B pro uvolnění alespoň
+GEDAB4EA9	Znovu připojte ovladač a pokračujte stisknutím START
+G00E55934	Na pevném disku není dost volných bloků pro tuto uloženou hru.
+G20A17FB1	bloků je třeba uvolnit.
+G353AAE58	Formátování se nezdařilo! Chyba paměťové karty (PS2) ve slotu MEMORY CARD 2! Pokračujte stisknutím tlačítka X.
+G9CAF03E3	Hru nelze uložit. Pokračujte stisknutím tlačítka A.
+GCB03752D	Hra uložena.  Pokračujte stisknutím tlačítka A.
+GACBFB64F	Uložení na paměťovou kartu (PS2) ve slotu MEMORY CARD 2 proběhlo úspěšně! Pokračujte stisknutím tlačítka X.
+GC7C0454F	Ukládání dat na paměťovou kartu (PS2) ve slotu MEMORY CARD 1. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+G4B14AAB4	Ukládání dat na paměťovou kartu (PS2) ve slotu MEMORY CARD 2. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+G53DAC278	Nahrávání dat z paměťové karty (PS2) ve slotu MEMORY CARD 1. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+GF144B8B3	Nahrávání dat z paměťové karty (PS2) ve slotu MEMORY CARD 2. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+G063DD8CC	Hru nelze nahrát. Pokračujte stisknutím tlačítka A.
+GE5BDAC0B	Chcete uložit hru?
+GED3A9CCF	Žádné uložené hry. Pokračujte stisknutím tlačítka A.
+GAF453999	bloků.
+GEE649E5A	Paměťová karta (PS2) ve slotu MEMORY CARD 1 není naformátovaná. Pokračujte stisknutím tlačítka X.
+G81447581	Paměťová karta (PS2) ve slotu MEMORY CARD 2 není naformátovaná. Pokračujte stisknutím tlačítka X.
+GB36F8F0C	Čtení dat z paměťové karty (PS2) ve slotu MEMORY CARD 1. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+G97EC5687	Čtení dat z paměťové karty (PS2) ve slotu MEMORY CARD 2. Nevyjímejte paměťovou kartu (PS2), neresetujte ani nevypínejte konzoli.
+G8E8AF6C1	S použitým diskem je problém. Může být špinavý nebo poškozený.
+G9CB8DFF0	Mise 1
+G0EC04F2B	Mise 2
+GE8BDD4C2	Mise 3
+G5AC543FD	Mise 4
+G34C2C994	Mise 5
+GA6CA38CF	Mise 6
+G80C7BE66	Mise 7
+GF2CF2DA1	Mise 8
+GCCCCB338	Mise 9
+GA1F545C0	Mise 10
+GC7F7C029	Mise 11
+GEDFA3A92	Mise 12
+G13FCB4FB	Mise 13
+GFBA35200	Mise A
+G6DAAC13B	Mise B
+G47A846D2	Mise C
+GB9AFB60D	Mise D
+G0111B4C5	Zkušenosti z mise:
+G10CB2024	Hodnocení mise:
+GB8F11F62	Celkem bodů vylepšení:
+G94649BD6	Dokonalé
+GE424E811	Vynikající
+G70E9184E	Dobré
+GE98543F1	Ucházející
+GF9792B5F	Slabé
+G4DE9139C	Dovednost
+GB525F096	Silný
+G5F8C23CD	Obrana
+G8673311D	Útok
+G7829DFB2	Rychlá kombinace.  Účinná proti menším nepřátelům bez štítu.
+G63E6B4FD	Ničivá kombinace, která prorazí překážky nebo roztříští nepřátelské štíty.
+G406CD62A	Použijete stisknutím a podržením levé spouště.  Střílejte tlačítkem A (podržením zvýšíte poškození).
+G7651B078	Tento bodný úder dorazí každého sraženého nepřítele.
+G09258F36	Odhoďte nepřátele od sebe, mimo dosah jejich úderů.
+G36E84E05	Blokuje útoky a střely nepřátel.
+G074FC78D	Zničující útok.  Použijete stisknutím a podržením tlačítka Y.
+GE5C8740D	Trvale zvýší vaše zdraví.
+G791AEDAB	Vyrazte vpřed a srazte nepřátele bez štítu k zemi.
+GF4A5485B	Zaútočte, když se zvedáte ze země, a zaskočte nepřátele.
+GC0B8F80A	Velmi účinné kombo na likvidaci nepřátel bez štítu.
+G6CBE68E9	Velmi účinné na co nejrychlejší likvidaci nepřátel se štítem.
+GD7BB121B	NAVAZUJÍCÍ POHYB: Okamžitě zabijte útočícího goblina.
+G4A59663E	Ostnaté šípy Rohirů se střílejí stejně jako z Dúnadanského luku a způsobují vážná zranění.
+G96A8AB86	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla správců)
+GED26DEB8	Vyrazte vpřed z velké vzdálenosti a srazte nepřátele bez štítu k zemi. (Vyžaduje: Útok v trysku)
+GB4790643	Zraňte, srazte a udeřte nepřítele tímto kombinovaným útokem.
+G9709901B	Tímto kombem udeřte nepřítele bez štítu, zlikvidujte ho a rychle udeřte na dalšího.
+G066B80A4	NAVAZUJÍCÍ POHYB: Okamžitě zabijte útočícího skřeta.
+GB54F0B8A	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Isildura)
+G1C742C09	Ještě ničivější útok.  (Vyžaduje: Hraničářská zuřivost)
+G9F299E6A	Zvýší poškození vašeho rychlého útoku.
+G2A888253	Tímto kombem silné nepřátele zraňte, srazte a pak dorazte.
+GEF4043FD	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Elendila)
+GF3D48718	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Běsnění divočiny)
+GDAE09290	Železné šípy Gondoru způsobují strašlivá zranění.  (Vyžaduje: Rohanský luk)
+GBD1ED2AE	NAVAZUJÍCÍ POHYB: Okamžitě zabijte útočícího Skurut-hai.
+G6DF8DC34	Použijte proti silnému nepříteli: rozbijte mu štít, srazte ho k zemi a udeřte ho.
+GB1BCB280	Nic
+GE225A1EC	Použijete stisknutím a podržením levé spouště.  Házejte tlačítkem A (podržením zvýšíte poškození).
+GFF3FB1CE	Tento úder sekerou dorazí každého sraženého nepřítele.
+G81A89461	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc skály)
+GF266C7E6	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc železa)
+G2FCD00C0	Vyrazte vpřed z velké vzdálenosti a srazte nepřátele bez štítu k zemi.  (Vyžaduje: Útok v trysku)
+G00247254	Trvale zvýší vaše zdraví.  (Vyžaduje: Runa ochrany)
+GA505D28C	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc Balina)
+G34C62FC4	Břitké morijské sekery se házejí stejně jako Ereborské sekery a způsobují ještě větší poškození.
+G57901BB9	Ještě ničivější útok.  (Vyžaduje: Trpasličí zuřivost)
+G8840F62F	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc Glóina)
+G361F0511	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Běsnění hor)
+G219C0125	Tyto čepele s mithrilovým ostřím způsobují strašlivá zranění.  (Vyžaduje: Morijské sekery)
+G9986DAAB	Zvýší poškození vašeho prudkého útoku.
+G11BF2FC5	Jasanové šípy z Roklinky se střílejí stejně jako z Dlouhého luku z Temného hvozdu a způsobují ještě větší poškození.
+G7A9893BB	Očarované šípy z Lothlórienu způsobují hrozivá zranění.  (Vyžaduje: Dlouhý luk z Roklinky)
+G42E47239	Tyto kouzelné šípy zapálí vaše nepřátele.  (Vyžaduje: Dlouhý luk z Lothlórienu)
+G5BAB8220	Trvale zvýší vaše zdraví.  (Vyžaduje: Mocnost Celeborna)
+G39265CB0	Ještě ničivější útok.  (Vyžaduje: Elfská zuřivost)
+G084B6AEF	Tyto šípy prolétnou všemi nepřáteli v cestě a zraní je.  (Vyžaduje: Šípy dračího ohně)
+GB1D19C39	Zvýší poškození každého vystřeleného šípu.
+G06E26BE1	Trojitý úder
+G20A303C1	Dvojitý sek
+GCB8F4087	Dúnadanský luk
+G3F6F3751	Úder ze stínu
+GBE8C73E9	Bojový kop
+G5660E3B0	Kryt mečem
+GDF332280	Hraničářská zuřivost
+GB8AB07B9	Síla správců
+G187F8CC1	Útok v trysku
+G86E487F5	Útok ze země
+GF7D6DC76	Isildurova rychlá hrůza
+GB34DCC39	Isildurovo vysvobození
+GC9303634	Zhouba goblinů
+G3A0786A5	Rohanský luk
+G8B17B5C5	Síla Isildura
+G579A1927	Útočný výpad
+G207C1523	Isildurův smrtící výpad
+G6C2653E9	Isildurův gambit
+G2A3BA153	Zhouba skřetů
+GA28B29AA	Síla Elendila
+G7D213CCE	Běsnění divočiny
+G006BF315	Mistr meče
+G6B68444D	Isildurův válečný nápor
+G3B0A3720	Síla Argonathu
+G78BAB3BC	Hněv Númenoru
+GCEDAD8B0	Gondorský luk
+G3BE146BB	Zhouba Sarumana
+G701FD063	Isildurův soud
+G0251EC9F	Ereborské sekery
+G96C77DAD	Výpad sekerou
+GDD4B6691	Kryt sekerou
+GADD20DD0	Trpasličí zuřivost
+GB0D95BC6	Moc skály
+G4FB6CF69	Moc železa
+G5F017E32	Balinova rychlá hrůza
+GDFD7CADD	Balinovo vysvobození
+GDF1B571B	Runa ochrany
+G9B37EDE7	Balinův smrtící výpad
+GCDB1A82D	Balinův gambit
+G2DEF1D03	Moc Balina
+GE89D3658	Moc Glóina
+G31B06C3A	Morijské sekery
+GADFB76EF	Běsnění hor
+G75612F09	Balinův válečný nápor
+G8CE2E527	Moc Khazad-dûmu
+GE4E87FCC	Hněv Morie
+GA16173AB	Sekery Mlžných hor
+G24288EA5	Královské mistrovství sekery
+G45AAD667	Balinův soud
+GB752504B	Dlouhý luk z Temného hvozdu
+GA018F71A	Kryt nožem
+G0DCE9941	Elfská zuřivost
+G4A27D7DF	Mocnost Celeborna
+GE0EC06AA	Dlouhý luk z Roklinky
+G76059454	Elrondova rychlá hrůza
+GE8C0678B	Elrondovo vysvobození
+GE9F2F2C9	Dlouhý luk z Lothlórienu
+G5FE47D01	Elrondův smrtící výpad
+G4B1902CB	Elrondův gambit
+GB3FB8DDE	Šípy dračího ohně
+G4A61DECC	Mocnost Galadriel
+G204DE538	Gil-galadovo běsnění
+G5B85BC6F	Elrondův válečný nápor
+GBDF43860	Mithrilové šípy
+G4B69DAC6	Mistrovství elfského luku
+G43AB31C1	Elrondův soud
+GEAA8149B	Úroveň
+G11886F39	Krytem blokujete útoky nepřátel a odrážíte šípy.
+GE4E78CFD	Kryt
+G3226B277	Stisknutím a podržením levé spouště přepnete na zbraň na dálku.  Střílíte tlačítkem A.  Míříte levou páčkou.
+GFF931564	Zbraň na dálku
+G9A309E3D	Střelba
+GC4AB2A6D	Rychlým útokem zasahujte nepřátele bez štítu.
+G5C64BDED	Prudkým útokem rozbíjejte nepřátelské štíty.
+G4B1F5E2B	Prudký útok
+G12993772	Rychlý útok
+G5550F308	Získávejte body zkušeností, abyste zvýšili úroveň své postavy a mohli kupovat cenná vylepšení.
+GD5F0D645	Získané body zkušeností
+G109A17A7	Používejte pokročilé kombinace a vyhýbejte se zásahům nepřátel, abyste naplnili ukazatel dovednosti a získali maximum bodů zkušeností.
+GDB22979F	Ukazatel dovednosti
+GF7AF01B8	Mířit
+G552324EC	Odskok
+G3962B27E	Smrtící úder
+G819AB384	Odražení
+GB5FE5915	Střelba/rychlý útok
+G1438BF1E	Pohyb/míření
+GCDD8B9EF	Pauza
+G63E0263C	Rozhovor
+GA970F7F6	Peter Jackson a Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Pán prstenů
+GF0462ED4	Jak vznikala videohra
+G0DB34230	Exkluzivní filmové ukázky
+G9DF19E57	'Společenstvo Prstenu'
+G1704CE51	Fotografie z natáčení
+G330E63EE	Fangorn a Orthank
+GD722C1B8	Rohan a Helmův žleb
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Hrát za Aragorna
+GA8934934	Hrát za Legolase
+G84C57E95	Hrát za Gimliho
+G46EA0007	Hrát za Isildura
+G5689E41F	Tajná mise
+G7F2C7A4C	Hrát za tajnou postavu
+G96AF0882	Koncepční kresby
+G8813AE29	Odemknete dokončením mise Brány Morie
+G4EEEB554	Odemknete dokončením mise Balinova hrobka
+G3182CC3A	Odemknete dokončením mise Amon Hen
+G54747798	Odemknete dokončením mise Fangornský les
+G5D796BA6	Odemknete dokončením mise Rohanské pláně
+G758A2B31	Odemknete dokončením mise Západní úval
+GD1B66361	Odemknete dokončením mise Rohanská brána
+GEC95C099	Odemknete dokončením mise Helmův žleb: Hlubinná zeď
+G4F6E6B62	Odemknete dokončením mise Helmův žleb: Proražená zeď
+G7E4B2F5F	Dosáhněte s Aragornem 5. úrovně
+GA825B93E	Dosáhněte s Legolasem 5. úrovně
+GD08EF3EF	Dosáhněte s Gimlim 5. úrovně
+G060F3A0C	Dokončete misi Helmův žleb: Nádvoří Rohatého hradu a dosáhněte s Aragornem 10. úrovně
+G9C00EBDD	Dokončete misi Helmův žleb: Nádvoří Rohatého hradu a dosáhněte s Legolasem 10. úrovně
+GCA301FEC	Dokončete misi Helmův žleb: Nádvoří Rohatého hradu a dosáhněte s Gimlim 10. úrovně
+G2A4097F8	Dokončete tajnou misi s libovolnou postavou
+GF80714A8	Dokončete tajnou misi s tajnou postavou
+GF281A415	Peter Jackson a Barrie Osborne hovoří o filmu a hře
+GEF6D5A30	Elijah Wood vypráví o hraní Froda ve videohře 'Pán prstenů'
+G1B7C2E20	Ian McKellen hovoří o hraní Gandalfa ve videohře 'Pán prstenů'
+G100A11D4	Pohled do zákulisí vzniku videohry 'Pán prstenů'
+G14A8622F	Fotografie postav a scenérií ze 'Společenstva Prstenu'
+G228511D6	Fotografie postav a scenérií z Fangornu a Orthanku
+GFDF064C7	Kresby inspirované 'Pánem prstenů' od Johna Howea a Alana Leeho
+GAAE1A0C0	Fotografie postav a scenérií z Rohanu a Helmova žlebu
+G6CEBDAE1	Viggo Mortensen vypráví o hraní Aragorna ve videohře 'Pán prstenů'
+G6824CF13	Orlando Bloom hovoří o hraní Legolase ve videohře 'Pán prstenů'
+G84770794	John Rhys-Davies vypráví o hraní Gimliho ve videohře 'Pán prstenů'
+G775EAFA1	Tajné kódy k odemčení skrytých funkcí videohry 'Pán prstenů'
+G640E4463	Změnit výběr
+G6D02770F	Potvrdit výběr
+GE5EE10E6	Zpět
+GA75BE7EE	Změnit nebo upravit výběr
+GE7B4EE86	Odejít do hlavní nabídky
+G47C91DD4	Změnit obrázek
+GE445F6CE	Za body vylepšení kupujte své postavě zlepšení.
+GB2D2B6DB	Zabijte je všechny!
+GFD9FFC0E	Sejměte tu stvůru rychlými útoky!
+G7BD97E94	Prudkým útokem mu zničte štít!
+G62FC14DC	Už jdou! Zabijte je všechny!
+GA3F97A90	Půjčte mi své meče!
+G88F3FEA7	Ááh! Zemři, stvůro Mordoru!
+G4888927E	Za Bílé město!
+GB5DB8B33	Jsi vyřízený!
+G91F156A0	Táhni, stvůro stínu!
+G8F5E1C57	Zemři, Sauronův zplozenče! Zemři!
+GEF59BEBD	Zatlačte je zpět!
+G263E18E0	Vpřed!
+G8715790C	Držte pozice!
+G09E491AC	Zemři!
+GC9D8887A	Gondorská verbeži!
+GD909145B	Ty, zemři!
+G8524085B	Všechny nás nezabiješ!
+GFA0F31A8	Zemři, verbeži!
+G6949F8FB	Je jich příliš, musíte se bránit!
+GAB41028F	Braňte se, pane.
+GC99D9EF1	Na tohohle platí rychlé útoky.
+G8BC62719	Prudké útoky ty štíty rozbijí.
+G24319240	Svět se změnil.
+G6FC7E51E	Cítím to ve vodě.
+G586AE929	Cítím to v zemi.
+GA0D1D398	Cítím to ve vzduchu.
+G20A7EC8F	Mnohé, co kdysi bylo, je ztraceno,
+G9A5EEA48	neboť nikdo z těch, kdo si to pamatují, již nežije.
+G991F588A	Začalo to ukováním Velkých prstenů.
+GDCCA686B	Tři byly dány elfům -
+G64D4928C	nesmrtelným, nejmoudřejším a nejsličnějším ze všech bytostí.
+GC38B0B40	Sedm vládcům trpaslíků,
+GE4E9DA85	velkým horníkům a řemeslníkům horských síní.
+G8EA28015	A devět... devět prstenů bylo darováno rodu lidí,
+G5415D8A9	kteří ze všeho nejvíc touží po moci.
+GCAF2B8E3	Neboť v těchto prstenech byla spoutána síla a vůle vládnout každému rodu.
+GEAB51D48	Ale všichni byli oklamáni...
+G9968C959	neboť byl ukut další prsten.
+G6DF9A86C	V zemi Mordor, v ohních Hory osudu,
+GD5CC3D06	ukul Temný pán Sauron tajně Vládnoucí prsten, aby ovládl všechny ostatní.
+GA5AF65D9	A do tohoto Prstenu vložil svou krutost, svou zlobu a svou vůli ovládnout veškerý život...
+GF9C8C37E	Jedna po druhé padaly svobodné země Středozemě moci Prstenu.
+GD7B567A4	Ale byli i tací, kteří odolali.
+G9673067D	Poslední spojenectví lidí a elfů vytáhlo proti vojskům Mordoru
+G9292CF8B	a na úbočích Hory osudu bojovali za svobodu Středozemě.
+G9C449910	Bylo to v tom okamžiku,
+G4E624CE3	kdy všechna naděje vyhasla...
+G8B971AFC	...že Isildur, syn krále, zvedl meč svého otce.
+GA0976A20	Sauron, nepřítel svobodných národů Středozemě, byl poražen.
+GCE1FEBD6	Prsten přešel na Isildura, který měl tuto jedinou šanci navždy zničit zlo.
+G4653B8E6	Ale srdce lidí se snadno zkazí.
+GF1F12CD3	Znič ho!
+G7A59BC32	Ne.
+GEDAFB589	Jsem Isildurův dědic, ne Isildur sám. Můj osud patří mně.
+GECD0FC9B	Do Helmova žlebu! Brego, běž!
+GE526C94A	Frodo! Drž se od nich dál!
+GE5AC368C	Pomoc! Jsou všude!
+GE18CFED5	Najdeme tě.
+G754CEC13	Zpátky, ohavo!
+G0EE492EC	Hledají Prstenonoše! Držte se u sebe!
+GA236A198	Nemůžeš vzdorovat, půlčíku.
+GB0F6888B	Jsme ztraceni.
+GABCB70B5	Celý Železný pas se vyprázdnil.
+GD4A9E9B3	Je to vojsko zrozené pro jediný účel: zničit svět lidí.
+G65599300	Temný pán se blíží.
+GC6B5C82C	Pytlíku...
+GDE3725D0	Prstenové přízraky! Ustupte!
+GDB2A2A63	Chodče!
+GDF3A925F	Ať je ušetřen. Zachraň ho.
+G4867AD04	V útočišti Roklinky prokázal ten nejmenší z nás největší odvahu.
+G3505351D	Vezmu ho!
+G5B8CB3F8	A bylo ustaveno Společenstvo.
+GF6138FE1	Odnesu Prsten do Mordoru!
+GA7DC204A	Ačkoli...
+G2FFEE7D1	...neznám cestu.
+GD051F7C5	Pomohu ti nést toto břemeno, Frodo Pytlíku...
+G82079845	...dokud bude na tobě, abys ho nesl.
+G8308B082	Neseš osud nás všech, maličký.
+G32030F3F	A můj luk.
+G7A19CD10	A moji sekeru.
+G18A439E8	Dej nám prsten, půlčíku.
+G5E09B681	Prsten je náš.
+GC7625599	Pojď k nám, půlčíku.
+GB2DCED15	Pomozte mi!
+GF8B88DB9	Pojďte mi pomoct!
+G111D0DD5	Umírám.
+G439D87CA	Tahle země se změnila.
+GB5DB841A	Počkáme tady, dokud se cesta dál nebude zdát bezpečná.
+GF0EB3761	Z Morie jsme už mnoho let nedostali žádnou zprávu.
+G3A9580D6	Mohli bychom projít doly Morie.
+G852B83DE	Můj bratranec Balin by nás královsky přivítal.
+G48D6F333	Pozor!
+G20BEF03C	Rychle! Tudy!
+G37B7E741	Ohavná bestie.
+G70A83B75	Toto jsou Durinovy dveře, pána Morie.
+GE6E19D64	Takže, Gandalfe, zkoušíš je vést přes Caradhras.
+GF7BC40D4	A pokud to selže -
+GC7F3ECF5	kam pak půjdeš?
+G4F7AA217	Do Morie!
+G0F8A9576	Řekni, příteli, a vstup.
+GCB3668DA	Mellon.
+G64134F99	Teď nám zbývá jediná volba.
+GE57BDBA1	Musíme podstoupit dlouhou temnotu Morie.
+G3CA10A85	Mordorská verbež!
+GC753F514	Přepadení!
+G66D5EE9E	Jsou tu skřeti. Spousta.
+G8AB8C148	Když je zle, pošli tam trpaslíka!
+G6F4359B4	Dobrá rána, Gimli!
+G43E71D7A	Vydám se napřed a najdu cestu skrz.
+G0F5D4F40	Stvůra.
+G0BFC06A5	Právě zde jsme měli najít mnohem víc než hrobku Balina, pána Morie.
+G79CBD185	Zatarasili jsme brány. Bubny v hlubinách.
+G676CE560	Nemůžeme ven.
+GC2C2532E	Zpátky, vy bezduché bestie!
+G41169039	Legolasi! Potřebujeme tvůj luk!
+GED8A660A	Pospěš, Gimli!
+G548B1E16	Táhni, ohavná bestie!
+G8B6C996D	Toho beru já!
+GD624A593	Za tebou!
+G22876487	Držte se!
+G6E72BC38	Zpátky, vy stvůry!
+G98FB35D8	Sem!
+G758C706B	Legolasi!
+G7D3C2C42	Gimli!
+G96015B03	Gandalfe!
+G2F5D8C59	Je jich moc!
+GEB38BB38	Jak je můžeme zastavit?
+GDB1D4894	Nemůžu s nimi bojovat!
+GCA82C10C	Nedokážu je udržet v odstupu!
+G839F36D1	Vyřiď je lukem!
+G426819B7	Za Balina!
+G32A709EE	Už jsem u tebe!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Je jich příliš mnoho!
+GB502E0B9	Za Temný hvozd!
+G5C8B1856	Vyřežu ti do břicha díry pro červy!
+GF8D92047	Dostaňte je všechny!
+GDFB1C64C	Rozdrťte je!
+G5AF9060B	Zpátky do stínu!
+GF1BFC8A0	Aragorne! Potřebuji tvou čepel!
+GF83070F8	Ke mně, Gimli! Sem!
+G2EC65D74	Připravte se!
+GCD82317C	Pal!
+GCEA41230	Rozestupte se! Nesmí nás obklíčit!
+G3AD812AF	Najděte půlčíka!
+G6B59AA20	Frodo nese osud nás všech!
+G4B4B5CA5	Musíme ho bránit!
+G1881769E	Pro jeho čest, zaplatíte!
+G743E1105	Morie byla pro naše Společenstvo temnou cestou.
+G32DCF8A9	Utečte, vy blázni!
+G10D542AD	Neeeeeee!
+GD10EAA8A	Výprava stojí na ostří nože.
+GF997012E	Stačí jen trochu sejít z cesty a selže.
+G01C6A95F	Ale mělo být ještě hůř, neboť naše Společenstvo se rozpadalo.
+G212FEF60	Byl bych tě následoval až do konce, až do samých ohňů Mordoru.
+G960898CD	Utíkej!
+GD941582B	Odpočívej v pokoji...
+G9D8421F1	...synu Gondoru.
+G60BC6BA4	Musíme porazit tyhle Skurut-hai, aby Frodo mohl uniknout!
+GF0E0DD02	Boromire!
+G1C9C2949	Trochu pomoci, elfe!
+GB1E7FF01	Skurut-hai! Útok!
+G62308F86	Tohle si užiju!
+GA7F87EAC	Zpátky do jam, které vás zplodily.
+G06BA8520	Šli tudy, pojďte.
+G817C5460	Ale jejich stopa tu končí. Musíme se rozdělit, abychom je rychle našli.
+G934A6365	Aragorne, tam venku něco je.
+G32456D68	Co vidíš, Legolasi?
+G090A57A6	Bílý čaroděj.
+G3BE10384	Saruman.
+GF471A310	Navzdory Boromirovu hrdinství zajali Sarumanovi služebníci členy naší družiny.
+G9EB3E2D9	Ale nenechali bychom své druhy napospas mukám a smrti.
+GC9337F85	Celé dny jsme sledovali jejich stopu...
+G1A87CFBD	...až nás nakonec zavedla do Fangornského lesa.
+G7754D2C1	Tenhle les je starý...
+G9261B17A	...velmi starý.
+GF7DCBBD1	Je plný vzpomínek...
+GC4192431	...a hněvu.
+G92086B9D	V tom velkém lese se sbíhalo mnoho cest.
+G6F680400	To není možné.
+G7A0AC815	Teď je tu spojenectví mezi dvěma věžemi - Orthankem a Barad-dûrem.
+GF36A1977	Jste potřeba jinde.
+GA926AFE5	Do Rohanu přichází válka.
+GC5293984	Teď bude trocha zábavy!
+GCF6954E1	Už jsem to viděl, ale nikdy takhle.
+G2E930B75	Naší jedinou nadějí je stát při sobě!
+GFD82D6F4	Sarumanova vojska přesouvají tímto městem podivné výbušniny. Pomozte nám je zničit!
+G86FA279C	Zadržte je u brány!
+G7B48AD72	Těch pár z nás, kdo jsou schopni boje, táhne k Helmovu žlebu.
+GD55B6BE3	Tam bude budoucnost Rohanu žít, nebo zemře.
+G2256A18D	Pozor na výbušniny!
+GE0BD0D44	Ano! Dejte jim ochutnat ohně!
+G82C8009F	To by je mělo zpomalit!
+GA0C82879	Copak to tu máme?
+G751859FC	Co je tohle?
+G06637EF0	Musíme zničit ty výbušniny!
+GABF94061	Ty výbušniny musí být zničeny.
+G13114F1E	Co by to mohlo být?
+G5B2AF650	To by se mohlo hodit.
+G14659B9A	Tohle se zdá cenné.
+G418ECC01	Tady. Tohle si nechám.
+G136EC46C	Tohle stojí za to nést.
+G360BBC1D	Žene je Sarumanovo šílenství a vůle Temného pána.
+G4840EFEC	Další ohňostroj? Ha! Chtějí z nás všech nadělat mrtvoly!
+G19910876	Už si jdou pro nás!
+G08EB8FDB	Tudy se nedá projít.
+G6FED1000	Budu muset najít jinou cestu.
+G68F91872	Tahle vesnice hoří jako suché troudy!
+G57BD9573	Docela užitečné.
+G424E3FF5	To bude stačit!
+G501ABC20	Stůjte pevně!
+G31FDA576	I tuhle oblast zaplavili!
+GB60A7265	Při obraně Rohanu jsme nebyli sami.
+GA48B596C	Také královská garda se probojovávala k Helmovu žlebu.
+G65866A2E	Udělali jste tady vše, co jste mohli.
+G115A6D12	Přeživší se vydají k Helmovu žlebu.
+GC07CBB0E	Ještě máte práci. Vrátím se k vám, až se karta obrátí.
+G63B48C52	Prorazili!
+GAAD29572	Prosím! Ne! Ne! Ne!
+G589F2E2F	Musíme zachránit každého, koho můžeme, jinak tahle vesnice padne.
+GE1654ECA	Než nás naše dlouhá cesta přivedla do Edorasu...
+G97FC9F74	...vaši lidé už byli ve velkém nebezpečí.
+GB52DB0C9	Ušetřete mě!
+GDDA274AE	Prosím! Ušetřete mě!
+GA354A5CD	Áách! Ne!
+G1C74FEB5	Ne!
+G946E2F3A	Ne! Ne! Nedělejte to!
+GF46D4AC5	Ne! Ne! Ne!
+G1BD76207	Dostaňte nás ven! Rychle!
+GE57CB50F	Ušetřete mě, prosím vás!
+G716689E1	Ochraňte nás!
+G6295F93F	Zachraňte mě! Prosím, zachraňte mě!
+GFA27E38F	Áááách! Upalují nás zaživa!
+G25B702F8	Nechte mě žít! Prosím!
+GDE034FBB	Musíte pokračovat.  Jsem potřeba jinde.
+G898F1CFF	Ať se bojí vlků Železného pasu!
+G04FC403B	Nemohli jsme dovolit, aby se ty stvůry dostaly k uprchlíkům.
+GD8C5307E	Vaši lidé byli ubráněni, ale zaplatili jsme za to mnoha životy.
+G4FD6FE99	Málem jsem přišel o ten svůj.
+G753DFA73	A tak jsme se všichni různými cestami dostali do pevnosti Helmova žlebu, abychom svedli poslední boj.
+G932478E9	A teď zabij tamtoho!
+GF940F960	Ano, moji miláčci!
+G646F5FC4	Naši vrrci budou dnes v noci hodovat!
+G948FC6FF	Nehrajte si s ním!  Zabijte ho!
+G99617AA4	Stáhli se.  Prozatím je konec.
+G4A0F838F	Mám devatenáct!
+GC16105A6	Pak jsme vyrovnaní.
+GAC4FD1F9	To se ještě uvidí.
+GF71FBCA2	Mám dva.
+G641CA89C	Je jich dost pro nás oba, Gimli!
+GF4B76D82	Musíme udržet Sauronův pohled upřený na nás - aby byl slepý ke všemu ostatnímu, co se děje!
+G5B04C967	Zpátky!
+G3487D102	Pryč z hradeb!
+G8B575855	Skřeti jsou na hradbách!
+GCE3C16C0	Mám jich už sedmnáct!
+G3D052135	Hledejte úkryt!
+G05C9D273	Zase po nás střílejí!
+G4941BF74	Shoďte ten žebřík, než nás zaplaví!
+G265760A3	K zemi!  K zemi!
+G2E8173A8	Nesmíme je pustit k Třpytivým jeskyním!
+G36DE1341	Takovou práci se sekerou jsem ještě neviděl, mistře trpaslíku.
+G80FBF437	Ani já takové umění s lukem.
+G3F35FF0E	Ale ti, které zasáhnu já, už nikdy nevstanou.
+GEC633822	Naše obrana je prolomena! Ženy a děti jsou v pasti!
+G17070638	Odveďte je do Velké síně!
+G5CAB82D3	Zadržíme je tady, nebo u pevnosti!
+GFFC47594	Zadrželi jsme je. Ženy a děti jsou v bezpečí - prozatím.
+GBD5794D5	Už je nedokážeme zadržet! Do Velké síně!
+G088ED5E4	Nedokážeme je zadržet!
+G7C6E3511	Sauron a Saruman utahují smyčku.
+G7B236705	Ale přes všechnu jejich lstivost máme jednu výhodu.
+GFCAC9515	Prsten zůstává skryt.
+G1C7DF558	A že bychom se ho chtěli pokusit zničit, je ještě nenapadlo ani v jejich nejtemnějších snech.
+GB72B409D	A tak se zbraň nepřítele blíží k Mordoru v rukou hobita -
+G86CED6F6	každý den ji přibližuje k ohňům Hory osudu.
+GD9BB4CD5	Sauron se tě bojí, Aragorne.
+GDD966B5E	Lučištníci na hradby!
+G6A122B51	Ustupte! Barikáda co nevidět padne!
+G427F5206	Pospěš, mistře trpaslíku!
+G113213B2	Jdi k Legolasovi, já je tu zadržím!
+GA7B95A20	Za Gondor!
+G7C696E8A	Aragorn je v přesile! K němu!
+GFC98A99D	Náš elfí přítel potřebuje pomoc.
+G66A680C0	Skurut-hai!
+G8968245E	Co nevidět rozbijí barikádu!
+G428EE07E	Jsou uvnitř pevnosti. Jsme ztraceni!
+GFAE8490C	NEEEEEEE!!
+G63F31F0F	Tvůj konec se blíží.
+GE8B9DB2E	Zvolil sis cestu bolesti!
+G910D7B12	Ty hlupáku.
+G58E8BBAA	Je čas, abys přestal.
+GD8425223	Snad sis nemyslel, že nějaký otrhaný hraničář se může měřit s mou vůlí? Jsem mimo tvou moc.
+G1A989E68	Za svou zpupnost zaplatíš.
+G0079D300	Snad sis nemyslel, že se trpaslík může měřit s vůlí Sarumana. Nikdo to nedokáže.
+GFB1E1C33	Snad sis vážně nemyslel, že se elf může měřit se Sarumanem? Nikdo to nedokáže, ani by se neměl odvážit.
+GCB4F521C	Ostnaté šípy Rohirů se střílejí stejně jako z Luku správců a způsobují vážná zranění.
+G906620AF	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc Denethora)
+GE4F990F3	Ještě ničivější útok.  (Vyžaduje: Gondorská zuřivost)
+G55B83821	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Gondoru)
+GD4900EBD	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Hněv Gondoru)
+GF1EE1785	Luk správců
+GC7DFC68A	Gondorská zuřivost
+G26838C80	Gondorský roh
+G948EF2DD	Kapitánův vzdor
+GC354B788	Moc Denethora
+G2675AC6D	Výpad Minas Tirith
+G3A16134F	Gambit správce
+G7C6E9536	Síla Gondoru
+G909BDBD3	Hněv Gondoru
+GBCA2DB1D	Nápor Bílé věže
+GA70E206F	Vzdor na Amon Hen
+GECE9E935	Hrát za Boromira
+G2BAAD5AF	Použijete stisknutím a podržením levé spouště.  Kouzlíte tlačítkem A (podržením zvýšíte poškození).
+GF2DB6139	Plamen Narye se sesílá stejně jako Čarodějné světlo a spaluje nepřátele s vážným poškozením.
+G4E51B4E3	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Istari)
+G701450DF	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Olórina)
+G876BFE80	Ještě ničivější útok.  (Vyžaduje: Zuřivost Maiar)
+G554AF8D3	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Narye)
+GF20F1105	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Čarodějovo běsnění)
+GE86497FB	Bílý oheň Istari strašlivě pálí. (Vyžaduje: Oheň prstenu)
+G5D1DA1B0	Čarodějné světlo
+GE4245C5B	Kryt holí
+G68852FD1	Zuřivost Maiar
+G63891384	Síla Istari
+G3023E8DD	Plamen Anoru
+G03053C48	Neprojdeš
+G44E88937	Oheň prstenu
+G31781C88	Síla Olórina
+GC67FABAE	Výpad Stříbrovlase
+GB28BAB38	Šedý poutník
+GBB647C84	Síla Narye
+G3A1959EB	Čarodějovo běsnění
+G910A4D18	Mistr Glamdringu
+GE54BB6DF	Mithrandirův nápor
+G80CB05F7	Síla Bílého
+G5500602D	Hněv Olórina
+GB3B8BA9A	Bílý oheň
+G4D3F3799	Hněv Maiara
+GB06CD44C	Hrát za Gandalfa
+GD63AEB69	Použijete stisknutím a podržením levé spouště.  Vrháte tlačítkem A (podržením zvýšíte poškození).
+GF1500B18	Ostré pazourky z Brandyvíny se házejí stejně jako Kameny z Kraje a způsobují vážná zranění.
+G1594107A	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Kraje)
+G223FB1F4	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Bilba)
+G419FBE06	Ještě ničivější útok.  (Vyžaduje: Hobití zuřivost)
+G549E8839	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Samvěda)
+G3E7B6E97	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Běsnění Kraje)
+G5DBA6F26	Kameny požehnané elfy způsobují strašlivá zranění.  (Vyžaduje: Pazourková střela)
+G586DFFA8	Kameny z Kraje
+GAF333BB7	Hobití zuřivost
+GA30AB0B5	Síla Kraje
+G5B952654	Kousnutí Žihadla
+G3F0B7A46	Vůle Prstenonoše
+GE7A5F0EC	Pazourková střela
+G97512A2B	Síla Bilba
+G4F6E34B0	Pytlíkův výpad
+G8AFDEEE2	Hobití štěstí
+G9AE8326E	Síla Samvěda
+G5FECDC01	Běsnění Kraje
+GB7F9A847	Mistrovství Žihadla
+GD629F714	Bralovský nápor
+G31486B52	Síla Dna pytle
+G4023054B	Hněv Žihadla
+GD48B81F2	Elfské kameny
+G371FFFDE	Mithrilové odhodlání
+G031E765B	Hrát za Froda
+G63C78123	Ostnaté šípy Orthanku se střílejí stejně jako z Luku Železného pasu a způsobují vážná zranění.
+G266F9F27	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Železného pasu)
+G4451D279	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Sarumana)
+G2DE635F5	Ještě ničivější útok.  (Vyžaduje: Skurutí zuřivost)
+G4D25FA2B	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Orthanku)
+G055C2C2B	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Běsnění Železného pasu)
+G478E4DB1	Černé šípy Železného pasu způsobují strašlivá zranění.  (Vyžaduje: Skurutí luk)
+GB0EED2A6	Luk Železného pasu
+G13D5F1B3	Kryt čepelí
+GCC2F9E7C	Skurutí zuřivost
+GF496EAA0	Síla Železného pasu
+GC727C10B	Lurtzův hon
+G73D0C070	Sarumanova vůle
+GD64B9B56	Skurutí luk
+G9E8D350E	Síla Sarumana
+G6426C642	Výpad bojovného skuruta
+GCC3C5342	Řezníkův gambit
+G0DEF3FCC	Síla Orthanku
+G0EBAA8C5	Běsnění Železného pasu
+GFC62112E	Mistr řezník
+GEE7780E5	Nápor Železného pasu
+G838B10AC	Síla Skurut-hai
+GF44614A3	Hněv Sarumana
+G45DC8B08	Černý luk
+G4F638CF6	Zhouba Rohanu
+G9E606E3B	Zkáza prvního skuruta
+GE31550F8	Lurtz
+G981416DE	Hrát za Lurtze
+G6F22BB2E	Šípy z Roklinky se střílejí stejně jako z Elfského luku a způsobují vážná zranění.
+GCA4A15A1	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Roklinky)
+G75BCF244	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc Gil-galada)
+G216AF74D	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Vilye)
+G0B6CC0B6	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Noldorské běsnění)
+G0355C5D7	Stříbrné šípy Eldar způsobují strašlivá zranění. (Vyžaduje: Vanyarský luk)
+GD3F16BA3	Elfský luk
+G710A6666	Síla Roklinky
+G96D9F158	Milost Vilye
+GF127A06E	Poslední spojenectví
+GB426C696	Vanyarský luk
+G71620C4B	Moc Gil-galada
+GFBF3A490	Výpad Lindonu
+G00542D8B	Heroldův gambit
+G5104305A	Síla Vilye
+G221633E0	Noldorské běsnění
+G11A9FF39	Noldorský válečný nápor
+GDE2839BE	Síla Eldar
+GB0E7C432	Hněv Lindonu
+G008B68D9	Eldarský luk
+G10607364	Pán Imladris
+G0BA28B85	Hrát za Elronda
+GD6BB77A1	Oheň Barad-dûru se sesílá stejně jako Temný blesk a způsobuje vážné poškození.
+G113CAFFC	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Barad-dûru)
+G2F14F0F7	Trvale zvýší vaše zdraví.  (Vyžaduje: Síla Mordoru)
+G573FFFF8	Ještě ničivější útok.  (Vyžaduje: Temná zuřivost)
+G6AE28C4F	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc Prstenu)
+GC4B7E7DB	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Mordorské běsnění)
+G5FEE9C56	Plameny Hory osudu způsobují strašlivá zranění.  (Vyžaduje: Pekelný oheň)
+GA07FAB7C	Temný blesk
+G59838F7F	Kryt palcátem
+G0ACE1349	Temná zuřivost
+GD97CF863	Síla Barad-dûru
+GF62B2130	Sauronův tanec
+G53F430F0	Vůle Jednoho prstenu
+GB60C89B8	Pekelný oheň
+GC26DDD50	Síla Mordoru
+G29856B22	Výpad Temného pána
+G27C67462	Annatarův gambit
+G66205DC8	Moc Prstenu
+GA64C9515	Mordorské běsnění
+G278CB8C1	Mistr palcátů
+G4B8493DC	Mordorský válečný nápor
+G5487C52D	Síla Hory osudu
+GE9A37F55	Hněv Mordoru
+G3F70A0C4	Oheň osudu
+GBB8776B5	Zhouba elfů
+G6E2AA149	Sauronovo oko
+G1C11BF19	Sauron
+G3057B52F	Hrát za Saurona
+GB76B50B9	Tyto kameny z jam se házejí stejně jako Skalní balvany a způsobují vážná zranění.
+GECFE6FA3	Trvale zvýší vaše zdraví.  (Vyžaduje: Moc jam)
+G47753157	Tento zničující útok zapálí více nepřátel.  (Vyžaduje: Berserkrovo běsnění)
+GF2D43E42	Roztavené kameny způsobují strašlivá zranění.  (Vyžaduje: Válečné balvany)
+GC390874C	Skalní balvany
+G035878D4	Berserkrova zuřivost
+GC2D0B8DB	Pochodeň žlebu
+GFF1647F7	Válečné balvany
+G98869254	Moc jam
+GC4A495AD	Výpad na Hlubinnou zeď
+GE0FB4F25	Gambit Skurut-hai
+G8925F4A1	Berserkrovo běsnění
+G468B4A5C	Mistr berserkr
+GB0E58D9C	Obléhací nápor
+GD5AF6DD1	Hněv Orthanku
+G01AF5769	Lávové balvany
+G18494AB3	Hněv jam
+GB3AAE2E1	Skurut-hai
+G683077D7	Hrát za Skurut-hai
+P:Frame Rate:	Snímková frekvence:
+P:Unlocked	Neomezeno
+P:Display Mode:	Režim zobrazení:
+P:Window	Okno
+P:Full Screen	Celá obrazovka
+P:Window Size:	Velikost okna:
+P:Automatic	Automaticky
+P:Aspect Ratio:	Poměr stran:
+P:Custom	Vlastní
+P:Resolution:	Rozlišení:
+P:Anisotropic:	Anizotropie:
+P:Mipmaps:	Mipmapy:
+P:Off	Vypnuto
+P:On	Zapnuto
+P:Ultra Textures:	Ultra textury:
+P:Wide Cutscenes:	Široké scény:
+P:Anti-aliasing:	Vyhlazování:
+P:VSync:	VSync:
+P:Picture:	Obraz:
+P:Keep Shape	Zachovat tvar
+P:Stretch	Roztáhnout
+P:Vertex Programs:	Vertex programy:
+P:Brightness:	Jas:
+P:Sharpening:	Doostření:
+P:Colour:	Barvy:
+P:Original	Původní
+P:Vivid	Živé
+P:Muted	Tlumené
+P:HUD Widescreen:	HUD širokoúhle:
+P:Edges	Okraje
+P:Centred	Na střed
+P:Menus:	Nabídky:
+P:Fill	Vyplnit
+P:Movies:	Videa:
+P:As Made	Jak natočeno
+P:Button Prompts:	Ikony tlačítek:
+P:Keyboard	Klávesnice
+P:Mouse Pointer:	Kurzor myši:
+P:Sensitivity:	Citlivost:
+P:Pointer Size:	Velikost kurzoru:
+P:Mouse Aiming:	Míření myší:
+P:Invert Aiming:	Obrátit míření:
+P:Up/Down	Nahoru/dolů
+P:Left/Right	Doleva/doprava
+P:Both	Obojí
+P:Mouse Steering:	Řízení myší:
+P:A Button:	Tlačítko A:
+P:B Button:	Tlačítko B:
+P:X Button:	Tlačítko X:
+P:Y Button:	Tlačítko Y:
+P:Black Button:	Černé tlačítko:
+P:White Button:	Bílé tlačítko:
+P:Left Trigger:	Levá spoušť:
+P:Right Trigger:	Pravá spoušť:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	D-pad nahoru:
+P:D-pad Down:	D-pad dolů:
+P:D-pad Left:	D-pad doleva:
+P:D-pad Right:	D-pad doprava:
+P:L Stick Click:	Stisk levé páčky:
+P:R Stick Click:	Stisk pravé páčky:
+P:Move Forward:	Pohyb vpřed:
+P:Move Back:	Pohyb vzad:
+P:Move Left:	Pohyb doleva:
+P:Move Right:	Pohyb doprava:
+P:Look Up:	Pohled nahoru:
+P:Look Down:	Pohled dolů:
+P:Look Left:	Pohled doleva:
+P:Look Right:	Pohled doprava:
+P:Walk:	Chůze:
+P:General Options	Obecné možnosti
+P:Display Options	Možnosti zobrazení
+P:Controls	Ovládání
+P:Reset Controls	Obnovit ovládání
+P:Press a key...  (Esc: cancel, Delete: clear)	Stiskněte klávesu...  (Esc: zrušit, Delete: smazat)
+P:R Stick	Pravá páčka
+P:Stick	Páčka
+P:L Stick	Levá páčka
+P:Black button	Černé tlačítko
+P:White button	Bílé tlačítko
+P:Left trigger	Levá spoušť
+P:Right trigger	Pravá spoušť
+P:Start	Start
+P:Back	Back
+P:D-pad up	D-pad nahoru
+P:D-pad down	D-pad dolů
+P:D-pad left	D-pad doleva
+P:D-pad right	D-pad doprava
+P:Left stick click	Stisk levé páčky
+P:Right stick click	Stisk pravé páčky
+P:Move forward	Pohyb vpřed
+P:Move back	Pohyb vzad
+P:Move left	Pohyb doleva
+P:Move right	Pohyb doprava
+P:Right stick up	Pravá páčka nahoru
+P:Right stick down	Pravá páčka dolů
+P:Right stick left	Pravá páčka doleva
+P:Right stick right	Pravá páčka doprava
+P:Walk	Chůze
+P:None	Žádné
+P:LS click	Stisk LS
+P:RS click	Stisk RS
+P:Mouse Left	Levé tl. myši
+P:Mouse Right	Pravé tl. myši
+P:Mouse Middle	Prostř. tl. myši
+P:Mouse 4	Myš 4
+P:Mouse 5	Myš 5
+P:Space	Mezerník
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Šipka nahoru
+P:Down	Šipka dolů
+P:Left	Šipka doleva
+P:Right	Šipka doprava
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num *
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Středník
+P:Equals	Rovnítko
+P:Comma	Čárka
+P:Minus	Mínus
+P:Period	Tečka
+P:Slash	Lomítko
+P:Backquote	Obrácený apostrof
+P:Backslash	Zpětné lomítko
+P:Quote	Apostrof
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Podržením {6} přepnete na zbraň na dálku.  Střílíte stisknutím {0}.  Míříte pomocí {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Stisknutím a podržením {6} přepnete na zbraň na dálku.  Střílíte stisknutím {0}.  Míříte pomocí {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Použijete podržením {6}.  Střílíte stisknutím {0} (podržením zvýšíte poškození).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Použijete stisknutím a podržením {6}.  Střílíte stisknutím {0} (podržením zvýšíte poškození).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Použijete podržením {6}.  Házíte stisknutím {0} (podržením zvýšíte poškození).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Použijete stisknutím a podržením {6}.  Házíte stisknutím {0} (podržením zvýšíte poškození).
+P:A devastating attack.  Press and hold {3} to use.	Zničující útok.  Použijete stisknutím a podržením {3}.
+P:Game Saved.  Press {8} to continue.	Hra uložena.  Pokračujte stisknutím {8}.
+P:Game Saved.  Press {0} to continue.	Hra uložena.  Pokračujte stisknutím {0}.
+P:Unable to save game. Press {8} to continue.	Hru nelze uložit. Pokračujte stisknutím {8}.
+P:Unable to save game. Press {0} to continue.	Hru nelze uložit. Pokračujte stisknutím {0}.
+P:Unable to load game. Press {8} to continue.	Hru nelze nahrát. Pokračujte stisknutím {8}.
+P:Unable to load game. Press {0} to continue.	Hru nelze nahrát. Pokračujte stisknutím {0}.
+P:No saved games. Press {8} to continue.	Žádné uložené hry. Pokračujte stisknutím {8}.
+P:No saved games. Press {0} to continue.	Žádné uložené hry. Pokračujte stisknutím {0}.
+P:Not unlocked yet. Press {8} to continue.	Zatím neodemčeno. Pokračujte stisknutím {8}.
+P:Not unlocked yet. Press {0} to continue.	Zatím neodemčeno. Pokračujte stisknutím {0}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Nemáte dost bodů vylepšení na nákup tohoto vylepšení. Pokračujte stisknutím {8}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Nemáte dost bodů vylepšení na nákup tohoto vylepšení. Pokračujte stisknutím {0}.
+P:Press {8} to resume	Pokračujte stisknutím {8}
+P:the left mouse button	levého tlačítka myši
+P:the right mouse button	pravého tlačítka myši
+P:the middle mouse button	prostředního tlačítka myši
+P:mouse button 4	tlačítka myši 4
+P:mouse button 5	tlačítka myši 5
+P:the A button	tlačítka A
+P:the B button	tlačítka B
+P:the X button	tlačítka X
+P:the Y button	tlačítka Y
+P:the Black button	černého tlačítka
+P:the White button	bílého tlačítka
+P:the left trigger	levé spouště
+P:the right trigger	pravé spouště
+P:up on the d-pad	šipky nahoru na D-padu
+P:down on the d-pad	šipky dolů na D-padu
+P:left on the d-pad	šipky doleva na D-padu
+P:right on the d-pad	šipky doprava na D-padu
+P:the left thumbstick button	tlačítka levé páčky
+P:the right thumbstick button	tlačítka pravé páčky
+P:the Menu button	tlačítka Menu
+P:the View button	tlačítka View
+P:the cross button	tlačítka křížek
+P:the circle button	tlačítka kolečko
+P:the square button	tlačítka čtvereček
+P:the triangle button	tlačítka trojúhelník
+P:Left Click	Levý klik
+P:Right Click	Pravý klik
+P:Middle Click	Prostřední klik
+P: or 	 nebo 
+P:Exit	Konec
+P:Press {k}	Stiskněte {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Skurut-hai
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	Cesty
+L:Game files ready:  	Herní soubory připraveny:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	Herní soubory zatím nejsou nainstalovány. Vyberte ISO hry The Two Towers (USA) pro Xbox nebo složku s rozbaleným diskem.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Sestavování ultra textur z balíčku GLOS69 (jednorázově; několik minut)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Obraz disku Xbox (*.iso;*.xiso)\\0*.iso;*.xiso\\0Všechny soubory\\0*.*\\0
+L:Checking disc...	Kontrola disku...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Vyberte složku s rozbaleným diskem The Two Towers (obsahuje default.xbe)
+L:Display	Zobrazení
+L:Developer	Vývojář
+L:Renderer	Vykreslování
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, vložte do složky dxvk)
+L:Software (no graphics card)	Softwarové (bez grafické karty)
+L:Frame rate	Snímková frekvence
+L:30 fps (as on the Xbox)	30 fps (jako na Xboxu)
+L:60 fps (experimental)	60 fps (experimentální)
+L:Unlocked (experimental)	Neomezeno (experimentální)
+L:Display mode	Režim zobrazení
+L:Windowed	V okně
+L:Full screen (borderless)	Celá obrazovka (bez okrajů)
+L:Window size	Velikost okna
+L:Automatic	Automaticky
+L:Aspect ratio	Poměr stran
+L:4:3 (original)	4:3 (původní)
+L:16:9 widescreen	16:9 širokoúhlý
+L:21:9 ultrawide	21:9 ultraširoký
+L:32:9 super ultrawide	32:9 super ultraširoký
+L:HUD in widescreen	HUD na širokoúhlé obrazovce
+L:At the screen's edges	U okrajů obrazovky
+L:Centred (4:3)	Na střed (4:3)
+L:Menus	Nabídky
+L:Fill the screen (past the old TV margin)	Vyplnit obrazovku (přes starý okraj televize)
+L:Original (with a margin)	Původní (s okrajem)
+L:Movies in widescreen	Videa na širokoúhlé obrazovce
+L:As made (4:3)	Jak natočeno (4:3)
+L:Fill the width (black bands cut off)	Vyplnit šířku (černé pruhy oříznuty)
+L:Widescreen cutscenes	Širokoúhlé scény
+L:Off (4:3, side bars)	Vypnuto (4:3, boční pruhy)
+L:On (the sky's edges can show)	Zapnuto (mohou být vidět okraje oblohy)
+L:Ultra textures	Ultra textury
+L:Off	Vypnuto
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	Zapnuto (ostřejší nabídky a HUD; vše s balíčkem GLOS69)
+L:Internal resolution	Vnitřní rozlišení
+L:1x  (640 x 480, original)	1x  (640 x 480, původní)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 řádků: 3840 x 2160 při 16:9)
+L:Anisotropic filtering	Anizotropní filtrování
+L:Mipmaps	Mipmapy
+L:On (less shimmer)	Zapnuto (méně mihotání)
+L:Anti-aliasing	Vyhlazování hran
+L:FXAA (the finished picture)	FXAA (hotový obraz)
+L:VSync	VSync
+L:On (no tearing)	Zapnuto (bez trhání obrazu)
+L:Picture shape	Tvar obrazu
+L:Keep aspect (black bars)	Zachovat poměr (černé pruhy)
+L:Stretch to fill	Roztáhnout na celou plochu
+L:Vertex programs	Vertex programy
+L:Graphics card (faster)	Grafická karta (rychlejší)
+L:CPU (old method)	Procesor (stará metoda)
+L:Brightness	Jas
+L:Darker	Tmavší
+L:Original	Původní
+L:Brighter	Světlejší
+L:Brighter +	Světlejší +
+L:Brightest	Nejsvětlejší
+L:Sharpening	Doostření
+L:Low	Nízké
+L:Medium	Střední
+L:High	Vysoké
+L:Colour	Barvy
+L:Vivid	Živé
+L:Muted	Tlumené
+L:Button prompts	Ikony tlačítek
+L:Automatic (follows the pad or keys you use)	Automaticky (podle ovladače nebo kláves, které používáte)
+L:Keyboard / mouse (your bound keys)	Klávesnice / myš (vaše přiřazené klávesy)
+L:Input	Vstup
+L:Mouse pointer in menus	Kurzor myši v nabídkách
+L:On (point and click in the menus)	Zapnuto (ukazování a klikání v nabídkách)
+L:Off (mouse buttons as bound)	Vypnuto (tlačítka myši podle přiřazení)
+L:Mouse sensitivity	Citlivost myši
+L:Normal	Normální
+L:Very high	Velmi vysoká
+L:Pointer size	Velikost kurzoru
+L:Small	Malý
+L:Large	Velký
+L:Extra large	Extra velký
+L:Mouse aiming (ranged)	Míření myší (na dálku)
+L:On (hold the ranged button, move the mouse)	Zapnuto (držte tlačítko střelby, pohybujte myší)
+L:Mouse aiming: invert	Míření myší: obrátit
+L:Up / down	Nahoru / dolů
+L:Left / right	Doleva / doprava
+L:Both	Obojí
+L:Mouse steering (movement)	Řízení myší (pohyb)
+L:On (the mouse sets the way; W A S D move by it)	Zapnuto (myš určuje směr; W A S D se pohybují podle něj)
+L:Mod: ECTS 2002 HUD (experimental)	Mod: HUD z ECTS 2002 (experimentální)
+L:Off (retail HUD)	Vypnuto (HUD z prodejní verze)
+L:On (ECTS 2002 demo HUD)	Zapnuto (HUD z dema ECTS 2002)
+L:Mods	Mody
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Mod: Oranžové léčivé předměty (z předběžných verzí a videí o natáčení)
+L:Off (green, as retail)	Vypnuto (zelené, jako v prodejní verzi)
+L:On (orange health pickups)	Zapnuto (oranžové léčivé předměty)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Mod: Další hrdinové (Boromir, Gandalf, Frodo, Lurtz, Elrond, Skurut-hai, Sauron; odemčení s Isildurem)
+L:Off (four heroes, as retail)	Vypnuto (čtyři hrdinové, jako v prodejní verzi)
+L:On (eleven heroes)	Zapnuto (jedenáct hrdinů)
+L:On, unlocked for testing (save not changed)	Zapnuto, odemčeno pro testování (uložená hra se nemění)
+L:Custom: 	Vlastní: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Ultra textury jsou zapnuté: nabídky, výběr úrovně a HUD jsou ostřejší.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	Pro všechny textury si stáhněte balíček textur ve vysokém rozlišení z GameCube (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	od jeho autora a vložte jeho složku GLOS69 sem:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nSpouštěč ho připraví, až příště stisknete Hrát (jednorázově; několik minut).
+L:Graphics settings	Nastavení grafiky
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	Vše kromě modů lze změnit i během hraní: stiskněte F10 (nebo držte Back a stiskněte Start). 
+L:The mods are set here and take effect when the game starts.	Mody se nastavují zde a projeví se při spuštění hry.
+L:Defaults	Výchozí
+L:Cancel	Zrušit
+L:A button	Tlačítko A
+L:B button	Tlačítko B
+L:X button	Tlačítko X
+L:Y button	Tlačítko Y
+L:Black button	Černé tlačítko
+L:White button	Bílé tlačítko
+L:Left trigger	Levá spoušť
+L:Right trigger	Pravá spoušť
+L:Start	Start
+L:Back	Back
+L:D-pad up	D-pad nahoru
+L:D-pad down	D-pad dolů
+L:D-pad left	D-pad doleva
+L:D-pad right	D-pad doprava
+L:Left stick click	Stisk levé páčky
+L:Right stick click	Stisk pravé páčky
+L:Move forward	Pohyb vpřed
+L:Move back	Pohyb vzad
+L:Move left	Pohyb doleva
+L:Move right	Pohyb doprava
+L:Right stick up	Pravá páčka nahoru
+L:Right stick down	Pravá páčka dolů
+L:Right stick left	Pravá páčka doleva
+L:Right stick right	Pravá páčka doprava
+L:Walk (hold)	Chůze (držet)
+L:None	Žádné
+L:LS click	Stisk LS
+L:RS click	Stisk RS
+L:Mouse Left	Levé tl. myši
+L:Mouse Right	Pravé tl. myši
+L:Mouse Middle	Prostř. tl. myši
+L:Mouse 4	Myš 4
+L:Mouse 5	Myš 5
+L:Space	Mezerník
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Šipka nahoru
+L:Down	Šipka dolů
+L:Left	Šipka doleva
+L:Right	Šipka doprava
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num *
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Středník
+L:Equals	Rovnítko
+L:Comma	Čárka
+L:Minus	Mínus
+L:Period	Tečka
+L:Slash	Lomítko
+L:Backquote	Obrácený apostrof
+L:Backslash	Zpětné lomítko
+L:Quote	Apostrof
+L:Key 	Klávesa 
+L:Controls	Ovládání
+L:press a key or mouse button…	stiskněte klávesu nebo tlačítko myši…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Stiskněte klávesu nebo tlačítko myši pro tuto akci (Esc ruší). Nahradí první klávesu akce; ostatní akce ji ztratí.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Klikněte na pole klávesy a pak stiskněte klávesu nebo tlačítko myši. V rozbalovacích seznamech zvolíte, které tlačítko ovladače provádí kterou akci. Lze je změnit i ve hře: F10, stránka Ovládání.
+L:Action	Akce
+L:Keyboard / mouse	Klávesnice / myš
+L:Controller	Ovladač
+L:stick part way	páčka napůl
+L:right stick	pravá páčka
+L:left stick	levá páčka
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Stále se pracuje (instalace nebo sestavování ultra textur). Přesto ukončit?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	Pán prstenů: Dvě věže  -  nativní rekompilace pro PC
+L:Install from ISO…	Instalovat z ISO…
+L:Use extracted folder…	Použít rozbalenou složku…
+L:Show the game window	Zobrazit okno hry
+L:Write a log file (for bug reports)	Zapisovat soubor protokolu (pro hlášení chyb)
+L:Graphics settings…	Nastavení grafiky…
+L:Controls…	Ovládání…
+L:Play	Hrát
+L:Open folder	Otevřít složku
+L:30 fps (original)	30 fps (původní)
+L:60 / unlocked can run some scenes faster than normal	60 / neomezeno může některé scény zrychlit oproti normálu
+L:Full screen	Celá obrazovka
+L:Alt+Enter or F11 also switches	Přepíná také Alt+Enter nebo F11
+L:The 3D view widens fully after the next load	3D pohled se plně rozšíří po dalším nahrání
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Ostřejší, ale vyžaduje silnější grafickou kartu (9x a výš: hodně video paměti)
+L:On	Zapnuto
+L:Less shimmer on distant textures	Méně mihotání vzdálených textur
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA vyhlazuje hrany 3D při vykreslování; FXAA hotový obraz
+L:Waits for the monitor: no tearing	Čeká na monitor: bez trhání obrazu
+L:Picture	Obraz
+L:Keep shape	Zachovat tvar
+L:Graphics card	Grafická karta
+L:Graphics card is much faster	Grafická karta je mnohem rychlejší
+L:Lifts the dark areas (gamma)	Zesvětlí tmavé oblasti (gama)
+L:Crisper textures, best with a higher internal resolution	Ostřejší textury, nejlépe s vyšším vnitřním rozlišením
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Automaticky: podle toho, čím jste naposledy hráli (ovladač, ovladač PlayStation, klávesy)
+L:Where the HUD sits when the picture is wider than 4:3	Kde je HUD, když je obraz širší než 4:3
+L:Fill the screen	Vyplnit obrazovku
+L:Menus, loading and upgrade screens: past the old TV margin	Nabídky, nahrávací obrazovky a vylepšení: přes starý okraj televize
+L:Fill the width	Vyplnit šířku
+L:Fill: the films' black bands cut off, a little closer	Vyplnit: černé pruhy filmů oříznuty, o něco blíž
+L:Point and click in the menus (Off: the mouse buttons act as before)	Ukazování a klikání v nabídkách (Vypnuto: tlačítka myši fungují jako dřív)
+L:The pointer's speed and the mouse aiming's	Rychlost kurzoru a míření myší
+L:Hold the ranged button and move the mouse to aim	Pro míření držte tlačítko střelby a pohybujte myší
+L:Press to toggle	Stisknutím přepnout
+L:Hold	Držet
+L:Windowed mode	Režim v okně
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	Balíček textur ve vysokém rozlišení (GLOS69 a textures_ultra vedle hry)
+L:Off (4:3)	Vypnuto (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	Zapnuto: rozšíří se i scény v enginu (mohou být vidět okraje oblohy)
+L:Mod: ECTS 2002 HUD	Mod: HUD z ECTS 2002
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Portrét, runová koule a ukazatel zkušeností z dema ECTS 2002
+L:Mod: Orange health pickups	Mod: Oranžové léčivé předměty
+L:Health pickups are orange, as in pre-release and making-of videos	Léčivé předměty jsou oranžové, jako v předběžných verzích a videích o natáčení
+L:Custom (%.2f:1)	Vlastní (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	NASTAVENÍ GRAFIKY
+L:Page	Stránka
+L:Graphics	Grafika
+L:Left/Right: switch to the Controls page	Doleva/doprava: přepnout na stránku Ovládání
+L:press a key...	stiskněte klávesu...
+L:Reset all controls to the defaults	Obnovit výchozí nastavení všech ovládacích prvků
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Stiskněte klávesu nebo tlačítko myši.  Esc: zrušit.  Delete: smazat.
+L:A / Enter: reset	A / Enter: obnovit
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: nastavit klávesu.   Doleva/doprava: tlačítko ovladače.
+L:Left/Right: switch to the Graphics page	Doleva/doprava: přepnout na stránku Grafika
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Nahoru/dolů: výběr     Doleva/doprava nebo A: změna     B / Esc / F10: zavřít
+L:Changes are saved automatically	Změny se ukládají automaticky
+L:Language	Jazyk
+L:Restart the game for the language to change	Jazyk se změní po restartu hry
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Myš určuje směr vpřed; W, A, S a D se pohybují podle něj (Chůze stále chodí)
+L:Language (game and launcher):	Jazyk (hra a spouštěč):
+L:CONTROLS	OVLÁDÁNÍ
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Další hrdinové: Sauron sprintuje stiskem levé páčky (Shift na klávesnici)
+L:Sauron's sprint	Sauronův sprint
+L:hold	držet
+L:toggle	přepínat
+L:Combo Runes	Kombo runy
+L:Speed	Rychlý
+L:Fierce	Prudký
+L:Special	Zvláštní
+L:Each attack fills a quarter	Každý útok naplní čtvrtinu
+L:OK	OK
+L:Could not start twotowers_recomp.exe.	Nelze spustit twotowers_recomp.exe.
+P:the left thumbstick	levou páčku
+L:default.xbe was not found in that folder.	V této složce nebyl nalezen soubor default.xbe.
+L:That default.xbe is not the USA retail release this port was built from.	Tento default.xbe nepochází z americké (USA) prodejní verze, ze které byl tento port vytvořen.
+L:Error: 	Chyba: 
+L:Error: the disc has no default.xbe.	Chyba: disk neobsahuje default.xbe.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Chyba: tento ISO není americký (USA) prodejní disk The Two Towers, který tento port podporuje.
+L:Extracting 	Rozbalování: 
+L:Ultra textures (once): 	Ultra textury (jednorázově): 
+L:Ultra textures: 	Ultra textury: 
+L:Converting 	Převod: 
+L:Softening the edges of 	Změkčování okrajů: 
+L:Fixing the transparency of 	Oprava průhlednosti: 
+L:Writing the index	Zápis indexu
+L:Ultra textures ready: 	Ultra textury připraveny: 
+L: pictures	 obrázků
+L: could not be made	 se nepodařilo vytvořit
+L:The GLOS69 texture pack is not in the game's folder.	Balíček textur GLOS69 není ve složce hry.
+L:Could not write textures_ultra/index.bin.	Nelze zapsat textures_ultra/index.bin.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	Zapnuto (držet W: běží tam, kam tlačí myš; Chůze – chodí)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	Držte W: běží tam, kam tlačí myš (Chůze – chodí)

@@ -1,0 +1,854 @@
+# Ultra textures: pairings checked by eye (the game texture's hash, as texture_dump names it, then the picture).
+# These win over the automatic pairing. "HASH -" keeps a texture as it is.
+71C950C7 -    # the health pickup (the orange pickups mod recolours it)
+# the pack picture with the game texture's transparency (alphafix.py)
+029C1398 textures_ultra/alphafix/029C1398.dds
+04127B0D textures_ultra/alphafix/04127B0D.dds
+0B4B0DE4 textures_ultra/alphafix/0B4B0DE4.dds
+0BD8A2DF textures_ultra/alphafix/0BD8A2DF.dds
+0F283B10 textures_ultra/alphafix/0F283B10.dds
+10DEF44E textures_ultra/alphafix/10DEF44E.dds
+1549313F textures_ultra/alphafix/1549313F.dds
+16B58675 textures_ultra/alphafix/16B58675.dds
+174C26A8 textures_ultra/alphafix/174C26A8.dds
+1D14A247 textures_ultra/alphafix/1D14A247.dds
+24DADFA3 textures_ultra/alphafix/24DADFA3.dds
+253CCB4E textures_ultra/alphafix/253CCB4E.dds
+297B5A9F textures_ultra/alphafix/297B5A9F.dds
+2AFFFA69 textures_ultra/alphafix/2AFFFA69.dds
+315F02B3 textures_ultra/alphafix/315F02B3.dds
+37FF429E textures_ultra/alphafix/37FF429E.dds
+388E8723 textures_ultra/alphafix/388E8723.dds
+39066EE7 textures_ultra/alphafix/39066EE7.dds
+39B42885 textures_ultra/alphafix/39B42885.dds
+3B34C17A textures_ultra/alphafix/3B34C17A.dds
+3EA38795 textures_ultra/alphafix/3EA38795.dds
+43F6E087 textures_ultra/alphafix/43F6E087.dds
+44E50A26 textures_ultra/alphafix/44E50A26.dds
+46D0DA5D textures_ultra/alphafix/46D0DA5D.dds
+4738677F textures_ultra/alphafix/4738677F.dds
+4A77AFF4 textures_ultra/alphafix/4A77AFF4.dds
+4F380BD7 textures_ultra/alphafix/4F380BD7.dds
+509D0703 textures_ultra/alphafix/509D0703.dds
+532CE09B textures_ultra/alphafix/532CE09B.dds
+54AF490A textures_ultra/alphafix/54AF490A.dds
+5592A8DD textures_ultra/alphafix/5592A8DD.dds
+56DDD1D6 textures_ultra/alphafix/56DDD1D6.dds
+58F83D67 textures_ultra/alphafix/58F83D67.dds
+5A6901E0 textures_ultra/alphafix/5A6901E0.dds
+5B9F7E90 textures_ultra/alphafix/5B9F7E90.dds
+5CDC0397 textures_ultra/alphafix/5CDC0397.dds
+5D0065FB textures_ultra/alphafix/5D0065FB.dds
+60029C22 textures_ultra/alphafix/60029C22.dds
+63AEFE2C textures_ultra/alphafix/63AEFE2C.dds
+662822B7 textures_ultra/alphafix/662822B7.dds
+68DB1DD7 textures_ultra/alphafix/68DB1DD7.dds
+699F99DB textures_ultra/alphafix/699F99DB.dds
+6B0F157A textures_ultra/alphafix/6B0F157A.dds
+741E4C7E textures_ultra/alphafix/741E4C7E.dds
+79D8CCFE textures_ultra/alphafix/79D8CCFE.dds
+7CFC7C2F textures_ultra/alphafix/7CFC7C2F.dds
+7DD0BB1D textures_ultra/alphafix/7DD0BB1D.dds
+800E9C9F textures_ultra/alphafix/800E9C9F.dds
+834A5821 textures_ultra/alphafix/834A5821.dds
+835C95B4 textures_ultra/alphafix/835C95B4.dds
+83B4EC86 textures_ultra/alphafix/83B4EC86.dds
+83E9D3E0 textures_ultra/alphafix/83E9D3E0.dds
+8535FF4A textures_ultra/alphafix/8535FF4A.dds
+85CAE36D textures_ultra/alphafix/85CAE36D.dds
+8A390687 textures_ultra/alphafix/8A390687.dds
+951D7D40 textures_ultra/alphafix/951D7D40.dds
+9658B2F0 textures_ultra/alphafix/9658B2F0.dds
+967D5A2E textures_ultra/alphafix/967D5A2E.dds
+991490D0 textures_ultra/alphafix/991490D0.dds
+9BB6489E textures_ultra/alphafix/9BB6489E.dds
+9DC340A7 textures_ultra/alphafix/9DC340A7.dds
+A1672D3F textures_ultra/alphafix/A1672D3F.dds
+A7EB069D textures_ultra/alphafix/A7EB069D.dds
+A88F30BE textures_ultra/alphafix/A88F30BE.dds
+A91DD62F textures_ultra/alphafix/A91DD62F.dds
+AB81A7A2 textures_ultra/alphafix/AB81A7A2.dds
+ACC09702 textures_ultra/alphafix/ACC09702.dds
+AE018E11 textures_ultra/alphafix/AE018E11.dds
+AE58FA4F textures_ultra/alphafix/AE58FA4F.dds
+B1BFC475 textures_ultra/alphafix/B1BFC475.dds
+B2B42723 textures_ultra/alphafix/B2B42723.dds
+B82762BC textures_ultra/alphafix/B82762BC.dds
+BB82F059 textures_ultra/alphafix/BB82F059.dds
+BBE53BAA textures_ultra/alphafix/BBE53BAA.dds
+C3C14C71 textures_ultra/alphafix/C3C14C71.dds
+C4697BE5 textures_ultra/alphafix/C4697BE5.dds
+C470C623 textures_ultra/alphafix/C470C623.dds
+C62F49B2 textures_ultra/alphafix/C62F49B2.dds
+C87C8881 textures_ultra/alphafix/C87C8881.dds
+D11747CC textures_ultra/alphafix/D11747CC.dds
+D3707A28 textures_ultra/alphafix/D3707A28.dds
+D60F876E textures_ultra/alphafix/D60F876E.dds
+DE84609D textures_ultra/alphafix/DE84609D.dds
+DEBF1F8A textures_ultra/alphafix/DEBF1F8A.dds
+E04998CB textures_ultra/alphafix/E04998CB.dds
+E2024B30 textures_ultra/alphafix/E2024B30.dds
+E2D137EF textures_ultra/alphafix/E2D137EF.dds
+E5457B90 textures_ultra/alphafix/E5457B90.dds
+E666C76E textures_ultra/alphafix/E666C76E.dds
+E83EE242 textures_ultra/alphafix/E83EE242.dds
+E86CE6E0 textures_ultra/alphafix/E86CE6E0.dds
+E9FDA9B9 textures_ultra/alphafix/E9FDA9B9.dds
+EB5EB18E textures_ultra/alphafix/EB5EB18E.dds
+EDD299D2 textures_ultra/alphafix/EDD299D2.dds
+EEB966DC textures_ultra/alphafix/EEB966DC.dds
+F081507B textures_ultra/alphafix/F081507B.dds
+F0E90E36 textures_ultra/alphafix/F0E90E36.dds
+F775BE52 textures_ultra/alphafix/F775BE52.dds
+F83C6EF7 textures_ultra/alphafix/F83C6EF7.dds
+FA13416E textures_ultra/alphafix/FA13416E.dds
+FFD58916 textures_ultra/alphafix/FFD58916.dds
+02150FAF GLOS69/tex1_64x32_m_fd3089f9031d9c67_14.dds    # review A#3
+0687617A GLOS69/tex1_128x32_m_19209b4165e9fdbe_14.dds    # review A#9
+07DF7458 GLOS69/tex1_64x64_d5b2ea7027fcc721_14.dds    # review A#13
+0A22553B GLOS69/tex1_64x64_9efee490e4d28f0c_0.dds    # review A#15
+0BA92DD7 GLOS69/tex1_64x32_d7bf51dd57694743_14.dds    # review A#19
+0C85C29B GLOS69/tex1_32x8_m_c5fbbb4910a01136_14.dds    # review A#21
+0CCB0509 GLOS69/tex1_16x8_m_2efed7f2f795b9f5_14.dds    # review A#23
+0D4DCF14 GLOS69/tex1_16x32_m_0f8921d4f30c39a6_14.dds    # review A#25
+0FCCA5FE GLOS69/tex1_256x256_de2b96a736ec4ac0_14.dds    # review A#32
+106B6335 GLOS69/tex1_16x32_m_daba9809181ed1c6_14.dds    # review A#35
+11259C0F GLOS69/tex1_128x64_m_dc4a021e0f75ef17_14.dds    # review A#38
+1298307E GLOS69/tex1_128x32_e7680f880fcf9458_14.dds    # review A#40
+13550C4F GLOS69/tex1_32x32_m_a0f164bb879173e6_14.dds    # review A#42
+140C5CBC GLOS69/tex1_128x128_8384f5c3dd00ffd0_6.dds    # review A#43
+17F5B24F GLOS69/tex1_128x64_m_6923724c330b673a_14.dds    # review A#48
+18DFD285 textures_ultra/png/tex1_128x128_3d57179ce4a499cc_14.dds    # review A#49
+1D1B4805 GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#56
+21AA93CD GLOS69/tex1_16x8_m_6a63485babcaf944_14.dds    # review A#59
+21CFFF6A GLOS69/tex1_16x64_m_fdf1372b9b8f418f_14.dds    # review A#60
+223F10D2 GLOS69/tex1_16x8_m_9773c598001c1f6a_14.dds    # review A#61
+22E5E02E GLOS69/tex1_128x64_m_a4640262b99a5cfd_14.dds    # review A#62
+24B6D523 GLOS69/tex1_128x128_m_b788be6e238999eb_14.dds    # review A#65
+25988A29 GLOS69/tex1_16x8_m_09cdf39cdbd68bd4_14.dds    # review A#70
+28499524 textures_ultra/png/tex1_128x128_1c2735dfcc67f8d4_6.dds    # review A#72
+286CCB38 GLOS69/tex1_8x32_m_33778f60581c6c94_14.dds    # review A#74
+290DEB08 GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#75
+2924EA62 GLOS69/tex1_128x128_m_dca2043b8a5c8b01_14.dds    # review A#76
+2A7ADCC7 GLOS69/tex1_32x128_m_604e2705ecef42c9_14.dds    # review A#78
+2BB8D3E2 GLOS69/tex1_128x128_d47bb52f73a17640_14.dds    # review A#81
+2DBBC527 GLOS69/tex1_128x128_m_4a3a8136380cf248_14.dds    # review A#83
+2F487D5D GLOS69/tex1_128x128_b859648a7c484517_14.dds    # review A#85
+315CFAC2 textures_ultra/png/tex1_128x256_1065e8d289c36678_14.dds    # review A#87
+31C48DE5 GLOS69/tex1_16x32_m_cca2e0194911cdb8_14.dds    # review A#89
+341BB9CD GLOS69/tex1_32x8_m_c241f97793f6512c_14.dds    # review A#91
+34F088F7 GLOS69/tex1_256x256_m_09c0387df0d050a6_14.dds    # review A#92
+3672F8DA textures_ultra/png/tex1_128x128_0794d13dd1e4d256_14.dds    # review A#95
+3834B8FC GLOS69/tex1_128x128_m_4e0acff2bfe395bd_14.dds    # review A#100
+3B12BD65 GLOS69/tex1_64x64_23f0d7ed7a6cae61_0.dds    # review A#110
+3C2BE90D GLOS69/tex1_128x128_m_c6aa1ee195256c8a_14.dds    # review A#112
+3F6318FD GLOS69/tex1_16x8_m_6a63485babcaf944_14.dds    # review A#116
+40EF8EA0 GLOS69/tex1_64x64_feeae1325334e51e_14.dds    # review A#118
+43CFF9A6 textures_ultra/png/tex1_128x128_ebe02c86c748fb2c_14.dds    # review A#122
+45F8E992 textures_ultra/png/tex1_128x128_acf6cb149f3d8838_14.dds    # review A#127
+46493AB4 GLOS69/tex1_16x8_m_5c5d9bc7c24e2817_14.dds    # review A#128
+46C559D7 GLOS69/tex1_16x8_m_145f1ec20d1bccbc_14.dds    # review A#129
+46DFEF1B textures_ultra/png/tex1_256x256_ee3afacd765bbc2e_0.dds    # review A#131
+48769B62 GLOS69/tex1_8x32_m_4e6f13e5cfe50cc8_14.dds    # review A#134
+4A75A2BB GLOS69/tex1_128x128_684a727dfa8593dd_14.dds    # review A#136
+4D0FB545 GLOS69/tex1_16x128_m_424976d405cd1873_14.dds    # review A#141
+4F454945 GLOS69/tex1_8x128_m_bb11f89278e5142c_14.dds    # review A#144
+50501F95 GLOS69/tex1_128x32_m_19209b4165e9fdbe_14.dds    # review A#146
+5099AB4A GLOS69/tex1_128x128_m_519c9482006fe5cf_14.dds    # review A#147
+52769A63 GLOS69/tex1_16x128_m_107df264bd0b0c13_14.dds    # review A#151
+54D5CAF3 GLOS69/tex1_64x64_812b6181ad8b2f8b_0.dds    # review A#157
+5510A534 GLOS69/tex1_128x128_m_da778512498a7e5d_14.dds    # review A#158
+57D80945 GLOS69/tex1_8x128_m_fd1f02ba3dd2fd5b_14.dds    # review A#164
+582728AF GLOS69/tex1_256x256_6f28e633f50f45e9_14.dds    # review A#165
+589E2FE3 textures_ultra/png/tex1_128x128_m_fea4c500af6d6b38_14.dds    # review A#168
+5DC98856 textures_ultra/png/tex1_128x64_cbaa5176ee3d8839_14.dds    # review A#177
+5ED2968D GLOS69/tex1_16x8_m_bb1c2fc736d5004f_14.dds    # review A#179
+5F461654 GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#181
+62B666B4 GLOS69/tex1_8x32_m_7bd9cc2dbaee605b_14.dds    # review A#185
+635F43E5 GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#186
+6518D5C0 GLOS69/tex1_16x8_m_982373bb57f8af97_14.dds    # review A#189
+68D1BADD GLOS69/tex1_128x128_m_b7e82fedb12309ff_14.dds    # review A#198
+6B350735 GLOS69/tex1_128x128_m_139dedee327deaab_14.dds    # review A#203
+6B379E6B GLOS69/tex1_8x128_m_41cc400cc99af7c9_14.dds    # review A#204
+6C4C4AE8 GLOS69/tex1_128x128_m_51f79983ae8eb835_14.dds    # review A#205
+6C9D0037 textures_ultra/png/tex1_128x128_021ab69014daa759_6.dds    # review A#206
+764AAED2 GLOS69/tex1_128x128_m_122f35a322cb408e_14.dds    # review A#221
+7885A808 GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#224
+79BDB632 GLOS69/tex1_128x128_m_922cc4d9bdb6149b_14.dds    # review A#227
+7ACCD44E textures_ultra/png/tex1_128x128_49f876ac5c9d66d3_14.dds    # review A#229
+7E56B784 GLOS69/tex1_128x128_m_df9a83d9307532f1_14.dds    # review A#234
+7FDD0582 GLOS69/tex1_128x128_ee804e607b3ff3b2_14.dds    # review A#237
+824735E5 GLOS69/tex1_8x32_m_ad33f6c2137a135f_14.dds    # review A#241
+8354F874 GLOS69/tex1_8x32_m_33778f60581c6c94_14.dds    # review A#244
+8627C6B3 GLOS69/tex1_128x128_m_6a4673adcf7032a3_14.dds    # review A#254
+86E8FC55 textures_ultra/png/tex1_128x128_e38cdb51e61ac68b_14.dds    # review A#255
+88B2A2CD GLOS69/tex1_32x8_m_4604d1142c44f013_14.dds    # review A#258
+88EBD043 GLOS69/tex1_8x32_m_0b07e766e9ad1b36_14.dds    # review A#259
+89DE2716 GLOS69/tex1_128x128_969b01b2af39398b_14.dds    # review A#260
+8A4B3D4C GLOS69/tex1_64x64_1c6809f123829491_0.dds    # review A#262
+8F9F80B3 GLOS69/tex1_128x32_m_d3c4290f69a8d5df_14.dds    # review A#267
+9490A43C GLOS69/tex1_16x8_18af70b283256680_14.dds    # review A#275
+99188DC8 GLOS69/tex1_256x256_m_6eeab55ed4e62a5e_14.dds    # review A#284
+9DFAB88C textures_ultra/png/tex1_128x128_016bb0cf0ead323b_14.dds    # review A#291
+9F686632 GLOS69/tex1_16x8_m_a40ced3805c15d9b_14.dds    # review A#294
+A1D06731 GLOS69/tex1_32x64_m_04aa63801a3a93bf_14.dds    # review A#298
+A33DE813 GLOS69/tex1_64x64_131931a1db075e86_0.dds    # review A#299
+A3554D67 GLOS69/tex1_128x128_m_56220f26db21bef8_14.dds    # review A#300
+A7BD754C GLOS69/tex1_128x128_m_564e710e3c5f52d7_14.dds    # review A#305
+AAC7B00B textures_ultra/png/tex1_128x128_m_f1115488d87cae34_14.dds    # review A#313
+AE45833A textures_ultra/png/tex1_128x128_m_3b2b0d071b2999ed_14.dds    # review A#321
+AEB5F99A GLOS69/tex1_8x32_m_c97a8fb696f213f7_14.dds    # review A#323
+B3E7C8FF GLOS69/tex1_64x32_m_fd3089f9031d9c67_14.dds    # review A#335
+B50E663E textures_ultra/png/tex1_128x128_3729101558c928e7_14.dds    # review A#337
+B7690E8F GLOS69/tex1_16x8_m_e5149a81db1cf81c_14.dds    # review A#339
+BC45A25E GLOS69/tex1_128x128_m_f641bcd4b8f753e3_14.dds    # review A#347
+C1DDCC5F GLOS69/tex1_16x8_m_24a4e3688591ee97_14.dds    # review A#353
+C67BCC5B GLOS69/tex1_16x8_m_e5149a81db1cf81c_14.dds    # review A#361
+C8936E81 GLOS69/tex1_32x16_m_a68542bc092fe730_14.dds    # review A#363
+CBF52274 GLOS69/tex1_8x32_m_5fa411a32283a4a9_14.dds    # review A#370
+CC2AA714 GLOS69/tex1_64x64_5e4e4ede0964cb7f_0.dds    # review A#372
+CD321201 GLOS69/tex1_256x256_9c0ee39138251583_14.dds    # review A#374
+CD57D6CC GLOS69/tex1_8x32_m_4a1414a7923e798b_14.dds    # review A#375
+CE39B136 textures_ultra/png/tex1_128x128_174e6552491fb8d7_6.dds    # review A#377
+CF3DD034 textures_ultra/png/tex1_128x128_e7321748f0cb9c25_14.dds    # review A#381
+D3A9276D textures_ultra/png/tex1_128x128_335c383961c578cc_14.dds    # review A#388
+D3F37172 GLOS69/tex1_128x128_6a5e655d5e60db14_14.dds    # review A#389
+D54FDE5E GLOS69/tex1_64x32_m_fd3089f9031d9c67_14.dds    # review A#393
+D6523FA9 GLOS69/tex1_16x8_m_8815c7aafbea2bf6_14.dds    # review A#395
+D65A26A3 GLOS69/tex1_8x32_m_217109c164bc8ce3_14.dds    # review A#396
+E1FF0BFB GLOS69/tex1_128x128_5c9b32c3d0b90dd1_14.dds    # review A#410
+E3CED352 textures_ultra/png/tex1_128x128_81453ef709d054db_6.dds    # review A#416
+E4C72669 GLOS69/tex1_128x128_m_4854166a7c6bdb82_14.dds    # review A#418
+E54E5151 GLOS69/tex1_64x64_d6b8ffb48d746673_0.dds    # review A#419
+E6BD6BD8 textures_ultra/png/tex1_128x128_m_fea4c500af6d6b38_14.dds    # review A#424
+E6CA54EE GLOS69/tex1_64x64_daf77bb5796f9666_0.dds    # review A#425
+E6EAD421 GLOS69/tex1_16x32_m_10b008a2579dd6bc_14.dds    # review A#426
+EAE31EAB GLOS69/tex1_128x128_m_4a3a8136380cf248_14.dds    # review A#435
+EB866152 GLOS69/tex1_8x32_m_8bb5d35228ab337f_14.dds    # review A#437
+F0C8A6DD GLOS69/tex1_64x64_ccc844431f3872ef_0.dds    # review A#445
+F199AA9C GLOS69/tex1_128x128_m_7cd947a1b192821c_14.dds    # review A#448
+F2EC0AB9 GLOS69/tex1_128x128_m_9f99975d490d1a9a_14.dds    # review A#451
+F4912D85 GLOS69/tex1_16x64_m_4b16eed6b0659509_14.dds    # review A#452
+FA6C0078 GLOS69/tex1_128x128_m_6658d9463d3bc168_14.dds    # review A#462
+52B2DBFA GLOS69/tex1_128x128_m_99c8efb6aa415964_14.dds    # review B#65
+FFE31FFC GLOS69/tex1_128x128_m_238eecc3b1740039_14.dds    # review B#41
+CBB05491 GLOS69/tex1_640x512_120a720736a6a316_14.dds    # review B#289
+86216F9D textures_ultra/ui/8F94C8D5.dds    # Legolas's results picture (the pack has none: its 1beb0dac is a second Aragorn, which showed for Legolas)
+698FC00C GLOS69/tex1_640x512_2efb4446a0d52c6b_14.dds    # review B#292
+CBDCA2E5 GLOS69/tex1_640x512_6a43483d5c525e38_14.dds    # review B#294
+784110CF GLOS69/tex1_640x512_a788c693366bbe34_14.dds    # review B#296
+284DCEBE GLOS69/tex1_640x512_b9f7002a5fc824b9_14.dds    # review B#297
+BE3A74A0 GLOS69/tex1_64x16_m_650229603f014c81_14.dds    # review B#313
+# upscaled 4x from the game's own (textures the pack has no picture for: menus, text, icons)
+000F8CBD textures_ultra/ui/000F8CBD.dds
+00AE4571 textures_ultra/ui/00AE4571.dds
+00E6ADA3 textures_ultra/ui/00E6ADA3.dds
+019858F5 textures_ultra/ui/019858F5.dds
+019F7034 textures_ultra/ui/019F7034.dds
+01CFED47 textures_ultra/ui/01CFED47.dds
+022CF72F textures_ultra/ui/022CF72F.dds
+028EDF48 textures_ultra/ui/028EDF48.dds
+02FC9BD1 textures_ultra/ui/02FC9BD1.dds
+038EB69F textures_ultra/ui/038EB69F.dds
+045D0A20 textures_ultra/ui/045D0A20.dds
+04FBD3EF textures_ultra/ui/04FBD3EF.dds
+0557AD58 textures_ultra/ui/0557AD58.dds
+06137DCA textures_ultra/ui/06137DCA.dds
+0674069C textures_ultra/ui/0674069C.dds
+06C18FB1 textures_ultra/ui/06C18FB1.dds
+07230979 textures_ultra/ui/07230979.dds
+075E62F3 textures_ultra/ui/075E62F3.dds
+0784EBBC textures_ultra/ui/0784EBBC.dds
+078DC7B5 textures_ultra/ui/078DC7B5.dds
+07AE8E0D textures_ultra/ui/07AE8E0D.dds
+0872D7AB textures_ultra/ui/0872D7AB.dds
+0896D1BB textures_ultra/ui/0896D1BB.dds
+0A444729 textures_ultra/ui/0A444729.dds
+0A4D67BE textures_ultra/ui/0A4D67BE.dds
+0A756108 textures_ultra/ui/0A756108.dds
+0A840290 textures_ultra/ui/0A840290.dds
+0A840702 textures_ultra/ui/0A840702.dds
+0AA02D45 textures_ultra/ui/0AA02D45.dds
+0AE4BA26 textures_ultra/ui/0AE4BA26.dds
+0B57F716 textures_ultra/ui/0B57F716.dds
+0B7D00B2 textures_ultra/ui/0B7D00B2.dds
+0C6EFCB2 textures_ultra/ui/0C6EFCB2.dds
+0C76FEE9 textures_ultra/ui/0C76FEE9.dds
+0CB1818F textures_ultra/ui/0CB1818F.dds
+0CC25B66 textures_ultra/ui/0CC25B66.dds
+0D126D2A textures_ultra/ui/0D126D2A.dds
+0D966699 textures_ultra/ui/0D966699.dds
+0DE2C017 textures_ultra/ui/0DE2C017.dds
+0E3A4967 textures_ultra/ui/0E3A4967.dds
+0E437DFF textures_ultra/ui/0E437DFF.dds
+0E5B1687 textures_ultra/ui/0E5B1687.dds
+0F12FED9 textures_ultra/ui/0F12FED9.dds
+0FA4DC4D textures_ultra/ui/0FA4DC4D.dds
+0FA88BD1 textures_ultra/ui/0FA88BD1.dds
+0FB314D5 textures_ultra/ui/0FB314D5.dds
+0FF4E049 textures_ultra/ui/0FF4E049.dds
+0FFBC55A textures_ultra/ui/0FFBC55A.dds
+1052377A textures_ultra/ui/1052377A.dds
+10BC031F textures_ultra/ui/10BC031F.dds
+11622602 textures_ultra/ui/11622602.dds
+12F79CDC textures_ultra/ui/12F79CDC.dds
+130C1D7B textures_ultra/ui/130C1D7B.dds
+131F882E textures_ultra/ui/131F882E.dds
+139C7A40 textures_ultra/ui/139C7A40.dds
+13DF2C89 textures_ultra/ui/13DF2C89.dds
+1490DF4B textures_ultra/ui/1490DF4B.dds
+14B681F6 textures_ultra/ui/14B681F6.dds
+14FAA3A1 textures_ultra/ui/14FAA3A1.dds
+15363C91 textures_ultra/ui/15363C91.dds
+15C871AE textures_ultra/ui/15C871AE.dds
+15E9C062 textures_ultra/ui/15E9C062.dds
+1625329F textures_ultra/ui/1625329F.dds
+167097B1 textures_ultra/ui/167097B1.dds
+17294F00 textures_ultra/ui/17294F00.dds
+17E598A2 textures_ultra/ui/17E598A2.dds
+1846DF52 textures_ultra/ui/1846DF52.dds
+18ECEA7A textures_ultra/ui/18ECEA7A.dds
+193460E8 textures_ultra/ui/193460E8.dds
+197D62CC textures_ultra/ui/197D62CC.dds
+198F019C textures_ultra/ui/198F019C.dds
+19F84337 textures_ultra/ui/19F84337.dds
+19FD6807 textures_ultra/ui/19FD6807.dds
+1A860344 textures_ultra/ui/1A860344.dds
+1ACD8336 textures_ultra/ui/1ACD8336.dds
+1B5E1DEA textures_ultra/ui/1B5E1DEA.dds
+1B9B255A textures_ultra/ui/1B9B255A.dds
+1BBE0BF2 textures_ultra/ui/1BBE0BF2.dds
+1BFD7298 textures_ultra/ui/1BFD7298.dds
+1CA30A3B textures_ultra/ui/1CA30A3B.dds
+1D38C2E6 textures_ultra/ui/1D38C2E6.dds
+1DAC6366 textures_ultra/ui/1DAC6366.dds
+1DFC456E textures_ultra/ui/1DFC456E.dds
+1E0A2A0A textures_ultra/ui/1E0A2A0A.dds
+1E26EA48 textures_ultra/ui/1E26EA48.dds
+1E2EA204 textures_ultra/ui/1E2EA204.dds
+1F1D9D8A textures_ultra/ui/1F1D9D8A.dds
+1F75BA16 textures_ultra/ui/1F75BA16.dds
+20306ADB textures_ultra/ui/20306ADB.dds
+20914917 textures_ultra/ui/20914917.dds
+211FB59B textures_ultra/ui/211FB59B.dds
+21235EBB textures_ultra/ui/21235EBB.dds
+21806AA5 textures_ultra/ui/21806AA5.dds
+22C329E5 textures_ultra/ui/22C329E5.dds
+2370D3C9 textures_ultra/ui/2370D3C9.dds
+23C69A4E textures_ultra/ui/23C69A4E.dds
+24EDE851 textures_ultra/ui/24EDE851.dds
+24F5177B textures_ultra/ui/24F5177B.dds
+256CB952 textures_ultra/ui/256CB952.dds
+259E5D96 textures_ultra/ui/259E5D96.dds
+25DE94DB textures_ultra/ui/25DE94DB.dds
+26629FC5 textures_ultra/ui/26629FC5.dds
+29134D33 textures_ultra/ui/29134D33.dds
+29629FC5 textures_ultra/ui/29629FC5.dds
+29DBFC16 textures_ultra/ui/29DBFC16.dds
+2A16053A textures_ultra/ui/2A16053A.dds
+2B026C44 textures_ultra/ui/2B026C44.dds
+2BC571CA textures_ultra/ui/2BC571CA.dds
+2BFC8720 textures_ultra/ui/2BFC8720.dds
+2C1372E6 textures_ultra/ui/2C1372E6.dds
+2C1AF042 textures_ultra/ui/2C1AF042.dds
+2C20E2C0 textures_ultra/ui/2C20E2C0.dds
+2C48C43A textures_ultra/ui/2C48C43A.dds
+2D2B7343 textures_ultra/ui/2D2B7343.dds
+2D99BDE4 textures_ultra/ui/2D99BDE4.dds
+2E246F6E textures_ultra/ui/2E246F6E.dds
+2EC329E5 textures_ultra/ui/2EC329E5.dds
+2F2C0D92 textures_ultra/ui/2F2C0D92.dds
+3000781D textures_ultra/ui/3000781D.dds
+30C329E5 textures_ultra/ui/30C329E5.dds
+30EF35E4 textures_ultra/ui/30EF35E4.dds
+31FAF795 textures_ultra/ui/31FAF795.dds
+324F2737 textures_ultra/ui/324F2737.dds
+3348FE84 textures_ultra/ui/3348FE84.dds
+33946D3B textures_ultra/ui/33946D3B.dds
+33B7048A textures_ultra/ui/33B7048A.dds
+34A432C3 textures_ultra/ui/34A432C3.dds
+35374E42 textures_ultra/ui/35374E42.dds
+35724D8E textures_ultra/ui/35724D8E.dds
+3626F35C textures_ultra/ui/3626F35C.dds
+3667B60A textures_ultra/ui/3667B60A.dds
+36F229BD textures_ultra/ui/36F229BD.dds
+377802BA textures_ultra/ui/377802BA.dds
+37A0ACDC textures_ultra/ui/37A0ACDC.dds
+37B9CB60 textures_ultra/ui/37B9CB60.dds
+3842A201 textures_ultra/ui/3842A201.dds
+3939F592 textures_ultra/ui/3939F592.dds
+39BF9CC5 textures_ultra/ui/39BF9CC5.dds
+3A090C37 textures_ultra/ui/3A090C37.dds
+3A51A041 textures_ultra/ui/3A51A041.dds
+3A9193EB textures_ultra/ui/3A9193EB.dds
+3AB53E06 textures_ultra/ui/3AB53E06.dds
+3ADF622F textures_ultra/ui/3ADF622F.dds
+3AF1AA6A textures_ultra/ui/3AF1AA6A.dds
+3B055D45 textures_ultra/ui/3B055D45.dds
+3B42BDB7 textures_ultra/ui/3B42BDB7.dds
+3CBBB539 textures_ultra/ui/3CBBB539.dds
+3D42124A textures_ultra/ui/3D42124A.dds
+3D7227E5 textures_ultra/ui/3D7227E5.dds
+3E6BD611 textures_ultra/ui/3E6BD611.dds
+3F0B24E8 textures_ultra/ui/3F0B24E8.dds
+3F5348BE textures_ultra/ui/3F5348BE.dds
+3F57CF12 textures_ultra/ui/3F57CF12.dds
+3F72A3BE textures_ultra/ui/3F72A3BE.dds
+3FC271D2 textures_ultra/ui/3FC271D2.dds
+3FFDF9F8 textures_ultra/ui/3FFDF9F8.dds
+410AABB0 textures_ultra/ui/410AABB0.dds
+4112AD8D textures_ultra/ui/4112AD8D.dds
+4154C4EC textures_ultra/ui/4154C4EC.dds
+419049FA textures_ultra/ui/419049FA.dds
+41AC3317 textures_ultra/ui/41AC3317.dds
+426BBE93 textures_ultra/ui/426BBE93.dds
+428A8C07 textures_ultra/ui/428A8C07.dds
+43376DDD textures_ultra/ui/43376DDD.dds
+44422DC1 textures_ultra/ui/44422DC1.dds
+474EFA05 textures_ultra/ui/474EFA05.dds
+478ACBA8 textures_ultra/ui/478ACBA8.dds
+485A5FCC textures_ultra/ui/485A5FCC.dds
+48C3F274 textures_ultra/ui/48C3F274.dds
+4971E357 textures_ultra/ui/4971E357.dds
+4A1CA9B0 textures_ultra/ui/4A1CA9B0.dds
+4A814624 textures_ultra/ui/4A814624.dds
+4AADC0BE textures_ultra/ui/4AADC0BE.dds
+4B1A5648 textures_ultra/ui/4B1A5648.dds
+4B82D101 textures_ultra/ui/4B82D101.dds
+4B9129A4 textures_ultra/ui/4B9129A4.dds
+4D5C1784 textures_ultra/ui/4D5C1784.dds
+4E74A3D8 textures_ultra/ui/4E74A3D8.dds
+4F653D1E textures_ultra/ui/4F653D1E.dds
+4FA01B8B textures_ultra/ui/4FA01B8B.dds
+503ADFC7 textures_ultra/ui/503ADFC7.dds
+50990BDC textures_ultra/ui/50990BDC.dds
+50EF2DEC textures_ultra/ui/50EF2DEC.dds
+5112E624 textures_ultra/ui/5112E624.dds
+5170074C textures_ultra/ui/5170074C.dds
+51FD6169 textures_ultra/ui/51FD6169.dds
+522F8353 textures_ultra/ui/522F8353.dds
+52CB4D2D textures_ultra/ui/52CB4D2D.dds
+53295E77 textures_ultra/ui/53295E77.dds
+536769A7 textures_ultra/ui/536769A7.dds
+5372EF43 textures_ultra/ui/5372EF43.dds
+53E9D14F textures_ultra/ui/53E9D14F.dds
+5417E47E textures_ultra/ui/5417E47E.dds
+544AF335 textures_ultra/ui/544AF335.dds
+54699411 textures_ultra/ui/54699411.dds
+557EBD9A textures_ultra/ui/557EBD9A.dds
+559EA391 textures_ultra/ui/559EA391.dds
+55BBB35E textures_ultra/ui/55BBB35E.dds
+55CDD242 textures_ultra/ui/55CDD242.dds
+55F24B88 textures_ultra/ui/55F24B88.dds
+568C0603 textures_ultra/ui/568C0603.dds
+57210946 textures_ultra/ui/57210946.dds
+58040FA3 textures_ultra/ui/58040FA3.dds
+582ED7E7 textures_ultra/ui/582ED7E7.dds
+58581F42 textures_ultra/ui/58581F42.dds
+58767482 textures_ultra/ui/58767482.dds
+588BEBBE textures_ultra/ui/588BEBBE.dds
+588DEBF8 textures_ultra/ui/588DEBF8.dds
+58F6CD85 textures_ultra/ui/58F6CD85.dds
+59EB0558 textures_ultra/ui/59EB0558.dds
+5A642145 textures_ultra/ui/5A642145.dds
+5A8997DC textures_ultra/ui/5A8997DC.dds
+5ABE9909 textures_ultra/ui/5ABE9909.dds
+5B048ECC textures_ultra/ui/5B048ECC.dds
+5BEB0B35 textures_ultra/ui/5BEB0B35.dds
+5C53E32E textures_ultra/ui/5C53E32E.dds
+5DBF9CC5 textures_ultra/ui/5DBF9CC5.dds
+5E463DBF textures_ultra/ui/5E463DBF.dds
+5E787CD2 textures_ultra/ui/5E787CD2.dds
+5F3975E6 textures_ultra/ui/5F3975E6.dds
+5F4733CD textures_ultra/ui/5F4733CD.dds
+5F83F445 textures_ultra/ui/5F83F445.dds
+6209C05A textures_ultra/ui/6209C05A.dds
+622DEB3E textures_ultra/ui/622DEB3E.dds
+62764416 textures_ultra/ui/62764416.dds
+6296504C textures_ultra/ui/6296504C.dds
+6355EB89 textures_ultra/ui/6355EB89.dds
+64130830 textures_ultra/ui/64130830.dds
+6527EE85 textures_ultra/ui/6527EE85.dds
+656C072C textures_ultra/ui/656C072C.dds
+659E1F91 textures_ultra/ui/659E1F91.dds
+65E6E213 textures_ultra/ui/65E6E213.dds
+66516DD5 textures_ultra/ui/66516DD5.dds
+66549F01 textures_ultra/ui/66549F01.dds
+66874FB2 textures_ultra/ui/66874FB2.dds
+673EB5D3 textures_ultra/ui/673EB5D3.dds
+67B412DC textures_ultra/ui/67B412DC.dds
+67FDB6ED textures_ultra/ui/67FDB6ED.dds
+687B3268 textures_ultra/ui/687B3268.dds
+68EDC28E textures_ultra/ui/68EDC28E.dds
+694A76CE textures_ultra/ui/694A76CE.dds
+69B2CB38 textures_ultra/ui/69B2CB38.dds
+69DA303C textures_ultra/ui/69DA303C.dds
+69F36166 textures_ultra/ui/69F36166.dds
+6A2F45DD textures_ultra/ui/6A2F45DD.dds
+6AA644BD textures_ultra/ui/6AA644BD.dds
+6AA91405 textures_ultra/ui/6AA91405.dds
+6BB46B89 textures_ultra/ui/6BB46B89.dds
+6CB32CC7 textures_ultra/ui/6CB32CC7.dds
+6CE14431 textures_ultra/ui/6CE14431.dds
+6D08E9D0 textures_ultra/ui/6D08E9D0.dds
+6D246CD1 textures_ultra/ui/6D246CD1.dds
+6D263A6F textures_ultra/ui/6D263A6F.dds
+6DA9F157 textures_ultra/ui/6DA9F157.dds
+6DEDFDA5 textures_ultra/ui/6DEDFDA5.dds
+6E1E52EC textures_ultra/ui/6E1E52EC.dds
+6E863DD5 textures_ultra/ui/6E863DD5.dds
+6EB4352F textures_ultra/ui/6EB4352F.dds
+6F5705D5 textures_ultra/ui/6F5705D5.dds
+6FA88BD1 textures_ultra/ui/6FA88BD1.dds
+6FB14AD0 textures_ultra/ui/6FB14AD0.dds
+705EEF84 textures_ultra/ui/705EEF84.dds
+70D49580 textures_ultra/ui/70D49580.dds
+713A99B7 textures_ultra/ui/713A99B7.dds
+7168E123 textures_ultra/ui/7168E123.dds
+71E4228A textures_ultra/ui/71E4228A.dds
+723F0632 textures_ultra/ui/723F0632.dds
+730F9529 textures_ultra/ui/730F9529.dds
+732CFD7D textures_ultra/ui/732CFD7D.dds
+73434BEF textures_ultra/ui/73434BEF.dds
+737FF5C9 textures_ultra/ui/737FF5C9.dds
+7403ABFD textures_ultra/ui/7403ABFD.dds
+74D40D0B textures_ultra/ui/74D40D0B.dds
+74E157EF textures_ultra/ui/74E157EF.dds
+7543D324 textures_ultra/ui/7543D324.dds
+75520A96 textures_ultra/ui/75520A96.dds
+7561292E textures_ultra/ui/7561292E.dds
+7598D042 textures_ultra/ui/7598D042.dds
+75E1177C textures_ultra/ui/75E1177C.dds
+767C9DAE textures_ultra/ui/767C9DAE.dds
+77138F3E textures_ultra/ui/77138F3E.dds
+7866AB17 textures_ultra/ui/7866AB17.dds
+788EA90E textures_ultra/ui/788EA90E.dds
+788F4745 textures_ultra/ui/788F4745.dds
+78D912BB textures_ultra/ui/78D912BB.dds
+794B3A29 textures_ultra/ui/794B3A29.dds
+7A9A6C6C textures_ultra/ui/7A9A6C6C.dds
+7B64D30D textures_ultra/ui/7B64D30D.dds
+7C4EC85C textures_ultra/ui/7C4EC85C.dds
+7CEFDDD5 textures_ultra/ui/7CEFDDD5.dds
+7DE10496 textures_ultra/ui/7DE10496.dds
+7F9336E4 textures_ultra/ui/7F9336E4.dds
+7FC7627E textures_ultra/ui/7FC7627E.dds
+802B7343 textures_ultra/ui/802B7343.dds
+8034B15B textures_ultra/ui/8034B15B.dds
+80864497 textures_ultra/ui/80864497.dds
+80BF9CC5 textures_ultra/ui/80BF9CC5.dds
+82DACE25 textures_ultra/ui/82DACE25.dds
+83055D45 textures_ultra/ui/83055D45.dds
+84BFE9FA textures_ultra/ui/84BFE9FA.dds
+851F7979 textures_ultra/ui/851F7979.dds
+8570A416 textures_ultra/ui/8570A416.dds
+8573CDE1 textures_ultra/ui/8573CDE1.dds
+86C6E0C0 textures_ultra/ui/86C6E0C0.dds
+870B2F2C textures_ultra/ui/870B2F2C.dds
+8743840A textures_ultra/ui/8743840A.dds
+875B3B76 textures_ultra/ui/875B3B76.dds
+87C8ECC1 textures_ultra/ui/87C8ECC1.dds
+8917319D textures_ultra/ui/8917319D.dds
+8A4A215F textures_ultra/ui/8A4A215F.dds
+8AA8DBC9 textures_ultra/ui/8AA8DBC9.dds
+8AAC46DC textures_ultra/ui/8AAC46DC.dds
+8C0D560C textures_ultra/ui/8C0D560C.dds
+8C13C086 textures_ultra/ui/8C13C086.dds
+8C408D66 textures_ultra/ui/8C408D66.dds
+8C40EE5C textures_ultra/ui/8C40EE5C.dds
+8CA7CD85 textures_ultra/ui/8CA7CD85.dds
+8D208598 textures_ultra/ui/8D208598.dds
+8D3AB6F6 textures_ultra/ui/8D3AB6F6.dds
+8DF5CEDF textures_ultra/ui/8DF5CEDF.dds
+8E560956 textures_ultra/ui/8E560956.dds
+8E7A6263 textures_ultra/ui/8E7A6263.dds
+8F3D689D textures_ultra/ui/8F3D689D.dds
+8F94C8D5 textures_ultra/ui/8F94C8D5.dds
+8FD8D03C textures_ultra/ui/8FD8D03C.dds
+8FE8842B textures_ultra/ui/8FE8842B.dds
+9059F4DD textures_ultra/ui/9059F4DD.dds
+90940227 textures_ultra/ui/90940227.dds
+90BF9CC5 textures_ultra/ui/90BF9CC5.dds
+90E83920 textures_ultra/ui/90E83920.dds
+90EA1E18 textures_ultra/ui/90EA1E18.dds
+90FE8D13 textures_ultra/ui/90FE8D13.dds
+91131627 textures_ultra/ui/91131627.dds
+911C0EF7 textures_ultra/ui/911C0EF7.dds
+912510A7 textures_ultra/ui/912510A7.dds
+914D601F textures_ultra/ui/914D601F.dds
+92424EF1 textures_ultra/ui/92424EF1.dds
+925EECA4 textures_ultra/ui/925EECA4.dds
+92F166A4 textures_ultra/ui/92F166A4.dds
+934717E0 textures_ultra/ui/934717E0.dds
+93B84118 textures_ultra/ui/93B84118.dds
+93B9900F textures_ultra/ui/93B9900F.dds
+93BF9CC5 textures_ultra/ui/93BF9CC5.dds
+94C329E5 textures_ultra/ui/94C329E5.dds
+94E426E7 textures_ultra/ui/94E426E7.dds
+955A7B80 textures_ultra/ui/955A7B80.dds
+95747703 textures_ultra/ui/95747703.dds
+95BF9CC5 textures_ultra/ui/95BF9CC5.dds
+95D7AB3A textures_ultra/ui/95D7AB3A.dds
+95F479F7 textures_ultra/ui/95F479F7.dds
+972DBC74 textures_ultra/ui/972DBC74.dds
+97A644BD textures_ultra/ui/97A644BD.dds
+9860ED98 textures_ultra/ui/9860ED98.dds
+99B1784F textures_ultra/ui/99B1784F.dds
+9A667018 textures_ultra/ui/9A667018.dds
+9B1896C4 textures_ultra/ui/9B1896C4.dds
+9B5BF8F2 textures_ultra/ui/9B5BF8F2.dds
+9B633D77 textures_ultra/ui/9B633D77.dds
+9C980D01 textures_ultra/ui/9C980D01.dds
+9D4105C3 textures_ultra/ui/9D4105C3.dds
+9D4EF5D1 textures_ultra/ui/9D4EF5D1.dds
+9D58E2FF textures_ultra/ui/9D58E2FF.dds
+9DA9B890 textures_ultra/ui/9DA9B890.dds
+9E0A4B1A textures_ultra/ui/9E0A4B1A.dds
+9ECFA8AA textures_ultra/ui/9ECFA8AA.dds
+9EF6CD85 textures_ultra/ui/9EF6CD85.dds
+9F3CE484 textures_ultra/ui/9F3CE484.dds
+9F583734 textures_ultra/ui/9F583734.dds
+9FC329E5 textures_ultra/ui/9FC329E5.dds
+A0537AFB textures_ultra/ui/A0537AFB.dds
+A0F6BAAE textures_ultra/ui/A0F6BAAE.dds
+A18D74A7 textures_ultra/ui/A18D74A7.dds
+A1915C5D textures_ultra/ui/A1915C5D.dds
+A2FB8198 textures_ultra/ui/A2FB8198.dds
+A39BFF46 textures_ultra/ui/A39BFF46.dds
+A3A96BBB textures_ultra/ui/A3A96BBB.dds
+A3CB951D textures_ultra/ui/A3CB951D.dds
+A46C35A8 textures_ultra/ui/A46C35A8.dds
+A4765EA5 textures_ultra/ui/A4765EA5.dds
+A68F2DEA textures_ultra/ui/A68F2DEA.dds
+A6E001FD textures_ultra/ui/A6E001FD.dds
+A6F6766A textures_ultra/ui/A6F6766A.dds
+A7DB28D2 textures_ultra/ui/A7DB28D2.dds
+A7EFDDD5 textures_ultra/ui/A7EFDDD5.dds
+A86EAAA2 textures_ultra/ui/A86EAAA2.dds
+A883B704 textures_ultra/ui/A883B704.dds
+A8A0780C textures_ultra/ui/A8A0780C.dds
+A8A96BBB textures_ultra/ui/A8A96BBB.dds
+A8BC629E textures_ultra/ui/A8BC629E.dds
+A8F12F51 textures_ultra/ui/A8F12F51.dds
+A98217F3 textures_ultra/ui/A98217F3.dds
+A9C272F8 textures_ultra/ui/A9C272F8.dds
+AA5E48F9 textures_ultra/ui/AA5E48F9.dds
+ABB117AE textures_ultra/ui/ABB117AE.dds
+AC181AA1 textures_ultra/ui/AC181AA1.dds
+ACEB1B2A textures_ultra/ui/ACEB1B2A.dds
+ACF587E9 textures_ultra/ui/ACF587E9.dds
+AD7C9A30 textures_ultra/ui/AD7C9A30.dds
+AD8A32C9 textures_ultra/ui/AD8A32C9.dds
+ADE193F9 textures_ultra/ui/ADE193F9.dds
+ADFEE1B8 textures_ultra/ui/ADFEE1B8.dds
+AE048ECC textures_ultra/ui/AE048ECC.dds
+AEB6D5CE textures_ultra/ui/AEB6D5CE.dds
+AF1BFE9D textures_ultra/ui/AF1BFE9D.dds
+AF42B46E textures_ultra/ui/AF42B46E.dds
+AF77A077 textures_ultra/ui/AF77A077.dds
+AFAD54A5 textures_ultra/ui/AFAD54A5.dds
+B0BF9CC5 textures_ultra/ui/B0BF9CC5.dds
+B0E06C2E textures_ultra/ui/B0E06C2E.dds
+B0ED0931 textures_ultra/ui/B0ED0931.dds
+B1316DE5 textures_ultra/ui/B1316DE5.dds
+B1923FB8 textures_ultra/ui/B1923FB8.dds
+B23C3F34 textures_ultra/ui/B23C3F34.dds
+B2A58943 textures_ultra/ui/B2A58943.dds
+B3958E77 textures_ultra/ui/B3958E77.dds
+B39ACC01 textures_ultra/ui/B39ACC01.dds
+B3AFE426 textures_ultra/ui/B3AFE426.dds
+B3BF1801 textures_ultra/ui/B3BF1801.dds
+B3F65AE2 textures_ultra/ui/B3F65AE2.dds
+B65DE6F9 textures_ultra/ui/B65DE6F9.dds
+B6C38D85 textures_ultra/ui/B6C38D85.dds
+B6DCC9E0 textures_ultra/ui/B6DCC9E0.dds
+B6FD710C textures_ultra/ui/B6FD710C.dds
+B74D7CDF textures_ultra/ui/B74D7CDF.dds
+B7BF479C textures_ultra/ui/B7BF479C.dds
+B8B78944 textures_ultra/ui/B8B78944.dds
+B8D3B557 textures_ultra/ui/B8D3B557.dds
+B8EAB07F textures_ultra/ui/B8EAB07F.dds
+B9FDDA6D textures_ultra/ui/B9FDDA6D.dds
+BA0FD11E textures_ultra/ui/BA0FD11E.dds
+BB1B4F15 textures_ultra/ui/BB1B4F15.dds
+BB313F8F textures_ultra/ui/BB313F8F.dds
+BBBE1C9E textures_ultra/ui/BBBE1C9E.dds
+BBF39B52 textures_ultra/ui/BBF39B52.dds
+BC7B4AAD textures_ultra/ui/BC7B4AAD.dds
+BCE27F53 textures_ultra/ui/BCE27F53.dds
+BCEF35E4 textures_ultra/ui/BCEF35E4.dds
+BD2B2EB4 textures_ultra/ui/BD2B2EB4.dds
+BD61B2CE textures_ultra/ui/BD61B2CE.dds
+BDBF9CC5 textures_ultra/ui/BDBF9CC5.dds
+BDE72A68 textures_ultra/ui/BDE72A68.dds
+BE1309C8 textures_ultra/ui/BE1309C8.dds
+C148868D textures_ultra/ui/C148868D.dds
+C1729035 textures_ultra/ui/C1729035.dds
+C2D652EC textures_ultra/ui/C2D652EC.dds
+C3B0A448 textures_ultra/ui/C3B0A448.dds
+C3FD4D11 textures_ultra/ui/C3FD4D11.dds
+C40F4001 textures_ultra/ui/C40F4001.dds
+C4BF9CC5 textures_ultra/ui/C4BF9CC5.dds
+C4DBEE8D textures_ultra/ui/C4DBEE8D.dds
+C53E9DDA textures_ultra/ui/C53E9DDA.dds
+C5B38B28 textures_ultra/ui/C5B38B28.dds
+C73C2CBD textures_ultra/ui/C73C2CBD.dds
+C766722D textures_ultra/ui/C766722D.dds
+C84BD26B textures_ultra/ui/C84BD26B.dds
+C8629FC5 textures_ultra/ui/C8629FC5.dds
+C8A644BD textures_ultra/ui/C8A644BD.dds
+C915B7EB textures_ultra/ui/C915B7EB.dds
+C9AFDD85 textures_ultra/ui/C9AFDD85.dds
+CA269E86 textures_ultra/ui/CA269E86.dds
+CACD918A textures_ultra/ui/CACD918A.dds
+CAE16E36 textures_ultra/ui/CAE16E36.dds
+CB14EEED textures_ultra/ui/CB14EEED.dds
+CB81BD07 textures_ultra/ui/CB81BD07.dds
+CB81CA16 textures_ultra/ui/CB81CA16.dds
+CC25A108 textures_ultra/ui/CC25A108.dds
+CC691DB3 textures_ultra/ui/CC691DB3.dds
+CD1545BF textures_ultra/ui/CD1545BF.dds
+CD5F40C9 textures_ultra/ui/CD5F40C9.dds
+CE4305ED textures_ultra/ui/CE4305ED.dds
+CE6FE5D4 textures_ultra/ui/CE6FE5D4.dds
+CEF05C67 textures_ultra/ui/CEF05C67.dds
+CEF8AE60 textures_ultra/ui/CEF8AE60.dds
+CF4AB4D7 textures_ultra/ui/CF4AB4D7.dds
+CF9521B5 textures_ultra/ui/CF9521B5.dds
+D03BF80E textures_ultra/ui/D03BF80E.dds
+D098E2DA textures_ultra/ui/D098E2DA.dds
+D0A96BBB textures_ultra/ui/D0A96BBB.dds
+D0BEC325 textures_ultra/ui/D0BEC325.dds
+D0DD57F3 textures_ultra/ui/D0DD57F3.dds
+D18D3C39 textures_ultra/ui/D18D3C39.dds
+D1965C8C textures_ultra/ui/D1965C8C.dds
+D1A6CC47 textures_ultra/ui/D1A6CC47.dds
+D2163D45 textures_ultra/ui/D2163D45.dds
+D287EA5C textures_ultra/ui/D287EA5C.dds
+D330D4DA textures_ultra/ui/D330D4DA.dds
+D3682FDF textures_ultra/ui/D3682FDF.dds
+D3EFDDD5 textures_ultra/ui/D3EFDDD5.dds
+D3FA93A6 textures_ultra/ui/D3FA93A6.dds
+D43699DF textures_ultra/ui/D43699DF.dds
+D4DF1387 textures_ultra/ui/D4DF1387.dds
+D68686C9 textures_ultra/ui/D68686C9.dds
+D6D60FC6 textures_ultra/ui/D6D60FC6.dds
+D710B0F3 textures_ultra/ui/D710B0F3.dds
+D76C04D9 textures_ultra/ui/D76C04D9.dds
+D79D2DCF textures_ultra/ui/D79D2DCF.dds
+D8B32D63 textures_ultra/ui/D8B32D63.dds
+D8D92EC6 textures_ultra/ui/D8D92EC6.dds
+D913B327 textures_ultra/ui/D913B327.dds
+D94824D5 textures_ultra/ui/D94824D5.dds
+D96A0A10 textures_ultra/ui/D96A0A10.dds
+DA048ECC textures_ultra/ui/DA048ECC.dds
+DA3AE2F0 textures_ultra/ui/DA3AE2F0.dds
+DB901AF6 textures_ultra/ui/DB901AF6.dds
+DB9C446C textures_ultra/ui/DB9C446C.dds
+DBA098CA textures_ultra/ui/DBA098CA.dds
+DC117741 textures_ultra/ui/DC117741.dds
+DC3F365C textures_ultra/ui/DC3F365C.dds
+DD055D45 textures_ultra/ui/DD055D45.dds
+DD0763C1 textures_ultra/ui/DD0763C1.dds
+DD40E664 textures_ultra/ui/DD40E664.dds
+DD671476 textures_ultra/ui/DD671476.dds
+DD6E2AF6 textures_ultra/ui/DD6E2AF6.dds
+DDE995A9 textures_ultra/ui/DDE995A9.dds
+DE0DFB49 textures_ultra/ui/DE0DFB49.dds
+DE2C1F1E textures_ultra/ui/DE2C1F1E.dds
+DE4BAE08 textures_ultra/ui/DE4BAE08.dds
+DE6AE3B0 textures_ultra/ui/DE6AE3B0.dds
+DE8B0364 textures_ultra/ui/DE8B0364.dds
+DEBE81BE textures_ultra/ui/DEBE81BE.dds
+DF122335 textures_ultra/ui/DF122335.dds
+DFAA1D6B textures_ultra/ui/DFAA1D6B.dds
+E0795190 textures_ultra/ui/E0795190.dds
+E0F3BAE6 textures_ultra/ui/E0F3BAE6.dds
+E0F5330B textures_ultra/ui/E0F5330B.dds
+E19CE837 textures_ultra/ui/E19CE837.dds
+E2207F1B textures_ultra/ui/E2207F1B.dds
+E2D45CD3 textures_ultra/ui/E2D45CD3.dds
+E2DD746B textures_ultra/ui/E2DD746B.dds
+E35EC3F5 textures_ultra/ui/E35EC3F5.dds
+E3C60347 textures_ultra/ui/E3C60347.dds
+E3D1DFC0 textures_ultra/ui/E3D1DFC0.dds
+E44D2811 textures_ultra/ui/E44D2811.dds
+E48B178B textures_ultra/ui/E48B178B.dds
+E559AEC2 textures_ultra/ui/E559AEC2.dds
+E57BE05B textures_ultra/ui/E57BE05B.dds
+E61CD92E textures_ultra/ui/E61CD92E.dds
+E67585F9 textures_ultra/ui/E67585F9.dds
+E7835A25 textures_ultra/ui/E7835A25.dds
+E7E7AEDF textures_ultra/ui/E7E7AEDF.dds
+E82D3A35 textures_ultra/ui/E82D3A35.dds
+E879F5A4 textures_ultra/ui/E879F5A4.dds
+E89077D6 textures_ultra/ui/E89077D6.dds
+E8CAAE96 textures_ultra/ui/E8CAAE96.dds
+E8F1B022 textures_ultra/ui/E8F1B022.dds
+E9896A12 textures_ultra/ui/E9896A12.dds
+EA32BD9E textures_ultra/ui/EA32BD9E.dds
+EA4EE4E1 textures_ultra/ui/EA4EE4E1.dds
+EAF3B166 textures_ultra/ui/EAF3B166.dds
+EB42390F textures_ultra/ui/EB42390F.dds
+EC56F270 textures_ultra/ui/EC56F270.dds
+ECCF137C textures_ultra/ui/ECCF137C.dds
+ED0706DA textures_ultra/ui/ED0706DA.dds
+ED5705D5 textures_ultra/ui/ED5705D5.dds
+EDCD47FB textures_ultra/ui/EDCD47FB.dds
+EDEE04A1 textures_ultra/ui/EDEE04A1.dds
+EFBF9CC5 textures_ultra/ui/EFBF9CC5.dds
+EFC39FE7 textures_ultra/ui/EFC39FE7.dds
+EFE2C811 textures_ultra/ui/EFE2C811.dds
+F036FF4A textures_ultra/ui/F036FF4A.dds
+F04B9BDD textures_ultra/ui/F04B9BDD.dds
+F0BB92AF textures_ultra/ui/F0BB92AF.dds
+F0CA1064 textures_ultra/ui/F0CA1064.dds
+F139DE4D textures_ultra/ui/F139DE4D.dds
+F1B01447 textures_ultra/ui/F1B01447.dds
+F1B9207E textures_ultra/ui/F1B9207E.dds
+F1DA8258 textures_ultra/ui/F1DA8258.dds
+F1F4B417 textures_ultra/ui/F1F4B417.dds
+F23FA54C textures_ultra/ui/F23FA54C.dds
+F3CB5B43 textures_ultra/ui/F3CB5B43.dds
+F3E980F8 textures_ultra/ui/F3E980F8.dds
+F43239C9 textures_ultra/ui/F43239C9.dds
+F43B6C5E textures_ultra/ui/F43B6C5E.dds
+F48EC89D textures_ultra/ui/F48EC89D.dds
+F5099A5B textures_ultra/ui/F5099A5B.dds
+F52A1E34 textures_ultra/ui/F52A1E34.dds
+F53AB6F6 textures_ultra/ui/F53AB6F6.dds
+F55CFA99 textures_ultra/ui/F55CFA99.dds
+F58B4091 textures_ultra/ui/F58B4091.dds
+F5BF9CC5 textures_ultra/ui/F5BF9CC5.dds
+F62DB4D3 textures_ultra/ui/F62DB4D3.dds
+F6F6CD85 textures_ultra/ui/F6F6CD85.dds
+F7E43FB8 textures_ultra/ui/F7E43FB8.dds
+F84B3A29 textures_ultra/ui/F84B3A29.dds
+F84C9886 textures_ultra/ui/F84C9886.dds
+F84E751C textures_ultra/ui/F84E751C.dds
+F8C329E5 textures_ultra/ui/F8C329E5.dds
+F8FF11FF textures_ultra/ui/F8FF11FF.dds
+F9536F37 textures_ultra/ui/F9536F37.dds
+FA1DB790 textures_ultra/ui/FA1DB790.dds
+FA319080 textures_ultra/ui/FA319080.dds
+FA659762 textures_ultra/ui/FA659762.dds
+FAFA9A32 textures_ultra/ui/FAFA9A32.dds
+FB7A2D49 textures_ultra/ui/FB7A2D49.dds
+FC97D863 textures_ultra/ui/FC97D863.dds
+FC990BDC textures_ultra/ui/FC990BDC.dds
+FCA7193E textures_ultra/ui/FCA7193E.dds
+FDC329E5 textures_ultra/ui/FDC329E5.dds
+FDF19D4C textures_ultra/ui/FDF19D4C.dds
+FDF6CD85 textures_ultra/ui/FDF6CD85.dds
+FE17902F textures_ultra/ui/FE17902F.dds
+FE72AD42 textures_ultra/ui/FE72AD42.dds
+FE8633F4 textures_ultra/ui/FE8633F4.dds
+FE91BA24 textures_ultra/ui/FE91BA24.dds
+FEA4E9DC textures_ultra/ui/FEA4E9DC.dds
+FEA9BAE9 textures_ultra/ui/FEA9BAE9.dds
+FF068940 textures_ultra/ui/FF068940.dds
+FF56C3F9 textures_ultra/ui/FF56C3F9.dds
+FF8C1EBA textures_ultra/ui/FF8C1EBA.dds
+FFA8E145 textures_ultra/ui/FFA8E145.dds
+FFC30964 textures_ultra/ui/FFC30964.dds
+905F13A4 textures_ultra/ui/905F13A4.dds

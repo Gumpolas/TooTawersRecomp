@@ -1,0 +1,1454 @@
+# Svenska, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	SAGAN OM RINGEN:  DE TVÅ TORNEN
+G20EBC61E	En film av Peter Jackson
+G2D8D3B98	Producerad av
+G7EDB1AE9	Samproducerad av
+G90AF53E8	Specialeffekter
+G893165F0	Weta Digital
+GD9523953	Musik av Howard Shore
+G7B677F6E	Spelröster
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX-TEAMET
+GAAA9253B	Projektledning
+G2E65B2E4	Programmering
+G1E165282	Grafik
+G4CFF767B	Ljud
+G1B12D0CA	URSPRUNGLIGT UTVECKLINGSTEAM
+G5BB408B8	Projektchef
+GA9D987DE	Teknisk chef
+GA4E53836	Utvecklingschef
+GCBF9A863	Ljudchef
+G71D27F1C	Huvuddesigner
+GABE6171F	Huvudprogrammerare
+GB6AEE806	Ledande miljögrafiker
+G0FAA1BD8	Ledande filmsekvensgrafiker
+G93A039A2	Ledande animatör
+G85851417	Konstnärlig ledning
+GEC5EB699	Biträdande producent
+G1E1B7E49	Specialeffektgrafiker
+GE457B26A	Miljögrafiker
+G09AFDB2B	Grafiker för filmsekvenser i spelet
+GC6201467	Konceptkonstnärer
+GCE12C680	Figurmodellerare/animatörer
+G958F64A1	Gränssnittsgrafiker
+G5817028D	Grafikprogrammerare
+G8E313DB8	AI-programmerare
+G7559A05A	Spelmekanikprogrammerare
+G47FDFA0D	Speldesigners
+G2A1A4D1F	Ljuddesign och musikredigering
+GD6AC199C	Ljuddesign
+G83731102	Ytterligare utvecklingsledning
+G9B9AC6A2	Ytterligare projektledning
+G2C8B85F3	Ytterligare grafik
+G154B3F75	Ytterligare programmering
+GEC34AAA5	Ytterligare ljuddesign
+GE9E2F454	Ytterligare manus
+G8B63E4D8	Affärsutveckling
+G8E754AFA	Ansvarig chef för utveckling
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Exekutiv producent
+GF944BB31	Senior producent
+G49F95533	Biträdande producent, lokalisering
+GE5AAA381	Producentassistent
+G20A463E8	Mjukvaruingenjörer
+GEDDCFA70	Testledare
+G6EC637F4	Biträdande testledare
+GA9C92124	Kärntestare
+GDDEFB046	Producenter
+G5F4C2C91	Chef för spelutveckling
+G53E62C46	Banddesigner
+G4019279E	Biträdande art director
+G3548CB79	Filmsekvenser i spelet
+G5BF26924	Grafisk design (gränssnitt)
+GF5E6331B	Biträdande lokaliseringsproducent
+GB9029242	Producentassistenter
+G81160EAA	Senior animatör
+GB1B5EEDE	Animatör
+G1D384099	Miljömodellerare
+GD670D187	Filmsekvenser (FMV)
+GB4300D0E	Produktionsledare
+GDB61FEB0	Produktionschef, FMV
+G13204F99	Teknisk art director
+G8774AEB2	Art director
+G2EDA5AA3	Animationschef
+G4761EC6C	Teknisk figuransvarig
+GC40AEB65	Ledande miljögrafiker
+G04B7AD9A	Manusförfattare
+GCCDC1EDE	Figurgrafiker
+G765B2120	Seniora figuranimatörer
+GDB98BF7E	Senior ljussättningsgrafiker
+G8AEFA15C	Senior effektanimatör
+GB64D9748	Effektanimatör
+GB770287B	Riggare/CG-modellerare
+GA89434BE	Kameraplanering
+GBAA388EF	Klippare
+GA79B5345	Ljuddesigner/ommixning
+GE2D38E72	Produktionschef, grafik
+G29C8EC71	Chefsassistent
+GB01B1D73	Systemadministratör
+G257D0532	Produktionsassistent
+GB2965969	Dialogredigering
+G2ACF75E1	Ytterligare ljudbearbetning
+G821EF7A5	Röstskådespelare
+G3CCB3DF3	EA Kvalitetssäkring
+G2851776E	QA-chef
+G3D43CCDD	QA-arbetsledare
+G997D9582	QA-ledare
+G5B5CE9C6	Biträdande QA-ledare
+GE0B33004	QA-kärntestare
+GBBB3A592	Projektledare, FLT
+G7F330F1A	Funktionella språktestare
+G731958CD	Språktestare
+G7005C763	Kundkvalitetskontroll
+GCC3D24EF	CQC-chef
+G0FF24E54	CQC-arbetsledare
+G7498FE74	Avdelningsledare, CQC
+G5AB35ED0	CQC-produktanalytiker
+G6E529086	Masteringlabb
+G0229B6F3	Chef, internationell produktutveckling
+G6B435E81	Projektledare, lokalisering
+GF8BA9878	Projektsamordnare, lokalisering
+G906896D8	Chef, partnergodkännanden
+G860EDA13	Affärsjuridik
+G7AC94AC6	Juridik
+GFDF965B3	Studiodrift
+G9FF9799E	Avtalssamordnare, studio
+G9E24FEC0	Marknadschef
+G44C57DC5	Produktchef
+GE1A6D911	PR
+GA5ADE5FF	Dokumentation
+G4C2A256D	Dokumentationslayout
+G279BA159	Projektledning, förpackning
+G482E9235	Förpackningsdesign
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Filmteamet för Sagan om ringen
+GE196FA55	Regissör
+GE364782E	Exekutiva producenter
+GB11B5F1A	Samproducenter
+GDDE9A104	Arkivarie
+G73D53EB3	Materialansvarig
+G4616CF92	Producentassistent
+GD98C077D	Ansvariga för efterproduktion
+G26FFE43A	Förste klippassistent
+GFAE3387C	Miniatyransvarig
+G0D7D1A1D	Exekutiv vice vd, global licensiering och merchandising
+GD58105C6	Kreativ chef
+GB0E8D9D5	Filmskådespelare
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Sam
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Vice vd, musikjuridik
+G96EBB4D8	Ansvarig chef för musik
+G2728DB7D	Musikchef
+GFE08F13A	3Foot6
+GCFF1286B	Merchandisingsamordnare
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Vice vd
+GE58F283A	Producent/produktionschef
+G97C336EB	Animationsansvarig
+G96FF4CEA	Senior teknisk chef
+GE816CF3D	Ledande teknisk uppsättning
+G22B756F5	Animatörer
+G86F5B2D9	Mattemålare
+GBC50C796	Kontorschef
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Inspelningsproducent
+G14C96B5C	Ledande CG-grafiker
+GD9742A3C	CG-grafiker/animatörer
+GBA7D6969	Arnson Communications
+G22C5AB99	Exekutiv producent/kreativ chef
+G45C5172D	Manusförfattare/producent
+GDCC6F23E	Art director/animatör
+G9C4F3B3B	DS-grafiker
+GF0F58DD3	SÄRSKILT TACK FRÅN EA
+G895C842A	SÄRSKILT TACK FRÅN STORMFRONT STUDIOS
+G9D4DD21A	I Midgårds länder berättar legenden om Mörkrets herre Sauron
+G6CFA90F6	och om Ringen som skulle ge honom makten att förslava världen.
+G18F2969C	Och nu har den hamnat i händerna på den mest osannolika person man kan tänka sig.
+G378C79D6	Jag är ett stort spelfan, så självklart ville jag veta allt om ett tv-spel om Sagan om ringen.
+GDCF04190	Jag hamnar i ett läge där jag spelar hela tiden,
+G977EBA13	och det är oftast när jag spelar typ ett äventyrsspel som jag är helt uppslukad.
+G49C9AB1A	När jag väl har kommit in i det kan jag inte sluta tänka på det, och jag måste ta min figur hela vägen till slutet.
+GD2647A40	Denna uppgift är ålagd dig, och om du inte finner en väg, gör ingen det.
+G3AC8371A	Ta skydd!
+GAD82B19D	Så jag har liksom frågat runt om det här och äntligen fått spela det, och det är otroligt.
+G8DE86872	Det är bara så vackert att titta på.
+G72E74697	Åh, vad häftigt!
+GF9824FCA	Ja, kör, Aragorn! Kom igen!
+G2EE7D5D4	De kommer.
+G61F7CD7D	Det är lite av en bonus att kunna sätta på ett tv-spel och se mig själv springa omkring.
+G57A5BC04	Jag får verkligen stryk.
+G1F85273D	Frodo ser ut som jag! Är inte det häftigt?
+G1FFE0A40	Så häftigt.
+GE6E563F9	De kommer att hitta Ringen
+GD135555F	och döda den som bär den.
+G18844D24	Spring! Spring, Frodo!
+G525D5AD9	De vill ha Ringen! De får inte ta den.
+GB99DAE56	Skillnaden mellan eftersynk för en film och att göra röster till ett spel är att eftersynk för en film i regel görs mot bild.
+G7558081F	Man tittar liksom på filmen och försöker härma repliken man har gjort tidigare och få den i synk med filmens dialog.
+GDD3F428F	Vem är du?
+GE906BA5B	Är du rädd?
+G9BDAB30C	Ja.
+G3B07B1B1	Inte tillräckligt rädd.
+GFBD6613D	För spelet finns det ingen bild, och det är mest en massa atmosfäriska grejer som man slänger in.
+G0EE06D0F	Fara, hjälp, sånt där.
+G2F9FC8E2	Aragorn! Hjälp! Aragorn! Aragorn!
+G289F7C03	Jag gillar actionfigurer och jag gillar spel, och om jag får vara med är det en total nördbonus och jag älskar det.
+G67346E61	Även den minsta person kan ändra framtidens gång.
+G16420686	Jag är så taggad  jag kan inte vänta på att få mitt exemplar. Det är grymt.
+GDBA69463	Moria.
+G1D429D96	Du fruktar att gå in i de gruvorna.
+G372C9F91	Du vet vad de väckte i mörkret.
+G34515230	Jag tyckte verkligen om att göra spelet, för man behöver inte slita så förbaskat hårt
+G93AEF9C3	som när man skapar figuren från början.
+GA9883FB4	Att spela in en film går med nödvändighet väldigt långsamt.
+G0C1E0E8C	Något underbart med datorspelet är förstås att jag inte behöver sminkas.
+GA5F1044B	När man gör spelet står man i en studio
+GCE4A81AD	och man säger, ja, jag tycker att du ska säga det här och det här och det här,
+G049A3A66	och de har en hög med manus och man säger alla dessa underbara repliker.
+G70F1359D	Bakhåll! Bakhåll!
+G65325B21	Och sedan tar de allt det där, bygger in det i spelet, och man får en del av äran.
+G39F1D126	De där sprängladdningarna måste förstöras!
+GEB33699E	Jag älskar den här modellen av mig som Gimli.
+GD9A0C650	Jag tycker att det är en så kraftfull, viril och attraktiv figur.
+G43591DCA	Han är verkligen den enda figur man skulle vilja spela.
+G5C0A6C1E	Jag menar resten, du vet, alla Aragorn, du vet, alla Legolas, du vet, snygga, stiliga killar och allt det där,
+G3D52D95F	men för riktig krigföring av kvalitet måste man välja Gimli.
+G8E74524F	Vi tillbringade fjorton månader på de vackraste platserna i världen, i Nya Zeeland, för att få rätt utseende på filmen.
+GAD562976	Spelet är en krigs- och stridssituation, och det är underbart och briljant gjort.
+G7F21BCD6	Jag kan inte lämna honom där! Gud!
+G9AA947F5	Vad tidskrävande det kommer att bli.
+G669C44C6	Jag menar, det är ett nytt beroende som jag har upptäckt.
+G63540AD1	Så, spelare, bra jobbat, grattis till att ni har tagit er in i den här lilla nischen där ni får se intervjun.
+G925FED56	Jag önskar att jag kunde säga hur man spelar spelet bättre, men faktum är att jag aldrig kom så här långt.
+GC3162ADB	Lycka till och fortsätt spela.
+GA3572714	Världens öde kommer snart att avgöras.
+G922859CB	Hela processen med att konstruera eller bygga tv-spelet
+GD9B03397	går främst ut på att man slåss mot saker och ninjagrejer ... jag vet inte vad.
+G24326AFA	Jag blev förvånad, och det ser mycket mer realistiskt ut,
+G3E302C15	det verkar som att det tar steget till en helt ny nivå.
+GBD830A87	Jag tror att Aragorn siktar bättre i tv-spelet än jag själv ...
+GF76948D6	men jag tänker inte klaga på det.
+GD27FED3E	Om jag kan skydda dig med mitt liv eller min död, så gör jag det.
+G56368F53	Du har mitt svärd.
+G8D6DAFD1	Det jag har sett av tv-spelet verkar återspegla det faktum att
+G970D4AB6	den andra filmen  till skillnad från den första  är i större skala,
+GFD0BADCA	och jag ser fram emot att se dem lika mycket som jag ser fram emot att se resten av spelet.
+G1F48F697	Jag har bara sett ett smakprov i dag.
+GB689F1B9	Jag är glad att se att Aragorn till exempel ibland blir nedslagen, eller faller omkull, eller rullar runt,
+G6F6072BC	och att hans stridsstil förändras, du vet, för att passa situationen.
+GA3A3F7A1	Det är inte alltid snyggt och prydligt, du vet, det är liksom ...
+G28095E46	ibland kan han vara lite av en slagskämpe  åtminstone var det så han gjorde i filmen  och spelet återspeglar det, tycker jag.
+G43AA6A0B	Det är imponerande.
+G8559FF90	Främlingar från fjärran länder, ni har kallats hit för att besvara hotet från Mordor.
+GC2A75F48	Midgård står på randen till undergång.
+GFE143A07	Ingen kan undkomma det. Enas, annars kommer ni att falla.
+GF59E5460	Jag blir alltid lika häpen när jag ser hur tekniken går framåt och så,
+GAD5CBAE4	och hur nära verkligheten den har kommit.
+GF96BCD4B	Jag måste ta mig till Boromir, nu!
+GD262135E	När man spelar in eftersynk för en film tittar man, du vet, förstås på skärmen
+G83EECB7A	och ser handlingen spelas upp framför sig, så som man spelade den på inspelningsdagen.
+G3C0B6913	När man spelar in ljudet för det här
+G2A8B6AD2	finns det ingen kamera riktad mot en,
+G52F7D105	och man försöker inte läppsynka mot en bild framför sig,
+G8EE2279F	så man kan verkligen anstränga sig det där lilla extra och liksom
+GA5BE0F5A	förstärka och liksom utveckla det som står i manuset.
+G51E230FB	Tillbaka till hålorna som fött er!
+G97400E1E	De är mer förstärkta än de skulle vara i filmen.
+GC26338C3	Förstår du vad jag menar?
+G40EB5D5C	De är liksom lite löjliga, och det är kul.
+G52FECFA2	Det var rätt kul att verkligen leka med det på det sättet.
+G91D69630	Kom!
+G87873143	Den striden kan du inte vinna!
+G47AECCC4	Jag tror att om jag spelade spelet
+GB0CCD2A6	skulle det vara trevligt att veta att de riktiga skådespelarna har gett röst åt det som den datoranimerade figuren gjorde,
+GC1719889	och jag antar att ju mer verklighet man har i datorvärlden, desto mer spännande blir det för spelaren.
+G77ECFBF0	Du kan inte bruka den. Ingen av oss kan det.
+GB42EC53B	Ringen måste förstöras.
+G43E793ED	Ringbärarens fara växer.
+G6E2FF8E0	För det finns en annan som jagar Ringen.
+GDD26CBEC	Jag har aldrig spelat ett tv-spel i hela mitt liv.
+GF783F574	Jag förstår mig aldrig på reglerna.
+G573BC826	Jag har väldigt stora och klumpiga händer och inte riktigt den koordination mellan hand och hjärna som jag tror krävs,
+GFBB68CB5	som tydligen alla under sex års ålder har.
+G8D9D9F75	Det som är så underbart med det här spelet, Sagan om ringen,
+G81AEE08E	är att man får rösterna från de ursprungliga skådespelarna  allihop.
+GAE3BFBD7	Och i dag har jag spelat in Gandalf den grå och Gandalf den vite,
+G21F22F52	de två figurerna som jag spelar i Sagan om ringen.
+GCED01E94	Vad ser du?
+GB4F26455	Det finns tecken.
+G5C7EB8BC	Det är någon form av alviska.
+G27A03C42	Jag kan inte läsa det.
+G8E22513B	Det finns få som kan.
+G4B2817A2	Nu finns det ett förbund mellan de två tornen: Orthanc och Barad-dûr.
+GC69D576A	För spelet är det lite råare, lite mer redo, lite mer omedelbart, kanske.
+G363960EA	En av er måste gå in.
+GFFCB2D5D	Hjälp de bybor som fortfarande lever.
+GF4DAF5B8	I grund och botten är det här ett aggressivt stycke strid.
+G00009069	Det är Gandalfs militära sida som kommer fram: befälhavaren, samurajen, ledaren.
+G4519FC71	Du kommer inte förbi!
+G066F3360	Så det du ser på skärmen är så nära  fasiken 
+GF4CF848B	den Gandalf som du ser i filmerna. Och jag önskar att jag kunde komma och spela spelet med dig.
+G699B7BF2	I denna ring hällde han sin grymhet, sin ondska och sin vilja att härska över allt liv.
+GA1469225	En ring att styra dem alla.
+G01090CE9	Det vi har gjort är kulmen på en enorm mängd arbete av tusentals människor.
+G74E1F68D	Titeln, De två tornen, syftar på Orthancs torn, 
+G0AE01FA9	där Saruman, Christopher Lees figur, håller till,
+GD9642178	och Barad-dûrs torn i Mordor, Saurons hem.
+G573418F9	Film två är, som varje film i den här trilogin, en utmaning. Och det kommer den att förbli tills vi levererar den.
+GB2A31EA0	Det är en fantastisk film. Den kommer att bli större än film ett.
+GB831FA3A	Jag tror verkligen att det lades ner så mycket omsorg på att göra de här filmerna,
+GCCFC11FE	och att kunna föra över den informationen till teamet som bygger spelen är fantastiskt, 
+G327C2028	för jag vet att de lägger ner lika mycket omsorg och möda på att ge allmänheten ett riktigt innehållsrikt spel.
+G2C4A352E	Tolkien beskriver Edoras mycket levande i böckerna
+G10EFB23A	som en stad av träbyggnader på en kulle framför en kedja av snötäckta berg.
+G50D180A4	När vi letade inspelningsplatser från början sa jag: vi måste hitta ett ställe i Nya Zeeland,
+GDA11996F	det måste finnas en sådan kulle framför bergen.
+GD6F61F77	Så de flög helikopter över hela landet och kom tillbaka med ett fotografi av den absolut perfekta kullen.
+GC56228ED	Den låg ungefär tio, elva mil från närmaste stad.
+GF796DA0F	Den låg mitt på Sydön; den var väldigt avlägsen.
+GFA1CD969	Vi ägnade ungefär sju eller åtta månader åt att faktiskt bygga de här enorma byggnaderna.
+GC2D0BAAA	Slutresultatet blev att vi i filmen har ett Edoras som är helt trovärdigt.
+GC2774958	Jag kunde åka dit och bara filma som om det var en verklig plats.
+G99F69515	En av de spännande sakerna med EA:s spel, och det jag har sett i modellerna medan de byggts,
+G6B3554D6	är den fantastiska återgivningen av våra kulisser och våra figurer,
+GB997C9B4	till den grad att EA kom överens med våra skådespelare om att de skulle komma och spela in sina egna repliker.
+G815CAC49	Skådespelarna var riktigt entusiastiska över det.
+GA1640DEB	Slaget vid Helms klyfta är över.
+G93BD7122	Slaget om Midgård ska just börja.
+G958468DE	Vi byggde en miniatyr av Helms klyfta, men det intressanta var att det inte bara var en modell. 
+G1BC58576	Det var en enorm miniatyr. Den var i skala en fjärdedel, men var i sig omkring tio, tolv meter bred.
+GFA4F689B	Den var så stor att vi bara kunde fotografera den med våra kameror utan att den såg ut som en miniatyr.
+G2571B991	Den såg helt enkelt fullständigt trovärdig ut.
+G31C24FB0	Det som gör en fantastisk film är egentligen ett fantastiskt manus och fantastiska skådespelare.
+G9C04D37F	Jag föreställer mig att man har många av samma utmaningar när man gör ett spel.
+GA0B86A25	Man måste locka rätt talanger till spelet.
+G0B7DC714	Man måste ha en berättelse som lockar en publik och sedan gör den entusiastisk över berättelsen
+G5E1101AB	och så fängslad av berättelsen att den vill se den komma till liv.
+G87FC774C	Det finns inget vi kan göra för Frodo.
+G3C9AA8BC	Uppdraget kommer att kosta honom livet.
+G98F7C221	Rohan är svagt och redo att falla,
+GA01F7D34	och därför kommer han att slå hårt och snabbt mot människornas värld.
+GA8723617	Kriget är över oss.
+GE1AF4B03	De har stulit vår skatt och vi vill ha den.
+G6A5F57B3	Det kanske mest skrämmande med att ge sig in i det här projektet var
+GDE1DC635	känslan av att vi hade ett otroligt ansvar att leverera
+GCFDFC743	i ett interaktivt format på samma sätt som Peter Jackson hade levererat på film.
+GC87068A6	Han har tagit några av alla tiders mest älskade litterära verk
+G423C7E0C	och förvandlat dem till ett episkt filmmästerverk som har skapat miljontals fans världen över.
+GC8F29411	I början av ett projekt arbetar man med konceptet och designen.
+GBACB2DE5	Allt eftersom projektet fortskrider  programmerare, grafiker, animatörer, miljögrafiker,
+G047AC48F	modelleringsspecialister, texturspecialister  alla dessa människor tänker på sin del av spelet,
+GB60517EB	men utifrån helhetsupplevelsen.
+G13170460	En av fördelarna med att kunna arbeta så nära filmskaparna
+GA03610FF	är att vi kunde använda modellerna och rekvisitan som de skapade för filmen
+G9DADDEE4	som referens för det vi behövde skapa i vårt spel.
+GF0D449E5	Skuggan rör sig i mörkret.
+GEC940136	När vi utformade Aragorn var vi tvungna att tänka på alla tre spelbara figurer samtidigt.
+GBB381F7C	Legolas är till exempel mycket mer inriktad på snabbhet och finess.
+G4CE351A9	Gimli är en liten stridsvagn.
+G21025B26	Aragorn är mer en blandning av de två.
+G3ADE6E66	Vi studerade varje figurs rörelser  bildruta för bildruta  innan vi började bygga något.
+G80ADBA8B	Sedan skapade vi en trådmodell av figuren. Det är de grundläggande proportionerna, storleken och skalan.
+G85E5A400	Sedan lade vi till texturer och ljussättning för att göra klart kläderna och lägga till figurens finare detaljer.
+GCD3CDD42	Skådespelarna var mycket intresserade av att arbeta med oss.
+G092B49A0	I ett fall visade Viggo Mortensen oss några av sina actionrörelser.
+G915A1A70	Han och hans stuntman öppnade en låda med svärd och började fäktas med varandra.
+G215B5E15	Det blev grunden för många av Aragorns rörelser.
+G7126178B	Den vill bli funnen.
+G7E02AF05	När vi valde scener ur filmen att ta med i spelet stack Balins grav verkligen ut som en stark kandidat.
+GF4146E18	Det är ett av de mest minnesvärda ögonblicken i den första filmen.
+GE152213A	Vi ville återskapa stämningen i den mycket starka ljusstrålen på själva graven.
+GB236432D	Det var en utmaning för våra miljömodellerare och ljussättningsspecialister.
+GD3C26DBB	Banorna i byn i Rohan är unika i den meningen att de gav oss en möjlighet att bygga ut områden från filmen.
+G8669E69D	Själva spelbanan ser ut och känns väldigt mycket som filmens inspelningsplatser när det gäller ljussättning,
+GF9B205CF	arkitekturens form och människorna som finns där, men i just det här fallet bygger vi vidare på det
+GB285B32E	och skapar områden på banan där spelaren kan utforska och slåss, som de kanske inte såg i filmen.
+G5E5F1D1C	Det som är så underbart med det här spelet, Sagan om ringen,
+G610E0BE4	är att man får höra de ursprungliga skådespelarnas röster på sin egen skärm  allihop.
+GC6FCAA65	Hjälp! Aragorn! Aragorn! Hjälp!
+G20165D69	Det är otroligt autentiskt, och jag tror att det är riktigt svårt att göra ett spel som bygger på en film.
+GBF3A0A5B	Det här spelet lyckas. Det är väldigt likt filmen.
+GDD010A37	Vi utformade ett mycket dynamiskt musiksystem som återspeglar stämningen i det som händer i spelet.
+G96BEDA9C	En ring att föra dem alla och i mörkret binda dem.
+G91629050	I filmen anfaller Saruman Helms klyfta med tiotusen Uruk-hai.
+G3B702B98	Så vi fick använda andra medel som vi hade till vårt förfogande för att skapa känslan av ett slag.
+GDEFA604D	Med ljudeffekter och ljud får vi det verkligen att kännas som att det finns tusentals orcher på platsen.
+G204351C8	Om någon sätter i spelet och säger till sig själv:
+GEC81BA2D	Herregud! Det här är ju filmen! Då har vi uppnått precis det vi ville.
+G52BF957B	Det här är platsen som jag minns från filmen.
+G571B482E	Jag är där. Jag kan göra något. Nu är det min tur.
+G625B0A6D	Det är så vi vill att spelaren ska känna.
+GB222979D	Var är hästen och ryttaren?
+G2457FF85	Var är hornet som ljöd?
+G8B36CA83	De har dragit förbi som regn över bergen,
+G50095CA7	som vind över ängen.
+G10EB8BCF	Dagarna har sjunkit ned i väster,
+G109A0CCE	bakom kullarna,
+G02628501	in i skuggan.
+G80A942D2	Aragorn!
+GDDEA48AC	Hjälp
+G4C40E774	Tryck på START
+GEE711094	Fortsätt
+GF9202936	Spela igen
+G2E427514	På
+GFC4343CA	Av
+G52E4CD32	Navigera
+G39D074FD	Välj
+GAC3A8B6E	Tillbaka
+G42B46F3C	 2002 New Line Productions, Inc.  The Lord of The Rings och dess figurer, namn och platser,  The Saul Zaentz Company d/b/a Tolkien Enterprises under licens till New Line Productions, Inc.  Med ensamrätt.
+G035F710A	EA GAMES är ett varumärke som tillhör Electronic Arts.
+GBAC3ED5F	Spelkod och vissa ljud- och bildelement  2002 Electronic Arts Inc. Med ensamrätt.
+G0EF5F91F	Nytt spel
+GB8D9D2FD	Ladda spel
+G0BE2A075	Alternativ
+G5D6AEEF7	Felsökningsläge
+G83335327	Bonusmaterial
+G731194FA	Spara spel
+G7BA082D0	Tryck på START för att fortsätta
+G755B3BA1	Handkontrollsinställningar
+G03961FD4	Spelinställningar
+GABEE6EA4	Svårighetsgrad:
+GF065116B	Lätt
+G8D3A16F6	Normal
+GACDD0363	Expert
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Röstvolym:
+G7F04050E	Musikvolym:
+GF30A57F8	Undertexter:
+G64752D2D	Vibration:
+GB3F78571	Spelvolym:
+GED3C9F14	Ljud:
+GB065D5A4	Välj spel att ladda:
+G00FF7920	Välj plats att spara på:
+GC99B6C1E	Välj MEMORY CARD-fack:
+GFB5C0BA2	Xbox-hårddisk
+GD2F916B6	MEMORY CARD-fack 2
+GAEFBDEF3	Avbryt
+GDA714102	Ja
+GB893E04C	Nej
+GE506E266	Är du säker?
+G574C52F2	Är du säker på att du vill köpa den här uppgraderingen?
+G0D91D779	Är du säker? Resultaten från din senaste genomspelning av detta uppdrag går förlorade.
+G1CF7123A	Är du säker? Alla osparade framsteg i detta spel går förlorade.
+GEF04DC5D	Är du säker? Framstegen i detta uppdrag går förlorade.
+GEDF6F861	Är du säker på att du vill skriva över detta spel?
+GF44D8878	Är du klar med att köpa uppgraderingar?
+G1EF3EFE3	Spara spel på hårddisken
+G05163971	Ladda spel från hårddisken
+G8F93A6FE	Välj svårighetsgrad
+G654484DF	Låst
+G5A7CB330	Avklarad
+G8D6AAF13	Ej spelad
+GBE8C099C	Prolog
+GF4FBBE46	Väderklint
+GE7EA3020	Morias portar
+GE13A531D	Balins grav
+G79C1EAD3	Amon Hen
+G51C82E11	Fangornskogen
+G35CCE51F	Rohans slätter
+GAD341B58	Västfolden
+G94ADD008	Rohanpasset
+G9760067E	Klyftmuren
+GF8B38ED5	Den brutna muren
+G644C89AD	Hornborgens borggård
+G69B8B4C2	Orthancs torn
+GBF00F963	Helms klyfta:
+GE34AB2FD	New Line Zoo
+GE132F5FF	Välj en filmsekvens att spela upp:
+G4B3C17B9	Inledning
+GAD303F2A	Avslutning
+G668B98BD	Golv
+G9C7A95F0	Uppgraderingspoäng:
+G4AE44639	4) Ange den angivna kodsekvensen.
+G5374B3F5	Hemliga koder
+GDF7B6B3A	Alltid förödande:
+GFECB245B	2 spelare:
+GCAB16744	Små fiender:
+G587D657D	Alla uppgraderingar:
+G58E34314	Osårbar:
+GF0336180	Slow motion:
+G5A122CB0	Så här anger du en kod:
+G35BC6746	1) Starta ett uppdrag.
+G46DF9919	2) Tryck på START för att pausa.
+G5A1291EE	3) Tryck in och håll
+GEB88B42D	Oändlig hälsa:
+G6AE6FFFE	Oändligt med projektiler:
+GAA29A634	Avsluta uppdrag:
+GB2AE1BCE	Pausläge:
+GAA467E08	Lägg till erfarenhet:
+GEA42298C	Gå upp en nivå:
+G6BA0C403	Återställ hälsa:
+G41D871E0	Återställ projektiler:
+G04DBD06B	Projektiluppgradering:
+GA7A50BB5	Visa uppgraderingar
+GA67DF58D	Avsluta till menyn
+G773B79A5	Gå till nästa uppdrag
+G96540044	Du har misslyckats med uppdraget.
+G5ADDCAC2	Spela uppdraget igen
+G9DD85D6D	Avsluta till menyn
+G730918CA	Försök igen
+GB437BA93	Medverkande
+G798A44A2	Spela uppdraget igen
+G6F46B26E	Välj ett språk.
+G2809E047	Engelska
+GE3AAFF7A	Snabb
+GD0DB46DB	Våldsam
+G9AD854EF	Dödande
+GE83BE834	Special
+GDB34AED9	Kombination
+GDACF8DCA	Köpt
+G125CAC9A	Inte upplåst ännu. Tryck på A-knappen för att fortsätta.
+GDA9711D2	Du har inte samlat tillräckligt med uppgraderingspoäng för att köpa den här uppgraderingen. Tryck på A-knappen för att fortsätta.
+GEB0E0008	eller
+G90A54691	efter parering
+GF5F43483	när liggande
+GFC1C2104	Tom plats
+GB8BCCCB9	Spel 2
+G92BA5250	Spel 3
+G9CCBAB2F	Spel 4
+G76C930C6	Spel 5
+G50C6B65D	Spel 6
+G2AC43BF4	Spel 7
+G34D594D3	Spel 8
+G0ED31A6A	Spel 9
+GBE76BA62	Spel 10
+GE47934CB	Spel 11
+G6ED86859	Inget minneskort (PS2) är isatt. Minst 80 kB krävs för att spara speldata. Vill du fortsätta?
+G87DE26DA	Otillräckligt utrymme på minneskortet (PS2) i MEMORY CARD-fack 1.  Minst 80 kB krävs för att spara programdata. Vill du fortsätta?
+G7118C569	Otillräckligt utrymme på minneskortet (PS2) i MEMORY CARD-fack 2.  Minst 80 kB krävs för att spara programdata. Vill du fortsätta?
+G6804B4C2	Otillräckligt utrymme på minneskorten (PS2) i MEMORY CARD-facken. Minst 80 kB krävs för att spara programdata. Vill du fortsätta?
+G849021EA	Inget minneskort (PS2) i MEMORY CARD-fack 1. Tryck på X-knappen för att fortsätta.
+G59CE2129	Inget minneskort (PS2) i MEMORY CARD-fack 2. Tryck på X-knappen för att fortsätta.
+GC5BD8B5F	Anslut handkontrollen igen och tryck på START för att fortsätta.
+GC2BDD02C	Minneskortet (PS2) i MEMORY CARD-fack 2 är inte formaterat. Formatera minneskortet (PS2)?
+G6B64948C	Din Xbox har inte tillräckligt med lediga block för att spara spel.  Tryck på A för att fortsätta utan att spara eller på B för att frigöra minst
+GEDAB4EA9	Anslut handkontrollen igen och tryck på START för att fortsätta
+G00E55934	Hårddisken har inte tillräckligt med lediga block för detta sparade spel.
+G20A17FB1	block måste frigöras.
+G353AAE58	Formateringen misslyckades! Fel på minneskortet (PS2) i MEMORY CARD-fack 2! Tryck på X-knappen för att fortsätta.
+G9CAF03E3	Det gick inte att spara spelet. Tryck på A-knappen för att fortsätta.
+GCB03752D	Spelet har sparats.  Tryck på A-knappen för att fortsätta.
+GACBFB64F	Sparningen på minneskortet (PS2) i MEMORY CARD-fack 2 lyckades! Tryck på X-knappen för att fortsätta.
+GC7C0454F	Sparar data på minneskortet (PS2) i MEMORY CARD-fack 1. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+G4B14AAB4	Sparar data på minneskortet (PS2) i MEMORY CARD-fack 2. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+G53DAC278	Laddar data från minneskortet (PS2) i MEMORY CARD-fack 1. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+GF144B8B3	Laddar data från minneskortet (PS2) i MEMORY CARD-fack 2. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+G063DD8CC	Det gick inte att ladda spelet. Tryck på A-knappen för att fortsätta.
+GE5BDAC0B	Vill du spara ditt spel?
+GED3A9CCF	Inga sparade spel. Tryck på A-knappen för att fortsätta.
+GAF453999	block.
+GEE649E5A	Minneskortet (PS2) i MEMORY CARD-fack 1 är inte formaterat. Tryck på X-knappen för att fortsätta.
+G81447581	Minneskortet (PS2) i MEMORY CARD-fack 2 är inte formaterat. Tryck på X-knappen för att fortsätta.
+GB36F8F0C	Läser data från minneskortet (PS2) i MEMORY CARD-fack 1. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+G97EC5687	Läser data från minneskortet (PS2) i MEMORY CARD-fack 2. Ta inte ut minneskortet (PS2), återställ inte och stäng inte av konsolen.
+G8E8AF6C1	Det är problem med skivan du använder. Den kan vara smutsig eller skadad.
+G9CB8DFF0	Uppdrag 1
+G0EC04F2B	Uppdrag 2
+GE8BDD4C2	Uppdrag 3
+G5AC543FD	Uppdrag 4
+G34C2C994	Uppdrag 5
+GA6CA38CF	Uppdrag 6
+G80C7BE66	Uppdrag 7
+GF2CF2DA1	Uppdrag 8
+GCCCCB338	Uppdrag 9
+GA1F545C0	Uppdrag 10
+GC7F7C029	Uppdrag 11
+GEDFA3A92	Uppdrag 12
+G13FCB4FB	Uppdrag 13
+GFBA35200	Uppdrag A
+G6DAAC13B	Uppdrag B
+G47A846D2	Uppdrag C
+GB9AFB60D	Uppdrag D
+G0111B4C5	Erfarenhet från uppdraget:
+G10CB2024	Betyg för uppdraget:
+GB8F11F62	Totalt antal uppgraderingspoäng:
+G94649BD6	Perfekt
+GE424E811	Utmärkt
+G70E9184E	Bra
+GE98543F1	Godkänt
+GF9792B5F	Dåligt
+G4DE9139C	Skicklighet
+GB525F096	Stark
+G5F8C23CD	Försvar
+G8673311D	Anfall
+G7829DFB2	En snabb kombination.  Effektiv mot mindre fiender utan sköld.
+G63E6B4FD	En kraftfull kombination som slår sig igenom hinder eller krossar fiendens sköldar.
+G406CD62A	Tryck in och håll vänster avtryckare för att använda.  Avfyra med A-knappen (håll ned för att öka skadan).
+G7651B078	Denna stöt gör slut på varje nedslagen fiende.
+G09258F36	Slå bort fiender från dig och utom räckhåll.
+G36E84E05	Blockerar fiendens anfall och projektiler.
+G074FC78D	Ett förödande anfall.  Tryck på och håll Y-knappen för att använda.
+GE5C8740D	Öka din hälsa permanent.
+G791AEDAB	Rusa framåt och tvinga fiender utan sköld till marken.
+GF4A5485B	Anfall medan du reser dig och överraska fienderna.
+GC0B8F80A	En mycket effektiv kombination för att slå ut fiender utan sköld.
+G6CBE68E9	Mycket effektiv för att göra slut på fiender med sköld så snabbt som möjligt.
+GD7BB121B	KOMBINERAT DRAG: Döda en anfallande vätte direkt.
+G4A59663E	Rohirrims hullingförsedda pilar avfyras som med Dúnedainbågen och gör allvarlig skada.
+G96A8AB86	Öka din hälsa permanent.  (Kräver Förvaltarnas styrka)
+GED26DEB8	Rusa framåt från långt håll och tvinga fiender utan sköld till marken. (Kräver Rusningsanfall)
+GB4790643	Såra, slå ned och träffa din fiende med detta kombinationsanfall.
+G9709901B	Använd denna kombination för att träffa en fiende utan sköld, göra slut på honom och snabbt träffa nästa.
+G066B80A4	KOMBINERAT DRAG: Döda en anfallande orch direkt.
+GB54F0B8A	Öka din hälsa permanent.  (Kräver Isildurs styrka)
+G1C742C09	Ett ännu mer förödande anfall.  (Kräver Utbygdsjägarens raseri)
+G9F299E6A	Öka skadan från ditt snabba anfall.
+G2A888253	Såra, slå ned och gör sedan slut på mäktiga fiender med denna kombination.
+GEF4043FD	Öka din hälsa permanent.  (Kräver Elendils styrka)
+GF3D48718	Detta förödande anfall sätter eld på flera fiender.  (Kräver Vildmarkens vrede)
+GDAE09290	Gondors järnpilar gör fruktansvärd skada.  (Kräver Rohanbåge)
+GBD1ED2AE	KOMBINERAT DRAG: Döda en anfallande Uruk-hai direkt.
+G6DF8DC34	Använd mot en mäktig fiende för att krossa hans sköld, slå honom till marken och träffa honom.
+GB1BCB280	Ingenting
+GE225A1EC	Tryck in och håll vänster avtryckare för att använda.  Kasta med A-knappen (håll ned för att öka skadan).
+GFF3FB1CE	Detta yxhugg gör slut på varje nedslagen fiende.
+G81A89461	Öka din hälsa permanent.  (Kräver Klippans kraft)
+GF266C7E6	Öka din hälsa permanent.  (Kräver Järnets kraft)
+G2FCD00C0	Rusa framåt från långt håll och tvinga fiender utan sköld till marken.  (Kräver Rusningsanfall)
+G00247254	Öka din hälsa permanent.  (Kräver Skyddsrunan)
+GA505D28C	Öka din hälsa permanent.  (Kräver Balins kraft)
+G34C62FC4	De rakbladsvassa Moriayxorna kastas som Ereboryxorna och gör ännu mer skada.
+G57901BB9	Ett ännu mer förödande anfall.  (Kräver Dvärgaraseri)
+G8840F62F	Öka din hälsa permanent.  (Kräver Glóins kraft)
+G361F0511	Detta förödande anfall sätter eld på flera fiender.  (Kräver Bergens vrede)
+G219C0125	Dessa blad med eggar av mithril orsakar fruktansvärd skada.  (Kräver Moriayxor)
+G9986DAAB	Öka skadan från ditt våldsamma anfall.
+G11BF2FC5	Vattnadals askpilar avfyras som med Mörkmårdens långbåge och gör ännu mer skada.
+G7A9893BB	Lothlóriens förtrollade pilar gör fasansfull skada.  (Kräver Vattnadals långbåge)
+G42E47239	Dessa magiska pilar sätter eld på dina fiender.  (Kräver Lothlóriens långbåge)
+G5BAB8220	Öka din hälsa permanent.  (Kräver Celeborns makt)
+G39265CB0	Ett ännu mer förödande anfall.  (Kräver Alviskt raseri)
+G084B6AEF	Dessa pilar tränger igenom och skadar alla fiender i sin väg.  (Kräver Drakeldspilar)
+GB1D19C39	Öka skadan från varje pil du avfyrar.
+G06E26BE1	Trippelhugg
+G20A303C1	Dubbelhugg
+GCB8F4087	Dúnedainbåge
+G3F6F3751	Skuggslag
+GBE8C73E9	Stridsspark
+G5660E3B0	Svärdsparering
+GDF332280	Utbygdsjägarens raseri
+GB8AB07B9	Förvaltarnas styrka
+G187F8CC1	Rusningsanfall
+G86E487F5	Uppresningsanfall
+GF7D6DC76	Isildurs snabba skräck
+GB34DCC39	Isildurs befrielse
+GC9303634	Vättebane
+G3A0786A5	Rohanbåge
+G8B17B5C5	Isildurs styrka
+G579A1927	Stormanfall
+G207C1523	Isildurs dödsstorm
+G6C2653E9	Isildurs gambit
+G2A3BA153	Orchbane
+GA28B29AA	Elendils styrka
+G7D213CCE	Vildmarkens vrede
+G006BF315	Svärdsmästare
+G6B68444D	Isildurs krigsrusning
+G3B0A3720	Argonaths styrka
+G78BAB3BC	Númenors vrede
+GCEDAD8B0	Gondorbåge
+G3BE146BB	Sarumans bane
+G701FD063	Isildurs dom
+G0251EC9F	Ereboryxor
+G96C77DAD	Yxstöt
+GDD4B6691	Yxparering
+GADD20DD0	Dvärgaraseri
+GB0D95BC6	Klippans kraft
+G4FB6CF69	Järnets kraft
+G5F017E32	Balins snabba skräck
+GDFD7CADD	Balins befrielse
+GDF1B571B	Skyddsrunan
+G9B37EDE7	Balins dödsstorm
+GCDB1A82D	Balins gambit
+G2DEF1D03	Balins kraft
+GE89D3658	Glóins kraft
+G31B06C3A	Moriayxor
+GADFB76EF	Bergens vrede
+G75612F09	Balins krigsrusning
+G8CE2E527	Khazad-dûms kraft
+GE4E87FCC	Morias vrede
+GA16173AB	Dimmiga bergens yxor
+G24288EA5	Kungarnas yxmästerskap
+G45AAD667	Balins dom
+GB752504B	Mörkmårdens långbåge
+GA018F71A	Knivparering
+G0DCE9941	Alviskt raseri
+G4A27D7DF	Celeborns makt
+GE0EC06AA	Vattnadals långbåge
+G76059454	Elronds snabba skräck
+GE8C0678B	Elronds befrielse
+GE9F2F2C9	Lothlóriens långbåge
+G5FE47D01	Elronds dödsstorm
+G4B1902CB	Elronds gambit
+GB3FB8DDE	Drakeldspilar
+G4A61DECC	Galadriels makt
+G204DE538	Gil-galads vrede
+G5B85BC6F	Elronds krigsrusning
+GBDF43860	Mithrilpilar
+G4B69DAC6	Alviskt bågmästerskap
+G43AB31C1	Elronds dom
+GEAA8149B	Nivå
+G11886F39	Parera för att blockera fiendens anfall och avvärja pilar.
+GE4E78CFD	Parera
+G3226B277	Tryck in och håll vänster avtryckare för att byta till ditt avståndsvapen.  Tryck på A-knappen för att avfyra.  Sikta med vänster styrspak.
+GFF931564	Avståndsvapen
+G9A309E3D	Avfyra
+GC4AB2A6D	Använd ett snabbt anfall för att träffa fiender utan sköld.
+G5C64BDED	Använd det våldsamma anfallet för att krossa fiendens sköldar.
+G4B1F5E2B	Våldsamt anfall
+G12993772	Snabbt anfall
+G5550F308	Samla erfarenhetspoäng för att höja din figurs nivå och köpa värdefulla uppgraderingar.
+GD5F0D645	Intjänade erfarenhetspoäng
+G109A17A7	Använd avancerade kombinationer och undvik att bli träffad av fiender för att fylla skicklighetsmätaren och få maximalt med erfarenhetspoäng.
+GDB22979F	Skicklighetsmätare
+GF7AF01B8	Sikta
+G552324EC	Hoppa bakåt
+G3962B27E	Dödsstöt
+G819AB384	Slå tillbaka
+GB5FE5915	Avfyra/snabbt anfall
+G1438BF1E	Rörelse/sikte
+GCDD8B9EF	Paus
+G63E0263C	Intervju
+GA970F7F6	Peter Jackson och Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Sagan om ringen
+GF0462ED4	Så gjordes tv-spelet
+G0DB34230	Exklusiva filmklipp
+G9DF19E57	'Sagan om ringen'
+G1704CE51	Produktionsfoton
+G330E63EE	Fangorn och Orthanc
+GD722C1B8	Rohan och Helms klyfta
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Spela som Aragorn
+GA8934934	Spela som Legolas
+G84C57E95	Spela som Gimli
+G46EA0007	Spela som Isildur
+G5689E41F	Hemligt uppdrag
+G7F2C7A4C	Spela som hemlig figur
+G96AF0882	Konceptkonst
+G8813AE29	Klara Morias portar för att låsa upp
+G4EEEB554	Klara Balins grav för att låsa upp
+G3182CC3A	Klara Amon Hen för att låsa upp
+G54747798	Klara Fangornskogen för att låsa upp
+G5D796BA6	Klara Rohans slätter för att låsa upp
+G758A2B31	Klara Västfolden för att låsa upp
+GD1B66361	Klara Rohanpasset för att låsa upp
+GEC95C099	Klara Helms klyfta: Klyftmuren för att låsa upp
+G4F6E6B62	Klara Helms klyfta: Den brutna muren för att låsa upp
+G7E4B2F5F	Nå nivå 5 med Aragorn
+GA825B93E	Nå nivå 5 med Legolas
+GD08EF3EF	Nå nivå 5 med Gimli
+G060F3A0C	Klara Helms klyfta: Hornborgens borggård och nå nivå 10 med Aragorn
+G9C00EBDD	Klara Helms klyfta: Hornborgens borggård och nå nivå 10 med Legolas
+GCA301FEC	Klara Helms klyfta: Hornborgens borggård och nå nivå 10 med Gimli
+G2A4097F8	Klara det hemliga uppdraget med valfri figur
+GF80714A8	Klara det hemliga uppdraget med den hemliga figuren
+GF281A415	Peter Jackson och Barrie Osborne pratar om filmen och spelet
+GEF6D5A30	Elijah Wood berättar om att spela Frodo i tv-spelet 'Sagan om ringen'
+G1B7C2E20	Ian McKellen pratar om att spela Gandalf i tv-spelet 'Sagan om ringen'
+G100A11D4	En titt bakom kulisserna på hur tv-spelet 'Sagan om ringen' gjordes
+G14A8622F	Foton av figurer och miljöer från 'Sagan om ringen'
+G228511D6	Foton av figurer och miljöer från Fangorn och Orthanc
+GFDF064C7	Konst inspirerad av 'Sagan om ringen' av John Howe och Alan Lee
+GAAE1A0C0	Foton av figurer och miljöer från Rohan och Helms klyfta
+G6CEBDAE1	Viggo Mortensen berättar om att spela Aragorn i tv-spelet 'Sagan om ringen'
+G6824CF13	Orlando Bloom pratar om att spela Legolas i tv-spelet 'Sagan om ringen'
+G84770794	John Rhys-Davies berättar om att spela Gimli i tv-spelet 'Sagan om ringen'
+G775EAFA1	Hemliga koder som låser upp dolda funktioner i tv-spelet 'Sagan om ringen'
+G640E4463	Ändra val
+G6D02770F	Välj
+GE5EE10E6	Gå tillbaka
+GA75BE7EE	Ändra val
+GE7B4EE86	Avsluta till huvudmenyn
+G47C91DD4	Byt bild
+GE445F6CE	Använd dina uppgraderingspoäng för att köpa förbättringar till din figur.
+GB2D2B6DB	Döda dem allihop!
+GFD9FFC0E	Fäll den här varelsen med snabba anfall!
+G7BD97E94	Använd ditt våldsamma anfall för att krossa hans sköld!
+G62FC14DC	Här kommer de! Döda dem allihop!
+GA3F97A90	Låna mig era svärd!
+G88F3FEA7	Ugh! Dö, varelse från Mordor!
+G4888927E	För den vita staden!
+GB5DB8B33	Det är ute med dig!
+G91F156A0	Försvinn, skuggans varelse!
+G8F5E1C57	Dö, Saurons yngel! Dö!
+GEF59BEBD	Driv tillbaka dem!
+G263E18E0	Framåt!
+G8715790C	Håll stånd!
+G09E491AC	Dö!
+GC9D8887A	Gondors avskum!
+GD909145B	Du, dö!
+G8524085B	Ni kan inte döda oss alla!
+GFA0F31A8	Dö, avskum!
+G6949F8FB	De är för många, du måste försvara dig!
+GAB41028F	Försvara er, herre.
+GC99D9EF1	Snabba anfall kommer att besegra den här.
+G8BC62719	Våldsamma anfall kommer att spräcka de där sköldarna.
+G24319240	Världen har förändrats.
+G6FC7E51E	Jag känner det i vattnet.
+G586AE929	Jag känner det i jorden.
+GA0D1D398	Jag känner doften av det i luften.
+G20A7EC8F	Mycket av det som en gång var är förlorat,
+G9A5EEA48	för ingen som nu lever minns det.
+G991F588A	Det började med smidandet av de mäktiga ringarna.
+GDCCA686B	Tre gavs till alverna 
+G64D4928C	odödliga, de visaste och fagraste av alla väsen.
+GC38B0B40	Sju till dvärgafurstarna,
+GE4E9DA85	stora gruvarbetare och hantverkare i bergssalarna.
+G8EA28015	Och nio ... nio ringar gavs till människornas släkte,
+G5415D8A9	som framför allt annat åtrår makt.
+GCAF2B8E3	För i dessa ringar var styrkan och viljan att styra varje folk bunden.
+GEAB51D48	Men de blev alla bedragna ...
+G9968C959	för ännu en ring smiddes.
+G6DF9A86C	I Mordors land, i Domedagsbergets eldar,
+GD5CC3D06	smidde Mörkrets herre Sauron i hemlighet en härskarring för att kontrollera alla de andra.
+GA5AF65D9	Och i denna ring hällde han sin grymhet, sin ondska och sin vilja att härska över allt liv ...
+GF9C8C37E	Ett efter ett föll Midgårds fria länder under Ringens makt.
+GD7B567A4	Men det fanns några som gjorde motstånd.
+G9673067D	Ett sista förbund mellan människor och alver drog ut mot Mordors arméer,
+G9292CF8B	och på Domedagsbergets sluttningar stred de för Midgårds frihet.
+G9C449910	Det var i detta ögonblick,
+G4E624CE3	när allt hopp hade slocknat ...
+G8B971AFC	... som Isildur, kungens son, tog upp sin faders svärd.
+GA0976A20	Sauron, fienden till Midgårds fria folk, besegrades.
+GCE1FEBD6	Ringen gick till Isildur, som hade denna enda chans att förgöra ondskan för alltid.
+G4653B8E6	Men människornas hjärtan är lätta att fördärva.
+GF1F12CD3	Förstör den!
+G7A59BC32	Nej.
+GEDAFB589	Jag är Isildurs arvinge, inte Isildur själv. Mitt öde är mitt eget.
+GECD0FC9B	Till Helms klyfta! Brego, spring!
+GE526C94A	Frodo! Håll dig undan från dem!
+GE5AC368C	Hjälp! De är överallt!
+GE18CFED5	Vi kommer att finna dig.
+G754CEC13	Tillbaka, vidriga varelse!
+G0EE492EC	De söker Ringbäraren! Håll er nära!
+GA236A198	Du kan inte stå emot, halvling.
+GB0F6888B	Vi är förlorade.
+GABCB70B5	Hela Isengard har tömts.
+GD4A9E9B3	Det är en armé fostrad för ett enda syfte: att förgöra människornas värld.
+G65599300	Mörkrets herre närmar sig.
+GC6B5C82C	Bagger ...
+GDE3725D0	Ringvålnader! Tillbaka!
+GDB2A2A63	Vidstige!
+GDF3A925F	Låt honom skonas. Rädda honom.
+G4867AD04	I Vattnadals fristad visade den minste av oss det största modet.
+G3505351D	Jag tar den!
+G5B8CB3F8	Och ett brödraskap smiddes.
+GF6138FE1	Jag tar Ringen till Mordor!
+GA7DC204A	Fast ...
+G2FFEE7D1	... jag hittar inte vägen.
+GD051F7C5	Jag ska hjälpa dig att bära denna börda, Frodo Bagger ...
+G82079845	... så länge den är din att bära.
+G8308B082	Du bär allas vårt öde, lille vän.
+G32030F3F	Och du har min båge.
+G7A19CD10	Och min yxa.
+G18A439E8	Ge oss ringen, halvling.
+G5E09B681	Ringen är vår.
+GC7625599	Kom till oss, halvling.
+GB2DCED15	Hjälp mig!
+GF8B88DB9	Kom och hjälp mig!
+G111D0DD5	Jag håller på att dö.
+G439D87CA	Det här landet har förändrats.
+GB5DB841A	Vi väntar här tills vägen framåt verkar säker.
+GF0EB3761	Vi har inte hört något från Moria på många år.
+G3A9580D6	Vi skulle kunna ta oss igenom Morias gruvor.
+G852B83DE	Min kusin Balin skulle ge oss ett kungligt välkomnande.
+G48D6F333	Se upp!
+G20BEF03C	Fort! Den här vägen!
+G37B7E741	Vidrigt odjur.
+G70A83B75	Det här är Durins dörr, Morias herre.
+GE6E19D64	Så, Gandalf, du försöker leda dem över Caradhras.
+GF7BC40D4	Och om det misslyckas 
+GC7F3ECF5	vart ska du då gå?
+G4F7AA217	Till Moria!
+G0F8A9576	Säg vän och stig in.
+GCB3668DA	Mellon.
+G64134F99	Nu har vi bara ett val.
+GE57BDBA1	Vi måste möta Morias långa mörker.
+G3CA10A85	Mordors avskum!
+GC753F514	Bakhåll!
+G66D5EE9E	Det är orcher. Många.
+G8AB8C148	När det kniper, skicka in en dvärg!
+G6F4359B4	Bra träffat, Gimli!
+G43E71D7A	Jag spanar i förväg för att hitta en väg igenom.
+G0F5D4F40	Varelse.
+G0BFC06A5	Det var här vi skulle finna mycket mer än Balins grav, Morias herre.
+G79CBD185	Vi har bommat portarna. Trummor i djupet.
+G676CE560	Vi kan inte ta oss ut.
+GC2C2532E	Tillbaka, era själlösa bestar!
+G41169039	Legolas! Vi behöver din båge!
+GED8A660A	Skynda dig, Gimli!
+G548B1E16	Försvinn, vidriga odjur!
+G8B6C996D	Jag tar honom!
+GD624A593	Bakom dig!
+G22876487	Håll stånd!
+G6E72BC38	Tillbaka, era varelser!
+G98FB35D8	Här borta!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	De är för många!
+GEB38BB38	Hur ska vi kunna stoppa dem?
+GDB1D4894	Jag kan inte bekämpa dem!
+GCA82C10C	Jag kan inte hålla dem stången!
+G839F36D1	Gör slut på dem med din båge!
+G426819B7	För Balin!
+G32A709EE	Nu tar jag dig!
+G7BC2A45C	Frodo!
+GE0A9DD2D	De är för många!
+GB502E0B9	För Mörkmården!
+G5C8B1856	Jag ska skära maskhål i din mage!
+GF8D92047	Ta dem allihop!
+GDFB1C64C	Krossa dem!
+G5AF9060B	Tillbaka till skuggan!
+GF1BFC8A0	Aragorn! Jag behöver din klinga!
+GF83070F8	Till mig, Gimli! Här borta!
+G2EC65D74	Stålsätt er!
+GCD82317C	Skjut!
+GCEA41230	Sprid ut er! De får inte omringa oss!
+G3AD812AF	Hitta halvlingen!
+G6B59AA20	Frodo bär allas vårt öde!
+G4B4B5CA5	Vi måste försvara honom!
+G1881769E	Vid hans ära, du ska få betala!
+G743E1105	Moria hade varit en mörk färd för vårt brödraskap.
+G32DCF8A9	Fly, era dårar!
+G10D542AD	Neeeeeej!
+GD10EAA8A	Uppdraget balanserar på en knivsegg.
+GF997012E	Avvik det minsta, och det misslyckas.
+G01C6A95F	Men det skulle bli ännu mörkare, för vårt brödraskap höll på att splittras.
+G212FEF60	Jag skulle ha följt dig till slutet, ända in i Mordors eldar.
+G960898CD	Spring!
+GD941582B	Var i frid ...
+G9D8421F1	... Gondors son.
+G60BC6BA4	Vi måste besegra de här Uruk-hai så att Frodo kan fly!
+GF0E0DD02	Boromir!
+G1C9C2949	Lite hjälp här, alv!
+GB1E7FF01	Uruk-hai! Anfall!
+G62308F86	Det här ska bli ett nöje!
+GA7F87EAC	Tillbaka till hålorna som fött er.
+G06BA8520	De gick den här vägen, kom.
+G817C5460	Men deras spår slutar här. Vi måste dela upp oss för att hitta dem snabbt.
+G934A6365	Aragorn, det finns något där ute.
+G32456D68	Vad ser du, Legolas?
+G090A57A6	Den vite trollkarlen.
+G3BE10384	Saruman.
+GF471A310	Trots Boromirs hjältemod tillfångatog Sarumans tjänare medlemmar av vårt sällskap.
+G9EB3E2D9	Men vi tänkte inte överge våra följeslagare åt plåga och död.
+GC9337F85	I dagar följde vi deras spår ...
+G1A87CFBD	... till slut ledde det oss till Fangornskogen.
+G7754D2C1	Den här skogen är gammal ...
+G9261B17A	... mycket gammal.
+GF7DCBBD1	Den är full av minnen ...
+GC4192431	... och vrede.
+G92086B9D	I den stora skogen möttes många vägar.
+G6F680400	Det kan inte vara möjligt.
+G7A0AC815	Nu finns det ett förbund mellan de två tornen  Orthanc och Barad-dûr.
+GF36A1977	Du behövs på annat håll.
+GA926AFE5	Kriget kommer till Rohan.
+GC5293984	Nu blir det lite skoj!
+GCF6954E1	Jag har sett det förut, men aldrig så här.
+G2E930B75	Vårt enda hopp är att stå enade!
+GFD82D6F4	Sarumans styrkor för märkliga sprängladdningar genom staden. Hjälp oss att förstöra dem!
+G86FA279C	Håll dem vid porten!
+G7B48AD72	De få av oss som kan strida marscherar mot Helms klyfta.
+GD55B6BE3	Där ska Rohans framtid leva eller dö.
+G2256A18D	Se upp för sprängladdningarna!
+GE0BD0D44	Ja! Ge dem en smak av eld!
+G82C8009F	Det borde sakta ner dem!
+GA0C82879	Vad har vi här?
+G751859FC	Vad är det här?
+G06637EF0	Vi måste förstöra de här sprängladdningarna!
+GABF94061	De där sprängladdningarna måste förstöras.
+G13114F1E	Vad kan det här vara?
+G5B2AF650	Det här kan komma till nytta.
+G14659B9A	Det här verkar värdefullt.
+G418ECC01	Här. Det här behåller jag.
+G136EC46C	Det här är värt att bära med sig.
+G360BBC1D	De drivs av Sarumans galenskap och Mörkrets herres vilja.
+G4840EFEC	Mer fyrverkerier? Ha! De tänker göra lik av oss allihop!
+G19910876	Nu kommer de efter oss!
+G08EB8FDB	Det går inte att ta sig förbi.
+G6FED1000	Jag får hitta en annan väg.
+G68F91872	Den här byn brinner som torrt fnöske!
+G57BD9573	Mycket användbart.
+G424E3FF5	Det ska nog göra susen!
+G501ABC20	Stå fast!
+G31FDA576	De översvämmar det här området också!
+GB60A7265	Vi var inte ensamma om att försvara Rohan.
+GA48B596C	Kungens garde kämpade sig också fram till Helms klyfta.
+G65866A2E	Du har gjort allt du kan här.
+G115A6D12	De överlevande kommer att bege sig till Helms klyfta.
+GC07CBB0E	Du har fortfarande arbete att göra. Jag återvänder till dig när tidvattnet vänder.
+G63B48C52	De har brutit igenom!
+GAAD29572	Snälla! Nej! Nej! Nej!
+G589F2E2F	Vi måste rädda alla vi kan, annars faller den här byn.
+GE1654ECA	Innan vår långa färd förde oss till Edoras ...
+G97FC9F74	... var ditt folk redan i stor fara.
+GB52DB0C9	Skona mig!
+GDDA274AE	Snälla! Skona mig!
+GA354A5CD	Aaah! Nej!
+G1C74FEB5	Nej!
+G946E2F3A	Nej! Nej! Låt bli!
+GF46D4AC5	Nej! Nej! Nej!
+G1BD76207	Få ut oss! Skynda!
+GE57CB50F	Skona mig, jag ber dig!
+G716689E1	Skydda oss!
+G6295F93F	Rädda mig! Snälla, rädda mig!
+GFA27E38F	Aaaaaah! De bränner oss levande!
+G25B702F8	Låt mig leva! Snälla!
+GDE034FBB	Du måste fortsätta.  Jag behövs på annat håll.
+G898F1CFF	Få dem att frukta Isengards vargar!
+G04FC403B	Vi kunde inte låta de här varelserna nå flyktingarna.
+GD8C5307E	Ditt folk försvarades, men vi betalade för det med många liv.
+G4FD6FE99	Jag förlorade nästan mitt eget.
+G753DFA73	Så har vi alla, längs olika vägar, kommit till fästningen Helms klyfta för att göra ett sista motstånd.
+G932478E9	Döda nu den där!
+GF940F960	Ja, mina sötnosar!
+G646F5FC4	Våra vargar ska kalasa i kväll!
+G948FC6FF	Lek inte med honom!  Döda honom!
+G99617AA4	De har dragit sig tillbaka.  Det är över för den här gången.
+G4A0F838F	Jag har nitton!
+GC16105A6	Då står vi lika.
+GAC4FD1F9	Det får vi se.
+GF71FBCA2	Jag har två.
+G641CA89C	Det finns nog för oss båda, Gimli!
+GF4B76D82	Vi måste hålla Saurons blick riktad mot oss  hålla honom blind för allt annat som rör sig!
+G5B04C967	Tillbaka!
+G3487D102	Bort från muren!
+G8B575855	Orcherna är uppe på muren!
+GCE3C16C0	Jag är uppe i sjutton!
+G3D052135	Sök skydd!
+G05C9D273	De skjuter på oss igen!
+G4941BF74	Ta ner den där stegen innan vi blir överrumplade!
+G265760A3	Ner!  Ner med er!
+G2E8173A8	Vi kan inte låta dem komma nära de glittrande grottorna!
+G36DE1341	Aldrig har jag sett sådant yxarbete, mäster dvärg.
+G80FBF437	Inte jag heller sådan bågskicklighet.
+G3F35FF0E	Men de reser sig aldrig igen efter att jag har träffat dem.
+GEC633822	Vårt försvar är överrumplat! Kvinnorna och barnen blir instängda!
+G17070638	Få in dem i Stora salen!
+G5CAB82D3	Vi ska hålla dem här, eller vid borgen!
+GFFC47594	Vi har hållit dem. Kvinnorna och barnen är i säkerhet  för tillfället.
+GBD5794D5	Vi kan inte hålla dem längre! In i Stora salen!
+G088ED5E4	Vi kan inte hålla dem!
+G7C6E3511	Sauron och Saruman drar åt snaran.
+G7B236705	Men trots all deras list har vi en fördel.
+GFCAC9515	Ringen förblir dold.
+G1C7DF558	Och att vi skulle försöka förgöra den har ännu inte föresvävat dem ens i deras mörkaste drömmar.
+GB72B409D	Och så rör sig fiendens vapen mot Mordor i händerna på en hobbit 
+G86CED6F6	varje dag för den närmare Domedagsbergets eldar.
+GD9BB4CD5	Sauron fruktar dig, Aragorn.
+GDD966B5E	Bågskyttar på muren!
+G6A122B51	Backa! Barrikaden håller på att falla!
+G427F5206	Skynda, mäster dvärg!
+G113213B2	Gå till Legolas, jag håller dem här!
+GA7B95A20	För Gondor!
+G7C696E8A	Aragorn är i underläge! Till honom!
+GFC98A99D	Vår alvvän behöver en hjälpande hand.
+G66A680C0	Uruk-hai!
+G8968245E	De håller på att krossa barrikaden!
+G428EE07E	De är inne i borgen. Vi är förlorade!
+GFAE8490C	NEEEEEEJ!!
+G63F31F0F	Ditt slut är nära.
+GE8B9DB2E	Du har valt smärtans väg!
+G910D7B12	Din dåre.
+G58E8BBAA	Det är dags för dig att sluta.
+GD8425223	Du trodde väl inte att en trashank till utbygdsjägare kunde mäta sig med min vilja? Jag står bortom din makt.
+G1A989E68	Du ska få betala för ditt högmod.
+G0079D300	Du trodde inte att en dvärg kunde mäta sig med Sarumans vilja. Det finns ingen som kan det.
+GFB1E1C33	Trodde du på allvar att en alv kunde mäta sig med Saruman? Ingen kan det, och ingen borde ens våga.
+GCB4F521C	Rohirrims hullingförsedda pilar avfyras som med Förvaltarbågen och gör allvarlig skada.
+G906620AF	Öka din hälsa permanent.  (Kräver Denethors kraft)
+GE4F990F3	Ett ännu mer förödande anfall.  (Kräver Gondors raseri)
+G55B83821	Öka din hälsa permanent.  (Kräver Gondors styrka)
+GD4900EBD	Detta förödande anfall sätter eld på flera fiender.  (Kräver Gondors vrede)
+GF1EE1785	Förvaltarbåge
+GC7DFC68A	Gondors raseri
+G26838C80	Gondors horn
+G948EF2DD	Hövitsmannens stånd
+GC354B788	Denethors kraft
+G2675AC6D	Minas Tiriths stormanfall
+G3A16134F	Förvaltarens gambit
+G7C6E9536	Gondors styrka
+G909BDBD3	Gondors vrede
+GBCA2DB1D	Vita tornets rusning
+GA70E206F	Ståndet vid Amon Hen
+GECE9E935	Spela som Boromir
+G2BAAD5AF	Tryck in och håll vänster avtryckare för att använda.  Kasta besvärjelsen med A-knappen (håll ned för att öka skadan).
+GF2DB6139	Naryas flamma kastas som Trollkarlsljus och bränner fiender med allvarlig skada.
+G4E51B4E3	Öka din hälsa permanent.  (Kräver Istaris styrka)
+G701450DF	Öka din hälsa permanent.  (Kräver Olórins styrka)
+G876BFE80	Ett ännu mer förödande anfall.  (Kräver Maiaraseri)
+G554AF8D3	Öka din hälsa permanent.  (Kräver Naryas styrka)
+GF20F1105	Detta förödande anfall sätter eld på flera fiender.  (Kräver Trollkarlens vrede)
+GE86497FB	Istaris vita eld bränner fruktansvärt. (Kräver Ringeld)
+G5D1DA1B0	Trollkarlsljus
+GE4245C5B	Stavparering
+G68852FD1	Maiaraseri
+G63891384	Istaris styrka
+G3023E8DD	Anors flamma
+G03053C48	Du kommer inte förbi
+G44E88937	Ringeld
+G31781C88	Olórins styrka
+GC67FABAE	Skuggfaxes stormanfall
+GB28BAB38	Den grå pilgrimen
+GBB647C84	Naryas styrka
+G3A1959EB	Trollkarlens vrede
+G910A4D18	Glamdringmästare
+GE54BB6DF	Mithrandirs rusning
+G80CB05F7	Den vites styrka
+G5500602D	Olórins vrede
+GB3B8BA9A	Vit eld
+G4D3F3799	Maians vrede
+GB06CD44C	Spela som Gandalf
+GD63AEB69	Tryck in och håll vänster avtryckare för att använda.  Slunga med A-knappen (håll ned för att öka skadan).
+GF1500B18	Vassa flintor från Brandyvin kastas som Fylkestenar och gör allvarlig skada.
+G1594107A	Öka din hälsa permanent.  (Kräver Fylkets styrka)
+G223FB1F4	Öka din hälsa permanent.  (Kräver Bilbos styrka)
+G419FBE06	Ett ännu mer förödande anfall.  (Kräver Hobbitraseri)
+G549E8839	Öka din hälsa permanent.  (Kräver Samvis styrka)
+G3E7B6E97	Detta förödande anfall sätter eld på flera fiender.  (Kräver Fylkets vrede)
+G5DBA6F26	Alvvälsignade stenar gör fruktansvärd skada.  (Kräver Flintskott)
+G586DFFA8	Fylkestenar
+GAF333BB7	Hobbitraseri
+GA30AB0B5	Fylkets styrka
+G5B952654	Sticks bett
+G3F0B7A46	Ringbärarens vilja
+GE7A5F0EC	Flintskott
+G97512A2B	Bilbos styrka
+G4F6E34B0	Baggers stormanfall
+G8AFDEEE2	Hobbitlycka
+G9AE8326E	Samvis styrka
+G5FECDC01	Fylkets vrede
+GB7F9A847	Mästare med Stick
+GD629F714	Tukisk rusning
+G31486B52	Baggershus styrka
+G4023054B	Sticks vrede
+GD48B81F2	Alvstenar
+G371FFFDE	Mithrilståndaktighet
+G031E765B	Spela som Frodo
+G63C78123	Orthancs hullingförsedda pilar avfyras som med Isengardbågen och gör allvarlig skada.
+G266F9F27	Öka din hälsa permanent.  (Kräver Isengards styrka)
+G4451D279	Öka din hälsa permanent.  (Kräver Sarumans styrka)
+G2DE635F5	Ett ännu mer förödande anfall.  (Kräver Urukraseri)
+G4D25FA2B	Öka din hälsa permanent.  (Kräver Orthancs styrka)
+G055C2C2B	Detta förödande anfall sätter eld på flera fiender.  (Kräver Isengards vrede)
+G478E4DB1	Isengards svarta pilar gör fruktansvärd skada.  (Kräver Urukbåge)
+GB0EED2A6	Isengardbåge
+G13D5F1B3	Klingparering
+GCC2F9E7C	Urukraseri
+GF496EAA0	Isengards styrka
+GC727C10B	Lurtz jakt
+G73D0C070	Sarumans vilja
+GD64B9B56	Urukbåge
+G9E8D350E	Sarumans styrka
+G6426C642	Krigarurukens stormanfall
+GCC3C5342	Slaktarens gambit
+G0DEF3FCC	Orthancs styrka
+G0EBAA8C5	Isengards vrede
+GFC62112E	Mästerslaktare
+GEE7780E5	Isengards stormning
+G838B10AC	Uruk-hais styrka
+GF44614A3	Sarumans vrede
+G45DC8B08	Svarta bågen
+G4F638CF6	Rohans bane
+G9E606E3B	Den förste urukens dom
+GE31550F8	Lurtz
+G981416DE	Spela som Lurtz
+G6F22BB2E	Vattnadals pilar avfyras som med Alvbågen och gör allvarlig skada.
+GCA4A15A1	Öka din hälsa permanent.  (Kräver Vattnadals styrka)
+G75BCF244	Öka din hälsa permanent.  (Kräver Gil-galads kraft)
+G216AF74D	Öka din hälsa permanent.  (Kräver Vilyas styrka)
+G0B6CC0B6	Detta förödande anfall sätter eld på flera fiender.  (Kräver Noldors vrede)
+G0355C5D7	Eldars silverpilar gör fruktansvärd skada. (Kräver Vanyabåge)
+GD3F16BA3	Alvbåge
+G710A6666	Vattnadals styrka
+G96D9F158	Vilyas nåd
+GF127A06E	Sista förbundet
+GB426C696	Vanyabåge
+G71620C4B	Gil-galads kraft
+GFBF3A490	Lindons stormanfall
+G00542D8B	Häroldens gambit
+G5104305A	Vilyas styrka
+G221633E0	Noldors vrede
+G11A9FF39	Noldors krigsrusning
+GDE2839BE	Eldars styrka
+GB0E7C432	Lindons vrede
+G008B68D9	Eldarbåge
+G10607364	Imladris herre
+G0BA28B85	Spela som Elrond
+GD6BB77A1	Barad-dûrs eld kastas som Mörk blixt och gör allvarlig skada.
+G113CAFFC	Öka din hälsa permanent.  (Kräver Barad-dûrs styrka)
+G2F14F0F7	Öka din hälsa permanent.  (Kräver Mordors styrka)
+G573FFFF8	Ett ännu mer förödande anfall.  (Kräver Mörkt raseri)
+G6AE28C4F	Öka din hälsa permanent.  (Kräver Ringens kraft)
+GC4B7E7DB	Detta förödande anfall sätter eld på flera fiender.  (Kräver Mordors vrede)
+G5FEE9C56	Domedagsbergets lågor gör fruktansvärd skada.  (Kräver Helveteseld)
+GA07FAB7C	Mörk blixt
+G59838F7F	Klubbparering
+G0ACE1349	Mörkt raseri
+GD97CF863	Barad-dûrs styrka
+GF62B2130	Saurons dans
+G53F430F0	Den enda ringens vilja
+GB60C89B8	Helveteseld
+GC26DDD50	Mordors styrka
+G29856B22	Mörkrets herres stormanfall
+G27C67462	Annatars gambit
+G66205DC8	Ringens kraft
+GA64C9515	Mordors vrede
+G278CB8C1	Klubbornas mästare
+G4B8493DC	Mordors krigsrusning
+G5487C52D	Domedagsbergets styrka
+GE9A37F55	Mordors raseri
+G3F70A0C4	Domedagseld
+GBB8776B5	Alvernas bane
+G6E2AA149	Saurons öga
+G1C11BF19	Sauron
+G3057B52F	Spela som Sauron
+GB76B50B9	Dessa stenar från hålorna kastas som Klippstenar och gör allvarlig skada.
+GECFE6FA3	Öka din hälsa permanent.  (Kräver Hålornas kraft)
+G47753157	Detta förödande anfall sätter eld på flera fiender.  (Kräver Bärsärkavrede)
+GF2D43E42	Smälta stenar gör fruktansvärd skada.  (Kräver Krigsstenar)
+GC390874C	Klippstenar
+G035878D4	Bärsärkagång
+GC2D0B8DB	Djupets fackla
+GFF1647F7	Krigsstenar
+G98869254	Hålornas kraft
+GC4A495AD	Stormanfall mot Klyftmuren
+GE0FB4F25	Uruk-hais gambit
+G8925F4A1	Bärsärkavrede
+G468B4A5C	Mästerbärsärk
+GB0E58D9C	Belägringsrusning
+GD5AF6DD1	Orthancs vrede
+G01AF5769	Lavastenar
+G18494AB3	Hålornas vrede
+GB3AAE2E1	Uruk-hai
+G683077D7	Spela som Uruk-hai
+P:Frame Rate:	Bildfrekvens:
+P:Unlocked	Obegränsad
+P:Display Mode:	Visningsläge:
+P:Window	Fönster
+P:Full Screen	Helskärm
+P:Window Size:	Fönsterstorlek:
+P:Automatic	Automatisk
+P:Aspect Ratio:	Bildförhållande:
+P:Custom	Anpassad
+P:Resolution:	Upplösning:
+P:Anisotropic:	Anisotropisk:
+P:Mipmaps:	Mipmaps:
+P:Off	Av
+P:On	På
+P:Ultra Textures:	Ultratexturer:
+P:Wide Cutscenes:	Breda mellansekvenser:
+P:Anti-aliasing:	Kantutjämning:
+P:VSync:	VSync:
+P:Picture:	Bild:
+P:Keep Shape	Behåll form
+P:Stretch	Sträck ut
+P:Vertex Programs:	Vertexprogram:
+P:Brightness:	Ljusstyrka:
+P:Sharpening:	Skärpning:
+P:Colour:	Färg:
+P:Original	Original
+P:Vivid	Livfull
+P:Muted	Dämpad
+P:HUD Widescreen:	HUD i bredbild:
+P:Edges	Kanter
+P:Centred	Centrerad
+P:Menus:	Menyer:
+P:Fill	Fyll
+P:Movies:	Filmer:
+P:As Made	Original
+P:Button Prompts:	Knappsymboler:
+P:Keyboard	Tangentbord
+P:Mouse Pointer:	Muspekare:
+P:Sensitivity:	Känslighet:
+P:Pointer Size:	Pekarstorlek:
+P:Mouse Aiming:	Sikta med mus:
+P:Invert Aiming:	Invertera sikte:
+P:Up/Down	Upp/ned
+P:Left/Right	Vänster/höger
+P:Both	Båda
+P:Mouse Steering:	Musstyrning:
+P:A Button:	A-knapp:
+P:B Button:	B-knapp:
+P:X Button:	X-knapp:
+P:Y Button:	Y-knapp:
+P:Black Button:	Svart knapp:
+P:White Button:	Vit knapp:
+P:Left Trigger:	Vänster avtryckare:
+P:Right Trigger:	Höger avtryckare:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	Styrkors upp:
+P:D-pad Down:	Styrkors ned:
+P:D-pad Left:	Styrkors vänster:
+P:D-pad Right:	Styrkors höger:
+P:L Stick Click:	V spak, klick:
+P:R Stick Click:	H spak, klick:
+P:Move Forward:	Gå framåt:
+P:Move Back:	Gå bakåt:
+P:Move Left:	Gå åt vänster:
+P:Move Right:	Gå åt höger:
+P:Look Up:	Titta upp:
+P:Look Down:	Titta ned:
+P:Look Left:	Titta åt vänster:
+P:Look Right:	Titta åt höger:
+P:Walk:	Gå långsamt:
+P:General Options	Allmänna alternativ
+P:Display Options	Grafikalternativ
+P:Controls	Kontroller
+P:Reset Controls	Återställ kontroller
+P:Press a key...  (Esc: cancel, Delete: clear)	Tryck på en tangent ...  (Esc: avbryt, Delete: rensa)
+P:R Stick	H spak
+P:Stick	Spak
+P:L Stick	V spak
+P:Black button	Svart knapp
+P:White button	Vit knapp
+P:Left trigger	Vänster avtryckare
+P:Right trigger	Höger avtryckare
+P:Start	Start
+P:Back	Back
+P:D-pad up	Styrkors upp
+P:D-pad down	Styrkors ned
+P:D-pad left	Styrkors vänster
+P:D-pad right	Styrkors höger
+P:Left stick click	Vänster spak, klick
+P:Right stick click	Höger spak, klick
+P:Move forward	Gå framåt
+P:Move back	Gå bakåt
+P:Move left	Gå åt vänster
+P:Move right	Gå åt höger
+P:Right stick up	Höger spak upp
+P:Right stick down	Höger spak ned
+P:Right stick left	Höger spak vänster
+P:Right stick right	Höger spak höger
+P:Walk	Gå långsamt
+P:None	Ingen
+P:LS click	VS-klick
+P:RS click	HS-klick
+P:Mouse Left	Vänster musknapp
+P:Mouse Right	Höger musknapp
+P:Mouse Middle	Mittenmusknapp
+P:Mouse 4	Mus 4
+P:Mouse 5	Mus 5
+P:Space	Mellanslag
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backsteg
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Upp
+P:Down	Ned
+P:Left	Vänster
+P:Right	Höger
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Semikolon
+P:Equals	Likhetstecken
+P:Comma	Komma
+P:Minus	Minus
+P:Period	Punkt
+P:Slash	Snedstreck
+P:Backquote	Grav accent
+P:Backslash	Omvänt snedstreck
+P:Quote	Apostrof
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Håll ned {6} för att byta till ditt avståndsvapen.  Tryck på {0} för att avfyra.  Sikta med {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Tryck in och håll {6} för att byta till ditt avståndsvapen.  Tryck på {0} för att avfyra.  Sikta med {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Håll ned {6} för att använda.  Avfyra med {0} (håll ned för att öka skadan).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Tryck in och håll {6} för att använda.  Avfyra med {0} (håll ned för att öka skadan).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Håll ned {6} för att använda.  Kasta med {0} (håll ned för att öka skadan).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Tryck in och håll {6} för att använda.  Kasta med {0} (håll ned för att öka skadan).
+P:A devastating attack.  Press and hold {3} to use.	Ett förödande anfall.  Tryck på och håll {3} för att använda.
+P:Game Saved.  Press {8} to continue.	Spelet har sparats.  Tryck på {8} för att fortsätta.
+P:Game Saved.  Press {0} to continue.	Spelet har sparats.  Tryck på {0} för att fortsätta.
+P:Unable to save game. Press {8} to continue.	Det gick inte att spara spelet. Tryck på {8} för att fortsätta.
+P:Unable to save game. Press {0} to continue.	Det gick inte att spara spelet. Tryck på {0} för att fortsätta.
+P:Unable to load game. Press {8} to continue.	Det gick inte att ladda spelet. Tryck på {8} för att fortsätta.
+P:Unable to load game. Press {0} to continue.	Det gick inte att ladda spelet. Tryck på {0} för att fortsätta.
+P:No saved games. Press {8} to continue.	Inga sparade spel. Tryck på {8} för att fortsätta.
+P:No saved games. Press {0} to continue.	Inga sparade spel. Tryck på {0} för att fortsätta.
+P:Not unlocked yet. Press {8} to continue.	Inte upplåst ännu. Tryck på {8} för att fortsätta.
+P:Not unlocked yet. Press {0} to continue.	Inte upplåst ännu. Tryck på {0} för att fortsätta.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Du har inte samlat tillräckligt med uppgraderingspoäng för att köpa den här uppgraderingen. Tryck på {8} för att fortsätta.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Du har inte samlat tillräckligt med uppgraderingspoäng för att köpa den här uppgraderingen. Tryck på {0} för att fortsätta.
+P:Press {8} to resume	Tryck på {8} för att fortsätta
+P:the left mouse button	vänster musknapp
+P:the right mouse button	höger musknapp
+P:the middle mouse button	mittenmusknappen
+P:mouse button 4	musknapp 4
+P:mouse button 5	musknapp 5
+P:the A button	A-knappen
+P:the B button	B-knappen
+P:the X button	X-knappen
+P:the Y button	Y-knappen
+P:the Black button	den svarta knappen
+P:the White button	den vita knappen
+P:the left trigger	vänster avtryckare
+P:the right trigger	höger avtryckare
+P:up on the d-pad	upp på styrkorset
+P:down on the d-pad	ned på styrkorset
+P:left on the d-pad	vänster på styrkorset
+P:right on the d-pad	höger på styrkorset
+P:the left thumbstick button	vänster styrspaksknapp
+P:the right thumbstick button	höger styrspaksknapp
+P:the Menu button	Menu-knappen
+P:the View button	View-knappen
+P:the cross button	kryssknappen
+P:the circle button	cirkelknappen
+P:the square button	fyrkantsknappen
+P:the triangle button	triangelknappen
+P:Left Click	Vänsterklick
+P:Right Click	Högerklick
+P:Middle Click	Mittenklick
+P: or 	 eller 
+P:Exit	Avsluta
+P:Press {k}	Tryck på {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	vänster styrspak

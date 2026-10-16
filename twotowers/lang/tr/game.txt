@@ -1,0 +1,1454 @@
+# Türkçe, in the game's characters -- made by tools/lang/build_lang.py
+GA81157BF	YÜZÜKLERN EFENDS:  K KULE
+G20EBC61E	Bir Peter Jackson filmi
+G2D8D3B98	Yapmclar
+G7EDB1AE9	Ortak Yapmclar
+G90AF53E8	Özel Efektler
+G893165F0	Weta Digital
+GD9523953	Müzik: Howard Shore
+G7B677F6E	Oyun Seslendirmeleri
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX EKB
+GAAA9253B	Proje Yönetimi
+G2E65B2E4	Programlama
+G1E165282	Grafik
+G4CFF767B	Ses
+G1B12D0CA	ÖZGÜN GELTRME EKB
+G5BB408B8	Proje Direktörü
+GA9D987DE	Teknik Direktör
+GA4E53836	Gelitirme Direktörü
+GCBF9A863	Ses Direktörü
+G71D27F1C	Ba Tasarmc
+GABE6171F	Ba Programc
+GB6AEE806	Ba Çevre Sanatçlar
+G0FAA1BD8	Ba Sinematik Sanatçs
+G93A039A2	Ba Animatör
+G85851417	Sanat Yönetimi
+GEC5EB699	Yardmc Yapmc
+G1E1B7E49	Özel Efekt Sanatçs
+GE457B26A	Çevre Sanatçlar
+G09AFDB2B	Oyun çi Sinematik Sanatçlar
+GC6201467	Konsept Sanatçlar
+GCE12C680	Karakter Modelleyicileri/Animatörleri
+G958F64A1	Arayüz Sanatçs
+G5817028D	Grafik Programclar
+G8E313DB8	Yapay Zekâ Programclar
+G7559A05A	Oynan Programclar
+G47FDFA0D	Oyun Tasarmclar
+G2A1A4D1F	Ses Tasarm ve Müzik Kurgusu
+GD6AC199C	Ses Tasarm
+G83731102	Ek Gelitirme Yönetimi
+G9B9AC6A2	Ek Proje Yönetimi
+G2C8B85F3	Ek Grafik
+G154B3F75	Ek Programlama
+GEC34AAA5	Ek Ses Tasarm
+GE9E2F454	Ek Metin Yazarl
+G8B63E4D8	 Gelitirme
+G8E754AFA	Gelitirmeden Sorumlu Yönetici
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Ba Yapmc
+GF944BB31	Kdemli Yapmc
+G49F95533	Yerelletirme Yardmc Yapmcs
+GE5AAA381	Yapmc Asistan
+G20A463E8	Yazlm Mühendisleri
+GEDDCFA70	Ba Test Uzman
+G6EC637F4	Ba Test Uzman Yardmcs
+GA9C92124	Çekirdek Test Ekibi
+GDDEFB046	Yapmclar
+G5F4C2C91	Oyun Gelitirme Direktörü
+G53E62C46	Bölüm Tasarmcs
+G4019279E	Yardmc Sanat Yönetmeni
+G3548CB79	Oyun çi Sinematikler
+G5BF26924	Grafik Tasarm (Arayüz)
+GF5E6331B	Yerelletirme Yapmc Asistan
+GB9029242	Yapmc Asistanlar
+G81160EAA	Kdemli Animatör
+GB1B5EEDE	Animatör
+G1D384099	Çevre Modelleyicileri
+GD670D187	Ara Videolar (FMV)
+GB4300D0E	Yapm Sorumlusu
+GDB61FEB0	FMV Yapm Müdürü
+G13204F99	Teknik Sanat Yönetmeni
+G8774AEB2	Sanat Yönetmeni
+G2EDA5AA3	Animasyon Yönetmeni
+G4761EC6C	Karakter Teknik Direktörü
+GC40AEB65	Ba Çevre Sanatçs
+G04B7AD9A	Yazar
+GCCDC1EDE	Karakter Sanatçlar
+G765B2120	Kdemli Karakter Animatörleri
+GDB98BF7E	Kdemli Iklandrma Sanatçs
+G8AEFA15C	Kdemli Efekt Animatörü
+GB64D9748	Efekt Animatörü
+GB770287B	Rig Uzman/CG Modelleyicileri
+GA89434BE	Kamera Yerleimi
+GBAA388EF	Kurgucular
+GA79B5345	Ses Tasarmcs/Yeniden Kayt Uzman
+GE2D38E72	Grafik Yapm Müdürü
+G29C8EC71	Yönetici Asistan
+GB01B1D73	Sistem Yöneticisi
+G257D0532	Yapm Asistan
+GB2965969	Diyalog Kurgusu
+G2ACF75E1	Ek Ses leme
+G821EF7A5	Seslendirme Sanatçlar
+G3CCB3DF3	EA Kalite Güvencesi
+G2851776E	Kalite Güvence Müdürü
+G3D43CCDD	Kalite Güvence Sorumlusu
+G997D9582	Kalite Güvence Ekip Liderleri
+G5B5CE9C6	Kalite Güvence Ekip Lideri Yardmclar
+GE0B33004	Kalite Güvence Çekirdek Test Ekibi
+GBBB3A592	FLT Proje Lideri
+G7F330F1A	levsel Dil Test Uzmanlar
+G731958CD	Dil Test Uzmanlar
+G7005C763	Müteri Kalite Kontrolü
+GCC3D24EF	CQC Müdürü
+G0FF24E54	CQC Sorumlusu
+G7498FE74	CQC Departman Lideri
+G5AB35ED0	CQC Ürün Analistleri
+G6E529086	Mastering Laboratuvar
+G0229B6F3	Direktör, Uluslararas Ürün Gelitirme
+G6B435E81	Yerelletirme Proje Müdürü
+GF8BA9878	Yerelletirme Proje Koordinatörü
+G906896D8	Müdür,  Orta zinleri ve Onaylar
+G860EDA13	Ticari ler
+G7AC94AC6	Hukuk
+GFDF965B3	Stüdyo Operasyonlar
+G9FF9799E	Stüdyo Sözlemeleri Koordinatörü
+G9E24FEC0	Pazarlama Direktörü
+G44C57DC5	Ürün Müdürü
+GE1A6D911	Halkla likiler
+GA5ADE5FF	Dokümantasyon
+G4C2A256D	Dokümantasyon Mizanpaj
+G279BA159	Ambalaj Proje Yönetimi
+G482E9235	Ambalaj Tasarm
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Yüzüklerin Efendisi Film Ekibi
+GE196FA55	Yönetmen
+GE364782E	Ba Yapmclar
+GB11B5F1A	Ortak Yapmclar
+GDDE9A104	Arivci
+G73D53EB3	Materyal Sorumlusu
+G4616CF92	Yapmc Asistan
+GD98C077D	Post Prodüksiyon Sorumlular
+G26FFE43A	Birinci Kurgu Asistan
+GFAE3387C	Maket Sorumlusu
+G0D7D1A1D	Dünya Çapnda Lisanslama ve Ürünlendirme Kdemli Bakan Yardmcs
+GD58105C6	Kreatif Direktör
+GB0E8D9D5	Film Oyuncular
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Théoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samvis
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Müzik Ticari leri Bakan Yardmcs
+G96EBB4D8	Müzikten Sorumlu Yönetici
+G2728DB7D	Müzik Direktörü
+GFE08F13A	3Foot6
+GCFF1286B	Ürünlendirme Koordinatörü
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Bakan Yardmcs
+GE58F283A	Yapmc/Yapm Müdürü
+G97C336EB	Animasyon Sorumlusu
+G96FF4CEA	Kdemli Teknik Direktör
+GE816CF3D	Ba Teknik Kurulum Uzman
+G22B756F5	Animatörler
+G86F5B2D9	Mat Ressam
+GBC50C796	Ofis Müdürü
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Uygulayc Yapmc
+G14C96B5C	Ba CG Sanatçs
+GD9742A3C	CG Sanatçlar/Animatörler
+GBA7D6969	Arnson Communications
+G22C5AB99	Ba Yapmc/Kreatif Direktör
+G45C5172D	Yazar/Yapmc
+GDCC6F23E	Sanat Yönetmeni/Animatör
+G9C4F3B3B	DS Sanatçs
+GF0F58DD3	EA ÖZEL TEEKKÜRLER
+G895C842A	STORMFRONT STUDIOS ÖZEL TEEKKÜRLER
+G9D4DD21A	Orta Dünya topraklarnda efsaneler Kara Lord Sauron'dan söz eder,
+G6CFA90F6	ve ona dünyay köleletirme gücünü verecek Yüzük'ten.
+G18F2969C	Ve o Yüzük imdi, akla gelebilecek en olmadk kiinin eline geçti.
+G378C79D6	Büyük bir oyun hayranym, o yüzden bir Yüzüklerin Efendisi oyununun tüm ayrntlarn örenmek istedim tabii.
+GDCF04190	Bazen öyle bir oyun moduna girerim ki sürekli oynarm,
+G977EBA13	ve genelde aklm kaptrdm ey, mesela bir macera oyunu olur.
+G49C9AB1A	Bir kere içine girdim mi aklmdan çkaramam, karakterimi sonuna kadar götürmem gerekir.
+GD2647A40	Bu görev sana verildi ve sen bir yol bulamazsan kimse bulamaz.
+G3AC8371A	Siper aln!
+GAD82B19D	Bir süredir bu oyunu soruturuyordum, sonunda oynama frsatm oldu ve inanlmaz.
+G8DE86872	Bakmas bile çok güzel.
+G72E74697	Vay, bu çok haval!
+GF9824FCA	Evet, hadi Aragorn! Haydi!
+G2EE7D5D4	Geliyorlar.
+G61F7CD7D	Bir oyunu açp kendimi oradan oraya koarken görmek ayr bir ikramiye gibi.
+G57A5BC04	Fena dayak yiyorum.
+G1F85273D	Frodo bana benziyor! Haval deil mi?
+G1FFE0A40	Çok haval.
+GE6E563F9	Yüzük'ü bulacaklar,
+GD135555F	ve onu tayan öldürecekler.
+G18844D24	Hadi! Hadi Frodo!
+G525D5AD9	Yüzük'ü istiyorlar! Onu almamallar.
+GB99DAE56	Bir film için ADR ile bir oyunu seslendirmek arasndaki fark, film için ADR'nin genelde görüntüye göre yaplmasdr.
+G7558081F	Filme bakp daha önce söylediin replii taklit etmeye ve filmdeki diyalogla senkronize etmeye çalrsn.
+GDD3F428F	Kimsin sen?
+GE906BA5B	Korkuyor musun?
+G9BDAB30C	Evet.
+G3B07B1B1	Yeterince korkmuyorsun.
+GFBD6613D	Oyun içinse görüntü yok; daha çok araya kattn bir sürü atmosferik öe var.
+G0EE06D0F	Tehlike, yardm, o türden eyler.
+G2F9FC8E2	Aragorn! mdat! Aragorn! Aragorn!
+G289F7C03	Aksiyon figürlerine de oyunlara da baylrm; bunlara dahil edilmek tam bir inek ikramiyesi, çok houma gidiyor.
+G67346E61	En küçük kii bile gelecein gidiatn deitirebilir.
+G16420686	Çok heyecanlym - kendi kopyam almak için sabrszlanyorum. Müthi bir ey.
+GDBA69463	Moria.
+G1D429D96	O madenlere girmekten korkuyorsun.
+G372C9F91	Karanlkta neyi uyandrdklarn biliyorsun.
+G34515230	Oyunu yapmaktan gerçekten keyif aldm, çünkü o kadar zahmetli i yapmanz gerekmiyor
+G93AEF9C3	karakteri ilk kez yaratrken yaptnz kadar.
+GA9883FB4	Film çekmek ister istemez çok yava bir itir.
+G0C1E0E8C	Bilgisayar oyununun harika yan da tabii ki makyaja girmek zorunda olmamam.
+GA5F1044B	Oyun için çalrken bir stüdyoda durursunuz
+GCE4A81AD	ve "bence unu, unu ve unu söylemelisin" dersiniz,
+G049A3A66	ellerinde bir yn senaryo vardr ve siz de tüm o harika replikleri söylersiniz.
+G70F1359D	Pusu! Pusu!
+G65325B21	Sonra hepsini alp oyuna yerletiriyorlar, siz de övgüden biraz pay alyorsunuz.
+G39F1D126	O patlayclar yok edilmeli!
+GEB33699E	Gimli olarak bu modelime baylyorum.
+GD9A0C650	Bence çok dinç, erkeksi ve çekici bir karakter.
+G43591DCA	Oynamak isteyeceiniz tek karakter o aslnda.
+G5C0A6C1E	Yani dierleri, bilirsiniz, Aragornlar, Legolaslar, yakkl, güzel adamlar falan,
+G3D52D95F	ama gerçek, kaliteli bir sava için Gimli'yi seçmelisiniz.
+G8E74524F	Film için doru görünümü yakalamak üzere Yeni Zelanda'da, dünyann en güzel mekânlarnda on dört ay geçirdik.
+GAD562976	Oyun bir sava, bir çatma ortam ve harika, parlak bir ekilde yaratlm.
+G7F21BCD6	Onu orada brakamam! Tanrm!
+G9AA947F5	Ne kadar çok vakit alacak bir ey olacak bu.
+G669C44C6	Yani kefettiim yeni bir bamllk bu.
+G63540AD1	Evet oyuncular, aferin size, bu röportaj izleyebildiiniz bu küçük köeye ulatnz için tebrikler.
+G925FED56	Keke oyunu nasl daha iyi oynayacanz söyleyebilseydim ama aslnda ben hiç bu bölüme gelemedim.
+GC3162ADB	Bol ans, oynamaya devam edin.
+GA3572714	Dünyann kaderi yaknda belirlenecek.
+G922859CB	Video oyununun yapm ya da ina sürecinin tamam
+GD9B03397	esas olarak bir eylerle, ninja eyleriyle dövümen... ne bileyim.
+G24326AFA	ardm, çok daha gerçekçi görünüyor,
+G3E302C15	sanki bambaka bir seviyeye çkm.
+GBD830A87	Bence oyundaki Aragorn'un nian benimkinden daha iyi...
+GF76948D6	ama bundan ikâyet edecek deilim.
+GD27FED3E	Ölümüm ya da yaammla seni koruyabileceksem, koruyacam.
+G56368F53	Klcm seninle.
+G8D6DAFD1	Oyundan gördüüm kadaryla, u gerçek yanstlm gibi:
+G970D4AB6	ikinci film - ilkinin aksine - çok daha büyük ölçekte,
+GFD0BADCA	ve onlar görmeyi, oyunun geri kalann görmeyi beklediim kadar dört gözle bekliyorum.
+G1F48F697	Bugün sadece bir örneini gördüm.
+GB689F1B9	Mesela Aragorn'un bazen yere ykldn, dütüünü ya da yuvarlandn görmek houma gitti,
+G6F6072BC	ve dövü tarznn da duruma göre deitiini.
+GA3A3F7A1	Her zaman derli toplu deil yani, biraz ey...
+G28095E46	bazen biraz kavgac olabiliyor - en azndan filmde öyle yapt - ve bence oyun da bunu yanstyor.
+G43AA6A0B	Etkileyici.
+G8559FF90	Uzak diyarlardan gelen yabanclar, buraya Mordor tehdidine yant vermek için çarldnz.
+GC2A75F48	Orta Dünya ykmn eiinde.
+GFE143A07	Kimse ondan kaçamaz. Birlein, yoksa düeceksiniz.
+GF59E5460	Teknolojinin falan ilerlediini gördükçe hep hayret ediyorum
+GAD5CBAE4	ve gerçee ne kadar yaklatn.
+GF96BCD4B	Hemen Boromir'e ulamalym!
+GD262135E	Bir film için ADR kaydederken tabii ki ekrana bakarsnz,
+G83EECB7A	sahneyi o gün oynadnz haliyle önünüzde akarken görürsünüz.
+G3C0B6913	Bunun için kayt yaparken ise
+G2A8B6AD2	üzerinizde kamera yoktur,
+G52F7D105	önünüzdeki görüntüye dudak senkronu yapmaya çalmazsnz,
+G8EE2279F	bu yüzden gerçekten bir adm öteye geçip
+GA5BE0F5A	sayfadakini vurgulayabilir, biraz da süsleyebilirsiniz.
+G51E230FB	Sizi douran çukurlara geri dönün!
+G97400E1E	Filmdekinden daha abartllar.
+GC26338C3	Ne demek istediimi anlyor musunuz?
+G40EB5D5C	Biraz gülünçler ve bu elenceli.
+G52FECFA2	Onunla bu ekilde oynamak epey elenceliydi.
+G91D69630	Gelin!
+G87873143	O sava kazanamazsn!
+G47AECCC4	Sanrm oyunu ben oynuyor olsaydm
+GB0CCD2A6	bilgisayarla yaratlm karakterin yapt hareketleri gerçek oyuncularn seslendirdiini bilmek houma giderdi,
+GC1719889	ve sanrm bilgisayar dünyasnda ne kadar çok gerçeklik olursa oyuncu için o kadar heyecanl olur.
+G77ECFBF0	Onu kullanamazsn. Hiçbirimiz kullanamayz.
+GB42EC53B	Yüzük yok edilmeli.
+G43E793ED	Yüzük Taycs'nn tehlikesi derinleiyor.
+G6E2FF8E0	Çünkü Yüzük'ün peinde olan bir bakas daha var.
+GDD26CBEC	Hayatmda hiç video oyunu oynamadm.
+GF783F574	Kurallar hiçbir zaman anlayamyorum.
+G573BC826	Ellerim çok büyük ve beceriksiz, gerekli olduunu düündüüm el-zihin koordinasyonuna da pek sahip deilim;
+GFBB68CB5	ki bu alt yan altndaki herkeste var gibi görünüyor.
+G8D9D9F75	Bu oyunun, Yüzüklerin Efendisi'nin bu kadar harika olmasnn nedeni
+G81AEE08E	asl oyuncularn seslerini duyuyor olmanz--hepsinin.
+GAE3BFBD7	Bugün de Gri Gandalf ile Ak Gandalf'n kaytlarn yapyordum,
+G21F22F52	Yüzüklerin Efendisi'nde canlandrdm iki karakterin.
+GCED01E94	Ne görüyorsun?
+GB4F26455	aretler var.
+G5C7EB8BC	Bir tür Elf dili.
+G27A03C42	Okuyamyorum.
+G8E22513B	Okuyabilen çok az kii var.
+G4B2817A2	Artk ki Kule arasnda bir birlik var: Orthanc ve Barad-dûr.
+GC69D576A	Oyun için biraz daha kaba, biraz daha hazrlksz, belki biraz daha anlk.
+G363960EA	çinizden biri girmeli.
+GFFCB2D5D	Hâlâ hayatta olan köylülere yardm edin.
+GF4DAF5B8	Temelde bu saldrgan bir dövü bölümü.
+G00009069	Gandalf'n askerî yan ortaya çkyor: komutan, samuray, lider.
+G4519FC71	Geçemezsin!
+G066F3360	Yani ekranda gördüünüz ey - kahretsin - filmlerde gördüünüz
+GF4CF848B	Gandalf'a olabildiince yakn. Keke gelip oyunu sizinle oynayabilsem.
+G699B7BF2	Bu Yüzük'e zalimliini, kinini ve tüm yaama hükmetme iradesini aktt.
+GA1469225	Hepsine hükmedecek Tek Yüzük.
+G01090CE9	Yaptmz i, binlerce kiinin katld muazzam bir emein doruk noktas.
+G74E1F68D	ki Kule ad Orthanc Kulesi'ne, 
+G0AE01FA9	yani Christopher Lee'nin karakteri Saruman'n üssüne,
+GD9642178	ve Sauron'un yurdu Mordor'daki Barad-dûr Kulesi'ne gönderme yapyor.
+G573418F9	kinci film, bu üçlemedeki her film gibi, zorlu bir i. Ve teslim edene kadar da öyle kalacak.
+GB2A31EA0	Harika bir film. Birinci filmden daha büyük olacak.
+GB831FA3A	Bence bu filmlerin yapmna kesinlikle çok büyük özen gösterildi,
+GCCFC11FE	ve bu bilgiyi oyunlar gelitiren ekibe aktarabilmek harika, 
+G327C2028	çünkü halka gerçekten zengin bir oyun sunmak için onlarn da ayn özeni ve emei gösterdiini biliyorum.
+G2C4A352E	Tolkien kitaplarda Edoras' çok canl bir ekilde anlatr;
+G10EFB23A	karl da srasnn önündeki bir tepede, ahap binalardan oluan bir ehir olarak.
+G50D180A4	Mekân kefine ilk çktmzda, bakn dedim, Yeni Zelanda'da bir yer bulmalyz,
+GDA11996F	dalarn önünde buna benzer bir tepe olmal.
+GD6F61F77	Helikopterle bütün ülkeyi dolatlar ve kusursuz bir tepenin fotorafyla döndüler.
+GC56228ED	En yakn kasabadan yüz, yüz on kilometre kadar uzaktayd.
+GF796DA0F	Güney Adas'nn ortasndayd; çok ssz bir yerdi.
+GFA1CD969	Bu dev binalar ina etmek yedi sekiz aymz ald.
+GC2D0BAAA	Sonuçta filmde son derece inandrc bir Edoras'mz oldu.
+GC2774958	Oraya gidip sanki gerçekten var olan bir mekânm gibi çekim yapabildim.
+G99F69515	EA oyunlarnn heyecan verici yanlarndan biri, yaplrken modellerde gördüüm ey,
+G6B3554D6	setlerimizin ve karakterlerimizin harika bir ekilde yeniden yaratlmas;
+GB997C9B4	öyle ki EA, oyuncularmzla anlap kendi diyaloglarn gelip seslendirmelerini salad.
+G815CAC49	Oyuncular bu konuda epey heyecanlyd.
+GA1640DEB	Mifer Dibi Sava sona erdi.
+G93BD7122	Orta Dünya Sava balamak üzere.
+G958468DE	Mifer Dibi'nin bir maketini yaptk ama ilginç olan, sradan bir model olmamasyd. 
+G1BC58576	Devasa bir maketti. Dörtte bir ölçekteydi ama kendisi on, on iki metre geniliindeydi.
+GFA4F689B	O kadar büyüktü ki kameralarmzla dorudan çekebiliyorduk ve maket gibi görünmüyordu.
+G2571B991	Tamamen inandrc görünüyordu.
+G31C24FB0	Harika bir filmi yaratan ey aslnda harika bir senaryo ve harika bir oyuncu kadrosudur.
+G9C04D37F	Bir oyun yaparken de sanrm zorluklarn çou ayndr.
+GA0B86A25	Oyuna doru yetenekleri çekmeniz gerekir.
+G0B7DC714	zleyiciyi çekecek bir hikâye bulmanz, onlar o hikâyeyle heyecanlandrmanz
+G5E1101AB	ve o hikâyenin canlandn görmeye mecbur hissettirmeniz gerekir.
+G87FC774C	Frodo için yapabileceimiz hiçbir ey yok.
+G3C9AA8BC	Bu görev onun cann alacak.
+G98F7C221	Rohan zayf ve dümeye hazr,
+GA01F7D34	bu yüzden nsanlar dünyasna sert ve hzl vuracak.
+GA8723617	Sava kapmzda.
+GE1AF4B03	Kymetlimizi çaldlar ve biz onu istiyoruz.
+G6A5F57B3	Bu projeye girimenin muhtemelen en ürkütücü yan,
+GDE1DC635	Peter Jackson'n filmde baardn etkileimli bir formatta
+GCFDFC743	ayn ekilde baarma konusundaki o inanlmaz sorumluluk duygusuydu.
+GC87068A6	O, tüm zamanlarn en sevilen edebî eserlerinden bazlarn alp
+G423C7E0C	dünya çapnda milyonlarca hayran kazanan destans bir film aheserine dönütürdü.
+GC8F29411	Bir projenin banda konsept ve tasarm taraf üzerinde çalrsnz.
+GBACB2DE5	Proje ilerledikçe - programclar, sanatçlar, animatörler, çevre sanatçlar,
+G047AC48F	modelleme uzmanlar, doku uzmanlar - tüm bu insanlar oyunun kendi alanlarn düünür,
+GB60517EB	ama bunu genel deneyim açsndan yaparlar.
+G13170460	Film yapmclaryla bu kadar yakn çalabilmenin avantajlarndan biri,
+GA03610FF	film için yarattklar modelleri ve aksesuarlar
+G9DADDEE4	oyunumuzda yaratmamz gerekenler için referans olarak kullanabilmemizdi.
+GF0D449E5	Karanlkta gölge kprdyor.
+GEC940136	Aragorn'u tasarlarken oynanabilir üç karakterin hepsini ayn anda düünmemiz gerekti.
+GBB381F7C	Örnein Legolas çok daha fazla hza ve incelie dayal bir karakter.
+G4CE351A9	Gimli ufak tefek bir sava tank.
+G21025B26	Aragorn ise ikisinin karm.
+G3ADE6E66	Bir ey yapmaya balamadan önce her karakterin hareketlerini kare kare inceledik.
+G80ADBA8B	Sonra karakterin tel kafes modelini olutururduk. Bu, temel oranlar, boyutu ve ölçeidir.
+G85E5A400	Ardndan kyafetlerini tamamlamak ve karakterlerinin ince ayrntlarn eklemek için doku ve k eklerdik.
+GCD3CDD42	Oyuncular bizimle çalmaya çok ilgi gösterdi.
+G092B49A0	Bir keresinde Viggo Mortensen bize baz aksiyon hareketlerini gösterdi.
+G915A1A70	O ve dublörü bir sandk klç açp birbirleriyle idman dövüüne baladlar.
+G215B5E15	Bu, Aragorn'un birçok hareketinin temeli oldu.
+G7126178B	Bulunmak istiyor.
+G7E02AF05	Oynana dahil etmek için filmden sahne seçerken Balin'in Mezar güçlü bir aday olarak öne çkt.
+GF4146E18	lk filmin en aklda kalan anlarndan biri.
+GE152213A	Mezarn üzerine düen o çok güçlü k huzmesindeki atmosferi yeniden yaratmak istedik.
+GB236432D	Bu, çevre modelleyicilerimiz ve k uzmanlarmz için zorlu bir iti.
+GD3C26DBB	Rohan Köyü bölümleri, filmdeki alanlar geniletme frsat vermeleri bakmndan benzersiz.
+G8669E69D	Oyun bölümü k, mimarinin biçimi ve oradaki insanlar açsndan
+GF9B205CF	film mekânlarna çok benziyor ve ayn hissi veriyor, ama bu örnekte aslnda bunun üzerine ina ettik
+GB285B32E	ve bölümde oyuncunun kefedip savaabilecei, belki filmde görmedikleri alanlar yarattk.
+G5E5F1D1C	Bu oyunun, Yüzüklerin Efendisi'nin bu kadar harika olmasnn nedeni
+G610E0BE4	kendi ekrannzda asl oyuncularn seslerini duyuyor olmanz--hepsinin.
+GC6FCAA65	mdat! Aragorn! Aragorn! mdat!
+G20165D69	nanlmaz derecede özgün; bence bir filme dayal oyun yapmak gerçekten zor.
+GBF3A0A5B	Bu oyun bunu baaryor. Filme çok benziyor.
+GDD010A37	Oyundaki olaylarn havasn yanstan çok dinamik bir müzik sistemi tasarladk.
+G96BEDA9C	Hepsini bir araya getirecek ve karanlkta birbirine balayacak Tek Yüzük.
+G91629050	Filmde Saruman, Mifer Dibi'ne on bin Uruk-hai ile saldryor.
+G3B702B98	Bu yüzden sava hissini yaratmak için elimizdeki baka öeleri kullanmak zorunda kaldk.
+GDEFA604D	Ses efektleri ve seslerle o mekânda gerçekten binlerce Ork varm gibi hissettiriyoruz.
+G204351C8	Biri oyunu açp kendi kendine:
+GEC81BA2D	Aman Tanrm! Bu film! derse, hedeflediimiz eyi tam olarak baarmz demektir.
+G52BF957B	Buras filmden hatrladm yer.
+G571B482E	Oradaym. Bir ey yapabilirim. Artk sra bende.
+G625B0A6D	Oyuncunun böyle hissetmesini istiyoruz.
+GB222979D	Nerede imdi at ve binicisi?
+G2457FF85	Nerede o çalan boru?
+G8B36CA83	Dalardaki yamur gibi geçip gittiler;
+G50095CA7	çayrdaki rüzgâr gibi.
+G10EB8BCF	Günler Bat'da batt,
+G109A0CCE	tepelerin ardnda,
+G02628501	gölgelere gömüldü.
+G80A942D2	Aragorn!
+GDDEA48AC	Yardm
+G4C40E774	START dümesine basn
+GEE711094	Devam
+GF9202936	Yeniden Oyna
+G2E427514	Açk
+GFC4343CA	Kapal
+G52E4CD32	Gezin
+G39D074FD	Seç
+GAC3A8B6E	Geri
+G42B46F3C	 2002 New Line Productions, Inc.  Yüzüklerin Efendisi ve içindeki karakterler, isimler ve yerler,  The Saul Zaentz Company d/b/a Tolkien Enterprises tarafndan New Line Productions, Inc.'e lisanslanmtr.  Tüm Haklar Sakldr.
+G035F710A	EA GAMES, bir Electronic Arts markasdr.
+GBAC3ED5F	Oyun kodu ve baz görsel/iitsel öeler  2002 Electronic Arts Inc. Tüm haklar sakldr.
+G0EF5F91F	Yeni Oyun
+GB8D9D2FD	Oyun Yükle
+G0BE2A075	Seçenekler
+G5D6AEEF7	Hata Ayklama Modu
+G83335327	Bonus Özellikler
+G731194FA	Oyunu Kaydet
+G7BA082D0	Devam etmek için START'a basn
+G755B3BA1	Kumanda Yaplandrmas
+G03961FD4	Oyun Ayarlar
+GABEE6EA4	Zorluk:
+GF065116B	Kolay
+G8D3A16F6	Normal
+GACDD0363	Uzman
+GAEA05F86	Mono
+G913A11F7	Stereo
+G2A253083	Surround
+GA10C5C21	Ses Düzeyi (Konuma):
+G7F04050E	Müzik Düzeyi:
+GF30A57F8	Altyazlar:
+G64752D2D	Titreim:
+GB3F78571	Oyun Ses Düzeyi:
+GED3C9F14	Ses:
+GB065D5A4	Yüklenecek Oyunu Seçin:
+G00FF7920	Kayt Yerini Seçin:
+GC99B6C1E	MEMORY CARD yuvasn seçin:
+GFB5C0BA2	Xbox Sabit Diski
+GD2F916B6	MEMORY CARD yuvas 2
+GAEFBDEF3	ptal
+GDA714102	Evet
+GB893E04C	Hayr
+GE506E266	Emin misiniz?
+G574C52F2	Bu gelitirmeyi satn almak istediinizden emin misiniz?
+G0D91D779	Emin misiniz? Bu görevi son oynaynzn sonuçlar kaybolacak.
+G1CF7123A	Emin misiniz? Bu oyundaki kaydedilmemi tüm ilerleme kaybolacak.
+GEF04DC5D	Emin misiniz? Bu görevdeki ilerleme kaybolacak.
+GEDF6F861	Bu oyunun üzerine yazmak istediinizden emin misiniz?
+GF44D8878	Gelitirme satn almay bitirdiniz mi?
+G1EF3EFE3	Oyunu Sabit Diske Kaydet
+G05163971	Oyunu Sabit Diskten Yükle
+G8F93A6FE	Zorluk seçin
+G654484DF	Kilitli
+G5A7CB330	Tamamland
+G8D6AAF13	Oynanmad
+GBE8C099C	Önsöz
+GF4FBBE46	Hava Tepesi
+GE7EA3020	Moria Kaplar
+GE13A531D	Balin'in Mezar
+G79C1EAD3	Amon Hen
+G51C82E11	Fangorn Orman
+G35CCE51F	Rohan Ovalar
+GAD341B58	Batal
+G94ADD008	Rohan Geçidi
+G9760067E	Dip Duvar
+GF8B38ED5	Yklan Duvar
+G644C89AD	Hornburg Avlusu
+G69B8B4C2	Orthanc Kulesi
+GBF00F963	Mifer Dibi:
+GE34AB2FD	New Line Hayvanat Bahçesi
+GE132F5FF	Oynatlacak videoyu seçin:
+G4B3C17B9	Açl
+GAD303F2A	Kapan
+G668B98BD	Kat
+G9C7A95F0	Gelitirme puan:
+G4AE44639	4) Belirtilen kod dizisini girin.
+G5374B3F5	Gizli Kodlar
+GDF7B6B3A	Hep Ykc:
+GFECB245B	2 Oyuncu:
+GCAB16744	Küçük Dümanlar:
+G587D657D	Tüm Gelitirmeler:
+G58E34314	Ölümsüzlük:
+GF0336180	Ar Çekim:
+G5A122CB0	Kod girmek için:
+G35BC6746	1) Bir görev balatn.
+G46DF9919	2) Duraklatmak için START dümesine basn.
+G5A1291EE	3) unlar çekip basl tutun:
+GEB88B42D	Sonsuz Salk:
+G6AE6FFFE	Sonsuz Mermi:
+GAA29A634	Görevi Bitir:
+GB2AE1BCE	Duraklatma Modu:
+GAA467E08	Deneyim Ekle:
+GEA42298C	Seviye Atla:
+G6BA0C403	Sal Yenile:
+G41D871E0	Mermileri Yenile:
+G04DBD06B	Mermi Gelitirmesi:
+GA7A50BB5	Gelitirmeleri Göster
+GA67DF58D	Menüye Çk
+G773B79A5	Sonraki Göreve Geç
+G96540044	Görevde baarsz oldunuz.
+G5ADDCAC2	Görevi yeniden oyna
+G9DD85D6D	Menüye çk
+G730918CA	Tekrar Dene
+GB437BA93	Emei Geçenler
+G798A44A2	Görevi Yeniden Oyna
+G6F46B26E	Lütfen bir dil seçin.
+G2809E047	ngilizce
+GE3AAFF7A	Hz
+GD0DB46DB	Sert
+G9AD854EF	Öldür
+GE83BE834	Özel
+GDB34AED9	Kombo
+GDACF8DCA	Satn alnd
+G125CAC9A	Henüz kilidi açlmad. Devam etmek için A dümesine basn.
+GDA9711D2	Bu gelitirmeyi satn almak için yeterli gelitirme puan toplamadnz. Devam etmek için A dümesine basn.
+GEB0E0008	veya
+G90A54691	savuturmadan sonra
+GF5F43483	yerdeyken
+GFC1C2104	Bo Alan
+GB8BCCCB9	Oyun 2
+G92BA5250	Oyun 3
+G9CCBAB2F	Oyun 4
+G76C930C6	Oyun 5
+G50C6B65D	Oyun 6
+G2AC43BF4	Oyun 7
+G34D594D3	Oyun 8
+G0ED31A6A	Oyun 9
+GBE76BA62	Oyun 10
+GE47934CB	Oyun 11
+G6ED86859	Hafza Kart (PS2) takl deil. Bu oyun verisini kaydetmek için en az 80 KB gerekiyor. Devam etmek istiyor musunuz?
+G87DE26DA	MEMORY CARD yuvas 1'deki Hafza Kart'nda (PS2) yeterli alan yok.  Bu uygulama verisini kaydetmek için en az 80 KB gerekiyor. Devam etmek istiyor musunuz?
+G7118C569	MEMORY CARD yuvas 2'deki Hafza Kart'nda (PS2) yeterli alan yok.  Bu uygulama verisini kaydetmek için en az 80 KB gerekiyor. Devam etmek istiyor musunuz?
+G6804B4C2	MEMORY CARD yuvalarndaki Hafza Kartlarnda (PS2) yeterli alan yok. Bu uygulama verisini kaydetmek için en az 80 KB gerekiyor. Devam etmek istiyor musunuz?
+G849021EA	MEMORY CARD yuvas 1'de Hafza Kart (PS2) takl deil. Devam etmek için X dümesine basn.
+G59CE2129	MEMORY CARD yuvas 2'de Hafza Kart (PS2) takl deil. Devam etmek için X dümesine basn.
+GC5BD8B5F	Lütfen kumanday yeniden balayn ve devam etmek için START'a basn.
+GC2BDD02C	MEMORY CARD yuvas 2'deki Hafza Kart (PS2) biçimlendirilmemi. Hafza Kart (PS2) biçimlendirilsin mi?
+G6B64948C	Xbox'nzda oyun kaydetmek için yeterli bo blok yok.  Kaydetmeden devam etmek için A'ya basn ya da B'ye basp u kadar blok boaltn: en az
+GEDAB4EA9	Lütfen kumanday yeniden balayn ve devam etmek için START'a basn
+G00E55934	Sabit diskte bu kaytl oyun için yeterli bo blok yok.
+G20A17FB1	blok boaltlmal.
+G353AAE58	Biçimlendirme baarsz! MEMORY CARD yuvas 2'deki Hafza Kart (PS2) hatas! Devam etmek için X dümesine basn.
+G9CAF03E3	Oyun kaydedilemedi. Devam etmek için A dümesine basn.
+GCB03752D	Oyun Kaydedildi.  Devam etmek için A dümesine basn.
+GACBFB64F	MEMORY CARD yuvas 2'deki Hafza Kart'na (PS2) kayt baarl! Devam etmek için X dümesine basn.
+GC7C0454F	Veriler MEMORY CARD yuvas 1'deki Hafza Kart'na (PS2) kaydediliyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+G4B14AAB4	Veriler MEMORY CARD yuvas 2'deki Hafza Kart'na (PS2) kaydediliyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+G53DAC278	Veriler MEMORY CARD yuvas 1'deki Hafza Kart'ndan (PS2) yükleniyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+GF144B8B3	Veriler MEMORY CARD yuvas 2'deki Hafza Kart'ndan (PS2) yükleniyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+G063DD8CC	Oyun yüklenemedi. Devam etmek için A dümesine basn.
+GE5BDAC0B	Oyununuzu kaydetmek istiyor musunuz?
+GED3A9CCF	Kaytl oyun yok. Devam etmek için A dümesine basn.
+GAF453999	blok.
+GEE649E5A	MEMORY CARD yuvas 1'deki Hafza Kart (PS2) biçimlendirilmemi. Devam etmek için X dümesine basn.
+G81447581	MEMORY CARD yuvas 2'deki Hafza Kart (PS2) biçimlendirilmemi. Devam etmek için X dümesine basn.
+GB36F8F0C	Veriler MEMORY CARD yuvas 1'deki Hafza Kart'ndan (PS2) okunuyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+G97EC5687	Veriler MEMORY CARD yuvas 2'deki Hafza Kart'ndan (PS2) okunuyor. Hafza Kart'n (PS2) çkarmayn, konsolu sfrlamayn veya kapatmayn.
+G8E8AF6C1	Kullandnz diskte bir sorun var. Kirli ya da hasarl olabilir.
+G9CB8DFF0	Görev 1
+G0EC04F2B	Görev 2
+GE8BDD4C2	Görev 3
+G5AC543FD	Görev 4
+G34C2C994	Görev 5
+GA6CA38CF	Görev 6
+G80C7BE66	Görev 7
+GF2CF2DA1	Görev 8
+GCCCCB338	Görev 9
+GA1F545C0	Görev 10
+GC7F7C029	Görev 11
+GEDFA3A92	Görev 12
+G13FCB4FB	Görev 13
+GFBA35200	Görev A
+G6DAAC13B	Görev B
+G47A846D2	Görev C
+GB9AFB60D	Görev D
+G0111B4C5	Görev Deneyimi:
+G10CB2024	Görev Derecesi:
+GB8F11F62	Toplam Gelitirme Puan:
+G94649BD6	Kusursuz
+GE424E811	Mükemmel
+G70E9184E	yi
+GE98543F1	Orta
+GF9792B5F	Zayf
+G4DE9139C	Beceri
+GB525F096	Güçlü
+G5F8C23CD	Savunma
+G8673311D	Saldr
+G7829DFB2	Hzl bir kombinasyon.  Daha küçük, kalkansz dümanlara kar etkili.
+G63E6B4FD	Engelleri parçalamak ya da düman kalkanlarn krmak için ykc bir kombinasyon.
+G406CD62A	Kullanmak için sol tetii çekip basl tutun.  A dümesiyle ate edin (hasar artrmak için basl tutun).
+G7651B078	Bu saplama, yere dümü her dümann iini bitirir.
+G09258F36	Dümanlar kendinizden uzaa, saldr menzilinin dna savurun.
+G36E84E05	Düman saldrlarn ve atlan cisimleri engeller.
+G074FC78D	Ykc bir saldr.  Kullanmak için Y dümesini basl tutun.
+GE5C8740D	Salnz kalc olarak artrn.
+G791AEDAB	leri atln ve kalkansz dümanlar yere serin.
+GF4A5485B	Ayaa kalkarken saldrn, dümanlar gafil avlayn.
+GC0B8F80A	Kalkansz dümanlarn iini bitirmek için çok etkili bir kombo.
+G6CBE68E9	Kalkanl dümanlar olabildiince hzl halletmek için çok etkili.
+GD7BB121B	BALI HAMLE: Saldran bir goblini annda öldürün.
+G4A59663E	Dúnedain Yay gibi atlan Rohirrim'in dikenli oklar ciddi hasar verir.
+G96A8AB86	Salnz kalc olarak artrn.  (Gerekli: Kâhyalarn Gücü)
+GED26DEB8	Kalkansz dümanlar yere sermek için uzaktan ileri atln. (Gerekli: Hücum Saldrs)
+GB4790643	Bu kombinasyon saldrsyla dümannz yaralayn, yere serin ve vurun.
+G9709901B	Bu komboyla kalkansz bir dümana vurun, iini bitirin ve hzla bir bakasna vurun.
+G066B80A4	BALI HAMLE: Saldran bir orku annda öldürün.
+GB54F0B8A	Salnz kalc olarak artrn.  (Gerekli: Isildur'un Gücü)
+G1C742C09	Daha ykc bir saldr.  (Gerekli: Kolcu Öfkesi)
+G9F299E6A	Hzl Saldrnzn hasarn artrn.
+G2A888253	Bu komboyla güçlü dümanlar yaralayn, yere serin, sonra ilerini bitirin.
+GEF4043FD	Salnz kalc olarak artrn.  (Gerekli: Elendil'in Gücü)
+GF3D48718	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Yaban Hiddeti)
+GDAE09290	Gondor'un demir oklar korkunç hasar verir.  (Gerekli: Rohan Yay)
+GBD1ED2AE	BALI HAMLE: Saldran bir Uruk-hai'yi annda öldürün.
+G6DF8DC34	Güçlü bir dümana kar kullanarak kalkann parçalayn, onu yere serin ve vurun.
+GB1BCB280	Hiçbir ey
+GE225A1EC	Kullanmak için sol tetii çekip basl tutun.  A dümesiyle frlatn (hasar artrmak için basl tutun).
+GFF3FB1CE	Bu balta darbesi, yere dümü her dümann iini bitirir.
+G81A89461	Salnz kalc olarak artrn.  (Gerekli: Kayann Kudreti)
+GF266C7E6	Salnz kalc olarak artrn.  (Gerekli: Demirin Kudreti)
+G2FCD00C0	Kalkansz dümanlar yere sermek için uzaktan ileri atln.  (Gerekli: Hücum Saldrs)
+G00247254	Salnz kalc olarak artrn.  (Gerekli: Koruma Runu)
+GA505D28C	Salnz kalc olarak artrn.  (Gerekli: Balin'in Kudreti)
+G34C62FC4	Erebor Baltalar gibi frlatlan, jilet keskinliindeki Moria baltalar daha da fazla hasar verir.
+G57901BB9	Daha ykc bir saldr.  (Gerekli: Cüce Öfkesi)
+G8840F62F	Salnz kalc olarak artrn.  (Gerekli: Glóin'in Kudreti)
+G361F0511	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Da Hiddeti)
+G219C0125	Mithril azl bu bçaklar korkunç hasar verir.  (Gerekli: Moria Baltalar)
+G9986DAAB	Sert Saldrnzn hasarn artrn.
+G11BF2FC5	Kuyutorman Uzun Yay gibi atlan Ayrkvadi'nin dibudak oklar daha da fazla hasar verir.
+G7A9893BB	Lothlórien'in büyülü oklar dehet verici hasar verir.  (Gerekli: Ayrkvadi Uzun Yay)
+G42E47239	Bu büyülü oklar dümanlarnz atee verir.  (Gerekli: Lothlórien Uzun Yay)
+G5BAB8220	Salnz kalc olarak artrn.  (Gerekli: Celeborn'un Kuvveti)
+G39265CB0	Daha ykc bir saldr.  (Gerekli: Elf Öfkesi)
+G084B6AEF	Bu oklar yollarndaki tüm dümanlar delip geçer ve hasar verir.  (Gerekli: Ejderha Atei Oklar)
+GB1D19C39	Attnz her okun hasarn artrn.
+G06E26BE1	Üçlü Darbe
+G20A303C1	Çifte Yarma
+GCB8F4087	Dúnedain Yay
+G3F6F3751	Gölge Darbesi
+GBE8C73E9	Sava Tekmesi
+G5660E3B0	Klçla Savuturma
+GDF332280	Kolcu Öfkesi
+GB8AB07B9	Kâhyalarn Gücü
+G187F8CC1	Hücum Saldrs
+G86E487F5	Dorulma Saldrs
+GF7D6DC76	Isildur'un Çevik Deheti
+GB34DCC39	Isildur'un Kurtuluu
+GC9303634	Goblin Belas
+G3A0786A5	Rohan Yay
+G8B17B5C5	Isildur'un Gücü
+G579A1927	Atlma Saldrs
+G207C1523	Isildur'un Ölüm Hücumu
+G6C2653E9	Isildur'un Hamlesi
+G2A3BA153	Ork Belas
+GA28B29AA	Elendil'in Gücü
+G7D213CCE	Yaban Hiddeti
+G006BF315	Usta Klçç
+G6B68444D	Isildur'un Sava Akn
+G3B0A3720	Argonath'n Gücü
+G78BAB3BC	Númenor'un Gazab
+GCEDAD8B0	Gondor Yay
+G3BE146BB	Saruman'n Belas
+G701FD063	Isildur'un Hükmü
+G0251EC9F	Erebor Baltalar
+G96C77DAD	Balta Saplamas
+GDD4B6691	Baltayla Savuturma
+GADD20DD0	Cüce Öfkesi
+GB0D95BC6	Kayann Kudreti
+G4FB6CF69	Demirin Kudreti
+G5F017E32	Balin'in Çevik Deheti
+GDFD7CADD	Balin'in Kurtuluu
+GDF1B571B	Koruma Runu
+G9B37EDE7	Balin'in Ölüm Hücumu
+GCDB1A82D	Balin'in Hamlesi
+G2DEF1D03	Balin'in Kudreti
+GE89D3658	Glóin'in Kudreti
+G31B06C3A	Moria Baltalar
+GADFB76EF	Da Hiddeti
+G75612F09	Balin'in Sava Akn
+G8CE2E527	Khazad-dûm'un Kudreti
+GE4E87FCC	Moria'nn Gazab
+GA16173AB	Puslu Dalar Baltalar
+G24288EA5	Krallarn Balta Ustal
+G45AAD667	Balin'in Hükmü
+GB752504B	Kuyutorman Uzun Yay
+GA018F71A	Bçakla Savuturma
+G0DCE9941	Elf Öfkesi
+G4A27D7DF	Celeborn'un Kuvveti
+GE0EC06AA	Ayrkvadi Uzun Yay
+G76059454	Elrond'un Çevik Deheti
+GE8C0678B	Elrond'un Kurtuluu
+GE9F2F2C9	Lothlórien Uzun Yay
+G5FE47D01	Elrond'un Ölüm Hücumu
+G4B1902CB	Elrond'un Hamlesi
+GB3FB8DDE	Ejderha Atei Oklar
+G4A61DECC	Galadriel'in Kuvveti
+G204DE538	Gil-galad'n Hiddeti
+G5B85BC6F	Elrond'un Sava Akn
+GBDF43860	Mithril Oklar
+G4B69DAC6	Elf Yay Ustal
+G43AB31C1	Elrond'un Hükmü
+GEAA8149B	Seviye
+G11886F39	Düman saldrlarn engellemek ve oklar saptrmak için savuturun.
+GE4E78CFD	Savutur
+G3226B277	Uzak Menzilli Silahnza geçmek için sol tetii çekip basl tutun.  Ate etmek için A dümesine basn.  Nian almak için sol analog çubuu kullann.
+GFF931564	Uzak Menzilli Silah
+G9A309E3D	Ate
+GC4AB2A6D	Kalkansz dümanlara vurmak için Hzl Saldr kullann.
+G5C64BDED	Düman kalkanlarn krmak için Sert Saldr kullann.
+G4B1F5E2B	Sert Saldr
+G12993772	Hzl Saldr
+G5550F308	Karakterinizin Seviyesini artrmak ve deerli gelitirmeler satn almak için Deneyim Puan kazann.
+GD5F0D645	Kazanlan Deneyim Puan
+G109A17A7	Beceri Göstergesi'ni doldurup en yüksek Deneyim Puann kazanmak için gelimi kombinasyonlar kullann ve dümanlarn darbelerinden kaçnn.
+GDB22979F	Beceri Göstergesi
+GF7AF01B8	Nian Al
+G552324EC	Geri Sçra
+G3962B27E	Öldürücü Hamle
+G819AB384	Geri Savur
+GB5FE5915	Ate/Hzl Saldr
+G1438BF1E	Hareket/Nian
+GCDD8B9EF	Duraklat
+G63E0263C	Röportaj
+GA970F7F6	Peter Jackson ve Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Yüzüklerin Efendisi
+GF0462ED4	Video Oyununun Yapm
+G0DB34230	Özel Film Klipleri
+G9DF19E57	'Yüzük Kardelii'
+G1704CE51	Yapm Fotoraflar
+G330E63EE	Fangorn ve Orthanc
+GD722C1B8	Rohan ve Mifer Dibi
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Aragorn ile Oyna
+GA8934934	Legolas ile Oyna
+G84C57E95	Gimli ile Oyna
+G46EA0007	Isildur ile Oyna
+G5689E41F	Gizli Görev
+G7F2C7A4C	Gizli Karakterle Oyna
+G96AF0882	Konsept Sanat
+G8813AE29	Açmak için Moria Kaplar'n bitirin
+G4EEEB554	Açmak için Balin'in Mezar'n bitirin
+G3182CC3A	Açmak için Amon Hen'i bitirin
+G54747798	Açmak için Fangorn Orman'n bitirin
+G5D796BA6	Açmak için Rohan Ovalar'n bitirin
+G758A2B31	Açmak için Batal' bitirin
+GD1B66361	Açmak için Rohan Geçidi'ni bitirin
+GEC95C099	Açmak için Mifer Dibi: Dip Duvar'n bitirin
+G4F6E6B62	Açmak için Mifer Dibi: Yklan Duvar' bitirin
+G7E4B2F5F	Aragorn ile 5. Seviyeye ulan
+GA825B93E	Legolas ile 5. Seviyeye ulan
+GD08EF3EF	Gimli ile 5. Seviyeye ulan
+G060F3A0C	Mifer Dibi: Hornburg Avlusu'nu bitirin ve Aragorn ile 10. Seviyeye ulan
+G9C00EBDD	Mifer Dibi: Hornburg Avlusu'nu bitirin ve Legolas ile 10. Seviyeye ulan
+GCA301FEC	Mifer Dibi: Hornburg Avlusu'nu bitirin ve Gimli ile 10. Seviyeye ulan
+G2A4097F8	Gizli Görevi herhangi bir karakterle bitirin
+GF80714A8	Gizli Görevi gizli karakterle bitirin
+GF281A415	Peter Jackson ve Barrie Osborne film ve oyun hakknda konuuyor
+GEF6D5A30	Elijah Wood, 'Yüzüklerin Efendisi' video oyununda Frodo'yu canlandrmay anlatyor
+G1B7C2E20	Ian McKellen, 'Yüzüklerin Efendisi' video oyununda Gandalf' canlandrmay anlatyor
+G100A11D4	'Yüzüklerin Efendisi' video oyununun nasl yapldna kamera arkasndan bir bak
+G14A8622F	'Yüzük Kardelii'nden karakter ve mekân fotoraflar
+G228511D6	Fangorn ve Orthanc'tan karakter ve mekân fotoraflar
+GFDF064C7	John Howe ve Alan Lee'nin 'Yüzüklerin Efendisi'nden esinlenen çizimleri
+GAAE1A0C0	Rohan ve Mifer Dibi'nden karakter ve mekân fotoraflar
+G6CEBDAE1	Viggo Mortensen, 'Yüzüklerin Efendisi' video oyununda Aragorn'u canlandrmay anlatyor
+G6824CF13	Orlando Bloom, 'Yüzüklerin Efendisi' video oyununda Legolas' canlandrmay anlatyor
+G84770794	John Rhys-Davies, 'Yüzüklerin Efendisi' video oyununda Gimli'yi canlandrmay anlatyor
+G775EAFA1	'Yüzüklerin Efendisi' video oyununun gizli özelliklerini açan gizli kodlar
+G640E4463	Seçimi deitir
+G6D02770F	Seç
+GE5EE10E6	Geri dön
+GA75BE7EE	Seçimi deitir veya düzenle
+GE7B4EE86	Ana Menüye Çk
+G47C91DD4	Resmi deitir
+GE445F6CE	Gelitirme Puanlarnz karakterinize iyiletirmeler satn almak için kullann.
+GB2D2B6DB	Hepsini öldürün!
+GFD9FFC0E	Bu yarat hzl saldrlarla indir!
+G7BD97E94	Kalkann yok etmek için sert saldrn kullan!
+G62FC14DC	te geliyorlar! Hepsini öldürün!
+GA3F97A90	Klçlarnz bana ödünç verin!
+G88F3FEA7	Ahh! Geber, Mordor yarat!
+G4888927E	Ak ehir için!
+GB5DB8B33	in bitti!
+G91F156A0	Defol, gölge yarat!
+G8F5E1C57	Geber, Sauron'un dölü! Geber!
+GEF59BEBD	Geri püskürtün onlar!
+G263E18E0	lerleyin!
+G8715790C	Yerinizde durun!
+G09E491AC	Geber!
+GC9D8887A	Gondor pislii!
+GD909145B	Sen, geber!
+G8524085B	Hepimizi öldüremezsiniz!
+GFA0F31A8	Geber, pislik!
+G6949F8FB	Çok fazlalar, savunmalsn!
+GAB41028F	Kendinizi savunun, efendim.
+GC99D9EF1	Hzl saldrlar bunun hakkndan gelir.
+G8BC62719	Sert saldrlar o kalkanlar krar.
+G24319240	Dünya deiti.
+G6FC7E51E	Bunu suda hissediyorum.
+G586AE929	Bunu toprakta hissediyorum.
+GA0D1D398	Bunu havada kokluyorum.
+G20A7EC8F	Bir zamanlar var olanlarn çou kayboldu,
+G9A5EEA48	çünkü artk onlar hatrlayan kimse yaamyor.
+G991F588A	Her ey Büyük Yüzüklerin dövülmesiyle balad.
+GDCCA686B	Üçü Elflere verildi -
+G64D4928C	ölümsüz, tüm varlklarn en bilgesi ve en güzeli olanlara.
+GC38B0B40	Yedisi Cüce Beylerine,
+GE4E9DA85	da salonlarnn büyük madencileri ve zanaatkârlarna.
+G8EA28015	Ve dokuzu... dokuz Yüzük nsan rkna armaan edildi,
+G5415D8A9	her eyden çok güç arzulayanlara.
+GCAF2B8E3	Çünkü bu Yüzüklerin içine her rk yönetecek güç ve irade balanmt.
+GEAB51D48	Ama hepsi aldatlmt...
+G9968C959	çünkü bir Yüzük daha yapld.
+G6DF9A86C	Mordor Diyar'nda, Hüküm Da'nn atelerinde,
+GD5CC3D06	Kara Lord Sauron dier hepsini yönetecek bir Hükümdar Yüzük'ü gizlice dövdü.
+GA5AF65D9	Ve bu Yüzük'e zalimliini, kinini ve tüm yaama hükmetme iradesini aktt...
+GF9C8C37E	Orta Dünya'nn özgür topraklar birer birer Yüzük'ün gücüne yenik dütü.
+GD7B567A4	Ama direnenler de vard.
+G9673067D	nsanlarla Elflerin Son ttifak Mordor ordularna kar yürüdü,
+G9292CF8B	ve Hüküm Da'nn yamaçlarnda Orta Dünya'nn özgürlüü için savatlar.
+G9C449910	te o anda,
+G4E624CE3	tüm umutlar sönmüken...
+G8B971AFC	...Kral'n olu Isildur babasnn klcn ald.
+GA0976A20	Orta Dünya'nn özgür halklarnn düman Sauron yenildi.
+GCE1FEBD6	Yüzük, kötülüü sonsuza dek yok etmek için bu tek ansa sahip olan Isildur'a geçti.
+G4653B8E6	Ama nsanlarn kalpleri kolayca yozlar.
+GF1F12CD3	Yok et onu!
+G7A59BC32	Hayr.
+GEDAFB589	Ben Isildur'un varisiyim, Isildur'un kendisi deil. Kaderim bana ait.
+GECD0FC9B	Mifer Dibi'ne! Brego, git!
+GE526C94A	Frodo! Onlardan uzak dur!
+GE5AC368C	mdat! Her yerdeler!
+GE18CFED5	Seni bulacaz.
+G754CEC13	Geri çekil, irenç ey!
+G0EE492EC	Yüzük Taycs'n aryorlar! Yakn durun!
+GA236A198	Kar koyamazsn, Buçukluk.
+GB0F6888B	Mahvolduk.
+GABCB70B5	Tüm Isengard boald.
+GD4A9E9B3	Tek bir amaç için yetitirilmi bir ordu bu: nsanlarn dünyasn yok etmek.
+G65599300	Kara Lord yaklayor.
+GC6B5C82C	Baggins...
+GDE3725D0	Yüzük Tayflar! Geri çekilin!
+GDB2A2A63	Yolgezer!
+GDF3A925F	Balansn. Kurtarn onu.
+G4867AD04	Ayrkvadi'nin snanda, aramzdaki en küçük olan en büyük cesareti gösterdi.
+G3505351D	Ben alrm!
+G5B8CB3F8	Ve bir Kardelik kuruldu.
+GF6138FE1	Yüzük'ü Mordor'a ben götüreceim!
+GA7DC204A	Gerçi...
+G2FFEE7D1	...yolu bilmiyorum.
+GD051F7C5	Bu yükü tamana yardm edeceim, Frodo Baggins...
+G82079845	...onu tamak sana dütüü sürece.
+G8308B082	Hepimizin kaderini tayorsun, küçük dostum.
+G32030F3F	Benim yaym da seninle.
+G7A19CD10	Benim baltam da.
+G18A439E8	Yüzük'ü bize ver, buçukluk.
+G5E09B681	Yüzük bizim.
+GC7625599	Bize gel, buçukluk.
+GB2DCED15	Yardm edin!
+GF8B88DB9	Gelin, yardm edin!
+G111D0DD5	Ölüyorum.
+G439D87CA	Bu topraklar deiti.
+GB5DB841A	Öndeki yol güvenli görünene kadar burada bekleyeceiz.
+GF0EB3761	Yllardr Moria'dan hiç haber alamadk.
+G3A9580D6	Moria Madenleri'nden geçebiliriz.
+G852B83DE	Kuzenim Balin bizi krallara yarar ekilde karlar.
+G48D6F333	Dikkat et!
+G20BEF03C	Çabuk! Bu taraftan!
+G37B7E741	Korkunç yaratk.
+G70A83B75	Bu, Moria'nn Lordu Durin'in Kaps.
+GE6E19D64	Demek Gandalf, onlar Caradhras'tan geçirmeye çalyorsun.
+GF7BC40D4	Ya bu da baarsz olursa -
+GC7F3ECF5	o zaman nereye gideceksin?
+G4F7AA217	Moria'ya!
+G0F8A9576	Dost, söyle ve gir.
+GCB3668DA	Mellon.
+G64134F99	Artk tek bir seçeneimiz var.
+GE57BDBA1	Moria'nn uzun karanlyla yüzlemeliyiz.
+G3CA10A85	Mordor pislii!
+GC753F514	Pusu!
+G66D5EE9E	Orklar var. Hem de çok.
+G8AB8C148	Ban derde girince bir cüce gönder!
+G6F4359B4	yi vuru, Gimli!
+G43E71D7A	Önden gidip bir geçit yolu arayacam.
+G0F5D4F40	Yaratk.
+G0BFC06A5	Burada, Moria'nn Lordu Balin'in Mezar'ndan çok daha fazlasn bulacaktk.
+G79CBD185	Kaplar kapattk. Derinlerde davullar.
+G676CE560	Dar çkamyoruz.
+GC2C2532E	Geri çekilin, ruhsuz hayvanlar!
+G41169039	Legolas! Yayna ihtiyacmz var!
+GED8A660A	Acele et, Gimli!
+G548B1E16	Defol, korkunç yaratk!
+G8B6C996D	Onu ben hallederim!
+GD624A593	Arkanda!
+G22876487	Yerinizde durun!
+G6E72BC38	Geri çekilin, yaratklar!
+G98FB35D8	Buraya!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Çok fazlalar!
+GEB38BB38	Onlar nasl durduracaz?
+GDB1D4894	Onlarla savaamam!
+GCA82C10C	Onlar uzak tutamyorum!
+G839F36D1	Yaynla haklarndan gel!
+G426819B7	Balin için!
+G32A709EE	Geliyorum üstüne!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Çok fazlalar!
+GB502E0B9	Kuyutorman için!
+G5C8B1856	Göbeinde kurtçuk delikleri açacam!
+GF8D92047	Hepsini yakalayn!
+GDFB1C64C	Ezin onlar!
+G5AF9060B	Gölgeye geri dön!
+GF1BFC8A0	Aragorn! Klcna ihtiyacm var!
+GF83070F8	Yanma gel, Gimli! Buraya!
+G2EC65D74	Kendinizi hazrlayn!
+GCD82317C	Ate!
+GCEA41230	Daln! Bizi kuatmamallar!
+G3AD812AF	Buçukluu bulun!
+G6B59AA20	Frodo hepimizin kaderini tayor!
+G4B4B5CA5	Onu savunmalyz!
+G1881769E	Onun onuru için bedel ödeyeceksiniz!
+G743E1105	Moria, Kardeliimiz için karanlk bir yolculuk olmutu.
+G32DCF8A9	Kaçn, budalalar!
+G10D542AD	Hayr!
+GD10EAA8A	Görev bçak srtnda duruyor.
+GF997012E	Biraz sapn, baarsz olur.
+G01C6A95F	Ama daha da kararacakt, çünkü Kardeliimiz dalyordu.
+G212FEF60	Seninle sonuna kadar, Mordor'un atelerine kadar giderdim.
+G960898CD	Koun!
+GD941582B	Huzur içinde yat...
+G9D8421F1	...Gondor'un olu.
+G60BC6BA4	Frodo'nun kaçabilmesi için bu Uruk-hai'yi yenmeliyiz!
+GF0E0DD02	Boromir!
+G1C9C2949	Biraz yardm lütfen, Elf!
+GB1E7FF01	Uruk-hai! Saldrn!
+G62308F86	Bundan zevk alacam!
+GA7F87EAC	Sizi douran çukurlara geri dönün.
+G06BA8520	Bu taraftan gittiler, gelin.
+G817C5460	Ama izleri burada bitiyor. Onlar çabucak bulmak için ayrlmalyz.
+G934A6365	Aragorn, orada bir ey var.
+G32456D68	Ne görüyorsun, Legolas?
+G090A57A6	Ak Büyücü.
+G3BE10384	Saruman.
+GF471A310	Boromir'in kahramanlna ramen Saruman'n hizmetkârlar Topluluumuzdan bazlarn esir ald.
+G9EB3E2D9	Ama yoldalarmz ikenceye ve ölüme terk etmeyecektik.
+GC9337F85	Günlerce izlerini sürdük...
+G1A87CFBD	...sonunda bizi Fangorn Orman'na götürdü.
+G7754D2C1	Bu orman yal...
+G9261B17A	...çok yal.
+GF7DCBBD1	Anlarla dolu...
+GC4192431	...ve öfkeyle.
+G92086B9D	O büyük ormanda birçok yol kesiti.
+G6F680400	Olamaz.
+G7A0AC815	Artk iki kule arasnda bir birlik var - Orthanc ve Barad-dûr.
+GF36A1977	Sana baka yerde ihtiyaç var.
+GA926AFE5	Sava Rohan'a geliyor.
+GC5293984	te imdi elence balyor!
+GCF6954E1	Bunu daha önce de gördüm, ama hiç böylesini deil.
+G2E930B75	Tek umudumuz birlikte direnmek!
+GFD82D6F4	Saruman'n kuvvetleri bu kasabadan tuhaf patlayclar geçiriyor. Onlar yok etmemize yardm edin!
+G86FA279C	Onlar kapda tutun!
+G7B48AD72	Aramzda savaabilecek o birkaç kii Mifer Dibi'ne yürüyor.
+GD55B6BE3	Rohan'n gelecei orada yaayacak ya da ölecek.
+G2256A18D	Patlayclara dikkat edin!
+GE0BD0D44	Evet! Atein tadna baksnlar!
+G82C8009F	Bu onlar yavalatr!
+GA0C82879	Burada ne varm?
+G751859FC	Bu da ne?
+G06637EF0	Bu patlayclar yok etmeliyiz!
+GABF94061	O patlayclar yok edilmeli.
+G13114F1E	Bu ne olabilir?
+G5B2AF650	Bu ie yarayabilir.
+G14659B9A	Bu deerli görünüyor.
+G418ECC01	te. Bunu ben alaym.
+G136EC46C	Bunu tamaya deer buluyorum.
+G360BBC1D	Onlar Saruman'n delilii ve Kara Lord'un iradesi sürüklüyor.
+G4840EFEC	Daha fazla havai fiek mi? Ha! Hepimizi cesede çevirmek niyetindeler!
+G19910876	imdi bizim için geliyorlar!
+G08EB8FDB	Geçit vermiyor.
+G6FED1000	Baka bir yol bulmam gerekecek.
+G68F91872	Bu köy kuru çra gibi yanyor!
+G57BD9573	Epey ie yarar.
+G424E3FF5	Bu i görür!
+G501ABC20	Salam durun!
+G31FDA576	Buray da istila ediyorlar!
+GB60A7265	Rohan' savunurken yalnz deildik.
+GA48B596C	Kral'n Muhafzlar da Mifer Dibi'ne doru savaarak ilerliyordu.
+G65866A2E	Burada yapabilecein her eyi yaptn.
+G115A6D12	Hayatta kalanlar Mifer Dibi'ne gidecek.
+GC07CBB0E	Hâlâ yapacak iin var. Gidiat deitiinde sana döneceim.
+G63B48C52	Yarp geçtiler!
+GAAD29572	Lütfen! Hayr! Hayr! Hayr!
+G589F2E2F	Kurtarabildiimiz herkesi kurtarmalyz, yoksa bu köy düecek.
+GE1654ECA	Uzun yolculuumuz bizi Edoras'a getirmeden önce...
+G97FC9F74	...halknz zaten büyük tehlikedeydi.
+GB52DB0C9	Bala beni!
+GDDA274AE	Lütfen! Bala beni!
+GA354A5CD	Ahhh! Hayr!
+G1C74FEB5	Hayr!
+G946E2F3A	Hayr! Hayr! Yapma!
+GF46D4AC5	Hayr! Hayr! Hayr!
+G1BD76207	Çkarn bizi! Çabuk!
+GE57CB50F	Bala beni, yalvarrm!
+G716689E1	Koruyun bizi!
+G6295F93F	Kurtarn beni! Lütfen, kurtarn beni!
+GFA27E38F	Aaaaah! Bizi diri diri yakyorlar!
+G25B702F8	Yaamama izin verin! Lütfen!
+GDE034FBB	Sen devam etmelisin.  Bana baka yerde ihtiyaç var.
+G898F1CFF	Isengard'n kurtlarndan korksunlar!
+G04FC403B	Bu yaratklarn mültecilere ulamasna izin veremezdik.
+GD8C5307E	Halkn korundu, ama bunun bedelini birçok canla ödedik.
+G4FD6FE99	Neredeyse kendi canm kaybediyordum.
+G753DFA73	Ve böylece çeitli yollardan hepimiz son bir direni için Mifer Dibi kalesine geldik.
+G932478E9	imdi, unu öldürün!
+GF940F960	Evet, güzellerim!
+G646F5FC4	Vargalarmz bu gece ziyafet çekecek!
+G948FC6FF	Onunla oynamayn!  Öldürün onu!
+G99617AA4	Geri çekildiler.  imdilik bitti.
+G4A0F838F	Benimki on dokuz!
+GC16105A6	O zaman berabereyiz.
+GAC4FD1F9	Göreceiz.
+GF71FBCA2	Benimki iki.
+G641CA89C	kimize de yetecek kadar var, Gimli!
+GF4B76D82	Sauron'un bakn üzerimizde tutmalyz - hareket eden dier her eye kar onu kör brakmalyz!
+G5B04C967	Geri!
+G3487D102	Duvardan inin!
+G8B575855	Orklar duvarda!
+GCE3C16C0	Benimki on yedi oldu!
+G3D052135	Siper aln!
+G05C9D273	Yine üzerimize ate ediyorlar!
+G4941BF74	Bizi istila etmeden o merdiveni indirin!
+G265760A3	Yere!  Yere yatn!
+G2E8173A8	Onlar Iltl Maaralar'a yaklatramayz!
+G36DE1341	Hiç böyle balta kullanm görmedim, Cüce Efendi.
+G80FBF437	Ben de böyle yay ustal.
+G3F35FF0E	Ama ben vurduktan sonra bir daha asla ayaa kalkmyorlar.
+GEC633822	Savunmamz yarld! Kadnlar ve çocuklar kstrlyor!
+G17070638	Onlar Büyük Salon'a götürün!
+G5CAB82D3	Onlar burada ya da ç Kale'de tutacaz!
+GFFC47594	Onlar durdurduk. Kadnlar ve çocuklar güvende - imdilik.
+GBD5794D5	Artk onlar tutamayz! Büyük Salon'a!
+G088ED5E4	Onlar tutamyoruz!
+G7C6E3511	Sauron ve Saruman ilmei sklatryor.
+G7B236705	Ama tüm kurnazlklarna ramen bir üstünlüümüz var.
+GFCAC9515	Yüzük hâlâ sakl.
+G1C7DF558	Ve onu yok etmeye çalacamz en karanlk rüyalarna bile girmedi.
+GB72B409D	Ve böylece dümann silah bir Hobbit'in elinde Mordor'a doru ilerliyor -
+G86CED6F6	her gün onu Hüküm Da'nn atelerine biraz daha yaklatryor.
+GD9BB4CD5	Sauron senden korkuyor, Aragorn.
+GDD966B5E	Okçular duvara!
+G6A122B51	Geri çekilin! Barikat yklmak üzere!
+G427F5206	Acele et, Cüce Efendi!
+G113213B2	Legolas'n yanna git, onlar ben burada tutarm!
+GA7B95A20	Gondor için!
+G7C696E8A	Aragorn'un gücü yetmiyor! Yanna!
+GFC98A99D	Elf dostumuzun yardma ihtiyac var.
+G66A680C0	Uruk-hai!
+G8968245E	Barikat parçalamak üzereler!
+G428EE07E	ç Kale'ye girdiler. Mahvolduk!
+GFAE8490C	HAYIIIIR!!
+G63F31F0F	Sonun yakn.
+GE8B9DB2E	Ac yolunu seçtin!
+G910D7B12	Seni budala.
+G58E8BBAA	Durma vaktin geldi.
+GD8425223	Pejmürde bir kolcunun irademe kar koyabileceine inanmadn, deil mi? Ben senin gücünün ötesindeyim.
+G1A989E68	Kibrinin bedelini ödeyeceksin.
+G0079D300	Bir Cücenin Saruman'n iradesine kar koyabileceini düünmedin. Kimse koyamaz.
+GFB1E1C33	Bir Elfin Saruman'a kar koyabileceini cidden düünmedin, deil mi? Kimse koyamaz, buna cesaret bile edemez.
+GCB4F521C	Kâhya Yay gibi atlan Rohirrim'in dikenli oklar ciddi hasar verir.
+G906620AF	Salnz kalc olarak artrn.  (Gerekli: Denethor'un Kudreti)
+GE4F990F3	Daha ykc bir saldr.  (Gerekli: Gondor Öfkesi)
+G55B83821	Salnz kalc olarak artrn.  (Gerekli: Gondor'un Gücü)
+GD4900EBD	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Gondor'un Gazab)
+GF1EE1785	Kâhya Yay
+GC7DFC68A	Gondor Öfkesi
+G26838C80	Gondor Borusu
+G948EF2DD	Komutann Direnii
+GC354B788	Denethor'un Kudreti
+G2675AC6D	Minas Tirith Hücumu
+G3A16134F	Kâhyann Hamlesi
+G7C6E9536	Gondor'un Gücü
+G909BDBD3	Gondor'un Gazab
+GBCA2DB1D	Ak Kule Akn
+GA70E206F	Amon Hen Direnii
+GECE9E935	Boromir ile Oyna
+G2BAAD5AF	Kullanmak için sol tetii çekip basl tutun.  A dümesiyle büyü yapn (hasar artrmak için basl tutun).
+GF2DB6139	Büyücü I gibi yaplan Narya'nn alevi dümanlar yakarak ciddi hasar verir.
+G4E51B4E3	Salnz kalc olarak artrn.  (Gerekli: Istarilerin Gücü)
+G701450DF	Salnz kalc olarak artrn.  (Gerekli: Olórin'in Gücü)
+G876BFE80	Daha ykc bir saldr.  (Gerekli: Maia Öfkesi)
+G554AF8D3	Salnz kalc olarak artrn.  (Gerekli: Narya'nn Gücü)
+GF20F1105	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Büyücünün Hiddeti)
+GE86497FB	Istarilerin ak atei korkunç yakar. (Gerekli: Yüzük Atei)
+G5D1DA1B0	Büyücü I
+GE4245C5B	Asayla Savuturma
+G68852FD1	Maia Öfkesi
+G63891384	Istarilerin Gücü
+G3023E8DD	Anor Alevi
+G03053C48	Geçemezsin
+G44E88937	Yüzük Atei
+G31781C88	Olórin'in Gücü
+GC67FABAE	Gölgeyele Hücumu
+GB28BAB38	Gri Hac
+GBB647C84	Narya'nn Gücü
+G3A1959EB	Büyücünün Hiddeti
+G910A4D18	Glamdring Ustas
+GE54BB6DF	Mithrandir'in Akn
+G80CB05F7	Ak'n Gücü
+G5500602D	Olórin'in Gazab
+GB3B8BA9A	Ak Ate
+G4D3F3799	Maia'nn Gazab
+GB06CD44C	Gandalf ile Oyna
+GD63AEB69	Kullanmak için sol tetii çekip basl tutun.  A dümesiyle frlatn (hasar artrmak için basl tutun).
+GF1500B18	Shire Talar gibi frlatlan keskin Brandywine çakmaktalar ciddi hasar verir.
+G1594107A	Salnz kalc olarak artrn.  (Gerekli: Shire'n Gücü)
+G223FB1F4	Salnz kalc olarak artrn.  (Gerekli: Bilbo'nun Gücü)
+G419FBE06	Daha ykc bir saldr.  (Gerekli: Hobbit Öfkesi)
+G549E8839	Salnz kalc olarak artrn.  (Gerekli: Samvis'in Gücü)
+G3E7B6E97	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Shire Hiddeti)
+G5DBA6F26	Elflerce kutsanm talar korkunç hasar verir.  (Gerekli: Çakmakta At)
+G586DFFA8	Shire Talar
+GAF333BB7	Hobbit Öfkesi
+GA30AB0B5	Shire'n Gücü
+G5B952654	Sokan'n Isr
+G3F0B7A46	Yüzük Taycsnn radesi
+GE7A5F0EC	Çakmakta At
+G97512A2B	Bilbo'nun Gücü
+G4F6E34B0	Baggins Hücumu
+G8AFDEEE2	Hobbit ans
+G9AE8326E	Samvis'in Gücü
+G5FECDC01	Shire Hiddeti
+GB7F9A847	Sokan Ustal
+GD629F714	Took Akn
+G31486B52	Çkmaz Çkn'n Gücü
+G4023054B	Sokan'n Gazab
+GD48B81F2	Elf Talar
+G371FFFDE	Mithril Kararll
+G031E765B	Frodo ile Oyna
+G63C78123	Isengard Yay gibi atlan Orthanc'n dikenli oklar ciddi hasar verir.
+G266F9F27	Salnz kalc olarak artrn.  (Gerekli: Isengard'n Gücü)
+G4451D279	Salnz kalc olarak artrn.  (Gerekli: Saruman'n Gücü)
+G2DE635F5	Daha ykc bir saldr.  (Gerekli: Uruk Öfkesi)
+G4D25FA2B	Salnz kalc olarak artrn.  (Gerekli: Orthanc'n Gücü)
+G055C2C2B	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Isengard Hiddeti)
+G478E4DB1	Isengard'n kara oklar korkunç hasar verir.  (Gerekli: Uruk Yay)
+GB0EED2A6	Isengard Yay
+G13D5F1B3	Pala Savuturmas
+GCC2F9E7C	Uruk Öfkesi
+GF496EAA0	Isengard'n Gücü
+GC727C10B	Lurtz'un Av
+G73D0C070	Saruman'n radesi
+GD64B9B56	Uruk Yay
+G9E8D350E	Saruman'n Gücü
+G6426C642	Savaç Uruk Hücumu
+GCC3C5342	Kasabn Hamlesi
+G0DEF3FCC	Orthanc'n Gücü
+G0EBAA8C5	Isengard Hiddeti
+GFC62112E	Usta Kasap
+GEE7780E5	Isengard Taarruzu
+G838B10AC	Uruk-hai'nin Gücü
+GF44614A3	Saruman'n Gazab
+G45DC8B08	Kara Yay
+G4F638CF6	Rohan'n Belas
+G9E606E3B	lk Uruk'un Kyameti
+GE31550F8	Lurtz
+G981416DE	Lurtz ile Oyna
+G6F22BB2E	Elf Yay gibi atlan Ayrkvadi oklar ciddi hasar verir.
+GCA4A15A1	Salnz kalc olarak artrn.  (Gerekli: Ayrkvadi'nin Gücü)
+G75BCF244	Salnz kalc olarak artrn.  (Gerekli: Gil-galad'n Kudreti)
+G216AF74D	Salnz kalc olarak artrn.  (Gerekli: Vilya'nn Gücü)
+G0B6CC0B6	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Noldor Hiddeti)
+G0355C5D7	Eldar'n gümü oklar korkunç hasar verir. (Gerekli: Vanya Yay)
+GD3F16BA3	Elf Yay
+G710A6666	Ayrkvadi'nin Gücü
+G96D9F158	Vilya'nn Lütfu
+GF127A06E	Son ttifak
+GB426C696	Vanya Yay
+G71620C4B	Gil-galad'n Kudreti
+GFBF3A490	Lindon Hücumu
+G00542D8B	Habercinin Hamlesi
+G5104305A	Vilya'nn Gücü
+G221633E0	Noldor Hiddeti
+G11A9FF39	Noldor Sava Akn
+GDE2839BE	Eldar'n Gücü
+GB0E7C432	Lindon'un Gazab
+G008B68D9	Eldar Yay
+G10607364	Imladris'in Efendisi
+G0BA28B85	Elrond ile Oyna
+GD6BB77A1	Kara imek gibi yaplan Barad-dûr'un atei ciddi hasar verir.
+G113CAFFC	Salnz kalc olarak artrn.  (Gerekli: Barad-dûr'un Gücü)
+G2F14F0F7	Salnz kalc olarak artrn.  (Gerekli: Mordor'un Gücü)
+G573FFFF8	Daha ykc bir saldr.  (Gerekli: Kara Öfke)
+G6AE28C4F	Salnz kalc olarak artrn.  (Gerekli: Yüzük'ün Kudreti)
+GC4B7E7DB	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Mordor Hiddeti)
+G5FEE9C56	Hüküm Da'nn alevleri korkunç hasar verir.  (Gerekli: Cehennem Atei)
+GA07FAB7C	Kara imek
+G59838F7F	Topuzla Savuturma
+G0ACE1349	Kara Öfke
+GD97CF863	Barad-dûr'un Gücü
+GF62B2130	Sauron'un Dans
+G53F430F0	Tek Yüzük'ün radesi
+GB60C89B8	Cehennem Atei
+GC26DDD50	Mordor'un Gücü
+G29856B22	Kara Lord'un Hücumu
+G27C67462	Annatar'n Hamlesi
+G66205DC8	Yüzük'ün Kudreti
+GA64C9515	Mordor Hiddeti
+G278CB8C1	Topuz Ustas
+G4B8493DC	Mordor Sava Akn
+G5487C52D	Hüküm Da'nn Gücü
+GE9A37F55	Mordor'un Gazab
+G3F70A0C4	Hüküm Atei
+GBB8776B5	Elflerin Belas
+G6E2AA149	Sauron'un Gözü
+G1C11BF19	Sauron
+G3057B52F	Sauron ile Oyna
+GB76B50B9	Uçurum Kayalar gibi frlatlan bu çukur kayalar ciddi hasar verir.
+GECFE6FA3	Salnz kalc olarak artrn.  (Gerekli: Çukurlarn Kudreti)
+G47753157	Bu ykc saldr birden çok düman atee verir.  (Gerekli: Cinnet Hiddeti)
+GF2D43E42	Erimi kayalar korkunç hasar verir.  (Gerekli: Sava Kayalar)
+GC390874C	Uçurum Kayalar
+G035878D4	Cinnet Çlgnl
+GC2D0B8DB	Dip Mealesi
+GFF1647F7	Sava Kayalar
+G98869254	Çukurlarn Kudreti
+GC4A495AD	Dip Duvar Hücumu
+GE0FB4F25	Uruk-hai Hamlesi
+G8925F4A1	Cinnet Hiddeti
+G468B4A5C	Cinnet Ustas
+GB0E58D9C	Kuatma Akn
+GD5AF6DD1	Orthanc'n Gazab
+G01AF5769	Lav Kayalar
+G18494AB3	Çukurlarn Gazab
+GB3AAE2E1	Uruk-hai
+G683077D7	Uruk-hai ile Oyna
+P:Frame Rate:	Kare Hz:
+P:Unlocked	Snrsz
+P:Display Mode:	Ekran Modu:
+P:Window	Pencere
+P:Full Screen	Tam Ekran
+P:Window Size:	Pencere Boyutu:
+P:Automatic	Otomatik
+P:Aspect Ratio:	En Boy Oran:
+P:Custom	Özel
+P:Resolution:	Çözünürlük:
+P:Anisotropic:	Anizotropik:
+P:Mipmaps:	Mipmap:
+P:Off	Kapal
+P:On	Açk
+P:Ultra Textures:	Ultra Dokular:
+P:Wide Cutscenes:	Geni Ara Sahneler:
+P:Anti-aliasing:	Kenar Yumuatma:
+P:VSync:	VSync:
+P:Picture:	Görüntü:
+P:Keep Shape	Oran Koru
+P:Stretch	Uzat
+P:Vertex Programs:	Vertex Programlar:
+P:Brightness:	Parlaklk:
+P:Sharpening:	Keskinletirme:
+P:Colour:	Renk:
+P:Original	Orijinal
+P:Vivid	Canl
+P:Muted	Soluk
+P:HUD Widescreen:	Geni Ekran HUD:
+P:Edges	Kenarlar
+P:Centred	Ortal
+P:Menus:	Menüler:
+P:Fill	Doldur
+P:Movies:	Videolar:
+P:As Made	Özgün Haliyle
+P:Button Prompts:	Düme Simgeleri:
+P:Keyboard	Klavye
+P:Mouse Pointer:	Fare aretçisi:
+P:Sensitivity:	Hassasiyet:
+P:Pointer Size:	aretçi Boyutu:
+P:Mouse Aiming:	Fareyle Nian:
+P:Invert Aiming:	Nian Ters Çevir:
+P:Up/Down	Yukar/Aa
+P:Left/Right	Sol/Sa
+P:Both	kisi de
+P:Mouse Steering:	Fareyle Yönlendirme:
+P:A Button:	A Dümesi:
+P:B Button:	B Dümesi:
+P:X Button:	X Dümesi:
+P:Y Button:	Y Dümesi:
+P:Black Button:	Siyah Düme:
+P:White Button:	Beyaz Düme:
+P:Left Trigger:	Sol Tetik:
+P:Right Trigger:	Sa Tetik:
+P:Start:	Start:
+P:Back:	Back:
+P:D-pad Up:	Yön Tuu Yukar:
+P:D-pad Down:	Yön Tuu Aa:
+P:D-pad Left:	Yön Tuu Sol:
+P:D-pad Right:	Yön Tuu Sa:
+P:L Stick Click:	Sol Çubuk Tk:
+P:R Stick Click:	Sa Çubuk Tk:
+P:Move Forward:	leri Git:
+P:Move Back:	Geri Git:
+P:Move Left:	Sola Git:
+P:Move Right:	Saa Git:
+P:Look Up:	Yukar Bak:
+P:Look Down:	Aa Bak:
+P:Look Left:	Sola Bak:
+P:Look Right:	Saa Bak:
+P:Walk:	Yürü:
+P:General Options	Genel Seçenekler
+P:Display Options	Ekran Seçenekleri
+P:Controls	Kontroller
+P:Reset Controls	Kontrolleri Sfrla
+P:Press a key...  (Esc: cancel, Delete: clear)	Bir tua basn...  (Esc: iptal, Delete: temizle)
+P:R Stick	Sa Çubuk
+P:Stick	Çubuk
+P:L Stick	Sol Çubuk
+P:Black button	Siyah düme
+P:White button	Beyaz düme
+P:Left trigger	Sol tetik
+P:Right trigger	Sa tetik
+P:Start	Start
+P:Back	Back
+P:D-pad up	Yön tuu yukar
+P:D-pad down	Yön tuu aa
+P:D-pad left	Yön tuu sol
+P:D-pad right	Yön tuu sa
+P:Left stick click	Sol çubuk tk
+P:Right stick click	Sa çubuk tk
+P:Move forward	leri git
+P:Move back	Geri git
+P:Move left	Sola git
+P:Move right	Saa git
+P:Right stick up	Sa çubuk yukar
+P:Right stick down	Sa çubuk aa
+P:Right stick left	Sa çubuk sol
+P:Right stick right	Sa çubuk sa
+P:Walk	Yürü
+P:None	Yok
+P:LS click	Sol ç. tk
+P:RS click	Sa ç. tk
+P:Mouse Left	Fare Sol
+P:Mouse Right	Fare Sa
+P:Mouse Middle	Fare Orta
+P:Mouse 4	Fare 4
+P:Mouse 5	Fare 5
+P:Space	Boluk
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Yukar
+P:Down	Aa
+P:Left	Sol
+P:Right	Sa
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num 
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Noktal virgül
+P:Equals	Eittir
+P:Comma	Virgül
+P:Minus	Eksi
+P:Period	Nokta
+P:Slash	Eik çizgi
+P:Backquote	Ters trnak
+P:Backslash	Ters eik çizgi
+P:Quote	Trnak
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Uzak Menzilli Silahnza geçmek için basl tutun: {6}.  Ate etmek için basn: {0}.  Nian almak için: {M}.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Uzak Menzilli Silahnza geçmek için çekip basl tutun: {6}.  Ate etmek için basn: {0}.  Nian almak için: {M}.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Kullanmak için basl tutun: {6}.  Ate etmek için: {0} (hasar artrmak için basl tutun).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Kullanmak için çekip basl tutun: {6}.  Ate etmek için: {0} (hasar artrmak için basl tutun).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Kullanmak için basl tutun: {6}.  Frlatmak için: {0} (hasar artrmak için basl tutun).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Kullanmak için çekip basl tutun: {6}.  Frlatmak için: {0} (hasar artrmak için basl tutun).
+P:A devastating attack.  Press and hold {3} to use.	Ykc bir saldr.  Kullanmak için basl tutun: {3}.
+P:Game Saved.  Press {8} to continue.	Oyun Kaydedildi.  Devam etmek için basn: {8}.
+P:Game Saved.  Press {0} to continue.	Oyun Kaydedildi.  Devam etmek için basn: {0}.
+P:Unable to save game. Press {8} to continue.	Oyun kaydedilemedi. Devam etmek için basn: {8}.
+P:Unable to save game. Press {0} to continue.	Oyun kaydedilemedi. Devam etmek için basn: {0}.
+P:Unable to load game. Press {8} to continue.	Oyun yüklenemedi. Devam etmek için basn: {8}.
+P:Unable to load game. Press {0} to continue.	Oyun yüklenemedi. Devam etmek için basn: {0}.
+P:No saved games. Press {8} to continue.	Kaytl oyun yok. Devam etmek için basn: {8}.
+P:No saved games. Press {0} to continue.	Kaytl oyun yok. Devam etmek için basn: {0}.
+P:Not unlocked yet. Press {8} to continue.	Henüz kilidi açlmad. Devam etmek için basn: {8}.
+P:Not unlocked yet. Press {0} to continue.	Henüz kilidi açlmad. Devam etmek için basn: {0}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Bu gelitirmeyi satn almak için yeterli gelitirme puan toplamadnz. Devam etmek için basn: {8}.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Bu gelitirmeyi satn almak için yeterli gelitirme puan toplamadnz. Devam etmek için basn: {0}.
+P:Press {8} to resume	Devam etmek için basn: {8}
+P:the left mouse button	sol fare dümesi
+P:the right mouse button	sa fare dümesi
+P:the middle mouse button	orta fare dümesi
+P:mouse button 4	fare dümesi 4
+P:mouse button 5	fare dümesi 5
+P:the A button	A dümesi
+P:the B button	B dümesi
+P:the X button	X dümesi
+P:the Y button	Y dümesi
+P:the Black button	Siyah düme
+P:the White button	Beyaz düme
+P:the left trigger	sol tetik
+P:the right trigger	sa tetik
+P:up on the d-pad	yön tuunda yukar
+P:down on the d-pad	yön tuunda aa
+P:left on the d-pad	yön tuunda sol
+P:right on the d-pad	yön tuunda sa
+P:the left thumbstick button	sol analog çubuk dümesi
+P:the right thumbstick button	sa analog çubuk dümesi
+P:the Menu button	Menü dümesi
+P:the View button	Görünüm dümesi
+P:the cross button	çarp dümesi
+P:the circle button	daire dümesi
+P:the square button	kare dümesi
+P:the triangle button	üçgen dümesi
+P:Left Click	Sol Tk
+P:Right Click	Sa Tk
+P:Middle Click	Orta Tk
+P: or 	 veya 
+P:Exit	Çk
+P:Press {k}	Basn: {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+P:the left thumbstick	sol analog çubuu
