@@ -111,8 +111,8 @@ https://github.com/user-attachments/assets/00546d04-6453-4923-9260-b53e81e554df
 
 <img width="4608" height="1296" alt="Untitled3" src="https://github.com/user-attachments/assets/c9254d2a-92aa-44ca-8b0d-40faea7f567a" />
 
+<img width="3840" height="2160" alt="image" src="https://github.com/user-attachments/assets/1b11ae21-d9d8-495d-a56b-872ac8aaf93b" />
 
-<img width="4608" height="1296" alt="Untitled" src="https://github.com/user-attachments/assets/5bfd36a7-ee5a-43d2-a0ce-05708546c900" />
 
 <img width="1920" height="1080" alt="New folder (8) Screenshot 2026 10 16 - 11 50 36 24" src="https://github.com/user-attachments/assets/cd27127e-3580-4620-928b-2710676de681" />
 
