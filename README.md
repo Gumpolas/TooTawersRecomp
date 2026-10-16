@@ -29,7 +29,7 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
-- **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven extra playable heroes.
+- **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 
 ## What's new in 1.9.2
 
