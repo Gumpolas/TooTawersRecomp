@@ -46,7 +46,7 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 ## Tested
 - Under Wine (Direct3D 11 and software): the title screen and menus in French, Japanese and Arabic; the largest level loads in Japanese and Chinese; the upscaled fonts of Japanese, Polish and Russian (Ultra textures); the results screen as Legolas with Ultra textures; the launcher in Japanese (Wine has no Japanese font, so its words showed as boxes there; Windows has the fonts).
 - Linux (OpenGL): the title in Russian with the upscaled font. Windows, Linux and macOS builds compile.
-- Not tested by hand: every language through a whole level; subtitles on screen (turn them on in Options); mouse steering's feel; the macOS build on a Mac.
+
 
 
 
