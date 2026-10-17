@@ -20,7 +20,7 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 
 ## What the port adds
 
-- **Runs natively** on Windows, Linux and macOS, from your own disc.
+- **Runs natively** on Windows, Linux and macOS (experimental), from your own disc.
 - **Languages** *(new)*: 33 languages besides English for every text in the game, subtitles included, plus the launcher and the F10 menu.
 - **Resolution and widescreen**: internal resolution 1x–12x, 4:3 to 32:9 with the HUD at the screen's edges, widescreen cutscenes, menus that fill the screen.
 - **Picture**: Direct3D 11, Vulkan (DXVK) or OpenGL; MSAA and FXAA, anisotropic filtering, brightness, sharpening and color.
