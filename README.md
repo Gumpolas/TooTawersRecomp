@@ -43,7 +43,7 @@ The stripes and thin lines that crossed character shadows in every level, at any
 - The window and mouse follow every resolution change, so the pointer no longer drifts and W A S D keep working in the menus.
 
 ### Controller fixes
-- In the menus, a part push of the **left stick** moves the choice as the d-pad does. The main menu used to need a full push, and a push slightly to the side often did nothing. A held stick steps at the d-pad's pace.
+- In the main menus, a part push of the **left stick** moves the choice as the d-pad does. The main menu used to need a full push, and a push slightly to the side often did nothing. A held stick steps at the d-pad's pace.
 - A held stick or d-pad no longer runs down the **Options pages** at high frame rates.
 - **Mouse steering** and **mouse aiming** now take over the left stick only for the keys and mouse. Before, pushing a controller's stick up with steering on, or holding its LT with mouse aiming on, gave the stick to the mouse.
 
