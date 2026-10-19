@@ -40,7 +40,7 @@ The stripes and thin lines that crossed character shadows in every level, at any
 ### Exclusive full screen
 - **Display mode** now has **Windowed**, **Borderless** and **Exclusive** full screen (Options → Display, F10, the launcher, or `[Display] fullscreen=2`).
 - **Full-screen resolution** chooses the display's resolution for exclusive full screen: the desktop's, or another the display offers, at its highest refresh rate (`[Display] fs_resolution=1920x1080`). Changing it keeps you on the Display page.
-- Alt+Tab puts the desktop back while you are away and switches again when you return. The window and mouse follow every resolution change, so the pointer no longer drifts and W A S D keep working in the menus.
+- The window and mouse follow every resolution change, so the pointer no longer drifts and W A S D keep working in the menus.
 
 ### Controller fixes
 - In the menus, a part push of the **left stick** moves the choice as the d-pad does. The main menu used to need a full push, and a push slightly to the side often did nothing. A held stick steps at the d-pad's pace.
