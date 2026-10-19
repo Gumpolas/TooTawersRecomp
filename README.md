@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v1.9.2
+# The Two Towers Recompiled v1.9.3
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,15 +8,16 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9.2-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9.2-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9.2-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v1.9.2-source.zip` | Source code |
+| `TwoTowers-Recompiled-v1.9.3-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9.3-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9.3-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
+| `TwoTowers-Recompiled-v1.9.3-source.zip` | Source code |
+
 
 **Ultra textures, GameCube compatibility pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
+Updating from 1.9.2 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
 
 ## What the port adds
 
@@ -31,7 +32,40 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 
-## What's new in 1.9.2
+## What's new in 1.9.3
+
+### Character shadow improvements
+The stripes and thin lines that crossed character shadows in every level, at any resolution, are not fixed completely, but some of the shadows are now more filled in. (Direct3D 11 and Vulkan).
+
+### Exclusive full screen
+- **Display mode** now has **Windowed**, **Borderless** and **Exclusive** full screen (Options → Display, F10, the launcher, or `[Display] fullscreen=2`).
+- **Full-screen resolution** chooses the display's resolution for exclusive full screen: the desktop's, or another the display offers, at its highest refresh rate (`[Display] fs_resolution=1920x1080`). Changing it keeps you on the Display page.
+- Alt+Tab puts the desktop back while you are away and switches again when you return. The window and mouse follow every resolution change, so the pointer no longer drifts and W A S D keep working in the menus.
+
+### Controller fixes
+- In the menus, a part push of the **left stick** moves the choice as the d-pad does. The main menu used to need a full push, and a push slightly to the side often did nothing. A held stick steps at the d-pad's pace.
+- A held stick or d-pad no longer runs down the **Options pages** at high frame rates.
+- **Mouse steering** and **mouse aiming** now take over the left stick only for the keys and mouse. Before, pushing a controller's stick up with steering on, or holding its LT with mouse aiming on, gave the stick to the mouse.
+
+### macOS updates (Apple silicon)
+The 1.9.2 Mac build stopped at start-up on Apple silicon. Three fixes, from a player's report and tested patch (M2 Pro, macOS 27.2, Rosetta 2):
+- **The game window opens.** macOS only lets the main thread make windows; the game drew no window ("NSWindow should only be instantiated on the main thread"). The window now runs on the main thread, the game on its own.
+- **No crash once the renderer is up.** The OpenGL picture could be drawn from a second thread that had no OpenGL context (a crash in `glBindFramebuffer`).
+- **No crash at the first sound.** Rosetta 2 reports the step the audio-register handling takes as a breakpoint (`unhandled exception 0x80000003`); it is now recognised as the step it is.
+- A crash log line now also names the function it stopped in.
+
+### Other fixes
+- **Vulkan without a separate download.** DXVK 3.0.2 now comes in the Windows download's `dxvk` folder: choose **Vulkan** as the Renderer in the launcher. Direct3D 11 stays the default.
+- The **Secret Codes** page shows your controls: its L trigger follows the button prompts you chose (as R did), and its text names your keys with keyboard prompts.
+- 
+## Tested
+- Under Wine (Direct3D 11): levels load and play with the shadow repair on, at 1x and 4x internal resolution; exclusive full screen starts; the main menu with scripted left-stick pushes at 30 %, 40 %, 60 % and full (both ways), and a held stick against a held d-pad; the orange pickups and the ECTS HUD.
+- Linux (OpenGL): a level from boot. Windows, Linux and macOS builds compile.
+- macOS: the reporter's version of these fixes, in their own build, reached the renderer, sound and the intro screens at 30 frames a second on an M2 Pro (Rosetta 2). This release's Mac build (with the window fix reworked) has not been run on a Mac; full play, controllers and Intel Macs are untested.
+
+
+
+## What 1.9.2 added. 
 
 ### Languages
 - Choose one in the launcher's **Language** list (on Linux and macOS: `./twotowers-setup`, then **l**). English, French, German, Spanish (Spain and Latin America), Italian, Portuguese (Brazil and Portugal), Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Croatian, Turkish, Greek, Bulgarian, Russian, Ukrainian, Vietnamese, Indonesian, Japanese, Korean, Chinese (Simplified and Traditional), Thai, Hindi, Hebrew and Arabic.
@@ -53,7 +87,7 @@ Updating from 1.9.1 or earlier: unpack over your old folder, or into a new one a
 Known issues
 
     - Visual bugs: Character shadow bug. Sometimes the character shadows can appear stretched out or stringy, especially for larger NPC's. Some visual bugs with lighting as well. With the extra heros mod enabled, replaying the second level can sometimes show an odd texture covering the top of the upgrades screen after completing the level. This can be fixed temporarily by turning the mod off.
-        - Vulkan: If you get a black screen when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable.
+        - Vulkan: If you get any black screens when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable.
     - Extra Heroes: Kicking animations and their range during the Deepening level can be off. Kicking works fine against enemies, but some of the new characters have to be angled to the side to kick down the ladders. Again kicking works fine against enemies but not the ladders during this level. NPC's like Sauron, Frodo, and Lurtz can kick them just fine, but Elrond, Boromir, the Uruk and Gandalf may have some trouble and need to be angled to the side.
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
