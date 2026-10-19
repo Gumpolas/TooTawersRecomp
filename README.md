@@ -57,7 +57,7 @@ The 1.9.2 Mac build stopped at start-up on Apple silicon. Three fixes, from a pl
 ### Other fixes
 - **Vulkan without a separate download.** DXVK 3.0.2 now comes in the Windows download's `dxvk` folder: choose **Vulkan** as the Renderer in the launcher. Direct3D 11 stays the default.
 - The **Secret Codes** page shows your controls: its L trigger follows the button prompts you chose (as R did), and its text names your keys with keyboard prompts.
-- 
+  
 ## Tested
 - Under Wine (Direct3D 11): levels load and play with the shadow repair on, at 1x and 4x internal resolution; exclusive full screen starts; the main menu with scripted left-stick pushes at 30 %, 40 %, 60 % and full (both ways), and a held stick against a held d-pad; the orange pickups and the ECTS HUD.
 - Linux (OpenGL): a level from boot. Windows, Linux and macOS builds compile.
