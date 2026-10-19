@@ -36,7 +36,9 @@ extern void xbox_GfxSetIndex(int id, int v);
 enum { GFX_FPS, GFX_FULLSCREEN, GFX_ASPECT, GFX_SCALE, GFX_ANISO, GFX_MIPS, GFX_AA,
        GFX_VSYNC, GFX_STRETCH, GFX_VP, GFX_BRIGHT, GFX_SHARP, GFX_COLOR,
        GFX_PROMPTS, GFX_HUDPOS, GFX_MENUFILL, GFX_MOVIEFILL, GFX_MOUSE, GFX_MOUSE_SENS, GFX_CURSOR_SIZE,
-       GFX_MOUSE_AIM, GFX_MOUSE_INVERT, GFX_SPRINT, GFX_MOUSE_STEER, GFX_WINSIZE, GFX_ULTRA, GFX_WIDE_SCENES };
+       GFX_MOUSE_AIM, GFX_MOUSE_INVERT, GFX_SPRINT, GFX_MOUSE_STEER, GFX_WINSIZE, GFX_ULTRA, GFX_WIDE_SCENES,
+       GFX_FS_RES };
+extern const char *xbox_GfxItemName(int id, int v);
 
 /* the game's Options page elements we copy */
 #define EL_SIZE   0xDCu
@@ -56,11 +58,12 @@ enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET };   /* (K_BIND: gfx is the ac
 typedef struct {
     const char *label;
     int gfx, kind;
-    const char *names[16];    /* short names for the choices (columns, cycling) */
+    const char *names[24];    /* short names for the choices (columns, cycling) */
 } Row;
 static const Row s_display[] = {
     { "Frame Rate:", GFX_FPS, K_COLS, { "30", "60", "Unlocked" } },
-    { "Display Mode:", GFX_FULLSCREEN, K_COLS, { "Window", "Full Screen" } },
+    { "Display Mode:", GFX_FULLSCREEN, K_COLS, { "Window", "Borderless", "Exclusive" } },
+    { "Full Screen Res:", GFX_FS_RES, K_CYCLE, { 0 } },   /* (the monitor's own: their names from the settings) */
     { "Window Size:", GFX_WINSIZE, K_CYCLE, { "Automatic", "1280x720", "1280x960", "1600x900", "1920x1080", "1920x1200",
                                               "2560x1080", "2560x1440", "3440x1440", "3840x2160", "5120x1440" } },
     { "Aspect Ratio:", GFX_ASPECT, K_CYCLE, { "4:3", "16:9", "16:10", "21:9", "32:9", "Custom" } },
@@ -117,6 +120,7 @@ static int s_nctl;
 
 static int s_page = PG_HUB, s_sel, s_hub_sel, s_top;
 static DWORD s_drawn;            /* the Options page last drawn (ticks) */
+static volatile unsigned s_frames, s_drawn_frame;   /* (1.9.3) the game's frames, and the last with Options drawn */
 static uint32_t s_mem;           /* our elements and words, in the game's memory */
 #define MEM_SIZE 0x10000u
 #define MAX_EL   160
@@ -239,9 +243,9 @@ static void draw_page(void)
                 }
             } else if (w->kind == K_CYCLE) {
                 /* the choice in the middle, arrows either side */
-                if (cur >= 0 && cur < 12) {
+                if (cur >= 0 && cur < 24) {
                     marker(s_colx[1] + 64, y + 17, sel);
-                    text_el(T_VALUE, s_colx[1], y, 0, COL_OFF, w->names[cur] ? w->names[cur] : "?");
+                    text_el(T_VALUE, s_colx[1], y, 0, COL_OFF, w->names[cur] ? w->names[cur] : xbox_GfxItemName(w->gfx, cur));
                 }
                 text_el(T_VALUE, s_colx[0], y, 0, COL_OFF, "<");
                 text_el(T_VALUE, s_colx[2], y, 0, COL_OFF, ">");
@@ -262,8 +266,12 @@ static void draw_page(void)
 int tt_opt_draw(uint32_t obj)
 {
     (void)obj;
-    if (!s_drawn || since_drawn() > 400) { s_page = PG_HUB; s_hub_sel = 0; }   /* Options just opened: the first page */
+    /* Options just opened: the first page. (1.9.3: frames gone by without
+     * it, not time -- a new full-screen resolution held the picture for
+     * longer than 400 ms and the page went back to the first one) */
+    if (!s_drawn || s_frames - s_drawn_frame > 3) { s_page = PG_HUB; s_hub_sel = 0; }
     s_drawn = GetTickCount() | 1;
+    s_drawn_frame = s_frames;
     if (getenv("TT_NOOPTPAGES")) s_page = PG_GENERAL;
     if (s_page == PG_GENERAL) return 0;
     if (!s_mem) {
@@ -279,13 +287,14 @@ typedef struct { uint16_t wButtons; uint8_t bAnalogButtons[8]; int16_t sThumbLX,
 typedef struct { uint32_t dwPacketNumber; XPad Gamepad; } XState;
 enum { B_UP = 1, B_DOWN = 2, B_LEFT = 4, B_RIGHT = 8, B_A = 16, B_B = 32, B_START = 64 };
 static volatile uint32_t s_held_acc;   /* what was held since the last frame (the input thread) */
+static volatile uint32_t s_held_last;  /* (1.9.3) what the pad's last read held (the input thread) */
 static volatile int s_b_block;         /* B took us back to the first page: the game does not see it until let go */
 void tt_opt_filter(unsigned long port, XState *st)
 {
     XPad *p = &st->Gamepad;
     uint32_t h = 0;
     (void)port;
-    if (!opt_up()) return;
+    if (!opt_up()) { s_held_last = 0; return; }
     if (p->wButtons & 1) h |= B_UP;
     if (p->wButtons & 2) h |= B_DOWN;
     if (p->wButtons & 4) h |= B_LEFT;
@@ -299,6 +308,7 @@ void tt_opt_filter(unsigned long port, XState *st)
     if (p->wButtons & 0x20) h |= B_B;   /* Back (Tab, Backspace by default): out of the Options pages, as B */
     if (p->wButtons & 0x10) h |= B_START;
     s_held_acc |= h;
+    s_held_last = h;
     if (s_b_block) {
         if (h & B_B) p->bAnalogButtons[1] = 0;
         else s_b_block = 0;
@@ -389,9 +399,14 @@ static void capture_poll(void)
 /* a frame (menus.c's tick) */
 void tt_opt_tick(void)
 {
+    s_frames++;
     static uint32_t prev;
     static DWORD rep_t;
-    uint32_t now = s_held_acc, edge, rep = 0;
+    /* (1.9.3) what the pad's last read holds, and anything pressed since the
+     * last frame: at a high frame rate most frames see no read, and taken as
+     * let go there, every read was a new press -- a held stick or d-pad ran
+     * down the page */
+    uint32_t now = s_held_acc | s_held_last, edge, rep = 0;
     s_held_acc = 0;
     if (!opt_up()) { prev = 0; s_cap = 0; return; }
     if (s_cap) { capture_poll(); prev = now; return; }   /* (keys held over it make no press after) */

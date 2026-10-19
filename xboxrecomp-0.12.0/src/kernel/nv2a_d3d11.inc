@@ -37,6 +37,7 @@ static ID3D11RenderTargetView *g_sc_rtv;
 static HWND g_sc_hwnd;
 static UINT g_sc_w, g_sc_h;
 static ID3D11VertexShader *g_vs, *g_vs_quad, *g_vs_present, *g_vs_blit;
+static ID3D11PixelShader *g_ps_sh_one, *g_ps_sh_dil, *g_ps_sh_ero, *g_ps_sh_fill, *g_ps_sh_down;   /* (1.9.3) shadow repair */
 static ID3D11PixelShader *g_ps, *g_ps_clear, *g_ps_present, *g_ps_copy, *g_ps_fxaa, *g_ps_zres;
 
 /* Internal resolution: every render target and depth buffer is allocated at
@@ -1006,6 +1007,16 @@ static int gpu_init(void)
     if (!(b = gpu_compile("ps_copy", "ps_5_0"))) return 0;
     ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, &g_ps_copy);
     ID3D10Blob_Release(b);
+    {   /* (1.9.3) the shadow repair's passes (none: shadows as the game draws them) */
+        static const char *const nm[5] = { "ps_sh_one", "ps_sh_dil", "ps_sh_ero", "ps_sh_fill", "ps_sh_down" };
+        ID3D11PixelShader **out[5] = { &g_ps_sh_one, &g_ps_sh_dil, &g_ps_sh_ero, &g_ps_sh_fill, &g_ps_sh_down };
+        int i;
+        for (i = 0; i < 5; i++)
+            if ((b = gpu_compile(nm[i], "ps_5_0"))) {
+                ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, out[i]);
+                ID3D10Blob_Release(b);
+            }
+    }
     if ((b = gpu_compile("ps_zres", "ps_5_0"))) {
         ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, &g_ps_zres);
         ID3D10Blob_Release(b);
@@ -1103,6 +1114,246 @@ static UINT gpu_upload(ID3D11Buffer **buf, UINT *cap, UINT *pos, UINT bind, cons
 
 /* The colour and zeta targets the title has bound, made current. */
 static GSurf *g_cur_rt, *g_cur_ds;
+/* (1.9.3) Character shadows without the pale streaks.
+ *
+ * The game draws its character shadows as stencil volumes: the volume's
+ * faces counted into the stencil (decrement, then increment), alpha only,
+ * then two full-screen passes darken where the count is not zero, the
+ * second clearing it. The volume the game's CPU code builds is not closed
+ * everywhere, so thin lines inside a shadow keep a count of 0 and stay lit
+ * -- the pale streaks and stripes across shadows, in every level, at any
+ * resolution, the same in the software renderer.
+ *
+ * The repair, just before the first darkening pass: the stencil's "not zero"
+ * as a mask (resolved from its samples with MSAA), closed -- dilated and
+ * eroded by a few pixels, a pass per axis -- and the stencil set to 1 where
+ * the closed mask covers a pixel the shadow missed completely. The game's
+ * own passes then darken as before; nothing the shadow covered changes, its
+ * edges included. Gaps up to 4 pixels wide at 640x480 are closed (scaled
+ * with the internal resolution). */
+static ID3D11Texture2D *g_shm_tex[3], *g_shm_mtex;
+static ID3D11RenderTargetView *g_shm_rtv[3], *g_shm_mrtv;
+static ID3D11ShaderResourceView *g_shm_srv[3];
+static UINT g_shm_w, g_shm_h, g_shm_n, g_shm_d;   /* (the full-size mask; [1] [2] are 1/d of it) */
+static int g_sh_pending, g_sh_skipping;
+static void shm_free(void)
+{
+    int i;
+    for (i = 0; i < 3; i++) {
+        if (g_shm_srv[i]) ID3D11ShaderResourceView_Release(g_shm_srv[i]);
+        if (g_shm_rtv[i]) ID3D11RenderTargetView_Release(g_shm_rtv[i]);
+        if (g_shm_tex[i]) ID3D11Texture2D_Release(g_shm_tex[i]);
+        g_shm_srv[i] = NULL; g_shm_rtv[i] = NULL; g_shm_tex[i] = NULL;
+    }
+    if (g_shm_mrtv) ID3D11RenderTargetView_Release(g_shm_mrtv);
+    if (g_shm_mtex) ID3D11Texture2D_Release(g_shm_mtex);
+    g_shm_mrtv = NULL; g_shm_mtex = NULL;
+    g_shm_w = g_shm_h = g_shm_n = g_shm_d = 0;
+}
+static int shm_make(UINT w, UINT h, UINT n, UINT dd)
+{
+    D3D11_TEXTURE2D_DESC td;
+    int i;
+    if (g_shm_w == w && g_shm_h == h && g_shm_n == n && g_shm_d == dd && g_shm_tex[0]) return 1;
+    shm_free();
+    memset(&td, 0, sizeof td);
+    td.Width = w; td.Height = h; td.MipLevels = 1; td.ArraySize = 1; td.Format = DXGI_FORMAT_R8_UNORM;
+    td.SampleDesc.Count = 1; td.Usage = D3D11_USAGE_DEFAULT; td.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+    for (i = 0; i < 3; i++) {
+        td.Width = i ? (w + dd - 1) / dd : w; td.Height = i ? (h + dd - 1) / dd : h;
+        if (FAILED(ID3D11Device_CreateTexture2D(g_dev, &td, NULL, &g_shm_tex[i]))) { g_shm_tex[i] = NULL; shm_free(); return 0; }
+        ID3D11Device_CreateRenderTargetView(g_dev, (ID3D11Resource *)g_shm_tex[i], NULL, &g_shm_rtv[i]);
+        ID3D11Device_CreateShaderResourceView(g_dev, (ID3D11Resource *)g_shm_tex[i], NULL, &g_shm_srv[i]);
+        if (!g_shm_rtv[i] || !g_shm_srv[i]) { shm_free(); return 0; }
+    }
+    if (n > 1) {
+        td.Width = w; td.Height = h;
+        td.SampleDesc.Count = n; td.BindFlags = D3D11_BIND_RENDER_TARGET;
+        if (FAILED(ID3D11Device_CreateTexture2D(g_dev, &td, NULL, &g_shm_mtex))) { g_shm_mtex = NULL; shm_free(); return 0; }
+        if (FAILED(ID3D11Device_CreateRenderTargetView(g_dev, (ID3D11Resource *)g_shm_mtex, NULL, &g_shm_mrtv))) { shm_free(); return 0; }
+    }
+    g_shm_w = w; g_shm_h = h; g_shm_n = n; g_shm_d = dd;
+    return 1;
+}
+static int is_sop_count(uint32_t op) { return op == 0x1E02 || op == 0x1E03 || op == 0x8507 || op == 0x8508; }
+static void shadow_repair(int radius, UINT dd)
+{
+    static ID3D11DepthStencilState *ds_mask, *ds_fill;
+    static ID3D11RasterizerState *rs;
+    static ID3D11BlendState *bs_amax;
+    static UINT8 mask_rm = 0, mask_ref = 0; static int mask_func = -1;
+    D3D11_TEXTURE2D_DESC rd;
+    D3D11_VIEWPORT vp;
+    UINT n = 1, i;
+    float cb[4] = { 0, 0, 0, 0 };
+    float black[4] = { 0, 0, 0, 0 };
+    ID3D11ShaderResourceView *none[2] = { NULL, NULL };
+    ID3D11RenderTargetView *rt;
+    if (!g_ps_sh_one || !g_ps_sh_dil || !g_ps_sh_ero || !g_ps_sh_fill || !g_ps_sh_down || !g_cur_rt || !g_cur_ds || !g_cur_ds->dsv) return;
+    if (g_cur_rt->mtex) { ID3D11Texture2D_GetDesc(g_cur_rt->mtex, &rd); n = rd.SampleDesc.Count; }
+    if (dd < 1) dd = 1;
+    if (!shm_make(g_cur_rt->pw, g_cur_rt->ph, n, dd)) return;
+    if (!rs) {
+        D3D11_RASTERIZER_DESC d;
+        memset(&d, 0, sizeof d);
+        d.FillMode = D3D11_FILL_SOLID; d.CullMode = D3D11_CULL_NONE; d.DepthClipEnable = FALSE;
+        if (FAILED(ID3D11Device_CreateRasterizerState(g_dev, &d, &rs))) return;
+    }
+    if (!ds_mask || mask_rm != (UINT8)s_3d.st_mask || mask_func != (int)s_3d.st_func) {
+        D3D11_DEPTH_STENCIL_DESC d;
+        if (ds_mask) ID3D11DepthStencilState_Release(ds_mask), ds_mask = NULL;
+        memset(&d, 0, sizeof d);
+        d.DepthEnable = FALSE; d.StencilEnable = TRUE;
+        d.StencilReadMask = (UINT8)s_3d.st_mask; d.StencilWriteMask = 0;
+        d.FrontFace.StencilFailOp = d.FrontFace.StencilDepthFailOp = d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+        d.FrontFace.StencilFunc = gl_cmp(s_3d.st_func);
+        d.BackFace = d.FrontFace;
+        if (FAILED(ID3D11Device_CreateDepthStencilState(g_dev, &d, &ds_mask))) { ds_mask = NULL; return; }
+        mask_rm = (UINT8)s_3d.st_mask; mask_func = (int)s_3d.st_func;
+    }
+    mask_ref = (UINT8)s_3d.st_ref;
+    if (!ds_fill) {
+        D3D11_DEPTH_STENCIL_DESC d;
+        memset(&d, 0, sizeof d);
+        d.DepthEnable = FALSE; d.StencilEnable = TRUE; d.StencilReadMask = 0xFF; d.StencilWriteMask = 0xFF;
+        d.FrontFace.StencilFailOp = d.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        d.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE; d.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+        d.BackFace = d.FrontFace;
+        if (FAILED(ID3D11Device_CreateDepthStencilState(g_dev, &d, &ds_fill))) { ds_fill = NULL; return; }
+    }
+    if (!bs_amax) {
+        D3D11_BLEND_DESC bd;
+        memset(&bd, 0, sizeof bd);
+        bd.RenderTarget[0].BlendEnable = TRUE;
+        bd.RenderTarget[0].SrcBlend = bd.RenderTarget[0].DestBlend = D3D11_BLEND_ONE; bd.RenderTarget[0].BlendOp = D3D11_BLEND_OP_MAX;
+        bd.RenderTarget[0].SrcBlendAlpha = bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE; bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
+        bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALPHA;
+        if (FAILED(ID3D11Device_CreateBlendState(g_dev, &bd, &bs_amax))) { bs_amax = NULL; return; }
+    }
+    if (!g_cur_rt->srv) return;
+    /* the picture's alpha as it stands (MSAA: from its samples) */
+    ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 0, NULL, NULL);
+    if (g_cur_rt->mtex)
+        ID3D11DeviceContext_ResolveSubresource(g_ctx, (ID3D11Resource *)g_cur_rt->tex, 0, (ID3D11Resource *)g_cur_rt->mtex, 0, DXGI_FORMAT_B8G8R8A8_UNORM);
+    vp.TopLeftX = 0; vp.TopLeftY = 0; vp.Width = (float)g_shm_w; vp.Height = (float)g_shm_h; vp.MinDepth = 0; vp.MaxDepth = 1;
+    ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
+    ID3D11DeviceContext_RSSetState(g_ctx, rs);
+    ID3D11DeviceContext_OMSetBlendState(g_ctx, NULL, NULL, 0xFFFFFFFFu);
+    ID3D11DeviceContext_IASetInputLayout(g_ctx, NULL);
+    ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    ID3D11DeviceContext_VSSetShader(g_ctx, g_vs_quad, NULL, 0);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 2, none);
+    /* 1: the mask -- 1 where the stencil passes the darkening's own test */
+    rt = n > 1 ? g_shm_mrtv : g_shm_rtv[0];
+    ID3D11DeviceContext_ClearRenderTargetView(g_ctx, rt, black);
+    ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &rt, g_cur_ds->dsv);
+    ID3D11DeviceContext_OMSetDepthStencilState(g_ctx, ds_mask, mask_ref);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 2, 1, &g_cur_rt->srv);
+    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_sh_one, NULL, 0);
+    ID3D11DeviceContext_Draw(g_ctx, 3, 0);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 2, 1, none);
+    if (n > 1) {
+        ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 0, NULL, NULL);
+        ID3D11DeviceContext_ResolveSubresource(g_ctx, (ID3D11Resource *)g_shm_tex[0], 0, (ID3D11Resource *)g_shm_mtex, 0, DXGI_FORMAT_R8_UNORM);
+    }
+    /* 2: (1.9.3) the mask at 1/dd of the size (each pixel the largest of
+     * its dd x dd), closed there -- dilated (1 -> 2 -> 1), eroded (1 -> 2
+     * -> 1): at a high internal resolution the closing at full size read
+     * dozens of neighbours for millions of pixels, four times a frame, and
+     * held the frame rate down */
+    ID3D11DeviceContext_OMSetDepthStencilState(g_ctx, NULL, 0);
+    vp.Width = (float)((g_shm_w + dd - 1) / dd); vp.Height = (float)((g_shm_h + dd - 1) / dd);
+    ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
+    cb[0] = (float)radius; cb[1] = 0; cb[2] = (float)dd;
+    ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_cl, 0, NULL, cb, 0, 0);
+    ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 2, 1, &g_cb_cl);
+    ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &g_shm_rtv[1], NULL);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 1, &g_shm_srv[0]);
+    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_sh_down, NULL, 0);
+    ID3D11DeviceContext_Draw(g_ctx, 3, 0);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 2, none);
+    for (i = 0; i < 4; i++) {
+        static const int src[4] = { 1, 2, 1, 2 }, dst[4] = { 2, 1, 2, 1 };
+        cb[1] = (float)(i & 1);
+        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_cl, 0, NULL, cb, 0, 0);
+        ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 2, 1, &g_cb_cl);
+        ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &g_shm_rtv[dst[i]], NULL);
+        ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 1, &g_shm_srv[src[i]]);
+        ID3D11DeviceContext_PSSetShader(g_ctx, i < 2 ? g_ps_sh_dil : g_ps_sh_ero, NULL, 0);
+        ID3D11DeviceContext_Draw(g_ctx, 3, 0);
+        ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 2, none);
+    }
+    vp.Width = (float)g_shm_w; vp.Height = (float)g_shm_h;
+    ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
+    /* 3: where the closed mask has the shadow: its strength into the picture's
+     * alpha (the larger of the two), and the stencil set so the darkening
+     * passes (a value its test passes: the reference with its lowest
+     * compared bit flipped) */
+    ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &g_cur_rt->rtv, g_cur_ds->dsv);
+    {
+        ID3D11ShaderResourceView *two[2] = { g_shm_srv[0], g_shm_srv[1] };
+        ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 2, two);
+    }
+    {
+        UINT8 m = (UINT8)s_3d.st_mask, low = (UINT8)(m & (UINT8)(0u - m));
+        ID3D11DeviceContext_OMSetDepthStencilState(g_ctx, ds_fill, (UINT8)(mask_ref ^ (low ? low : 1)));
+    }
+    ID3D11DeviceContext_OMSetBlendState(g_ctx, bs_amax, NULL, 0xFFFFFFFFu);
+    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_sh_fill, NULL, 0);
+    ID3D11DeviceContext_Draw(g_ctx, 3, 0);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 2, none);
+    ID3D11DeviceContext_OMSetBlendState(g_ctx, NULL, NULL, 0xFFFFFFFFu);
+    if (g_cur_rt->mtex) g_cur_rt->ms_new = 1;
+    /* the game's draw goes on as it was bound */
+    {
+        D3D11_RECT sc = g_sh.sc;
+        int sc_ok = g_sh.sc_ok;
+        ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &g_cur_rt->rtv, g_cur_ds->dsv);
+        vp.Width = (float)g_cur_rt->pw; vp.Height = (float)g_cur_rt->ph;
+        ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
+        gpu_sh_reset();
+        g_sh.tg = 1; g_sh.rtv = g_cur_rt->rtv; g_sh.dsv = g_cur_ds->dsv;
+        g_sh.vw = vp.Width; g_sh.vh = vp.Height;
+        if (sc_ok) { ID3D11DeviceContext_RSSetScissorRects(g_ctx, 1, &sc); g_sh.sc = sc; g_sh.sc_ok = 1; }
+    }
+}
+/* Before each draw: 1 = leave this draw out (shadows off) */
+static int shadow_hook(void)
+{
+    static int q = -1; static unsigned rev = ~0u; static int rbase = -1;
+    int vol, dark;
+    if (rev != xbox_gfx_rev) {
+        const char *e = getenv("RECOMP_SHADOW_R");   /* testing: the radius (0: as the game draws them) */
+        rev = xbox_gfx_rev;
+        q = 3;   /* (High: gaps up to 4 pixels wide at 640x480 closed) */
+        rbase = e ? atoi(e) : -1;
+    }
+    if (!s_3d.stencil_test) { g_sh_skipping = 0; return 0; }
+    vol = s_3d.color_mask == 0x01000000u && (is_sop_count(s_3d.st_zpass) || is_sop_count(s_3d.st_zfail));
+    dark = !vol && s_3d.st_func == 0x205 /* NOTEQUAL */ && (g_sh_pending || g_sh_skipping);
+    if (vol) { g_sh_pending = 1; return q == 0; }
+    if (!dark) { g_sh_skipping = 0; return 0; }
+    if (q == 0) { g_sh_pending = 0; g_sh_skipping = 1; return 1; }
+    if (g_sh_pending) {
+        int r = rbase >= 0 ? rbase : q >= 4 ? 3 : q == 3 ? 2 : q == 2 ? 1 : 0;
+        g_sh_pending = 0;
+        if (r > 0) {
+            float k = g_rsy > g_rsx ? g_rsy : g_rsx;
+            /* (the closing at about two base pixels' worth of the internal
+             * resolution per mask pixel) */
+            UINT dd = k >= 4.0f ? (UINT)(k / 2.0f) : 1;
+            int rr = (int)(r * k / (float)dd + 0.99f);
+            if (rr > 24) rr = 24;
+            shadow_repair(rr, dd);
+            {   /* testing: TT_SHLOG -- the repairs made, once a second */
+                static int lg = -1; static unsigned nrep; static DWORD t0;
+                if (lg < 0) lg = getenv("TT_SHLOG") != NULL;
+                if (lg) { nrep++; if (GetTickCount() - t0 > 1000) { fprintf(stderr, "  [SHADOW] %u repairs (radius %d at 1/%u)\n", nrep, rr, dd); nrep = 0; t0 = GetTickCount(); } }
+            }
+        }
+    }
+    return 0;
+}
 static int gpu_bind_targets(int need_depth)
 {
     uint32_t base = dma_resolve(s_gpu.color_offset);
@@ -1559,6 +1810,7 @@ static void gpu_batch_hw(HwVp *hv, uint32_t nverts)
         ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_vpc, 0, NULL, g_vpc_shadow, 0, 0);
         g_vpc_ok = 1;
     }
+    if (shadow_hook()) return;
     gpu_bind_stages();
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);
@@ -1755,6 +2007,7 @@ cpu_verts_ready:
     ib_at = gpu_upload(&g_ib, &g_ib_cap, &g_ib_pos, D3D11_BIND_INDEX_BUFFER, g_idx, g_nidx * 4, 4);
     if (!g_vb || !g_ib || vb_at == 0xFFFFFFFFu || ib_at == 0xFFFFFFFFu) return;
     (void)off;
+    if (shadow_hook()) return;
     gpu_bind_stages();
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);

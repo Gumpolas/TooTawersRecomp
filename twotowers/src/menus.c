@@ -820,18 +820,45 @@ static void pad_filter(unsigned long port, XState *st)
         /* (1.9.2) scaled by forward's own push: Walk (W pushed part way)
          * walks while steering -- before, any push past 12000 took the
          * mouse's whole stick, and Walk's half push did not steer at all */
-        if (s_steer_on && !(s_aim_on && p->bAnalogButtons[6] > 30) && p->sThumbLY > 3000) {
+        /* (1.9.3) only when forward is the keys' (W): a controller's stick
+         * pushed up was turned the mouse's way -- the stick seemed not to
+         * work with mouse steering on. Likewise aiming takes the stick only
+         * for a key's or mouse button's ranged button, not the controller's LT */
+        extern volatile int xbox_input_kb_lstick, xbox_input_kb_lt;
+        int kb_aim = s_aim_on && p->bAnalogButtons[6] > 30 && xbox_input_kb_lt;
+        if (s_steer_on && !kb_aim && xbox_input_kb_lstick && p->sThumbLY > 3000) {
             float m = p->sThumbLY / 32767.0f;
             if (m > 1.0f) m = 1.0f;
             s_fwd_tick = GetTickCount() | 1;
             p->sThumbLX = (int16_t)(s_steer_x * m * 32767.0f);
             p->sThumbLY = (int16_t)(-s_steer_y * m * 32767.0f);
         }
-        if (s_aim_on && p->bAnalogButtons[6] > 30) {
+        if (kb_aim) {
             /* aiming: the mouse's stick for the left stick (WASD's) */
             float x = s_aim_x, y = s_aim_y;
             p->sThumbLX = (int16_t)(x * 32767.0f);
             p->sThumbLY = (int16_t)(-y * 32767.0f);
+        }
+        {   /* (1.9.3) the front end's menus: the stick as a d-pad -- pushed
+             * past about a quarter, it is pushed all the way along its main
+             * direction. The game's menus move only for a hard push (the main
+             * menu's up took a full one), and a push a little to the side
+             * lost more of it; the d-pad always worked */
+            static int dir[4];   /* per pad: 0 none, 1 up, 2 down, 3 left, 4 right */
+            uint32_t scr = G32(FE_SCREEN);
+            int *d = &dir[port & 3], sx = p->sThumbLX, sy = p->sThumbLY;
+            int m2 = sx * sx + sy * sy;
+            if (scr == 6 || scr == 8 || getenv("TT_NO_STICKPAD")) *d = 0;
+            else {
+                int on = *d ? m2 > 5000 * 5000 : m2 > 7000 * 7000;
+                if (!on) *d = 0;
+                else if (!*d || m2 > 7000 * 7000)   /* (the direction it is mostly pushed; kept as it eases back) */
+                    *d = abs(sy) >= abs(sx) ? (sy > 0 ? 1 : 2) : (sx < 0 ? 3 : 4);
+                if (*d) {
+                    p->sThumbLX = *d == 3 ? -32767 : *d == 4 ? 32767 : 0;
+                    p->sThumbLY = *d == 1 ? 32767 : *d == 2 ? -32767 : 0;
+                }
+            }
         }
         if (inj) {
             static unsigned nlog;
@@ -1659,6 +1686,11 @@ done:
 /* once a frame (twotowers_manual.c: the game's wait for the next frame) */
 void tt_menus_tick(void)
 {
+    {   /* testing: TT_MMSEL -- the main menu's choice as it changes */
+        static int on = -1; static uint32_t last = 0xFFFFFFFFu;
+        if (on < 0) on = getenv("TT_MMSEL") != NULL;
+        if (on && G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x14) != last) { last = G32(MM_OBJ + 0x14); tt_dbg("[MMSEL] %u at %lu\n", last, (unsigned long)GetTickCount()); }
+    }
     if (!xbox_pad_filter) xbox_pad_filter = pad_filter;
     el_log();
     el_flip();

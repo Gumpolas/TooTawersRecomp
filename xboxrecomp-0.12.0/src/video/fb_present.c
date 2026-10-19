@@ -57,6 +57,20 @@ int xbox_FramebufferMouseDelta(int *dx, int *dy, int *w, int *h)
     *w = r.right; *h = r.bottom;
     c.x = r.right / 2; c.y = r.bottom / 2;
     ClientToScreen(hw, &c);
+    {   /* (1.9.3) the middle of the part of the window on its screen: a window
+         * left larger than a new display mode had its middle off the screen,
+         * where Windows will not put the pointer -- every look read a move
+         * that never happened, the pointer drifted and held the menus'
+         * choice under it (W A S D seemed not to work) */
+        MONITORINFO mi = { sizeof(mi) };
+        RECT wr = { 0, 0, r.right, r.bottom }, vis;
+        POINT o = { 0, 0 };
+        ClientToScreen(hw, &o);
+        OffsetRect(&wr, o.x, o.y);
+        if (GetMonitorInfoA(MonitorFromWindow(hw, MONITOR_DEFAULTTONEAREST), &mi) && IntersectRect(&vis, &wr, &mi.rcMonitor)) {
+            c.x = (vis.left + vis.right) / 2; c.y = (vis.top + vis.bottom) / 2;
+        }
+    }
     if (!GetCursorPos(&p)) return 0;
     if (s_rel_primed) { *dx = p.x - c.x; *dy = p.y - c.y; }
     s_rel_primed = 1;
@@ -109,12 +123,14 @@ void xbox_FramebufferWindowSet(uint32_t fb_va, uint32_t pitch)
 unsigned char g_xbox_gamma[3][256];
 volatile int g_xbox_gamma_set;
 
+void xbox_FramebufferModeService(void);
 void xbox_FramebufferWindowPresent(uint32_t fb_va, uint32_t pitch)
 {
     const uint8_t *src;
     LONG next;
     uint32_t bpp, x, y;
 
+    xbox_FramebufferModeService();   /* (1.9.3) a display mode asked for: changed here, between frames */
     if (!s_fb_running || !fb_va || !pitch)
         return;
     if (getenv("RECOMP_FB_VA"))
@@ -196,26 +212,132 @@ void xbox_FramebufferKeyClear(int vk)
  * the flip-model swap chain this gets the display to itself (independent
  * flip), as exclusive full screen would, without a mode change. Alt+Enter or
  * F11 toggles; RECOMP_FULLSCREEN=1 starts that way. */
-static int s_fs;
+static int s_fs;          /* 0 windowed, 1 borderless full screen, 2 exclusive (the renderer takes the display) */
+static int s_fs_kind = 1;  /* the full-screen kind Alt+Enter / F11 goes to */
 static WINDOWPLACEMENT s_fs_saved = { sizeof(WINDOWPLACEMENT) };
+/* (1.9.3) Exclusive full screen: the display is switched to the chosen
+ * resolution ([Display] fs_resolution; "desktop" keeps its own) at the
+ * highest refresh rate it offers there, and the borderless window covers it;
+ * with the flip-model swap chain the game then has the display to itself.
+ * Done here on the window thread rather than through DXGI's own full-screen
+ * state, which waits on the window thread from the render thread. Leaving
+ * the game (Alt+Tab) puts the desktop back and minimises the window;
+ * coming back switches again. */
+extern void xbox_GfxFsMode(int *w, int *h);
+static volatile int s_mode_set;   /* the display is in our mode */
+static volatile LONG s_mode_want = -1, s_mode_seq, s_mode_done;   /* (1.9.3) asked by the window thread */
+static volatile DWORD s_mode_serviced;   /* when the render thread last looked */
+static void fb_mode_do(int on)
+{
+    if (on) {
+        DEVMODEA best, dm;
+        DWORD i;
+        int w = 0, hh = 0;
+        memset(&best, 0, sizeof best); best.dmSize = sizeof best;
+        xbox_GfxFsMode(&w, &hh);
+        if (w <= 0 || hh <= 0) {   /* the desktop's own resolution, at its best refresh */
+            memset(&dm, 0, sizeof dm); dm.dmSize = sizeof dm;
+            if (s_mode_set) ChangeDisplaySettingsExA(NULL, NULL, NULL, 0, NULL), s_mode_set = 0;
+            if (!EnumDisplaySettingsA(NULL, ENUM_REGISTRY_SETTINGS, &dm)) return;
+            w = (int)dm.dmPelsWidth; hh = (int)dm.dmPelsHeight;
+        }
+        for (i = 0;; i++) {
+            memset(&dm, 0, sizeof dm); dm.dmSize = sizeof dm;
+            if (!EnumDisplaySettingsA(NULL, i, &dm)) break;
+            if ((int)dm.dmPelsWidth != w || (int)dm.dmPelsHeight != hh || dm.dmBitsPerPel != 32) continue;
+            if (!best.dmPelsWidth || dm.dmDisplayFrequency > best.dmDisplayFrequency) best = dm;
+        }
+        if (!best.dmPelsWidth) {
+            fprintf(stderr, "  [FBWIN] exclusive full screen: the display has no %dx%d mode; keeping its own\n", w, hh);
+            fflush(stderr);
+            return;
+        }
+        best.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_DISPLAYFREQUENCY;
+        if (ChangeDisplaySettingsExA(NULL, &best, NULL, CDS_FULLSCREEN, NULL) == DISP_CHANGE_SUCCESSFUL) {
+            s_mode_set = 1;
+            fprintf(stderr, "  [FBWIN] display set to %lux%lu at %lu Hz\n", (unsigned long)best.dmPelsWidth,
+                    (unsigned long)best.dmPelsHeight, (unsigned long)best.dmDisplayFrequency);
+        } else {
+            fprintf(stderr, "  [FBWIN] the display would not change to %dx%d\n", w, hh);
+        }
+        fflush(stderr);
+    } else if (s_mode_set) {
+        ChangeDisplaySettingsExA(NULL, NULL, NULL, 0, NULL);
+        s_mode_set = 0;
+        fprintf(stderr, "  [FBWIN] display back to the desktop's mode\n");
+        fflush(stderr);
+    }
+}
+/* The display's mode is changed on the thread that presents the frames,
+ * between two of them (xbox_FramebufferModeService): changed here, on the
+ * window thread, it could meet a Present in flight -- coming back to the
+ * game with Alt+Tab in exclusive full screen froze it. When no frames are
+ * coming (half a second), here after all. */
+#define WM_FB_COVER (WM_APP + 9)
+static void fb_mode_apply(int on)
+{
+    s_mode_want = on;
+    InterlockedIncrement(&s_mode_seq);
+    if (GetTickCount() - s_mode_serviced > 500) { s_mode_done = s_mode_seq; fb_mode_do(on); }
+}
+/* testing: RECOMP_TEST_ALTTAB=ms -- that long after the window opens, the
+ * game is left (as Alt+Tab) and three seconds later come back to, twice */
+static DWORD WINAPI fb_alttab_test(LPVOID p)
+{
+    int k;
+    Sleep((DWORD)(uintptr_t)p);
+    for (k = 0; k < 2; k++) {
+        fprintf(stderr, "  [FBWIN] test: leaving the game\n"); fflush(stderr);
+        PostMessageA(s_fb_hwnd, WM_ACTIVATEAPP, 0, 0);
+        Sleep(3000);
+        fprintf(stderr, "  [FBWIN] test: back to the game\n"); fflush(stderr);
+        PostMessageA(s_fb_hwnd, WM_ACTIVATEAPP, 1, 0);
+        Sleep(6000);
+    }
+    return 0;
+}
+void xbox_FramebufferModeService(void)
+{
+    LONG q = s_mode_seq;
+    s_mode_serviced = GetTickCount();
+    if (q == s_mode_done) return;
+    s_mode_done = q;
+    fb_mode_do(s_mode_want == 1);
+    if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_COVER, 0, 0);
+}
+static void fb_cover_monitor(HWND h)
+{
+    MONITORINFO mi = { sizeof(mi) };
+    GetMonitorInfoA(MonitorFromWindow(h, MONITOR_DEFAULTTOPRIMARY), &mi);
+    SetWindowPos(h, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top,
+                 mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top,
+                 SWP_FRAMECHANGED | SWP_NOOWNERZORDER);
+}
 static void fb_set_fullscreen(HWND h, int on)
 {
+    if (on) s_fs_kind = on;
     if (on == s_fs) return;
+    if (on && s_fs) {   /* (borderless <-> exclusive: the window stays borderless; the display mode changes) */
+        s_fs = on;
+        fb_mode_apply(on == 2);
+        fb_cover_monitor(h);
+        fprintf(stderr, "  [FBWIN] %s full screen\n", on == 2 ? "exclusive" : "borderless");
+        fflush(stderr);
+        return;
+    }
     if (on) {
-        MONITORINFO mi = { sizeof(mi) };
         GetWindowPlacement(h, &s_fs_saved);
-        GetMonitorInfoA(MonitorFromWindow(h, MONITOR_DEFAULTTOPRIMARY), &mi);
+        if (on == 2) fb_mode_apply(1);
         SetWindowLongA(h, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-        SetWindowPos(h, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top,
-                     mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top,
-                     SWP_FRAMECHANGED | SWP_NOOWNERZORDER);
+        fb_cover_monitor(h);
     } else {
+        fb_mode_apply(0);
         SetWindowLongA(h, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
         SetWindowPlacement(h, &s_fs_saved);
         SetWindowPos(h, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
     }
     s_fs = on;
-    fprintf(stderr, "  [FBWIN] %s\n", on ? "full screen" : "windowed");
+    fprintf(stderr, "  [FBWIN] %s\n", on == 2 ? "exclusive full screen" : on ? "full screen" : "windowed");
     fflush(stderr);
 }
 
@@ -225,9 +347,10 @@ static void fb_set_fullscreen(HWND h, int on)
 extern int xbox_GfxMenuKey(int vk);
 void xbox_FramebufferSetFullscreen(int on)
 {
-    if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_SET_FULLSCREEN, (WPARAM)(on != 0), 0);
+    if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_SET_FULLSCREEN, (WPARAM)(on < 0 ? 0 : on > 2 ? 1 : on), 0);
 }
 int xbox_FramebufferIsFullscreen(void) { return s_fs; }
+void xbox_FramebufferFsModeChanged(void) { if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_SET_FULLSCREEN, 2, 1); }
 /* The window's size (its picture, w x h): now, or for when it is windowed again */
 #define WM_FB_SET_SIZE (WM_APP + 8)
 void xbox_FramebufferSetWindowSize(int w, int h)
@@ -238,7 +361,18 @@ void xbox_FramebufferSetWindowSize(int w, int h)
 static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
 {
     switch (m) {
+    case WM_FB_COVER:   /* the display's mode changed (render thread): the window over it again */
+        if (s_fs && !IsIconic(h)) fb_cover_monitor(h);
+        return 0;
+    case WM_DISPLAYCHANGE:   /* (1.9.3) any new display mode: full screen covers it exactly, whatever its size was */
+        if (s_fs && !IsIconic(h)) fb_cover_monitor(h);
+        s_rel_primed = 0;
+        return DefWindowProcA(h, m, w, l);
     case WM_FB_SET_FULLSCREEN:
+        if (l == 1) {   /* the full-screen resolution changed */
+            if (s_fs == 2) { fb_mode_apply(1); fb_cover_monitor(h); }
+            return 0;
+        }
         fb_set_fullscreen(h, (int)w);
         return 0;
     case WM_FB_SET_SIZE: {
@@ -290,7 +424,7 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
             return 0;
         }
         if ((w == VK_RETURN && m == WM_SYSKEYDOWN && !(l & 0x40000000)) || (w == VK_F11 && !(l & 0x40000000))) {
-            fb_set_fullscreen(h, !s_fs);
+            fb_set_fullscreen(h, s_fs ? 0 : s_fs_kind);
             return 0;
         }
         if ((unsigned)w < 256)
@@ -351,6 +485,14 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
         return 0;
     case WM_ACTIVATEAPP:
         if (!w) memset((void *)s_key_down, 0, sizeof s_key_down);
+        if (s_fs == 2) {   /* exclusive: the desktop's mode while away */
+            if (!w && s_mode_want != 0) { fb_mode_apply(0); ShowWindow(h, SW_MINIMIZE); }
+            else if (w) {
+                if (IsIconic(h)) ShowWindow(h, SW_RESTORE);
+                if (s_mode_want != 1) fb_mode_apply(1);
+                fb_cover_monitor(h);
+            }
+        }
         return DefWindowProcA(h, m, w, l);
     }
     return DefWindowProcA(h, m, w, l);
@@ -503,7 +645,8 @@ static DWORD WINAPI fb_thread(LPVOID unused)
     }
     hdc = GetDC(hwnd);
     s_fb_hwnd = hwnd;
-    if (getenv("RECOMP_FULLSCREEN") && getenv("RECOMP_FULLSCREEN")[0] == '1') fb_set_fullscreen(hwnd, 1);
+    if (getenv("RECOMP_FULLSCREEN") && (getenv("RECOMP_FULLSCREEN")[0] == '1' || getenv("RECOMP_FULLSCREEN")[0] == '2'))
+        fb_set_fullscreen(hwnd, getenv("RECOMP_FULLSCREEN")[0] - '0');
     SetStretchBltMode(hdc, HALFTONE);
 
     memset(&bi, 0, sizeof(bi));
@@ -516,6 +659,7 @@ static DWORD WINAPI fb_thread(LPVOID unused)
 
     s_rgb = (uint32_t *)calloc((size_t)s_fb_width * s_fb_height, 4);
 
+    if (getenv("RECOMP_TEST_ALTTAB")) CreateThread(NULL, 0, fb_alttab_test, (LPVOID)(uintptr_t)atoi(getenv("RECOMP_TEST_ALTTAB")), 0, NULL);
     fprintf(stderr, "  [FBWIN] framebuffer window open (%ux%u)\n",
             s_fb_width, s_fb_height);
 
@@ -798,17 +942,28 @@ static void key_set(int vk, int down)
     if (vk == VK_LMENU || vk == VK_RMENU) s_key_down[VK_MENU] = s_key_down[VK_LMENU] | s_key_down[VK_RMENU];
 }
 
-static int s_fs;
+static int s_fs, s_fs_kind = 1;   /* (0 windowed, 1 borderless, 2 exclusive: a real mode change) */
+extern void xbox_GfxFsMode(int *w, int *h);
 static void fb_set_fullscreen(int on)
 {
+    if (on) s_fs_kind = on;
     if (!s_win || on == s_fs) return;
-    if (SDL_SetWindowFullscreen(s_win, on ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) != 0) {
+    if (on == 2) {   /* the chosen mode (the desktop's: as it is) */
+        SDL_DisplayMode want, got;
+        int w = 0, h = 0;
+        xbox_GfxFsMode(&w, &h);
+        if (w > 0 && h > 0 && SDL_GetDesktopDisplayMode(SDL_GetWindowDisplayIndex(s_win), &want) == 0) {
+            want.w = w; want.h = h; want.refresh_rate = 0;
+            if (SDL_GetClosestDisplayMode(SDL_GetWindowDisplayIndex(s_win), &want, &got)) SDL_SetWindowDisplayMode(s_win, &got);
+        }
+    }
+    if (SDL_SetWindowFullscreen(s_win, on == 2 ? SDL_WINDOW_FULLSCREEN : on ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) != 0) {
         fprintf(stderr, "  [FBWIN] full screen switch failed: %s\n", SDL_GetError());
         return;
     }
     SDL_ShowCursor(xbox_fb_hide_cursor < 0 ? SDL_ENABLE : on || xbox_fb_hide_cursor ? SDL_DISABLE : SDL_ENABLE);
     s_fs = on;
-    fprintf(stderr, "  [FBWIN] %s\n", on ? "full screen" : "windowed");
+    fprintf(stderr, "  [FBWIN] %s\n", on == 2 ? "exclusive full screen" : on ? "full screen" : "windowed");
     fflush(stderr);
 }
 extern int xbox_GfxMenuKey(int vk);
@@ -818,17 +973,26 @@ void xbox_FramebufferSetFullscreen(int on)
     if (!s_win || !s_ev_fullscreen) return;
     memset(&e, 0, sizeof e);
     e.type = s_ev_fullscreen;
-    e.user.code = on != 0;
+    e.user.code = on < 0 ? 0 : on > 2 ? 1 : on;
     SDL_PushEvent(&e);
 }
 int xbox_FramebufferIsFullscreen(void) { return s_fs; }
+void xbox_FramebufferFsModeChanged(void)
+{
+    SDL_Event e;
+    if (!s_win || !s_ev_fullscreen) return;
+    memset(&e, 0, sizeof e);
+    e.type = s_ev_fullscreen;
+    e.user.code = 11;
+    SDL_PushEvent(&e);
+}
 void xbox_FramebufferSetWindowSize(int w, int h)
 {
     SDL_Event e;
     if (!s_win || !s_ev_fullscreen || w < 160 || h < 120) return;
     memset(&e, 0, sizeof e);
     e.type = s_ev_fullscreen;
-    e.user.code = 2;   /* (the size in data1) */
+    e.user.code = 10;   /* (the size in data1; 0-2 are the full-screen kinds) */
     e.user.data1 = (void *)(intptr_t)((w << 16) | h);
     SDL_PushEvent(&e);
 }
@@ -972,7 +1136,8 @@ sdl_failed:
             InterlockedExchange(&s_gl_state, 1);
         }
     } else InterlockedExchange(&s_gl_state, -1);
-    if (getenv("RECOMP_FULLSCREEN") && getenv("RECOMP_FULLSCREEN")[0] == '1') fb_set_fullscreen(1);
+    if (getenv("RECOMP_FULLSCREEN") && (getenv("RECOMP_FULLSCREEN")[0] == '1' || getenv("RECOMP_FULLSCREEN")[0] == '2'))
+        fb_set_fullscreen(getenv("RECOMP_FULLSCREEN")[0] - '0');
     s_rgb = (uint32_t *)calloc((size_t)s_fb_width * s_fb_height, 4);
     fprintf(stderr, "  [FBWIN] window open (%dx%d, %s)\n", cw, ch, s_gl_state > 0 ? "OpenGL" : "CPU picture");
     fflush(stderr);
@@ -1019,7 +1184,7 @@ sdl_failed:
                     break;
                 }
                 if (down && !e.key.repeat && (vk == VK_F11 || (vk == VK_RETURN && (e.key.keysym.mod & KMOD_ALT)))) {
-                    fb_set_fullscreen(!s_fs);
+                    fb_set_fullscreen(s_fs ? 0 : s_fs_kind);
                     break;
                 }
                 key_set(vk, down);
@@ -1053,7 +1218,9 @@ sdl_failed:
                 break;
             }
             default:
-                if (s_ev_fullscreen && e.type == s_ev_fullscreen && e.user.code == 2) {   /* a window size */
+                if (s_ev_fullscreen && e.type == s_ev_fullscreen && e.user.code == 11) {   /* new full-screen resolution */
+                    if (s_fs == 2) { s_fs = 1; fb_set_fullscreen(2); }
+                } else if (s_ev_fullscreen && e.type == s_ev_fullscreen && e.user.code == 10) {   /* a window size */
                     int ww = (int)((intptr_t)e.user.data1 >> 16), wh = (int)((intptr_t)e.user.data1 & 0xFFFF);
                     if (!s_fs) SDL_SetWindowSize(s_win, ww, wh);
                     fprintf(stderr, "  [FBWIN] window size %dx%d\n", ww, wh);
@@ -1119,16 +1286,64 @@ sdl_failed:
     return 0;
 }
 
+#if defined(__APPLE__)
+/* macOS: AppKit windows (NSWindow) may only be made, and their events only
+ * pumped, on the process's main thread. The game runs on a thread of its own
+ * (see the host's main); the main thread waits in
+ * xbox_FramebufferMainThreadRun until the window is asked for, then runs the
+ * window loop there for the rest of the session. */
+#include <pthread.h>
+static pthread_mutex_t s_main_mx = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t s_main_cv = PTHREAD_COND_INITIALIZER;
+static int s_main_req;      /* 1 window wanted, -1 the game is over (no window) */
+
+void xbox_FramebufferMainThreadRun(void)
+{
+    int req;
+    pthread_mutex_lock(&s_main_mx);
+    while (!s_main_req) pthread_cond_wait(&s_main_cv, &s_main_mx);
+    req = s_main_req;
+    pthread_mutex_unlock(&s_main_mx);
+    if (req > 0) fb_thread(NULL);
+}
+
+/* No window will be asked for after all: let the main thread go. */
+void xbox_FramebufferMainThreadRelease(void)
+{
+    pthread_mutex_lock(&s_main_mx);
+    if (!s_main_req) s_main_req = -1;
+    pthread_cond_broadcast(&s_main_cv);
+    pthread_mutex_unlock(&s_main_mx);
+}
+#endif
+
 void xbox_FramebufferWindowStart(void)
 {
+#if !defined(__APPLE__)
     HANDLE th;
+#endif
     if (!getenv("RECOMP_FB_WINDOW")) {
         InterlockedExchange(&s_gl_state, -1);
+#if defined(__APPLE__)
+        xbox_FramebufferMainThreadRelease();
+#endif
         return;
     }
     if (InterlockedCompareExchange(&s_fb_running, 1, 0) != 0) return;
+#if defined(__APPLE__)
+    pthread_mutex_lock(&s_main_mx);
+    if (s_main_req < 0) {   /* the main thread is no longer waiting */
+        pthread_mutex_unlock(&s_main_mx);
+        InterlockedExchange(&s_fb_running, 0); InterlockedExchange(&s_gl_state, -1);
+        return;
+    }
+    s_main_req = 1;
+    pthread_cond_broadcast(&s_main_cv);
+    pthread_mutex_unlock(&s_main_mx);
+#else
     th = CreateThread(NULL, 0, fb_thread, NULL, 0, NULL);
     if (th) CloseHandle(th);
     else { InterlockedExchange(&s_fb_running, 0); InterlockedExchange(&s_gl_state, -1); }
+#endif
 }
 #endif

@@ -15,6 +15,7 @@
 #define PR_X 0x6BB46B89u
 #define PR_Y 0x5E463DBFu
 #define PR_R 0x71E4228Au
+#define PR_L 0xDBA098CAu   /* (1.9.3) the left trigger (the Secret Codes' "Pull and hold L R") */
 /* in play: the prologue's hints ("Defend", "Speed Attack", ...), the
  * level's own pictures of X, Y and A (64x64) */
 #define PRG_X 0x53E9D14Fu
@@ -725,6 +726,7 @@ static void prompts_tex(uint32_t hash, uint32_t *argb, int w, int h)
         case PR_X: case PRG_X: pr_bound(argb, w, h, 2); break;
         case PR_Y: case PRG_Y: pr_bound(argb, w, h, 3); break;
         case PR_R: pr_bound(argb, w, h, 7); break;
+        case PR_L: pr_bound(argb, w, h, 6); break;
         default: break;
         }
         return;
@@ -736,6 +738,7 @@ static void prompts_tex(uint32_t hash, uint32_t *argb, int w, int h)
     case PR_X: case PRG_X: pr_pad_bound(argb, w, h, 2, kind); break;
     case PR_Y: case PRG_Y: pr_pad_bound(argb, w, h, 3, kind); break;
     case PR_R: pr_pad_bound(argb, w, h, 7, kind); break;
+    case PR_L: pr_pad_bound(argb, w, h, 6, kind); break;
     default: break;
     }
 }

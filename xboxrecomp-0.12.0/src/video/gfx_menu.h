@@ -5,7 +5,7 @@
 
 enum { GFX_FPS, GFX_FULLSCREEN, GFX_ASPECT, GFX_SCALE, GFX_ANISO, GFX_MIPS, GFX_AA,
        GFX_VSYNC, GFX_STRETCH, GFX_VP, GFX_BRIGHT, GFX_SHARP, GFX_COLOR,
-       GFX_PROMPTS, GFX_HUDPOS, GFX_MENUFILL, GFX_MOVIEFILL, GFX_MOUSE, GFX_MOUSE_SENS, GFX_CURSOR_SIZE, GFX_MOUSE_AIM, GFX_MOUSE_INVERT, GFX_SPRINT, GFX_MOUSE_STEER, GFX_WINSIZE, GFX_ULTRA, GFX_WIDE_SCENES, GFX_E3HUD, GFX_E3PICKUPS, GFX_N };
+       GFX_PROMPTS, GFX_HUDPOS, GFX_MENUFILL, GFX_MOVIEFILL, GFX_MOUSE, GFX_MOUSE_SENS, GFX_CURSOR_SIZE, GFX_MOUSE_AIM, GFX_MOUSE_INVERT, GFX_SPRINT, GFX_MOUSE_STEER, GFX_WINSIZE, GFX_ULTRA, GFX_WIDE_SCENES, GFX_FS_RES, GFX_E3HUD, GFX_E3PICKUPS, GFX_N };
 /* the in-game menu shows the options before the mods; the title's mods are
  * set in its launcher, before the game starts */
 #define GFX_MENU_N GFX_E3HUD
@@ -23,6 +23,7 @@ int xbox_GfxMsaa(void);            /* anti-aliasing: MSAA samples, 1 = none */
 int xbox_GfxFxaa(void);            /* anti-aliasing: FXAA on the finished picture */
 int   xbox_GfxGet(int id);          /* scale 1-4, aniso 1-16, fps 0/1/2, others 0/1 */
 float xbox_GfxAspect(void);
+void  xbox_GfxFsMode(int *w, int *h);   /* exclusive full screen's resolution; 0 x 0 = the desktop's */
 void  xbox_GfxSetFpsHandler(void (*fn)(int mode));
 void  xbox_GfxSetSaveHandler(void (*fn)(const char *key, const char *value));
 void  xbox_GfxMenuSetAvailable(int on);

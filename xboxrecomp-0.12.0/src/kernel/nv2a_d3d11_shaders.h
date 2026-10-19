@@ -241,6 +241,35 @@ static const char s_hlsl_src[] =
  * plain one the title samples as a texture */
 "Texture2DMS<float> txms : register(t7);\n"
 "float ps_zres(PV i) : SV_Depth { return txms.Load(int2(i.pos.xy), 0); }\n"
+/* (1.9.3) Character shadow repair (see shadow_hook in nv2a_d3d11.inc): the
+ * shadow's stencil as a mask, closed (dilated, then eroded, one axis at a
+ * time: clear_color.x the radius, .y the axis) -- the mask carries the
+ * shadow's strength (the picture's alpha, which the volume passes write) --
+ * and put back into the stencil and the alpha. */
+"Texture2D<float> shm0 : register(t0);\n"
+"Texture2D<float> shm1 : register(t1);\n"
+"Texture2D<float4> shpic : register(t2);\n"
+"float4 ps_sh_one(float4 p : SV_Position) : SV_Target { return max(shpic.Load(int3(p.xy, 0)).a, 1.0 / 255.0); }\n"
+"float4 ps_sh_dil(float4 p : SV_Position) : SV_Target {\n"
+"  int2 q = int2(p.xy), d = clear_color.y > 0.5 ? int2(0, 1) : int2(1, 0); int r = (int)clear_color.x; float m = 0;\n"
+"  [loop] for (int i = -r; i <= r; i++) m = max(m, shm0.Load(int3(q + d * i, 0)));\n"
+"  return m;\n"
+"}\n"
+"float4 ps_sh_ero(float4 p : SV_Position) : SV_Target {\n"
+"  int2 q = int2(p.xy), d = clear_color.y > 0.5 ? int2(0, 1) : int2(1, 0); int r = (int)clear_color.x; float m = 1;\n"
+"  [loop] for (int i = -r; i <= r; i++) m = min(m, shm0.Load(int3(q + d * i, 0)));\n"
+"  return m;\n"
+"}\n"
+"float4 ps_sh_down(float4 p : SV_Position) : SV_Target {\n"
+"  int d = max((int)clear_color.z, 1); int2 b = int2(p.xy) * d; float m = 0;\n"
+"  [loop] for (int y = 0; y < d; y++) [loop] for (int x = 0; x < d; x++) m = max(m, shm0.Load(int3(b + int2(x, y), 0)));\n"
+"  return m;\n"
+"}\n"
+"float4 ps_sh_fill(float4 p : SV_Position) : SV_Target {\n"
+"  float c = shm1.Load(int3(int2(p.xy) / max((int)clear_color.z, 1), 0));\n"
+"  if (c < 0.5 / 255.0) discard;\n"
+"  return float4(0, 0, 0, c);\n"
+"}\n"
 "PV vs_blit(uint id : SV_VertexID) {\n"
 "  PV o; float2 p = float2((id << 1) & 2, id & 2);\n"
 "  o.pos = float4(p * float2(2, -2) + float2(-1, 1), 0, 1); o.uv = clear_color.zw + p * clear_color.xy; return o;\n"

@@ -52,8 +52,11 @@ static void twotowers_write_default_ini(void)
           "fps=30\n"
           "; gpu = run the game's vertex programs on the graphics card (faster), cpu = the old way\n"
           "vertex_programs=gpu\n"
-          "; 1 = start in full screen (borderless). Alt+Enter or F11 switches at any time\n"
+          "; 0 = windowed, 1 = borderless full screen, 2 = exclusive full screen (at fs_resolution).\n"
+          ";   Alt+Enter or F11 switches at any time\n"
           "fullscreen=0\n"
+          "; exclusive full screen's resolution, e.g. 1920x1080; empty = the desktop's\n"
+          "fs_resolution=\n"
           "; window size in windowed mode, e.g. 1920x1080; empty = automatic\n"
           "window_size=\n"
           "; 1 = Ultra textures: sharper menus, level select and HUD, and with the GameCube high-resolution\n"
@@ -229,8 +232,12 @@ static void twotowers_setup_paths_and_log(void)
         char v[64];
         int n;
         _putenv_s("RECOMP_WINDOW_TITLE", "The Lord of the Rings: The Two Towers (Recompiled)");
-        if (!getenv("RECOMP_FULLSCREEN") && GetPrivateProfileIntA("Display", "fullscreen", 0, g_ini_path))
-            _putenv_s("RECOMP_FULLSCREEN", "1");
+        if (!getenv("RECOMP_FULLSCREEN")) {
+            int fs = GetPrivateProfileIntA("Display", "fullscreen", 0, g_ini_path);
+            if (fs == 1 || fs == 2) _putenv_s("RECOMP_FULLSCREEN", fs == 2 ? "2" : "1");
+        }
+        if (!getenv("RECOMP_FS_RES") && GetPrivateProfileStringA("Display", "fs_resolution", "", v, sizeof v, g_ini_path) && v[0])
+            _putenv_s("RECOMP_FS_RES", v);
         if (!getenv("RECOMP_WINDOW_SIZE") && GetPrivateProfileStringA("Display", "window_size", "", v, sizeof v, g_ini_path) && v[0])
             _putenv_s("RECOMP_WINDOW_SIZE", v);
         if (!getenv("RECOMP_ULTRA_ROOT")) _putenv_s("RECOMP_ULTRA_ROOT", g_exe_dir);   /* (Ultra textures: the pack beside the game) */

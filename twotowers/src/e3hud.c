@@ -57,8 +57,17 @@ extern FILE *tt_game_fopen(const char *rel);
 extern void tt_dbg(const char *fmt, ...);
 
 #define GFX_PROMPTS   13               /* gfx_menu.h order */
-#define GFX_E3HUD     27   /* (after Ultra textures 25, widescreen cutscenes 26) */
-#define GFX_E3PICKUPS 28
+/* (1.9.3) the mods' settings found by their ini key, not a number: a
+ * setting added before them moved the numbers */
+extern int xbox_GfxFind(const char *key);
+static int e3_id(int which)
+{
+    static int id[2] = { -2, -2 };
+    if (id[which] == -2) id[which] = xbox_GfxFind(which ? "e3_pickups" : "e3_hud");
+    return id[which];
+}
+#define GFX_E3HUD     e3_id(0)
+#define GFX_E3PICKUPS e3_id(1)
 #define G8(a)  (*(volatile uint8_t *)(xbox_GetMemoryOffset() + (uint32_t)(a)))
 #define G16(a) (*(volatile uint16_t *)(xbox_GetMemoryOffset() + (uint32_t)(a)))
 #define G32(a) (*(volatile uint32_t *)(xbox_GetMemoryOffset() + (uint32_t)(a)))

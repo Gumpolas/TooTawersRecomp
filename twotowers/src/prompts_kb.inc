@@ -443,6 +443,9 @@ static const KbTxt s_kb_txt[] = {
       "You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.",
       "You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue." },
     { "Press START to resume", "Press {8} to resume", "Press START to resume" },
+    /* (1.9.3) the Secret Codes page (its L and R are pictures: prompts.inc) */
+    { "2) Press the START button to pause.", "2) Press {8} to pause.", "2) Press {8} to pause." },
+    { "3) Pull and hold", "3) Hold down", "3) Pull and hold" },
 };
 #define KB_TXT_N ((int)(sizeof s_kb_txt / sizeof s_kb_txt[0]))
 #define KB_TXT_MAX 64

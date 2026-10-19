@@ -698,6 +698,17 @@ static LONG WINAPI tt_unhandled(PEXCEPTION_POINTERS ep)
     fprintf(stderr, "[CRASH] unhandled exception 0x%08lX at RIP=0x%llX (guest esp=%08X eax=%08X ecx=%08X)\n",
             (unsigned long)ep->ExceptionRecord->ExceptionCode, (unsigned long long)ep->ContextRecord->Rip,
             g_esp, g_eax, g_ecx);
+#if !defined(_WIN32)
+    {   /* the native function it stopped in (a recompiled one is named after its guest address) */
+        Dl_info di;
+        uintptr_t rip = (uintptr_t)ep->ContextRecord->Rip;
+        if (dladdr((void *)rip, &di))
+            fprintf(stderr, "[CRASH] native symbol %s + 0x%llX, image offset 0x%llX\n",
+                    di.dli_sname ? di.dli_sname : "?",
+                    (unsigned long long)(di.dli_saddr ? rip - (uintptr_t)di.dli_saddr : 0),
+                    (unsigned long long)(rip - (uintptr_t)di.dli_fbase));
+    }
+#endif
     fflush(stderr);
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -1015,10 +1026,20 @@ static BOOL load_xbe(const char *path, void **out_data, size_t *out_size)
 
 #if !defined(_WIN32)
 #include <pthread.h>
+#if defined(__APPLE__)
+extern void xbox_FramebufferMainThreadRun(void);
+#endif
 static void *tt_main_thread(void *p)
 {
+    int rc;
     (void)p;
-    return (void *)(intptr_t)WinMain(NULL, NULL, (LPSTR)"", 0);
+    rc = WinMain(NULL, NULL, (LPSTR)"", 0);
+#if defined(__APPLE__)
+    /* the main thread may be running the window: end the process from here */
+    fflush(stdout); fflush(stderr);
+    exit(rc);
+#endif
+    return (void *)(intptr_t)rc;
 }
 #endif
 /* Console entry point (for debugging -- lets you see printf output) */
@@ -1040,6 +1061,12 @@ int main(int argc, char **argv)
         pthread_attr_init(&at);
         pthread_attr_setstacksize(&at, 64u << 20);
         if (pthread_create(&th, &at, tt_main_thread, NULL) == 0) {
+#if defined(__APPLE__)
+            /* AppKit owns the real main thread: the game window is made and
+             * its events pumped here (fb_present.c). Returns only if there
+             * is no window; the game thread ends the process itself. */
+            xbox_FramebufferMainThreadRun();
+#endif
             pthread_join(th, &rv);
             return (int)(intptr_t)rv;
         }

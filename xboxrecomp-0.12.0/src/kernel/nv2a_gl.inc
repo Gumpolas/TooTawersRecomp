@@ -1547,6 +1547,23 @@ static int gpu_on(void)
         s_gpu_mode = gpu_init();
         if (s_gpu_mode) xbox_FramebufferSetGpuOwned(1);
     }
+#if defined(__APPLE__)
+    /* The pushbuffer runs on whichever thread kicks it (the title's kickoff
+     * or the poller), one at a time under the GPU lock
+     * (xbox_memory_layout.c), but a GL context is current per thread: the
+     * thread that set the renderer up was the only one that had it, and the
+     * other one drew into no context at all (a crash in glBindFramebuffer).
+     * Make it current on this thread too. macOS (CGL) allows one context
+     * current on several threads as long as they never use it at once,
+     * which the GPU lock guarantees. */
+    if (s_gpu_mode > 0 && SDL_GL_GetCurrentContext() != g_glc) {
+        if (SDL_GL_MakeCurrent(g_win, g_glc) != 0) {
+            static int said;
+            if (!said++) fprintf(stderr, "  [GL] cannot make the context current on this thread (%s)\n", SDL_GetError());
+            return 0;
+        }
+    }
+#endif
     return s_gpu_mode;
 }
 

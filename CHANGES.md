@@ -2279,3 +2279,86 @@ twotowers/CMakeLists.txt
   - The game has C++ in it now (lang_ultra.cpp): on Linux the C++ runtime
     is linked in (-static-libstdc++ -static-libgcc), as twotowers-setup's,
     so the build still runs on glibc 2.27 systems without a newer libstdc++.
+
+
+-- 1.9.3 ----------------------------------------------------------------
+
+xboxrecomp-0.12.0/src/kernel/nv2a_d3d11.inc, nv2a_d3d11_shaders.h
+  - Character shadows without the pale streaks. The game draws them as
+    stencil volumes (faces counted into the stencil, alpha only), then two
+    full-screen passes darken where the count is not zero. Its CPU-built
+    volume is not closed everywhere, so thin lines inside a shadow keep a
+    count of 0 and stay lit. Just before the first darkening pass the
+    stencil's "not zero" is made a mask (from its samples with MSAA),
+    reduced to 1/d of the size (each pixel the largest of its d x d; d
+    about half the internal resolution's scale), closed there (dilated and
+    eroded, one axis at a time, gaps up to 4 pixels at 640x480), and the
+    stencil set (and the shadow's strength put in the alpha) where the
+    closed mask covers a pixel the shadow missed. The game's passes then
+    darken as before. RECOMP_SHADOW_R=0 leaves them as drawn; TT_SHLOG
+    logs the repairs (testing).
+xboxrecomp-0.12.0/src/video/fb_present.c, gfx_menu.c/.h, twotowers/src/
+options.c, setup_launcher.cpp, twotowers_host.h
+  - Exclusive full screen: [Display] fullscreen=2 and fs_resolution=WxH
+    (empty: the desktop's). The display is switched with
+    ChangeDisplaySettingsEx at the mode's highest refresh rate, on the
+    render thread between two frames (xbox_FramebufferModeService; a
+    change from the window thread could meet a Present in flight), and the
+    borderless window covers it; leaving the game puts the desktop's mode
+    back and minimises, coming back switches again. Display mode in the
+    Options page, F10 and the launcher has Windowed / Borderless /
+    Exclusive, and Full-screen resolution lists the display's own modes
+    (the screen's own, the common ones it offers, the largest of the rest).
+  - Every new display mode (WM_DISPLAYCHANGE, and after our own change) the
+    full-screen window covers it again; the mouse's relative movement is
+    measured from the middle of the part of the window on its screen. A
+    window left larger than a new mode had its middle off the screen,
+    where Windows will not put the pointer: the pointer drifted, and the
+    menus' choice followed it (W A S D seemed not to work).
+  - The Options page stays on the page shown while a new resolution holds
+    the picture (frames gone by, not 400 ms).
+twotowers/src/menus.c, options.c, xboxrecomp-0.12.0/src/input/xinput_device.c
+  - In the front end (not play or films) the left stick pushed past about
+    a quarter is pushed all the way along its main direction, so the
+    game's menus move as with the d-pad: the main menu moved only for a
+    near-full push (a 40% push did nothing), and a push a little to the
+    side lost more. A held stick steps at the d-pad's pace.
+  - Mouse steering only when the left stick is the keys' (W), and mouse
+    aiming only for a key's or mouse button's ranged button
+    (xbox_input_kb_lstick / xbox_input_kb_lt from the input layer): a
+    controller's stick pushed up was turned the mouse's way, and its LT
+    gave the stick to the mouse.
+  - The Options pages read what the pad's last read holds as well as what
+    was pressed since the last frame: at a high frame rate most frames see
+    no read, and every read was a new press -- a held stick ran down the
+    page.
+twotowers/src/prompts.inc, prompts_kb.inc
+  - The Secret Codes page: its L trigger picture (0xDBA098CA) follows the
+    prompt style as R does; "Press the START button to pause" and "Pull and
+    hold" read as the keys' with keyboard prompts.
+twotowers/src/e3hud.c, xboxrecomp-0.12.0/src/video/gfx_menu.c
+  - The ECTS HUD finds its two settings by their ini key (xbox_GfxFind),
+    not their number: a setting added before them moved the numbers, and
+    the orange health pickups stayed green.
+twotowers/src/main.c, xboxrecomp-0.12.0/src/video/fb_present.c
+  - macOS: the game window is made and its events pumped on the process's
+    main thread (AppKit allows NSWindow nowhere else; the window thread
+    could not open one and the game drew on the CPU). The game keeps its
+    64 MB thread; the main thread waits until the window is asked for
+    (xbox_FramebufferMainThreadRun) and runs the window loop there. With
+    no window the game thread ends the process as before.
+  - A crash names the native function it stopped in (dladdr): a
+    recompiled one is named after its guest address.
+xboxrecomp-0.12.0/src/kernel/nv2a_gl.inc
+  - macOS: the pushbuffer runs on whichever thread kicks it (the title's
+    kickoff or the poller), one at a time under the GPU lock; the OpenGL
+    context was current only on the thread that set the renderer up, and
+    the other one crashed in glBindFramebuffer. The context is made current
+    on the running thread when it is not (CGL allows that while the lock
+    keeps the threads from using it at once).
+xboxrecomp-0.12.0/src/platform/win32_compat.c
+  - A SIGTRAP with the trap flag set is a single step whatever si_code
+    says: Rosetta 2 reports the MMIO handlers' step as a breakpoint, and
+    the first AC97 register access ended the game.
+  (These three from a report and patch by a player on an M2 Pro, macOS
+  27.2, through Rosetta 2.)

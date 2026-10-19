@@ -441,7 +441,41 @@ static void gfxBuildOptions()
     g_gfx.push_back({L"Frame rate", L"fps", L"30",
         {{L"30 fps (as on the Xbox)", L"30"}, {L"60 fps (experimental)", L"60"}, {L"Unlocked (experimental)", L"unlocked"}}});
     g_gfx.push_back({L"Display mode", L"fullscreen", L"0",
-        {{L"Windowed", L"0"}, {L"Full screen (borderless)", L"1"}}});
+        {{L"Windowed", L"0"}, {L"Full screen (borderless)", L"1"}, {L"Exclusive full screen", L"2"}}});
+    {   // exclusive full screen's resolutions: the monitor's own, largest first
+        static std::vector<std::wstring> names, vals;
+        static bool listed;
+        if (!listed) {
+            DEVMODEW dm{}; dm.dmSize = sizeof dm;
+            std::vector<std::pair<int, int>> m;
+            for (DWORD i = 0; EnumDisplaySettingsW(nullptr, i, &dm) && i < 4000; i++) {
+                if (dm.dmBitsPerPel != 32 || dm.dmPelsWidth < 640 || dm.dmPelsHeight < 480) continue;
+                std::pair<int, int> r((int)dm.dmPelsWidth, (int)dm.dmPelsHeight);
+                if (std::find(m.begin(), m.end(), r) == m.end()) m.push_back(r);
+            }
+            std::sort(m.begin(), m.end(), [](const std::pair<int, int> &a, const std::pair<int, int> &b) {
+                return (long)a.first * a.second != (long)b.first * b.second ? (long)a.first * a.second > (long)b.first * b.second : a.first > b.first; });
+            {   // (1.9.3) as the game's list (gfx_menu.c): the screen's own, the common ones it offers (720p and below), the largest of the rest
+                static const int pref[][2] = { {3840,2160}, {2560,1600}, {2560,1440}, {1920,1200}, {1920,1080}, {1680,1050}, {1600,900},
+                                               {1440,900}, {1366,768}, {1280,1024}, {1280,800}, {1280,720}, {1024,768}, {960,540}, {800,600}, {640,480} };
+                std::vector<char> keep(m.size(), 0);
+                size_t nk = 0;
+                if (!m.empty()) { keep[0] = 1; nk = 1; }
+                for (auto &pr : pref)
+                    for (size_t k = 0; k < m.size(); k++) if (!keep[k] && m[k].first == pr[0] && m[k].second == pr[1] && nk < 23) { keep[k] = 1; nk++; }
+                for (size_t k = 0; k < m.size() && nk < 23; k++) if (!keep[k]) { keep[k] = 1; nk++; }
+                std::vector<std::pair<int, int>> k2;
+                for (size_t k = 0; k < m.size(); k++) if (keep[k]) k2.push_back(m[k]);
+                m.swap(k2);
+            }
+            names.reserve(24); vals.reserve(24);
+            for (auto &r : m) { names.push_back(std::to_wstring(r.first) + L" x " + std::to_wstring(r.second)); vals.push_back(std::to_wstring(r.first) + L"x" + std::to_wstring(r.second)); }
+            listed = true;
+        }
+        GfxOpt o{L"Full-screen resolution (exclusive)", L"fs_resolution", L"", {{L"The desktop's", L""}}};
+        for (size_t i = 0; i < names.size(); i++) o.choices.push_back({names[i].c_str(), vals[i].c_str()});
+        g_gfx.push_back(o);
+    }
     g_gfx.push_back({L"Window size", L"window_size", L"",
         {{L"Automatic", L""}, {L"1280 x 720", L"1280x720"}, {L"1280 x 960", L"1280x960"}, {L"1600 x 900", L"1600x900"},
          {L"1920 x 1080", L"1920x1080"}, {L"1920 x 1200", L"1920x1200"}, {L"2560 x 1080", L"2560x1080"},

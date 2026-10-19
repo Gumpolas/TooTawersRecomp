@@ -680,6 +680,10 @@ int xbox_InputAnyPlayStationModel(void)
  * stick reads centred; outside it the range is stretched back to full, so
  * the stick still reaches every speed. Radial, so diagonals are not cut.
  * 0 turns it off (the pad's raw values, as before). */
+/* (1.9.3) player 1's last read: its left stick came from the keys (W A S D),
+ * its left trigger from a key or mouse button rather than the controller --
+ * for a title's mouse steering and aiming, which take the stick only then */
+volatile int xbox_input_kb_lstick, xbox_input_kb_lt;
 static void stick_deadzone(SHORT *px, SHORT *py)
 {
     static float dz = -1.0f;
@@ -1130,6 +1134,7 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
         g_controller_connected[dwPort] = FALSE;
         if (dwPort == 0 && keyboard_enabled()) {
             keyboard_state(pState);
+            xbox_input_kb_lstick = 1; xbox_input_kb_lt = 1;   /* (no controller: all of it is the keys') */
             if (kb_active(pState)) s_last_kbm = 1;
             return ERROR_SUCCESS;
         }
@@ -1213,10 +1218,14 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
                 pState->Gamepad.bAnalogButtons[i] = kb.Gamepad.bAnalogButtons[i];
         /* The keyboard's stick only stands in for a controller stick at
          * rest: a pushed controller stick always wins. */
+        xbox_input_kb_lstick = 0;
+        xbox_input_kb_lt = kb.Gamepad.bAnalogButtons[6] > 30 && pState->Gamepad.bAnalogButtons[6] <= kb.Gamepad.bAnalogButtons[6]
+                           && hp.lt <= 30;
         {
             int pl = abs(pState->Gamepad.sThumbLX) > 7849 || abs(pState->Gamepad.sThumbLY) > 7849;
             int pr = abs(pState->Gamepad.sThumbRX) > 8689 || abs(pState->Gamepad.sThumbRY) > 8689;
             if (!pl && (kb.Gamepad.sThumbLX || kb.Gamepad.sThumbLY)) {
+                xbox_input_kb_lstick = 1;
                 pState->Gamepad.sThumbLX = kb.Gamepad.sThumbLX;
                 pState->Gamepad.sThumbLY = kb.Gamepad.sThumbLY;
             }

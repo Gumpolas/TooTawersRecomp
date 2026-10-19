@@ -35,15 +35,16 @@ int xbox_gfxmenu_rtl;
 typedef struct {
     const char *label, *key;
     int n;
-    const char *names[16];
-    const char *vals[16];
+    const char *names[24];
+    const char *vals[24];
     const char *note;
 } GfxItem;
 
 static GfxItem s_items[GFX_N] = {
     { "Frame rate", "fps", 3, { "30 fps (original)", "60 fps (experimental)", "Unlocked (experimental)" },
       { "30", "60", "unlocked" }, "60 / unlocked can run some scenes faster than normal" },
-    { "Display mode", "fullscreen", 2, { "Windowed", "Full screen" }, { "0", "1" }, "Alt+Enter or F11 also switches" },
+    { "Display mode", "fullscreen", 3, { "Windowed", "Borderless full screen", "Exclusive full screen" }, { "0", "1", "2" },
+      "Alt+Enter or F11 also switches" },
     { "Aspect ratio", "aspect", 5, { "4:3 (original)", "16:9", "16:10", "21:9", "32:9" },
       { "4:3", "16:9", "16:10", "21:9", "32:9" }, "The 3D view widens fully after the next load" },
     { "Internal resolution", "render_scale", 13, { "1x  (640 x 480)", "2x  (1280 x 960)", "3x  (1920 x 1440)", "4x  (2560 x 1920)", "4.5x (2160 lines: 3840 x 2160 at 16:9)",
@@ -93,6 +94,7 @@ static GfxItem s_items[GFX_N] = {
       "The high-resolution texture pack (GLOS69 and textures_ultra beside the game)" },
     { "Widescreen cutscenes", "wide_scenes", 2, { "Off (4:3)", "On" }, { "0", "1" },
       "On: the in-engine scenes widened too (the sky's edges can show)" },
+    { "Full-screen resolution", "fs_resolution", 1, { "The desktop's" }, { "" }, "For exclusive full screen" },
     { "Mod: ECTS 2002 HUD", "e3_hud", 2, { "Off", "On" }, { "0", "1" },
       "Portrait, rune orb and EXP readout of the ECTS 2002 demo" },
     { "Mod: Orange health pickups", "e3_pickups", 2, { "Off", "On" }, { "0", "1" },
@@ -124,6 +126,51 @@ static int find_val(int item, const char *v)
     return -1;
 }
 
+/* (1.9.3) exclusive full screen's resolutions: the monitor's own modes
+ * (32-bit), largest first, each at its highest refresh rate */
+static char s_fs_name[24][32], s_fs_val[24][16];
+static void fs_modes_list(void)
+{
+#if defined(_WIN32)
+    DEVMODEA dm;
+    int i, n = 1, k, j;
+    struct { int w, h; } m[64];
+    int nm = 0;
+    memset(&dm, 0, sizeof dm); dm.dmSize = sizeof dm;
+    for (i = 0; EnumDisplaySettingsA(NULL, (DWORD)i, &dm) && i < 4000; i++) {
+        int w = (int)dm.dmPelsWidth, h = (int)dm.dmPelsHeight, seen = 0;
+        if (dm.dmBitsPerPel != 32 || w < 640 || h < 480) continue;
+        for (k = 0; k < nm; k++) if (m[k].w == w && m[k].h == h) seen = 1;
+        if (!seen && nm < 64) { m[nm].w = w; m[nm].h = h; nm++; }
+    }
+    for (k = 0; k < nm; k++) for (j = k + 1; j < nm; j++)
+        if ((long)m[j].w * m[j].h > (long)m[k].w * m[k].h || ((long)m[j].w * m[j].h == (long)m[k].w * m[k].h && m[j].w > m[k].w)) {
+            int tw = m[k].w, th = m[k].h; m[k] = m[j]; m[j].w = tw; m[j].h = th;
+        }
+    {   /* (1.9.3) 23 at most: the screen's own (the largest), the common
+         * ones it offers (720p and below included -- before, a high-
+         * resolution laptop's list held only its 15 largest), then the
+         * largest of the rest; largest first */
+        static const int pref[][2] = { {3840,2160}, {2560,1600}, {2560,1440}, {1920,1200}, {1920,1080}, {1680,1050}, {1600,900},
+                                       {1440,900}, {1366,768}, {1280,1024}, {1280,800}, {1280,720}, {1024,768}, {960,540}, {800,600}, {640,480} };
+        int keep[64] = { 0 }, nk = 0, q;
+        if (nm > 0) { keep[0] = 1; nk = 1; }
+        for (q = 0; q < (int)(sizeof pref / sizeof pref[0]); q++)
+            for (k = 0; k < nm; k++) if (!keep[k] && m[k].w == pref[q][0] && m[k].h == pref[q][1] && nk < 23) { keep[k] = 1; nk++; }
+        for (k = 0; k < nm && nk < 23; k++) if (!keep[k]) { keep[k] = 1; nk++; }
+        for (k = 0, j = 0; k < nm; k++) if (keep[k]) m[j++] = m[k];
+        nm = j;
+    }
+    for (k = 0; k < nm && n < 24; k++) {
+        snprintf(s_fs_name[n], sizeof s_fs_name[n], "%d x %d", m[k].w, m[k].h);
+        snprintf(s_fs_val[n], sizeof s_fs_val[n], "%dx%d", m[k].w, m[k].h);
+        s_items[GFX_FS_RES].names[n] = s_fs_name[n];
+        s_items[GFX_FS_RES].vals[n] = s_fs_val[n];
+        n++;
+    }
+    s_items[GFX_FS_RES].n = n;
+#endif
+}
 static void gfx_init(void)
 {
     const char *e;
@@ -137,7 +184,11 @@ static void gfx_init(void)
     e = getenv("TT_FPS");
     s_cur[GFX_FPS] = e && e[0] == '6' ? 1 : e && (e[0] == 'u' || e[0] == 'U') ? 2 : 0;
     e = getenv("RECOMP_FULLSCREEN");
-    s_cur[GFX_FULLSCREEN] = e && e[0] == '1';
+    s_cur[GFX_FULLSCREEN] = e && e[0] == '2' ? 2 : e && e[0] == '1' ? 1 : 0;
+    fs_modes_list();
+    e = getenv("RECOMP_FS_RES");
+    s_cur[GFX_FS_RES] = 0;
+    if (e && *e && (i = find_val(GFX_FS_RES, e)) > 0) s_cur[GFX_FS_RES] = i;
     e = getenv("RECOMP_ASPECT");
     {
         float a = e ? (float)atof(e) : 4.0f / 3.0f;
@@ -248,6 +299,12 @@ float xbox_GfxAspect(void)
     return i < 5 ? k[i] : s_aspect_custom_v;
 }
 
+void xbox_GfxFsMode(int *w, int *h)
+{
+    gfx_init();
+    *w = *h = 0;
+    if (s_cur[GFX_FS_RES] > 0) sscanf(s_items[GFX_FS_RES].vals[s_cur[GFX_FS_RES]], "%dx%d", w, h);
+}
 void xbox_GfxSetFpsHandler(void (*fn)(int mode)) { s_fps_fn = fn; }
 void xbox_GfxSetSaveHandler(void (*fn)(const char *key, const char *value)) { s_save_fn = fn; }
 void xbox_GfxMenuSetAvailable(int on) { s_avail = on; }
@@ -269,6 +326,10 @@ static void gfx_set(int item, int v)
             int ww = 0, wh = 0;
             if (sscanf(it->vals[v], "%dx%d", &ww, &wh) == 2) xbox_FramebufferSetWindowSize(ww, wh);
         }
+        if (item == GFX_FS_RES) {
+            extern void xbox_FramebufferFsModeChanged(void);
+            xbox_FramebufferFsModeChanged();
+        }
     }
     if (item == GFX_FULLSCREEN) s_cur[item] = v;
     s_ver++;
@@ -280,6 +341,13 @@ static void gfx_set(int item, int v)
 
 /* For a title's own settings pages: each option's choices, and setting one
  * as the F10 menu does (saved, applied). */
+/* (1.9.3) a setting's id from its ini key (-1: none) */
+int xbox_GfxFind(const char *key)
+{
+    int i;
+    for (i = 0; i < GFX_N; i++) if (s_items[i].key && !strcmp(s_items[i].key, key)) return i;
+    return -1;
+}
 int xbox_GfxItemCount(int id) { gfx_init(); return id >= 0 && id < GFX_N ? s_items[id].n : 0; }
 const char *xbox_GfxItemName(int id, int v)
 {
@@ -292,7 +360,7 @@ int xbox_GfxIndex(int id)
 {
     gfx_init();
     if (id < 0 || id >= GFX_N) return 0;
-    if (id == GFX_FULLSCREEN) return xbox_FramebufferIsFullscreen() ? 1 : 0;
+    if (id == GFX_FULLSCREEN) return xbox_FramebufferIsFullscreen();
     return s_cur[id];
 }
 void xbox_GfxSetIndex(int id, int v)
