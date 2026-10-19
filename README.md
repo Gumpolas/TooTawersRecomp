@@ -35,7 +35,7 @@ Updating from 1.9.2 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 1.9.3
 
 ### Character shadow improvements
-The stripes and thin lines that crossed character shadows in every level, at any resolution, are not fixed completely, but some of the shadows are now more filled in. (Direct3D 11 and Vulkan).
+The stripes and thin lines that crossed character shadows in every level, at any resolution, are not fixed completely, but some of the shadows are now filled in more (Direct3D 11 and Vulkan).
 
 ### Exclusive full screen
 - **Display mode** now has **Windowed**, **Borderless** and **Exclusive** full screen (Options → Display, F10, the launcher, or `[Display] fullscreen=2`).
