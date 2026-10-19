@@ -1,0 +1,15 @@
+# Editor settings: keep line endings and indentation consistent
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{c,h,inc,cpp}]
+indent_style = space
+indent_size = 4
+
+[*.py]
+indent_style = space
+indent_size = 4
