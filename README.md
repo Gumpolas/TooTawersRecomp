@@ -36,7 +36,7 @@ Updating from 1.9.3 or earlier: unpack over your old folder, or into a new one a
 
 ### Performance
 - **Much higher frame rates/performance improvements.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier and usage scales better. 
-- **Game time keeps real time at any frame rate.** Above the monitor's refresh rate (usually above 240 hz/fps) some animations in the game world would move slowly and feel delayed. They now run at the right speed at high frame rates.
+- **Game time improvements for higher frame rate.** Above the monitor's refresh rate (usually above 240 hz/fps) some animations in the game world would move slowly and feel delayed. They now run at the right speed at high frame rates.
 - **A drop to 20 fps** with Gandalf or Sauron at a certain spot in the Gates of Moria is fixed. 
 
 ### Frame rate and display
