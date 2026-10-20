@@ -185,6 +185,7 @@ static int surface_write_refused(uint32_t base, uint32_t bytes, const char *what
  * appear several times inside one BEGIN_END to draw a longer run. */
 #define NV097_DRAW_ARRAYS                 0x1810
 #define NV097_INLINE_ARRAY                0x1818
+static void frame_limit(void);   /* (1.9.4: the frame-rate limit at present, below) */
 /* Immediate-mode vertices. SET_VERTEX3F/4F carry the position, and writing
  * its last component completes a vertex using whatever the SET_VERTEX_DATA*
  * registers currently hold for the other attributes. This is how Half-Life
@@ -393,13 +394,18 @@ static void note_texture_use(void)
 
 static void note_unhandled(uint32_t method, uint32_t param)
 {
-    int i;
+    /* (1.9.3) Found through a hash of the method (a linear scan of up to
+     * 2048 entries ran for every unhandled method, every draw). */
+    static uint16_t idx[4096];   /* entry + 1; 0 = empty */
+    uint32_t h = (method * 2654435761u) >> 20, n;
 
     s_gpu.unhandled_total++;
-    for (i = 0; i < s_unhandled_count; i++) {
-        if (s_unhandled[i].method == method) {
-            s_unhandled[i].count++;
-            s_unhandled[i].last_param = param;
+    for (n = 0; n < 4096; n++, h = (h + 1) & 4095u) {
+        uint16_t e = idx[h];
+        if (!e) break;
+        if (e <= s_unhandled_count && s_unhandled[e - 1].method == method) {
+            s_unhandled[e - 1].count++;
+            s_unhandled[e - 1].last_param = param;
             return;
         }
     }
@@ -408,6 +414,7 @@ static void note_unhandled(uint32_t method, uint32_t param)
         s_unhandled[s_unhandled_count].count = 1;
         s_unhandled[s_unhandled_count].last_param = param;
         s_unhandled_count++;
+        if (n < 4096) idx[h] = (uint16_t)s_unhandled_count;
     }
 }
 
@@ -1800,6 +1807,18 @@ static int imm_vertex_method(uint32_t method, uint32_t param)
     }
     return 0;
 }
+volatile long long xbox_perf_wait_ticks;   /* (1.9.3) the title's time waiting on the GPU or the frame clock (QPC), for [PERF] */
+/* the title's delay hook, at each sleep: 1 while it is one of its waits;
+ * calls 5 ms apart or less make one wait */
+void xbox_PerfWaitNote(int inwait)
+{
+    static LARGE_INTEGER lastw, qf;
+    LARGE_INTEGER q;
+    if (!qf.QuadPart) QueryPerformanceFrequency(&qf);
+    QueryPerformanceCounter(&q);
+    if (inwait && lastw.QuadPart && q.QuadPart - lastw.QuadPart < qf.QuadPart / 200) xbox_perf_wait_ticks += q.QuadPart - lastw.QuadPart;
+    lastw.QuadPart = inwait ? q.QuadPart : 0;
+}
 volatile unsigned g_nv2a_flips;   /* frames presented, for the hang watchdog */
 static uint32_t s_semaphore_offset;
 
@@ -1830,6 +1849,8 @@ int xbox_PbTakeCallback(uint32_t *fn, uint32_t *ctx)
     return 1;
 }
 
+/* (1.9.3) callbacks queued, not yet run (the GPU-wait watchdogs, twotowers_manual.c) */
+int xbox_PbCallbacksPending(void) { return s_cb_head != s_cb_tail; }
 static void pb_queue_callback(uint32_t fn, uint32_t ctx)
 {
     LONG tail = s_cb_tail, next = (tail + 1) % PB_CB_QUEUE;
@@ -1844,10 +1865,12 @@ static void pb_queue_callback(uint32_t fn, uint32_t ctx)
  * it now (wake the timer thread) rather than up to a tick later. Only from a
  * wait -- running one the instant it is queued raced the D3D code still
  * finishing the kick on the queuing thread (it froze The Two Towers' load). */
+volatile LONG g_pb_cb_poke;
 void xbox_PbWakeIfPending(void)
 {
-    if (g_pb_cb_wake && s_cb_head != s_cb_tail)
-        SetEvent(g_pb_cb_wake);
+    if (g_pb_cb_wake && s_cb_head != s_cb_tail) {
+        if (!g_pb_cb_poke) { g_pb_cb_poke = 1; SetEvent(g_pb_cb_wake); }
+    }
 }
 static uint32_t s_semaphore_dma;      /* NV097_SET_CONTEXT_DMA_SEMAPHORE (0x01A4) handle */
 
@@ -2029,8 +2052,80 @@ static int blit_method(uint32_t subch, uint32_t method, uint32_t param)
     default: return 0;
     }
 }
+/* (1.9.4) The frame-rate limit at the picture's going out: the title's
+ * frame wait (twotowers_manual.c) paces play, but its menus draw without
+ * waiting for anything -- over a thousand frames a second unlocked. Here
+ * no frame goes out sooner than the limit's period after the last, in
+ * menus and play alike; the title sets the rate (0: no limit). */
+volatile int xbox_frame_cap_hz;
+static void frame_limit(void)
+{
+    extern void xbox_precise_wait_until(LONGLONG deadline);
+    static LARGE_INTEGER f; static LONGLONG next;
+    LARGE_INTEGER n;
+    LONGLONG period;
+    int hz = xbox_frame_cap_hz;
+    static int force = -1;   /* testing: RECOMP_FRAME_CAP=<n> */
+    if (force < 0) { const char *e = getenv("RECOMP_FRAME_CAP"); force = e ? atoi(e) : 0; }
+    if (force > 0) hz = force;
+    if (hz <= 0) { next = 0; return; }
+    if (!f.QuadPart) QueryPerformanceFrequency(&f);
+    period = f.QuadPart / hz;
+    QueryPerformanceCounter(&n);
+    if (!next || n.QuadPart - next > period * 4 || next - n.QuadPart > period * 4) next = n.QuadPart;   /* (a pause, or the rate changed) */
+    if (n.QuadPart < next) xbox_precise_wait_until(next);
+    next += period;
+}
+void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param);
+/* (1.9.3) A run of INLINE_ARRAY words from the render thread's ring, in one
+ * piece: what nv2a_pb_exec_method does with each, without going through
+ * every other method's checks first. Capturing, or verbose: one at a time. */
+void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n)
+{
+    uint32_t room;
+    static int hist = -1;
+    if (hist < 0) hist = getenv("RECOMP_METHOD_HIST") != NULL;
+    if (s_cap_fp || hist) {
+        uint32_t i;
+        for (i = 0; i < n; i++) nv2a_pb_exec_method(0, NV097_INLINE_ARRAY, w[i]);
+        return;
+    }
+#if defined(_WIN32)
+    g_cnt_rt += n;
+#endif
+    if (!s_gpu.prim) return;
+    room = NV_MAX_INLINE - s_gpu.inline_count;
+    if (n > room) n = room;
+    memcpy(&s_gpu.inline_buf[s_gpu.inline_count], w, n * 4);
+    s_gpu.inline_count += n;
+}
 void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
 {
+#if defined(_WIN32)
+    g_cnt_rt++;
+#endif
+    {   /* testing: RECOMP_METHOD_HIST=1 -- the most common methods, every 5 s */
+        static int on = -1; static unsigned cnt[8][2048]; static DWORD t;
+        if (on < 0) on = getenv("RECOMP_METHOD_HIST") != NULL;
+        if (on) {
+            cnt[subch & 7][(method >> 2) & 2047]++;
+            if (GetTickCount() - t > 5000) {
+                int k, best[16] = {0}, bs[16] = {0}, b; unsigned i, j;
+                t = GetTickCount();
+                for (k = 0; k < 16; k++) {
+                    unsigned bv = 0; best[k] = -1;
+                    for (i = 0; i < 8; i++) for (j = 0; j < 2048; j++) {
+                        int taken = 0;
+                        for (b = 0; b < k; b++) if (best[b] == (int)j && bs[b] == (int)i) taken = 1;
+                        if (!taken && cnt[i][j] > bv) { bv = cnt[i][j]; best[k] = (int)j; bs[k] = (int)i; }
+                    }
+                    if (best[k] < 0) break;
+                    fprintf(stderr, "  [MHIST] %u:%04X %u\n", bs[k], best[k] * 4, bv);
+                }
+                memset(cnt, 0, sizeof cnt);
+            }
+        }
+    }
     static int inited;
     if (s_cap_fp) {
         uint32_t r[3] = { subch, method, param };
@@ -2281,6 +2376,35 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
             if (now - t0 >= 1000) {
                 fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u)\n",
                         nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3]);
+                {   /* (1.9.3) where a frame's time goes on the CPU: the GPU commands
+                     * turned into Direct3D 11 calls (the pushbuffer runs, on the
+                     * game's thread as it kicks them), of which waiting in Present;
+                     * the rest of the frame is the game's own code and its waits */
+                    extern volatile long long g_perf_pb_ticks, g_perf_rt_ticks;
+                    static long long pb0, pr0, wt0, rt0; static unsigned b0;
+#if defined(_WIN32)
+                    long long pr = g_perf_present_ticks;
+#else
+                    long long pr = 0;
+#endif
+                    double k = nf ? 1000.0 / (double)qf.QuadPart / nf : 0;
+                    double all = nf ? (double)(now - t0) / nf : 0.0, pbm = (g_perf_pb_ticks - pb0) * k, wtm = (xbox_perf_wait_ticks - wt0) * k;
+                    double rtm = (g_perf_rt_ticks - rt0) * k;
+                    if (g_perf_rt_ticks)   /* (recorded, executed on the render thread) */
+                        fprintf(stderr, "  [PERF] per frame: %.2f ms in all; game thread: %.2f ms reading GPU commands, %.2f ms waiting on the GPU or the frame clock, %.2f ms the game's code; render thread: %.2f ms turning them into Direct3D (%.2f of it in Present); %u draws\n",
+                                all, pbm, wtm, all - pbm - wtm, rtm, (pr - pr0) * k, nf ? (s_3d.batches - b0) / nf : 0);
+                    else
+                        fprintf(stderr, "  [PERF] per frame: %.2f ms in all, %.2f ms turning GPU commands into Direct3D (%.2f of it in Present), %.2f ms waiting on the GPU or the frame clock, %.2f ms the game's code; %u draws\n",
+                                all, pbm, (pr - pr0) * k, wtm, all - pbm - wtm, nf ? (s_3d.batches - b0) / nf : 0);
+#if defined(_WIN32)
+                    if (nf && g_perf_rt_ticks) {
+                        fprintf(stderr, "  [PERFD3D] per frame: %u vertex-constant updates, %u pixel-constant updates, %u texture rebinds, %u pixel shader / %u vertex shader / %u layout changes, %u blend-depth changes, %u commands\n",
+                                g_cnt_vpc / nf, g_cnt_cbps / nf, g_cnt_srv / nf, g_cnt_ps / nf, g_cnt_vs / nf, g_cnt_il / nf, g_cnt_om / nf, g_cnt_rt / nf);
+                        g_cnt_vpc = g_cnt_cbps = g_cnt_srv = g_cnt_ps = g_cnt_vs = g_cnt_il = g_cnt_om = g_cnt_rt = 0;
+                    }
+#endif
+                    pb0 = g_perf_pb_ticks; pr0 = pr; wt0 = xbox_perf_wait_ticks; rt0 = g_perf_rt_ticks; b0 = s_3d.batches;
+                }
                 nf = 0; t0 = now; ap0 = g_apu_periods;
                 memset(hist, 0, sizeof hist);
                 {

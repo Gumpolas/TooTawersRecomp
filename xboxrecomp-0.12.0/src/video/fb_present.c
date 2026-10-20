@@ -133,6 +133,13 @@ void xbox_FramebufferWindowPresent(uint32_t fb_va, uint32_t pitch)
     xbox_FramebufferModeService();   /* (1.9.3) a display mode asked for: changed here, between frames */
     if (!s_fb_running || !fb_va || !pitch)
         return;
+    {   /* (1.9.3) Direct3D 11 draws the picture: this copy (and its gamma
+         * pass over every pixel) only fed the dumps -- on the render thread,
+         * every frame. As on Linux and macOS. */
+        static int dump = -1;
+        if (dump < 0) dump = getenv("RECOMP_FB_DUMP") != NULL;
+        if (s_fb_gpu && !dump) return;
+    }
     if (getenv("RECOMP_FB_VA"))
         return;                       /* pinned: leave the old path alone */
     next = (s_present_idx == 0) ? 1 : 0;
@@ -350,6 +357,26 @@ void xbox_FramebufferSetFullscreen(int on)
     if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_SET_FULLSCREEN, (WPARAM)(on < 0 ? 0 : on > 2 ? 1 : on), 0);
 }
 int xbox_FramebufferIsFullscreen(void) { return s_fs; }
+/* (1.9.3) the refresh rate of the monitor the window is on (0: unknown),
+ * looked up again at most once a second */
+int xbox_DisplayRefreshHz(void)
+{
+    static volatile int hz; static volatile DWORD at;
+    DWORD now = GetTickCount();
+    if (!at || now - at > 1000) {
+        MONITORINFOEXW mi; DEVMODEW dm;
+        HMONITOR mon = MonitorFromWindow(s_fb_hwnd, MONITOR_DEFAULTTOPRIMARY);
+        at = now ? now : 1;
+        memset(&mi, 0, sizeof mi); mi.cbSize = sizeof mi;
+        memset(&dm, 0, sizeof dm); dm.dmSize = sizeof dm;
+        if (mon && GetMonitorInfoW(mon, (MONITORINFO *)&mi) && EnumDisplaySettingsW(mi.szDevice, ENUM_CURRENT_SETTINGS, &dm)
+                && dm.dmDisplayFrequency > 1)
+            hz = (int)dm.dmDisplayFrequency;
+        else if (EnumDisplaySettingsW(NULL, ENUM_CURRENT_SETTINGS, &dm) && dm.dmDisplayFrequency > 1)
+            hz = (int)dm.dmDisplayFrequency;
+    }
+    return hz;
+}
 void xbox_FramebufferFsModeChanged(void) { if (s_fb_hwnd) PostMessageA(s_fb_hwnd, WM_FB_SET_FULLSCREEN, 2, 1); }
 /* The window's size (its picture, w x h): now, or for when it is windowed again */
 #define WM_FB_SET_SIZE (WM_APP + 8)
@@ -670,10 +697,15 @@ static DWORD WINAPI fb_thread(LPVOID unused)
             DispatchMessageA(&msg);
         }
         if (s_fb_gpu) {
-            /* D3D11 owns the window; keep s_rgb current for dumps only. */
+            /* D3D11 owns the window; keep s_rgb current for dumps only
+             * (1.9.3: and only when a frame has come since) */
+            static LONG copied = -2; static unsigned seq_was;
+            extern volatile unsigned g_nv2a_flips;
             LONG idx = s_present_idx;
-            if (idx >= 0 && s_present[idx] && s_rgb)
+            if (idx >= 0 && s_present[idx] && s_rgb && (idx != copied || g_nv2a_flips != seq_was)) {
                 memcpy(s_rgb, s_present[idx], (size_t)s_fb_width * s_fb_height * 4);
+                copied = idx; seq_was = g_nv2a_flips;
+            }
         } else if (s_present_idx >= 0 && s_rgb) {
             /* A finished frame, published by the flip. Copied into s_rgb so
              * the dump path and GDI see one consistent image even if the
@@ -977,6 +1009,7 @@ void xbox_FramebufferSetFullscreen(int on)
     SDL_PushEvent(&e);
 }
 int xbox_FramebufferIsFullscreen(void) { return s_fs; }
+int xbox_DisplayRefreshHz(void) { return 0; }   /* (unknown here: no cap) */
 void xbox_FramebufferFsModeChanged(void)
 {
     SDL_Event e;
@@ -1286,64 +1319,16 @@ sdl_failed:
     return 0;
 }
 
-#if defined(__APPLE__)
-/* macOS: AppKit windows (NSWindow) may only be made, and their events only
- * pumped, on the process's main thread. The game runs on a thread of its own
- * (see the host's main); the main thread waits in
- * xbox_FramebufferMainThreadRun until the window is asked for, then runs the
- * window loop there for the rest of the session. */
-#include <pthread.h>
-static pthread_mutex_t s_main_mx = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t s_main_cv = PTHREAD_COND_INITIALIZER;
-static int s_main_req;      /* 1 window wanted, -1 the game is over (no window) */
-
-void xbox_FramebufferMainThreadRun(void)
-{
-    int req;
-    pthread_mutex_lock(&s_main_mx);
-    while (!s_main_req) pthread_cond_wait(&s_main_cv, &s_main_mx);
-    req = s_main_req;
-    pthread_mutex_unlock(&s_main_mx);
-    if (req > 0) fb_thread(NULL);
-}
-
-/* No window will be asked for after all: let the main thread go. */
-void xbox_FramebufferMainThreadRelease(void)
-{
-    pthread_mutex_lock(&s_main_mx);
-    if (!s_main_req) s_main_req = -1;
-    pthread_cond_broadcast(&s_main_cv);
-    pthread_mutex_unlock(&s_main_mx);
-}
-#endif
-
 void xbox_FramebufferWindowStart(void)
 {
-#if !defined(__APPLE__)
     HANDLE th;
-#endif
     if (!getenv("RECOMP_FB_WINDOW")) {
         InterlockedExchange(&s_gl_state, -1);
-#if defined(__APPLE__)
-        xbox_FramebufferMainThreadRelease();
-#endif
         return;
     }
     if (InterlockedCompareExchange(&s_fb_running, 1, 0) != 0) return;
-#if defined(__APPLE__)
-    pthread_mutex_lock(&s_main_mx);
-    if (s_main_req < 0) {   /* the main thread is no longer waiting */
-        pthread_mutex_unlock(&s_main_mx);
-        InterlockedExchange(&s_fb_running, 0); InterlockedExchange(&s_gl_state, -1);
-        return;
-    }
-    s_main_req = 1;
-    pthread_cond_broadcast(&s_main_cv);
-    pthread_mutex_unlock(&s_main_mx);
-#else
     th = CreateThread(NULL, 0, fb_thread, NULL, 0, NULL);
     if (th) CloseHandle(th);
     else { InterlockedExchange(&s_fb_running, 0); InterlockedExchange(&s_gl_state, -1); }
-#endif
 }
 #endif

@@ -896,6 +896,15 @@ static void pb_unlock(void) { LeaveCriticalSection(&g_pb_cs); }
  * jump past PUT into last lap's commands and replayed them (The Two Towers'
  * movie quad, run once per frame). Hardware consumes as fast as it is fed,
  * which is what calling this from the kickoff restores. */
+/* (1.9.3) the pushbuffer run to its end: GET has reached PUT */
+int xbox_Nv2aDrained(void)
+{
+    extern int xbox_PbRingEmpty(void);
+    char *regs = (char *)g_nv2a_memory;
+    if (!regs) return 1;
+    return *(volatile uint32_t *)(regs + NV2A_USER_DMA_PUT) == *(volatile uint32_t *)(regs + NV2A_USER_DMA_GET)
+           && xbox_PbRingEmpty();   /* (and the render thread has executed all it was given) */
+}
 void xbox_Nv2aKickNow(void)
 {
     extern void nv2a_pb_run(uint32_t, uint32_t);

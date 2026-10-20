@@ -21,6 +21,7 @@
  */
 #define COBJMACROS
 #include <d3d11.h>
+#include <dxgi1_5.h>   /* (1.9.3) IDXGIFactory5: tearing */
 #include <d3dcompiler.h>
 #include "../platform/d3dcompile_dyn.h"
 #include "../platform/d3d11_dyn.h"
@@ -92,6 +93,8 @@ static int g_aniso = -1, g_mips = -1;
 /* Options the settings overlay can change while running (src/video/gfx_menu.c). */
 #include "../video/gfx_menu.h"
 static long g_gfx_seen = 1;
+static volatile long long g_perf_present_ticks;   /* (1.9.3) time in Present, for [PERF] */
+static int g_tear;   /* (1.9.3) the swap chain may tear: with vsync off, frames go out at once */
 static int g_aa_on = -1, g_vsync_on = -1, g_stretch_on = -1, g_hwvp_user = 1;
 /* Menus fill the screen: a frame that drew no 3D (menus, the upgrade and
  * results screens, loading screens) is drawn inside the TV safe area, the
@@ -513,9 +516,15 @@ static void gsurf_sync_from_mem(GSurf *s)
      * reading a thousand scattered words of a 1 MB surface). */
     if (s->synced_run == g_pb_runs) return;
     s->synced_run = g_pb_runs;
-    sum = gpu_mem_sum(s->base, s->pitch * s->h);
-    if (sum == s->mem_sum) return;
-    gsurf_upload(s, (const uint8_t *)xbox_GetMemoryOffset() + s->base, s->pitch);
+    {
+        LARGE_INTEGER q0, q1;
+        QueryPerformanceCounter(&q0);
+        sum = gpu_mem_sum(s->base, s->pitch * s->h);
+        if (sum != s->mem_sum) { gsurf_upload(s, (const uint8_t *)xbox_GetMemoryOffset() + s->base, s->pitch); g_slow_sync_n++; }
+        QueryPerformanceCounter(&q1);
+        g_slow_sync_t += q1.QuadPart - q0.QuadPart;
+        if (sum == s->mem_sum) return;
+    }
     s->mem_sum = sum;
     s->rw = ++g_wr_clock;
 }
@@ -552,7 +561,7 @@ int xbox_FrameUsedTexture(uint32_t hash)
     for (i = 0; i < g_fhash_n[p]; i++) if (g_fhash[p][i] == hash) return 1;
     return 0;
 }
-#define GTEX_MAX 512
+#define GTEX_MAX 2048   /* (1.9.3: was 512; see TEXC_SLOTS) */
 static GTex g_tex[GTEX_MAX];
 
 /* Ultra textures (nv2a_ultra.inc): the pack's pictures as BC7 textures,
@@ -623,7 +632,42 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
     const uint32_t *argb;
     GTex *e = NULL, *victim = NULL;
     int i;
+    /* (1.9.3) The same texture bound again with nothing that could change
+     * it -- the same content-check epoch, no GPU write since, the same
+     * decode settings: the view it got last time, without the texture
+     * cache's lookups and checks (several binds a draw, thousands of draws
+     * a frame). Not for Ultra pictures (their choice depends on the draw). */
+    static struct { uint32_t off, color, w, h, pitch, ep, wgen, hash; long trev; int uon; GTex *e; ID3D11ShaderResourceView *srv; } gm[4096];
+    static int nomemo = -1;
+    uint32_t slot = ((t->offset >> 8) ^ (t->offset >> 17) ^ (t->color * 31u) ^ (t->width << 2) ^ (t->height << 5)) & 4095u;
+    if (nomemo < 0) nomemo = getenv("RECOMP_TEX_NO_MEMO") != NULL;
     s_ultra_used = 0;
+    static unsigned st_hit, st_call, st_key, st_ep, st_wgen, st_other, st_lin; static DWORD st_t;
+    if (getenv("RECOMP_TEX_STATS")) {
+        typeof(gm[0]) *m = &gm[slot];
+        st_call++; if (t->pitch) st_lin++;
+        if (!(m->srv && m->off == t->offset && m->color == t->color && m->w == t->width && m->h == t->height && m->pitch == t->pitch)) st_key++;
+        else if (m->ep != texc_epoch(t)) st_ep++;
+        else if (m->wgen != s_wgen) st_wgen++;
+        else if (!(m->trev == xbox_tex_rev && m->uon == g_ultra_on && m->e->srv == m->srv)) st_other++;
+        else st_hit++;
+        if (GetTickCount() - st_t > 2000) {
+            st_t = GetTickCount();
+            fprintf(stderr, "  [TEXSTAT] binds %u: hit %u, other texture %u, new check epoch %u, GPU wrote %u, other %u; linear %u; runs %u\n",
+                    st_call, st_hit, st_key, st_ep, st_wgen, st_other, st_lin, g_pb_runs);
+            st_call = st_hit = st_key = st_ep = st_wgen = st_other = st_lin = 0;
+        }
+    }
+    if (!nomemo) {
+        typeof(gm[0]) *m = &gm[slot];
+        if (m->srv && m->off == t->offset && m->color == t->color && m->w == t->width && m->h == t->height && m->pitch == t->pitch
+                && m->ep == texc_epoch(t) && m->wgen == s_wgen && m->trev == xbox_tex_rev && m->uon == g_ultra_on
+                && m->e->srv == m->srv && m->e->off == t->offset && m->e->color == t->color) {
+            fhash_note(m->hash);
+            m->e->used = ++g_clock;
+            return m->srv;
+        }
+    }
     argb = texc_get_ver(t, &ver);
     if (!argb) return NULL;
     fhash_note(s_texc_last_hash);
@@ -639,11 +683,23 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
             return hd;
         }
     }
-    for (i = 0; i < GTEX_MAX; i++) {
-        GTex *c = &g_tex[i];
-        if (c->tex && c->off == t->offset && c->color == t->color && c->w == t->width && c->h == t->height
-            && c->pitch == t->pitch) { e = c; break; }
-        if (!victim || (!c->tex && victim->tex) || (c->tex && victim->tex && c->used < victim->used)) victim = c;
+    {   /* (1.9.3) the entry this texture had last time, from an index; the
+         * full scan of all of them only on a miss */
+        static uint16_t gidx[8192];
+        uint32_t gk = ((t->offset >> 6) ^ (t->offset >> 17) ^ (t->color * 0x9E37u) ^ (t->width << 3) ^ (t->height << 7)) & 8191u;
+        int q = (int)gidx[gk] - 1;
+        if (q >= 0) {
+            GTex *c = &g_tex[q];
+            if (c->tex && c->off == t->offset && c->color == t->color && c->w == t->width && c->h == t->height && c->pitch == t->pitch) e = c;
+        }
+        if (!e)
+            for (i = 0; i < GTEX_MAX; i++) {
+                GTex *c = &g_tex[i];
+                if (c->tex && c->off == t->offset && c->color == t->color && c->w == t->width && c->h == t->height
+                    && c->pitch == t->pitch) { e = c; break; }
+                if (!victim || (!c->tex && victim->tex) || (c->tex && victim->tex && c->used < victim->used)) victim = c;
+            }
+        gidx[gk] = (uint16_t)((e ? e : victim) - g_tex + 1);
     }
     if (!e) {
         D3D11_TEXTURE2D_DESC td;
@@ -665,6 +721,7 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
             td.BindFlags |= D3D11_BIND_RENDER_TARGET;
             td.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
         }
+        g_slow_new_n++;
         if (FAILED(ID3D11Device_CreateTexture2D(g_dev, &td, NULL, &e->tex))) { memset(e, 0, sizeof *e); return NULL; }
         ID3D11Device_CreateShaderResourceView(g_dev, (ID3D11Resource *)e->tex, NULL, &e->srv);
         e->off = t->offset; e->color = t->color; e->w = t->width; e->h = t->height; e->pitch = t->pitch;
@@ -672,12 +729,22 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
     }
     if (e->ver != ver) {
         D3D11_TEXTURE2D_DESC cd;
+        LARGE_INTEGER uq0, uq1;
+        QueryPerformanceCounter(&uq0);
         ID3D11Texture2D_GetDesc(e->tex, &cd);
         ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)e->tex, 0, NULL, argb, t->width * 4, 0);
         if (cd.MipLevels > 1) ID3D11DeviceContext_GenerateMips(g_ctx, e->srv);
         e->ver = ver;
+        QueryPerformanceCounter(&uq1);
+        g_slow_up_t += uq1.QuadPart - uq0.QuadPart; g_slow_up_n++;
     }
     e->used = ++g_clock;
+    if (!nomemo && s_texc_last_uidx < 0) {
+        typeof(gm[0]) *m = &gm[slot];
+        m->off = t->offset; m->color = t->color; m->w = t->width; m->h = t->height; m->pitch = t->pitch;
+        m->ep = texc_epoch(t); m->wgen = s_wgen; m->hash = s_texc_last_hash; m->trev = xbox_tex_rev; m->uon = g_ultra_on;
+        m->e = e; m->srv = e->srv;
+    }
     return e->srv;
 }
 
@@ -686,11 +753,22 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
 typedef struct { uint64_t key[3]; void *obj; } GState;
 #define GSTATE_MAX 128
 static GState g_blend_c[GSTATE_MAX], g_ds_c[GSTATE_MAX], g_rs_c[GSTATE_MAX], g_smp_c[GSTATE_MAX];
+/* (1.9.3) per-frame Direct3D call counts, for the log's [PERFD3D] line */
+static unsigned g_slow_b0; static uint64_t g_slow_v0, g_slow_t0;
+static volatile unsigned g_cnt_vpc, g_cnt_cbps, g_cnt_srv, g_cnt_ps, g_cnt_vs, g_cnt_il, g_cnt_om, g_cnt_rt;
 static void *gstate_find(GState *c, const uint64_t k[3])
 {
     int i;
+    /* (1.9.3) the entry found last time first: consecutive draws mostly
+     * want the same blend, depth, raster and sampler states */
+    static GState *last[8]; static GState *tab[8]; int t;
+    for (t = 0; t < 8 && tab[t] && tab[t] != c; t++) {}
+    if (t < 8 && tab[t] == c && last[t] && last[t]->obj && !memcmp(last[t]->key, k, sizeof last[t]->key)) return last[t]->obj;
     for (i = 0; i < GSTATE_MAX && c[i].obj; i++)
-        if (!memcmp(c[i].key, k, sizeof c[i].key)) return c[i].obj;
+        if (!memcmp(c[i].key, k, sizeof c[i].key)) {
+            if (t < 8) { tab[t] = c; last[t] = &c[i]; }
+            return c[i].obj;
+        }
     return NULL;
 }
 static void gstate_put(GState *c, const uint64_t k[3], void *o)
@@ -762,9 +840,50 @@ static struct {
     ID3D11ShaderResourceView *srv[4]; ID3D11SamplerState *smp[4]; int tex_ok;
     float cbvs[4]; int cbvs_ok;
     unsigned char cbps[1152]; int cbps_ok;     /* the PS constants: 8 stages x 7 + 16 float4 */
-    int pipe;
+    int pipe;                                  /* 1: the draw pipeline below is valid */
+    ID3D11InputLayout *il; ID3D11Buffer *vb; UINT vbs;
+    ID3D11VertexShader *vs; ID3D11PixelShader *ps; ID3D11Buffer *ib;
 } g_sh;
 static void gpu_sh_reset(void) { memset(&g_sh, 0, sizeof g_sh); }
+
+/* (1.9.3) Bind a draw's pipeline, sending only what differs from the last
+ * draw: both draw paths share the index buffer, topology and constant
+ * buffers, and consecutive draws mostly share the layout, vertex buffer and
+ * shaders too. Re-sending all ten of these every draw was a large part of
+ * the driver time per draw. vb NULL: leave the vertex buffer as it is. */
+static ID3D11Buffer *g_cb_vpc;        /* (nv2a_d3d11_vp.inc) */
+static void gpu_bind_pipe2(ID3D11InputLayout *il, ID3D11Buffer *vb, UINT stride,
+                           ID3D11VertexShader *vs, ID3D11PixelShader *ps, ID3D11Buffer *ib);
+static void gpu_bind_pipe(ID3D11InputLayout *il, ID3D11Buffer *vb, UINT stride,
+                          ID3D11VertexShader *vs, ID3D11PixelShader *ps)
+{
+    gpu_bind_pipe2(il, vb, stride, vs, ps, g_ib);
+}
+static void gpu_bind_pipe2(ID3D11InputLayout *il, ID3D11Buffer *vb, UINT stride,
+                           ID3D11VertexShader *vs, ID3D11PixelShader *ps, ID3D11Buffer *ib)
+{
+    static int nocache = -1;
+    if (nocache < 0) nocache = getenv("RECOMP_GPU_NO_PIPECACHE") != NULL;
+    if (g_sh.pipe != 1 || nocache) {
+        ID3D11Buffer *cbs[3] = { g_cb_vs, NULL, g_cb_vpc };
+        ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        ID3D11DeviceContext_VSSetConstantBuffers(g_ctx, 0, 3, cbs);
+        ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 1, 1, &g_cb_ps);
+        g_sh.pipe = 1;
+        g_sh.il = (ID3D11InputLayout *)(intptr_t)-1; g_sh.vb = (ID3D11Buffer *)(intptr_t)-1; g_sh.vbs = 0;
+        g_sh.vs = (ID3D11VertexShader *)(intptr_t)-1; g_sh.ps = (ID3D11PixelShader *)(intptr_t)-1;
+        g_sh.ib = (ID3D11Buffer *)(intptr_t)-1;
+    }
+    if (ib != g_sh.ib) { ID3D11DeviceContext_IASetIndexBuffer(g_ctx, ib, DXGI_FORMAT_R32_UINT, 0); g_sh.ib = ib; }
+    if (il != g_sh.il) { ID3D11DeviceContext_IASetInputLayout(g_ctx, il); g_sh.il = il; g_cnt_il++; }
+    if (vb && (vb != g_sh.vb || stride != g_sh.vbs)) {
+        UINT off = 0;
+        ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &vb, &stride, &off);
+        g_sh.vb = vb; g_sh.vbs = stride;
+    }
+    if (vs != g_sh.vs) { ID3D11DeviceContext_VSSetShader(g_ctx, vs, NULL, 0); g_sh.vs = vs; g_cnt_vs++; }
+    if (ps != g_sh.ps) { ID3D11DeviceContext_PSSetShader(g_ctx, ps, NULL, 0); g_sh.ps = ps; g_cnt_ps++; }
+}
 
 static void gpu_set_blend(int write_mask_only_clear)
 {
@@ -801,7 +920,7 @@ static void gpu_set_blend(int write_mask_only_clear)
         bf[2] = (c & 0xFF) / 255.0f; bf[3] = (c >> 24) / 255.0f;
         if (alpha_const) bf[0] = bf[1] = bf[2] = bf[3];
         if (g_sh.bs_ok && g_sh.bs == bs && !memcmp(g_sh.bf, bf, sizeof bf)) return;
-        g_sh.bs = bs; memcpy(g_sh.bf, bf, sizeof bf); g_sh.bs_ok = 1;
+        g_sh.bs = bs; memcpy(g_sh.bf, bf, sizeof bf); g_sh.bs_ok = 1; g_cnt_om++;
         ID3D11DeviceContext_OMSetBlendState(g_ctx, bs, bf, 0xFFFFFFFFu);
     }
 }
@@ -835,7 +954,7 @@ static void gpu_set_depth(int have_dsv)
         gstate_put(g_ds_c, k, ds);
     }
     if (g_sh.ds_ok && g_sh.ds == ds && g_sh.sref == (s_3d.st_ref & 0xFF)) return;
-    g_sh.ds = ds; g_sh.sref = s_3d.st_ref & 0xFF; g_sh.ds_ok = 1;
+    g_sh.ds = ds; g_sh.sref = s_3d.st_ref & 0xFF; g_sh.ds_ok = 1; g_cnt_om++;
     ID3D11DeviceContext_OMSetDepthStencilState(g_ctx, ds, s_3d.st_ref & 0xFF);
 }
 
@@ -1344,7 +1463,13 @@ static int shadow_hook(void)
             UINT dd = k >= 4.0f ? (UINT)(k / 2.0f) : 1;
             int rr = (int)(r * k / (float)dd + 0.99f);
             if (rr > 24) rr = 24;
-            shadow_repair(rr, dd);
+            {
+                LARGE_INTEGER q0, q1;
+                QueryPerformanceCounter(&q0);
+                shadow_repair(rr, dd);
+                QueryPerformanceCounter(&q1);
+                g_slow_sh_t += q1.QuadPart - q0.QuadPart; g_slow_sh_n++;
+            }
             {   /* testing: TT_SHLOG -- the repairs made, once a second */
                 static int lg = -1; static unsigned nrep; static DWORD t0;
                 if (lg < 0) lg = getenv("TT_SHLOG") != NULL;
@@ -1474,7 +1599,7 @@ typedef struct {
     int sdot[4], sinp[4];
 } PsKey;
 static PsKey g_pskey;
-static ID3D11PixelShader *g_ps_bound;
+/* (g_ps_bound: now g_sh.ps) */
 
 static void gpu_bind_stages(void)
 {
@@ -1600,12 +1725,12 @@ static void gpu_bind_stages(void)
     memcpy(cb, st, sizeof st);
     memcpy(cb + sizeof st, &tail, sizeof tail);
     if (!g_sh.cbps_ok || memcmp(g_sh.cbps, cb, sizeof cb)) {
-        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_ps, 0, NULL, cb, 0, 0);
+        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_ps, 0, NULL, cb, 0, 0); g_cnt_cbps++;
         memcpy(g_sh.cbps, cb, sizeof cb); g_sh.cbps_ok = 1;
     }
     if (!g_sh.tex_ok || memcmp(g_sh.srv, srv, sizeof srv) || memcmp(g_sh.smp, smp, sizeof smp)) {
         ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 4, srv);
-        ID3D11DeviceContext_PSSetSamplers(g_ctx, 0, 4, smp);
+        ID3D11DeviceContext_PSSetSamplers(g_ctx, 0, 4, smp); g_cnt_srv++;
         memcpy(g_sh.srv, srv, sizeof srv); memcpy(g_sh.smp, smp, sizeof smp); g_sh.tex_ok = 1;
     }
 }
@@ -1783,50 +1908,82 @@ static void gpu_drop_bad_tris(uint32_t nverts)
 #include "nv2a_d3d11_ps.inc"
 
 /* Draw the assembled batch with the program's GPU vertex shader. */
+/* (1.9.3) The vertex-program path's vertices and indices share one ring
+ * buffer (bound as both): one Map a draw instead of two, the vertices
+ * packed straight into it rather than into a copy first. */
+static ID3D11Buffer *g_vix; static UINT g_vix_cap, g_vix_pos;
 static void gpu_batch_hw(HwVp *hv, uint32_t nverts)
 {
-    UINT stride = 16 * hv->nin, off = 0, vb_at = 0, ib_at;
-    uint32_t k;
-    if (hv->nin) {
-        size_t need = (size_t)nverts * 4 * hv->nin;
-        if (need > g_xin_cap) {
-            float *n = (float *)realloc(g_xin, need * sizeof(float) * 2);
-            if (!n) return;
-            g_xin = n; g_xin_cap = (uint32_t)(need * 2);
+    UINT stride = 16 * hv->nin, vb_at = 0, ib_at, vbytes = nverts * stride, ibytes = g_nidx * 4, need;
+    D3D11_MAPPED_SUBRESOURCE ms;
+    D3D11_MAP mode = D3D11_MAP_WRITE_NO_OVERWRITE;
+    uint32_t k, base = 0;
+    static int split = -1;
+    if (split < 0) split = getenv("RECOMP_GPU_SPLIT_VI") != NULL;
+    if (split) {   /* the old way: two rings */
+        UINT off = 0;
+        if (hv->nin) {
+            size_t nf = (size_t)nverts * 4 * hv->nin;
+            if (nf > g_xin_cap) {
+                float *n = (float *)realloc(g_xin, nf * sizeof(float) * 2);
+                if (!n) return;
+                g_xin = n; g_xin_cap = (uint32_t)(nf * 2);
+            }
+            hwvp_pack_range(hv, 0, nverts);
+            vb_at = gpu_upload(&g_vbx, &g_vbx_cap, &g_vbx_pos, D3D11_BIND_VERTEX_BUFFER, g_xin, (UINT)(nf * sizeof(float)), stride);
+            if (vb_at == 0xFFFFFFFFu) return;
+            vb_at /= stride;
+            for (k = 0; k < g_nidx; k++) g_idx[k] += vb_at;
         }
-        hwvp_pack_range(hv, 0, nverts);
-        vb_at = gpu_upload(&g_vbx, &g_vbx_cap, &g_vbx_pos, D3D11_BIND_VERTEX_BUFFER, g_xin, (UINT)(need * sizeof(float)), stride);
-        if (vb_at == 0xFFFFFFFFu) return;
-        /* Base the indices on the ring offset: a stride that does not
-         * divide the ring position cannot use BaseVertexLocation reliably
-         * across drivers, so the indices carry it. */
-        vb_at /= stride;
-        for (k = 0; k < g_nidx; k++) g_idx[k] += vb_at;
+        ib_at = gpu_upload(&g_ib, &g_ib_cap, &g_ib_pos, D3D11_BIND_INDEX_BUFFER, g_idx, g_nidx * 4, 4);
+        if (!g_ib || ib_at == 0xFFFFFFFFu) return;
+        (void)off;
+        goto drawn_uploaded;
     }
-    ib_at = gpu_upload(&g_ib, &g_ib_cap, &g_ib_pos, D3D11_BIND_INDEX_BUFFER, g_idx, g_nidx * 4, 4);
-    if (!g_ib || ib_at == 0xFFFFFFFFu) return;
+    need = vbytes + ibytes + 64;
+    if (!g_vix || g_vix_cap < need) {
+        D3D11_BUFFER_DESC d;
+        if (g_vix) ID3D11Buffer_Release(g_vix);
+        g_vix_cap = need < (16u << 20) ? (16u << 20) : need * 2;
+        memset(&d, 0, sizeof d);
+        d.ByteWidth = g_vix_cap; d.Usage = D3D11_USAGE_DYNAMIC;
+        d.BindFlags = D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_INDEX_BUFFER;
+        d.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        g_vix = NULL;
+        if (FAILED(ID3D11Device_CreateBuffer(g_dev, &d, NULL, &g_vix))) { g_vix_cap = 0; return; }
+        g_sh.pipe = 0;
+        g_vix_pos = g_vix_cap;
+    }
+    vb_at = stride ? (g_vix_pos + stride - 1) / stride * stride : (g_vix_pos + 3) & ~3u;
+    if (vb_at + vbytes + ibytes > g_vix_cap) { vb_at = 0; mode = D3D11_MAP_WRITE_DISCARD; }
+    ib_at = vb_at + vbytes;            /* (a multiple of 16: 4-aligned) */
+    if (FAILED(ID3D11DeviceContext_Map(g_ctx, (ID3D11Resource *)g_vix, 0, mode, 0, &ms))) return;
+    if (hv->nin) {
+        float *dst = (float *)((char *)ms.pData + vb_at);
+        uint32_t i;
+        for (k = 0; k < nverts; k++, dst += 4 * hv->nin)
+            for (i = 0; i < hv->nin; i++) fetch_attr_any(hv->inreg[i], g_vidx[k], dst + 4 * i);
+        base = vb_at / stride;         /* (the indices carry the ring offset: see below) */
+    }
+    {
+        uint32_t *di = (uint32_t *)((char *)ms.pData + ib_at);
+        for (k = 0; k < g_nidx; k++) di[k] = g_idx[k] + base;
+    }
+    ID3D11DeviceContext_Unmap(g_ctx, (ID3D11Resource *)g_vix, 0);
+    g_vix_pos = ib_at + ibytes;
+drawn_uploaded:
     if (!g_vpc_ok || memcmp(g_vpc_shadow, s_3d.c, sizeof g_vpc_shadow)) {
         memcpy(g_vpc_shadow, s_3d.c, sizeof g_vpc_shadow);
-        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_vpc, 0, NULL, g_vpc_shadow, 0, 0);
+        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_vpc, 0, NULL, g_vpc_shadow, 0, 0); g_cnt_vpc++;
         g_vpc_ok = 1;
     }
     if (shadow_hook()) return;
     gpu_bind_stages();
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);
-    ID3D11DeviceContext_IASetInputLayout(g_ctx, hv->il);
-    if (hv->nin) ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &g_vbx, &stride, &off);
-    ID3D11DeviceContext_IASetIndexBuffer(g_ctx, g_ib, DXGI_FORMAT_R32_UINT, 0);
-    ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    ID3D11DeviceContext_VSSetShader(g_ctx, hv->vs, NULL, 0);
-    {
-        ID3D11Buffer *cbs[3] = { g_cb_vs, NULL, g_cb_vpc };
-        ID3D11DeviceContext_VSSetConstantBuffers(g_ctx, 0, 3, cbs);
-    }
     g_ps_cur = hwps_lookup(&g_pskey);
-    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_cur, NULL, 0);
-    ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 1, 1, &g_cb_ps);
-    g_sh.pipe = 0;                         /* the CPU path rebinds its own */
+    if (split) gpu_bind_pipe(hv->il, hv->nin ? g_vbx : NULL, stride, hv->vs, g_ps_cur);
+    else gpu_bind_pipe2(hv->il, hv->nin ? g_vix : NULL, stride, hv->vs, g_ps_cur, g_vix);
     ID3D11DeviceContext_DrawIndexed(g_ctx, g_nidx, ib_at / 4, 0);
     s_gpu.tris_drawn += g_nidx / 3;
     s_gpu.drawn_offset = s_gpu.color_offset;
@@ -2011,23 +2168,8 @@ cpu_verts_ready:
     gpu_bind_stages();
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);
-    if (!g_sh.pipe) {
-        off = 0;
-        ID3D11DeviceContext_IASetInputLayout(g_ctx, g_il);
-        ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &g_vb, &stride, &off);
-        ID3D11DeviceContext_IASetIndexBuffer(g_ctx, g_ib, DXGI_FORMAT_R32_UINT, 0);
-        ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        ID3D11DeviceContext_VSSetShader(g_ctx, g_vs, NULL, 0);
-        ID3D11DeviceContext_VSSetConstantBuffers(g_ctx, 0, 1, &g_cb_vs);
-        g_ps_cur = hwps_lookup(&g_pskey);
-        ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_cur, NULL, 0);
-        ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 1, 1, &g_cb_ps);
-        g_ps_bound = g_ps_cur;
-        g_sh.pipe = 1;
-    } else {
-        g_ps_cur = hwps_lookup(&g_pskey);
-        if (g_ps_cur != g_ps_bound) { ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_cur, NULL, 0); g_ps_bound = g_ps_cur; }
-    }
+    g_ps_cur = hwps_lookup(&g_pskey);
+    gpu_bind_pipe(g_il, g_vb, stride, g_vs, g_ps_cur);
     {
         static int lo = -2, hi, mode;
         if (lo == -2) { const char *e = getenv("RECOMP_GPU_MARK"); lo = -1; if (e) sscanf(e, "%d,%d,%d", &lo, &hi, &mode); }
@@ -2181,6 +2323,7 @@ static int gpu_blit(uint32_t sb, uint32_t db, uint32_t ix, uint32_t iy, uint32_t
 /* Copy a GPU surface back into guest memory (frame dumps, replay, captures). */
 static void gpu_readback(uint32_t base, uint32_t pitch)
 {
+    g_slow_rb_n++;
     GSurf *s = gsurf_find(base, 0);
     D3D11_TEXTURE2D_DESC td;
     ID3D11Texture2D *st = NULL;
@@ -2484,14 +2627,36 @@ static void gpu_present(uint32_t base, uint32_t pitch)
              * full-screen window gets the display to itself (independent
              * flip) the way exclusive full screen would. */
             d.SwapEffect = (DXGI_SWAP_EFFECT)4 /* DXGI_SWAP_EFFECT_FLIP_DISCARD */;
+            /* (1.9.3) Tearing allowed (Windows 10 with a WDDM 2 driver):
+             * with vsync off, a flip-model window otherwise still waits for
+             * the display's next refresh -- the frame rate stopped at the
+             * refresh rate (165 on a 165 Hz screen) at any resolution, and
+             * the graphics card sat partly idle. RECOMP_NO_TEARING: as before. */
+            g_tear = 0;
+            {
+                IDXGIFactory5 *f5 = NULL;
+                BOOL ok = FALSE;
+                if (!getenv("RECOMP_NO_TEARING")
+                    && SUCCEEDED(IDXGIFactory_QueryInterface(fa, &IID_IDXGIFactory5, (void **)&f5)) && f5) {
+                    if (FAILED(IDXGIFactory5_CheckFeatureSupport(f5, DXGI_FEATURE_PRESENT_ALLOW_TEARING, &ok, sizeof ok))) ok = FALSE;
+                    IDXGIFactory5_Release(f5);
+                }
+                g_tear = ok ? 1 : 0;
+            }
+            d.Flags = g_tear ? DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0;
             hr = getenv("RECOMP_BLT_MODEL") ? E_FAIL : IDXGIFactory_CreateSwapChain(fa, (IUnknown *)g_dev, &d, &g_sc);
+            if (FAILED(hr) && g_tear) {
+                g_tear = 0; d.Flags = 0;
+                hr = IDXGIFactory_CreateSwapChain(fa, (IUnknown *)g_dev, &d, &g_sc);
+            }
             if (FAILED(hr)) {
+                g_tear = 0; d.Flags = 0;
                 d.SwapEffect = DXGI_SWAP_EFFECT_DISCARD; d.BufferCount = 1;
                 hr = IDXGIFactory_CreateSwapChain(fa, (IUnknown *)g_dev, &d, &g_sc);
             }
             if (FAILED(hr)) { fprintf(stderr, "  [D3D11] CreateSwapChain failed: 0x%08lX\n", (unsigned long)hr); fflush(stderr); }
-            else fprintf(stderr, "  [D3D11] presenting to the game window (%s model)\n",
-                         d.SwapEffect == DXGI_SWAP_EFFECT_DISCARD ? "blt" : "flip");
+            else fprintf(stderr, "  [D3D11] presenting to the game window (%s)\n",
+                         d.SwapEffect == DXGI_SWAP_EFFECT_DISCARD ? "blt model" : g_tear ? "flip model; with vsync off, frames go out at once" : "flip model");
             /* The window thread handles Alt+Enter itself (borderless full
              * screen), so DXGI must not switch modes behind its back. */
             IDXGIFactory_MakeWindowAssociation(fa, hwnd, DXGI_MWA_NO_ALT_ENTER | DXGI_MWA_NO_WINDOW_CHANGES);
@@ -2509,7 +2674,7 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         if (g_sc_rtv) { ID3D11RenderTargetView_Release(g_sc_rtv); g_sc_rtv = NULL; }
         ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 0, NULL, NULL);
         g_sc_w = rc.right - rc.left; g_sc_h = rc.bottom - rc.top;
-        if (FAILED(IDXGISwapChain_ResizeBuffers(g_sc, 0, g_sc_w, g_sc_h, DXGI_FORMAT_UNKNOWN, 0))) {
+        if (FAILED(IDXGISwapChain_ResizeBuffers(g_sc, 0, g_sc_w, g_sc_h, DXGI_FORMAT_UNKNOWN, g_tear ? DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0))) {
             fprintf(stderr, "  [D3D11] ResizeBuffers %ux%u failed\n", g_sc_w, g_sc_h); fflush(stderr);
         }
         IDXGISwapChain_GetBuffer(g_sc, 0, &IID_ID3D11Texture2D, (void **)&bb);
@@ -2530,6 +2695,38 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         extern volatile int xbox_frontend_hint;
         float mz = menu_fill_zoom((!g_frame_3d || xbox_frontend_hint == 1) && !xbox_MoviePlaying());
         g_wide_prev = wide; g_frame_3d = 0; g_present_n++;
+        {   /* (1.9.3) [SLOWFRAME]: a frame the render thread took over 25 ms
+             * over, with where that time went (at most one line a second) */
+            static LARGE_INTEGER sq, sf; static DWORD said; LARGE_INTEGER sn;
+            extern volatile long long g_perf_rt_ticks;
+            static long long rt0;
+            if (!sf.QuadPart) QueryPerformanceFrequency(&sf);
+            QueryPerformanceCounter(&sn);
+            if (sq.QuadPart) {
+                double ms = (double)(sn.QuadPart - sq.QuadPart) * 1000.0 / sf.QuadPart, k = 1000.0 / sf.QuadPart;
+                double busy = (double)(g_perf_rt_ticks - rt0) * k;
+                if (ms > 25.0 && busy > 20.0 && GetTickCount() - said > 1000) {
+                    said = GetTickCount();
+                    fprintf(stderr, "  [SLOWFRAME] %.1f ms (render thread busy %.1f): %u textures decoded %.1f ms (biggest %ux%u fmt %02X at %08X, %s), "
+                                    "%u uploads %.1f ms, %u new textures, %u surface syncs %.1f ms, %u shadow repairs %.1f ms, %u readbacks, %u draws, %u vertices, %u triangles\n",
+                            ms, busy, g_slow_dec_n, g_slow_dec_t * k, g_slow_big_w, g_slow_big_h, g_slow_big_fmt & 0xFF, g_slow_big_off,
+                            g_slow_big_why == 0 ? "new" : g_slow_big_why == 1 ? "changed" : g_slow_big_why == 2 ? "GPU wrote near it" : "settings",
+                            g_slow_up_n, g_slow_up_t * k, g_slow_new_n, g_slow_sync_n, g_slow_sync_t * k, g_slow_sh_n, g_slow_sh_t * k, g_slow_rb_n,
+                            s_3d.batches - g_slow_b0, (unsigned)(s_3d.verts - g_slow_v0), (unsigned)(s_gpu.tris_drawn - g_slow_t0));
+                    fflush(stderr);
+                }
+            }
+            sq = sn; rt0 = g_perf_rt_ticks; g_slow_b0 = s_3d.batches; g_slow_v0 = s_3d.verts; g_slow_t0 = s_gpu.tris_drawn;
+            g_slow_dec_t = g_slow_up_t = g_slow_sync_t = g_slow_sh_t = 0;
+            g_slow_dec_n = g_slow_up_n = g_slow_sync_n = g_slow_sh_n = g_slow_rb_n = g_slow_new_n = 0;
+            g_slow_big_px = 0; g_slow_big_w = g_slow_big_h = g_slow_big_fmt = g_slow_big_off = 0;
+        }
+        {   /* the swizzled textures' check tick (nv2a_sw3d.inc): at most every 8 ms */
+            static LARGE_INTEGER tq, tf; LARGE_INTEGER tn;
+            if (!tf.QuadPart) QueryPerformanceFrequency(&tf);
+            QueryPerformanceCounter(&tn);
+            if (tn.QuadPart - tq.QuadPart >= tf.QuadPart / 125) { s_texc_frame++; tq = tn; }
+        }
         if (g_stretch_on < 0) g_stretch_on = getenv("RECOMP_PRESENT_STRETCH") != NULL;
         ID3D11DeviceContext_ClearRenderTargetView(g_ctx, g_sc_rtv, black);
         if (g_stretch_on) { pw = ww; ph = wh; }
@@ -2621,17 +2818,27 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         }
         if (g_vsync_on < 0) { const char *v = getenv("RECOMP_VSYNC"); g_vsync_on = v && v[0] == '1'; }
         {
-            /* (1.8) On Vulkan (DXVK) the picture goes out on the display's
+            /* (1.8) On Vulkan (DXVK) the picture went out on the display's
              * refresh even with vsync off: presenting at once (immediate mode)
              * left the window black on some laptops (a GeForce drawing for a
-             * display on the other graphics chip). RECOMP_VULKAN_IMMEDIATE=1:
-             * at once, as Direct3D 11. */
+             * display on the other graphics chip). (1.9.3) Now at once, but
+             * through DXVK's mailbox mode (DXVK_CONFIG, d3d11_dyn.h), which
+             * does not tear: the frame rate is no longer held to the
+             * display's. RECOMP_VULKAN_SYNC=1: on the refresh, as before. */
             static int vk_sync = -1;
             if (vk_sync < 0) {
-                vk_sync = s_d3d11_vulkan && !getenv("RECOMP_VULKAN_IMMEDIATE");
+                vk_sync = s_d3d11_vulkan && getenv("RECOMP_VULKAN_SYNC") != NULL;
                 if (vk_sync && !g_vsync_on) { fprintf(stderr, "  [D3D11] Vulkan: presenting on the display's refresh\n"); fflush(stderr); }
             }
-            hr = IDXGISwapChain_Present(g_sc, (g_vsync_on || vk_sync) ? 1 : 0, 0);
+            {
+                UINT iv = (g_vsync_on || vk_sync) ? 1 : 0;
+                LARGE_INTEGER pa, pb;
+                QueryPerformanceCounter(&pa);
+                frame_limit();
+                hr = IDXGISwapChain_Present(g_sc, iv, (!iv && g_tear) ? DXGI_PRESENT_ALLOW_TEARING : 0);
+                QueryPerformanceCounter(&pb);
+                g_perf_present_ticks += pb.QuadPart - pa.QuadPart;
+            }
         }
         static int said;
         if (FAILED(hr)) {

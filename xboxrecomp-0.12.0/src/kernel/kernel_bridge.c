@@ -2310,9 +2310,19 @@ static void kernel_run_pb_callbacks(void)
     if (!cb_fq.QuadPart) QueryPerformanceFrequency(&cb_fq);
     QueryPerformanceCounter(&cb_now);
     extern HANDLE g_pb_cb_wake;
-    if (g_pb_cb_wake && cb_last.QuadPart && (cb_now.QuadPart - cb_last.QuadPart) * 500 < cb_fq.QuadPart)
+    static int spaced = -1;   /* the old opt-in wake mode kept 2 ms between runs */
+    if (spaced < 0) spaced = getenv("RECOMP_CB_WAKE") != NULL;
+    if (spaced && g_pb_cb_wake && cb_last.QuadPart && (cb_now.QuadPart - cb_last.QuadPart) * 500 < cb_fq.QuadPart)
         return;
-    while (ran < 1 && xbox_PbTakeCallback(&fn_va, &ctx)) {
+    /* (1.9.3) Every callback queued, at each tick: one a tick (2 ms) made
+     * each frame wait two ticks for its pair of frame-timing callbacks
+     * before the next could start -- 4 ms of every frame spent waiting, and
+     * the frame rate held to about 250. The flush value they could wipe
+     * is held by the title's hook (and its watchdog) instead.
+     * RECOMP_CB_ONE=1: one a tick, as before. */
+    static int one = -1;
+    if (one < 0) one = getenv("RECOMP_CB_ONE") != NULL;
+    while (ran < (one ? 1 : 32) && xbox_PbTakeCallback(&fn_va, &ctx)) {
         ran++;
         cb_last = cb_now;
         if (fn_va == 0xFFFFFFFFu) {
@@ -2677,11 +2687,20 @@ static DWORD WINAPI kernel_timer_thread(LPVOID unused)
                  * next one later), waited for precisely. RECOMP_TIMER_SLEEP=1
                  * uses the plain sleep. */
                 extern void xbox_precise_wait_until(LONGLONG deadline);
-                static LARGE_INTEGER tfq; static LONGLONG next; static int plain = -1;
+                extern int xbox_precise_wait_until_or(LONGLONG deadline, volatile LONG *poke, HANDLE wake);
+                extern volatile LONG g_pb_cb_poke;
+                static LARGE_INTEGER tfq; static LONGLONG next; static int plain = -1, poked;
                 LARGE_INTEGER tn;
                 if (plain < 0) {
                     plain = getenv("RECOMP_TIMER_SLEEP") != NULL;
                     QueryPerformanceFrequency(&tfq);
+                    /* (1.9.3) A guest thread that waits on the GPU while a D3D
+                     * callback is queued wakes this thread at once instead of
+                     * at the next 2 ms tick: at 200+ fps the game waits on
+                     * those callbacks every frame, and the tick added about
+                     * 1 ms to each. The tick grid stays as it was.
+                     * RECOMP_CB_GRID=1: callbacks on the tick only. */
+                    if (!getenv("RECOMP_CB_GRID")) g_pb_cb_wake = CreateEventW(NULL, FALSE, FALSE, NULL);
                     if (!plain) {
                         /* Off CPU 0 (the title's core): this thread may spin
                          * to its deadline, and must not do it there. The
@@ -2695,10 +2714,13 @@ static DWORD WINAPI kernel_timer_thread(LPVOID unused)
                 if (plain) xbox_hr_sleep_100ns(20000, FALSE);
                 else {
                     QueryPerformanceCounter(&tn);
-                    next += tfq.QuadPart / 500;
+                    if (!poked) next += tfq.QuadPart / 500;   /* an early wake keeps the tick's deadline */
                     if (next < tn.QuadPart - tfq.QuadPart / 50 || next > tn.QuadPart + tfq.QuadPart / 100)
                         next = tn.QuadPart + tfq.QuadPart / 500;   /* resync after a stall */
-                    xbox_precise_wait_until(next);
+                    if (g_pb_cb_wake) {
+                        poked = xbox_precise_wait_until_or(next, &g_pb_cb_poke, g_pb_cb_wake);
+                        if (poked) { InterlockedExchange(&g_pb_cb_poke, 0); ResetEvent(g_pb_cb_wake); }
+                    } else xbox_precise_wait_until(next);
                 }
             }
         }

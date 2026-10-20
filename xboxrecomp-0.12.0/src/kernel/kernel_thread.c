@@ -243,6 +243,39 @@ void xbox_precise_wait_until(LONGLONG deadline)
     }
 }
 
+/* (1.9.3) The timer thread's tick wait, ended early when a guest thread
+ * waiting on the GPU finds a D3D callback queued (xbox_PbWakeIfPending sets
+ * *poke and signals wake). Returns 1 when woken that way. */
+void xbox_hr_wait_or_wake(LONGLONG t, HANDLE wake);
+int xbox_precise_wait_until_or(LONGLONG deadline, volatile LONG *poke, HANDLE wake)
+{
+    static LARGE_INTEGER fq;
+    static LONGLONG over = 0;
+    LARGE_INTEGER now;
+    if (!fq.QuadPart) { QueryPerformanceFrequency(&fq); over = fq.QuadPart / 1000; }
+    if (*poke) return 1;
+    QueryPerformanceCounter(&now);
+    {
+        LONGLONG rem = deadline - now.QuadPart, margin = over + fq.QuadPart / 4000;
+        if (rem > margin) {
+            LONGLONG want = rem - margin, t0 = now.QuadPart, took;
+            xbox_hr_wait_or_wake(want * 10000000 / fq.QuadPart, wake);
+            QueryPerformanceCounter(&now);
+            if (*poke) return 1;
+            took = now.QuadPart - t0;
+            over = (over * 7 + (took > want ? took - want : 0)) / 8;
+            if (over > fq.QuadPart / 50) over = fq.QuadPart / 50;
+        }
+    }
+    while (now.QuadPart < deadline) {
+        LONGLONG rem = deadline - now.QuadPart;
+        if (*poke) return 1;
+        if (rem > fq.QuadPart / 5000) SwitchToThread(); else YieldProcessor();
+        QueryPerformanceCounter(&now);
+    }
+    return 0;
+}
+
 /* The timer thread's wait: the usual ~2 ms tick, cut short when the GPU
  * executor queues a D3D callback so the game's "GPU reached the fence" wait
  * ends as soon as the GPU really gets there instead of up to a tick later. */

@@ -38,6 +38,13 @@ static HMODULE d3d11_dyn_module(void)
             if (n && n < MAX_PATH && (s = wcsrchr(dir, L'\\')) != NULL) {
                 HMODULE g;
                 *s = 0;
+                /* (1.9.3) With vsync off, frames go out unlocked on Vulkan
+                 * too, through DXVK's mailbox mode (no tearing, never waits
+                 * for the display); immediate mode had left the window black
+                 * on some laptops, which is why it used to wait for the
+                 * refresh. A dxvk.conf or DXVK_CONFIG of the player's own wins. */
+                if (!getenv("DXVK_CONFIG") && !getenv("RECOMP_VULKAN_SYNC"))
+                    SetEnvironmentVariableA("DXVK_CONFIG", "dxvk.tearFree = True");
                 /* dxgi first: DXVK's d3d11.dll then finds it already loaded */
                 _snwprintf(p, MAX_PATH + 32, L"%ls\\dxvk\\dxgi.dll", dir); p[MAX_PATH + 31] = 0;
                 g = LoadLibraryExW(p, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);

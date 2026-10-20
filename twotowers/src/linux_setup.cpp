@@ -410,7 +410,7 @@ static int menu()
         std::cout << "  1) Install from an ISO (The Two Towers, USA)\n"
                      "  2) Use an extracted disc folder\n"
                      "  3) Full screen at start: " << iniGet("Display", "fullscreen", "0") << "\n"
-                     "  4) Frame rate: " << iniGet("Display", "fps", "30") << "  (30 / 60 / unlocked; 60 and unlocked are experimental)\n"
+                     "  4) Frame rate: " << iniGet("Display", "fps", "30") << "  (30 / 60 / 75 / 90 / 100 / 120 / 144 / 165 / 200 / 240 / 300 / unlocked; above 30 is experimental)\n"
                      "  5) ECTS 2002 HUD mod: " << iniGet("Mods", "e3_hud", "0") << "\n"
                      "  6) Button prompts: " << iniGet("Input", "prompts", "auto") << "  (auto / xbox / xboxone / playstation / keyboard)\n"
                      "  7) Extra heroes mod: Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron\n     (0 off / 1 on, unlock with Isildur / 2 on, unlocked for testing): " << iniGet("Mods", "extra_heroes", "0") << "\n"
@@ -424,7 +424,12 @@ static int menu()
         else if (c == "3") iniSet("Display", "fullscreen", iniGet("Display", "fullscreen", "0") == "1" ? "0" : "1");
         else if (c == "4") {
             std::string f = iniGet("Display", "fps", "30");
-            iniSet("Display", "fps", f == "30" ? "60" : f == "60" ? "unlocked" : "30");
+            {
+                static const char *seq[] = { "30", "60", "75", "90", "100", "120", "144", "165", "200", "240", "300", "unlocked" };
+                size_t k = 0;
+                while (k < 12 && f != seq[k]) k++;
+                iniSet("Display", "fps", seq[k >= 11 ? 0 : k + 1]);
+            }
         }
         else if (c == "5") iniSet("Mods", "e3_hud", iniGet("Mods", "e3_hud", "0") == "1" ? "0" : "1");
         else if (c == "6") {

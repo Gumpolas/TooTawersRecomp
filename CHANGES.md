@@ -2340,25 +2340,50 @@ twotowers/src/e3hud.c, xboxrecomp-0.12.0/src/video/gfx_menu.c
   - The ECTS HUD finds its two settings by their ini key (xbox_GfxFind),
     not their number: a setting added before them moved the numbers, and
     the orange health pickups stayed green.
-twotowers/src/main.c, xboxrecomp-0.12.0/src/video/fb_present.c
-  - macOS: the game window is made and its events pumped on the process's
-    main thread (AppKit allows NSWindow nowhere else; the window thread
-    could not open one and the game drew on the CPU). The game keeps its
-    64 MB thread; the main thread waits until the window is asked for
-    (xbox_FramebufferMainThreadRun) and runs the window loop there. With
-    no window the game thread ends the process as before.
-  - A crash names the native function it stopped in (dladdr): a
-    recompiled one is named after its guest address.
-xboxrecomp-0.12.0/src/kernel/nv2a_gl.inc
-  - macOS: the pushbuffer runs on whichever thread kicks it (the title's
-    kickoff or the poller), one at a time under the GPU lock; the OpenGL
-    context was current only on the thread that set the renderer up, and
-    the other one crashed in glBindFramebuffer. The context is made current
-    on the running thread when it is not (CGL allows that while the lock
-    keeps the threads from using it at once).
-xboxrecomp-0.12.0/src/platform/win32_compat.c
-  - A SIGTRAP with the trap flag set is a single step whatever si_code
-    says: Rosetta 2 reports the MMIO handlers' step as a breakpoint, and
-    the first AC97 register access ended the game.
-  (These three from a report and patch by a player on an M2 Pro, macOS
-  27.2, through Rosetta 2.)
+
+
+-- 1.9.4 ----------------------------------------------------------------
+
+xboxrecomp-0.12.0/src/kernel/nv2a_pb_scan.c, nv2a_pb_exec.c, xbox_memory_layout.c
+  - GPU commands are recorded as the title kicks them (following JUMP /
+    CALL / RETURN at once) into a ring, and executed by a render thread of
+    their own (Windows, Direct3D 11; RECOMP_GPU_SYNC=1: as before). The
+    title's fences complete when the render thread reaches them;
+    xbox_Nv2aDrained (GET == PUT and the ring empty) is the "GPU idle".
+  - Runs of INLINE_ARRAY words go into the ring as one record and to the
+    executor in one piece; the method inventory only when surveying; the
+    ring's free space tracked by the producer; events signalled only to a
+    waiting thread; unhandled methods counted through a hash.
+  - frame_limit: the frame-rate limit where frames go out, so the menus
+    (which draw without the game's frame wait) keep it too.
+xboxrecomp-0.12.0/src/kernel/kernel_bridge.c, kernel_thread.c
+  - Every queued D3D callback runs at each timer tick; a guest thread that
+    waits on the GPU with one queued wakes the timer thread at once
+    (RECOMP_CB_GRID=1: on the 2 ms tick only).
+xboxrecomp-0.12.0/src/kernel/nv2a_d3d11.inc, nv2a_sw3d.inc
+  - Pipeline state (layout, buffers, shaders, constant buffers, state
+    objects) sent only when it changes; the vertex-program path's vertices
+    and indices share one ring buffer, one Map a draw.
+  - Texture binds remembered while nothing could change them; swizzled
+    textures (told by format, not pitch) checked at most every 8 ms, linear
+    ones every kick; the texture caches hold 2048 (were 256 / 512 -- a busy
+    scene with an extra hero's bolt used over 300 textures a frame and
+    decoded them all again every frame: 20 fps), found through indexes.
+  - Present allows tearing with vsync off; on Vulkan (DXVK) frames go out
+    at once through DXVK's mailbox mode (DXVK_CONFIG dxvk.tearFree = True;
+    RECOMP_VULKAN_SYNC=1: on the refresh, as before).
+  - Log lines: [PERF] (where a frame's CPU time goes), [PERFD3D] (Direct3D
+    calls a frame), [SLOWFRAME] (a frame the render thread spent over
+    25 ms on, broken down).
+twotowers/src/twotowers_manual.c
+  - The game's frame time is handed out in whole milliseconds with the
+    remainder carried (sub_000E3350): the world update truncates it to
+    whole ms, and at 400 fps lost a fifth of every frame -- everything ran
+    slow and felt delayed above the monitor's rate. [FRAMETIME] log line.
+  - Frame rate 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 or
+    unlocked (at most 1000); the limits pace the game's frame wait, and
+    the frame-wait / flush watchdogs give a lost GPU signal (the "Load
+    game" black screen).
+xboxrecomp-0.12.0/src/video/gfx_menu.c, twotowers/src/setup_launcher.cpp
+  - The frame-rate list; exclusive full-screen resolutions smallest first
+    (the right arrow goes higher, as Window size).

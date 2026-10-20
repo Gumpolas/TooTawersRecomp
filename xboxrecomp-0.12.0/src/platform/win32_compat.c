@@ -2146,12 +2146,7 @@ static void veh_signal(int sig, siginfo_t *si, void *ucv)
         er.ExceptionInformation[1] = (ULONG_PTR)si->si_addr;
         break;
     case SIGTRAP:
-        /* A step armed through the trap flag (the MMIO handlers' single
-         * step) is a single step whatever si_code says: Rosetta 2 reports it
-         * as TRAP_BRKPT, and as a breakpoint nobody took it (AC97 register
-         * access ended the game). */
-        if (ctx.EFlags & 0x100u) er.ExceptionCode = EXCEPTION_SINGLE_STEP;
-        else er.ExceptionCode = (si->si_code == TRAP_BRKPT) ? EXCEPTION_BREAKPOINT : EXCEPTION_SINGLE_STEP;
+        er.ExceptionCode = (si->si_code == TRAP_BRKPT) ? EXCEPTION_BREAKPOINT : EXCEPTION_SINGLE_STEP;
         break;
     case SIGFPE:
         er.ExceptionCode = (si->si_code == FPE_INTOVF) ? EXCEPTION_INT_OVERFLOW

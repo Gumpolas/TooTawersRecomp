@@ -41,8 +41,10 @@ typedef struct {
 } GfxItem;
 
 static GfxItem s_items[GFX_N] = {
-    { "Frame rate", "fps", 3, { "30 fps (original)", "60 fps (experimental)", "Unlocked (experimental)" },
-      { "30", "60", "unlocked" }, "60 / unlocked can run some scenes faster than normal" },
+    { "Frame rate", "fps", 12, { "30 fps (original)", "60 fps (experimental)", "75 fps", "90 fps", "100 fps", "120 fps",
+      "144 fps", "165 fps", "200 fps", "240 fps", "300 fps", "Unlocked (experimental)" },
+      { "30", "60", "75", "90", "100", "120", "144", "165", "200", "240", "300", "unlocked" },
+      "Above 30 fps is experimental: some scenes can run faster than normal" },
     { "Display mode", "fullscreen", 3, { "Windowed", "Borderless full screen", "Exclusive full screen" }, { "0", "1", "2" },
       "Alt+Enter or F11 also switches" },
     { "Aspect ratio", "aspect", 5, { "4:3 (original)", "16:9", "16:10", "21:9", "32:9" },
@@ -160,6 +162,8 @@ static void fs_modes_list(void)
         for (k = 0; k < nm && nk < 23; k++) if (!keep[k]) { keep[k] = 1; nk++; }
         for (k = 0, j = 0; k < nm; k++) if (keep[k]) m[j++] = m[k];
         nm = j;
+        /* shown smallest first, as the window sizes: right is a higher resolution */
+        for (k = 0; k < nm / 2; k++) { int tw = m[k].w, th = m[k].h; m[k] = m[nm - 1 - k]; m[nm - 1 - k].w = tw; m[nm - 1 - k].h = th; }
     }
     for (k = 0; k < nm && n < 24; k++) {
         snprintf(s_fs_name[n], sizeof s_fs_name[n], "%d x %d", m[k].w, m[k].h);
@@ -182,7 +186,13 @@ static void gfx_init(void)
     }
     InitializeCriticalSection(&s_lock);
     e = getenv("TT_FPS");
-    s_cur[GFX_FPS] = e && e[0] == '6' ? 1 : e && (e[0] == 'u' || e[0] == 'U') ? 2 : 0;
+    s_cur[GFX_FPS] = 0;
+    if (e && *e) {   /* (a number from the list; unlocked -- and the old "refresh" -- the last) */
+        int f = find_val(GFX_FPS, e);
+        if (f >= 0) s_cur[GFX_FPS] = f;
+        else if (e[0] == 'u' || e[0] == 'U' || e[0] == 'r' || e[0] == 'R') s_cur[GFX_FPS] = s_items[GFX_FPS].n - 1;
+        else if (e[0] == '6') s_cur[GFX_FPS] = 1;
+    }
     e = getenv("RECOMP_FULLSCREEN");
     s_cur[GFX_FULLSCREEN] = e && e[0] == '2' ? 2 : e && e[0] == '1' ? 1 : 0;
     fs_modes_list();

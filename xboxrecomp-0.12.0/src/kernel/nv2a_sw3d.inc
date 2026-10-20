@@ -699,7 +699,10 @@ static void sw3d_tex_usage(void)
  * texture once into ARGB and indexing that is what makes per-pixel
  * multi-texture affordable. An entry is re-decoded when a checksum of its
  * first and middle bytes changes (render targets, streamed textures). */
-#define TEXC_SLOTS 256
+/* (1.9.3: 2048, was 256 -- a busy scene with an extra hero's effects
+ * used over 300 textures a frame, and each frame decoded them all again,
+ * the least recently used pushing out the next one needed: 20 fps) */
+#define TEXC_SLOTS 2048
 typedef struct {
     uint32_t off, color, w, h, pitch, sum, gen, ver, hash;
     uint32_t *argb;
@@ -712,6 +715,29 @@ typedef struct {
 extern volatile uint32_t g_pb_runs;
 static TexCacheEnt s_texc[TEXC_SLOTS];
 static uint64_t s_texc_clock;
+/* (1.9.3) Frames presented (the D3D11 renderer counts them). Swizzled
+ * textures -- loaded art the CPU does not rewrite as it goes -- have their
+ * content checked once a frame rather than once a kick: re-summing a couple
+ * of hundred textures at every kick was a large part of the render thread's
+ * time. The tick advances with presented frames, but at most every 8 ms:
+ * at hundreds of frames a second, once a frame was still most of the
+ * render thread's own work. Linear ones (movie frames, the CPU's own pictures) are still checked
+ * at every kick. RECOMP_TEX_CHECK_KICK=1: every texture at every kick. */
+static uint32_t s_texc_frame;
+/* (1.9.3) a slow frame's breakdown for the log ([SLOWFRAME], nv2a_d3d11.inc) */
+static long long g_slow_dec_t, g_slow_up_t, g_slow_sync_t, g_slow_sh_t, g_slow_rt_t;
+static unsigned g_slow_dec_n, g_slow_up_n, g_slow_sync_n, g_slow_sh_n, g_slow_rb_n, g_slow_new_n;
+static uint32_t g_slow_big_w, g_slow_big_h, g_slow_big_fmt, g_slow_big_off, g_slow_big_why, g_slow_big_px;
+/* the epoch a texture's content check is good for: a kick for linear ones,
+ * a texture-check tick for swizzled ones (see above) */
+static uint32_t texc_epoch(const Texture *t)
+{
+    static int per_kick = -1;
+    if (per_kick < 0) per_kick = getenv("RECOMP_TEX_CHECK_KICK") != NULL;
+    /* (swizzled or compressed by its format: the pitch register is set for
+     * those too, so it does not tell a linear texture) */
+    return (tex_size_from_format(t->color) && s_texc_frame && !per_kick) ? (s_texc_frame | 0x80000000u) : g_pb_runs;
+}
 
 static uint32_t texc_sum(const Texture *t)
 {
@@ -727,7 +753,7 @@ static uint32_t texc_sum(const Texture *t)
     if (bytes > (16u << 20)) bytes = 16u << 20;
     bytes &= ~3u;
     if (bytes < 16) return 0;
-    if (t->pitch) {
+    if (t->pitch && !tex_size_from_format(t->color)) {   /* (1.9.3: by the format -- see texc_epoch) */
         for (i = 0; i + 4 <= bytes; i += 64) h = (h ^ *(const uint32_t *)(m + i)) * 16777619u;
     } else {
         uint32_t step = bytes > 16384 ? (bytes / 4096) & ~3u : 4;
@@ -846,7 +872,7 @@ static const uint32_t *texc_get(const Texture *t)
 {
     TexCacheEnt *e = NULL, *victim = NULL;
     int i;
-    uint32_t sum, gen, x, y;
+    uint32_t sum, gen, x, y, ep;
     s_texc_last_uidx = -1;
     if (!t->valid || t->width > 2048 || t->height > 2048) return NULL;
     (void)ultra_on();   /* (turned on or off: everything decoded again) */
@@ -855,19 +881,43 @@ static const uint32_t *texc_get(const Texture *t)
         gen = gpu_written_gen(t->offset, bytes);
     }
     s_texc_clock++;
-    for (i = 0; i < TEXC_SLOTS; i++) {
-        TexCacheEnt *c = &s_texc[i];
-        if (c->argb && c->off == t->offset && c->color == t->color && c->w == t->width
-            && c->h == t->height && c->pitch == t->pitch) { e = c; break; }
-        if (!victim || (!c->argb && victim->argb) || (c->argb && victim->argb && c->last_use < victim->last_use))
-            victim = c;
+    {   /* (1.9.3) the slot this texture had last time, from a small index:
+         * scanning all 256 slots on every bind (several a draw, a thousand
+         * draws a frame) was a large part of the render thread's own time.
+         * The full scan only on a miss. */
+        static uint16_t idx[8192];
+        uint32_t k = ((t->offset >> 6) ^ (t->offset >> 17) ^ (t->color * 0x9E37u) ^ (t->width << 3) ^ (t->height << 7)) & 8191u;
+        int q = (int)idx[k] - 1;
+        if (q >= 0) {
+            TexCacheEnt *c = &s_texc[q];
+            if (c->argb && c->off == t->offset && c->color == t->color && c->w == t->width
+                && c->h == t->height && c->pitch == t->pitch) e = c;
+        }
+        if (!e) {
+            for (i = 0; i < TEXC_SLOTS; i++) {
+                TexCacheEnt *c = &s_texc[i];
+                if (c->argb && c->off == t->offset && c->color == t->color && c->w == t->width
+                    && c->h == t->height && c->pitch == t->pitch) { e = c; break; }
+                if (!victim || (!c->argb && victim->argb) || (c->argb && victim->argb && c->last_use < victim->last_use))
+                    victim = c;
+            }
+            if (!e && victim) idx[k] = (uint16_t)(victim - s_texc + 1);
+        }
+        if (e) idx[k] = (uint16_t)(e - s_texc + 1);
     }
     /* The CPU can only change a texture between pushbuffer runs: within a
      * run, a texture already checked is current (a texture is bound many
      * times a frame, and the checksum was most of the renderer's CPU time). */
-    if (e && e->run == g_pb_runs && e->gen == gen && e->trev == xbox_tex_rev) { e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
+    ep = texc_epoch(t);
+    if (e && e->run == ep && e->gen == gen && e->trev == xbox_tex_rev) { e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
     sum = texc_sum(t);
-    if (e && e->sum == sum && e->gen == gen && e->trev == xbox_tex_rev) { e->run = g_pb_runs; e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
+    if (e && e->sum == sum && e->gen == gen && e->trev == xbox_tex_rev) { e->run = ep; e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
+    {   /* (for [SLOWFRAME]: why this decode, and the biggest of the frame) */
+        uint32_t why = !e ? 0 : e->gen != gen ? 2 : e->trev != xbox_tex_rev ? 3 : 1;   /* new / changed / GPU wrote / settings */
+        uint32_t px = t->width * t->height;
+        g_slow_dec_n++;
+        if (px > g_slow_big_px) { g_slow_big_px = px; g_slow_big_w = t->width; g_slow_big_h = t->height; g_slow_big_fmt = t->color; g_slow_big_off = t->offset; g_slow_big_why = why; }
+    }
     if (e && e->trev == xbox_tex_rev) e->redec++;
     if (!e) {
         e = victim;
@@ -880,10 +930,12 @@ static const uint32_t *texc_get(const Texture *t)
     e->sum = sum;
     e->gen = gen;
     e->trev = xbox_tex_rev;
-    e->run = g_pb_runs;
+    e->run = ep;
     { static uint32_t vc; e->ver = ++vc; s_texc_last_ver = e->ver; }
     e->last_use = s_texc_clock;
     s_cur_tex = t;
+    LARGE_INTEGER dq0, dq1;
+    QueryPerformanceCounter(&dq0);
     for (y = 0; y < t->height; y++)
         for (x = 0; x < t->width; x++) {
             uint32_t v;
@@ -898,6 +950,8 @@ static const uint32_t *texc_get(const Texture *t)
         }
     s_cur_tex = &s_gpu.tex;
     e->hash = texc_hook(e->argb, t);
+    QueryPerformanceCounter(&dq1);
+    g_slow_dec_t += dq1.QuadPart - dq0.QuadPart;
     s_texc_last_hash = e->hash;
     e->uidx = -1;
     if (!gen && !s_texc_hook_changed && e->redec < 2 && g_ultra_on == 1 && ultra_on()) {   /* (not a picture the GPU drew, nor one that keeps changing) */

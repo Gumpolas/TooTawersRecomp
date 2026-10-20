@@ -32,6 +32,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tt_env.h"   /* (1.9.3) getenv looked up once per name */
 #include <string.h>
 #include <math.h>
 

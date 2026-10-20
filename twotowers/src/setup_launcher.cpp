@@ -439,7 +439,9 @@ static void gfxBuildOptions()
         {{L"Direct3D 11", L"d3d11"}, {L"Vulkan (DXVK, put in the dxvk folder)", L"vulkan"},
          {L"Software (no graphics card)", L"software"}}});
     g_gfx.push_back({L"Frame rate", L"fps", L"30",
-        {{L"30 fps (as on the Xbox)", L"30"}, {L"60 fps (experimental)", L"60"}, {L"Unlocked (experimental)", L"unlocked"}}});
+        {{L"30 fps (as on the Xbox)", L"30"}, {L"60 fps (experimental)", L"60"}, {L"75 fps", L"75"}, {L"90 fps", L"90"},
+         {L"100 fps", L"100"}, {L"120 fps", L"120"}, {L"144 fps", L"144"}, {L"165 fps", L"165"}, {L"200 fps", L"200"},
+         {L"240 fps", L"240"}, {L"300 fps", L"300"}, {L"Unlocked (experimental)", L"unlocked"}}});
     g_gfx.push_back({L"Display mode", L"fullscreen", L"0",
         {{L"Windowed", L"0"}, {L"Full screen (borderless)", L"1"}, {L"Exclusive full screen", L"2"}}});
     {   // exclusive full screen's resolutions: the monitor's own, largest first
@@ -467,6 +469,7 @@ static void gfxBuildOptions()
                 std::vector<std::pair<int, int>> k2;
                 for (size_t k = 0; k < m.size(); k++) if (keep[k]) k2.push_back(m[k]);
                 m.swap(k2);
+                std::reverse(m.begin(), m.end());   // smallest first, as the window sizes: right is higher
             }
             names.reserve(24); vals.reserve(24);
             for (auto &r : m) { names.push_back(std::to_wstring(r.first) + L" x " + std::to_wstring(r.second)); vals.push_back(std::to_wstring(r.first) + L"x" + std::to_wstring(r.second)); }

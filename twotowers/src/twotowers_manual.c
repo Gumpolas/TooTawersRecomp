@@ -9,6 +9,7 @@
 #include "recomp/gen/recomp_funcs.h"
 #include <string.h>
 #include <stdlib.h>
+#include "tt_env.h"   /* (1.9.3) getenv looked up once per name */
 #if !defined(_WIN32)
 /* The few host calls below are declared by hand (windows.h would clash with
  * the generated headers); on POSIX they come from win32_compat.c. */
@@ -433,6 +434,59 @@ __declspec(dllimport) int __stdcall SwitchToThread(void);
  * -- after the wait. The Two Towers frees the movie texture while recording
  * the first level's pushbuffers and deadlocked here. The GPU in this runtime
  * has already run everything submitted, so such a wait returns at once. */
+/* The game's frame time, in whole milliseconds with the remainder carried
+ * (sub_000E3350 derives the game timer -- dt in ms at 0x4B8B98, in seconds
+ * at 0x4B8BA0 -- from the clock each frame).
+ *
+ * The game's per-frame world update (0x000F1240 / 0x000F1310 / 0x000F2FF0)
+ * cuts the frame time down to whole milliseconds and drops the rest. At 30
+ * fps that lost 1% (33.3 -> 33 ms); at 400 fps half of every frame (2.5 ->
+ * 2 ms), so above the monitor's rate everything in the world ran slow and
+ * felt delayed, and under a millisecond it did not move at all. Here every
+ * frame's time is whole milliseconds and the fractions add up into the next
+ * frame, so game time keeps real time at any frame rate.
+ * TT_NO_MSCARRY=1: as the game did it. */
+extern void sub_000E3350_gen(void);
+void sub_000E3350(void)
+{
+    static int off = -1;
+    static double carry;
+    float ms;
+    sub_000E3350_gen();
+    if (off < 0) off = getenv("TT_NO_MSCARRY") != NULL;
+    if (off) return;
+    { uint32_t w = MEM32(0x4B8B98u); memcpy(&ms, &w, 4); }
+    if (!(ms > 0.0f) || ms >= 100.0f) { carry = 0; return; }
+    /* (steps far under a millisecond are not frames: a loading screen ticks
+     * the timer in a tight loop, and the world's step was 0 there -- left so) */
+    if (ms < 0.5f) return;
+    {   /* for the log: the world's whole-ms time against the real time, every 10 s */
+        static double real, world_before, world_after; static unsigned frames;
+        real += ms; world_before += (int)ms; frames++;
+        world_after += (int)(carry + ms);
+        if (real > 10000.0) {
+            extern volatile unsigned g_nv2a_flips;
+            static unsigned lf;
+            tt_dbg("  [FRAMETIME] %.0f fps (%u steps, %u frames shown): the world moved %.1f%% of real time (%.1f%% without the carry)\n",
+                   frames * 1000.0 / real, frames, g_nv2a_flips - lf, world_after * 100.0 / real, world_before * 100.0 / real);
+            lf = g_nv2a_flips;
+            real = world_before = world_after = 0; frames = 0;
+        }
+    }
+    carry += ms;
+    if (carry >= 1.0) {
+        int whole = (int)carry;
+        float fm = (float)whole, fs = (float)whole * 0.001f;
+        carry -= whole;
+        memcpy((void *)XBOX_PTR(0x4B8B98u), &fm, 4);
+        memcpy((void *)XBOX_PTR(0x4B8BA0u), &fs, 4);
+    }
+    /* (under a millisecond so far: the frame keeps its own small time --
+     * the world's whole-ms step is 0 this frame, as before, and nothing is
+     * divided by a zero frame time; unlocked stays under 1000 fps, so this
+     * is rare) */
+}
+
 extern void sub_0011A8E0_gen(void);
 static volatile uint32_t tt_bot_target, tt_bot_issued, tt_bot_done, tt_bot_flags, tt_bot_caller, tt_bot_in;
 void sub_0011A8E0(void)
@@ -446,6 +500,11 @@ void sub_0011A8E0(void)
         uint32_t done = MEM32(MEM32(dev + 0x34));
         (void)issued;
         if ((int32_t)(target - done) > 0 && (MEM32(dev + 8) & 4u)) {
+            /* (1.9.3) the render thread first through what it was given, so
+             * a resource freed after this is no longer being drawn from */
+            extern int xbox_Nv2aDrained(void);
+            unsigned long long w0 = GetTickCount64();
+            while (!xbox_Nv2aDrained() && GetTickCount64() - w0 < 2000) SwitchToThread();
             tt_bot_in = 0;
             esp += 12;   /* ret 8 */
             return;
@@ -463,7 +522,8 @@ void sub_0011A8E0(void)
                 unsigned long long now;
                 if ((int32_t)(target - d) <= 0) break;
                 now = GetTickCount64();
-                if (MEM32(0xFD800040u) == MEM32(0xFD800044u)) {
+                extern int xbox_Nv2aDrained(void);
+                if (xbox_Nv2aDrained()) {   /* (GET == PUT, and the render thread through it all) */
                     if (!idle_since) idle_since = now;
                     else if (now - idle_since > 20) {
                         static int said;
@@ -600,7 +660,10 @@ void sub_0011DA80(void)
  *   unlocked fills the vblank counter, so the wait ends at once.
  * EXPERIMENTAL: if the game advances its simulation by a fixed step per
  * frame, gameplay runs faster than normal in these modes. */
-static int tt_fps_mode = -1;   /* 0 = 30 (stock), 1 = 60, 2 = unlocked */
+static int tt_fps_mode = -1;   /* 0 = 30 (stock), 1 = 60, 2 = unlocked (up to tt_fps_cap, or 1000), 3 = unlocked up to the monitor's refresh rate */
+static int tt_fps_cap;          /* (1.9.3) frames a second for mode 2: 75 .. 300 from the list; 0 = unlocked */
+/* the settings list (gfx_menu.c): 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300, unlocked */
+static const int tt_fps_list[12] = { 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300, 0 };
 volatile unsigned long long tt_hud_drawn_ms;   /* the HUD last drawn (0x000CF450) */
 /* an in-engine scene: play's screen, no film, and no HUD drawn lately */
 int tt_in_scene(void)
@@ -609,9 +672,124 @@ int tt_in_scene(void)
     extern int xbox_MoviePlaying(void);
     return MEM32(0x4AD050u) == 6 && !xbox_MoviePlaying() && GetTickCount64() - tt_hud_drawn_ms > 300;
 }
+/* testing: TT_DTSCAN=1 -- find the game's clock: guest memory words (float
+ * seconds or milliseconds, or whole ms) that advance as fast as the time the
+ * game reads, sampled every 2 s of it; then TT_CLOCKVA=<addr>,<kind> logs how
+ * fast that clock runs against real time. */
+/* testing: TT_WATCH=addr,addr,... (hex, whole numbers) -- printed with the
+ * game clock every 2 s of it in play */
+static void tt_valwatch(void)
+{
+    static int n = -1; static uint32_t ad[8]; static float last;
+    float c;
+    if (n < 0) {
+        const char *e = getenv("TT_WATCH"); char *end;
+        n = 0;
+        while (e && *e && n < 8) { ad[n++] = (uint32_t)strtoul(e, &end, 16); e = *end == ',' ? end + 1 : end; if (end == e && *e != ',') break; }
+    }
+    if (!n || MEM32(0x4AD050u) != 6) return;
+    { uint32_t w = MEM32(0x4B8B9Cu); memcpy(&c, &w, 4); }
+    if (c - last < 2.0f && c >= last) return;
+    last = c;
+    { int i; tt_dbg("[WATCH] clock %.3f", (double)c); for (i = 0; i < n; i++) tt_dbg(" %08X=%u", ad[i], MEM32(ad[i])); tt_dbg("\n"); }
+}
+static void tt_dtscan(void)
+{
+    /* TT_DTSCAN=2: per frame, words matching this frame's step of the game
+     * clock (0x4B8B9C, float seconds) as float s / float ms / x30 / x60 */
+    static int on = -1; static unsigned frames; static float lc;
+    static uint32_t *cand; static uint8_t *kind; static size_t nc;
+    const uint32_t lo = 0x10000u, hi = 0x3FF0000u;
+    float c, f; double dt;
+    if (on < 0) { const char *e = getenv("TT_DTSCAN"); on = e ? atoi(e) : 0; }
+    if (on != 2 || MEM32(0x4AD050u) != 6) { lc = 0; return; }
+    { uint32_t w = MEM32(0x4B8B9Cu); memcpy(&c, &w, 4); }
+    if (lc == 0 || c <= lc) { lc = c; return; }
+    dt = (double)c - (double)lc; lc = c;
+    if (dt > 0.1) return;   /* (a clamp may apply: those frames left out) */
+    if (++frames < 150) return;
+    if (!cand) {
+        size_t cap = 1u << 22, a2;
+        cand = (uint32_t *)malloc(cap * 4); kind = (uint8_t *)malloc(cap);
+        for (a2 = lo; a2 < hi && nc < cap; a2 += 4) {
+            uint32_t w = MEM32(a2); int k;
+            memcpy(&f, &w, 4);
+            for (k = 1; k <= 4; k++) {
+                double m = k == 1 ? 1 : k == 2 ? 1000 : k == 3 ? 30 : 60, v = (double)f / m;
+                if (v > dt * 0.97 && v < dt * 1.03) { cand[nc] = (uint32_t)a2; kind[nc] = (uint8_t)k; nc++; break; }
+            }
+        }
+        tt_dbg("[DTSCAN] dt %.5f: %u candidates\n", dt, (unsigned)nc);
+        return;
+    }
+    {
+        size_t i, j = 0; unsigned nmiss = 0;
+        for (i = 0; i < nc; i++) {
+            uint32_t w = MEM32(cand[i]); int k = kind[i];
+            double m = k == 1 ? 1 : k == 2 ? 1000 : k == 3 ? 30 : 60, v;
+            memcpy(&f, &w, 4); v = (double)f / m;
+            if (v > dt * 0.97 && v < dt * 1.03) { cand[j] = cand[i]; kind[j] = kind[i]; j++; }
+            else nmiss++;
+        }
+        nc = j;
+        if (frames % 20 == 0 || nc < 10) {
+            tt_dbg("[DTSCAN] dt %.5f: %u left", dt, (unsigned)nc);
+            for (i = 0; i < nc && i < 10; i++) { uint32_t w = MEM32(cand[i]); memcpy(&f, &w, 4); tt_dbg(" %08X(%d)=%g", cand[i], kind[i], (double)f); }
+            tt_dbg("\n");
+        }
+    }
+}
 static void tt_delay_hook(void)
 {
     extern int xbox_MoviePlaying(void);
+    {   /* (1.9.3) the game's two waits on the GPU, with the GPU done -- the
+         * pushbuffer run to its end and no D3D callback left to run -- for
+         * 300 ms: the signal the GPU's callback gives was lost (a later
+         * frame's callback wrote over it before the waiter looked, more
+         * often at high frame rates), and nothing will ever give it. Given
+         * here, so the game goes on:
+         *  - a flush (0x000E08D0: sleeps until 0x1BB3BC reads 2) -- "Load
+         *    game" sat on a black screen;
+         *  - the last frame done (0x000E00E0: sleeps until 0x4B7601 reads 0)
+         *    -- a hang while loading into a level. Two seconds for this one:
+         *    a slow frame can keep the signal back for longer than 300 ms. */
+        extern int xbox_Nv2aDrained(void);
+        extern int xbox_PbCallbacksPending(void);
+        extern __declspec(dllimport) unsigned long long __stdcall GetTickCount64(void);
+        static unsigned long long since[2];
+        static int off = -1;
+        int k, w = -1;
+        if (off < 0) off = getenv("TT_NO_GPUDOG") != NULL;
+        int inwait = 0;
+        for (k = 0; k < 48 && w < 0 && !inwait; k++) {
+            uint32_t r = MEM32(esp + 4 * k);
+            if (r == 0x000E08F7u || r == 0x000E012Bu || r == 0x000E015Cu || r == 0x000E0177u) inwait = 1;
+            if (off) continue;
+            if (r == 0x000E08F7u && MEM32(0x1BB3BCu) != 2) w = 0;
+            else if (r == 0x000E012Bu && MEM8(0x4B7601u) != 0) w = 1;
+        }
+        {   /* (1.9.3) time in the game's waits (the GPU's flush and frame
+             * signals, the frame clock), for the log's [PERF] line */
+            extern void xbox_PerfWaitNote(int inwait);
+            xbox_PerfWaitNote(inwait);
+        }
+        if (w != 0) since[0] = 0;
+        if (w != 1) since[1] = 0;
+        if (w >= 0) {
+            unsigned long long t = GetTickCount64();
+            if (!since[w]) since[w] = t;
+            else if (t - since[w] > (w ? 2000u : 300u) && xbox_Nv2aDrained() && !xbox_PbCallbacksPending()) {
+                if (w == 0) {
+                    tt_dbg("  [GPUWAIT] the flush wait had lost its signal (flag %u, %llu ms): given\n", MEM32(0x1BB3BCu), t - since[w]);
+                    MEM32(0x1BB3BCu) = 2;
+                } else {
+                    tt_dbg("  [GPUWAIT] the frame wait had lost its signal (%llu ms): given\n", t - since[w]);
+                    MEM8(0x4B7601u) = 0;
+                }
+                since[w] = 0;
+            }
+        }
+    }
     {   /* the renderer's menu fill (nv2a menu_fill_zoom): a front-end screen
          * -- anything but play (screens 6 and 8) -- is drawn inside the TV
          * safe area even where it draws 3D (the main menu, the mission
@@ -628,7 +806,27 @@ static void tt_delay_hook(void)
      * so they are left at stock speed. */
     if (xbox_MoviePlaying()) { if (tt_fps_mode == 1) MEM8(0x4B75F1u) = 1; return; }
     if (tt_fps_mode == 1) MEM8(0x4B75F1u) = 0;
-    else if (tt_fps_mode == 2) MEM32(0x4B7618u) = 8;   /* (1.8.1: unlocked throughout again -- choose 60 before the scenes instead) */
+    else if (tt_fps_mode >= 2) {
+        /* (unlocked: 1.8.1 -- unlocked throughout again; choose 60 before the scenes instead) */
+        /* (1.9.3) A frame no sooner than one period after the last: the
+         * frame wait is ended (the vblank counter filled) once a period,
+         * not at every sleep. Mode 3: the monitor's refresh period.
+         * TT_FPS_CAP=<n>: that many frames a second instead. */
+        extern int xbox_DisplayRefreshHz(void);
+        extern __declspec(dllimport) int __stdcall QueryPerformanceCounter(long long *);
+        extern __declspec(dllimport) int __stdcall QueryPerformanceFrequency(long long *);
+        static long long fq, next; static int cap = -1;
+        long long now, period; int hz;
+        if (cap < 0) { const char *c = getenv("TT_FPS_CAP"); cap = c ? atoi(c) : 0; QueryPerformanceFrequency(&fq); }
+        /* (1.9.3) unlocked: up to 1000 frames a second -- a frame under a
+         * millisecond is one the game's world does not move in */
+        hz = cap > 0 ? cap : tt_fps_mode == 3 ? xbox_DisplayRefreshHz() : tt_fps_cap > 0 ? tt_fps_cap : 1000;
+        if (hz < 30) hz = 1000;   /* (rate unknown) */
+        period = fq / hz;
+        QueryPerformanceCounter(&now);
+        if (now - next > period * 4 || next - now > period * 4) next = now;   /* (a pause, or the rate changed) */
+        if (now >= next) { MEM32(0x4B7618u) = 8; next += period; }
+    }
     if (getenv("TT_HUDCOUNT")) {   /* testing: is the HUD drawn (play) or not (a scene)? */
         extern __declspec(dllimport) unsigned long long __stdcall GetTickCount64(void);
         static unsigned long long last; static int n, nh;
@@ -658,6 +856,7 @@ static void tt_pb_callback_hook(uint32_t fn, uint32_t ctx)
     extern volatile unsigned g_nv2a_flips;
     unsigned long long t;
     if (fn != 0x000DFFA0u) return;
+    if (ctx == 1) { tt_dtscan(); tt_valwatch(); }
     tt_cb_last[tt_cb_n++ & 7] = ctx;
     t = GetTickCount64();
     if (ctx == 2) { tt_hold2_until = (long long)t + 250; tt_hold2_flips = g_nv2a_flips + 2; }
@@ -665,12 +864,26 @@ static void tt_pb_callback_hook(uint32_t fn, uint32_t ctx)
 }
 /* From the settings overlay. Leaving 60 for 30 puts the game's own 30 fps
  * flag back (gameplay's setting; menus switch it again themselves). */
-static void tt_fps_set(int mode)
+/* (1.9.4) the same limit where frames go out (nv2a_pb_exec.c frame_limit),
+ * so the menus -- which draw without the game's frame wait -- keep it too:
+ * the chosen rate, 1000 unlocked, 60 at 30 / 60 (the Xbox's menus' rate) */
+static void tt_fps_present_cap(void)
 {
-    int old = tt_fps_mode;
+    extern volatile int xbox_frame_cap_hz;
+    xbox_frame_cap_hz = tt_fps_mode >= 2 ? (tt_fps_cap > 0 ? tt_fps_cap : 1000) : 60;
+}
+static void tt_fps_set(int idx)
+{
+    int old = tt_fps_mode, mode;
+    /* (1.9.3) the settings list's entry: 30, 60, a cap, or unlocked */
+    if (idx < 0 || idx > 11) idx = 0;
+    mode = idx == 0 ? 0 : idx == 1 ? 1 : 2;
+    tt_fps_cap = idx >= 2 ? tt_fps_list[idx] : 0;
     tt_fps_mode = mode;
+    tt_fps_present_cap();
     if (old == 1 && mode != 1) MEM8(0x4B75F1u) = 1;
-    tt_dbg("  [FPS] frame-rate mode now %s\n", mode == 1 ? "60" : mode == 2 ? "unlocked" : "30");
+    if (mode == 2 && tt_fps_cap) tt_dbg("  [FPS] frame-rate mode now up to %d fps\n", tt_fps_cap);
+    else tt_dbg("  [FPS] frame-rate mode now %s\n", mode == 1 ? "60" : mode == 2 ? "unlocked" : "30");
 }
 void tt_fps_init(void)
 {
@@ -681,6 +894,13 @@ void tt_fps_init(void)
     tt_fps_mode = 0;
     if (v && (v[0] == '6')) tt_fps_mode = 1;
     else if (v && (v[0] == 'u' || v[0] == 'U')) tt_fps_mode = 2;
+    else if (v && (v[0] == 'r' || v[0] == 'R')) tt_fps_mode = 2;   /* (the old "refresh": unlocked) */
+    else if (v && atoi(v) > 60) {   /* a frame rate from the list */
+        int f = atoi(v), k;
+        for (k = 2; k < 11 && tt_fps_list[k] != f; k++) {}
+        tt_fps_mode = 2; tt_fps_cap = k < 11 ? f : 0;
+    }
+    tt_fps_present_cap();
     /* Always installed: the settings overlay can change the mode in game. */
     xbox_guest_delay_hook = tt_delay_hook;
     {
@@ -688,7 +908,7 @@ void tt_fps_init(void)
         xbox_GfxSetFpsHandler(tt_fps_set);
     }
     if (tt_fps_mode)
-        tt_dbg("  [FPS] experimental frame-rate mode: %s\n", tt_fps_mode == 1 ? "60" : "unlocked");
+        tt_dbg("  [FPS] experimental frame-rate mode: %s (cap %d)\n", tt_fps_mode == 1 ? "60" : "unlocked", tt_fps_cap);
 }
 
 recomp_func_t twotowers_lookup_manual(uint32_t xbox_va)
@@ -703,6 +923,7 @@ recomp_func_t twotowers_lookup_manual(uint32_t xbox_va)
     case 0x0012F10Au: return sub_0012F10A;
     case 0x00117AD0u: return sub_00117AD0;
     case 0x0011A8E0u: return sub_0011A8E0;
+    case 0x000E3350u: return sub_000E3350;
     case 0x0011DA80u: return sub_0011DA80;
     case 0x0004E890u: return sub_0004E890;
     case 0x000E3AF0u: return sub_000E3AF0;

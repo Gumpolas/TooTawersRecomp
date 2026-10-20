@@ -25,6 +25,7 @@
 #include <stddef.h>   /* ptrdiff_t */
 #include <stdlib.h>
 #include <string.h>
+#include "kernel.h"   /* (1.9.3) windows.h: QueryPerformanceCounter for [PERF] */
 extern const char *recomp_cgetenv(const char *name);
 #define getenv(n) recomp_cgetenv(n)
 #ifndef XBOX_CONTIG_BASE
@@ -296,9 +297,177 @@ uint32_t nv2a_pb_get(void)  { return s_get & 0x0FFFFFFFu; }
 uint32_t nv2a_pb_subr(void) { return s_in_call ? ((s_subr & 0x0FFFFFFFu) | 1u) : 0u; }
 
 volatile uint32_t g_pb_runs;   /* pushbuffer runs; CPU writes happen only between them */
+
+/* (1.9.3) Recording, and executing on a render thread of its own (Windows,
+ * Direct3D 11): the GPU commands are read from the pushbuffer as the title
+ * kicks them -- on its thread, following JUMP / CALL / RETURN at once, as
+ * before (read later, a re-patched jump at a recorded pushbuffer's end led
+ * into stale commands) -- but only copied, method and parameter, into a
+ * ring; the render thread turns them into Direct3D 11 calls, as the
+ * console's GPU worked beside its CPU. The title's fences (the semaphore,
+ * the callbacks, flips) complete when the render thread reaches them, as
+ * on the console. Before, the game's code and all of its Direct3D work took
+ * turns on one core, and the graphics card waited for both.
+ * RECOMP_GPU_SYNC=1: executed on the kicking thread, as before. */
+/* (1.9.3: 4 MB rather than 16: the commands are still in the processor's
+ * cache when the render thread reads them -- a frame is far less) */
+#define PB_INLINE_HDR 0xFFFE1818u   /* (see pb_emit_inline) */
+#define PB_RING (1u << 19)   /* entries: (subchannel << 16 | method), parameter */
+static uint32_t *s_ring;
+static volatile LONG s_ring_head, s_ring_tail;   /* consumer, producer (entries, wrapping at PB_RING) */
+static LONG s_ring_tail_local, s_ring_room;
+static HANDLE s_ring_wake, s_ring_space;
+static int s_async = -1;
+static volatile LONG s_rt_sleeping, s_pb_waiting;   /* (1.9.3) events signalled only to a waiting thread */
+static int s_mark_pending;   /* a run began; its marker not yet in the ring */
+volatile long long g_perf_rt_ticks;   /* the render thread's time executing, for [PERF] */
+static DWORD WINAPI pb_render_thread(LPVOID p)
+{
+    extern void xbox_UnpinServiceThread(void);
+    (void)p;
+    xbox_UnpinServiceThread();
+    SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL);
+    for (;;) {
+        LONG h = s_ring_head, t = s_ring_tail, done = 0;
+        LARGE_INTEGER a, b;
+        if (h == t) {
+            InterlockedExchange(&s_rt_sleeping, 1);
+            if (s_ring_tail == h) WaitForSingleObject(s_ring_wake, 2);
+            InterlockedExchange(&s_rt_sleeping, 0);
+            continue;
+        }
+        QueryPerformanceCounter(&a);
+        while (h != t) {
+            uint32_t sm = s_ring[2 * h], pr = s_ring[2 * h + 1];
+            /* a kick's start: a run, as the texture and surface caches count
+             * them (memory the CPU wrote is looked at again once a run);
+             * counted per wake-up instead, textures were hashed again many
+             * times a frame */
+            if (sm == 0xFFFFFFFFu) g_pb_runs++;
+            else if (sm == PB_INLINE_HDR) {
+                extern void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n);
+                uint32_t n = pr, ent = (n + 1) / 2;
+                LONG d = (h + 1) & (PB_RING - 1);
+                uint32_t first = (uint32_t)(PB_RING - d);   /* entries before the ring wraps */
+                if (first >= ent) nv2a_pb_exec_inline(&s_ring[2 * d], n);
+                else {
+                    nv2a_pb_exec_inline(&s_ring[2 * d], first * 2);
+                    nv2a_pb_exec_inline(&s_ring[0], n - first * 2);
+                }
+                h = (h + ent) & (PB_RING - 1);
+                done += ent;
+            }
+            else nv2a_pb_exec_method(sm >> 16, sm & 0xFFFFu, pr);
+            h = (h + 1) & (PB_RING - 1);
+            if (++done >= 1024) { done = 0; InterlockedExchange(&s_ring_head, h); if (s_pb_waiting) SetEvent(s_ring_space); }
+        }
+        InterlockedExchange(&s_ring_head, h);
+        if (s_pb_waiting) SetEvent(s_ring_space);
+        QueryPerformanceCounter(&b);
+        g_perf_rt_ticks += b.QuadPart - a.QuadPart;
+    }
+    return 0;
+}
+static int pb_async(void)
+{
+    if (s_async < 0) {
+#if defined(_WIN32)
+        s_async = !getenv("RECOMP_GPU_SYNC");
+#else
+        s_async = 0;   /* (OpenGL's context belongs to one thread) */
+#endif
+        if (s_async) {
+            s_ring = (uint32_t *)malloc((size_t)PB_RING * 8);
+            s_ring_wake = CreateEventW(NULL, FALSE, FALSE, NULL);
+            s_ring_space = CreateEventW(NULL, FALSE, FALSE, NULL);
+            if (!s_ring || !s_ring_wake || !s_ring_space || !CreateThread(NULL, 0, pb_render_thread, NULL, 0, NULL)) s_async = 0;
+        }
+        fprintf(stderr, "  [NV2A] GPU commands %s\n", s_async ? "recorded as kicked, executed on a render thread of their own" : "executed as kicked");
+        fflush(stderr);
+    }
+    return s_async;
+}
+static void pb_publish(void)
+{
+    InterlockedExchange(&s_ring_tail, s_ring_tail_local);
+    if (s_rt_sleeping) SetEvent(s_ring_wake);   /* (it re-checks the tail after saying it sleeps) */
+}
+static void pb_emit(uint32_t subch, uint32_t method, uint32_t param)
+{
+    LONG n;
+    if (!s_async) { nv2a_pb_exec_method(subch, method, param); return; }
+    if (s_mark_pending) { s_mark_pending = 0; pb_emit(0xFFFFu, 0xFFFFu, 0); }   /* (0xFFFFFFFF: a run starts) */
+    n = (s_ring_tail_local + 1) & (PB_RING - 1);
+    /* (free entries known without reading the render thread's position --
+     * a cache line it writes -- for every command) */
+    while (!s_ring_room) {
+        LONG room = (s_ring_head - n) & (PB_RING - 1);   /* entries before n reaches head */
+        if (n != s_ring_head) { s_ring_room = room ? room : PB_RING - 1; break; }
+        pb_publish();   /* full: let the render thread catch up */
+        InterlockedExchange(&s_pb_waiting, 1);
+        if (n == s_ring_head) WaitForSingleObject(s_ring_space, 2);
+        InterlockedExchange(&s_pb_waiting, 0);
+    }
+    s_ring_room--;
+    s_ring[2 * s_ring_tail_local] = (subch << 16) | method;
+    s_ring[2 * s_ring_tail_local + 1] = param;
+    s_ring_tail_local = n;
+    if ((n & 4095) == 0) pb_publish();   /* (the render thread starts on a long run before it ends) */
+}
+/* (1.9.3) A run of INLINE_ARRAY words -- the vertices this title writes
+ * straight into its pushbuffer, three quarters of all its commands -- as one
+ * record: a header (0xFFFE1818, the count), then the words two to an entry.
+ * The render thread hands them over in one piece (nv2a_pb_exec_inline)
+ * instead of one command at a time. Room for all of it is made first, and
+ * nothing is published part-way, so the render thread never finds a header
+ * without its words. */
+static void pb_emit_inline(const uint32_t *w, uint32_t n)
+{
+    LONG need = 1 + (LONG)((n + 1) / 2), i;
+    if (s_mark_pending) { s_mark_pending = 0; pb_emit(0xFFFFu, 0xFFFFu, 0); }
+    while (s_ring_room < need) {
+        LONG nx = (s_ring_tail_local + 1) & (PB_RING - 1);
+        LONG room = nx == s_ring_head ? 0 : ((s_ring_head - nx) & (PB_RING - 1));
+        if (room >= need) { s_ring_room = room; break; }
+        pb_publish();
+        InterlockedExchange(&s_pb_waiting, 1);
+        if ((((s_ring_head - nx) & (PB_RING - 1)) < need) || nx == s_ring_head) WaitForSingleObject(s_ring_space, 2);
+        InterlockedExchange(&s_pb_waiting, 0);
+    }
+    s_ring_room -= need;
+    s_ring[2 * s_ring_tail_local] = PB_INLINE_HDR;
+    s_ring[2 * s_ring_tail_local + 1] = n;
+    s_ring_tail_local = (s_ring_tail_local + 1) & (PB_RING - 1);
+    for (i = 0; i < (LONG)n; i += 2) {
+        s_ring[2 * s_ring_tail_local] = w[i];
+        s_ring[2 * s_ring_tail_local + 1] = (uint32_t)i + 1 < n ? w[i + 1] : 0;
+        s_ring_tail_local = (s_ring_tail_local + 1) & (PB_RING - 1);
+    }
+    {   /* (the render thread starts on a long run before it ends) */
+        static LONG since;
+        since += need;
+        if (since >= 4096) { since = 0; pb_publish(); }
+    }
+}
+/* nothing recorded is still to be executed (the title's GPU-wait watchdog) */
+int xbox_PbRingEmpty(void) { return !s_async || s_ring_head == s_ring_tail; }
+volatile long long g_perf_pb_ticks;   /* (1.9.3) time in the runs (QueryPerformanceCounter), for [PERF] */
+static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys);
 void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)
 {
-    g_pb_runs++;
+    LARGE_INTEGER a, b;
+    QueryPerformanceCounter(&a);
+    if (s_exec_enabled < 0) s_exec_enabled = getenv("RECOMP_PB_EXEC") != NULL;
+    if (s_exec_enabled) pb_async();
+    s_mark_pending = 1;   /* (the run's start goes in before its first command: see pb_emit) */
+    nv2a_pb_run_(put_phys, init_get_phys);
+    if (s_async > 0) pb_publish();
+    QueryPerformanceCounter(&b);
+    g_perf_pb_ticks += b.QuadPart - a.QuadPart;
+}
+static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
+{
+    if (s_async <= 0) g_pb_runs++;   /* (recorded: the render thread counts its runs) */
     const uint8_t *mem = (const uint8_t *)xbox_GetMemoryOffset();
     uint32_t put = XBOX_CONTIG_BASE | (put_phys & 0x0FFFFFFFu);
     uint32_t words = 0;
@@ -308,6 +477,10 @@ void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)
         s_exec_enabled = getenv("RECOMP_PB_EXEC") != NULL;
     if (trace < 0)
         trace = getenv("RECOMP_PB_FLOW") != NULL;
+    /* (1.9.3) the method inventory (a bring-up report) only when surveying
+     * or asked for: executing, it cost a table update per command */
+    static int inventory = -1;
+    if (inventory < 0) inventory = !s_exec_enabled || getenv("RECOMP_PB_SCAN") || getenv("RECOMP_PB_INVENTORY");
     if (!(getenv("RECOMP_PB_SCAN") || s_exec_enabled))
         return;
     if (!s_get_valid) {
@@ -384,13 +557,28 @@ void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)
             uint32_t method =  w & 0x1FFCu;
             int noninc = (w & 0xE0000000u) == 0x40000000u;
             uint32_t i;
+            if (s_async > 0 && s_exec_enabled && noninc && subch == 0 && method == 0x1818u && count > 1 && !inventory) {
+                /* (a run of inline vertex words: one record -- see pb_emit_inline) */
+                uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
+                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
+                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                if (avail > count) avail = count;
+                if (avail > lim) avail = lim;
+                if (avail) {
+                    pb_emit_inline((const uint32_t *)(mem + s_get), avail);
+                    s_get += avail * 4; words += avail;
+                }
+                if (avail == count) continue;
+                /* (stopped at PUT or the end of memory: the loop below stops
+                 * at once, as it would have) */
+            }
             for (i = 0; i < count; i++) {
                 uint32_t m = noninc ? method : method + i * 4;
                 if (s_get == put || s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u)
                     break;
-                note(subch, m);
+                if (inventory) note(subch, m);
                 if (s_exec_enabled)
-                    nv2a_pb_exec_method(subch, m, *(const uint32_t *)(mem + s_get));
+                    pb_emit(subch, m, *(const uint32_t *)(mem + s_get));
                 s_get += 4;
                 words++;
             }
