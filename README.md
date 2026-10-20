@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates are experimental. It is recommended to play the game at 60 fps. See known issues. 
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates work but are experimental. It is recommended to play the game at 60 fps. See known issues. 
 
 ## Downloads
 
@@ -35,17 +35,14 @@ Updating from 1.9.3 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 1.9.4
 
 ### Performance
-- **Much higher frame rates.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier.
-- **Game time keeps real time at any frame rate.** Above the monitor's refresh rate the game world used to move slowly and feel delayed. It now runs at the right speed at high frame rates.
-- **A drop to 20 fps** with Gandalf or Sauron at the Gates of Moria is fixed.
+- **Much higher frame rates/performance improvements.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier and usage scales better. 
+- **Game time keeps real time at any frame rate.** Above the monitor's refresh rate (usually above 240 hz/fps) some animations in the game world would move slowly and feel delayed. They now run at the right speed at high frame rates.
+- **A drop to 20 fps** with Gandalf or Sauron at the Gates of Moria is fixed. 
 
 ### Frame rate and display
-- **Frame rate** has 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
+- **Frame rate limiter options** has 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
 - **Vulkan** is no longer held to the monitor's refresh rate with VSync off.
 - The exclusive **Full-screen resolution** list goes from small to large, so the right arrow goes to a higher resolution, as Window size does.
-
-### Other fixes
-- **"Load game"** no longer stops on a black screen.
 
 ## What 1.9.3 added
 
