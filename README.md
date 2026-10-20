@@ -40,7 +40,7 @@ Updating from 1.9.3 or earlier: unpack over your old folder, or into a new one a
 - **A drop to 20 fps** with Gandalf or Sauron at a certain spot in the Gates of Moria is fixed. 
 
 ### Frame rate and display
-- **Frame rate limiter options** has 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
+- **Frame rate limiter options** - 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
 - **Vulkan** is no longer held to the monitor's refresh rate with VSync off.
 - The exclusive **Full-screen resolution** list goes from small to large, so the right arrow goes to a higher resolution, as Window size does.
 
