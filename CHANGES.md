@@ -2419,3 +2419,92 @@ kernel/nv2a_copy.h, nv2a_sw3d.inc, nv2a_d3d11.inc, nv2a_pb_exec.c, nv2a_pb_scan.
     the whole list).
   - The [PERFRT] timing (a dozen processor-clock reads a draw, two for every
     constant upload) only with RECOMP_PERFRT=1.
+kernel/nv2a_d3d11.inc, nv2a_d3d11_vp.inc, nv2a_pb_exec.c (1.9.5)
+  - Draws that differ only in their vertex-program constants (each
+    character's bones, each object's place) are joined into one Direct3D
+    draw. Every program gets a second shader that reads its constants from
+    the vertex ring instead of the constant buffer: the batch's constant
+    sets are written after its vertices, then for each vertex where its
+    draw's set starts; where that list starts reaches the shader as an
+    instance attribute (a buffer of 0, 1, 2, ... read at the draw's first
+    instance), so a batch costs no constant-buffer write. About 300 more
+    draws a frame joined in a busy scene, no vertex-constant uploads left;
+    replays of captured frames identical pixel for pixel.
+    RECOMP_CONST_JOIN=0: off. [PERFD3D] counts the joins. Only the
+    constants a program reads are copied (up to its highest register; all
+    192 when it addresses them relatively).
+kernel/nv2a_d3d11.inc, nv2a_pb_exec.c (1.9.5), from the next profile:
+  - Textures and samplers set separately, each only for the stages that
+    changed.
+  - Whether a method changed anything is returned instead of read back
+    from s_chg (the byte just or-ed into it made every method's read stall).
+  - A surface the CPU may have drawn (movies, loading screens) checked once
+    a frame, not once a pushbuffer run (RECOMP_SURF_SYNC_RUN=1: every run).
+kernel/nv2a_pb_scan.c, twotowers/src/twotowers_manual.c (1.9.5)
+  - Linux: the GPU commands run on a render thread of their own, as on
+    Windows (OpenGL's context is taken by the first thread that draws, the
+    render thread). macOS keeps the old way until tried on a Mac
+    (RECOMP_GPU_ASYNC=1 to try it); RECOMP_GPU_SYNC=1: the old way anywhere.
+  - The game's waits for the GPU (D3D's block-on-time, the drain before a
+    resource is freed) sleep until the render thread gets further instead
+    of yielding in a loop: with the render thread the slower one, the game
+    thread had kept a whole core busy (on Linux 14.6 ms of processor time a
+    frame, now 3.0). Counted as waiting in [PERF].
+twotowers/src/twotowers_manual.c (1.9.5)
+  - Animations keep their speed at any frame rate. Each frame an animated
+    object's step was whole ms of (frame time x the animation's speed), the
+    fraction dropped (0x00028310): at 30 fps under-full-speed animations
+    kept 98% of their time, at 500 fps 53% -- half-speed animations above
+    300 fps, and a slow layer (heads turning toward a look-at target) could
+    stop moving. The fractions are now carried per object; [ANIMSTEP] in the
+    log every 10 s shows the original's share against the 100% kept
+    (TT_NO_ANIMCARRY=1: as before).
+  - Testing hooks keyed to the game's own clock: TT_DUMP_GAME_MS/TT_DUMP_DIR
+    (pictures), TT_MEMDUMP_GAME/TT_MEMDUMP_AT (RAM), TT_POSLOG (player
+    position), TT_WWATCH/TT_WWATCH_AT (Linux: who writes a word);
+    RECOMP_PAD_GAMETIME=1 plays a pad script by game time; RECOMP_GPU_NULL=2
+    skips presenting too.
+twotowers/src/twotowers_manual.c (1.9.5)
+  - Falling at any frame rate (0x000B9530, an actor's gravity step). The
+    fall speed had its acceleration added once a frame, so at 500 fps
+    anything that stepped off a ledge or jumped built up speed 16 times as
+    fast as at 30 fps and landed deep. The add is now scaled to the frame
+    time (the original exactly at 30 fps). TT_NO_FALLFIX=1: as before.
+  - The same step dropped any move under 0.01 units a frame -- most moves
+    above about 300 fps (70% at 1000 fps), so actors stood still or caught
+    on the ground. The threshold now scales with the frame time.
+  - Testing: TT_FALLLOG=1 ([LAND] each landing, [FALLSTEP] tiny moves),
+    TT_SPLOG=1 / j / address (who sets an actor's position, with host call
+    stacks on Linux), TT_GSLOG=1 (ground snaps); TT_MEMDUMP_GAME now also
+    dumps the 0x80000000 window, where the game's objects live.
+apu/apu_vp.c, kernel/nv2a_gl.inc (1.9.5)
+  - A voice's gain glides across each 32-sample frame from the last frame's
+    instead of stepping (the MCPX ramps its volumes): fewer clicks when a
+    title moves its sounds every frame (RECOMP_APU_NORAMP=1: steps).
+  - Testing: RECOMP_APU_PIOSTAT, RECOMP_APU_VOLLOG, RECOMP_APU_GSTAT;
+    RECOMP_GPU_NULL=3 draws only the frames a picture is asked of
+    (TT_DUMP_GAME_MS runs at a fixed frame time, fast).
+apu/apu_core.c, apu/apu_vp.c, kernel/nv2a_pb_exec.c (1.9.5)
+  - Sound no longer cuts out. Whenever the title held the sound chip's
+    front end (DirectSound does around each batch of voice updates), the
+    sound thread skipped that 32-sample frame: 3-10% of all sound came out
+    as silence, in slices -- crackle, and sounds that seemed to stop part
+    way (measured: the same sounds played a third as long unlocked as at 30
+    fps). Holding the front end holds back methods only; the voices now
+    play on. RECOMP_APU_HOLDSKIP=1: as before. [FPS] counts the frames that
+    came round while held.
+  - The title's methods are taken under the APU lock, so a voice list never
+    changes while the sound thread walks it (RECOMP_APU_NOPIOLOCK=1: not).
+  - Testing: RECOMP_APU_LIFELOG=1 ([LIFE] each sound's length).
+twotowers/src/twotowers_manual.c (1.9.5)
+  - Unlocked (1000 fps cap): a frame is held to at least a millisecond after
+    the last. Catching up on a late frame let the next few through back to
+    back, under a millisecond apart, and the game's clock could not keep
+    such frames straight: the world rounded each one up to a millisecond
+    (fistp) while animations cut it to nothing, and frames under half a
+    millisecond were left out of the carry altogether. In the Westfold
+    intro, Aragorn's run played slow beside the scene. A frame under a
+    millisecond (carry short of one) now gives the world 0 ms, and every
+    frame's time goes into the carry.
+  - Testing: TT_LVLLOG=1 ([LVLRESET]), TT_DUMP_LVL=1 (pictures by the level
+    clock).

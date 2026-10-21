@@ -19,6 +19,7 @@ typedef struct {
     uint32_t words[VP_SLOTS][4];
     uint32_t nin;                     /* inputs the program reads */
     uint8_t  inreg[16];               /* their attribute registers, in buffer order */
+    uint32_t ncon;                    /* (1.9.5) constants it reads: 0..ncon-1 (all 192 with relative addressing) */
     ID3D11VertexShader *vs;
     ID3D11InputLayout *il;
     char *src;                        /* HLSL, freed after compile */
@@ -29,6 +30,14 @@ typedef struct {
     ID3DBlob *blob;
     struct { uint32_t sig[16]; ID3D11InputLayout *il; } lay[8];
     int nlay, laynext;
+    /* (1.9.5) the same program reading its constants from the vertex ring
+     * (gpu_batch_raw: draws that differ only in their constants drawn as
+     * one): its shader, blob and layouts */
+    char *srcp;
+    ID3D11VertexShader *vsp;
+    ID3DBlob *blobp;
+    struct { uint32_t sig[16]; ID3D11InputLayout *il; } layp[8];
+    int nlayp, laynextp;
 } HwVp;
 
 #define HWVP_MAX 512
@@ -69,6 +78,27 @@ static void hwvp_cat(char **p, size_t *cap, size_t *len, const char *fmt, ...)
     }
 }
 
+/* (1.9.5) text with one marker replaced: a new string */
+static char *hwvp_subst(const char *t, const char *mark, const char *with)
+{
+    const char *at = t ? strstr(t, mark) : NULL;
+    size_t a, b, c;
+    char *r;
+    if (!t) return NULL;
+    if (!at) return strdup(t);
+    a = (size_t)(at - t); b = strlen(with); c = strlen(at + strlen(mark));
+    r = (char *)malloc(a + b + c + 1);
+    if (r) { memcpy(r, t, a); memcpy(r + a, with, b); memcpy(r + a + b, at + strlen(mark), c + 1); }
+    return r;
+}
+/* the three markers of a translated program replaced */
+static char *hwvp_subst3(const char *t, const char *hdr, const char *vi, const char *mn)
+{
+    char *x = hwvp_subst(t, "@@HDR@@", hdr), *y = hwvp_subst(x, "@@VI@@", vi), *z = hwvp_subst(y, "@@MAIN@@", mn);
+    free(x); free(y);
+    return z;
+}
+
 static const char *hwvp_src_expr(const VpSrc *d, char *buf, size_t bs)
 {
     static const char sw[] = "xyzw";
@@ -78,7 +108,7 @@ static const char *hwvp_src_expr(const VpSrc *d, char *buf, size_t bs)
     case 2: snprintf(base, sizeof base, "v%u", d->reg); break;
     case 3:
         if (d->rel) snprintf(base, sizeof base, "kc(%d + a0)", d->ci);
-        else if (d->ci >= 0 && d->ci < VP_CONSTS) snprintf(base, sizeof base, "c[%d]", d->ci);
+        else if (d->ci >= 0 && d->ci < VP_CONSTS) snprintf(base, sizeof base, "CK(%d)", d->ci);
         else snprintf(base, sizeof base, "float4(0,0,0,1)");
         break;
     default: snprintf(base, sizeof base, "float4(0,0,0,1)"); break;
@@ -115,14 +145,18 @@ static char *hwvp_translate(HwVp *e)
         int s;
         if (I->o_mask && !I->orb) { free(p); return NULL; }
         for (s = 0; s < 3; s++) if (I->s[s].mux == 2) used |= 1u << I->s[s].reg;
+        for (s = 0; s < 3; s++) if (I->s[s].mux == 3) {
+            if (I->s[s].rel) e->ncon = VP_CONSTS;
+            else if (I->s[s].ci >= 0 && I->s[s].ci < VP_CONSTS && (uint32_t)I->s[s].ci + 1 > e->ncon) e->ncon = (uint32_t)I->s[s].ci + 1;
+        }
     }
     e->nin = 0;
     for (i = 0; i < 16; i++) if (used & (1u << i)) e->inreg[e->nin++] = (uint8_t)i;
 
     hwvp_cat(&p, &cap, &len,
         "cbuffer VSC : register(b0) { float4 vp; };\n"
-        "cbuffer VPC : register(b2) { float4 c[192]; };\n"
-        "float4 kc(int i) { return (i >= 0 && i < 192) ? c[i] : float4(0,0,0,1); }\n"
+        "@@HDR@@"
+        "float4 kc(int i) { return (i >= 0 && i < 192) ? CK(i) : float4(0,0,0,1); }\n"
         "float4 rcc(float x) { float r = 1.0 / x; float ar = abs(r);\n"
         "  ar = (ar < 5.42101e-20) ? 5.42101e-20 : ((ar > 1.884467e+19) ? 1.884467e+19 : ar);\n"
         "  r = (r < 0 || (r == 0 && asuint(r) == 0x80000000)) ? -ar : ar; return float4(r,r,r,r); }\n"
@@ -135,14 +169,14 @@ static char *hwvp_translate(HwVp *e)
     for (i = 0; i < e->nin; i++) hwvp_cat(&p, &cap, &len, " float4 v%u:TEXCOORD%u;", e->inreg[i], i);
     if (!e->nin) hwvp_cat(&p, &cap, &len, " uint vid:SV_VertexID;");
     hwvp_cat(&p, &cap, &len,
-        " };\n"
+        "@@VI@@ };\n"
         "struct VO { float4 pos:SV_Position; float4 d0:COLOR0; float4 d1:COLOR1; float4 fog:TEXCOORD4;\n"
         "            float4 t0:TEXCOORD0; float4 t1:TEXCOORD1; float4 t2:TEXCOORD2; float4 t3:TEXCOORD3; };\n"
         "VO vs_hw(VI vin) {\n"
         "  float4 R[16]; float4 o[13]; int a0 = 0; float4 m, l;\n"
         "  [unroll] for (int q = 0; q < 16; q++) R[q] = float4(0,0,0,0);\n"
         "  [unroll] for (int q2 = 0; q2 < 13; q2++) o[q2] = float4(0,0,0,1);\n"
-        "  o[3] = float4(1,1,1,1);\n");
+        "  o[3] = float4(1,1,1,1);\n@@MAIN@@");
     for (i = 0; i < e->nin; i++) hwvp_cat(&p, &cap, &len, "  float4 v%u = vin.v%u;\n", e->inreg[i], e->inreg[i]);
     for (k = 0; k < s_vpd_len; k++) {
         const VpIns *I = &s_vpd[k];
@@ -194,6 +228,18 @@ static char *hwvp_translate(HwVp *e)
         "  r.d0 = saturate(o[3]); r.d1 = saturate(o[4]); r.fog = float4(o[5].x, 0, 0, 0);\n"
         "  r.t0 = o[9]; r.t1 = o[10]; r.t2 = o[11]; r.t3 = o[12];\n"
         "  return r;\n}\n");
+    /* (1.9.5) two shaders from it: constants from the constant buffer, as
+     * before, and (programs that read vertex inputs) from the vertex ring */
+    if (p && e->nin) {
+        static const char *hp = "Buffer<float4> RING4 : register(t14);\nBuffer<uint> RING1 : register(t15);\n"
+                                "static uint g_sb;\n#define CK(i) RING4[g_sb + (uint)(i)]\n";
+        e->srcp = hwvp_subst3(p, hp, " uint pvid:SV_VertexID; uint cbase:CBASE;", "  g_sb = RING1[vin.cbase + vin.pvid];\n");
+    }
+    if (p) {
+        char *q = hwvp_subst3(p, "cbuffer VPC : register(b2) { float4 c[192]; };\n#define CK(i) c[i]\n", "", "");
+        free(p);
+        p = q;
+    }
     return p;
 }
 
@@ -231,6 +277,20 @@ static void hwvp_compile_one(HwVp *e)
         }
     }
     e->blob = b;   /* (kept: the raw-vertex path's layouts are made against it) */
+    if (e->srcp) {   /* (1.9.5) the constants-from-the-ring variant (none: the raw path joins no constant changes) */
+        ID3DBlob *bp = NULL, *ep = NULL;
+        if (SUCCEEDED(D3DCompile(e->srcp, strlen(e->srcp), "nv2a_vp_ring", NULL, NULL, "vs_hw", "vs_5_0",
+                                 D3DCOMPILE_OPTIMIZATION_LEVEL1, 0, &bp, &ep))) {
+            if (SUCCEEDED(ID3D11Device_CreateVertexShader(g_dev, ID3D10Blob_GetBufferPointer(bp), ID3D10Blob_GetBufferSize(bp), NULL, &e->vsp)))
+                e->blobp = bp;
+            else ID3D10Blob_Release(bp);
+        } else {
+            static int shown;
+            if (shown++ < 3) fprintf(stderr, "  [HWVP] program %08X: ring-constant variant did not compile: %s\n", e->hash,
+                                     ep ? (const char *)ID3D10Blob_GetBufferPointer(ep) : "?");
+        }
+        if (ep) ID3D10Blob_Release(ep);
+    }
     InterlockedIncrement((volatile LONG *)&g_hwvp_compiled);
     MemoryBarrier();
     e->state = 1;
@@ -254,6 +314,7 @@ static DWORD WINAPI hwvp_thread(LPVOID unused)
             if (e && e->state == 0 && e->src && !InterlockedExchange(&e->claimed, 1)) {
                 hwvp_compile_one(e);
                 free(e->src); e->src = NULL;
+                free(e->srcp); e->srcp = NULL;
                 did = 1;
             }
         }
@@ -318,6 +379,7 @@ static HwVp *hwvp_lookup(void)
             e->claimed = 1;
             hwvp_compile_one(e);
             free(e->src); e->src = NULL;
+            free(e->srcp); e->srcp = NULL;
         }
     }
     g_hwvp[g_hwvp_n] = e;

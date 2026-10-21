@@ -126,8 +126,12 @@ static void voice_set_mask(MCPXAPUState *d, uint16_t voice_handle,
  * Voice off / lock
  * ============================================================ */
 
+void *g_apu_offra[MCPX_HW_MAX_VOICES];
+uint32_t g_apu_vpcall[MCPX_HW_MAX_VOICES];
+uint32_t g_apu_mring[64][4]; unsigned g_apu_mn;
 static void voice_off(MCPXAPUState *d, uint16_t v)
 {
+    { extern void *g_apu_offra[]; g_apu_offra[v] = __builtin_return_address(0); }
     if (getenv("RECOMP_APU_VTRACE")) { static int n; if (n++ < 4000) fprintf(stderr, "  [APUV] voice_off %04X\n", v); }
     voice_set_mask(d, v, NV_PAVS_VOICE_PAR_STATE,
                    NV_PAVS_VOICE_PAR_STATE_ACTIVE_VOICE, 0);
@@ -201,6 +205,26 @@ static void fe_method(MCPXAPUState *d, uint32_t method, uint32_t argument)
         }
     }
 
+    {   /* testing (LIFELOG): the last methods, for [LIFE] */
+        extern uint32_t g_apu_mring[64][4]; extern unsigned g_apu_mn;
+        if (method != SE2FE_IDLE_VOICE && method != NV1BA0_PIO_SET_VOICE_TAR_VOLA && method != NV1BA0_PIO_SET_VOICE_TAR_VOLB && method != NV1BA0_PIO_SET_VOICE_TAR_VOLC && method != NV1BA0_PIO_VOICE_LOCK) {
+            unsigned q = g_apu_mn++ & 63; g_apu_mring[q][0] = (uint32_t)d->ep_frame_div; g_apu_mring[q][1] = method; g_apu_mring[q][2] = argument; g_apu_mring[q][3] = d->regs[NV_PAPU_FECV];
+        }
+    }
+    {   /* testing: RECOMP_APU_PIOSTAT=1 -- how often each method is sent, every 10 s */
+        static int on = -1; static unsigned cnt[0x400]; static uint32_t t0;
+        if (on < 0) on = getenv("RECOMP_APU_PIOSTAT") != NULL;
+        if (on) {
+            uint32_t now = (uint32_t)GetTickCount();
+            cnt[(method >> 2) & 0x3FF]++;
+            if (!t0) t0 = now;
+            if (now - t0 >= 10000) {
+                unsigned i;
+                for (i = 0; i < 0x400; i++) if (cnt[i] >= 5) fprintf(stderr, "  [PIOSTAT] method %04X: %.1f/s\n", i << 2, cnt[i] / 10.0);
+                memset(cnt, 0, sizeof cnt); t0 = now;
+            }
+        }
+    }
     switch (method) {
     case NV1BA0_PIO_VOICE_LOCK:
         voice_lock(d, (uint16_t)d->regs[NV_PAPU_FECV], argument & 1);
@@ -387,6 +411,11 @@ static void fe_method(MCPXAPUState *d, uint32_t method, uint32_t argument)
     }
 
     case NV1BA0_PIO_SET_VOICE_TAR_VOLA:
+        {   /* testing: RECOMP_APU_VOLLOG=1 -- each voice's VOLA as it is sent (ms, voice, value) */
+            static int vl = -1; static unsigned n;
+            if (vl < 0) vl = getenv("RECOMP_APU_VOLLOG") != NULL;
+            if (vl && n++ < 200000) fprintf(stderr, "  [VOLA] %u %u %08X\n", (unsigned)GetTickCount(), (unsigned)d->regs[NV_PAPU_FECV], argument);
+        }
         voice_set_mask(d, (uint16_t)d->regs[NV_PAPU_FECV],
                        NV_PAVS_VOICE_TAR_VOLA, 0xFFFFFFFF, argument);
         break;
@@ -596,8 +625,23 @@ void mcpx_apu_vp_write(void *opaque, hwaddr addr, uint64_t val,
     MCPXAPUState *d = (MCPXAPUState *)opaque;
     (void)size;
 
-    /* Dispatch known methods through fe_method */
-    fe_method(d, (uint32_t)addr, (uint32_t)val);
+    /* Dispatch known methods through fe_method.
+     *
+     * (1.9.5) Under the APU's lock: a method changes the voice lists (a voice
+     * put on, one taken off as idle) that the sound thread walks each 32-sample
+     * frame, and the two met unguarded -- a voice the title put on while the
+     * thread was taking another off could be lost from its list: still on,
+     * never played again (sounds cut off part way). The more often the title
+     * talks to the sound chip (every frame of an unlocked frame rate), the
+     * more often they met. RECOMP_APU_NOPIOLOCK=1: as before. */
+    {
+        static int nolock = -1;
+        if (nolock < 0) nolock = getenv("RECOMP_APU_NOPIOLOCK") != NULL;
+        if (nolock) { fe_method(d, (uint32_t)addr, (uint32_t)val); return; }
+        qemu_mutex_lock(&d->lock);
+        fe_method(d, (uint32_t)addr, (uint32_t)val);
+        qemu_mutex_unlock(&d->lock);
+    }
 }
 
 /* ============================================================
@@ -1075,6 +1119,7 @@ static void voice_process(MCPXAPUState *d,
     bool paused = voice_get_mask(d, v, NV_PAVS_VOICE_PAR_STATE,
                                  NV_PAVS_VOICE_PAR_STATE_PAUSED) != 0;
 
+    { extern uint32_t g_apu_vpcall[]; g_apu_vpcall[v] = (uint32_t)d->ep_frame_div; }
     struct McpxApuDebugVoice *dbg = &g_dbg.vp.v[v];
     dbg->active = true;
     dbg->stereo = stereo;
@@ -1221,7 +1266,69 @@ static void voice_process(MCPXAPUState *d,
         }
     }
 
-    /* Mix into bins */
+    {   /* testing: RECOMP_APU_GSTAT=1 -- how often a playing voice's gain, pitch or filter changes between frames, every 10 s */
+        static int on = -1; static float lg[MCPX_HW_MAX_VOICES][2], lr[MCPX_HW_MAX_VOICES];
+        static unsigned frames, gch, ech, rch, big; static uint32_t t0;
+        if (on < 0) on = getenv("RECOMP_APU_GSTAT") != NULL;
+        if (on) {
+            float g0 = ea_value * attenuate(vol[0]), g1 = ea_value * attenuate(vol[1]);
+            frames++;
+            if (g0 != lg[v][0] || g1 != lg[v][1]) {
+                float dd = fabsf(g0 - lg[v][0]) + fabsf(g1 - lg[v][1]);
+                gch++; if (dd > 0.01f) big++;
+                if (attenuate(vol[0]) == attenuate(vol[0]) && lg[v][0] != 0 && ea_value != 1.0f) ech++;
+            }
+            if (rate != lr[v]) rch++;
+            lg[v][0] = g0; lg[v][1] = g1; lr[v] = rate;
+            if (!t0) t0 = (uint32_t)GetTickCount();
+            if ((uint32_t)GetTickCount() - t0 >= 10000) {
+                fprintf(stderr, "  [GSTAT] %u voice frames: gain changed %u (%u by over 1%%, %u in an envelope), rate changed %u\n", frames, gch, big, ech, rch);
+                frames = gch = ech = rch = big = 0; t0 = (uint32_t)GetTickCount();
+            }
+        }
+    }
+    /* Mix into bins.
+     *
+     * A voice's gain (its volumes x its amplitude envelope) moves from one
+     * 32-sample frame to the next in steps, and a step in the middle of a
+     * sound is heard as a click -- with a title that updates its 3D sounds
+     * every frame, as a faint crackle, more of it the higher the frame rate.
+     * The MCPX ramps a voice's current volume toward its target; here the
+     * gain glides from the last frame's to this one's across the frame
+     * (a voice just started begins at its gain). RECOMP_APU_NORAMP=1: steps. */
+    {   /* testing: RECOMP_APU_LIFELOG=1 -- each sound's life: [LIFE] base, frames played, frames above a quarter of its peak gain, peak */
+        static int on = -1; static uint32_t lf[MCPX_HW_MAX_VOICES], st[MCPX_HW_MAX_VOICES], ba0[MCPX_HW_MAX_VOICES], hi[MCPX_HW_MAX_VOICES]; static float pk[MCPX_HW_MAX_VOICES];
+        static float gl[MCPX_HW_MAX_VOICES][2048]; static uint16_t ng[MCPX_HW_MAX_VOICES];
+        if (on < 0) on = getenv("RECOMP_APU_LIFELOG") != NULL;
+        if (on) {
+            uint32_t now = (uint32_t)d->ep_frame_div, ba = voice_get_mask(d, v, NV_PAVS_VOICE_CUR_PSL_START, NV_PAVS_VOICE_CUR_PSL_START_BA);
+            float g = ea_value * (attenuate(vol[0]) + attenuate(vol[1])) * 0.5f;
+            int k;
+            for (k = 0; k < MCPX_HW_MAX_VOICES; k++)   /* voices that stopped being processed: their life ends */
+                if (st[k] && lf[k] + 2u < now) {
+                    unsigned j, q = 0; for (j = 0; j < ng[k]; j++) if (gl[k][j] > pk[k] * 0.25f) q++;
+                    fprintf(stderr, "  [LIFE] %06X %u %u %.4f st%d off %+ld act%d pau%d called %d\n", ba0[k], lf[k] - st[k] + 1, q, pk[k], (int)voice_get_mask(d, (uint16_t)k, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE), g_apu_offra[k] ? (long)((char *)g_apu_offra[k] - (char *)voice_off) : 0L,
+                            (int)voice_get_mask(d, (uint16_t)k, NV_PAVS_VOICE_PAR_STATE, NV_PAVS_VOICE_PAR_STATE_ACTIVE_VOICE), (int)voice_get_mask(d, (uint16_t)k, NV_PAVS_VOICE_PAR_STATE, NV_PAVS_VOICE_PAR_STATE_PAUSED), (int)(now - g_apu_vpcall[k]));
+                    {   static int shown; if (shown < 6 && lf[k] - st[k] > 3 && (int)(now - g_apu_vpcall[k]) >= 3 && voice_get_mask(d, (uint16_t)k, NV_PAVS_VOICE_PAR_STATE, NV_PAVS_VOICE_PAR_STATE_ACTIVE_VOICE)) {
+                        unsigned j; shown++; fprintf(stderr, "    voice %u last played frame %u (now %u); methods:\n", k, lf[k], now);
+                        for (j = g_apu_mn - 64; j != g_apu_mn; j++) { uint32_t *r = g_apu_mring[j & 63]; if (r[0] + 40u >= lf[k] && r[0] <= now) fprintf(stderr, "      %u %04X %08X cv %u\n", r[0], r[1], r[2], r[3]); }
+                        fprintf(stderr, "    lists 2D %04X 3D %04X MP %04X\n", d->regs[NV_PAPU_TVL2D], d->regs[NV_PAPU_TVL3D], d->regs[NV_PAPU_TVLMP]);
+                    } } g_apu_offra[k] = 0; st[k] = 0;
+                }
+            if (!st[v] || lf[v] + 1u != now || ba != ba0[v]) {
+                if (st[v]) { unsigned j, q = 0; for (j = 0; j < ng[v]; j++) if (gl[v][j] > pk[v] * 0.25f) q++; fprintf(stderr, "  [LIFE] %06X %u %u %.4f\n", ba0[v], lf[v] - st[v] + 1, q, pk[v]); }
+                st[v] = now ? now : 1; ba0[v] = ba; pk[v] = 0; ng[v] = 0; hi[v] = 0;
+            }
+            lf[v] = now; if (g > pk[v]) pk[v] = g; if (ng[v] < 2048) gl[v][ng[v]++] = g;
+        }
+    }
+    static float s_lastg[MCPX_HW_MAX_VOICES][8];
+    static uint8_t s_lastbin[MCPX_HW_MAX_VOICES][8];
+    static uint32_t s_lastframe[MCPX_HW_MAX_VOICES];
+    static int noramp = -1;
+    if (noramp < 0) noramp = getenv("RECOMP_APU_NORAMP") != NULL;
+    bool cont = !noramp && s_lastframe[v] == (uint32_t)d->ep_frame_div - 1u;
+    s_lastframe[v] = (uint32_t)d->ep_frame_div;
     for (int b = 0; b < 8; b++) {
         float g = ea_value;
         float hr;
@@ -1231,8 +1338,17 @@ static void voice_process(MCPXAPUState *d,
             hr = (float)(1 << d->vp.submix_headroom[bin[b]]);
         }
         g *= attenuate(vol[b]) / hr;
-        for (int i = 0; i < NUM_SAMPLES_PER_FRAME; i++) {
-            mixbins[bin[b]][i] += g * samples[i][b % channels];
+        float g0 = (cont && s_lastbin[v][b] == (uint8_t)bin[b]) ? s_lastg[v][b] : g;
+        s_lastg[v][b] = g; s_lastbin[v][b] = (uint8_t)bin[b];
+        if (g0 == g) {
+            for (int i = 0; i < NUM_SAMPLES_PER_FRAME; i++) {
+                mixbins[bin[b]][i] += g * samples[i][b % channels];
+            }
+        } else {
+            float dg = (g - g0) / (float)NUM_SAMPLES_PER_FRAME;
+            for (int i = 0; i < NUM_SAMPLES_PER_FRAME; i++) {
+                mixbins[bin[b]][i] += (g0 + dg * (float)(i + 1)) * samples[i][b % channels];
+            }
         }
     }
 

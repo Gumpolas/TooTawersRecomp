@@ -2580,11 +2580,12 @@ static int gpu_batch_hw(HwVp *hv, uint32_t nverts)
     return 1;
 }
 
+static int g_null3_draw;   /* (RECOMP_GPU_NULL=3) */
 static void gpu_batch(void)
 {
-    {   static int nul = -1;   /* testing: RECOMP_GPU_NULL=1 -- no drawing (CPU profiles of the game) */
-        if (nul < 0) nul = getenv("RECOMP_GPU_NULL") != NULL;
-        if (nul) return;
+    {   static int nul = -1;   /* testing: RECOMP_GPU_NULL=1 -- no drawing (CPU profiles of the game); =3: only the frames a picture is asked of */
+        if (nul < 0) { const char *e = getenv("RECOMP_GPU_NULL"); nul = !e ? 0 : *e == '3' ? 3 : 1; }
+        if (nul == 1 || (nul == 3 && !g_null3_draw)) return;
     }
     uint32_t i, n = s_gpu.idx_count, nverts = 0;
     uint32_t vb_at, ib_at;
@@ -3025,6 +3026,15 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     hud_frame_end();   /* this frame's HUD pieces, grouped (hud_wide_x) */
     GSurf *s = gsurf_find(base, 0);
     int wide;
+    {   /* testing: RECOMP_GPU_NULL=2 -- nothing shown either (the game's own speed, unpaced by the window) */
+        static int nul = -1;
+        if (nul < 0) { const char *e = getenv("RECOMP_GPU_NULL"); nul = !e ? 0 : *e == '2' ? 2 : *e == '3' ? 3 : 0; }
+        if (nul == 2) return;
+        if (nul == 3) {   /* (=3: a frame drawn and shown only when a picture is asked for -- the whole of the frame after the ask) */
+            if (!g_dump_req[0]) { g_null3_draw = 0; return; }
+            if (!g_null3_draw) { g_null3_draw = 1; return; }
+        }
+    }
     if (getenv("RECOMP_FB_DUMP")) {
         static unsigned every, k;
         if (!every) {

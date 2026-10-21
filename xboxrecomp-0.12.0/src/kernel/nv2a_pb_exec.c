@@ -2090,34 +2090,39 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param);
  * nothing -- only the next draw's vertices arrived --, only vertex-program
  * constants, or other state / an action (a clear, a flip, a fence, a blit).
  * A register written with the value it already has changes nothing. */
-static void pb_note_change1(uint32_t subch, uint32_t method, uint32_t param)
+/* (1.9.5) returns whether a register or action changed (the gathered draws
+ * must go out first): read back from s_chg, the byte just written there
+ * stalled every method */
+static int pb_note_change1(uint32_t subch, uint32_t method, uint32_t param)
 {
     uint32_t mi;
-    if (subch != 0) { s_chg |= CHG_STATE | CHG_ACTION; GRP_SET(GRP_OTHER); return; }
+    int chg = 0;
+    if (subch != 0) { s_chg |= CHG_STATE | CHG_ACTION; GRP_SET(GRP_OTHER); return 1; }
     switch (method) {
     case 0x17FC: case 0x1800: case 0x1808: case 0x1810: case 0x1818:   /* BEGIN_END, the draw's indices / vertices */
     case 0x1EA4: case 0x1E9C:                                            /* constant / program load positions */
-        return;
+        return 0;
     case 0x0100: case 0x0110: case 0x0120: case 0x0124: case 0x0128: case 0x012C: case 0x0130:   /* NOP (callbacks), flips */
     case 0x01A4: case 0x1D6C: case 0x1D70: case 0x1D94:                 /* semaphore, clear */
     case 0x1710: case 0x1714:                                            /* vertex cache invalidation */
         s_chg |= CHG_STATE | CHG_ACTION; GRP_SET(GRP_OTHER);
-        return;
+        return 1;
     default: break;
     }
     if (method >= 0x0B80 && method < 0x0C00) {                          /* a constant's component */
         if (s_3d.c_load >= VP_CONSTS || memcmp(&s_3d.c[s_3d.c_load][s_3d.c_comp], &param, 4)) { s_chg |= CHG_CONST; s_vpc_dirty = 1; }
-        return;
+        return 0;
     }
     if (method >= 0x0B00 && method < 0x0B80) {                          /* a program word */
-        if (s_3d.load_slot >= VP_SLOTS || s_3d.prog[s_3d.load_slot][s_3d.load_word] != param) { s_chg |= CHG_STATE; s_vp_gen++; }
-        return;
+        if (s_3d.load_slot >= VP_SLOTS || s_3d.prog[s_3d.load_slot][s_3d.load_word] != param) { s_chg |= CHG_STATE; s_vp_gen++; return 1; }
+        return 0;
     }
     if ((method == 0x1EA0 || method == 0x1E94) && s_mlast[method >> 2] != param) s_vp_gen++;   /* program start, mode */
-    if ((method >= 0x1500 && method < 0x1540) || (method >= 0x1880 && method < 0x1B00)) { s_chg |= CHG_STATE; GRP_SET(GRP_OTHER); return; }   /* immediate vertices */
+    if ((method >= 0x1500 && method < 0x1540) || (method >= 0x1880 && method < 0x1B00)) { s_chg |= CHG_STATE; GRP_SET(GRP_OTHER); return 1; }   /* immediate vertices */
     mi = (method >> 2) & 0x7FF;
     if (s_mlast[mi] != param || !(s_mseen[mi >> 5] & (1u << (mi & 31)))) {
         s_mlast[mi] = param; s_mseen[mi >> 5] |= 1u << (mi & 31); s_chg |= CHG_STATE; GRP_SET(grp_of(method));
+        chg = 1;
         {   /* testing: RECOMP_CHG_HIST=1 -- which registers change between draws, every 5 s */
             static int on = -1; static unsigned cnt[0x800]; static DWORD t;
             if (on < 0) on = getenv("RECOMP_CHG_HIST") != NULL;
@@ -2138,6 +2143,7 @@ static void pb_note_change1(uint32_t subch, uint32_t method, uint32_t param)
             }
         }
     }
+    return chg;
 }
 /* (1.9.3) A run of INLINE_ARRAY words from the render thread's ring, in one
  * piece: what nv2a_pb_exec_method does with each, without going through
@@ -2313,8 +2319,7 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
                     subch, method, param);
     }
 
-    pb_note_change1(subch, method, param);
-    if (s_chg & ~CHG_CONST) gpu_mb_flush();   /* (the gathered draws go out before anything else changes) */
+    if (pb_note_change1(subch, method, param)) gpu_mb_flush();   /* (the gathered draws go out before anything else changes) */
     if (subch == 2 || subch == 3) {        /* D3D's CopyRects: image blit + 2D surfaces */
         if (blit_method(subch, method, param))
             return;
@@ -2531,11 +2536,11 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
             nf++;
             if (now - t0 >= 1000) {
                 {
-                    extern volatile unsigned g_apu_short;
-                    static unsigned sh0;
-                    fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u); sound voices short of data %u\n",
-                            nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3], g_apu_short - sh0);
-                    sh0 = g_apu_short;
+                    extern volatile unsigned g_apu_short, g_apu_feheld;
+                    static unsigned sh0, fh0;
+                    fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u); sound voices short of data %u; sound frames held %u\n",
+                            nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3], g_apu_short - sh0, g_apu_feheld - fh0);
+                    sh0 = g_apu_short; fh0 = g_apu_feheld;
                 }
                 {   /* (1.9.3) where a frame's time goes on the CPU: the GPU commands
                      * turned into Direct3D 11 calls (the pushbuffer runs, on the
@@ -2559,8 +2564,9 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
                                 all, pbm, (pr - pr0) * k, wtm, all - pbm - wtm, nf ? (s_3d.batches - b0) / nf : 0);
 #if defined(_WIN32)
                     if (nf && g_perf_rt_ticks) {
-                        fprintf(stderr, "  [PERFD3D] per frame: %u vertex-constant updates, %u pixel-constant updates, %u texture rebinds, %u pixel shader / %u vertex shader / %u layout changes, %u blend-depth changes, %u commands\n",
-                                g_cnt_vpc / nf, g_cnt_cbps / nf, g_cnt_srv / nf, g_cnt_ps / nf, g_cnt_vs / nf, g_cnt_il / nf, g_cnt_om / nf, g_cnt_rt / nf);
+                        fprintf(stderr, "  [PERFD3D] per frame: %u vertex-constant updates, %u pixel-constant updates, %u texture rebinds, %u pixel shader / %u vertex shader / %u layout changes, %u blend-depth changes, %u commands; %u draws joined across a constant change\n",
+                                g_cnt_vpc / nf, g_cnt_cbps / nf, g_cnt_srv / nf, g_cnt_ps / nf, g_cnt_vs / nf, g_cnt_il / nf, g_cnt_om / nf, g_cnt_rt / nf, g_cp_joined / nf);
+                        g_cp_joined = 0;
                         g_cnt_vpc = g_cnt_cbps = g_cnt_srv = g_cnt_ps = g_cnt_vs = g_cnt_il = g_cnt_om = g_cnt_rt = 0;
                     }
 #endif

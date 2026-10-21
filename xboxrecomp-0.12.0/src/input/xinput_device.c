@@ -869,6 +869,17 @@ int xbox_PadScriptFlag(int n) { return n > 0 && n < 32 && (s_ps_flags & (1u << n
 static struct { DWORD ms; int anchor; char b[8]; } s_ps_ev[512];
 /* Loaded on first use: the first input poll, or the first file open (an
  * anchor's file can be opened before the game ever reads the pad). */
+/* (1.9.5) testing: RECOMP_PAD_GAMETIME=1 -- the script's times in the
+ * game's own time (the sum of its frame times, xbox_pad_clock), so a run at
+ * a fixed frame time (TT_FAKE_FRAME_MS) presses the same buttons at the same
+ * moments of the game whatever the real frame rate */
+uint32_t (*volatile xbox_pad_clock)(void);
+static DWORD pad_now(void)
+{
+    static int gt = -1;
+    if (gt < 0) gt = getenv("RECOMP_PAD_GAMETIME") != NULL;
+    return (gt && xbox_pad_clock) ? (DWORD)xbox_pad_clock() : GetTickCount();
+}
 static void pad_script_load(void)
 {
     const char *f;
@@ -899,7 +910,7 @@ static void pad_script_load(void)
         }
         fclose(fp);
     }
-    s_ps_t0 = GetTickCount();
+    s_ps_t0 = pad_now();
 }
 
 void xbox_PadScriptNotePath(const char *path)
@@ -908,7 +919,7 @@ void xbox_PadScriptNotePath(const char *path)
     pad_script_load();
     for (i = 0; i < s_anchor_n; i++)
         if (!s_anchor_t[i] && path && strstr(path, s_anchor_name[i]))
-            s_anchor_t[i] = GetTickCount();
+            s_anchor_t[i] = pad_now();
 }
 
 static void pad_script(XBOX_INPUT_STATE *s)
@@ -924,13 +935,13 @@ static void pad_script(XBOX_INPUT_STATE *s)
         const char *b = ev[i].b;
         if (ev[i].anchor >= 0) {
             if (!s_anchor_t[ev[i].anchor]) continue;
-            now = GetTickCount() - s_anchor_t[ev[i].anchor];
+            now = pad_now() - s_anchor_t[ev[i].anchor];
         } else {
             /* "CLEAR" (usually anchored): stop every untimed-to-a-file line,
              * e.g. "loadsave.bff+0 CLEAR" ends a START-spam once a screen
              * is reached. */
             if (s_ps_cleared) continue;
-            now = GetTickCount() - t0;
+            now = pad_now() - t0;
         }
         if (!strncmp(ev[i].b, "FLAG", 4)) {
             /* "FLAGn": a named moment for test hooks (xbox_PadScriptFlag) */

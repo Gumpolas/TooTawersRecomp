@@ -447,12 +447,112 @@ __declspec(dllimport) int __stdcall SwitchToThread(void);
  * frame, so game time keeps real time at any frame rate.
  * TT_NO_MSCARRY=1: as the game did it. */
 extern void sub_000E3350_gen(void);
+static void tt_frametime(void);
+/* (1.9.5) The game's own clock: the sum of the whole-ms frame times it was
+ * given (testing: RECOMP_PAD_GAMETIME presses a pad script's buttons by it;
+ * TT_DUMP_GAME_MS=n writes a picture every n ms of it to TT_DUMP_DIR -- so
+ * runs at different fixed frame times, TT_FAKE_FRAME_MS, can be compared
+ * moment for moment) */
+static volatile uint32_t tt_game_ms, tt_lvl_ms;
+static float tt_real_ms;   /* (the frame's time before any TT_FAKE_FRAME_MS) */
+static uint32_t tt_game_clock(void) { return getenv("TT_PADCLOCK_LVL") ? tt_lvl_ms : tt_game_ms; }
+/* testing: TT_MEMDUMP_GAME=prefix, TT_MEMDUMP_AT=t1,t2,... -- all of RAM at
+ * those ms of game time after the last long frame (a level's load ends with
+ * one): two runs at different fixed frame times compared word for word find
+ * what in the game keeps time per frame instead of per millisecond */
+static void tt_memdump_game(uint32_t before, uint32_t now)
+{
+    static const char *pre = (const char *)1; static uint32_t at[16]; static int nat;
+    int i;
+    if (pre == (const char *)1) {
+        const char *e = getenv("TT_MEMDUMP_AT");
+        pre = getenv("TT_MEMDUMP_GAME");
+        while (e && *e && nat < 16) { at[nat++] = (uint32_t)atoi(e); while (*e && *e != ',') e++; if (*e) e++; }
+    }
+    if (!pre) return;
+    for (i = 0; i < nat; i++) if (before < at[i] && now >= at[i]) {
+        extern void *fopen(const char *, const char *);
+        extern size_t fwrite(const void *, size_t, size_t, void *);
+        extern int fclose(void *);
+        char nm[300]; void *f;
+        size_t pl = strlen(pre) < 280 ? strlen(pre) : 280;
+        memcpy(nm, pre, pl); nm[pl] = (char)('0' + i / 10); nm[pl + 1] = (char)('0' + i % 10); memcpy(nm + pl + 2, ".bin", 5);
+        if ((f = fopen(nm, "wb"))) { fwrite((const void *)XBOX_PTR(0x10000u), 1, 0x3FF0000u, f); fclose(f); }
+        memcpy(nm + pl + 2, "c.bin", 6);   /* (and the contiguous window at 0x80000000 -- separate memory here, where many objects live) */
+        if ((f = fopen(nm, "wb"))) { fwrite((const void *)XBOX_PTR(0x80000000u), 1, 0x4000000u, f); fclose(f); }
+        tt_dbg("  [MEMDUMP] %s at %u ms of game time (frame %u ms)\n", nm, now, now - before);
+    }
+}
 void sub_000E3350(void)
+{
+    extern uint32_t (*volatile xbox_pad_clock)(void);
+    float ms; uint32_t w;
+    if (!xbox_pad_clock) xbox_pad_clock = tt_game_clock;
+    tt_frametime();
+    w = MEM32(0x4B8B98u); memcpy(&ms, &w, 4);
+    if (tt_real_ms >= 100.0f) { static int lg = -1; if (lg < 0) lg = getenv("TT_LVLLOG") != NULL; if (lg) tt_dbg("  [LVLRESET] at game %u ms, level clock was %u (frame %.0f ms)\n", tt_game_ms, tt_lvl_ms, tt_real_ms); tt_lvl_ms = 0; }
+    if (ms >= 1.0f && ms < 100.0f) {
+        uint32_t lb = tt_lvl_ms;
+        tt_lvl_ms += (uint32_t)ms;
+        tt_memdump_game(lb, tt_lvl_ms);
+        {   /* testing: TT_POSLOG=n -- the player's place every n ms of game time ([POS] lines) */
+            static int pl = -1;
+            if (pl < 0) { const char *e = getenv("TT_POSLOG"); pl = e ? atoi(e) : 0; }
+            if (pl > 0 && lb / (uint32_t)pl != tt_lvl_ms / (uint32_t)pl) {
+                uint32_t p = MEM32(0x43B15Cu);
+                if (p) { float x, y, z; uint32_t v; v = MEM32(p + 0xF0); memcpy(&x, &v, 4); v = MEM32(p + 0xF4); memcpy(&y, &v, 4); v = MEM32(p + 0xF8); memcpy(&z, &v, 4);
+                    tt_dbg("[POS] %u %.3f %.3f %.3f\n", tt_lvl_ms, x, y, z); }
+            }
+        }
+        {   /* testing: TT_ACTLOG=n -- every n ms of game time, each actor (vtable 0x001741C0, in the
+             * contiguous window) whose height moved by over 0.5 since the last look ([ACT] t addr x y z) */
+            static int al = -1; static uint32_t aaddr[512]; static float az[512]; static int an;
+            if (al < 0) { const char *e = getenv("TT_ACTLOG"); al = e ? atoi(e) : 0; }
+            if (al > 0 && lb / (uint32_t)al != tt_lvl_ms / (uint32_t)al) {
+                const uint32_t *w = (const uint32_t *)XBOX_PTR(0x80000000u);
+                uint32_t i;
+                for (i = 0; i < 0x4000000u / 4u - 0x200u; i++) if (w[i] == 0x001741C0u) {
+                    uint32_t o = 0x80000000u + i * 4u; float x, y, z; int k;
+                    memcpy(&x, &w[i + 0xF0 / 4], 4); memcpy(&y, &w[i + 0xF4 / 4], 4); memcpy(&z, &w[i + 0xF8 / 4], 4);
+                    for (k = 0; k < an && aaddr[k] != o; k++) {}
+                    if (k == an && an < 512) { aaddr[an] = o; az[an] = z; an++; tt_dbg("[ACT] %u %08X new %.2f %.2f %.2f\n", tt_lvl_ms, o, x, y, z); }
+                    else if (k < an && (z - az[k] > 0.5f || az[k] - z > 0.5f)) { az[k] = z; tt_dbg("[ACT] %u %08X %.2f %.2f %.2f\n", tt_lvl_ms, o, x, y, z); }
+                }
+            }
+        }
+#if !defined(_WIN32)
+        {   /* testing: TT_WATCH=guest address, from TT_WATCH_AT ms of game time ([WATCH] lines: who writes it) */
+            static int on = -1; static uint32_t wa, wat;
+            if (on < 0) { const char *e = getenv("TT_WWATCH"); on = e != NULL; if (e) wa = (uint32_t)strtoul(e, NULL, 16); e = getenv("TT_WWATCH_AT"); wat = e ? (uint32_t)atoi(e) : 10000; }
+            if (on && tt_lvl_ms >= wat) { extern void xbox_WatchArm(void *); static int said; if (!said++) tt_dbg("[WATCH] arming %08X at %u ms\n", wa, tt_lvl_ms); { static const uint32_t al[6] = { 0, 0x04000000u, 0x08000000u, 0x0C000000u, 0x80000000u, 0xF0000000u }; int q; for (q = 0; q < 6; q++) xbox_WatchArm((void *)XBOX_PTR((wa & 0x03FFFFFFu) | al[q])); } }
+        }
+#endif
+        static int every = -1, bylvl = -1; static const char *dir;
+        uint32_t before = tt_game_ms;
+        tt_game_ms += (uint32_t)ms;
+        if (bylvl < 0) bylvl = getenv("TT_DUMP_LVL") != NULL;   /* testing: pictures by the time since the level's load ended */
+        if (bylvl) { static uint32_t mx; if (lb == 0 && mx > 30000u && every > 0) every = 0; if (tt_lvl_ms > mx) mx = tt_lvl_ms; before = lb; }   /* (until the level clock restarts after 30 s) */
+        if (every < 0) { const char *e = getenv("TT_DUMP_GAME_MS"); every = e ? atoi(e) : 0; dir = getenv("TT_DUMP_DIR"); if (!dir) dir = "."; }
+        if (every > 0 && before / (uint32_t)every != (bylvl ? tt_lvl_ms : tt_game_ms) / (uint32_t)every) {
+            extern void xbox_PresentDumpRequest(const char *path);
+            static char path[600];
+            uint32_t v = (bylvl ? tt_lvl_ms : tt_game_ms) / (uint32_t)every * (uint32_t)every, n = 0, k;
+            char num[8];
+            for (k = 0; k < 7; k++) { num[6 - k] = (char)('0' + v % 10); v /= 10; }
+            num[7] = 0;
+            while (dir[n] && n < 500) { path[n] = dir[n]; n++; }
+            memcpy(path + n, "/g_", 3); memcpy(path + n + 3, num, 7); memcpy(path + n + 10, ".bmp", 5);
+            xbox_PresentDumpRequest(path);
+        }
+    }
+}
+static void tt_frametime(void)
 {
     static int off = -1;
     static double carry;
     float ms;
     sub_000E3350_gen();
+    { uint32_t w0 = MEM32(0x4B8B98u); memcpy(&tt_real_ms, &w0, 4); }
     {   /* testing: TT_FAKE_FRAME_MS=x -- every frame's time is x ms, as at 1000/x fps */
         static float fake = -1.0f;
         if (fake < 0.0f) { const char *e = getenv("TT_FAKE_FRAME_MS"); fake = e ? (float)atof(e) : 0.0f; }
@@ -468,7 +568,8 @@ void sub_000E3350(void)
     if (!(ms > 0.0f) || ms >= 100.0f) { carry = 0; return; }
     /* (steps far under a millisecond are not frames: a loading screen ticks
      * the timer in a tight loop, and the world's step was 0 there -- left so) */
-    if (ms < 0.5f) return;
+    /* (1.9.5: no longer left out -- frames a catch-up let through back to
+     * back could be under half a millisecond, and the world lost them) */
     {   /* for the log: the world's whole-ms time against the real time, every 10 s */
         static double real, world_before, world_after; static unsigned frames;
         real += ms; world_before += (int)ms; frames++;
@@ -490,10 +591,16 @@ void sub_000E3350(void)
         memcpy((void *)XBOX_PTR(0x4B8B98u), &fm, 4);
         memcpy((void *)XBOX_PTR(0x4B8BA0u), &fs, 4);
     }
-    /* (under a millisecond so far: the frame keeps its own small time --
-     * the world's whole-ms step is 0 this frame, as before, and nothing is
-     * divided by a zero frame time; unlocked stays under 1000 fps, so this
-     * is rare) */
+    else {
+        /* (under a millisecond so far: the world's whole-ms step is 0 this
+         * frame -- 1.9.5: written as 0, where the world had rounded the frame's
+         * own fraction UP to a millisecond (fistp) while animations cut it to
+         * nothing, and the carry then gave it again: above 1000 fps the world
+         * ran fast and animations slow beside it. The seconds keep the frame's
+         * small time, so nothing is divided by zero; unlocked stays at 1000
+         * fps or under, so this is rare) */
+        float z = 0.0f; memcpy((void *)XBOX_PTR(0x4B8B98u), &z, 4);
+    }
 }
 
 extern void sub_0011A8E0_gen(void);
@@ -513,7 +620,8 @@ void sub_0011A8E0(void)
              * a resource freed after this is no longer being drawn from */
             extern int xbox_Nv2aDrained(void);
             unsigned long long w0 = GetTickCount64();
-            while (!xbox_Nv2aDrained() && GetTickCount64() - w0 < 2000) SwitchToThread();
+            extern void xbox_PbWaitProgress(unsigned ms);
+            while (!xbox_Nv2aDrained() && GetTickCount64() - w0 < 2000) xbox_PbWaitProgress(1);
             tt_bot_in = 0;
             esp += 12;   /* ret 8 */
             return;
@@ -546,7 +654,7 @@ void sub_0011A8E0(void)
                     idle_since = 0;
                 }
                 if (now - t0 > 10000) break;   /* leave it to D3D */
-                SwitchToThread();
+                {   extern void xbox_PbWaitProgress(unsigned ms); xbox_PbWaitProgress(1); }   /* (1.9.5: not a spin) */
             }
         }
     }
@@ -834,7 +942,17 @@ static void tt_delay_hook(void)
         period = fq / hz;
         QueryPerformanceCounter(&now);
         if (now - next > period * 4 || next - now > period * 4) next = now;   /* (a pause, or the rate changed) */
-        if (now >= next) { MEM32(0x4B7618u) = 8; next += period; }
+        if (now >= next) {
+            MEM32(0x4B7618u) = 8;
+            /* (1.9.5) At 500 frames a second and up, the next frame no sooner
+             * than a period from now: catching up on a late frame used to let
+             * the next few through back to back, under a millisecond apart --
+             * frames the game's clock gives no whole millisecond, where its
+             * world rounded the step up and animations cut it to nothing, so
+             * at an unlocked rate characters ran (the Westfold intro's run)
+             * with their animations behind their feet. */
+            if (hz >= 500) next = now + period; else next += period;
+        }
     }
     if (getenv("TT_HUDCOUNT")) {   /* testing: is the HUD drawn (play) or not (a scene)? */
         extern __declspec(dllimport) unsigned long long __stdcall GetTickCount64(void);
@@ -1888,3 +2006,239 @@ void sub_0003F210(void)
 
 /* ---- (1.9.5) the hottest Direct3D library functions as native code ---- */
 #include "d3d_native.inc"
+
+/* (1.9.5) An animated object's clock at any frame rate.
+ *
+ * Each frame the animation update (0x0002B420) hands every animated object
+ * the frame time in whole ms, and 0x00028310 turns that into the object's
+ * step: whole ms of (frame time x the animation's speed, +0x534), the
+ * fraction cut off (__ftol) -- and every animation layer, blend and timed
+ * event of the object moves by that step. At 30 fps a 0.9-speed animation
+ * lost 0.7 of 30 ms; at 500 fps it lost 0.8 of every 1.8 ms, so animations
+ * played at half speed or less, and a slow layer (a turn of the head toward
+ * what a character looks at) did not move at all once the frame was short
+ * enough -- the heads that did not turn in the prologue above 60 fps.
+ * Here the fractions are kept per object and add up into later steps, so
+ * an animation keeps its speed at any frame rate. (The step reaches the
+ * original by its speed: for the one multiply the speed is set so the cut
+ * gives the step wanted, then put back.) TT_NO_ANIMCARRY=1: as before. */
+extern void sub_00028310_gen(void);
+#define TT_ANIMC_N 2048u
+static uint32_t tt_animc_key[TT_ANIMC_N];
+static float tt_animc_frac[TT_ANIMC_N];
+static uint32_t g_tt_anim_lastdt;
+static double g_tt_anim_deliv;
+void sub_00028310(void)
+{
+    static int off = -1;
+    uint32_t obj = ecx, h, i, spw, tmpw;
+    int32_t dt;
+    float spd, tmp;
+    double exact, whole;
+    if (off < 0) off = getenv("TT_NO_ANIMCARRY") != NULL;
+    dt = (int32_t)MEM32(esp + 4);
+    if (obj >= 0x10000u && dt > 0 && dt < 100) {   /* for the log: how much animation time the cut loses, every 10 s of game time */
+        static double want, cut, gt, swant, scut; static uint32_t calls, slow;
+        float s; uint32_t w = MEM32(obj + 0x534); memcpy(&s, &w, 4);
+        if (s == s && s < 1000.0f && s > -1000.0f) {
+            want += (double)dt * s; cut += (double)(int32_t)((double)dt * s); calls++;
+            if (s > 0.0f && s < 1.0f) { slow++; swant += (double)dt * s; scut += (double)(int32_t)((double)dt * s); }
+        }
+        if (g_tt_anim_lastdt != MEM32(0x4B8B94u)) { g_tt_anim_lastdt = MEM32(0x4B8B94u); gt += dt; }
+        if (gt >= 10000.0) {
+            tt_dbg("  [ANIMSTEP] %u object steps: the original's cut keeps %.1f%% of the animation time, %.1f%% for the %u at under full speed; here %.1f%%\n",
+                   calls, want > 0 ? cut * 100.0 / want : 100.0, swant > 0 ? scut * 100.0 / swant : 100.0, slow,
+                   want > 0 ? (off ? cut : g_tt_anim_deliv) * 100.0 / want : 100.0);
+            want = cut = gt = swant = scut = 0; calls = slow = 0; g_tt_anim_deliv = 0;
+        }
+    }
+    if (off || obj < 0x10000u || dt <= 0 || dt >= 100) { sub_00028310_gen(); return; }
+    spw = MEM32(obj + 0x534); memcpy(&spd, &spw, 4);
+    if (!(spd == spd) || spd > 1000.0f || spd < -1000.0f) { sub_00028310_gen(); return; }
+    h = (obj >> 4) * 2654435761u;
+    for (i = 0; i < 8; i++) {
+        uint32_t k = (h + i) & (TT_ANIMC_N - 1u);
+        if (tt_animc_key[k] == obj || tt_animc_key[k] == 0) { h = k; break; }
+    }
+    if (i == 8) { h &= TT_ANIMC_N - 1u; tt_animc_frac[h] = 0.0f; }   /* (full here: take the slot) */
+    if (tt_animc_key[h] != obj) { tt_animc_key[h] = obj; tt_animc_frac[h] = 0.0f; }
+    exact = (double)dt * (double)spd + (double)tt_animc_frac[h];
+    whole = exact >= 0.0 ? __builtin_floor(exact) : __builtin_ceil(exact);   /* (__ftol cuts toward zero) */
+    tt_animc_frac[h] = (float)(exact - whole);
+    if (tt_animc_frac[h] >= 1.0f || tt_animc_frac[h] <= -1.0f) tt_animc_frac[h] = 0.0f;
+    /* the speed that makes the original's cut of dt x speed give `whole` */
+    tmp = (float)((whole + (whole >= 0.0 ? 0.5 : -0.5)) / (double)dt);
+    if (whole == 0.0) tmp = 0.0f;
+    memcpy(&tmpw, &tmp, 4);
+    MEM32(obj + 0x534) = tmpw;
+    sub_00028310_gen();
+    g_tt_anim_deliv += (double)(int32_t)MEM32(obj + 0x530);
+    if (MEM32(obj + 0x534) == tmpw) MEM32(obj + 0x534) = spw;   /* (unless the update set a new speed) */
+}
+
+/* testing: TT_ADTLOG=1 -- the ms each animated object's update (0x00026AE0) is given, by caller, against the world's */
+extern void sub_00026AE0_gen(void);
+void sub_00026AE0(void)
+{
+    static int on = -1;
+    if (on < 0) on = getenv("TT_ADTLOG") != NULL;
+    if (on) {
+        static uint32_t callers[8], n[8], lastfr; static double got[8], world, ws;
+        uint32_t c = MEM32(esp), fr = MEM32(0x4B8B94u); int32_t d = (int32_t)MEM32(esp + 4); int k;
+        if (fr != lastfr) { float m, s; uint32_t w = MEM32(0x4B8B98u); memcpy(&m, &w, 4); w = MEM32(0x4B8BB0u); memcpy(&s, &w, 4); lastfr = fr; world += m; ws += s * 1000.0f; }
+        for (k = 0; k < 8 && callers[k] && callers[k] != c; k++) {}
+        if (k < 8) { callers[k] = c; n[k]++; got[k] += d; }
+        if (world >= 10000.0) {
+            for (k = 0; k < 8 && callers[k]; k++) tt_dbg("  [ADT] caller %08X: %u calls, %.0f ms given; world %.0f ms (real-time copy %.0f)\n", callers[k], n[k], got[k], world, ws);
+            memset(n, 0, sizeof n); memset(got, 0, sizeof got); world = ws = 0;
+        }
+    }
+    sub_00026AE0_gen();
+}
+
+/* testing: TT_SPLOG=1 -- who sets an actor's position (0x000977A0, thiscall x,y,z), every 10 s;
+ * TT_SPLOG=addr: that object's every move, with the caller */
+extern void sub_000977A0_gen(void);
+void sub_000977A0(void)
+{
+    static int on = -1; static uint32_t one;
+    if (on < 0) { const char *e = getenv("TT_SPLOG"); on = e != NULL; if (e) one = (uint32_t)strtoul(e, NULL, 16); if (e && !strcmp(e, "j")) one = 1u; else if (one < 0x10000u) one = 0; }
+    if (on) {
+        uint32_t c = MEM32(esp), obj = ecx;
+        if (one == 1u) {   /* TT_SPLOG=1j: anything coming down off the far plateau (z over 40 to under 60), its moves for 4 s */
+            static uint32_t jo[64], jt[64]; static int nj; int k; float z, oz; uint32_t w;
+            w = MEM32(esp + 12); memcpy(&z, &w, 4); w = MEM32(obj + 0xF8); memcpy(&oz, &w, 4);
+            for (k = 0; k < nj && jo[k] != obj; k++) {}
+            if (k == nj && oz > 40.0f && z < 60.0f && nj < 64) { jo[nj] = obj; jt[nj] = tt_lvl_ms; nj++; }
+            if (k < nj && tt_lvl_ms - jt[k] < 4000u) {
+                float x, y; w = MEM32(esp + 4); memcpy(&x, &w, 4); w = MEM32(esp + 8); memcpy(&y, &w, 4);
+                tt_dbg("[SPJ] %u %08X %08X/%08X %.3f %.3f %.3f (z %+.3f)\n", tt_lvl_ms, obj, c, MEM32(esp + 0x14), x, y, z, z - oz);
+#if !defined(_WIN32)
+                if (z - oz < -0.5f) {   /* a big step down: the host call stack (tools/wsym-style: offsets from tt_frametime) */
+                    extern int backtrace(void **, int);
+                    void *bt[24]; char b[600]; int q, n = 0, k2 = backtrace(bt, 24);
+                    for (q = 1; q < k2 && n < 560; q++) n += __builtin_snprintf(b + n, sizeof b - n, " %+ld", (long)((char *)bt[q] - (char *)tt_frametime));
+                    b[n] = 0; tt_dbg("[SPJS]%s\n", b);
+                }
+#endif
+            }
+        } else if (one) {
+            if (obj == one) {
+                float x, y, z, oz; uint32_t w;
+                w = MEM32(esp + 4); memcpy(&x, &w, 4); w = MEM32(esp + 8); memcpy(&y, &w, 4); w = MEM32(esp + 12); memcpy(&z, &w, 4);
+                w = MEM32(obj + 0xF8); memcpy(&oz, &w, 4);
+                tt_dbg("[SP] %u %08X %.3f %.3f %.3f (z %+.3f)\n", tt_lvl_ms, c, x, y, z, z - oz);
+#if !defined(_WIN32)
+                {   static uint32_t f0 = 1, f1; if (f0 == 1) { const char *e = getenv("TT_SPLOG_FROM"); f0 = e ? (uint32_t)atoi(e) : 0; e = getenv("TT_SPLOG_TO"); f1 = e ? (uint32_t)atoi(e) : 0; }
+                    if (tt_lvl_ms >= f0 && tt_lvl_ms <= f1) {
+                        extern int backtrace(void **, int);
+                        void *bt[24]; char b[600]; int q, n = 0, k2 = backtrace(bt, 24);
+                        for (q = 1; q < k2 && n < 560; q++) n += __builtin_snprintf(b + n, sizeof b - n, " %+ld", (long)((char *)bt[q] - (char *)tt_frametime));
+                        b[n] = 0; tt_dbg("[SPJS]%s\n", b);
+                    } }
+#endif
+            }
+        } else {
+            static uint32_t callers[32], n[32]; static uint32_t t0; int k;
+            for (k = 0; k < 32 && callers[k] && callers[k] != c; k++) {}
+            if (k < 32) { callers[k] = c; n[k]++; }
+            if (tt_lvl_ms - t0 >= 10000u) {
+                for (k = 0; k < 32 && callers[k]; k++) tt_dbg("  [SPLOG] caller %08X: %u\n", callers[k], n[k]);
+                memset(callers, 0, sizeof callers); memset(n, 0, sizeof n); t0 = tt_lvl_ms;
+            }
+        }
+    }
+    sub_000977A0_gen();
+}
+
+/* testing: TT_GSLOG=1 -- an actor's ground snap (0x000821F0, thiscall, 4 args) moving it more than 0.3 */
+extern void sub_000821F0_gen(void);
+void sub_000821F0(void)
+{
+    static int on = -1;
+    uint32_t obj = ecx, a1 = MEM32(esp + 4), a2 = MEM32(esp + 8), a3 = MEM32(esp + 12), a4 = MEM32(esp + 16);
+    float z0 = 0, z1, x, y; uint32_t w;
+    if (on < 0) on = getenv("TT_GSLOG") != NULL;
+    if (on) { w = MEM32(obj + 0xF8); memcpy(&z0, &w, 4); }
+    sub_000821F0_gen();
+    if (on) {
+        w = MEM32(obj + 0xF8); memcpy(&z1, &w, 4);
+        if (z1 - z0 > 0.3f || z1 - z0 < -0.3f) {
+            w = MEM32(obj + 0xF0); memcpy(&x, &w, 4); w = MEM32(obj + 0xF4); memcpy(&y, &w, 4);
+            float a[4]; int k; for (k = 0; k < 4; k++) { uint32_t pa = k == 0 ? a1 : k == 1 ? a2 : k == 2 ? a3 : a4; if (pa > 0x10000u && pa < 0xF0000000u) { w = MEM32(pa + (k == 0 ? 8 : 0)); memcpy(&a[k], &w, 4); } else a[k] = -999; }
+            tt_dbg("[GS] %u %08X %.3f %.3f z %.3f -> %.3f  args %08X %08X %08X %08X (%.3f %.3f %.3f %.3f) v %.3f\n", tt_lvl_ms, obj, x, y, z0, z1, a1, a2, a3, a4, a[0], a[1], a[2], a[3],
+                   (double)(*(float *)XBOX_PTR(obj + 0x2B4)));
+        }
+    }
+}
+
+/* (1.9.5) Falling at any frame rate.
+ *
+ * An actor's gravity step (0x000B9530, thiscall; the actor at arg+8) keeps
+ * two numbers: +0x2B0, which grows more negative by 0.3 a second (scaled by
+ * the frame time), and +0x2B4, the fall speed, to which +0x2B0 is added once
+ * a FRAME. The drop each frame is then fall speed x frame time. At 30 fps
+ * that is a fall; at 500 fps the fall speed builds 16 times as fast (a
+ * second's worth of frames adds 16 times as many terms), so anything that
+ * stepped off a ledge or jumped came down many times faster than it should,
+ * and landed deep: the orcs leaping across the prologue's chasm ended up
+ * half into the ground. Here the once-a-frame add is scaled to the frame
+ * time (x frame time / 30 fps frame) -- exactly the original at 30 fps.
+ * TT_NO_FALLFIX=1: as before. TT_FALLLOG=1: each landing ([LAND]). */
+extern void sub_000B9530_gen(void);
+void sub_000B9530(void)
+{
+    static int on = -1, off = -1;
+    uint32_t a = 0, w; float v0 = 0, v1, z0 = 0, z1, x, y;
+    static uint32_t fo[256]; static float ftop[256]; static uint32_t fn[256];
+    if (on < 0) on = getenv("TT_FALLLOG") != NULL;
+    if (off < 0) off = getenv("TT_NO_FALLFIX") != NULL;
+    a = MEM32(MEM32(esp + 4) + 8);
+    if (on && a) { w = MEM32(a + 0x2B4); memcpy(&v0, &w, 4); w = MEM32(a + 0xF8); memcpy(&z0, &w, 4); }
+    if (!off && a && ecx) {
+        uint32_t fl = MEM32(a + 0x110), wd = MEM32(ecx + 8);
+        if ((fl & 0x400u) && (fl & 0x1000u) && (fl & 0x4000u) && wd) {
+            float dt, acc, v, s;
+            w = MEM32(wd + 0x32004u); memcpy(&dt, &w, 4);
+            if (dt > 0.0f && dt < 0.1f) {
+                /* the same step the original takes, then its fall speed set so that adding acc gives v + acc x s */
+                w = MEM32(a + 0x2B0); memcpy(&acc, &w, 4);
+                acc = acc - dt * 0.3f; if (acc < -1.0f) acc = -1.0f;
+                w = MEM32(a + 0x2B4); memcpy(&v, &w, 4);
+                s = dt * 30.0f;
+                v = v + acc * s - acc;
+                memcpy(&w, &v, 4); MEM32(a + 0x2B4) = w;
+            }
+        }
+    }
+    {   /* testing: TT_FALLLOG=1 also counts the steps whose move (this frame's position less the last) is under 0.01 -- which the original drops */
+        static unsigned calls, tiny, moved; static uint32_t t0;
+        if (on && a && (MEM32(a + 0x110) & 0x5400u) == 0x5400u) {
+            float p[3], q[3]; int k; for (k = 0; k < 3; k++) { uint32_t w2 = MEM32(a + 0xF0 + 4 * k); memcpy(&p[k], &w2, 4); w2 = MEM32(a + 0x140 + 4 * k); memcpy(&q[k], &w2, 4); }
+            float d = (p[0]-q[0])*(p[0]-q[0]) + (p[1]-q[1])*(p[1]-q[1]) + (p[2]-q[2])*(p[2]-q[2]);
+            calls++; if (d > 0.0f) moved++; if (d > 0.0f && d < 0.0001f) tiny++;
+            if (tt_lvl_ms - t0 >= 10000u) { tt_dbg("  [FALLSTEP] %u steps, %u moving, %u of them under 0.01\n", calls, moved, tiny); calls = tiny = moved = 0; t0 = tt_lvl_ms; }
+        }
+    }
+    {   /* (1.9.5) the move this step must make before the collision takes it: 0.01 at 30 fps, and as much less as the
+         * frame is shorter (a fixed 0.01 dropped most of every move above about 300 fps, so things stood still or caught
+         * on the ground). The constant at 0x1702FC is the original's; it is set for the call and put back. */
+        uint32_t keep = MEM32(0x1702FCu), wd = ecx ? MEM32(ecx + 8) : 0;
+        float dt = 0.0f;
+        if (!off && wd) { w = MEM32(wd + 0x32004u); memcpy(&dt, &w, 4); }
+        if (!off && dt > 0.0f && dt < 1.0f / 30.0f) { float eps = 0.01f * dt * 30.0f; memcpy(&w, &eps, 4); MEM32(0x1702FCu) = w; }
+        sub_000B9530_gen();
+        MEM32(0x1702FCu) = keep;
+    }
+    if (on && a) {
+        uint32_t h = (a >> 4) & 255;
+        w = MEM32(a + 0x2B4); memcpy(&v1, &w, 4); w = MEM32(a + 0xF8); memcpy(&z1, &w, 4);
+        if (fo[h] != a) { fo[h] = a; ftop[h] = z0; fn[h] = 0; }
+        if (v0 >= -0.1001f) { ftop[h] = z0; fn[h] = 0; }     /* (on the ground before: a fall starts here) */
+        else fn[h]++;
+        if (v0 < -0.1001f && v1 >= -0.1001f && v1 <= -0.0999f && ftop[h] - z1 > 0.2f) {
+            w = MEM32(a + 0xF0); memcpy(&x, &w, 4); w = MEM32(a + 0xF4); memcpy(&y, &w, 4);
+            tt_dbg("[LAND] %u %08X %.3f %.3f fell %.3f -> %.3f in %u steps (v %.3f)\n", tt_lvl_ms, a, x, y, ftop[h], z1, fn[h], v0);
+        }
+    }
+}

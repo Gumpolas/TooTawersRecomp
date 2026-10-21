@@ -286,7 +286,7 @@ void mcpx_apu_monitor_finalize(MCPXAPUState *d)
             g_waveout.frames_written);
 }
 
-volatile unsigned g_apu_periods, g_apu_short;   /* (g_apu_short: voice frames a playing voice had no data for) */   /* 256-sample periods produced (187.5/s in real time) */
+volatile unsigned g_apu_periods, g_apu_short, g_apu_feheld;   /* (g_apu_short: voice frames a playing voice had no data for) */   /* 256-sample periods produced (187.5/s in real time) */
 
 void mcpx_apu_monitor_frame(MCPXAPUState *d)
 {
@@ -527,10 +527,24 @@ static void *mcpx_apu_frame_thread(void *arg)
         int xcntmode = GET_MASK(qatomic_read(&d->regs[NV_PAPU_SECTL]),
                                 NV_PAPU_SECTL_XCNTMODE);
         uint32_t fectl = qatomic_read(&d->regs[NV_PAPU_FECTL]);
+        /* (1.9.5) A held front end (DirectSound halts it around each batch of
+         * voice updates, and a method trap waits for the title) holds back the
+         * chip's METHODS; its voices keep playing. Here a frame that came round
+         * while the front end was held used to be skipped -- 32 samples of
+         * silence, 3-10% of all sound -- heard as crackle and sounds cutting
+         * out, the more so the more often the title updates (an unlocked frame
+         * rate). The voices play on now (methods are taken under the lock, so
+         * a list never changes mid-frame). RECOMP_APU_HOLDSKIP=1: as before. */
+        static int holdskip = -1;
+        if (holdskip < 0) holdskip = getenv("RECOMP_APU_HOLDSKIP") != NULL;
         bool apu_active = (xcntmode != NV_PAPU_SECTL_XCNTMODE_OFF) &&
-                          !(fectl & NV_PAPU_FECTL_FEMETHMODE_TRAPPED) &&
-                          !(fectl & NV_PAPU_FECTL_FEMETHMODE_HALTED);
+                          (!holdskip || (!(fectl & NV_PAPU_FECTL_FEMETHMODE_TRAPPED) &&
+                                         !(fectl & NV_PAPU_FECTL_FEMETHMODE_HALTED)));
 
+        {   /* (1.9.5) frames the sound chip skipped while the title held its front end (methods trapped/halted) */
+            extern volatile unsigned g_apu_feheld;
+            if (xcntmode != NV_PAPU_SECTL_XCNTMODE_OFF && ((fectl & NV_PAPU_FECTL_FEMETHMODE_TRAPPED) || (fectl & NV_PAPU_FECTL_FEMETHMODE_HALTED))) g_apu_feheld++;
+        }
         if (apu_active && !g_test_tone.active) {
             /* Full pipeline: VP voices → DSP → monitor → waveOut */
             se_frame(d);

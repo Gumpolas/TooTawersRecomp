@@ -415,10 +415,12 @@ static DWORD WINAPI pb_render_thread(LPVOID p)
 static int pb_async(void)
 {
     if (s_async < 0) {
-#if defined(_WIN32)
+        /* (1.9.5) OpenGL too: its context is made current by the first
+         * thread that draws (gpu_init), which is then the render thread */
         s_async = !getenv("RECOMP_GPU_SYNC");
-#else
-        s_async = 0;   /* (OpenGL's context belongs to one thread) */
+#if defined(__APPLE__)
+        /* (not yet tried on a Mac: Cocoa's OpenGL from a second thread) */
+        s_async = getenv("RECOMP_GPU_ASYNC") != NULL;
 #endif
         if (s_async) {
             s_ring = (uint32_t *)malloc((size_t)PB_RING * 8);
@@ -507,6 +509,26 @@ static void pb_emit_block(uint32_t hdr, const uint32_t *w, uint32_t n)
 }
 /* nothing recorded is still to be executed (the title's GPU-wait watchdog) */
 int xbox_PbRingEmpty(void) { return !s_async || s_ring_head == s_ring_tail; }
+/* (1.9.5) A wait for the render thread to get further, instead of spinning:
+ * woken when it has run what it was given (or at most ms later). The game's
+ * waits for the GPU (D3D's block-on-time) used to yield in a loop and kept a
+ * whole core busy whenever the render thread was the slower one. */
+void xbox_PbWaitProgress(unsigned ms)
+{
+    extern volatile DWORD xbox_perf_game_tid;
+    extern volatile long long xbox_perf_wait_ticks;
+    LARGE_INTEGER a, b;
+    int me = xbox_perf_game_tid && GetCurrentThreadId() == xbox_perf_game_tid;
+    if (me) QueryPerformanceCounter(&a);   /* (counted as the game thread waiting, in [PERF]) */
+    if (s_async <= 0 || !s_ring_space) SwitchToThread();
+    else {
+        InterlockedExchange(&s_pb_waiting, 1);
+        if (s_ring_head != s_ring_tail) WaitForSingleObject(s_ring_space, ms);
+        else SwitchToThread();
+        InterlockedExchange(&s_pb_waiting, 0);
+    }
+    if (me) { QueryPerformanceCounter(&b); xbox_perf_wait_ticks += b.QuadPart - a.QuadPart; }
+}
 volatile long long g_perf_pb_ticks;   /* (1.9.3) time in the runs (QueryPerformanceCounter), for [PERF] */
 static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys);
 void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)

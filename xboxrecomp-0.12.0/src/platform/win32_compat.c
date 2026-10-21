@@ -2126,6 +2126,21 @@ static void veh_to_uc(ucontext_t *uc, const CONTEXT *c)
 #endif
 
 #if defined(__x86_64__) && (defined(__APPLE__) || defined(__linux__))
+/* (1.9.5) testing: write watches on guest words (xbox_WatchArm, re-armed by
+ * the caller; up to 8, e.g. one word's aliases): the first write to a
+ * watched page each time it is armed is let through; one to the word itself
+ * logs the writing code's address */
+static volatile uintptr_t s_watch_page[8], s_watch_word[8], s_watch_rearm[8], s_watch_step;
+void xbox_WatchArm(void *host_word)
+{
+    uintptr_t pg = (uintptr_t)host_word & ~(uintptr_t)4095;
+    int k, fr = -1;
+    for (k = 0; k < 8; k++) { if (s_watch_word[k] == (uintptr_t)host_word) { fr = k; break; } if (fr < 0 && !s_watch_word[k]) fr = k; }
+    if (fr < 0 || s_watch_page[fr]) return;
+    s_watch_word[fr] = (uintptr_t)host_word;
+    if (mprotect((void *)pg, 4096, PROT_READ) == 0) s_watch_page[fr] = pg;
+    else { static int said; if (!said++) fprintf(stderr, "[WATCH] mprotect failed (%d)\n", errno); }
+}
 static void veh_signal(int sig, siginfo_t *si, void *ucv)
 {
     ucontext_t *uc = (ucontext_t *)ucv;
@@ -2133,6 +2148,47 @@ static void veh_signal(int sig, siginfo_t *si, void *ucv)
     CONTEXT ctx;
     EXCEPTION_POINTERS ep;
     int i, n, saved_errno = errno;
+#if defined(__linux__)
+    if (sig == SIGTRAP && s_watch_step) {   /* (the write let through: watch the page again) */
+        int k;
+        for (k = 0; k < 8; k++) if (s_watch_rearm[k]) { s_watch_page[k] = s_watch_rearm[k]; s_watch_rearm[k] = 0; }
+        mprotect((void *)s_watch_step, 4096, PROT_READ);
+        s_watch_step = 0;
+        uc->uc_mcontext.gregs[REG_EFL] &= ~(greg_t)0x100;
+        errno = saved_errno;
+        return;
+    }
+#endif
+    if (sig == SIGSEGV) {
+        uintptr_t a = (uintptr_t)si->si_addr, pg = a & ~(uintptr_t)4095;
+        int k, hit = 0;
+        for (k = 0; k < 8; k++) if (s_watch_page[k] == pg) {
+            if (!hit) mprotect((void *)pg, 4096, PROT_READ | PROT_WRITE);
+            hit = 1;
+            s_watch_page[k] = 0;
+            if (!(a >= s_watch_word[k] && a < s_watch_word[k] + 4)) {
+#if defined(__linux__)
+                /* another word of the page: one instruction, then watched again */
+                s_watch_rearm[k] = pg; s_watch_step = pg;
+                uc->uc_mcontext.gregs[REG_EFL] |= 0x100;
+#endif
+            } else {
+                static uintptr_t seen[64]; static int ns;
+#if defined(__linux__)
+                uintptr_t rip = (uintptr_t)uc->uc_mcontext.gregs[REG_RIP];
+#else
+                uintptr_t rip = 0;
+#endif
+                int q;
+                for (q = 0; q < ns && seen[q] != rip; q++) {}
+                if (q == ns && ns < 64) {
+                    seen[ns++] = rip;
+                    fprintf(stderr, "[WATCH] word %d written by code at xbox_WatchArm%+lld\n", k, (long long)(rip - (uintptr_t)xbox_WatchArm));
+                }
+            }
+        }
+        if (hit) { errno = saved_errno; return; }
+    }
 
     memset(&er, 0, sizeof er);
     veh_from_uc(&ctx, uc);
