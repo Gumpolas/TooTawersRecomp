@@ -2387,3 +2387,35 @@ twotowers/src/twotowers_manual.c
 xboxrecomp-0.12.0/src/video/gfx_menu.c, twotowers/src/setup_launcher.cpp
   - The frame-rate list; exclusive full-screen resolutions smallest first
     (the right arrow goes higher, as Window size).
+twotowers/src/d3d_native.inc (1.9.5), xboxrecomp-0.12.0/tools/recomp/manual_scan.py
+  - The game's hottest Direct3D library functions written in C instead of
+    lifted: DrawIndexedVerticesUP (0x118300), DrawIndexedVertices
+    (0x1184E0), DrawVertices (0x118440), the vertex stream setup before a
+    draw (0x120370), one vertex shader constant (0x116A40), the dword copy
+    (0x118110). Same pushbuffer, byte for byte; the library's share of the
+    game thread's time about halved. TT_D3D_NATIVE=0 the lifted code,
+    =2 every call checked against it ([D3D] log lines).
+  - The override scan follows a manual file's local #includes.
+twotowers/postproc_regs.py (1.9.5), generate.py
+  - The guest's integer registers kept in C locals inside each lifted
+    function, written to the per-thread globals only at calls, tail jumps
+    and returns. The compiler had been storing every register change to
+    memory (a volatile guest access is a point it will not move a store
+    past). 8682 functions converted, 5 left; a differential test of every
+    converted function (old and new body from the same random state:
+    registers, memory, x87 stack, the calls made) found them identical,
+    and ran them about a quarter faster.
+kernel/nv2a_copy.h, nv2a_sw3d.inc, nv2a_d3d11.inc, nv2a_pb_exec.c, nv2a_pb_scan.c (1.9.5)
+  From a profile of the render thread on a real PC:
+  - Vertex data written into the graphics card's mapped ring with SSE2
+    streaming stores, and the recorded pushbuffer, inline vertices and
+    constants copied with SSE2 (msvcrt's memcpy was the render thread's
+    largest single cost, and a large one on the game thread's recording).
+  - RECOMP_BASE_VERTEX=1: the gathered draws drawn with a base vertex, the
+    vertex ring bound once. Off: on an NVIDIA card the driver's share of the
+    render thread grew to about three times (profiled), more than it saved.
+  - Blend, depth, raster and sampler states found through a small hash
+    table (the samplers of several stages took turns and each miss searched
+    the whole list).
+  - The [PERFRT] timing (a dozen processor-clock reads a draw, two for every
+    constant upload) only with RECOMP_PERFRT=1.

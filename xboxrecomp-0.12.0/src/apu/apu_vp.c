@@ -411,6 +411,16 @@ static void fe_method(MCPXAPUState *d, uint32_t method, uint32_t argument)
                        NV_PAVS_VOICE_TAR_FCB, 0xFFFFFFFF, argument);
         break;
     case NV1BA0_PIO_SET_VOICE_TAR_PITCH:
+        {   /* testing: RECOMP_APU_PITCHLOG=1 -- each voice's pitch as it changes */
+            static int pl = -1; static int16_t last[MCPX_HW_MAX_VOICES]; static unsigned n;
+            uint16_t vv = (uint16_t)d->regs[NV_PAPU_FECV];
+            int16_t np = (int16_t)((argument & NV1BA0_PIO_SET_VOICE_TAR_PITCH_STEP) >> 16);
+            if (pl < 0) pl = getenv("RECOMP_APU_PITCHLOG") != NULL;
+            if (pl && vv < MCPX_HW_MAX_VOICES && last[vv] != np && n++ < 20000) {
+                fprintf(stderr, "  [PITCH] voice %u %d -> %d\n", vv, last[vv], np);
+                last[vv] = np;
+            }
+        }
         voice_set_mask(d, (uint16_t)d->regs[NV_PAPU_FECV],
                        NV_PAVS_VOICE_TAR_PITCH_LINK,
                        NV_PAVS_VOICE_TAR_PITCH_LINK_PITCH,
@@ -834,6 +844,9 @@ static int voice_get_samples(MCPXAPUState *d, uint32_t v, float samples[][2],
                 d->vp.ssl[v].ssl_index = 0;
                 voice_off(d, (uint16_t)v);
             } else {
+                /* (1.9.5) a stream (music, speech) waiting for its next packet: for the log's [FPS] line */
+                extern volatile unsigned g_apu_short;
+                g_apu_short++;
                 set_notify_status(d, v, MCPX_HW_NOTIFIER_SSLA_DONE +
                                   d->vp.ssl[v].ssl_index,
                                   NV1BA0_NOTIFICATION_STATUS_DONE_SUCCESS);

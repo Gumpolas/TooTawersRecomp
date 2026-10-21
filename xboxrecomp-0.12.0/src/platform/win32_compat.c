@@ -2159,6 +2159,14 @@ static void veh_signal(int sig, siginfo_t *si, void *ucv)
     }
     ep.ExceptionRecord = &er;
     ep.ContextRecord = &ctx;
+    {   /* testing: TT_VEH_STATS=1 */
+        static int on = -1; static unsigned tot, bysig[32]; static uintptr_t lastaddr; static time_t t;
+        if (on < 0) on = getenv("TT_VEH_STATS") != NULL;
+        if (on) {
+            tot++; bysig[sig & 31]++; lastaddr = (uintptr_t)si->si_addr;
+            if (time(NULL) - t >= 10) { t = time(NULL); fprintf(stderr, "[VEHSIG] %u signals (SEGV %u TRAP %u FPE %u ILL %u BUS %u) last addr %llx rip %llx\n", tot, bysig[SIGSEGV], bysig[SIGTRAP], bysig[SIGFPE], bysig[SIGILL], bysig[SIGBUS], (unsigned long long)lastaddr, (unsigned long long)(ctx.Rip - (uintptr_t)veh_signal)); tot = 0; memset(bysig, 0, sizeof bysig); }
+        }
+    }
     n = s_veh_n;
     for (i = 0; i < n; i++) {
         PVECTORED_EXCEPTION_HANDLER h = s_veh[i];

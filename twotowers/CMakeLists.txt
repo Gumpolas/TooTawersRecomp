@@ -116,6 +116,10 @@ add_executable(${PROJECT_NAME} WIN32
     ${GAME_SOURCES}
     ${RECOMP_GEN_SOURCES}
 )
+# (1.9.5) the game code's sin/cos/tan: our own (src/rc_fastmath.h), four
+# times as fast as the C library's x87 versions and as accurate
+set_property(SOURCE ${RECOMP_GEN_SOURCES} src/heroes.c APPEND PROPERTY COMPILE_OPTIONS
+    "-include" "${CMAKE_CURRENT_SOURCE_DIR}/src/rc_fastmath.h")
 
 # Link against the xboxrecomp umbrella target (all 6 runtime libraries)
 target_link_libraries(${PROJECT_NAME} PRIVATE xboxrecomp)

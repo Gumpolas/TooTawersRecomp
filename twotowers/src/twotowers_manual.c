@@ -453,6 +453,15 @@ void sub_000E3350(void)
     static double carry;
     float ms;
     sub_000E3350_gen();
+    {   /* testing: TT_FAKE_FRAME_MS=x -- every frame's time is x ms, as at 1000/x fps */
+        static float fake = -1.0f;
+        if (fake < 0.0f) { const char *e = getenv("TT_FAKE_FRAME_MS"); fake = e ? (float)atof(e) : 0.0f; }
+        if (fake > 0.0f) {
+            float fs = fake * 0.001f; uint32_t w;
+            memcpy(&w, &fake, 4); if (MEM32(0x4B8B98u)) MEM32(0x4B8B98u) = w;
+            memcpy(&w, &fs, 4); if (MEM32(0x4B8BA0u)) MEM32(0x4B8BA0u) = w;
+        }
+    }
     if (off < 0) off = getenv("TT_NO_MSCARRY") != NULL;
     if (off) return;
     { uint32_t w = MEM32(0x4B8B98u); memcpy(&ms, &w, 4); }
@@ -1099,24 +1108,188 @@ void sub_00117AD0(void)
     sub_00117AD0_gen();
 }
 
-/* XInputSetState (XAPI, 0x00169845: stdcall handle, XINPUT_FEEDBACK*).
- * TT_RUMBLE_LOG=1 (testing): its first calls, what it returns and what it
- * found in the device it was given -- which way the rumble goes. */
+/* ---- (1.9.5) The controller, read natively ----------------------------
+ *
+ * The game reads its controllers through the Xbox's input library (XAPI, in
+ * the XPP section): XInitDevices starts the console's USB stack, and from
+ * then on the USB driver talks to an imitation of the OHCI controller chip
+ * (src/usb) -- about 1,300 trapped register accesses a second -- so that
+ * XInputGetState can copy out the pad's last report. These replacements do
+ * what the library's functions do, from the PC's own input (XInput, the
+ * keyboard and mouse, the bindings and the settings overlay, all as
+ * before: xbox_InputGetState): no USB stack is started, nothing is trapped.
+ * One controller, on port 1, as the USB imitation presented.
+ *
+ *   0x0016989A  XInitDevices(count, types)            stdcall, 8
+ *   0x0016989F  XGetDevices(type)                     stdcall, 4
+ *   0x001698C1  XGetDeviceChanges(type, &ins, &rem)    stdcall, 12
+ *   0x00169599  XInputOpen(type, port, slot, params)  stdcall, 16
+ *   0x001695EF  XInputClose(handle)                   stdcall, 4
+ *   0x001695FB  XInputGetCapabilities(handle, caps)   stdcall, 8
+ *   0x001697D9  XInputGetState(handle, state)         stdcall, 8
+ *   0x00169845  XInputSetState(handle, feedback)      stdcall, 8
+ *
+ * The pad's device type is the table at 0x00168634. TT_USB_HLE=0: the
+ * library and the USB imitation, as before. */
+/* (src/input/xinput_xbox.h's types, declared here: its header brings the
+ * runtime's Windows definitions, which clash with this file's) */
+typedef struct { uint32_t dwPacketNumber; struct { uint16_t wButtons; uint8_t bAnalogButtons[8];
+    int16_t sThumbLX, sThumbLY, sThumbRX, sThumbRY; } Gamepad; } XBOX_INPUT_STATE;
+#if defined(_WIN32)
+typedef unsigned long tt_dword;
+#else
+typedef uint32_t tt_dword;
+#endif
+extern tt_dword xbox_InputGetState(tt_dword port, XBOX_INPUT_STATE *s);
+extern void xbox_InputSetVibrationDeferred(tt_dword port, unsigned short l, unsigned short r);
+extern void sub_0016989A_gen(void);
+extern void sub_0016989F_gen(void);
+extern void sub_001698C1_gen(void);
+extern void sub_00169599_gen(void);
+extern void sub_001695EF_gen(void);
+extern void sub_001695FB_gen(void);
+extern void sub_001697D9_gen(void);
 extern void sub_00169845_gen(void);
+#define TT_PAD_TYPE   0x00168634u
+#define TT_PAD_HANDLE 0x00F0CA00u        /* (a token: the game only passes it back) */
+static int tt_usb_hle(void)
+{
+    static int on = -1;
+    if (on < 0) {
+        const char *v = getenv("TT_USB_HLE");
+        on = !(v && v[0] == '0');
+        tt_dbg("  [INPUT] controllers %s\n", on ? "read directly (no USB imitation)" : "through the console's USB stack (TT_USB_HLE=0)");
+    }
+    return on;
+}
+static int tt_pad_open;
+void sub_0016989A(void)   /* XInitDevices */
+{
+    extern uint32_t xbox_ContiguousAllocatedBytes(void);
+    if (!tt_usb_hle()) {
+        uint32_t c0 = xbox_ContiguousAllocatedBytes();
+        sub_0016989A_gen();
+        tt_dbg("  [INPUT] the USB stack took %u bytes of contiguous memory\n", xbox_ContiguousAllocatedBytes() - c0);
+        return;
+    }
+    {   /* The 8 KB the USB stack would have taken, taken anyway: the
+         * contiguous memory after it keeps its addresses. Without it the
+         * pushbuffer began at physical 0, which the GPU code reads as
+         * "none" -- every frame's commands were lost. */
+        extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
+        xbox_ContiguousAlloc(8192, 4096);
+    }
+    esp += 12;
+}
+void sub_0016989F(void)   /* XGetDevices: the ports with a device of that type */
+{
+    if (!tt_usb_hle()) { sub_0016989F_gen(); return; }
+    eax = MEM32(esp + 4) == TT_PAD_TYPE ? 1u : 0u;
+    esp += 8;
+}
+void sub_001698C1(void)   /* XGetDeviceChanges: nothing comes or goes */
+{
+    uint32_t ins, rem;
+    if (!tt_usb_hle()) { sub_001698C1_gen(); return; }
+    ins = MEM32(esp + 8); rem = MEM32(esp + 12);
+    if (ins) MEM32(ins) = 0;
+    if (rem) MEM32(rem) = 0;
+    eax = 0;
+    esp += 16;
+}
+void sub_00169599(void)   /* XInputOpen */
+{
+    if (!tt_usb_hle()) { sub_00169599_gen(); return; }
+    if (MEM32(esp + 4) == TT_PAD_TYPE && MEM32(esp + 8) == 0) { tt_pad_open = 1; eax = TT_PAD_HANDLE; }
+    else eax = 0;
+    esp += 20;
+}
+void sub_001695EF(void)   /* XInputClose */
+{
+    if (!tt_usb_hle()) { sub_001695EF_gen(); return; }
+    if (MEM32(esp + 4) == TT_PAD_HANDLE) tt_pad_open = 0;
+    esp += 8;
+}
+void sub_001695FB(void)   /* XInputGetCapabilities: an Xbox controller, every input and both motors */
+{
+    uint32_t c;
+    if (!tt_usb_hle()) { sub_001695FB_gen(); return; }
+    c = MEM32(esp + 8);
+    if (MEM32(esp + 4) != TT_PAD_HANDLE) { eax = 1167; esp += 12; return; }   /* ERROR_DEVICE_NOT_CONNECTED */
+    {   /* {BYTE SubType; WORD Reserved; XINPUT_GAMEPAD In; XINPUT_RUMBLE Out} */
+        uint32_t k;
+        MEM8(c) = 1;                     /* XINPUT_DEVSUBTYPE_GC_GAMEPAD */
+        MEM8(c + 1) = 0; MEM16(c + 2) = 0;
+        MEM16(c + 4) = 0x00FF;           /* the digital buttons */
+        for (k = 0; k < 8; k++) MEM8(c + 6 + k) = 0xFF;
+        for (k = 0; k < 4; k++) MEM16(c + 14 + 2 * k) = 0xFFFF;
+        MEM16(c + 22) = 0xFFFF; MEM16(c + 24) = 0xFFFF;
+    }
+    eax = 0;
+    esp += 12;
+}
+void sub_001697D9(void)   /* XInputGetState: {DWORD dwPacketNumber; XINPUT_GAMEPAD Gamepad} */
+{
+    static uint32_t packet;
+    static uint8_t last[18];
+    XBOX_INPUT_STATE st;
+    uint32_t p;
+    uint8_t g[18];
+    int k;
+    if (!tt_usb_hle()) { sub_001697D9_gen(); return; }
+    p = MEM32(esp + 8);
+    if (MEM32(esp + 4) != TT_PAD_HANDLE || !tt_pad_open) { eax = 1167; esp += 12; return; }
+    {
+        extern volatile tt_dword g_usb_report_ms;
+        extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void);
+        g_usb_report_ms = GetTickCount() | 1;   /* (the input watchdog's "a report went out") */
+    }
+    memset(&st, 0, sizeof st);
+    if (xbox_InputGetState(0, &st) != 0) memset(&st, 0, sizeof st);
+    g[0] = (uint8_t)(st.Gamepad.wButtons & 0xFF); g[1] = (uint8_t)(st.Gamepad.wButtons >> 8);
+    for (k = 0; k < 8; k++) g[2 + k] = st.Gamepad.bAnalogButtons[k];
+    g[10] = (uint8_t)st.Gamepad.sThumbLX; g[11] = (uint8_t)((uint16_t)st.Gamepad.sThumbLX >> 8);
+    g[12] = (uint8_t)st.Gamepad.sThumbLY; g[13] = (uint8_t)((uint16_t)st.Gamepad.sThumbLY >> 8);
+    g[14] = (uint8_t)st.Gamepad.sThumbRX; g[15] = (uint8_t)((uint16_t)st.Gamepad.sThumbRX >> 8);
+    g[16] = (uint8_t)st.Gamepad.sThumbRY; g[17] = (uint8_t)((uint16_t)st.Gamepad.sThumbRY >> 8);
+    if (memcmp(g, last, 18)) { memcpy(last, g, 18); packet++; }
+    MEM32(p) = packet;
+    for (k = 0; k < 18; k++) MEM8(p + 4 + k) = g[k];
+    eax = 0;
+    esp += 12;
+}
+/* XInputSetState (handle, XINPUT_FEEDBACK*): the motors at +0x42 (left,
+ * heavy) and +0x44 (right, light), passed to the PC's controller; the
+ * request is done at once (Header.dwStatus at +0). TT_RUMBLE_LOG=1
+ * (testing): its first calls. */
 void sub_00169845(void)
 {
     static int log = -1, n;
     uint32_t h = MEM32(esp + 4), fb = MEM32(esp + 8);
     if (log < 0) log = getenv("TT_RUMBLE_LOG") != NULL;
-    sub_00169845_gen();
-    if (log && n < 40) {
-        uint32_t dev = h ? MEM32(h + 0xA3) : 0, ext = h ? MEM32(h) : 0;
-        n++;
-        tt_dbg("[RUMBLE] SetState h=%08X fb=%08X L=%u R=%u -> %u; dev flags %02X; ext %08X pipe %08X type %02X outsz %02X\n",
-               h, fb, fb ? MEM16(fb + 0x42) : 0, fb ? MEM16(fb + 0x44) : 0, eax,
-               dev ? MEM8(dev + 0x28) : 0, ext, h ? MEM32(h + 0x10) : 0,
-               ext ? MEM8(ext + 4) : 0, ext ? MEM8(ext + 0xD) : 0);
+    if (!tt_usb_hle()) {
+        sub_00169845_gen();
+        if (log && n < 40) {
+            uint32_t dev = h ? MEM32(h + 0xA3) : 0, ext = h ? MEM32(h) : 0;
+            n++;
+            tt_dbg("[RUMBLE] SetState h=%08X fb=%08X L=%u R=%u -> %u; dev flags %02X; ext %08X pipe %08X type %02X outsz %02X\n",
+                   h, fb, fb ? MEM16(fb + 0x42) : 0, fb ? MEM16(fb + 0x44) : 0, eax,
+                   dev ? MEM8(dev + 0x28) : 0, ext, h ? MEM32(h + 0x10) : 0,
+                   ext ? MEM8(ext + 4) : 0, ext ? MEM8(ext + 0xD) : 0);
+        }
+        return;
     }
+    if (h != TT_PAD_HANDLE || !fb) { eax = 1167; esp += 12; return; }
+    {
+        static int said;
+        uint16_t l = MEM16(fb + 0x42), r = MEM16(fb + 0x44);
+        if (!said && (l || r)) { said = 1; tt_dbg("  [INPUT] rumble from the game (left %u, right %u): passed to the controller\n", l, r); }
+        if (log && n < 40) { n++; tt_dbg("[RUMBLE] SetState L=%u R=%u\n", l, r); }
+        xbox_InputSetVibrationDeferred(0, l, r);
+    }
+    MEM32(fb) = 0;          /* Header.dwStatus: ERROR_SUCCESS (done) */
+    eax = 997;              /* ERROR_IO_PENDING, as the library answers */
+    esp += 12;
 }
 
 /* The game's own debug output, which retail keeps to itself: 0x000E3CA0 is
@@ -1712,3 +1885,6 @@ void sub_0003F210(void)
     sub_0003F210_gen();
     if (turned) { extern void tt_lang_line_back(void); tt_lang_line_back(); MEM32(line + 4) = of; MEM32(line + 8) = oe; }
 }
+
+/* ---- (1.9.5) the hottest Direct3D library functions as native code ---- */
+#include "d3d_native.inc"

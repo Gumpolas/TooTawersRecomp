@@ -29,6 +29,51 @@
  */
 
 #include <math.h>
+#include <x86intrin.h>
+
+/* (1.9.5) Where the render thread's time goes, for the log's [PERFRT] line:
+ * processor cycles (rdtsc, a few ns a reading) per phase of a draw. */
+enum { PT_SETUP, PT_WALK, PT_FETCH, PT_STAGES, PT_TEX, PT_SUBMIT, PT_BATCH, PT_RAW, PT_VPC, PT_TARGETS, PT_FLUSH, PT_CONSTS, PT_INLINE, PT_INDICES, PT_N };
+static unsigned long long g_pt[PT_N];
+static unsigned g_pt_raw_n, g_pt_old_n;
+/* (1.9.5) only when asked (RECOMP_PERFRT=1): reading the processor's clock
+ * a dozen times a draw, and twice for every constant upload, was a few
+ * percent of the render thread's time on its own */
+static int g_pt_on = -1;
+static int pt_on_init(void) { const char *e = getenv("RECOMP_PERFRT"); g_pt_on = e && *e && *e != '0'; return g_pt_on; }
+#define PT_ON() (g_pt_on > 0 || (g_pt_on < 0 && pt_on_init()))
+#define PT_T0(v) unsigned long long v = PT_ON() ? __rdtsc() : 0
+#define PT_ADD(i, v) ((void)(g_pt_on > 0 ? (g_pt[i] += __rdtsc() - (v)) : 0))
+
+#include "nv2a_copy.h"
+/* (1.9.5) what changed since the last draw (pb_note_change, nv2a_pb_exec.c) */
+#define CHG_CONST  1u
+#define CHG_STATE  2u
+#define CHG_ACTION 4u
+static uint32_t s_chg = CHG_STATE | CHG_ACTION;
+static uint32_t s_last_chg = CHG_STATE;   /* (s_chg as the current draw found it) */
+static uint32_t s_mlast[0x800], s_mseen[0x800 / 32];
+static uint32_t s_chg_n[3];   /* draws: nothing changed, only constants, more */
+static int s_vpc_dirty = 1;   /* (1.9.5) a vertex-program constant changed since they were last sent */
+static uint32_t s_vp_gen = 1; /* (1.9.5) bumped when the program, its start or the mode changes */
+/* (1.9.5) which kinds of state changed since the textures and combiners were
+ * last bound (gpu_bind_stages may then keep what it bound) */
+#define GRP_TEX   1u
+#define GRP_COMB  2u
+#define GRP_OTHER 4u
+#define GRP_RUN   8u   /* (1.9.5) a new pushbuffer run: only linear textures are checked again then */
+static uint32_t s_grp = GRP_TEX | GRP_COMB | GRP_OTHER;
+static uint32_t s_grp_su = GRP_TEX | GRP_COMB | GRP_OTHER;   /* (the same, for sw3d_batch's own set-up) */
+#define GRP_SET(g) do { uint32_t g_ = (g); s_grp |= g_; s_grp_su |= g_; } while (0)
+static uint32_t grp_of(uint32_t m)
+{
+    if (m >= 0x1B00 && m < 0x1C00) return GRP_TEX;
+    if ((m >= 0x0260 && m < 0x0290) || (m >= 0x0A60 && m < 0x0AE0) || (m >= 0x1E40 && m < 0x1E80) || (m >= 0x09C0 && m < 0x09D0)
+        || m == 0x029C || m == 0x02A4 || m == 0x02A8 || m == 0x0300 || m == 0x033C || m == 0x0340) return GRP_COMB;
+    if ((m >= 0x1720 && m < 0x17C0) || (m >= 0x0B00 && m < 0x0C00) || (m >= 0x1E90 && m < 0x1EA8)) return 0;   /* vertex arrays, program, constants */
+    if (m >= 0x0304 && m < 0x0400) return 0;   /* (1.9.5) blend, depth, stencil, cull, clip: nothing the stages read */
+    return GRP_OTHER;
+}
 
 static int gpu_on(void);
 static void gpu_batch(void);
@@ -438,6 +483,7 @@ static VpIns s_vpd[VP_SLOTS];
 static uint32_t s_vpd_src[VP_SLOTS][4];
 static uint32_t s_vpd_start = 0xFFFFFFFFu, s_vpd_len;
 static int s_vpd_cwrite;          /* the program writes constants: not thread-safe */
+static uint32_t s_vpd_rev = 1;
 
 static void vp_dec_src(VpSrc *d, const uint32_t *t, uint32_t mux, uint32_t r, int neg,
                        uint32_t sx, uint32_t sy, uint32_t sz, uint32_t sw)
@@ -477,6 +523,7 @@ static void vp_decode(void)
     }
     s_vpd_start = s_3d.start;
     s_vpd_len = n;
+    s_vpd_rev++;   /* (1.9.5) the decoded program changed (hwvp_lookup keys on this) */
 }
 
 static inline void vp_fetch_fast(const VpSrc *d, float R[16][4], float (*in)[4],
@@ -730,13 +777,19 @@ static unsigned g_slow_dec_n, g_slow_up_n, g_slow_sync_n, g_slow_sh_n, g_slow_rb
 static uint32_t g_slow_big_w, g_slow_big_h, g_slow_big_fmt, g_slow_big_off, g_slow_big_why, g_slow_big_px;
 /* the epoch a texture's content check is good for: a kick for linear ones,
  * a texture-check tick for swizzled ones (see above) */
+static uint8_t s_tex_dyn[16384];   /* (1.9.5) 4 KB pages holding a swizzled texture the CPU changed */
 static uint32_t texc_epoch(const Texture *t)
 {
     static int per_kick = -1;
     if (per_kick < 0) per_kick = getenv("RECOMP_TEX_CHECK_KICK") != NULL;
     /* (swizzled or compressed by its format: the pitch register is set for
      * those too, so it does not tell a linear texture) */
-    return (tex_size_from_format(t->color) && s_texc_frame && !per_kick) ? (s_texc_frame | 0x80000000u) : g_pb_runs;
+    /* (1.9.5) each swizzled texture every fourth tick, the textures taking
+     * turns by their address: loaded art the CPU rewrites mid-level is rare,
+     * and checking all of them in the same frame made that frame slow */
+    if (!(tex_size_from_format(t->color) && s_texc_frame && !per_kick)) return g_pb_runs;
+    if (s_tex_dyn[(t->offset >> 12) & 16383u]) return s_texc_frame | 0x80000000u;   /* (one the CPU has rewritten: every tick) */
+    return ((s_texc_frame + ((t->offset >> 12) & 3u)) >> 2) | 0x40000000u;
 }
 
 static uint32_t texc_sum(const Texture *t)
@@ -753,13 +806,21 @@ static uint32_t texc_sum(const Texture *t)
     if (bytes > (16u << 20)) bytes = 16u << 20;
     bytes &= ~3u;
     if (bytes < 16) return 0;
-    if (t->pitch && !tex_size_from_format(t->color)) {   /* (1.9.3: by the format -- see texc_epoch) */
-        for (i = 0; i + 4 <= bytes; i += 64) h = (h ^ *(const uint32_t *)(m + i)) * 16777619u;
-    } else {
-        uint32_t step = bytes > 16384 ? (bytes / 4096) & ~3u : 4;
-        for (i = 0; i + 4 <= bytes; i += step) h = (h ^ *(const uint32_t *)(m + i)) * 16777619u;
+    {   /* (1.9.5) four running sums side by side: one sum's every step waited
+         * for the one before (a multiply each), and this was the largest single
+         * part of the render thread's own time in a busy scene */
+        uint32_t step = (t->pitch && !tex_size_from_format(t->color)) ? 64   /* (1.9.3: by the format -- see texc_epoch) */
+                      : bytes > 16384 ? (bytes / 4096) & ~3u : 4;
+        uint32_t h1 = 0x01000193u, h2 = 0x9E3779B9u, h3 = 0x85EBCA6Bu, s4 = step * 4;
+        for (i = 0; i + 3 * step + 4 <= bytes; i += s4) {
+            h  = (h  ^ *(const uint32_t *)(m + i))            * 16777619u;
+            h1 = (h1 ^ *(const uint32_t *)(m + i + step))     * 16777619u;
+            h2 = (h2 ^ *(const uint32_t *)(m + i + 2 * step)) * 16777619u;
+            h3 = (h3 ^ *(const uint32_t *)(m + i + 3 * step)) * 16777619u;
+        }
+        for (; i + 4 <= bytes; i += step) h = (h ^ *(const uint32_t *)(m + i)) * 16777619u;
+        return h ^ (h1 * 3u) ^ (h2 * 5u) ^ (h3 * 7u);
     }
-    return h;
 }
 
 static uint32_t s_texc_last_ver, s_texc_last_hash;
@@ -862,6 +923,129 @@ static uint32_t texc_hook(uint32_t *argb, const Texture *t)
 
 #include "nv2a_ultra.inc"
 
+/* (1.9.5) A whole texture decoded at once, giving exactly what
+ * sample_texture gives texel by texel: a DXT block decoded once for its 16
+ * texels (texel by texel it was decoded 16 times), a swizzled texture's
+ * addresses from two small tables, and each format's conversion without the
+ * per-texel checks. Returns 0 for a format it does not do (the per-texel
+ * path then). RECOMP_TEX_SLOWDEC=1: always the per-texel path;
+ * RECOMP_TEX_VERIFY=1: both, and any difference logged. */
+static inline int texc_conv(uint32_t fmt, const uint8_t *p, uint32_t *o)
+{
+    uint32_t t;
+    switch (fmt) {
+    case 0x12: *o = *(const uint32_t *)p; return 1;
+    case 0x1E: *o = *(const uint32_t *)p | 0xFF000000u; return 1;
+    case 0x3F: t = *(const uint32_t *)p; *o = (t & 0xFF00FF00u) | ((t & 0xFF) << 16) | ((t >> 16) & 0xFF); return 1;
+    case 0x40: t = *(const uint32_t *)p; *o = ((t & 0xFFu) << 24) | (((t >> 8) & 0xFFu) << 16) | (((t >> 16) & 0xFFu) << 8) | ((t >> 24) & 0xFFu); return 1;
+    case 0x41: t = *(const uint32_t *)p; *o = ((t & 0xFFu) << 24) | (t >> 8); return 1;
+    case 0x10: t = *(const uint16_t *)p; *o = ((t & 0x8000u) ? 0xFF000000u : 0u) | (expand((t >> 10) & 0x1F, 5) << 16) | (expand((t >> 5) & 0x1F, 5) << 8) | expand(t & 0x1F, 5); return 1;
+    case 0x1C: t = *(const uint16_t *)p; *o = 0xFF000000u | (expand((t >> 10) & 0x1F, 5) << 16) | (expand((t >> 5) & 0x1F, 5) << 8) | expand(t & 0x1F, 5); return 1;
+    case 0x11: t = *(const uint16_t *)p; *o = 0xFF000000u | (expand((t >> 11) & 0x1F, 5) << 16) | (expand((t >> 5) & 0x3F, 6) << 8) | expand(t & 0x1F, 5); return 1;
+    case 0x1D: t = *(const uint16_t *)p; *o = (expand((t >> 12) & 0x0F, 4) << 24) | (expand((t >> 8) & 0x0F, 4) << 16) | (expand((t >> 4) & 0x0F, 4) << 8) | expand(t & 0x0F, 4); return 1;
+    case 0x13: t = *p; *o = 0xFF000000u | (t << 16) | (t << 8) | t; return 1;
+    case 0x1F: *o = ((uint32_t)*p << 24) | 0x00FFFFFFu; return 1;
+    default: return 0;
+    }
+}
+static uint32_t texc_bpp(uint32_t fmt)
+{
+    switch (fmt) {
+    case 0x12: case 0x1E: case 0x3F: case 0x40: case 0x41: return 4;
+    case 0x10: case 0x1C: case 0x11: case 0x1D: return 2;
+    case 0x13: case 0x1F: return 1;
+    default: return 0;
+    }
+}
+/* One DXT1/3/5 block's 16 texels, as d3d8_dxt_decode_texel gives each */
+static void texc_dxt_block(const uint8_t *b, uint32_t fmt, uint32_t bb, uint32_t out[16])
+{
+    uint32_t c[4] = { 0, 0, 0, 0 }, alpha[16], c0, c1, i, idxw;
+    for (i = 0; i < 16; i++) alpha[i] = 255u;
+    if (bb == 16) {
+        if (fmt == 0x0E) {
+            for (i = 0; i < 16; i++) { uint32_t nib = b[i >> 1]; alpha[i] = d3d8_expand_channel((i & 1u) ? (nib >> 4) : (nib & 0x0Fu), 4); }
+        } else {
+            uint32_t a0 = b[0], a1 = b[1], a[8];
+            uint64_t bits = 0;
+            for (i = 0; i < 6; i++) bits |= (uint64_t)b[2 + i] << (8 * i);
+            a[0] = a0; a[1] = a1;
+            if (a0 > a1) for (i = 1; i < 7; i++) a[i + 1] = ((7 - i) * a0 + i * a1) / 7;
+            else { for (i = 1; i < 5; i++) a[i + 1] = ((5 - i) * a0 + i * a1) / 5; a[6] = 0; a[7] = 255; }
+            for (i = 0; i < 16; i++) alpha[i] = a[(uint32_t)((bits >> (3 * i)) & 7u)];
+        }
+        b += 8;
+    }
+    c0 = (uint32_t)b[0] | ((uint32_t)b[1] << 8);
+    c1 = (uint32_t)b[2] | ((uint32_t)b[3] << 8);
+    for (i = 0; i < 2; i++) {
+        uint32_t rgb = i ? c1 : c0;
+        c[i] = (d3d8_expand_channel((rgb >> 11) & 0x1Fu, 5) << 16) | (d3d8_expand_channel((rgb >> 5) & 0x3Fu, 6) << 8)
+             | d3d8_expand_channel(rgb & 0x1Fu, 5);
+    }
+    if (c0 > c1 || bb == 16) {
+        for (i = 0; i < 3; i++) {
+            uint32_t sh = i * 8, m0 = (c[0] >> sh) & 0xFFu, m1 = (c[1] >> sh) & 0xFFu;
+            c[2] = (c[2] & ~(0xFFu << sh)) | (((2 * m0 + m1) / 3) << sh);
+            c[3] = (c[3] & ~(0xFFu << sh)) | (((m0 + 2 * m1) / 3) << sh);
+        }
+    } else {
+        for (i = 0; i < 3; i++) {
+            uint32_t sh = i * 8, m0 = (c[0] >> sh) & 0xFFu, m1 = (c[1] >> sh) & 0xFFu;
+            c[2] = (c[2] & ~(0xFFu << sh)) | (((m0 + m1) / 2) << sh);
+        }
+        c[3] = 0;
+    }
+    idxw = (uint32_t)b[4] | ((uint32_t)b[5] << 8) | ((uint32_t)b[6] << 16) | ((uint32_t)b[7] << 24);
+    for (i = 0; i < 16; i++) {
+        uint32_t idx = (idxw >> (2 * i)) & 3u, al = alpha[i];
+        if (bb == 8 && c0 <= c1 && idx == 3) al = 0;
+        out[i] = (al << 24) | (c[idx] & 0x00FFFFFFu);
+    }
+}
+static int texc_decode_fast(const Texture *t, uint32_t *out)
+{
+    const uint8_t *mem = (const uint8_t *)xbox_GetMemoryOffset() + t->offset;
+    uint32_t w = t->width, h = t->height, fmt = t->color, x, y;
+    uint32_t bb = d3d8_format_dxt_block_bytes(fmt);
+    if (!w || !h) return 0;
+    if (bb) {
+        uint32_t bpr = (w + 3u) / 4u, bx, by;
+        for (by = 0; by < (h + 3u) / 4u; by++)
+            for (bx = 0; bx < bpr; bx++) {
+                uint32_t blk[16], i;
+                texc_dxt_block(mem + ((size_t)by * bpr + bx) * bb, fmt, bb, blk);
+                for (i = 0; i < 16; i++) {
+                    uint32_t xx = bx * 4 + (i & 3u), yy = by * 4 + (i >> 2);
+                    if (xx < w && yy < h) out[yy * w + xx] = blk[i];
+                }
+            }
+        return 1;
+    }
+    if (d3d8_format_is_swizzled(fmt)) {
+        uint32_t lf = linear_twin(fmt), bpp = texc_bpp(lf), mx, my;
+        static uint32_t tx[2048], ty[2048];
+        if (!bpp || w > 2048 || h > 2048) return 0;
+        xbox_swizzle_masks(w, h, &mx, &my);
+        for (x = 0; x < w; x++) tx[x] = swizzle_deposit(x, mx);
+        for (y = 0; y < h; y++) ty[y] = swizzle_deposit(y, my);
+        for (y = 0; y < h; y++)
+            for (x = 0; x < w; x++)
+                if (!texc_conv(lf, mem + (size_t)(tx[x] | ty[y]) * bpp, &out[y * w + x])) return 0;
+        return 1;
+    }
+    {
+        uint32_t bpp = texc_bpp(fmt);
+        if (!bpp || !t->pitch) return 0;
+        for (y = 0; y < h; y++) {
+            const uint8_t *row = mem + (size_t)y * t->pitch;
+            for (x = 0; x < w; x++)
+                if (!texc_conv(fmt, row + (size_t)x * bpp, &out[y * w + x])) return 0;
+        }
+        return 1;
+    }
+}
+
 static const uint32_t *texc_get_ver(const Texture *t, uint32_t *ver)
 {
     const uint32_t *r = texc_get(t);
@@ -919,6 +1103,7 @@ static const uint32_t *texc_get(const Texture *t)
         if (px > g_slow_big_px) { g_slow_big_px = px; g_slow_big_w = t->width; g_slow_big_h = t->height; g_slow_big_fmt = t->color; g_slow_big_off = t->offset; g_slow_big_why = why; }
     }
     if (e && e->trev == xbox_tex_rev) e->redec++;
+    if (e && e->gen == gen && e->trev == xbox_tex_rev && e->sum != sum && e->redec >= 2) s_tex_dyn[(t->offset >> 12) & 16383u] = 1;   /* (changed twice: not just a new level in the same memory) */
     if (!e) {
         e = victim;
         e->redec = 0;
@@ -936,6 +1121,26 @@ static const uint32_t *texc_get(const Texture *t)
     s_cur_tex = t;
     LARGE_INTEGER dq0, dq1;
     QueryPerformanceCounter(&dq0);
+    {
+        static int slow = -1, verify = -1;
+        if (slow < 0) { slow = getenv("RECOMP_TEX_SLOWDEC") != NULL; verify = getenv("RECOMP_TEX_VERIFY") != NULL; }
+        if (!slow && texc_decode_fast(t, e->argb)) {
+            if (verify) {
+                static unsigned bad, checked;
+                uint32_t n = t->width * t->height, i, nb = 0;
+                for (i = 0; i < n; i++) {
+                    uint32_t v = 0xFFFF00FFu;
+                    sample_texture(i % t->width, i / t->width, &v);
+                    if (v != e->argb[i]) nb++;
+                }
+                checked++;
+                if (nb) bad++;
+                if (nb || (checked & 255) == 1)
+                    fprintf(stderr, "  [TEXVERIFY] %ux%u fmt %02X: %u texels differ (%u of %u textures so far)\n", t->width, t->height, t->color, nb, bad, checked);
+            }
+            goto decoded;
+        }
+    }
     for (y = 0; y < t->height; y++)
         for (x = 0; x < t->width; x++) {
             uint32_t v;
@@ -948,6 +1153,7 @@ static const uint32_t *texc_get(const Texture *t)
             }
             e->argb[y * t->width + x] = v;
         }
+decoded:
     s_cur_tex = &s_gpu.tex;
     e->hash = texc_hook(e->argb, t);
     QueryPerformanceCounter(&dq1);
@@ -1987,9 +2193,19 @@ static void sw3d_blend_stats(void)
     }
 }
 
+static int s_su_always = -1;
 static void sw3d_batch(void)
 {
     uint32_t i, n = s_gpu.idx_count;
+    PT_T0(pt_setup0);
+    {
+        extern volatile uint32_t g_pb_runs;
+        static uint32_t runs;
+        if (runs != g_pb_runs) { runs = g_pb_runs; s_chg |= CHG_STATE; s_grp |= GRP_RUN; }   /* (the CPU may have changed textures) */
+        s_chg_n[!s_chg ? 0 : s_chg == CHG_CONST ? 1 : 2]++;
+        s_last_chg = s_chg;
+        s_chg = 0;
+    }
 
     sw3d_blend_stats();
 
@@ -1998,12 +2214,18 @@ static void sw3d_batch(void)
     s_vgen++;
     if (!s_vgen) s_vgen = 1;
     if (s_vp_slow < 0) s_vp_slow = getenv("RECOMP_VP_SLOW") != NULL;
+    if (s_su_always < 0) s_su_always = getenv("RECOMP_STAGES_ALWAYS") != NULL;
     if (s_3d.mode == 2 && !s_vp_slow) vp_decode();
-    sw3d_setup_stages();
-    sw3d_tex_usage();
-    if (!gpu_on()) sw3d_bind_texels();
-    sw3d_comb_prepare();
-    sw3d_comb_compile();
+    /* (1.9.5) the stages and combiners as decoded for the last draw, when no
+     * texture, combiner or other register has changed since (the GPU path) */
+    if (!gpu_on() || (s_grp_su & (GRP_TEX | GRP_COMB | GRP_OTHER)) || s_su_always) {
+        s_grp_su = 0;
+        sw3d_setup_stages();
+        sw3d_tex_usage();
+        if (!gpu_on()) sw3d_bind_texels();
+        sw3d_comb_prepare();
+        sw3d_comb_compile();
+    }
     {
         int st, k;
         memset(s_attr_need, 0, sizeof s_attr_need);
@@ -2015,7 +2237,7 @@ static void sw3d_batch(void)
     }
     if (s_stage[0].enabled) note_texture_use();
 
-    if (gpu_on()) { gpu_batch(); return; }
+    if (gpu_on()) { PT_ADD(PT_SETUP, pt_setup0); PT_T0(pt_b0); gpu_batch(); PT_ADD(PT_BATCH, pt_b0); return; }
     s_surface_ok = surface_begin_batch((uint8_t *)xbox_GetMemoryOffset());
     if (!s_surface_ok) return;
     if ((s_3d.depth_test || s_3d.stencil_test)

@@ -73,6 +73,8 @@ def main():
          "--exclude-manual", os.path.join(GAME, "src", "twotowers_manual.c")],
         quiet_filter=["functions (", "unresolved"])
     run([py, os.path.join(GAME, "postproc_apu.py"), gen], quiet_filter=["rewritten"])
+    run([py, os.path.join(GAME, "postproc_x87.py"), gen], quiet_filter=["x87"])
+    run([py, os.path.join(GAME, "postproc_regs.py"), gen], quiet_filter=["registers"])
     n = len([f for f in os.listdir(gen) if f.endswith(".c")])
     print("Done: %d source files in twotowers/src/recomp/gen. Now build with CMake (README.md)." % n)
 

@@ -541,9 +541,21 @@ void xbox_GfxMenuPad(XBOX_INPUT_STATE *st)
         if (nb & (0x200 | XBOX_GAMEPAD_START | XBOX_GAMEPAD_BACK)) xbox_GfxMenuToggle();
     }
     prev = b;
-    if (s_open || s_block_pad) {
-        if (!s_open && !(b & 0x3FF)) s_block_pad = 0;
+    if (s_open) {
+        s_block_pad = 1;
         memset(&st->Gamepad, 0, sizeof st->Gamepad);
+    } else if (s_block_pad) {
+        /* (1.9.5) Only what was held as the menu closed is kept from the
+         * game, until it is let go -- and for a second at most: a button
+         * that read as held for ever (a key whose release never arrived)
+         * kept every input from the game until the window lost the focus. */
+        static WORD mask; static DWORD since;
+        if (s_block_pad == 1) { mask = (WORD)(b & 0x3FF); since = now; s_block_pad = 2; }
+        mask &= (WORD)b;
+        if (!mask || now - since > 1000) {
+            if (mask) { fprintf(stderr, "  [GFXMENU] buttons %04X still read as held a second after closing: passed on\n", mask); fflush(stderr); }
+            s_block_pad = 0;
+        } else memset(&st->Gamepad, 0, sizeof st->Gamepad);
     }
 }
 

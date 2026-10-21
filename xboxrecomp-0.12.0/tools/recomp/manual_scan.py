@@ -44,11 +44,27 @@ def strip_disabled(src):
     return "".join(out)
 
 
+_INC_RE = re.compile(r'^#include "([^"]+\.(?:inc|c))"', re.M)
+
+
+def read_live(path):
+    """The file's live text, with the local files it #includes (".inc" or
+    ".c", next to it) read in at their place -- a project can keep its
+    hand-written functions in several files."""
+    live = strip_disabled(open(path, encoding="utf-8", errors="replace").read())
+    base = os.path.dirname(path)
+
+    def inc(m):
+        p = os.path.join(base, m.group(1))
+        return read_live(p) if os.path.exists(p) else m.group(0)
+    return _INC_RE.sub(inc, live)
+
+
 def definition_names(path):
     """Names of functions actually defined (compiled) in `path`."""
     if not os.path.exists(path):
         return set()
-    live = strip_disabled(open(path, encoding="utf-8", errors="replace").read())
+    live = read_live(path)
     return {m.group(1) for m in _SUB_DEF_RE.finditer(live)}
 
 
@@ -70,7 +86,7 @@ def scan(path):
     if not os.path.exists(path):
         print(f"WARNING: {path} not found; excluding nothing.", file=sys.stderr)
         return set(), set(), set()
-    live = strip_disabled(open(path, encoding="utf-8", errors="replace").read())
+    live = read_live(path)
     skip = {int(m.group(2), 16) for m in _SUB_DEF_RE.finditer(live)}
     wrap = {int(m.group(2), 16) for m in _WRAP_RE.finditer(live)}
     referenced = {int(m.group(1), 16) for m in _REF_RE.finditer(live)}

@@ -23,6 +23,12 @@ typedef struct {
     ID3D11InputLayout *il;
     char *src;                        /* HLSL, freed after compile */
     volatile LONG claimed;
+    /* (1.9.5) the raw-vertex path: the compiled program (input layouts are
+     * made against it) and the layouts made so far, one per arrangement of
+     * the inputs in the title's own vertex data */
+    ID3DBlob *blob;
+    struct { uint32_t sig[16]; ID3D11InputLayout *il; } lay[8];
+    int nlay, laynext;
 } HwVp;
 
 #define HWVP_MAX 512
@@ -224,7 +230,7 @@ static void hwvp_compile_one(HwVp *e)
             ID3D10Blob_Release(b); ID3D11VertexShader_Release(e->vs); e->vs = NULL; e->state = 2; return;
         }
     }
-    ID3D10Blob_Release(b);
+    e->blob = b;   /* (kept: the raw-vertex path's layouts are made against it) */
     InterlockedIncrement((volatile LONG *)&g_hwvp_compiled);
     MemoryBarrier();
     e->state = 1;
@@ -278,7 +284,11 @@ static HwVp *hwvp_lookup(void)
 {
     uint32_t h, i;
     HwVp *e;
+    static uint32_t last_gen; static HwVp *last_e;
     if (!g_hwvp_user || !hwvp_enabled() || s_3d.mode != 2 || s_vp_slow || !s_vpd_len) return NULL;
+    /* (1.9.5) the same program as the last draw's: its entry, without hashing
+     * and comparing the program again */
+    if (last_e && last_gen == s_vpd_rev && last_e->state == 1) return last_e;
     h = hwvp_hash((const uint32_t (*)[4])s_vpd_src, s_vpd_len);
     {   /* testing: RECOMP_HWVP_DENY=hash,hash,... keeps those programs on the CPU */
         static char deny[512]; static int dl = -1;
@@ -288,8 +298,10 @@ static HwVp *hwvp_lookup(void)
     }
     for (i = 0; i < (uint32_t)g_hwvp_n; i++) {
         e = g_hwvp[i];
-        if (e->hash == h && e->len == s_vpd_len && !memcmp(e->words, s_vpd_src, s_vpd_len * 16))
-            return e->state == 1 ? e : NULL;
+        if (e->hash == h && e->len == s_vpd_len && !memcmp(e->words, s_vpd_src, s_vpd_len * 16)) {
+            if (e->state == 1) { last_e = e; last_gen = s_vpd_rev; return e; }
+            return NULL;
+        }
     }
     if (g_hwvp_n >= HWVP_MAX) return NULL;
     e = (HwVp *)calloc(1, sizeof *e);

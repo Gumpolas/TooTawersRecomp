@@ -204,6 +204,13 @@ NTSTATUS __stdcall xbox_NtWaitForSingleObject(
     return xbox_wait_result_to_ntstatus(result, 1);
 }
 
+
+/* (1.9.5) [PERF]: the game's frame thread waiting (see nv2a_pb_exec.c) */
+extern volatile DWORD xbox_perf_game_tid;
+extern volatile long long xbox_perf_wait_ticks;
+#define PERF_WAIT_BEGIN() LARGE_INTEGER _pw0; int _pw = xbox_perf_game_tid && GetCurrentThreadId() == xbox_perf_game_tid; if (_pw) QueryPerformanceCounter(&_pw0)
+#define PERF_WAIT_END() do { if (_pw) { LARGE_INTEGER _pw1; QueryPerformanceCounter(&_pw1); xbox_perf_wait_ticks += _pw1.QuadPart - _pw0.QuadPart; } } while (0)
+
 NTSTATUS __stdcall xbox_NtWaitForSingleObjectEx(
     HANDLE Handle,
     KPROCESSOR_MODE WaitMode,
@@ -220,9 +227,13 @@ NTSTATUS __stdcall xbox_NtWaitForSingleObjectEx(
      */
     (void)WaitMode;
 
-    result = WaitForSingleObjectEx(Handle, ms, Alertable);
-    if (ms == 0 && result == WAIT_TIMEOUT)
-        SwitchToThread();
+    {
+        PERF_WAIT_BEGIN();
+        result = WaitForSingleObjectEx(Handle, ms, Alertable);
+        if (ms == 0 && result == WAIT_TIMEOUT)
+            SwitchToThread();
+        PERF_WAIT_END();
+    }
     return xbox_wait_result_to_ntstatus(result, 1);
 }
 
@@ -240,7 +251,11 @@ NTSTATUS __stdcall xbox_NtWaitForMultipleObjectsEx(
     /* WaitType: 0 = WaitAll, 1 = WaitAny (matches NT definitions) */
     bWaitAll = (WaitType == 0) ? TRUE : FALSE;
 
-    result = WaitForMultipleObjectsEx(Count, Handles, bWaitAll, ms, Alertable);
+    {
+        PERF_WAIT_BEGIN();
+        result = WaitForMultipleObjectsEx(Count, Handles, bWaitAll, ms, Alertable);
+        PERF_WAIT_END();
+    }
     /* A zero-timeout poll that found nothing gives the CPU away. On the
      * Xbox a polling thread round-robins with the others; here the process
      * shares one core, and Bink's background thread polling its event with a
@@ -268,7 +283,10 @@ NTSTATUS __stdcall xbox_KeWaitForSingleObject(
 
     HANDLE hObject = (HANDLE)Object;
     DWORD ms = xbox_nt_timeout_to_ms(Timeout);
-    DWORD result = WaitForSingleObjectEx(hObject, ms, Alertable);
+    DWORD result;
+    PERF_WAIT_BEGIN();
+    result = WaitForSingleObjectEx(hObject, ms, Alertable);
+    PERF_WAIT_END();
     return xbox_wait_result_to_ntstatus(result, 1);
 }
 
@@ -290,8 +308,11 @@ NTSTATUS __stdcall xbox_KeWaitForMultipleObjects(
     DWORD ms = xbox_nt_timeout_to_ms(Timeout);
 
     /* Objects[] is an array of PVOID which we treat as HANDLE[] */
-    DWORD result = WaitForMultipleObjectsEx(Count, (HANDLE*)Objects,
-                                            bWaitAll, ms, Alertable);
+    DWORD result;
+    PERF_WAIT_BEGIN();
+    result = WaitForMultipleObjectsEx(Count, (HANDLE*)Objects,
+                                      bWaitAll, ms, Alertable);
+    PERF_WAIT_END();
     return xbox_wait_result_to_ntstatus(result, Count);
 }
 

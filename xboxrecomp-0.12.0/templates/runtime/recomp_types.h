@@ -166,13 +166,28 @@ extern uint32_t g_xbox_code_hi;
 #  define RECOMP_TLS _Thread_local
 #endif
 
-extern RECOMP_TLS uint32_t g_eax, g_ecx, g_edx, g_esp;
-extern RECOMP_TLS uint32_t g_ebx, g_esi, g_edi;
+/* (1.9.5) The registers' C type. Guest memory is read and written as
+ * uint32_t (MEM32), and to the C compiler a store through a uint32_t pointer
+ * may change any uint32_t variable -- so after every guest store it read
+ * every register back from memory, and the game's code spent much of its time
+ * moving registers in and out of memory. On Windows, unsigned long is the
+ * same 32 bits but a type a uint32_t store cannot change, so the registers
+ * stay in the processor's registers between calls. (Elsewhere unsigned long
+ * is 64 bits wide: uint32_t, as before.) RECOMP_REG_UINT32 forces the old type. */
+#if defined(_WIN32) && !defined(RECOMP_REG_UINT32)
+typedef unsigned long recomp_reg_t;
+typedef long recomp_sreg_t;
+#else
+typedef uint32_t recomp_reg_t;
+typedef int recomp_sreg_t;
+#endif
+extern RECOMP_TLS recomp_reg_t g_eax, g_ecx, g_edx, g_esp;
+extern RECOMP_TLS recomp_reg_t g_ebx, g_esi, g_edi;
 
 /* x87 stack. Per-thread for the same reason the integer registers are:
  * arguments are passed in st(0)/st(1) across call boundaries. */
 extern RECOMP_TLS double g_fp_stack[8];
-extern RECOMP_TLS int g_fp_top;
+extern RECOMP_TLS recomp_sreg_t g_fp_top;
 
 /**
  * SEH frame pointer bridge.
@@ -190,10 +205,10 @@ extern RECOMP_TLS int g_fp_top;
  * Per-thread, because a TIB is. fs:[0] is the SEH chain head and fs:[4]
  * reaches the CRT's per-thread data, so a single shared base makes every
  * guest thread the same thread as far as the CRT is concerned. */
-extern RECOMP_TLS uint32_t g_fs_base;
+extern RECOMP_TLS recomp_reg_t g_fs_base;
 #define XBOX_FS_BASE g_fs_base
 
-extern RECOMP_TLS uint32_t g_seh_ebp;
+extern RECOMP_TLS recomp_reg_t g_seh_ebp;
 
 /* ---- non-local jumps (setjmp / longjmp) --------------------------------
  *
@@ -235,7 +250,7 @@ extern RECOMP_TLS uint32_t g_seh_ebp;
 #include <setjmp.h>
 jmp_buf *recomp_setjmp_slot(uint32_t buf_va);
 int recomp_guest_longjmp(uint32_t buf_va, uint32_t value);
-extern RECOMP_TLS uint32_t g_ebp;
+extern RECOMP_TLS recomp_reg_t g_ebp;
 
 /* EFLAGS.DF, and the signed step the string instructions take because of it.
  *
@@ -249,7 +264,7 @@ extern RECOMP_TLS uint32_t g_ebp;
  * be found by name, and the dashboard rebooted rather than showing a UI.
  * memmove's overlapping case is the same instruction and the same bug.
  */
-extern RECOMP_TLS int g_df;
+extern RECOMP_TLS recomp_sreg_t g_df;
 #define RECOMP_DF_STEP(n) (g_df ? -(int32_t)(n) : (int32_t)(n))
 
 /* x87 control and status. Thread-local for the same reason the x87 stack
@@ -257,7 +272,7 @@ extern RECOMP_TLS int g_df;
    and the FNSTSW that reads it can land in different bodies, and the control
    word has to survive a call. (g_fp_stack/g_fp_top are declared above.) */
 extern RECOMP_TLS uint16_t g_fp_control_word;
-extern RECOMP_TLS int g_fp_cmp;
+extern RECOMP_TLS recomp_sreg_t g_fp_cmp;
 extern RECOMP_TLS uint16_t g_fp_cc;
 #define RECOMP_FCMP_CC(c) ((uint16_t)((c)==2 ? 0x4500u : (c)<0 ? 0x0100u : (c)>0 ? 0u : 0x4000u))
 /* Values in the existing double-backed stack are all representable as normal
@@ -373,7 +388,7 @@ uint64_t xbox_ReadTimeStampCounter(void);
  * Pentium III answer, so CPU-feature probes see the console's MMX/SSE. */
 uint32_t recomp_eflags_read(void);
 void     recomp_eflags_write(uint32_t value);
-void     recomp_cpuid(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d);
+void     recomp_cpuid(recomp_reg_t *a, recomp_reg_t *b, recomp_reg_t *c, recomp_reg_t *d);
 
 void recomp_trace_enter(const char *name, uint32_t va);
 #define RECOMP_TRACE_ENTER(name, va) recomp_trace_enter((name), (va))
@@ -469,6 +484,21 @@ static inline RecompXmm XMM_SCALAR_BITS(uint32_t bits) {
  * Addresses are guest VAs, so they go through MEM32 like every other
  * access. Done lane-wise, which is also unaligned-safe for movups. */
 
+/* (1.9.5) One 16-byte access, not four volatile 4-byte ones: the
+ * compiler can then keep the vector math in vector registers (SSE data is
+ * never a flag another thread spins on). RECOMP_XMM_PORTABLE: lane-wise. */
+#if (defined(__x86_64__) || defined(_M_X64)) && !defined(RECOMP_XMM_PORTABLE)
+#define RECOMP_XMM_SSE 1
+#include <emmintrin.h>
+static inline __m128 xmm_v(RecompXmm a) { __m128 v; memcpy(&v, &a, 16); return v; }
+static inline RecompXmm xmm_r(__m128 v) { RecompXmm r; memcpy(&r, &v, 16); return r; }
+static inline RecompXmm XMM_MEM(uint32_t addr) {
+    return xmm_r(_mm_loadu_ps((const float *)XBOX_PTR(addr)));
+}
+static inline void XMM_STORE(uint32_t addr, RecompXmm v) {
+    _mm_storeu_ps((float *)XBOX_PTR(addr), xmm_v(v));
+}
+#else
 static inline RecompXmm XMM_MEM(uint32_t addr) {
     RecompXmm r;
     r.u[0] = MEM32(addr);      r.u[1] = MEM32(addr + 4);
@@ -480,6 +510,7 @@ static inline void XMM_STORE(uint32_t addr, RecompXmm v) {
     MEM32(addr)      = v.u[0]; MEM32(addr + 4)  = v.u[1];
     MEM32(addr + 8)  = v.u[2]; MEM32(addr + 12) = v.u[3];
 }
+#endif
 
 /* movlps/movhps move 8 bytes into or out of one half, leaving the
  * other half alone. */
@@ -490,14 +521,12 @@ static inline void XMM_STORE(uint32_t addr, RecompXmm v) {
 
 static inline void recomp_xmm_load_half(RecompXmm *dst, uint32_t addr,
                                         int high) {
-    dst->u[high * 2]     = MEM32(addr);
-    dst->u[high * 2 + 1] = MEM32(addr + 4);
+    memcpy(&dst->q[high], (const void *)XBOX_PTR(addr), 8);
 }
 
 static inline void recomp_xmm_store_half(uint32_t addr, RecompXmm src,
                                          int high) {
-    MEM32(addr)     = src.u[high * 2];
-    MEM32(addr + 4) = src.u[high * 2 + 1];
+    memcpy((void *)XBOX_PTR(addr), &src.q[high], 8);
 }
 
 /** movlhps: dst high = src low. */
@@ -519,6 +548,17 @@ static inline RecompXmm XMM_MOVE_HIGH_TO_LOW(RecompXmm a, RecompXmm b) {
         return r;                                                         \
     }
 
+#if defined(RECOMP_XMM_SSE)
+/* (1.9.5) the host's own instructions: the same IEEE single-precision
+ * results lane for lane, and MINPS/MAXPS are the guest's instructions */
+static inline RecompXmm XMM_ADD(RecompXmm a, RecompXmm b) { return xmm_r(_mm_add_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_SUB(RecompXmm a, RecompXmm b) { return xmm_r(_mm_sub_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_MUL(RecompXmm a, RecompXmm b) { return xmm_r(_mm_mul_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_DIV(RecompXmm a, RecompXmm b) { return xmm_r(_mm_div_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_MIN(RecompXmm a, RecompXmm b) { return xmm_r(_mm_min_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_MAX(RecompXmm a, RecompXmm b) { return xmm_r(_mm_max_ps(xmm_v(a), xmm_v(b))); }
+static inline RecompXmm XMM_SQRT(RecompXmm a, RecompXmm b) { (void)a; return xmm_r(_mm_sqrt_ps(xmm_v(b))); }
+#else
 RECOMP_XMM_LANEWISE(XMM_ADD, a.f[i] + b.f[i])
 RECOMP_XMM_LANEWISE(XMM_SUB, a.f[i] - b.f[i])
 RECOMP_XMM_LANEWISE(XMM_MUL, a.f[i] * b.f[i])
@@ -529,6 +569,7 @@ RECOMP_XMM_LANEWISE(XMM_MIN, (a.f[i] < b.f[i]) ? a.f[i] : b.f[i])
 RECOMP_XMM_LANEWISE(XMM_MAX, (a.f[i] > b.f[i]) ? a.f[i] : b.f[i])
 /* Packed unary ops, all four lanes (dst = op(src)); `a` is the old dst. */
 RECOMP_XMM_LANEWISE(XMM_SQRT, sqrtf(b.f[i]))
+#endif
 RECOMP_XMM_LANEWISE(XMM_RSQRT, 1.0f / sqrtf(b.f[i]))
 RECOMP_XMM_LANEWISE(XMM_RCP, 1.0f / b.f[i])
 
@@ -623,7 +664,13 @@ static inline uint32_t XMM_MOVEMASK(RecompXmm a) {
 }
 
 /** shufps: lanes 0-1 selected out of `a`, lanes 2-3 out of `b`. */
+#if defined(RECOMP_XMM_SSE)
+/* (the immediate is always a literal in the lifted code) */
+#define XMM_SHUFFLE(a, b, imm) xmm_r(_mm_shuffle_ps(xmm_v(a), xmm_v(b), (int)(imm)))
+static inline RecompXmm XMM_SHUFFLE_RT(RecompXmm a, RecompXmm b, uint32_t imm) {
+#else
 static inline RecompXmm XMM_SHUFFLE(RecompXmm a, RecompXmm b, uint32_t imm) {
+#endif
     RecompXmm r;
     r.u[0] = a.u[(imm >> 0) & 3u]; r.u[1] = a.u[(imm >> 2) & 3u];
     r.u[2] = b.u[(imm >> 4) & 3u]; r.u[3] = b.u[(imm >> 6) & 3u];

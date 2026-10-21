@@ -607,6 +607,61 @@ static DWORD WINAPI wd_thread(LPVOID p)
 }
 
 #if defined(_WIN32)
+/* (1.9.5) The exe's function names, from the symbol table the build leaves
+ * in the file: the profile below is then reported per function, by name.
+ * (One address at a time, a busy thread's work was spread over hundreds of
+ * entries and the 14 shown were mostly its waits.) */
+static struct { uint32_t rva; const char *name; } *s_fn;
+static int s_fn_n;
+static int fn_cmp(const void *a, const void *b)
+{
+    uint32_t x = *(const uint32_t *)a, y = *(const uint32_t *)b;
+    return x < y ? -1 : x > y;
+}
+static void fn_load(void)
+{
+    char path[MAX_PATH];
+    FILE *f;
+    long sz;
+    uint8_t *b;
+    if (!GetModuleFileNameA(NULL, path, sizeof path) || !(f = fopen(path, "rb"))) return;
+    fseek(f, 0, SEEK_END); sz = ftell(f); fseek(f, 0, SEEK_SET);
+    b = (uint8_t *)malloc(sz > 0 ? (size_t)sz : 1);
+    if (!b || fread(b, 1, (size_t)sz, f) != (size_t)sz) { fclose(f); free(b); return; }
+    fclose(f);
+    {
+        IMAGE_NT_HEADERS *nt = (IMAGE_NT_HEADERS *)(b + ((IMAGE_DOS_HEADER *)b)->e_lfanew);
+        IMAGE_SECTION_HEADER *sec = IMAGE_FIRST_SECTION(nt);
+        uint32_t ps = nt->FileHeader.PointerToSymbolTable, ns = nt->FileHeader.NumberOfSymbols, i;
+        const char *strtab;
+        if (!ps || !ns || (long)ps + (long)ns * 18 > sz) return;
+        strtab = (const char *)b + ps + ns * 18;
+        s_fn = calloc(ns, sizeof *s_fn);
+        if (!s_fn) return;
+        for (i = 0; i < ns; i++) {
+            const uint8_t *e = b + ps + i * 18;
+            int16_t secn; uint16_t type; uint8_t cls, aux;
+            uint32_t val;
+            memcpy(&val, e + 8, 4); memcpy(&secn, e + 12, 2); memcpy(&type, e + 14, 2); cls = e[16]; aux = e[17];
+            if (secn > 0 && secn <= nt->FileHeader.NumberOfSections && (type & 0x30) == 0x20 && (cls == 2 || cls == 3)
+                && (sec[secn - 1].Characteristics & IMAGE_SCN_CNT_CODE)) {
+                char *nm;
+                if (*(const uint32_t *)e == 0) nm = _strdup(strtab + *(const uint32_t *)(e + 4));
+                else { nm = (char *)calloc(1, 9); if (nm) memcpy(nm, e, 8); }
+                if (nm) { s_fn[s_fn_n].rva = sec[secn - 1].VirtualAddress + val; s_fn[s_fn_n].name = nm; s_fn_n++; }
+            }
+            i += aux;
+        }
+        qsort(s_fn, s_fn_n, sizeof *s_fn, fn_cmp);
+    }
+    free(b);
+}
+static int fn_find(uint32_t rva)
+{
+    int lo = 0, hi = s_fn_n - 1, r = -1;
+    while (lo <= hi) { int m = (lo + hi) / 2; if (s_fn[m].rva <= rva) { r = m; lo = m + 1; } else hi = m - 1; }
+    return r;
+}
 static DWORD WINAPI pa_thread(LPVOID p)
 {
     extern void xbox_UnpinServiceThread(void);
@@ -619,6 +674,7 @@ static DWORD WINAPI pa_thread(LPVOID p)
     (void)p;
     s_pa = calloc(PA_THREADS, sizeof *s_pa);
     if (!s_pa) return 0;
+    fn_load();
     for (;;) {
         int t;
         Sleep(2);
@@ -678,6 +734,34 @@ static DWORD WINAPI pa_thread(LPVOID p)
                 int top, j;
                 if (s_pa[t].total < 200) { s_pa[t].total = s_pa[t].sys = 0; memset(s_pa[t].s, 0, sizeof s_pa[t].s); continue; }
                 fprintf(stderr, "[PROFT] thread %lu: %u samples, %u in system calls\n", (unsigned long)s_pa[t].tid, s_pa[t].total, s_pa[t].sys);
+                if (s_fn_n && s_pa[t].sys < s_pa[t].total * 97 / 100) {
+                    /* (1.9.5) by function: the samples of each address added up under the
+                     * function it is in (W: waiting in, or calling, a system DLL) */
+                    static struct { int fn; uint32_t n; int sys, md; } agg[512];
+                    int na = 0, q;
+                    for (j = 0; j < PA_SLOTS; j++) {
+                        uint64_t r = s_pa[t].s[j].rip, a = r & 0x00FFFFFFFFFFFFFFull;
+                        int f, sy = (int)(r >> 63), md = (int)((r >> 56) & 0x7F);
+                        if (!s_pa[t].s[j].n) continue;
+                        f = a ? fn_find((uint32_t)(a - lo)) : -1;
+                        for (q = 0; q < na && !(agg[q].fn == f && agg[q].sys == sy && agg[q].md == md); q++) {}
+                        if (q == na) { if (na == 512) continue; agg[na].fn = f; agg[na].n = 0; agg[na].sys = sy; agg[na].md = md; na++; }
+                        agg[q].n += s_pa[t].s[j].n;
+                    }
+                    static int all = -1;
+                    if (all < 0) all = getenv("TT_PROF_ALL") != NULL;   /* testing: every function, however small */
+                    for (top = 0; top < (all ? 512 : 18); top++) {
+                        int best = -1;
+                        for (q = 0; q < na; q++) if (agg[q].n && (best < 0 || agg[q].n > agg[best].n)) best = q;
+                        if (best < 0 || (!all && agg[best].n * 400 < s_pa[t].total)) break;
+                        fprintf(stderr, "[PROFF]   %5.1f%% %s%s%s%s%s\n", agg[best].n * 100.0 / s_pa[t].total,
+                                agg[best].fn >= 0 ? s_fn[agg[best].fn].name : "?",
+                                agg[best].sys ? " (W" : "", agg[best].sys && agg[best].md && s_pa_modname ? " in " : "",
+                                agg[best].sys ? (agg[best].md && s_pa_modname ? s_pa_modname[agg[best].md - 1] : "") : "",
+                                agg[best].sys ? ")" : "");
+                        agg[best].n = 0;
+                    }
+                }
                 for (top = 0; top < 14; top++) {
                     int best = -1;
                     for (j = 0; j < PA_SLOTS; j++)
@@ -723,6 +807,39 @@ static void tt_timer_setup(void)
 #endif
 }
 
+#if defined(__linux__)
+#include <signal.h>
+#include <pthread.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <ucontext.h>
+#include <sys/time.h>
+#define LXP_N (1u << 24)
+static uint64_t *lxp_buf; static volatile uint32_t lxp_n, lxp_done;
+static void lxp_handler(int sig, siginfo_t *si, void *uc)
+{
+    (void)sig; (void)si;
+    uint32_t i = __sync_fetch_and_add(&lxp_n, 2);
+    if (i + 1 < LXP_N) { lxp_buf[i] = (uint64_t)syscall(SYS_gettid); lxp_buf[i + 1] = (uint64_t)((ucontext_t *)uc)->uc_mcontext.gregs[REG_RIP]; }
+}
+static void *lxp_dump(void *a)
+{
+    (void)a;
+    for (;;) {
+        uint32_t n;
+        sleep(10);
+        n = lxp_n; if (n > LXP_N) n = LXP_N; n &= ~1u;
+        if (n > lxp_done) {
+            FILE *f = fopen("lxprof.bin", "ab");
+            if (f) { uint64_t h[2] = { 0, (uint64_t)(uintptr_t)lxp_handler }; fwrite(h, 8, 2, f); fwrite(lxp_buf + lxp_done, 8, n - lxp_done, f); fclose(f); }
+            {   static int maps; if (!maps++) { FILE *i = fopen("/proc/self/maps", "r"), *o = fopen("lxprof.maps", "w"); char ln[512]; if (i && o) while (fgets(ln, sizeof ln, i)) fputs(ln, o); if (i) fclose(i); if (o) fclose(o); } }
+            lxp_done = n;
+        }
+    }
+    return NULL;
+}
+#endif
 static void prof_start(void)
 {
     {
@@ -740,6 +857,22 @@ static void prof_start(void)
     DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(),
                     &s_prof_thread_h, 0, FALSE, DUPLICATE_SAME_ACCESS);
     CreateThread(NULL, 0, prof_thread, NULL, 0, NULL);
+#elif defined(__linux__)
+    /* testing (Linux): RECOMP_PROFILE=lx -- this thread's program counter,
+     * every 200 us of its CPU time, appended to lxprof.bin (resolve with nm) */
+    if (!strcmp(e, "lx")) {
+        clockid_t cid; struct sigevent sev; struct sigaction sa; int tm = 0; struct itimerspec its;
+        pthread_t th;
+        lxp_buf = (uint64_t *)malloc(sizeof(uint64_t) * LXP_N);
+        memset(&sa, 0, sizeof sa); sa.sa_sigaction = lxp_handler; sa.sa_flags = SA_SIGINFO | SA_RESTART;
+        sigaction(SIGPROF, &sa, NULL);
+        (void)cid; (void)sev; (void)tm; (void)its;
+        {   struct itimerval iv; iv.it_interval.tv_sec = 0; iv.it_interval.tv_usec = 200; iv.it_value = iv.it_interval;
+            setitimer(ITIMER_PROF, &iv, NULL);
+            pthread_create(&th, NULL, lxp_dump, NULL);
+            fprintf(stderr, "[PROF] sampling this thread (main.c lxp)\n");
+        }
+    }
 #else
     fprintf(stderr, "[PROF] the sampling profiler is Windows-only\n");
 #endif
@@ -787,6 +920,22 @@ static LONG CALLBACK veh_handler(PEXCEPTION_POINTERS ep)
         {
             uint32_t xbox_va =
                 (uint32_t)(fault_addr - (uintptr_t)g_xbox_mem_offset);
+            {   /* testing: TT_VEH_STATS=1 -- which device registers trap, every 10 s */
+                static int on = -1; static unsigned cnt[64][2], tot; static DWORD t;
+                if (on < 0) on = getenv("TT_VEH_STATS") != NULL;
+                if (on) {
+                    unsigned k = (xbox_va >> 12) & 63;
+                    cnt[k][xbox_OhciOwnsAddress(xbox_va) ? 1 : 0]++; tot++;
+                    if (GetTickCount() - t > 10000) {
+                        unsigned i;
+                        t = GetTickCount();
+                        fprintf(stderr, "[VEHSTAT] %u traps:", tot);
+                        for (i = 0; i < 64; i++) if (cnt[i][0] + cnt[i][1]) fprintf(stderr, " page%02X:%u/%u", i, cnt[i][0], cnt[i][1]);
+                        fprintf(stderr, " (last %08X)\n", xbox_va);
+                        memset(cnt, 0, sizeof cnt); tot = 0;
+                    }
+                }
+            }
 
             /* USB host controllers -> the OHCI model (RECOMP_USB). */
             if (xbox_OhciOwnsAddress(xbox_va)
@@ -885,6 +1034,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     setvbuf(stderr, NULL, _IONBF, 0);
 
     printf("=== The Lord of the Rings: The Two Towers (Xbox, USA) - Static Recompilation ===\n");
+    {   /* (1.9.5) indirect calls (C++ virtual functions, the game's function
+         * tables) find their target in one table read instead of a binary
+         * search over the 8,700 functions */
+        extern int recomp_dispatch_init(void);
+        if (!getenv("TT_NO_FLAT_DISPATCH")) recomp_dispatch_init();
+    }
     printf("Loading XBE...\n");
 
     /* Install VEH handler (first handler in chain) */
@@ -1019,6 +1174,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     /* Step 7: Call the recompiled entry point */
     printf("\nStarting game...\n");
     prof_start();
+#if defined(__linux__)
+    { extern long long g_cpustat_tid; g_cpustat_tid = (long long)syscall(SYS_gettid); }
+#endif
     { extern void tt_fps_init(void); tt_fps_init(); }
     { extern void tt_lang_init(void); tt_lang_init(); }   /* (1.9.2) the language: before the game opens a file */
     fflush(stdout);

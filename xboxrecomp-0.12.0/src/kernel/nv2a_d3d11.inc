@@ -569,6 +569,7 @@ static GTex g_tex[GTEX_MAX];
 static ID3D11ShaderResourceView **g_usrv;
 static ID3D11Texture2D **g_utex;
 static int s_ultra_used;     /* the last gtex_get gave a pack picture */
+static int s_ultra_pend;     /* (1.9.5) a gtex_get since the stages were bound found a pack picture not yet ready */
 static void ultra_gpu_drop(int i)
 {
     if (g_usrv[i]) ID3D11ShaderResourceView_Release(g_usrv[i]);
@@ -682,6 +683,7 @@ static ID3D11ShaderResourceView *gtex_get(const Texture *t)
             s_ultra_used = 1;
             return hd;
         }
+        s_ultra_pend = 1;   /* (1.9.5) its pack picture not ready yet */
     }
     {   /* (1.9.3) the entry this texture had last time, from an index; the
          * full scan of all of them only on a miss */
@@ -761,12 +763,17 @@ static void *gstate_find(GState *c, const uint64_t k[3])
     int i;
     /* (1.9.3) the entry found last time first: consecutive draws mostly
      * want the same blend, depth, raster and sampler states */
-    static GState *last[8]; static GState *tab[8]; int t;
+    /* (1.9.5) and then a small table by the key's hash: the samplers of
+     * several stages took turns, and each miss searched the whole list */
+    static GState *last[8]; static GState *tab[8]; static GState *hx[8][64]; int t;
+    uint32_t h = (uint32_t)((k[0] * 0x9E3779B97F4A7C15ull ^ k[1] * 0xC2B2AE3D27D4EB4Full ^ k[2] * 0x165667B19E3779F9ull) >> 58);
     for (t = 0; t < 8 && tab[t] && tab[t] != c; t++) {}
-    if (t < 8 && tab[t] == c && last[t] && last[t]->obj && !memcmp(last[t]->key, k, sizeof last[t]->key)) return last[t]->obj;
+    if (t < 8 && !tab[t]) tab[t] = c;
+    if (t < 8 && last[t] && last[t]->obj && !memcmp(last[t]->key, k, sizeof last[t]->key)) return last[t]->obj;
+    if (t < 8 && hx[t][h] && hx[t][h]->obj && !memcmp(hx[t][h]->key, k, sizeof hx[t][h]->key)) { last[t] = hx[t][h]; return hx[t][h]->obj; }
     for (i = 0; i < GSTATE_MAX && c[i].obj; i++)
         if (!memcmp(c[i].key, k, sizeof c[i].key)) {
-            if (t < 8) { tab[t] = c; last[t] = &c[i]; }
+            if (t < 8) { last[t] = &c[i]; hx[t][h] = &c[i]; }
             return c[i].obj;
         }
     return NULL;
@@ -841,8 +848,10 @@ static struct {
     float cbvs[4]; int cbvs_ok;
     unsigned char cbps[1152]; int cbps_ok;     /* the PS constants: 8 stages x 7 + 16 float4 */
     int pipe;                                  /* 1: the draw pipeline below is valid */
-    ID3D11InputLayout *il; ID3D11Buffer *vb; UINT vbs;
+    ID3D11InputLayout *il; ID3D11Buffer *vb; UINT vbs, vboff;
     ID3D11VertexShader *vs; ID3D11PixelShader *ps; ID3D11Buffer *ib;
+    int topo; int ibfmt;                       /* (1.9.5) the raw-vertex path changes these too */
+    ID3D11Buffer *vb1;                         /* slot 1: the constant stream for inputs a draw has no data for */
 } g_sh;
 static void gpu_sh_reset(void) { memset(&g_sh, 0, sizeof g_sh); }
 
@@ -866,7 +875,7 @@ static void gpu_bind_pipe2(ID3D11InputLayout *il, ID3D11Buffer *vb, UINT stride,
     if (nocache < 0) nocache = getenv("RECOMP_GPU_NO_PIPECACHE") != NULL;
     if (g_sh.pipe != 1 || nocache) {
         ID3D11Buffer *cbs[3] = { g_cb_vs, NULL, g_cb_vpc };
-        ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        g_sh.topo = 0;
         ID3D11DeviceContext_VSSetConstantBuffers(g_ctx, 0, 3, cbs);
         ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 1, 1, &g_cb_ps);
         g_sh.pipe = 1;
@@ -874,12 +883,18 @@ static void gpu_bind_pipe2(ID3D11InputLayout *il, ID3D11Buffer *vb, UINT stride,
         g_sh.vs = (ID3D11VertexShader *)(intptr_t)-1; g_sh.ps = (ID3D11PixelShader *)(intptr_t)-1;
         g_sh.ib = (ID3D11Buffer *)(intptr_t)-1;
     }
-    if (ib != g_sh.ib) { ID3D11DeviceContext_IASetIndexBuffer(g_ctx, ib, DXGI_FORMAT_R32_UINT, 0); g_sh.ib = ib; }
+    if (g_sh.topo != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) {
+        ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        g_sh.topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+    }
+    if (ib && (ib != g_sh.ib || g_sh.ibfmt != DXGI_FORMAT_R32_UINT)) {
+        ID3D11DeviceContext_IASetIndexBuffer(g_ctx, ib, DXGI_FORMAT_R32_UINT, 0); g_sh.ib = ib; g_sh.ibfmt = DXGI_FORMAT_R32_UINT;
+    }
     if (il != g_sh.il) { ID3D11DeviceContext_IASetInputLayout(g_ctx, il); g_sh.il = il; g_cnt_il++; }
-    if (vb && (vb != g_sh.vb || stride != g_sh.vbs)) {
+    if (vb && (vb != g_sh.vb || stride != g_sh.vbs || g_sh.vboff)) {
         UINT off = 0;
         ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &vb, &stride, &off);
-        g_sh.vb = vb; g_sh.vbs = stride;
+        g_sh.vb = vb; g_sh.vbs = stride; g_sh.vboff = 0;
     }
     if (vs != g_sh.vs) { ID3D11DeviceContext_VSSetShader(g_ctx, vs, NULL, 0); g_sh.vs = vs; g_cnt_vs++; }
     if (ps != g_sh.ps) { ID3D11DeviceContext_PSSetShader(g_ctx, ps, NULL, 0); g_sh.ps = ps; g_cnt_ps++; }
@@ -1601,6 +1616,8 @@ typedef struct {
 static PsKey g_pskey;
 /* (g_ps_bound: now g_sh.ps) */
 
+static int g_stg_dyn;   /* (1.9.5) the last binding sampled a drawn surface or a pack picture */
+static int g_stg_lin;   /* (1.9.5) ... or a texture checked again at every pushbuffer run (linear) */
 static void gpu_bind_stages(void)
 {
     struct {
@@ -1684,6 +1701,7 @@ static void gpu_bind_stages(void)
                             gs ? (isd ? "zeta surface" : "colour surface") : "memory (near a surface!)");
                 }
             }
+            if (gs) g_stg_dyn = 1;
             if (gs && !isd) gsurf_sync_from_mem(gs);
             if (gs) {
                 gsurf_resolve(gs);
@@ -1691,7 +1709,8 @@ static void gpu_bind_stages(void)
                 if (isd) fl |= 8;
                 if (!S->normalized) { tail.sscale[k][0] = 1.0f / (float)gs->w; tail.sscale[k][1] = 1.0f / (float)gs->h; }
             } else {
-                srv[k] = gtex_get(&S->t);
+                { PT_T0(pt_t0); srv[k] = gtex_get(&S->t); PT_ADD(PT_TEX, pt_t0); }
+                if ((texc_epoch(&S->t) & 0xC0000000u) == 0) g_stg_lin = 1;   /* (checked again every run: see gpu_stages) */
             }
             if (!srv[k]) fl &= ~1;
             /* (a pack picture: always through its levels -- it is many times the size it is drawn at) */
@@ -1733,6 +1752,30 @@ static void gpu_bind_stages(void)
         ID3D11DeviceContext_PSSetSamplers(g_ctx, 0, 4, smp); g_cnt_srv++;
         memcpy(g_sh.srv, srv, sizeof srv); memcpy(g_sh.smp, smp, sizeof smp); g_sh.tex_ok = 1;
     }
+}
+
+/* (1.9.5) Textures and combiners for a draw: kept as the last draw bound them
+ * when nothing they depend on has changed since (no texture, combiner or
+ * other state register written with a new value, no clear, flip, fence or
+ * new pushbuffer run), the last binding sampled no drawn surface or pack
+ * picture, and nothing has unbound them. Returns 1 when kept (the pixel
+ * shader is then the one bound already). RECOMP_STAGES_ALWAYS=1: every draw. */
+static unsigned g_stg_kept, g_stg_made;
+static int gpu_stages(void)
+{
+    static int always = -1, valid; static long trev, grev; static int uon, zt, zw;
+    if (always < 0) always = getenv("RECOMP_STAGES_ALWAYS") != NULL;
+    if (valid && !always && !(s_grp & (GRP_TEX | GRP_COMB | GRP_OTHER)) && !((s_grp & GRP_RUN) && g_stg_lin)
+        && g_sh.tex_ok && g_sh.cbps_ok && g_sh.pipe == 1
+        && trev == xbox_tex_rev && uon == g_ultra_on && grev == xbox_gfx_rev
+        && zt == s_3d.depth_test && zw == s_3d.depth_mask) { g_stg_kept++; return 1; }   /* (a pack picture's choice reads the depth state) */
+    s_grp &= ~(GRP_TEX | GRP_COMB | GRP_OTHER | GRP_RUN);
+    g_stg_dyn = 0; g_stg_lin = 0; s_ultra_pend = 0;
+    gpu_bind_stages();
+    valid = !g_stg_dyn && !s_ultra_pend; trev = xbox_tex_rev; uon = g_ultra_on; grev = xbox_gfx_rev;
+    zt = s_3d.depth_test; zw = s_3d.depth_mask;
+    g_stg_made++;
+    return 0;
 }
 
 /* Vertices of a batch: assembled first (index -> slot), then transformed
@@ -1911,6 +1954,17 @@ static void gpu_drop_bad_tris(uint32_t nverts)
 /* (1.9.3) The vertex-program path's vertices and indices share one ring
  * buffer (bound as both): one Map a draw instead of two, the vertices
  * packed straight into it rather than into a copy first. */
+/* The vertex program's 192 constants, sent when they changed. */
+static void gpu_vp_constants(void)
+{
+    /* (1.9.5) sent when one of them changed (the constant methods say so):
+     * comparing all 192 every draw was itself a visible cost */
+    if (!g_vpc_ok || s_vpc_dirty) {
+        s_vpc_dirty = 0;
+        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_vpc, 0, NULL, s_3d.c, 0, 0); g_cnt_vpc++;
+        g_vpc_ok = 1;
+    }
+}
 static ID3D11Buffer *g_vix; static UINT g_vix_cap, g_vix_pos;
 static void gpu_batch_hw(HwVp *hv, uint32_t nverts)
 {
@@ -1957,6 +2011,7 @@ static void gpu_batch_hw(HwVp *hv, uint32_t nverts)
     vb_at = stride ? (g_vix_pos + stride - 1) / stride * stride : (g_vix_pos + 3) & ~3u;
     if (vb_at + vbytes + ibytes > g_vix_cap) { vb_at = 0; mode = D3D11_MAP_WRITE_DISCARD; }
     ib_at = vb_at + vbytes;            /* (a multiple of 16: 4-aligned) */
+    PT_T0(pt_f0);
     if (FAILED(ID3D11DeviceContext_Map(g_ctx, (ID3D11Resource *)g_vix, 0, mode, 0, &ms))) return;
     if (hv->nin) {
         float *dst = (float *)((char *)ms.pData + vb_at);
@@ -1970,25 +2025,375 @@ static void gpu_batch_hw(HwVp *hv, uint32_t nverts)
         for (k = 0; k < g_nidx; k++) di[k] = g_idx[k] + base;
     }
     ID3D11DeviceContext_Unmap(g_ctx, (ID3D11Resource *)g_vix, 0);
+    PT_ADD(PT_FETCH, pt_f0);
     g_vix_pos = ib_at + ibytes;
 drawn_uploaded:
-    if (!g_vpc_ok || memcmp(g_vpc_shadow, s_3d.c, sizeof g_vpc_shadow)) {
-        memcpy(g_vpc_shadow, s_3d.c, sizeof g_vpc_shadow);
-        ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_vpc, 0, NULL, g_vpc_shadow, 0, 0); g_cnt_vpc++;
-        g_vpc_ok = 1;
-    }
+    {   PT_T0(pt_c0); gpu_vp_constants(); PT_ADD(PT_VPC, pt_c0); }
     if (shadow_hook()) return;
-    gpu_bind_stages();
+    { PT_T0(pt_s0); gpu_bind_stages(); PT_ADD(PT_STAGES, pt_s0); }
+    PT_T0(pt_d0);
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);
     g_ps_cur = hwps_lookup(&g_pskey);
     if (split) gpu_bind_pipe(hv->il, hv->nin ? g_vbx : NULL, stride, hv->vs, g_ps_cur);
     else gpu_bind_pipe2(hv->il, hv->nin ? g_vix : NULL, stride, hv->vs, g_ps_cur, g_vix);
     ID3D11DeviceContext_DrawIndexed(g_ctx, g_nidx, ib_at / 4, 0);
+    PT_ADD(PT_SUBMIT, pt_d0);
     s_gpu.tris_drawn += g_nidx / 3;
     s_gpu.drawn_offset = s_gpu.color_offset;
     s_3d.verts += nverts;
     g_hwvp_stat_hw++;
+}
+
+/* (1.9.5) The raw-vertex path: a draw whose vertex program runs on the
+ * graphics card hands the card the title's own vertex data, as a PC game
+ * hands Direct3D its vertex buffer, and the input assembler converts each
+ * attribute (floats, D3DCOLOR, normalised bytes and shorts) as the NV2A did.
+ * Before, the CPU walked every index, gave each vertex a slot, and turned
+ * every attribute of every vertex into four floats -- most of the render
+ * thread's own work at a few thousand draws a frame. Strips are drawn as
+ * strips; only fans and quads are turned into triangle lists (indices only).
+ * Anything else -- packed normals, unnormalised shorts, three-byte inputs, a
+ * title-chosen CPU model, the HUD's widening -- takes the old path.
+ * RECOMP_RAW_VERTS=0: the old path for everything. */
+static ID3D11Buffer *g_vconst;       /* float4(0,0,0,1): inputs the draw has no data for */
+static int g_raw_on = -1, g_raw_bgra;
+static int raw_format(const VertexAttr *a, DXGI_FORMAT *f, uint32_t *bytes)
+{
+    switch (a->type) {
+    case 0: if (a->size != 4 || !g_raw_bgra) return 0; *f = DXGI_FORMAT_B8G8R8A8_UNORM; *bytes = 4; return 1;   /* D3DCOLOR */
+    case 2: {                                                                                                   /* float */
+        static const DXGI_FORMAT ff[5] = { 0, DXGI_FORMAT_R32_FLOAT, DXGI_FORMAT_R32G32_FLOAT, DXGI_FORMAT_R32G32B32_FLOAT, DXGI_FORMAT_R32G32B32A32_FLOAT };
+        if (a->size < 1 || a->size > 4) return 0;
+        *f = ff[a->size]; *bytes = 4 * a->size; return 1;
+    }
+    case 4:                                                                                                     /* unsigned byte, normalised */
+        if (a->size == 1) { *f = DXGI_FORMAT_R8_UNORM; *bytes = 1; return 1; }
+        if (a->size == 2) { *f = DXGI_FORMAT_R8G8_UNORM; *bytes = 2; return 1; }
+        if (a->size == 4) { *f = DXGI_FORMAT_R8G8B8A8_UNORM; *bytes = 4; return 1; }
+        return 0;
+    case 1:                                                                                                     /* signed short, normalised */
+        if (a->size == 1) { *f = DXGI_FORMAT_R16_SNORM; *bytes = 2; return 1; }
+        if (a->size == 2) { *f = DXGI_FORMAT_R16G16_SNORM; *bytes = 4; return 1; }
+        if (a->size == 4) { *f = DXGI_FORMAT_R16G16B16A16_SNORM; *bytes = 8; return 1; }
+        return 0;
+    default: return 0;
+    }
+}
+static ID3D11InputLayout *raw_layout(HwVp *hv, const uint32_t *sig)
+{
+    D3D11_INPUT_ELEMENT_DESC el[16];
+    uint32_t i;
+    int k;
+    for (k = 0; k < hv->nlay; k++)
+        if (!memcmp(hv->lay[k].sig, sig, hv->nin * 4)) return hv->lay[k].il;
+    if (!hv->blob) return NULL;
+    for (i = 0; i < hv->nin; i++) {
+        el[i].SemanticName = "TEXCOORD"; el[i].SemanticIndex = i;
+        el[i].Format = (DXGI_FORMAT)(sig[i] & 0xFF);
+        el[i].InputSlot = sig[i] >> 31;
+        el[i].AlignedByteOffset = (sig[i] >> 8) & 0xFFF;
+        el[i].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA; el[i].InstanceDataStepRate = 0;
+    }
+    k = hv->nlay < 8 ? hv->nlay++ : (hv->laynext++ & 7);
+    if (hv->lay[k].il) ID3D11InputLayout_Release(hv->lay[k].il);
+    hv->lay[k].il = NULL;
+    memcpy(hv->lay[k].sig, sig, hv->nin * 4);
+    if (FAILED(ID3D11Device_CreateInputLayout(g_dev, el, hv->nin, ID3D10Blob_GetBufferPointer(hv->blob),
+                                              ID3D10Blob_GetBufferSize(hv->blob), &hv->lay[k].il))) {
+        hv->lay[k].il = NULL;
+        memset(hv->lay[k].sig, 0xFF, sizeof hv->lay[k].sig);
+    }
+    return hv->lay[k].il;
+}
+/* (1.9.5) the batch being gathered (see gpu_batch_raw): written straight
+ * into the vertex ring and an index ring of its own, both kept mapped while
+ * the batch grows (no Direct3D call touches them meanwhile: every other
+ * path sends the batch first) */
+static struct {
+    int on; HwVp *hv; ID3D11InputLayout *il; UINT stride; int absent;
+    uint8_t *vb; uint32_t vbytes, vcap, vb_at;
+    uint32_t *ib; uint32_t nidx, icap, ib_at;
+    uint32_t draws;
+} g_mb;
+static ID3D11Buffer *g_ixr;
+static uint32_t g_ixr_cap, g_ixr_pos;   /* in indices */
+static int g_mb_skip_targets;
+static unsigned g_mb_joined, g_mb_sent;
+static UINT g_mb_stride_next;   /* the vertex size of the batch about to begin */
+/* (1.9.5) RECOMP_BASE_VERTEX=1: batches drawn with a base vertex, the ring
+ * bound once. Off by default: on an NVIDIA card it made the driver's share
+ * of the render thread larger, not smaller. */
+static int g_mb_basev = -1;
+static int mb_basev(void) { if (g_mb_basev < 0) { const char *e = getenv("RECOMP_BASE_VERTEX"); g_mb_basev = e && *e == '1'; } return g_mb_basev; }
+static int gpu_vix_ensure(uint32_t need)
+{
+    if (!g_vix || g_vix_cap < need) {
+        D3D11_BUFFER_DESC d;
+        if (g_vix) ID3D11Buffer_Release(g_vix);
+        g_vix_cap = need < (16u << 20) ? (16u << 20) : need * 2;
+        memset(&d, 0, sizeof d);
+        d.ByteWidth = g_vix_cap; d.Usage = D3D11_USAGE_DYNAMIC;
+        d.BindFlags = D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_INDEX_BUFFER;
+        d.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        g_vix = NULL;
+        if (FAILED(ID3D11Device_CreateBuffer(g_dev, &d, NULL, &g_vix))) { g_vix_cap = 0; return 0; }
+        g_sh.vb = NULL; g_sh.ib = NULL;
+        g_vix_pos = g_vix_cap;
+    }
+    return 1;
+}
+static int gpu_ixr_ensure(uint32_t need)   /* (indices) */
+{
+    if (!g_ixr || g_ixr_cap < need) {
+        D3D11_BUFFER_DESC d;
+        if (g_ixr) ID3D11Buffer_Release(g_ixr);
+        g_ixr_cap = need < (2u << 20) ? (2u << 20) : need * 2;
+        memset(&d, 0, sizeof d);
+        d.ByteWidth = g_ixr_cap * 4; d.Usage = D3D11_USAGE_DYNAMIC;
+        d.BindFlags = D3D11_BIND_INDEX_BUFFER;
+        d.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        g_ixr = NULL;
+        if (FAILED(ID3D11Device_CreateBuffer(g_dev, &d, NULL, &g_ixr))) { g_ixr_cap = 0; return 0; }
+        g_sh.ib = NULL;
+        g_ixr_pos = g_ixr_cap;
+    }
+    return 1;
+}
+/* A new batch, with room for at least vneed bytes of vertices and inum
+ * indices: both rings mapped at their next free place (from the start,
+ * discarded, when the rest is too small). */
+static int gpu_mb_begin(uint32_t vneed, uint32_t inum)
+{
+    D3D11_MAPPED_SUBRESOURCE mv, mi;
+    D3D11_MAP md = D3D11_MAP_WRITE_NO_OVERWRITE, mdi = D3D11_MAP_WRITE_NO_OVERWRITE;
+    uint32_t vb_at, ib_at;
+    if (!gpu_vix_ensure(vneed + 64) || !gpu_ixr_ensure(inum)) return 0;
+    /* (1.9.5) at a whole vertex: the batch is drawn with a base vertex, the
+     * ring bound once (not at a new offset for every batch) */
+    vb_at = (g_mb_stride_next && mb_basev()) ? (g_vix_pos + g_mb_stride_next - 1) / g_mb_stride_next * g_mb_stride_next : (g_vix_pos + 15) & ~15u;
+    if (vb_at > g_vix_cap || g_vix_cap - vb_at < vneed + (1u << 20) / 8) { vb_at = 0; md = D3D11_MAP_WRITE_DISCARD; }
+    ib_at = g_ixr_pos;
+    if (ib_at > g_ixr_cap || g_ixr_cap - ib_at < inum + 4096) { ib_at = 0; mdi = D3D11_MAP_WRITE_DISCARD; }
+    if (FAILED(ID3D11DeviceContext_Map(g_ctx, (ID3D11Resource *)g_vix, 0, md, 0, &mv))) return 0;
+    if (FAILED(ID3D11DeviceContext_Map(g_ctx, (ID3D11Resource *)g_ixr, 0, mdi, 0, &mi))) {
+        ID3D11DeviceContext_Unmap(g_ctx, (ID3D11Resource *)g_vix, 0);
+        return 0;
+    }
+    g_mb.vb = (uint8_t *)mv.pData + vb_at; g_mb.vb_at = vb_at; g_mb.vcap = g_vix_cap - vb_at;
+    g_mb.ib = (uint32_t *)mi.pData + ib_at; g_mb.ib_at = ib_at; g_mb.icap = g_ixr_cap - ib_at;
+    g_mb.vbytes = 0; g_mb.nidx = 0; g_mb.draws = 0;
+    g_mb.on = 1;
+    return 1;
+}
+static void gpu_mb_flush(void)
+{
+    UINT stride;
+    if (!g_mb.on) return;
+    g_mb.on = 0;
+    g_mb_skip_targets = 0;
+    PT_T0(pt_f0);
+    _mm_sfence();   /* (the streaming stores of rt_copy_wc, before the card reads them) */
+    ID3D11DeviceContext_Unmap(g_ctx, (ID3D11Resource *)g_vix, 0);
+    ID3D11DeviceContext_Unmap(g_ctx, (ID3D11Resource *)g_ixr, 0);
+    g_vix_pos = g_mb.vb_at + g_mb.vbytes;
+    g_ixr_pos = g_mb.ib_at + g_mb.nidx;
+    if (!g_mb.nidx) return;
+    if (g_sh.topo != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) {
+        ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); g_sh.topo = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+    }
+    if (g_sh.ib != g_ixr || g_sh.ibfmt != DXGI_FORMAT_R32_UINT) {
+        ID3D11DeviceContext_IASetIndexBuffer(g_ctx, g_ixr, DXGI_FORMAT_R32_UINT, 0); g_sh.ib = g_ixr; g_sh.ibfmt = DXGI_FORMAT_R32_UINT;
+    }
+    stride = g_mb.stride;
+    if (!mb_basev() || g_mb.vb_at % stride) {
+        if (g_sh.vb != g_vix || g_sh.vbs != stride || g_sh.vboff != g_mb.vb_at) {
+            UINT off = g_mb.vb_at;
+            ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &g_vix, &stride, &off);
+            g_sh.vb = g_vix; g_sh.vbs = stride; g_sh.vboff = g_mb.vb_at;
+        }
+    } else if (g_sh.vb != g_vix || g_sh.vbs != stride || g_sh.vboff != 0) {
+        UINT off = 0;
+        ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 0, 1, &g_vix, &stride, &off);
+        g_sh.vb = g_vix; g_sh.vbs = stride; g_sh.vboff = 0;
+    }
+    if (g_mb.absent && g_sh.vb1 != g_vconst) {
+        UINT st0 = 0, off0 = 0;
+        ID3D11DeviceContext_IASetVertexBuffers(g_ctx, 1, 1, &g_vconst, &st0, &off0);
+        g_sh.vb1 = g_vconst;
+    }
+    ID3D11DeviceContext_DrawIndexed(g_ctx, g_mb.nidx, g_mb.ib_at, (!mb_basev() || g_mb.vb_at % stride) ? 0 : (INT)(g_mb.vb_at / stride));
+    g_mb_sent++;
+    PT_ADD(PT_FLUSH, pt_f0);
+}
+static int gpu_batch_raw(HwVp *hv)
+{
+    static const uint8_t *mem;
+    uint32_t n = s_gpu.idx_count, i, lo = 0xFFFFFFFFu, stride = 0, span = 0, mn = 0xFFFFFFFFu, mx = 0, seq = 1;
+    uint32_t sig[16], nvert, vbytes, nidx = 0, isz = 2, vb_at, ib_at = 0, need;
+    const uint8_t *src;
+    int absent = 0, indexed, topo;
+    ID3D11InputLayout *il;
+    D3D11_MAPPED_SUBRESOURCE ms;
+    D3D11_MAP mode = D3D11_MAP_WRITE_NO_OVERWRITE;
+    if (!hv->nin || !hv->blob || n < 3) return 0;
+    if (s_gpu.prim < NV_PRIM_TRIANGLES || s_gpu.prim > NV_PRIM_POLYGON) return 0;
+    /* the inputs: one stream (the title's interleaved vertex), plus the constant one */
+    for (i = 0; i < hv->nin; i++) {
+        const VertexAttr *a = &s_gpu.attr[hv->inreg[i]];
+        if (!a->size || !a->stride) { absent = 1; continue; }
+        if (!stride) stride = a->stride; else if (a->stride != stride) return 0;
+        if (s_gpu.inline_active ? 0 : !a->offset) return 0;
+        if (a->offset < lo) lo = a->offset;
+    }
+    if (!stride || (stride & 3) || stride > 2048) return 0;
+    for (i = 0; i < hv->nin; i++) {
+        const VertexAttr *a = &s_gpu.attr[hv->inreg[i]];
+        DXGI_FORMAT f; uint32_t b, o;
+        if (!a->size || !a->stride) { sig[i] = (1u << 31) | DXGI_FORMAT_R32G32B32A32_FLOAT; continue; }
+        if (!raw_format(a, &f, &b)) return 0;
+        o = a->offset - lo;
+        if ((o & 3) || o + b > stride) return 0;
+        if (o + b > span) span = o + b;
+        sig[i] = (o << 8) | (uint32_t)f;
+    }
+    /* the vertices the draw uses */
+    for (i = 0; i < n; i++) {
+        uint32_t x = s_gpu.idx[i];
+        if (x < mn) mn = x;
+        if (x > mx) mx = x;
+        if (x != s_gpu.idx[0] + i) seq = 0;
+    }
+    nvert = mx - mn + 1;
+    if (nvert > 4 * n + 256 || nvert > 65536 * 4) return 0;     /* (a few vertices out of a big array: the old path) */
+    vbytes = (nvert - 1) * stride + span;
+    if (s_gpu.inline_active) {
+        if ((size_t)lo + (size_t)mx * stride + span > (size_t)s_gpu.inline_count * 4) return 0;
+        src = (const uint8_t *)s_gpu.inline_buf + lo + (size_t)mn * stride;
+    } else {
+        if (!mem) mem = (const uint8_t *)xbox_GetMemoryOffset();
+        src = mem + lo + (size_t)mn * stride;
+    }
+    il = raw_layout(hv, sig);
+    if (!il) return 0;
+    switch (s_gpu.prim) {
+    case NV_PRIM_TRIANGLES: nidx = n - n % 3; break;
+    case NV_PRIM_TRIANGLE_STRIP: nidx = (n - 2) * 3; break;
+    case NV_PRIM_QUADS: nidx = (n / 4) * 6; break;
+    case NV_PRIM_QUAD_STRIP: nidx = n >= 4 ? ((n - 2) / 2) * 6 : 0; break;
+    default: nidx = (n - 2) * 3; break;   /* fan, polygon */
+    }
+    if (!nidx) return 1;
+    /* (1.9.5) Draws are gathered and sent as one: a draw with nothing
+     * changed since the one before it (no register written with a new value,
+     * no constant, no clear, flip, fence or blit -- s_last_chg) and the same
+     * program, layout and vertex size is added to the batch instead of
+     * becoming a Direct3D draw of its own. Every draw is sent as a triangle
+     * list (strips and fans as their triangles, in the same order and
+     * winding), so any two can be joined. The batch goes out before anything
+     * else touches Direct3D: the next draw that cannot join it, or any
+     * changed register or action (pb_note_change). */
+    {
+        static int merge = -1;
+        int join;
+        if (merge < 0) merge = !getenv("RECOMP_NO_MERGE");
+        join = merge && g_mb.on && s_last_chg == 0 && g_mb.hv == hv && g_mb.il == il && g_mb.stride == stride
+            && g_mb.absent == absent
+            && g_mb.vbytes + nvert * stride <= g_mb.vcap && g_mb.nidx + nidx <= g_mb.icap;
+        static int dbg = -1;   /* testing: RECOMP_MB_DBG=1 -- why unchanged draws did not join */
+        if (dbg < 0) dbg = getenv("RECOMP_MB_DBG") != NULL;
+        if (!join && dbg && s_last_chg == 0) {
+            static unsigned r[8], c;
+            r[!g_mb.on ? 0 : g_mb.hv != hv ? 1 : g_mb.il != il ? 2 : g_mb.stride != stride ? 3 : g_mb.absent != absent ? 4 : s_3d.stencil_test ? 5 : 6]++;
+            if (++c % 200 == 0) fprintf(stderr, "  [MBDBG] joined %u off %u hv %u il %u stride %u absent %u stencil %u size %u\n", g_mb_joined, r[0], r[1], r[2], r[3], r[4], r[5], r[6]);
+        }
+        if (!join) {
+            int kept;
+            gpu_mb_flush();
+            if (g_mb_skip_targets) {   /* (gpu_batch left them for a draw it expected to join) */
+                int need_depth = s_3d.depth_test || s_3d.stencil_test;
+                g_mb_skip_targets = 0;
+                if (!gpu_bind_targets(need_depth) || !gpu_set_raster()) return 1;
+            }
+            {   PT_T0(pt_c0); gpu_vp_constants(); PT_ADD(PT_VPC, pt_c0); }
+            if (shadow_hook()) return 1;
+            { PT_T0(pt_s0); kept = gpu_stages(); PT_ADD(PT_STAGES, pt_s0); }
+            {
+                PT_T0(pt_d0);
+                gpu_set_blend(0);
+                gpu_set_depth(g_cur_ds != NULL);
+                if (!kept || !g_ps_cur) g_ps_cur = hwps_lookup(&g_pskey);
+                gpu_bind_pipe2(il, NULL, 0, hv->vs, g_ps_cur, NULL);   /* (shaders, layout, constant buffers) */
+                PT_ADD(PT_SUBMIT, pt_d0);
+            }
+            g_mb_stride_next = stride;
+            if (!gpu_mb_begin(nvert * stride, nidx)) return 1;
+            g_mb.hv = hv; g_mb.il = il; g_mb.stride = stride; g_mb.absent = absent;
+        } else g_mb_joined++;
+    }
+    {   PT_T0(pt_r0);
+        uint32_t base = g_mb.vbytes / stride, k = g_mb.nidx, add = nvert * stride;
+        const uint32_t *x = s_gpu.idx;
+        uint32_t *d;
+        rt_copy_wc(g_mb.vb + g_mb.vbytes, src, vbytes);
+        if (add > vbytes) memset(g_mb.vb + g_mb.vbytes + vbytes, 0, add - vbytes);
+        g_mb.vbytes += add;
+        d = g_mb.ib;
+#define PUTI(v) (d[k++] = base + ((v) - mn))
+        switch (s_gpu.prim) {
+        case NV_PRIM_TRIANGLES:
+            if (seq) { for (i = 0; i < nidx; i++) d[k++] = base + i; }
+            else for (i = 0; i < nidx; i++) PUTI(x[i]);
+            break;
+        case NV_PRIM_TRIANGLE_STRIP:
+            for (i = 0; i + 2 < n; i++) {
+                if (i & 1) { PUTI(x[i+1]); PUTI(x[i]); PUTI(x[i+2]); }
+                else       { PUTI(x[i]); PUTI(x[i+1]); PUTI(x[i+2]); }
+            }
+            break;
+        case NV_PRIM_QUADS:
+            for (i = 0; i + 3 < n; i += 4) { PUTI(x[i]); PUTI(x[i+1]); PUTI(x[i+2]); PUTI(x[i]); PUTI(x[i+2]); PUTI(x[i+3]); }
+            break;
+        case NV_PRIM_QUAD_STRIP:
+            for (i = 0; i + 3 < n; i += 2) { PUTI(x[i]); PUTI(x[i+1]); PUTI(x[i+3]); PUTI(x[i]); PUTI(x[i+3]); PUTI(x[i+2]); }
+            break;
+        default:
+            for (i = 1; i + 1 < n; i++) { PUTI(x[0]); PUTI(x[i]); PUTI(x[i+1]); }
+            break;
+        }
+#undef PUTI
+        g_mb.nidx = k;
+        g_mb.draws++;
+        PT_ADD(PT_RAW, pt_r0);
+    }
+    s_gpu.tris_drawn += nidx / 3;
+    s_gpu.drawn_offset = s_gpu.color_offset;
+    s_3d.verts += nvert;
+    g_hwvp_stat_hw++;
+    g_pt_raw_n++;
+    (void)vb_at; (void)ib_at; (void)need; (void)ms; (void)mode; (void)isz; (void)indexed; (void)topo;
+    return 1;
+}
+static int raw_enabled(void)
+{
+    if (g_raw_on < 0) {
+        const char *e = getenv("RECOMP_RAW_VERTS");
+        UINT fs = 0;
+        static const float one[4] = { 0, 0, 0, 1 };
+        D3D11_BUFFER_DESC d; D3D11_SUBRESOURCE_DATA sd;
+        g_raw_on = !(e && atoi(e) == 0);
+        if (g_raw_on) {
+            g_raw_bgra = SUCCEEDED(ID3D11Device_CheckFormatSupport(g_dev, DXGI_FORMAT_B8G8R8A8_UNORM, &fs))
+                         && (fs & D3D11_FORMAT_SUPPORT_IA_VERTEX_BUFFER);
+            memset(&d, 0, sizeof d); memset(&sd, 0, sizeof sd);
+            d.ByteWidth = 16; d.Usage = D3D11_USAGE_IMMUTABLE; d.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+            sd.pSysMem = one;
+            if (FAILED(ID3D11Device_CreateBuffer(g_dev, &d, &sd, &g_vconst))) g_raw_on = 0;
+        }
+        fprintf(stderr, "  [D3D11] vertex data straight to the graphics card: %s (D3DCOLOR inputs %s)\n",
+                g_raw_on ? "on" : "off", g_raw_bgra ? "too" : "on the old path");
+    }
+    return g_raw_on;
 }
 
 static void gpu_batch(void)
@@ -2007,10 +2412,36 @@ static void gpu_batch(void)
         g_slot_gen = (uint32_t *)calloc(SW3D_CACHE, 4);
         if (!g_slot || !g_slot_gen) return;
     }
-    if (!gpu_bind_targets(need_depth)) return;
-    if (!gpu_set_raster()) return;
+    if (g_mb.on && s_last_chg == 0 && s_3d.mode == 2) g_mb_skip_targets = 1;   /* (this draw may join the gathered ones: nothing to bind) */
+    else {
+        PT_T0(pt_tg0);
+        gpu_mb_flush();
+        if (!gpu_bind_targets(need_depth)) return;
+        if (!gpu_set_raster()) return;
+        PT_ADD(PT_TARGETS, pt_tg0);
+    }
     g_gen++; if (!g_gen) g_gen = 1;
     g_nidx = 0;
+    if (s_3d.mode == 2 && raw_enabled()) {
+        static int hud = -1, dbg = -1, nul = -1;
+        if (hud < 0) hud = getenv("RECOMP_HUD_STRETCH") == NULL;
+        if (dbg < 0) dbg = getenv("RECOMP_BATCH_SHAPES") || getenv("RECOMP_BIGTRI") || getenv("RECOMP_GPU_SPLIT_VI");
+        if (nul < 0) nul = getenv("RECOMP_GPU_NULL") != NULL;
+        if (!dbg && !nul && !(hud && g_wide_prev && s_vpd_len <= 3 && g_aspect > 1.34f)) {
+            uint32_t va0 = s_gpu.attr[0].offset | 0x80000000u;
+            HwVp *hv = (xbox_gpu_cpu_hi && va0 >= xbox_gpu_cpu_lo && va0 < xbox_gpu_cpu_hi) ? NULL : hwvp_lookup();
+            if (hv) {
+                if (s_vpd_len > 3) g_frame_3d = 1;
+                if (gpu_batch_raw(hv)) return;
+            }
+        }
+    }
+    if (g_mb.on || g_mb_skip_targets) {   /* (not one for the gathered draws after all) */
+        int st = g_mb_skip_targets;
+        gpu_mb_flush();
+        if (st && (!gpu_bind_targets(need_depth) || !gpu_set_raster())) return;
+    }
+    PT_T0(pt_w0);
     switch (s_gpu.prim) {
     case NV_PRIM_TRIANGLES:
         for (i = 0; i + 2 < n; i += 3) gpu_tri(s_gpu.idx[i], s_gpu.idx[i+1], s_gpu.idx[i+2], &nverts);
@@ -2040,6 +2471,8 @@ static void gpu_batch(void)
     default:
         return;
     }
+    PT_ADD(PT_WALK, pt_w0);
+    g_pt_old_n++;
     if (!g_nidx) return;
     if (s_3d.mode == 2 && s_vpd_len > 3) g_frame_3d = 1;
     if (g_wide_prev && s_3d.mode == 2 && s_vpd_len <= 3 && g_aspect > 1.34f) {
@@ -2323,6 +2756,7 @@ static int gpu_blit(uint32_t sb, uint32_t db, uint32_t ix, uint32_t iy, uint32_t
 /* Copy a GPU surface back into guest memory (frame dumps, replay, captures). */
 static void gpu_readback(uint32_t base, uint32_t pitch)
 {
+    gpu_mb_flush();
     g_slow_rb_n++;
     GSurf *s = gsurf_find(base, 0);
     D3D11_TEXTURE2D_DESC td;
@@ -2578,6 +3012,7 @@ void xbox_PresentDumpRequest(const char *path)
 /* The flip: put the finished surface on the window. */
 static void gpu_present(uint32_t base, uint32_t pitch)
 {
+    gpu_mb_flush();
     hud_frame_end();   /* this frame's HUD pieces, grouped (hud_wide_x) */
     HWND hwnd = xbox_FramebufferHwnd();
     GSurf *s = gsurf_find(base, 0);
@@ -2725,7 +3160,7 @@ static void gpu_present(uint32_t base, uint32_t pitch)
             static LARGE_INTEGER tq, tf; LARGE_INTEGER tn;
             if (!tf.QuadPart) QueryPerformanceFrequency(&tf);
             QueryPerformanceCounter(&tn);
-            if (tn.QuadPart - tq.QuadPart >= tf.QuadPart / 125) { s_texc_frame++; tq = tn; }
+            if (tn.QuadPart - tq.QuadPart >= tf.QuadPart / 60) { s_texc_frame++; tq = tn; }   /* (1.9.5: 16 ms, was 8) */
         }
         if (g_stretch_on < 0) g_stretch_on = getenv("RECOMP_PRESENT_STRETCH") != NULL;
         ID3D11DeviceContext_ClearRenderTargetView(g_ctx, g_sc_rtv, black);

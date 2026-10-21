@@ -1810,14 +1810,22 @@ static int imm_vertex_method(uint32_t method, uint32_t param)
 volatile long long xbox_perf_wait_ticks;   /* (1.9.3) the title's time waiting on the GPU or the frame clock (QPC), for [PERF] */
 /* the title's delay hook, at each sleep: 1 while it is one of its waits;
  * calls 5 ms apart or less make one wait */
+/* (1.9.5) The game's frame thread -- the one that waits for its frames:
+ * the time it spends in the kernel's sleeps and waits (xbox_PerfWaitBegin /
+ * End, kernel_thread.c and kernel_sync.c) is what [PERF] calls waiting. The
+ * old estimate (sleeps close together counted as one wait) took the game's
+ * whole frame for a wait at high frame rates. */
+volatile DWORD xbox_perf_game_tid;
 void xbox_PerfWaitNote(int inwait)
 {
-    static LARGE_INTEGER lastw, qf;
-    LARGE_INTEGER q;
-    if (!qf.QuadPart) QueryPerformanceFrequency(&qf);
-    QueryPerformanceCounter(&q);
-    if (inwait && lastw.QuadPart && q.QuadPart - lastw.QuadPart < qf.QuadPart / 200) xbox_perf_wait_ticks += q.QuadPart - lastw.QuadPart;
-    lastw.QuadPart = inwait ? q.QuadPart : 0;
+    if (inwait) {   /* (the thread that waits for frames now: the loading screen's is another) */
+        DWORD t = GetCurrentThreadId();
+        if (t != xbox_perf_game_tid) {
+            static int n;
+            xbox_perf_game_tid = t;
+            if (n++ < 8) fprintf(stderr, "  [PERF] the game's frame thread: %lu\n", (unsigned long)t);
+        }
+    }
 }
 volatile unsigned g_nv2a_flips;   /* frames presented, for the hang watchdog */
 static uint32_t s_semaphore_offset;
@@ -2001,6 +2009,7 @@ int xbox_HudWidePlace(float cx, float cy, float *k)
 #include "nv2a_d3d11.inc"
 #else
 #include "nv2a_gl.inc"
+static void gpu_mb_flush(void) { }
 #endif
 
 static FILE *s_cap_fp;
@@ -2077,10 +2086,63 @@ static void frame_limit(void)
     next += period;
 }
 void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param);
+/* (1.9.5) What changed since the last draw (sw3d_batch reads and clears it):
+ * nothing -- only the next draw's vertices arrived --, only vertex-program
+ * constants, or other state / an action (a clear, a flip, a fence, a blit).
+ * A register written with the value it already has changes nothing. */
+static void pb_note_change1(uint32_t subch, uint32_t method, uint32_t param)
+{
+    uint32_t mi;
+    if (subch != 0) { s_chg |= CHG_STATE | CHG_ACTION; GRP_SET(GRP_OTHER); return; }
+    switch (method) {
+    case 0x17FC: case 0x1800: case 0x1808: case 0x1810: case 0x1818:   /* BEGIN_END, the draw's indices / vertices */
+    case 0x1EA4: case 0x1E9C:                                            /* constant / program load positions */
+        return;
+    case 0x0100: case 0x0110: case 0x0120: case 0x0124: case 0x0128: case 0x012C: case 0x0130:   /* NOP (callbacks), flips */
+    case 0x01A4: case 0x1D6C: case 0x1D70: case 0x1D94:                 /* semaphore, clear */
+    case 0x1710: case 0x1714:                                            /* vertex cache invalidation */
+        s_chg |= CHG_STATE | CHG_ACTION; GRP_SET(GRP_OTHER);
+        return;
+    default: break;
+    }
+    if (method >= 0x0B80 && method < 0x0C00) {                          /* a constant's component */
+        if (s_3d.c_load >= VP_CONSTS || memcmp(&s_3d.c[s_3d.c_load][s_3d.c_comp], &param, 4)) { s_chg |= CHG_CONST; s_vpc_dirty = 1; }
+        return;
+    }
+    if (method >= 0x0B00 && method < 0x0B80) {                          /* a program word */
+        if (s_3d.load_slot >= VP_SLOTS || s_3d.prog[s_3d.load_slot][s_3d.load_word] != param) { s_chg |= CHG_STATE; s_vp_gen++; }
+        return;
+    }
+    if ((method == 0x1EA0 || method == 0x1E94) && s_mlast[method >> 2] != param) s_vp_gen++;   /* program start, mode */
+    if ((method >= 0x1500 && method < 0x1540) || (method >= 0x1880 && method < 0x1B00)) { s_chg |= CHG_STATE; GRP_SET(GRP_OTHER); return; }   /* immediate vertices */
+    mi = (method >> 2) & 0x7FF;
+    if (s_mlast[mi] != param || !(s_mseen[mi >> 5] & (1u << (mi & 31)))) {
+        s_mlast[mi] = param; s_mseen[mi >> 5] |= 1u << (mi & 31); s_chg |= CHG_STATE; GRP_SET(grp_of(method));
+        {   /* testing: RECOMP_CHG_HIST=1 -- which registers change between draws, every 5 s */
+            static int on = -1; static unsigned cnt[0x800]; static DWORD t;
+            if (on < 0) on = getenv("RECOMP_CHG_HIST") != NULL;
+            if (on) {
+                cnt[mi]++;
+                if (GetTickCount() - t > 5000) {
+                    int k, j;
+                    t = GetTickCount();
+                    for (k = 0; k < 24; k++) {
+                        int b = -1;
+                        for (j = 0; j < 0x800; j++) if (cnt[j] && (b < 0 || cnt[j] > cnt[b])) b = j;
+                        if (b < 0) break;
+                        fprintf(stderr, "  [CHGHIST] %04X %u\n", b * 4, cnt[b]);
+                        cnt[b] = 0;
+                    }
+                    memset(cnt, 0, sizeof cnt);
+                }
+            }
+        }
+    }
+}
 /* (1.9.3) A run of INLINE_ARRAY words from the render thread's ring, in one
  * piece: what nv2a_pb_exec_method does with each, without going through
  * every other method's checks first. Capturing, or verbose: one at a time. */
-void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n)
+static void nv2a_pb_exec_inline_(const uint32_t *w, uint32_t n)
 {
     uint32_t room;
     static int hist = -1;
@@ -2096,17 +2158,109 @@ void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n)
     if (!s_gpu.prim) return;
     room = NV_MAX_INLINE - s_gpu.inline_count;
     if (n > room) n = room;
-    memcpy(&s_gpu.inline_buf[s_gpu.inline_count], w, n * 4);
+    rt_copy(&s_gpu.inline_buf[s_gpu.inline_count], w, (size_t)n * 4);
     s_gpu.inline_count += n;
 }
+static int s_mhist_on = -1;
+/* (1.9.5) A recorded method run (nv2a_pb_scan.c): word i of it is the
+ * method's i-th (the same method each time when it does not increment); at
+ * is where this piece starts in the run (a run can wrap the ring). */
+#define PB_METH_HDR_ 0xFFF00000u
+void nv2a_pb_exec_block(uint32_t hdr, const uint32_t *w, uint32_t n, uint32_t at)
+{
+    uint32_t subch = (hdr >> 16) & 7u, method = hdr & 0xFFFFu, i;
+    if ((hdr & 0x00080000u) && subch == 0 && method == NV097_ARRAY_ELEMENT16 && !s_cap_fp && s_mhist_on == 0) {
+        /* (1.9.5) a draw's 16-bit indices, two to a word -- most of the
+         * commands in a busy scene: added in one go instead of each word
+         * going through every method's checks (nothing else to do for them:
+         * pb_note_change ignores them, sw3d_method does not take them) */
+        PT_T0(t0);
+#if defined(_WIN32)
+        g_cnt_rt += n;
+#endif
+        if (s_gpu.prim) {
+            uint32_t k = s_gpu.idx_count, room = k <= NV_MAX_INDICES ? (NV_MAX_INDICES - k) / 2 : 0, m = n < room ? n : room;
+            uint32_t *d = &s_gpu.idx[k];
+            for (i = 0; i < m; i++) { d[2 * i] = w[i] & 0xFFFFu; d[2 * i + 1] = w[i] >> 16; }
+            s_gpu.idx_count = k + 2 * m;
+        }
+        PT_ADD(PT_INDICES, t0);
+        return;
+    }
+    if (hdr & 0x00080000u) { for (i = 0; i < n; i++) nv2a_pb_exec_method(subch, method, w[i]); }
+    else { for (i = 0; i < n; i++) nv2a_pb_exec_method(subch, method + (at + i) * 4, w[i]); }
+}
+/* (1.9.5) A run of vertex-program constant words from the render thread's
+ * ring, in one piece (nv2a_pb_scan.c records SetVertexShaderConstant's
+ * words so). */
+static void nv2a_pb_exec_consts_(const uint32_t *w, uint32_t n)
+{
+    uint32_t i;
+    if (s_cap_fp || s_mhist_on != 0) {
+        for (i = 0; i < n; i++) nv2a_pb_exec_method(0, 0x0B80, w[i]);
+        return;
+    }
+#if defined(_WIN32)
+    g_cnt_rt += n;
+#endif
+    if (s_3d.c_load < VP_CONSTS) {   /* (the words fill the constants in order: compared and stored as one) */
+        uint32_t at = (uint32_t)s_3d.c_load * 4 + (uint32_t)s_3d.c_comp, m = VP_CONSTS * 4 - at;
+        float *c = &s_3d.c[0][0] + at;
+        if (m > n) m = n;
+        if (memcmp(c, w, (size_t)m * 4)) { rt_copy(c, w, (size_t)m * 4); s_chg |= CHG_CONST; s_vpc_dirty = 1; }
+        at += m;
+        s_3d.c_load = at / 4; s_3d.c_comp = at % 4;
+    }
+    (void)i;
+}
+/* (1.9.5) A stretch of the pushbuffer as recorded (PB_RAW_HDR in
+ * nv2a_pb_scan.c): taken apart here the way the recorder used to before
+ * copying -- inline vertices, constants and other runs in one piece each */
+void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n);
+void nv2a_pb_exec_consts(const uint32_t *w, uint32_t n);
+void nv2a_pb_exec_raw(const uint32_t *w, uint32_t n)
+{
+    uint32_t i = 0;
+    while (i < n) {
+        uint32_t h = w[i++], count = (h >> 18) & 0x7FFu, subch = (h >> 13) & 7u, method = h & 0x1FFCu, k;
+        int noninc = (h & 0xE0000000u) == 0x40000000u;
+        const uint32_t *p = &w[i];
+        if (count > n - i) count = n - i;   /* (cannot happen: whole methods are recorded) */
+        i += count;
+        if (!count) continue;
+        if (count > 1) {
+            if (noninc && subch == 0 && method == 0x1818u) { nv2a_pb_exec_inline(p, count); continue; }
+            if (subch == 0 && (method & ~0x7Fu) == 0x0B80u && (noninc || method + count * 4 <= 0x0C00u)) { nv2a_pb_exec_consts(p, count); continue; }
+            nv2a_pb_exec_block(PB_METH_HDR_ | ((uint32_t)noninc << 19) | (subch << 16) | method, p, count, 0);
+            continue;
+        }
+        for (k = 0; k < count; k++) nv2a_pb_exec_method(subch, noninc ? method : method + k * 4, p[k]);
+    }
+}
+/* (1.9.5) timed for the log's [PERFRT] line */
+void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n) { PT_T0(t0); nv2a_pb_exec_inline_(w, n); PT_ADD(PT_INLINE, t0); }
+void nv2a_pb_exec_consts(const uint32_t *w, uint32_t n) { PT_T0(t0); nv2a_pb_exec_consts_(w, n); PT_ADD(PT_CONSTS, t0); }
 void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
 {
 #if defined(_WIN32)
     g_cnt_rt++;
 #endif
+    /* (1.9.5) The vertex-program constants -- most of the commands in a busy
+     * scene (every character's bone matrices, a few hundred thousand words a
+     * frame) -- stored at once, without every other method's checks first. */
+    if (subch == 0 && (method & ~0x7Fu) == 0x0B80 && !s_cap_fp && s_mhist_on == 0) {
+        if (s_3d.c_load < VP_CONSTS) {
+            float *c = &s_3d.c[s_3d.c_load][s_3d.c_comp];
+            if (memcmp(c, &param, 4)) { memcpy(c, &param, 4); s_chg |= CHG_CONST; s_vpc_dirty = 1; }
+            if (++s_3d.c_comp == 4) { s_3d.c_comp = 0; s_3d.c_load++; }
+        } else s_chg |= CHG_CONST;
+        return;
+    }
     {   /* testing: RECOMP_METHOD_HIST=1 -- the most common methods, every 5 s */
-        static int on = -1; static unsigned cnt[8][2048]; static DWORD t;
-        if (on < 0) on = getenv("RECOMP_METHOD_HIST") != NULL;
+        static unsigned cnt[8][2048]; static DWORD t;
+        int on;
+        if (s_mhist_on < 0) s_mhist_on = getenv("RECOMP_METHOD_HIST") != NULL;
+        on = s_mhist_on;
         if (on) {
             cnt[subch & 7][(method >> 2) & 2047]++;
             if (GetTickCount() - t > 5000) {
@@ -2159,6 +2313,8 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
                     subch, method, param);
     }
 
+    pb_note_change1(subch, method, param);
+    if (s_chg & ~CHG_CONST) gpu_mb_flush();   /* (the gathered draws go out before anything else changes) */
     if (subch == 2 || subch == 3) {        /* D3D's CopyRects: image blit + 2D surfaces */
         if (blit_method(subch, method, param))
             return;
@@ -2374,8 +2530,13 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
             if (!t0) { t0 = now; ap0 = g_apu_periods; }
             nf++;
             if (now - t0 >= 1000) {
-                fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u)\n",
-                        nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3]);
+                {
+                    extern volatile unsigned g_apu_short;
+                    static unsigned sh0;
+                    fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u); sound voices short of data %u\n",
+                            nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3], g_apu_short - sh0);
+                    sh0 = g_apu_short;
+                }
                 {   /* (1.9.3) where a frame's time goes on the CPU: the GPU commands
                      * turned into Direct3D 11 calls (the pushbuffer runs, on the
                      * game's thread as it kicks them), of which waiting in Present;
@@ -2401,6 +2562,24 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
                         fprintf(stderr, "  [PERFD3D] per frame: %u vertex-constant updates, %u pixel-constant updates, %u texture rebinds, %u pixel shader / %u vertex shader / %u layout changes, %u blend-depth changes, %u commands\n",
                                 g_cnt_vpc / nf, g_cnt_cbps / nf, g_cnt_srv / nf, g_cnt_ps / nf, g_cnt_vs / nf, g_cnt_il / nf, g_cnt_om / nf, g_cnt_rt / nf);
                         g_cnt_vpc = g_cnt_cbps = g_cnt_srv = g_cnt_ps = g_cnt_vs = g_cnt_il = g_cnt_om = g_cnt_rt = 0;
+                    }
+#endif
+#if defined(_WIN32)
+                    {   /* (1.9.5) the render thread's draws by phase (rdtsc, calibrated
+                         * against the performance counter over the same second) */
+                        static unsigned long long tsc0; static long long q0;
+                        unsigned long long tsc = __rdtsc();
+                        if (tsc0 && nf && qn.QuadPart > q0) {
+                            double cpms = (double)(tsc - tsc0) / ((double)(qn.QuadPart - q0) * 1000.0 / (double)qf.QuadPart);
+                            double f = cpms > 0 ? 1.0 / cpms / nf : 0;
+                            if (g_pt_on > 0) fprintf(stderr, "  [PERFRT] per frame (ms): draws %.2f = setup %.2f + targets %.2f + vertices: indices %.2f, fetch %.2f, raw %.2f + program constants %.2f + combiners %.2f (textures %.2f) + Direct3D calls %.2f + other %.2f; raw draws %u, old draws %u; since the draw before: no change %u, constants only %u, more %u; textures and combiners kept %u, bound %u; gathered draws: sent %.2f ms, joined %u, Direct3D draws %u; outside draws: constants %.2f ms, inline vertices %.2f ms (with any draws they end), indices %.2f ms\n",
+                                    g_pt[PT_SETUP] * f + g_pt[PT_BATCH] * f, g_pt[PT_SETUP] * f, g_pt[PT_TARGETS] * f, g_pt[PT_WALK] * f, g_pt[PT_FETCH] * f, g_pt[PT_RAW] * f,
+                                    g_pt[PT_VPC] * f, g_pt[PT_STAGES] * f, g_pt[PT_TEX] * f, g_pt[PT_SUBMIT] * f,
+                                    (g_pt[PT_BATCH] - g_pt[PT_TARGETS] - g_pt[PT_WALK] - g_pt[PT_FETCH] - g_pt[PT_RAW] - g_pt[PT_VPC] - g_pt[PT_STAGES] - g_pt[PT_SUBMIT]) * f,
+                                    g_pt_raw_n / nf, g_pt_old_n / nf, s_chg_n[0] / nf, s_chg_n[1] / nf, s_chg_n[2] / nf, g_stg_kept / nf, g_stg_made / nf, g_pt[PT_FLUSH] * f, g_mb_joined / nf, g_mb_sent / nf, g_pt[PT_CONSTS] * f, g_pt[PT_INLINE] * f, g_pt[PT_INDICES] * f);
+                        }
+                        memset(g_pt, 0, sizeof g_pt); g_pt_raw_n = g_pt_old_n = 0; memset(s_chg_n, 0, sizeof s_chg_n); g_stg_kept = g_stg_made = 0; g_mb_joined = g_mb_sent = 0;
+                        tsc0 = tsc; q0 = qn.QuadPart;
                     }
 #endif
                     pb0 = g_perf_pb_ticks; pr0 = pr; wt0 = xbox_perf_wait_ticks; rt0 = g_perf_rt_ticks; b0 = s_3d.batches;

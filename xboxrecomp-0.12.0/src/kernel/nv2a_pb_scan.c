@@ -21,11 +21,13 @@
  * method = w & 0x1FFC.
  */
 #include <stdio.h>
+#include <time.h>
 #include <stdint.h>
 #include <stddef.h>   /* ptrdiff_t */
 #include <stdlib.h>
 #include <string.h>
 #include "kernel.h"   /* (1.9.3) windows.h: QueryPerformanceCounter for [PERF] */
+#include "nv2a_copy.h"   /* (1.9.5) rt_copy */
 extern const char *recomp_cgetenv(const char *name);
 #define getenv(n) recomp_cgetenv(n)
 #ifndef XBOX_CONTIG_BASE
@@ -312,6 +314,15 @@ volatile uint32_t g_pb_runs;   /* pushbuffer runs; CPU writes happen only betwee
 /* (1.9.3: 4 MB rather than 16: the commands are still in the processor's
  * cache when the render thread reads them -- a frame is far less) */
 #define PB_INLINE_HDR 0xFFFE1818u   /* (see pb_emit_inline) */
+#define PB_CONST_HDR  0xFFFE0B80u   /* (1.9.5) a run of vertex-program constant words, recorded the same way */
+/* (1.9.5) any other method run of two or more words, recorded the same way:
+ * 0xFFF00000 | noninc << 19 | subchannel << 16 | method */
+#define PB_METH_HDR   0xFFF00000u
+/* (1.9.5) a stretch of the pushbuffer as it is -- whole methods, headers and
+ * their words, no jumps or calls -- for the render thread to take apart
+ * (nv2a_pb_exec_raw): the game thread only steps from header to header to
+ * find where the stretch ends, and copies it */
+#define PB_RAW_HDR    0xFFFE0001u
 #define PB_RING (1u << 19)   /* entries: (subchannel << 16 | method), parameter */
 static uint32_t *s_ring;
 static volatile LONG s_ring_head, s_ring_tail;   /* consumer, producer (entries, wrapping at PB_RING) */
@@ -344,15 +355,48 @@ static DWORD WINAPI pb_render_thread(LPVOID p)
              * counted per wake-up instead, textures were hashed again many
              * times a frame */
             if (sm == 0xFFFFFFFFu) g_pb_runs++;
-            else if (sm == PB_INLINE_HDR) {
+            else if (sm >= PB_METH_HDR && sm < 0xFFFE0000u) {
+                extern void nv2a_pb_exec_block(uint32_t hdr, const uint32_t *w, uint32_t n, uint32_t at);
+                uint32_t n = pr, ent = (n + 1) / 2;
+                LONG d = (h + 1) & (PB_RING - 1);
+                uint32_t first = (uint32_t)(PB_RING - d);
+                if (first >= ent) nv2a_pb_exec_block(sm, &s_ring[2 * d], n, 0);
+                else {
+                    nv2a_pb_exec_block(sm, &s_ring[2 * d], first * 2, 0);
+                    nv2a_pb_exec_block(sm, &s_ring[0], n - first * 2, first * 2);
+                }
+                h = (h + ent) & (PB_RING - 1);
+                done += ent;
+            }
+            else if (sm == PB_RAW_HDR) {
+                extern void nv2a_pb_exec_raw(const uint32_t *w, uint32_t n);
+                static uint32_t *tmp; static uint32_t tcap;
+                uint32_t n = pr, ent = (n + 1) / 2;
+                LONG d = (h + 1) & (PB_RING - 1);
+                uint32_t first = (uint32_t)(PB_RING - d);
+                if (first >= ent) nv2a_pb_exec_raw(&s_ring[2 * d], n);
+                else {   /* (wrapped: put back together, a method may straddle the seam) */
+                    if (tcap < n) { free(tmp); tcap = n * 2; tmp = (uint32_t *)malloc((size_t)tcap * 4); }
+                    if (tmp) {
+                        memcpy(tmp, &s_ring[2 * d], (size_t)first * 8);
+                        memcpy(tmp + first * 2, &s_ring[0], (size_t)(n - first * 2) * 4);
+                        nv2a_pb_exec_raw(tmp, n);
+                    }
+                }
+                h = (h + ent) & (PB_RING - 1);
+                done += ent;
+            }
+            else if (sm == PB_INLINE_HDR || sm == PB_CONST_HDR) {
                 extern void nv2a_pb_exec_inline(const uint32_t *w, uint32_t n);
+                extern void nv2a_pb_exec_consts(const uint32_t *w, uint32_t n);
+                void (*f)(const uint32_t *, uint32_t) = sm == PB_INLINE_HDR ? nv2a_pb_exec_inline : nv2a_pb_exec_consts;
                 uint32_t n = pr, ent = (n + 1) / 2;
                 LONG d = (h + 1) & (PB_RING - 1);
                 uint32_t first = (uint32_t)(PB_RING - d);   /* entries before the ring wraps */
-                if (first >= ent) nv2a_pb_exec_inline(&s_ring[2 * d], n);
+                if (first >= ent) f(&s_ring[2 * d], n);
                 else {
-                    nv2a_pb_exec_inline(&s_ring[2 * d], first * 2);
-                    nv2a_pb_exec_inline(&s_ring[0], n - first * 2);
+                    f(&s_ring[2 * d], first * 2);
+                    f(&s_ring[0], n - first * 2);
                 }
                 h = (h + ent) & (PB_RING - 1);
                 done += ent;
@@ -421,7 +465,9 @@ static void pb_emit(uint32_t subch, uint32_t method, uint32_t param)
  * instead of one command at a time. Room for all of it is made first, and
  * nothing is published part-way, so the render thread never finds a header
  * without its words. */
-static void pb_emit_inline(const uint32_t *w, uint32_t n)
+static void pb_emit_block(uint32_t hdr, const uint32_t *w, uint32_t n);
+static void pb_emit_inline(const uint32_t *w, uint32_t n) { pb_emit_block(PB_INLINE_HDR, w, n); }
+static void pb_emit_block(uint32_t hdr, const uint32_t *w, uint32_t n)
 {
     LONG need = 1 + (LONG)((n + 1) / 2), i;
     if (s_mark_pending) { s_mark_pending = 0; pb_emit(0xFFFFu, 0xFFFFu, 0); }
@@ -435,13 +481,23 @@ static void pb_emit_inline(const uint32_t *w, uint32_t n)
         InterlockedExchange(&s_pb_waiting, 0);
     }
     s_ring_room -= need;
-    s_ring[2 * s_ring_tail_local] = PB_INLINE_HDR;
+    s_ring[2 * s_ring_tail_local] = hdr;
     s_ring[2 * s_ring_tail_local + 1] = n;
     s_ring_tail_local = (s_ring_tail_local + 1) & (PB_RING - 1);
-    for (i = 0; i < (LONG)n; i += 2) {
-        s_ring[2 * s_ring_tail_local] = w[i];
-        s_ring[2 * s_ring_tail_local + 1] = (uint32_t)i + 1 < n ? w[i + 1] : 0;
-        s_ring_tail_local = (s_ring_tail_local + 1) & (PB_RING - 1);
+    {   /* (1.9.5) the words are the entries' two halves in order: copied
+         * as one (two where the ring wraps) instead of an entry at a time */
+        uint32_t ent = (n + 1) / 2, first = (uint32_t)(PB_RING - s_ring_tail_local), a;
+        (void)i;
+        if (first >= ent) {
+            rt_copy(&s_ring[2 * s_ring_tail_local], w, (size_t)n * 4);
+            if (n & 1) s_ring[2 * s_ring_tail_local + n] = 0;
+        } else {
+            a = first * 2;   /* words before the wrap (even, < n) */
+            rt_copy(&s_ring[2 * s_ring_tail_local], w, (size_t)a * 4);
+            rt_copy(&s_ring[0], w + a, (size_t)(n - a) * 4);
+            if ((n - a) & 1) s_ring[n - a] = 0;
+        }
+        s_ring_tail_local = (s_ring_tail_local + (LONG)ent) & (PB_RING - 1);
     }
     {   /* (the render thread starts on a long run before it ends) */
         static LONG since;
@@ -456,6 +512,11 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys);
 void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)
 {
     LARGE_INTEGER a, b;
+    long long ca = 0;
+    static int cs = -1;
+    extern long long xbox_thread_cpu_ns(void);
+    if (cs < 0) cs = getenv("TT_CPUSTAT") != NULL;
+    if (cs) ca = xbox_thread_cpu_ns();
     QueryPerformanceCounter(&a);
     if (s_exec_enabled < 0) s_exec_enabled = getenv("RECOMP_PB_EXEC") != NULL;
     if (s_exec_enabled) pb_async();
@@ -464,6 +525,7 @@ void nv2a_pb_run(uint32_t put_phys, uint32_t init_get_phys)
     if (s_async > 0) pb_publish();
     QueryPerformanceCounter(&b);
     g_perf_pb_ticks += b.QuadPart - a.QuadPart;
+    if (cs) { extern volatile long long g_cpustat_pb_ns; g_cpustat_pb_ns += xbox_thread_cpu_ns() - ca; }
 }
 static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
 {
@@ -507,12 +569,32 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
         }
     }
 #define PB_TARGET_OK(t) ((t) >= rng_lo && (t) < rng_hi)
+    static int raw_on = -1;
+    int raw;
+    if (raw_on < 0) raw_on = !getenv("RECOMP_PB_NO_RAW");
+    raw = raw_on && s_async > 0 && s_exec_enabled && !inventory && !trace;
     if (trace) fprintf(stderr, "  [PBFLOW] run GET %08X -> PUT %08X\n", s_get, put);
     while (s_get != put && words < 0x200000u) {
         uint32_t w;
         if (s_get < XBOX_CONTIG_BASE || s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) {
             words = 0x200000u;               /* off the end of RAM: resync */
             break;
+        }
+        if (raw) {   /* (1.9.5: see PB_RAW_HDR) whole methods up to the next jump, call, return or odd word */
+            uint32_t at = s_get, lim = (put > s_get) ? put : XBOX_CONTIG_BASE + 0x04000000u - 4u, e;
+            while (at < lim && at - s_get < (64u << 10) * 4u) {
+                uint32_t h2 = *(const uint32_t *)(mem + at);
+                if ((h2 & 0xE0030003u) != 0 && (h2 & 0xE0030003u) != 0x40000000u) break;   /* not a method header */
+                e = at + 4 + ((h2 >> 18) & 0x7FFu) * 4;
+                if (e > lim) break;   /* (its words past PUT or memory: the old way) */
+                at = e;
+            }
+            if (at != s_get) {
+                pb_emit_block(PB_RAW_HDR, (const uint32_t *)(mem + s_get), (at - s_get) / 4);
+                words += (at - s_get) / 4;
+                s_get = at;
+                continue;
+            }
         }
         w = *(const uint32_t *)(mem + s_get);
         words++;
@@ -571,6 +653,38 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
                 if (avail == count) continue;
                 /* (stopped at PUT or the end of memory: the loop below stops
                  * at once, as it would have) */
+            }
+            if (s_async > 0 && s_exec_enabled && subch == 0 && (method & ~0x7Fu) == 0x0B80u && count > 1 && !inventory
+                && (noninc || method + count * 4 <= 0x0C00u)) {
+                /* (1.9.5) the constants of a SetVertexShaderConstant: one record */
+                uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
+                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
+                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                if (avail > count) avail = count;
+                if (avail > lim) avail = lim;
+                if (avail) {
+                    pb_emit_block(PB_CONST_HDR, (const uint32_t *)(mem + s_get), avail);
+                    s_get += avail * 4; words += avail;
+                }
+                if (avail == count) continue;
+                count -= avail;   /* (the rest as before; the loop stops at once) */
+            }
+            if (s_async > 0 && s_exec_enabled && count > 1 && !inventory && method < 0x2000u) {
+                /* (1.9.5) the run's words copied as one record: copying each
+                 * with its own method was most of the time the game thread
+                 * spent recording (a few hundred thousand words a frame) */
+                uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
+                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
+                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                if (avail > count) avail = count;
+                if (avail > lim) avail = lim;
+                if (avail > 1) {
+                    pb_emit_block(PB_METH_HDR | ((uint32_t)noninc << 19) | (subch << 16) | method, (const uint32_t *)(mem + s_get), avail);
+                    s_get += avail * 4; words += avail;
+                    if (avail == count) continue;
+                    if (!noninc) method += avail * 4;
+                    count -= avail;
+                }
             }
             for (i = 0; i < count; i++) {
                 uint32_t m = noninc ? method : method + i * 4;

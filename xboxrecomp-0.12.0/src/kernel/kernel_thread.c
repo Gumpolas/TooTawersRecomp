@@ -11,6 +11,13 @@
  *   - Thread priorities use NT KPRIORITY increments
  */
 
+#if !defined(_WIN32)
+#include <time.h>
+#endif
+#if defined(__linux__)
+#include <sys/syscall.h>
+#include <unistd.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "kernel.h"
@@ -367,6 +374,19 @@ void xbox_DelayReport(void)
 static NTSTATUS kdelay_inner(KPROCESSOR_MODE WaitMode, BOOLEAN Alertable, PLARGE_INTEGER Interval);
 /* A title hook run at every guest sleep (the game's frame-rate options). */
 void (*volatile xbox_guest_delay_hook)(void);
+long long g_cpustat_tid;
+volatile long long g_cpustat_pb_ns;
+/* this thread's processor time, ns (testing: TT_CPUSTAT) */
+long long xbox_thread_cpu_ns(void)
+{
+#if defined(_WIN32)
+    FILETIME c, e, k, u;
+    if (!GetThreadTimes(GetCurrentThread(), &c, &e, &k, &u)) return 0;
+    return (long long)((((unsigned long long)k.dwHighDateTime << 32) | k.dwLowDateTime) + (((unsigned long long)u.dwHighDateTime << 32) | u.dwLowDateTime)) * 100;
+#else
+    struct timespec t; clock_gettime(CLOCK_THREAD_CPUTIME_ID, &t); return (long long)t.tv_sec * 1000000000LL + t.tv_nsec;
+#endif
+}   /* (the thread that runs the game's entry: twotowers main.c) */
 NTSTATUS __stdcall xbox_KeDelayExecutionThread(
     KPROCESSOR_MODE WaitMode,
     BOOLEAN Alertable,
@@ -381,8 +401,49 @@ NTSTATUS __stdcall xbox_KeDelayExecutionThread(
     { extern void xbox_PbWakeIfPending(void); xbox_PbWakeIfPending(); }
     slot = xbox_delay_note(Interval->QuadPart);
     QueryPerformanceCounter(&t0);
+    {   /* testing: TT_CPUSTAT=1 -- the game thread's processor time a frame
+         * outside its sleeps and the GPU command runs, every 5 s */
+        static int on = -1;
+        extern volatile DWORD xbox_perf_game_tid;
+        if (on < 0) on = getenv("TT_CPUSTAT") != NULL;
+        if (on && xbox_perf_game_tid && GetCurrentThreadId() == xbox_perf_game_tid) {
+            extern volatile unsigned g_nv2a_flips;
+            extern long long xbox_thread_cpu_ns(void);
+            static long long in_sleep, c_last, t_last, pb_last; static unsigned f_last;
+            long long a = xbox_thread_cpu_ns(), b;
+            r = kdelay_inner(WaitMode, Alertable, Interval);
+            b = xbox_thread_cpu_ns();
+            in_sleep += b - a;
+            {
+                long long wall = (long long)GetTickCount() / 1000;
+                unsigned fl = g_nv2a_flips;
+                if (!t_last) { t_last = wall; c_last = b - in_sleep; f_last = fl; pb_last = g_cpustat_pb_ns; }
+                else if (wall - t_last >= 5 && fl != f_last) {
+                    double work = (double)(b - in_sleep - c_last) / 1e6, pb = (double)(g_cpustat_pb_ns - pb_last) / 1e6;
+                    fprintf(stderr, "  [CPUSTAT] game thread: %.3f ms a frame of processor time outside sleeps (%.3f of it running GPU commands), %u frames\n",
+                            work / (fl - f_last), pb / (fl - f_last), fl - f_last);
+                    t_last = wall; c_last = b - in_sleep; f_last = fl; pb_last = g_cpustat_pb_ns;
+                }
+            }
+            xbox_delay_done(slot, t0);
+            {
+                extern volatile long long xbox_perf_wait_ticks;
+                LARGE_INTEGER t1; QueryPerformanceCounter(&t1);
+                xbox_perf_wait_ticks += t1.QuadPart - t0.QuadPart;
+            }
+            return r;
+        }
+    }
     r = kdelay_inner(WaitMode, Alertable, Interval);
     xbox_delay_done(slot, t0);
+    {   /* (1.9.5) [PERF]: the game's frame thread waiting */
+        extern volatile DWORD xbox_perf_game_tid;
+        extern volatile long long xbox_perf_wait_ticks;
+        if (xbox_perf_game_tid && GetCurrentThreadId() == xbox_perf_game_tid) {
+            LARGE_INTEGER t1; QueryPerformanceCounter(&t1);
+            xbox_perf_wait_ticks += t1.QuadPart - t0.QuadPart;
+        }
+    }
     return r;
 }
 static NTSTATUS kdelay_inner(KPROCESSOR_MODE WaitMode, BOOLEAN Alertable, PLARGE_INTEGER Interval)

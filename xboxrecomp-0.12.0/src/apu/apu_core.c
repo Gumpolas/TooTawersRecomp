@@ -286,7 +286,7 @@ void mcpx_apu_monitor_finalize(MCPXAPUState *d)
             g_waveout.frames_written);
 }
 
-volatile unsigned g_apu_periods;   /* 256-sample periods produced (187.5/s in real time) */
+volatile unsigned g_apu_periods, g_apu_short;   /* (g_apu_short: voice frames a playing voice had no data for) */   /* 256-sample periods produced (187.5/s in real time) */
 
 void mcpx_apu_monitor_frame(MCPXAPUState *d)
 {

@@ -2582,6 +2582,10 @@ static int gpu_batch_hw(HwVp *hv, uint32_t nverts)
 
 static void gpu_batch(void)
 {
+    {   static int nul = -1;   /* testing: RECOMP_GPU_NULL=1 -- no drawing (CPU profiles of the game) */
+        if (nul < 0) nul = getenv("RECOMP_GPU_NULL") != NULL;
+        if (nul) return;
+    }
     uint32_t i, n = s_gpu.idx_count, nverts = 0;
     uint32_t vb_at, ib_at;
     int need_depth = s_3d.depth_test || s_3d.stencil_test;
