@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates work but are experimental. It is recommended to play the game at 60 fps. See known issues. 
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates work but are experimental. It is recommended to play the game at no more than 1000 fps. See known issues. 
 
 ## Downloads
 
@@ -53,9 +53,6 @@ Updating from 1.9.4 or earlier: unpack over your old folder, or into a new one a
 - **No more cut-outs or crackle.** Whenever the game updated its sounds, the emulated sound chip skipped that slice of audio: 3-10% of all sound came out as silence in short slices, and sounds seemed to stop part way, more the higher the frame rate. The sound now plays on, and the game's sound commands are applied between slices.
 - Volume changes glide across each slice instead of stepping.
 
-### Fixes
-- **Keyboard after the F10 menu:** closing the F10 menu could leave every key dead until the window lost focus (pressing Left Alt). Only keys still held at the moment of closing are now kept from the game, for at most a second.
-
 ## Tested (1.9.5)
 - On Windows by the author: gameplay in busy scenes at unlocked frame rates (Westfold and others), with profiles of each change; the F10 menu fix; animation speed, the prologue and sound at up to 1000 fps.
 - On Linux at fixed frame times (33, 8, 2, 1 and 0.7 ms): animation time, falls and landings, and the world clock measured against 30 fps; sound lengths and gaps measured at 30 fps and unlocked.
@@ -67,11 +64,11 @@ Updating from 1.9.4 or earlier: unpack over your old folder, or into a new one a
 ## What 1.9.4 added
 
 ### Performance
-- **Much higher frame rates/performance improvements.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier and usage scales better. 
+- **Higher frame rates/performance improvements.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier and usage scales better. 
 - **Game time improvements for higher frame rate.** Above the monitor's refresh rate (usually above 240 hz/fps) some animations in the game world would move slowly and feel delayed. They now run at the right speed at high frame rates.
 - **A drop to 20 fps** with Gandalf or Sauron at a certain spot in the Gates of Moria is fixed. 
 
-### Frame rate and display
+### Frame-limiter and display
 - **Frame rate limiter options** - 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
 - **Vulkan** is no longer held to the monitor's refresh rate with VSync off.
 - The exclusive **Full-screen resolution** list goes from small to large, so the right arrow goes to a higher resolution, as Window size does.
@@ -136,7 +133,6 @@ Known issues
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
-    - Unlocked fps is experimental: One Known issue with frame rates above 60 fps is that some of the NPC animations during the prologue level fail to complete during the end of the in game cutscene for that level. Example is both Sauron and an elf NPC not turning their heads properly. Another known issue is Sauron falling through the Gates of Moria level after the intro cutscene during gameplay. At 60 fps these issues don't occur, so it is advised to set the frame rate to 60 fps before beginning the prologue or when playing that mission with Sauron. Crackling audio can occur at unlocked frame rates as well.
     - Widescreen is experimental: a few full-screen effects may not line up at the edges.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.
