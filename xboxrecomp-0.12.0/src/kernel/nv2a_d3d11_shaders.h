@@ -241,6 +241,12 @@ static const char s_hlsl_src[] =
  * plain one the title samples as a texture */
 "Texture2DMS<float> txms : register(t7);\n"
 "float ps_zres(PV i) : SV_Depth { return txms.Load(int2(i.pos.xy), 0); }\n"
+/* (co-op markers) the depth at up to four points of the frame's zeta surface, one per pixel of a 4x1 target: what
+ * the title drew in front of a hero's head there (xbox_zprobe_req, gpu_zprobe) */
+"cbuffer ZPC : register(b4) { float4 zp_pt[2]; };\n"
+"Texture2D<float> zp_tex : register(t6);\n"
+"float ps_zprobe(PV i) : SV_Target { int k = (int)i.pos.x; float2 p = k == 0 ? zp_pt[0].xy : k == 1 ? zp_pt[0].zw : k == 2 ? zp_pt[1].xy : zp_pt[1].zw;\n"
+"  return zp_tex.Load(int3(int2(p), 0)); }\n"
 /* (1.9.3) Character shadow repair (see shadow_hook in nv2a_d3d11.inc): the
  * shadow's stencil as a mask, closed (dilated, then eroded, one axis at a
  * time: clear_color.x the radius, .y the axis) -- the mask carries the

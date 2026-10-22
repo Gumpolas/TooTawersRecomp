@@ -3243,8 +3243,12 @@ static void bridge_NtCreateFile(void)
         size_t n = 0;
         while (w && w[n]) n++;
         if (n > 4 && w[n - 4] == L'.' && (w[n - 3] | 0x20) == L'b' && (w[n - 2] | 0x20) == L'i'
-            && (w[n - 1] | 0x20) == L'k')
-            g_movie_handle = BRIDGE_MEM32(handle_va);
+            && (w[n - 1] | 0x20) == L'k') {
+            /* (testing, coop-anything) TT_SKIPMOVIES: the movie reported missing, so bot runs don't sit through it
+             * (the levels' preloaded death movie kept: the game-over death cam uses it). The host handle is left open. */
+            if (getenv("TT_SKIPMOVIES") && !wcsstr(w, L"death") && !wcsstr(w, L"DEATH")) { g_eax = 0xC0000034u; fprintf(stderr, "  [MOVIE] skipped (TT_SKIPMOVIES)\n"); }
+            else g_movie_handle = BRIDGE_MEM32(handle_va);
+        }
     }
 
     /* An FMV the host can decode itself.

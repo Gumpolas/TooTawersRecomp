@@ -39,3 +39,6 @@ __pycache__/
 # Texture dumps and the E3 mod's portrait icons (crops of E3 2002 footage, not ours to publish)
 texture_dump/
 e3hud/
+
+# The co-op bot tests' local paths (tools/coop-bot/config.example.ps1 is the template)
+tools/coop-bot/config.ps1

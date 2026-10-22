@@ -1935,8 +1935,17 @@ static float s_hud_box[HUD_MAXB][4];      /* this frame's 2D pieces: x0 x1 y0 y1
 static int s_hud_nb;
 static float s_hud_grp[HUD_MAXB][4];      /* the last frame's groups */
 static int s_hud_ng;
+/* a box (640x480 frame units, x0 x1 y0 y1) whose pieces stay out of the groups: centred, and never pulling other
+ * pieces to the middle (a title's text drawn between its corner groups; set every frame, [4] = on) */
+volatile float xbox_hud_excl[5];
+volatile float xbox_hud_excl_more[4][5];   /* more such boxes (the co-op heroes' head markers) */
 static void hud_note(float x0, float x1, float y0, float y1)
 {
+    if (xbox_hud_excl[4] != 0.0f) { float cx = 0.5f * (x0 + x1), cy = 0.5f * (y0 + y1);
+        if (cx >= xbox_hud_excl[0] && cx <= xbox_hud_excl[1] && cy >= xbox_hud_excl[2] && cy <= xbox_hud_excl[3]) return; }
+    {   float cx = 0.5f * (x0 + x1), cy = 0.5f * (y0 + y1); int i;
+        for (i = 0; i < 4; i++) if (xbox_hud_excl_more[i][4] != 0.0f && cx >= xbox_hud_excl_more[i][0] && cx <= xbox_hud_excl_more[i][1]
+                                    && cy >= xbox_hud_excl_more[i][2] && cy <= xbox_hud_excl_more[i][3]) return; }
     if (s_hud_nb < HUD_MAXB) { s_hud_box[s_hud_nb][0] = x0; s_hud_box[s_hud_nb][1] = x1; s_hud_box[s_hud_nb][2] = y0; s_hud_box[s_hud_nb][3] = y1; s_hud_nb++; }
 }
 static void hud_frame_end(void)
@@ -1975,6 +1984,11 @@ void xbox_PresentMap(float m[5]) { int i; for (i = 0; i < 5; i++) m[i] = s_prese
 static float hud_wide_x(float x, float cx, float cy, float kk)
 {
     int centre = xbox_GfxGet(GFX_HUDPOS) == 1, i;
+    /* a piece in one of the excluded boxes stays centred, also inside an edge group's box (a co-op head marker
+     * beside player 2's ammo counter had its "2" pulled to the edge, observed) */
+    if (xbox_hud_excl[4] != 0.0f && cx >= xbox_hud_excl[0] && cx <= xbox_hud_excl[1] && cy >= xbox_hud_excl[2] && cy <= xbox_hud_excl[3]) centre = 1;
+    for (i = 0; i < 4 && !centre; i++)
+        if (xbox_hud_excl_more[i][4] != 0.0f && cx >= xbox_hud_excl_more[i][0] && cx <= xbox_hud_excl_more[i][1] && cy >= xbox_hud_excl_more[i][2] && cy <= xbox_hud_excl_more[i][3]) centre = 1;
     if (!centre)
         for (i = 0; i < s_hud_ng; i++) {
             const float *b = s_hud_grp[i];
@@ -1984,6 +1998,17 @@ static float hud_wide_x(float x, float cx, float cy, float kk)
             break;
         }
     return 320.0f + (x - 320.0f) / kk;
+}
+
+/* an overlay quad's x: its version's bit 31 keeps it to the left edge, bit 30 to the right (the co-op rings: their
+ * centres fall in no group of the 2D, and centred they stood away from their gauges); otherwise as the 2D (hud_wide_x) */
+static float ovl_wide_x(float x, float cx, float cy, float kk, unsigned ver)
+{
+    if (xbox_GfxGet(GFX_HUDPOS) != 1) {
+        if (ver & 0x80000000u) return x / kk;
+        if (ver & 0x40000000u) return 640.0f - (640.0f - x) / kk;
+    }
+    return hud_wide_x(x, cx, cy, kk);
 }
 
 /* For a title's pointer: how the 2D at (cx, cy) was placed in the last wide

@@ -53,7 +53,7 @@ extern const char *xbox_GfxItemName(int id, int v);
 #define COL_ON    0xFF77EAF8u
 #define COL_OFF   0xFF9C978Cu
 
-enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS };
+enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU };
 enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET };   /* (K_BIND: gfx is the action, input_bind.h) */
 typedef struct {
     const char *label;
@@ -114,11 +114,82 @@ extern int  xbox_InputKeyDown(int vk);
 extern volatile LONG xbox_fb_wheel;
 #define BIND_PAD_N_ 17
 static Row s_ctl_all[8 + BIND_N_ + 1];
-static const char *s_hub[3] = { "General Options", "Display Options", "Controls" };
+
+/* the co-op settings (the Co-op Options page), kept in the ini's [Coop]; the co-op code
+ * (twotowers_manual.c) reads them with tt_coop_setting. Testing: TT_COOP_DIFFICULTY,
+ * TT_COOP_ICONS, TT_COOP_ZOOMSET set one for the run (the ini is not changed). */
+#define GFX_COOP 1000
+enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_N };
+static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot" };
+static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT" };
+static const int s_coop_cnt[CO_N] = { 3, 2, 3, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0 };
+static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1 };
+static const Row s_coop[] = {
+    { "Difficulty:", GFX_COOP + CO_DIFF, K_COLS, { "Easy", "Normal", "Expert" } },
+    { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
+    { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
+    { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },   /* player 2 put beside player 1 when too far (the co-op code's catch-up) */
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },   /* player 2 played by the co-op code: follows player 1, fights what is near (twotowers_manual.c coop_p2bot) */
+};
+static void coop_ini(char *p, int n)
+{
+    char *sl;
+    GetModuleFileNameA(NULL, p, (DWORD)n);
+    sl = strrchr(p, '\\'); if (!sl) sl = strrchr(p, '/');
+    if (sl) *sl = 0;
+    strncat(p, "\\twotowers_recomp.ini", (size_t)n - strlen(p) - 1);
+}
+int tt_coop_setting(int i)
+{
+    if (i < 0 || i >= CO_N) return 0;
+    if (s_coop_v[i] < 0) {
+        char ini[MAX_PATH];
+        const char *e = getenv(s_coop_env[i]);
+        int v;
+        coop_ini(ini, sizeof ini);
+        v = e ? atoi(e) : (int)GetPrivateProfileIntA("Coop", s_coop_key[i], s_coop_def[i], ini);
+        s_coop_v[i] = v < 0 || v >= s_coop_cnt[i] ? s_coop_def[i] : v;
+    }
+    return s_coop_v[i];
+}
+static void coop_set(int i, int v)
+{
+    char ini[MAX_PATH], t[8];
+    if (i < 0 || i >= CO_N || v < 0 || v >= s_coop_cnt[i]) return;
+    s_coop_v[i] = v;
+    if (getenv(s_coop_env[i])) return;
+    coop_ini(ini, sizeof ini);
+    snprintf(t, sizeof t, "%d", v);
+    WritePrivateProfileStringA("Coop", s_coop_key[i], t, ini);
+    tt_dbg("[OPTIONS] co-op %s = %d\n", s_coop_key[i], v);
+}
+/* a row's value: the F10 settings, or ours */
+static int opt_count(int id) { return id >= GFX_COOP ? s_coop_cnt[id - GFX_COOP] : xbox_GfxItemCount(id); }
+static int opt_get(int id) { return id >= GFX_COOP ? tt_coop_setting(id - GFX_COOP) : xbox_GfxIndex(id); }
+static void opt_set(int id, int v) { if (id >= GFX_COOP) coop_set(id - GFX_COOP, v); else xbox_GfxSetIndex(id, v); }
+
+static const char *s_hub[4] = { "General Options", "Display Options", "Controls", "Co-op Options" };
+/* Co-op Options: on the front end's Options, and the pause menu's only in a co-op game */
+extern int tt_coop_active(void);
+static int hub_n(void) { uint32_t fe = G32(0x4AD050u); return fe == 6 || fe == 8 ? (tt_coop_active() ? 4 : 3) : 4; }
+static int hub_page(int i) { return i == 0 ? PG_GENERAL : i == 1 ? PG_DISPLAY : i == 2 ? PG_CONTROLS : PG_COOP; }
 #define NROWS(a) ((int)(sizeof a / sizeof a[0]))
 static int s_nctl;
 
 static int s_page = PG_HUB, s_sel, s_hub_sel, s_top;
+/* the Co-op menu (menus.c: the main menu's Co-op opens the Options screen on this page): New Game and Load Game at the
+ * top right, the co-op settings below. New / Load: the page leaves (B for the game) and menus.c, under a black cover,
+ * presses that item of the main menu with co-op kept on (New Game: then the difficulty screen with the co-op
+ * Difficulty as the game's). B: back to the main menu, co-op off */
+volatile int tt_coop_screen_req, tt_coop_menu_go;
+static int s_exit_frames;
+static const char *const s_cm_top[2] = { "New Game", "Load Game" };
+#define CM_TOPX 400
+#define CM_TOPY 60
+#define CM_TOPSTEP 48
+#define CM_ROWY 196
+#define CM_STEP 46                 /* (five rows clear of the Help prompt) */
+#define CM_N (2 + (int)(sizeof s_coop / sizeof s_coop[0]))
 static DWORD s_drawn;            /* the Options page last drawn (ticks) */
 static volatile unsigned s_frames, s_drawn_frame;   /* (1.9.3) the game's frames, and the last with Options drawn */
 static uint32_t s_mem;           /* our elements and words, in the game's memory */
@@ -183,6 +254,7 @@ static void marker(int cx, int cy, int ring)
 static const Row *rows(int *n)
 {
     if (s_page == PG_DISPLAY) { *n = NROWS(s_display); return s_display; }
+    if (s_page == PG_COOP || s_page == PG_COOPMENU) { *n = NROWS(s_coop); return s_coop; }
     if (s_page == PG_CONTROLS) {
         if (!s_nctl) {   /* the settings, then a row per action, then Reset */
             int i;
@@ -202,6 +274,52 @@ static unsigned char s_cap_held[256];
 #define ROW_SHOWN 7
 static const int s_colx[3] = { 222, 340, 466 };   /* (the game's 191, 309, 435, moved over for longer names) */
 
+static void draw_coopmenu(void)
+{
+    int i, k;
+    s_nel = 0;
+    s_txt = s_mem + MAX_EL * EL_SIZE;
+    if (getenv("TT_COOP_BGLOG")) { static int n; if (!n++) { uint32_t t = G32(T_BG + 0xB8), q; tt_dbg("[COOPBG] element:"); for (q = 0; q < 0xDC; q += 4) tt_dbg(" %X:%08X", q, G32(T_BG + q)); tt_dbg("\n[COOPBG] +B8 %08X:", t);
+        if (t >= 0x10000u) for (q = 0; q < 0xC0; q += 4) tt_dbg(" %X:%08X", q, G32(t + q)); tt_dbg("\n"); } }
+    {   /* its own background (the three hunters, UI\stills3.BFF key 2; heroes.c makes the pixels): the
+         * Options background's element (640 x 448 quad, a 512 x 256 texture: +0x18/+0x1C) drawn with a texture of our
+         * own -- a copy of its texture object {0x1709C4, 0, 0, 0, data} and of its data's 0x80 header (format byte
+         * DXT1 0x0C -> swizzled A8R8G8B8 0x06, the pixels' physical address at +0x30), then 512 x 256 x 4 bytes.
+         * Not readable: the Options one. TT_COOP_OLDBG: the Options one. */
+        static uint32_t blk, obj; static int state;   /* 0 not tried, 1 ready, -1 failed */
+        uint32_t so = G32(T_BG + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? G32(so + 0x10) : 0, e;
+        if (!state && sd >= 0x80000000u && sd < 0x84000000u && G32(sd + 4) == 512u && G32(sd + 8) == 256u && !getenv("TT_COOP_OLDBG")) {
+            extern int tt_coop_menu_bg_pixels(uint32_t *out); static uint32_t px[512 * 256]; uint32_t k;
+            state = -1;
+            if (tt_coop_menu_bg_pixels(px) && (blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u)) != 0 && (obj = xbox_ContiguousAlloc(0x40u, 16u)) != 0) {
+                for (k = 0; k < 0x80u; k += 4) G32(blk + k) = G32(sd + k);
+                G32(blk + 0x38) = (G32(sd + 0x38) & ~0xFF00u) | 0x0600u;
+                G32(blk + 0x3C) = 0;
+                G32(blk + 0x30) = (blk + 0x80u) & 0x03FFFFFFu;
+                for (k = 0; k < 512u * 256u; k++) G32(blk + 0x80u + 4 * k) = px[k];
+                for (k = 0; k < 0x20u; k += 4) G32(obj + k) = G32(so + k);
+                G32(obj + 0x10) = blk;
+                state = 1;
+                tt_dbg("[COOPMENU] background: the three hunters (stills3 key 2), texture %08X, format %08X -> %08X\n", obj, G32(sd + 0x38), G32(blk + 0x38));
+            } else tt_dbg("[COOPMENU] background: the still could not be made, the Options one stays\n");
+        }
+        if (state == 1 && !getenv("TT_COOP_OLDBG") && (e = el_from(T_BG)) != 0) { G32(e + 0xB8) = obj; draw(e); }
+        else draw(T_BG);
+    }
+    text_el(T_LABEL, 24, 28, 0, COL_ON, "Co-op");
+    for (i = 0; i < 2; i++) text_el(T_LABEL, CM_TOPX, CM_TOPY + i * CM_TOPSTEP, 220, s_sel == i ? COL_ON : COL_OFF, s_cm_top[i]);
+    for (i = 0; i < NROWS(s_coop); i++) {
+        const Row *w = &s_coop[i];
+        int y = CM_ROWY + i * CM_STEP, sel = s_sel == i + 2, cnt = opt_count(w->gfx), cur = opt_get(w->gfx);
+        text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
+        for (k = 0; k < cnt && k < 3; k++) {
+            if (k == cur) marker(s_colx[k] + 64, y + 17, sel);
+            text_el(T_VALUE, s_colx[k], y, 0, COL_OFF, w->names[k] ? w->names[k] : "");
+        }
+    }
+    draw(T_HELPI);
+    draw(T_HELPT);
+}
 static void draw_page(void)
 {
     int n, i;
@@ -210,7 +328,7 @@ static void draw_page(void)
     s_txt = s_mem + MAX_EL * EL_SIZE;
     draw(T_BG);
     if (s_page == PG_HUB) {
-        for (i = 0; i < 3; i++)
+        for (i = 0; i < hub_n(); i++)
             text_el(T_LABEL, 200, 150 + i * 60, 300, i == s_hub_sel ? COL_ON : COL_OFF, s_hub[i]);
     } else if (r) {
         if (s_sel < s_top) s_top = s_sel;
@@ -218,7 +336,7 @@ static void draw_page(void)
         for (i = s_top; i < n && i < s_top + ROW_SHOWN; i++) {
             const Row *w = &r[i];
             int y = ROW_Y0 + (i - s_top) * ROW_STEP, sel = i == s_sel, k;
-            int cnt = w->kind >= K_BIND ? 0 : xbox_GfxItemCount(w->gfx), cur = w->kind >= K_BIND ? 0 : xbox_GfxIndex(w->gfx);
+            int cnt = w->kind >= K_BIND ? 0 : opt_count(w->gfx), cur = w->kind >= K_BIND ? 0 : opt_get(w->gfx);
             text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
             if (w->kind == K_BIND) {
                 /* its keys, and (a button) the controller's button for it */
@@ -269,7 +387,8 @@ int tt_opt_draw(uint32_t obj)
     /* Options just opened: the first page. (1.9.3: frames gone by without
      * it, not time -- a new full-screen resolution held the picture for
      * longer than 400 ms and the page went back to the first one) */
-    if (!s_drawn || s_frames - s_drawn_frame > 3) { s_page = PG_HUB; s_hub_sel = 0; }
+    if (!s_drawn || s_frames - s_drawn_frame > 3) { s_page = PG_HUB; s_hub_sel = 0; s_exit_frames = 0; }
+    if (tt_coop_screen_req) { tt_coop_screen_req = 0; s_page = PG_COOPMENU; s_sel = 0; s_top = 0; tt_dbg("[COOPMENU] the Co-op menu opened\n"); }
     s_drawn = GetTickCount() | 1;
     s_drawn_frame = s_frames;
     if (getenv("TT_NOOPTPAGES")) s_page = PG_GENERAL;
@@ -278,7 +397,7 @@ int tt_opt_draw(uint32_t obj)
         s_mem = xbox_ContiguousAlloc(MEM_SIZE, 4096);
         if (!s_mem) { s_page = PG_GENERAL; return 0; }
     }
-    draw_page();
+    if (s_page == PG_COOPMENU) draw_coopmenu(); else draw_page();
     return 1;
 }
 
@@ -319,6 +438,16 @@ void tt_opt_filter(unsigned long port, XState *st)
         p->wButtons &= (uint16_t)~0x20u;
         return;
     }
+    if (s_page == PG_COOPMENU && s_exit_frames > 0) {   /* New / Load chosen: the game leaves Options (B held a few frames) */
+        memset(p, 0, sizeof *p); p->bAnalogButtons[1] = 255; s_exit_frames--;
+        return;
+    }
+    if (s_page == PG_COOPMENU && (h & B_B) && !s_b_block) {   /* B: back to the main menu, co-op off */
+        extern volatile int tt_coop_menu_on;
+        if (tt_coop_menu_on && !tt_coop_menu_go) { tt_coop_menu_on = 0; tt_dbg("[COOPMENU] back: co-op off\n"); }
+        if (p->wButtons & 0x20) { p->wButtons &= (uint16_t)~0x20u; p->bAnalogButtons[1] = 255; }
+        return;
+    }
     if (s_page == PG_HUB && (h & B_B) && !s_b_block) {   /* B on the first page: the game leaves Options (Back as B) */
         if (p->wButtons & 0x20) { p->wButtons &= (uint16_t)~0x20u; p->bAnalogButtons[1] = 255; }
         return;
@@ -348,12 +477,12 @@ static void change(const Row *w, int d)
         return;
     }
     if (w->kind == K_RESET) return;
-    cnt = xbox_GfxItemCount(w->gfx); cur = xbox_GfxIndex(w->gfx); v = cur + d;
+    cnt = opt_count(w->gfx); cur = opt_get(w->gfx); v = cur + d;
     if (cnt <= 0) return;
     if (w->kind == K_CYCLE) v = (v + cnt) % cnt;
     else if (w->kind == K_COLS && cnt > 3) { if (v < 0) v = 0; if (v > 2) v = 2; }
     if (v < 0 || v >= cnt || v == cur) return;
-    xbox_GfxSetIndex(w->gfx, v);
+    opt_set(w->gfx, v);
     move_sound();
 }
 
@@ -420,7 +549,7 @@ void tt_opt_tick(void)
             if (s_page == PG_HUB) {
                 int v = s_hub_sel - (int)dw;
                 if (v < 0) v = 0;
-                if (v > 2) v = 2;
+                if (v > hub_n() - 1) v = hub_n() - 1;
                 if (v != s_hub_sel) { s_hub_sel = v; move_sound(); }
             } else if (r && n > 0) {
                 int t = s_top - (int)dw, mx = n > ROW_SHOWN ? n - ROW_SHOWN : 0;
@@ -442,15 +571,28 @@ void tt_opt_tick(void)
     } else rep_t = GetTickCount();
     prev = now;
     edge |= rep;
+    if (s_page == PG_COOPMENU) {
+        if (s_exit_frames > 0 || tt_coop_menu_go || G32(0x4AD050u) != 5) return;
+        if (edge & B_UP) { if (s_sel > 0) { s_sel--; move_sound(); } }
+        if (edge & B_DOWN) { if (s_sel < CM_N - 1) { s_sel++; move_sound(); } }
+        if (s_sel >= 2 && (edge & B_LEFT)) change(&s_coop[s_sel - 2], -1);
+        if (s_sel >= 2 && (edge & B_RIGHT)) change(&s_coop[s_sel - 2], 1);
+        if (s_sel < 2 && (edge & (B_A | B_START))) {
+            tt_coop_menu_go = s_sel + 1; s_exit_frames = 8;
+            sound(0xA9D, -1.0f);
+            tt_dbg("[COOPMENU] %s chosen\n", s_cm_top[s_sel]);
+        }
+        return;
+    }
     if (s_page == PG_GENERAL) {
         if (edge & B_B) { s_page = PG_HUB; s_b_block = 1; move_sound(); }
         return;
     }
     if (s_page == PG_HUB) {
         if (edge & B_UP) { if (s_hub_sel > 0) { s_hub_sel--; move_sound(); } }
-        if (edge & B_DOWN) { if (s_hub_sel < 2) { s_hub_sel++; move_sound(); } }
+        if (edge & B_DOWN) { if (s_hub_sel < hub_n() - 1) { s_hub_sel++; move_sound(); } }
         if (edge & (B_A | B_START)) {
-            s_page = s_hub_sel == 0 ? PG_GENERAL : s_hub_sel == 1 ? PG_DISPLAY : PG_CONTROLS;
+            s_page = hub_page(s_hub_sel);
             s_sel = 0; s_top = 0;
             sound(0xA9D, -1.0f);
         }
@@ -486,13 +628,26 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
         static int lp = -1, lh = -1, ls = -1;
         if (lp != s_page || lh != s_hub_sel || ls != s_sel) { tt_dbg("[OPTM] page %d hub %d sel %d at %.0f,%.0f clk %d\n", s_page, s_hub_sel, s_sel, x, y, clk); lp = s_page; lh = s_hub_sel; ls = s_sel; }
     }
+    if (s_page == PG_COOPMENU) {
+        int hit = -1, k2;
+        if (s_exit_frames > 0 || tt_coop_menu_go || G32(0x4AD050u) != 5) return 1;
+        for (i = 0; i < 2; i++) if (x >= CM_TOPX - 20 && x < CM_TOPX + 220 && fabsf(y - (CM_TOPY + i * CM_TOPSTEP + 15)) < CM_TOPSTEP * 0.5f) hit = i;
+        for (i = 0; i < NROWS(s_coop); i++) if (x >= 10 && x < 630 && fabsf(y - (CM_ROWY + i * CM_STEP + 17)) < CM_STEP * 0.5f) hit = i + 2;
+        if (hit >= 0 && (moved || clk) && hit != s_sel) { s_sel = hit; move_sound(); }
+        if (hit >= 0 && clk) {
+            if (hit < 2) { tt_coop_menu_go = hit + 1; s_exit_frames = 8; sound(0xA9D, -1.0f); tt_dbg("[COOPMENU] %s chosen (mouse)\n", s_cm_top[hit]); }
+            else { const Row *w = &s_coop[hit - 2]; int cnt = opt_count(w->gfx);
+                for (k2 = 0; k2 < cnt && k2 < 3; k2++) if (x >= s_colx[k2] - 8 && x < s_colx[k2] + 120 && k2 != opt_get(w->gfx)) { opt_set(w->gfx, k2); move_sound(); } }
+        }
+        return 1;
+    }
     if (s_page == PG_HUB) {
         int hit = -1;
-        for (i = 0; i < 3; i++)
+        for (i = 0; i < hub_n(); i++)
             if (x >= 180 && x < 520 && fabsf(y - (150 + i * 60 + 15)) < 30) hit = i;
         if (hit >= 0 && (moved || clk) && hit != s_hub_sel) { s_hub_sel = hit; move_sound(); }
         if (hit >= 0 && clk) {
-            s_page = hit == 0 ? PG_GENERAL : hit == 1 ? PG_DISPLAY : PG_CONTROLS;
+            s_page = hub_page(hit);
             s_sel = 0; s_top = 0;
             sound(0xA9D, -1.0f);
         }
@@ -503,12 +658,12 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
     if (!r) return 1;
     if (!down) drag = -1;
     if (drag >= 0 && drag < n && r[drag].kind == K_SLIDER) {   /* a knob dragged */
-        int cnt = xbox_GfxItemCount(r[drag].gfx), v;
+        int cnt = opt_count(r[drag].gfx), v;
         if (cnt > 1) {
             v = (int)floorf((x - 262.0f) / 317.0f * (cnt - 1) + 0.5f);
             if (v < 0) v = 0;
             if (v > cnt - 1) v = cnt - 1;
-            if (v != xbox_GfxIndex(r[drag].gfx)) { xbox_GfxSetIndex(r[drag].gfx, v); move_sound(); }
+            if (v != opt_get(r[drag].gfx)) { opt_set(r[drag].gfx, v); move_sound(); }
         }
         return 1;
     }
@@ -529,10 +684,10 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
             return 1;
         }
         if (w->kind == K_RESET) { if (x < 330) activate(w); return 1; }
-        cnt = xbox_GfxItemCount(w->gfx);
+        cnt = opt_count(w->gfx);
         if (w->kind == K_COLS) {
             for (k = 0; k < cnt && k < 3; k++)
-                if (x >= s_colx[k] - 8 && x < s_colx[k] + 120 && k != xbox_GfxIndex(w->gfx)) { xbox_GfxSetIndex(w->gfx, k); move_sound(); }
+                if (x >= s_colx[k] - 8 && x < s_colx[k] + 120 && k != opt_get(w->gfx)) { opt_set(w->gfx, k); move_sound(); }
         } else if (w->kind == K_CYCLE) {
             if (x >= s_colx[0] - 8 && x < s_colx[1] - 4) change(w, -1);
             else if (x >= s_colx[1] - 4 && x < s_colx[2] + 60) change(w, 1);

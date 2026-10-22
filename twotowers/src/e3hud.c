@@ -556,18 +556,37 @@ static int e3_overlay(XboxOverlayQuad *q, int max)
         const int W = CL_W * CL_SCALE, H = CL_H * CL_SCALE;
         const float k = (float)CL_SCALE;
         if (!s_cluster) s_cluster = (uint32_t *)calloc((size_t)W * H, 4);
+        {   /* (co-op: the orb out, the Perfect rings of the co-op code in its place; drawn again when that changes) */
+            extern int tt_coop_active(void); static int last_coop = -1; int co = tt_coop_active() && !getenv("TT_COOP_E3ORB");
+            if (co != last_coop) { last_coop = co; s_state_ver++; }
+        }
         if (s_cluster && s_cluster_drawn != s_state_ver) {
+            extern int tt_coop_active(void);
             s_cluster_drawn = s_state_ver;
             memset(s_cluster, 0, (size_t)W * H * 4);
             draw_tube(s_cluster, W, H, (TUBE_X0 - CL_X) * k, (TUBE_Y0 - CL_Y) * k, (TUBE_X1 - CL_X) * k,
                       (ORB_SY - CL_Y) * k, 1.1f * k);
-            draw_orb(s_cluster, W, H, (ORB_SX - CL_X) * k, (ORB_SY - CL_Y) * k, ORB_SR * k);
+            if (!tt_coop_active() || getenv("TT_COOP_E3ORB")) draw_orb(s_cluster, W, H, (ORB_SX - CL_X) * k, (ORB_SY - CL_Y) * k, ORB_SR * k);
             s_cluster_ver++;
         }
         if (s_cluster) {
             q[n].px = s_cluster; q[n].w = W; q[n].h = H; q[n].ver = s_cluster_ver + 100;
             q[n].x = CL_X; q[n].y = CL_Y; q[n].dw = CL_W; q[n].dh = CL_H;
             n++;
+            {   /* co-op: player 2's gauge outline, mirrored to the right (his fill is the co-op code's mirrored copy of the
+                 * game's gauge), kept to the right edge (the version's bit 30) */
+                extern int tt_coop_active(void); extern int tt_coop_p2_gauge_on(void);
+                static uint32_t *mir; static unsigned mir_ver;
+                if (tt_coop_active() && tt_coop_p2_gauge_on() && n < max) {
+                    if (!mir) mir = (uint32_t *)calloc((size_t)W * H, 4);
+                    if (mir && mir_ver != s_cluster_ver) { int x, y; mir_ver = s_cluster_ver; for (y = 0; y < H; y++) for (x = 0; x < W; x++) mir[y * W + x] = s_cluster[y * W + (W - 1 - x)]; }
+                    if (mir) {
+                        q[n].px = mir; q[n].w = W; q[n].h = H; q[n].ver = (s_cluster_ver + 300) | 0x40000000u;
+                        q[n].x = 640.0f - CL_X - CL_W; q[n].y = CL_Y; q[n].dw = CL_W; q[n].dh = CL_H;
+                        n++;
+                    }
+                }
+            }
         }
     }
     /* the villager couples, where the retail bar and portrait were */

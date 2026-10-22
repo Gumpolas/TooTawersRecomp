@@ -39,7 +39,7 @@ static HWND g_sc_hwnd;
 static UINT g_sc_w, g_sc_h;
 static ID3D11VertexShader *g_vs, *g_vs_quad, *g_vs_present, *g_vs_blit;
 static ID3D11PixelShader *g_ps_sh_one, *g_ps_sh_dil, *g_ps_sh_ero, *g_ps_sh_fill, *g_ps_sh_down;   /* (1.9.3) shadow repair */
-static ID3D11PixelShader *g_ps, *g_ps_clear, *g_ps_present, *g_ps_copy, *g_ps_fxaa, *g_ps_zres;
+static ID3D11PixelShader *g_ps, *g_ps_clear, *g_ps_present, *g_ps_copy, *g_ps_fxaa, *g_ps_zres, *g_ps_zprobe;
 
 /* Internal resolution: every render target and depth buffer is allocated at
  * g_rs times the size the title asked for ([Display] render_scale, env
@@ -1164,6 +1164,10 @@ static int gpu_init(void)
     }
     if ((b = gpu_compile("ps_zres", "ps_5_0"))) {
         ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, &g_ps_zres);
+        ID3D10Blob_Release(b);
+    }
+    if ((b = gpu_compile("ps_zprobe", "ps_5_0"))) {
+        ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, &g_ps_zprobe);
         ID3D10Blob_Release(b);
     }
     {
@@ -3146,8 +3150,8 @@ static void gpu_draw_overlays(GSurf *s, int wide)
             g_ovl[i].ver = q[i].ver;
         }
         /* HUD art keeps its 4:3 shape in a widened frame (as the game's own) */
-        x0 = hud_wide_x(q[i].x, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k);
-        x1 = hud_wide_x(q[i].x + q[i].dw, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k);
+        x0 = ovl_wide_x(q[i].x, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k, q[i].ver);
+        x1 = ovl_wide_x(q[i].x + q[i].dw, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k, q[i].ver);
         vp.TopLeftX = x0 * (float)s->pw / (float)s->w;
         vp.TopLeftY = q[i].y * (float)s->ph / (float)s->h;
         vp.Width = (x1 - x0) * (float)s->pw / (float)s->w;
@@ -3174,6 +3178,88 @@ void xbox_PresentDumpRequest(const char *path)
     if (path && strlen(path) < sizeof g_dump_req - 1) { memcpy((char *)g_dump_req, path, strlen(path) + 1); }
 }
 
+/* Depth probes (a title's HUD mods: twotowers' co-op head markers): up to four points in the game's 640x480 frame,
+ * set by the game thread each frame; at the flip the depth the frame's zeta surface holds there is read on the GPU
+ * (ps_zprobe into a 4x1 float target), copied to a staging ring and read two flips later without waiting. The
+ * results are the 24-bit depth as 0..1 (1 = nothing drawn), with xbox_zprobe_seq counting results. */
+volatile float xbox_zprobe_req[4][2];
+volatile int xbox_zprobe_n;
+volatile float xbox_zprobe_res[4];
+volatile unsigned xbox_zprobe_seq;
+static ID3D11Texture2D *g_zp_rt, *g_zp_st[3];
+static ID3D11RenderTargetView *g_zp_rtv;
+static ID3D11Buffer *g_zp_cb;
+static unsigned g_zp_k;
+static void gpu_zprobe(GSurf *c)
+{
+    GSurf *z = NULL;
+    int i, n = xbox_zprobe_n;
+    float pts[8], cl[4] = { 1, 1, 0, 0 };
+    D3D11_VIEWPORT vp;
+    ID3D11ShaderResourceView *none = NULL;
+    if (n <= 0 || !c || !g_ps_zprobe) return;
+    for (i = 0; i < GSURF_MAX; i++) {   /* the frame's zeta: the depth surface of its size last bound as a target */
+        GSurf *t = &g_surf[i];
+        if (t->tex && t->is_depth && t->srv && t->w == c->w && t->h == c->h && (!z || t->wr > z->wr)) z = t;
+    }
+    if (!z) return;
+    gsurf_resolve(z);   /* (MSAA: the plain texture from its samples) */
+    if (!g_zp_rt) {
+        D3D11_TEXTURE2D_DESC td;
+        D3D11_BUFFER_DESC bd;
+        memset(&td, 0, sizeof td);
+        td.Width = 4; td.Height = 1; td.MipLevels = 1; td.ArraySize = 1; td.Format = DXGI_FORMAT_R32_FLOAT; td.SampleDesc.Count = 1;
+        td.Usage = D3D11_USAGE_DEFAULT; td.BindFlags = D3D11_BIND_RENDER_TARGET;
+        if (FAILED(ID3D11Device_CreateTexture2D(g_dev, &td, NULL, &g_zp_rt))) { g_zp_rt = NULL; return; }
+        ID3D11Device_CreateRenderTargetView(g_dev, (ID3D11Resource *)g_zp_rt, NULL, &g_zp_rtv);
+        td.Usage = D3D11_USAGE_STAGING; td.BindFlags = 0; td.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+        for (i = 0; i < 3; i++) ID3D11Device_CreateTexture2D(g_dev, &td, NULL, &g_zp_st[i]);
+        memset(&bd, 0, sizeof bd);
+        bd.ByteWidth = 32; bd.Usage = D3D11_USAGE_DEFAULT; bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+        ID3D11Device_CreateBuffer(g_dev, &bd, NULL, &g_zp_cb);
+    }
+    if (!g_zp_rtv || !g_zp_cb || !g_zp_st[0] || !g_zp_st[1] || !g_zp_st[2]) return;
+    memset(pts, 0, sizeof pts);
+    for (i = 0; i < n && i < 4; i++) {
+        float px = xbox_zprobe_req[i][0] * (float)z->pw / (float)z->w, py = xbox_zprobe_req[i][1] * (float)z->ph / (float)z->h;
+        if (px < 0) px = 0;
+        if (py < 0) py = 0;
+        if (px > (float)z->pw - 1) px = (float)z->pw - 1;
+        if (py > (float)z->ph - 1) py = (float)z->ph - 1;
+        pts[2 * i] = px; pts[2 * i + 1] = py;
+    }
+    ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_zp_cb, 0, NULL, pts, 0, 0);
+    ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_cl, 0, NULL, cl, 0, 0);
+    vp.TopLeftX = 0; vp.TopLeftY = 0; vp.Width = 4; vp.Height = 1; vp.MinDepth = 0; vp.MaxDepth = 1;
+    ID3D11DeviceContext_OMSetRenderTargets(g_ctx, 1, &g_zp_rtv, NULL);
+    ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
+    ID3D11DeviceContext_RSSetState(g_ctx, NULL);
+    ID3D11DeviceContext_OMSetBlendState(g_ctx, NULL, NULL, 0xFFFFFFFFu);
+    ID3D11DeviceContext_OMSetDepthStencilState(g_ctx, NULL, 0);
+    ID3D11DeviceContext_IASetInputLayout(g_ctx, NULL);
+    ID3D11DeviceContext_IASetPrimitiveTopology(g_ctx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    ID3D11DeviceContext_VSSetShader(g_ctx, g_vs_present, NULL, 0);
+    ID3D11DeviceContext_VSSetConstantBuffers(g_ctx, 2, 1, &g_cb_cl);
+    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_zprobe, NULL, 0);
+    ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 4, 1, &g_zp_cb);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 6, 1, &z->srv);
+    ID3D11DeviceContext_Draw(g_ctx, 3, 0);
+    ID3D11DeviceContext_PSSetShaderResources(g_ctx, 6, 1, &none);
+    ID3D11DeviceContext_CopyResource(g_ctx, (ID3D11Resource *)g_zp_st[g_zp_k % 3], (ID3D11Resource *)g_zp_rt);
+    if (g_zp_k >= 2) {
+        D3D11_MAPPED_SUBRESOURCE m;
+        ID3D11Resource *r = (ID3D11Resource *)g_zp_st[(g_zp_k - 2) % 3];
+        if (SUCCEEDED(ID3D11DeviceContext_Map(g_ctx, r, 0, D3D11_MAP_READ, D3D11_MAP_FLAG_DO_NOT_WAIT, &m))) {
+            const float *f = (const float *)m.pData;
+            for (i = 0; i < 4; i++) xbox_zprobe_res[i] = f[i];
+            xbox_zprobe_seq++;
+            ID3D11DeviceContext_Unmap(g_ctx, r, 0);
+        }
+    }
+    g_zp_k++;
+    gpu_sh_reset();
+}
+
 /* The flip: put the finished surface on the window. */
 static void gpu_present(uint32_t base, uint32_t pitch)
 {
@@ -3198,6 +3284,7 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     if (!hwnd || !s) return;
     gsurf_sync_from_mem(s);
     gsurf_resolve(s);   /* (MSAA: the picture from its samples) */
+    gpu_zprobe(s);
     {
         extern int xbox_MoviePlaying(void);
         int wide = g_aspect > 1.34f && g_frame_3d && !xbox_MoviePlaying() && g_ws_cam_tick != 0;

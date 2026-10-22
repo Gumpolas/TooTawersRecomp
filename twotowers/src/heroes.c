@@ -132,6 +132,23 @@ static Skin s_skins[] = {
     /* the black Uruk-hai: the Berserker (Fangorn, Helm's Deep), his great sword, his own attacks */
     { "uruk",    "Uruk",    W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (no bow of his own: nothing in that hand) */
+    /* co-op only (player 2, the character select): the retail heroes from their own level variants -- the hero
+     * record's mesh / animation set / texture (the same keys in every level, local/re/hero_keys.py) and the weapon
+     * the level script attaches to them for the sword's hand (@AttachToBone, observed in Balin's Tomb). Their
+     * animation sets are whole hero sets: their own skeleton, nothing composed (skin_retail) */
+    { "aragorn", "Aragorn", W("04BALIN1.bfa"), 0xE9B808FEu, 0xDE94124Au, 0x66829AC2u, NULL, 0, NULL, 0, 0, 0,
+      NULL, NULL, 0, NULL, 0, 0, W("04BALIN1.bfa"), 0x36AC3F58u, 0xD82C5CABu, 0 },   /* his bow (co-op: his ranged weapon's model in another
+      * hero's level, as Legolas'; its texture as logged for weaponObj148's copy in Gates of Moria) */
+    { "legolas", "Legolas", W("04BALIN1.bfl"), 0x9EDC669Eu, 0xEE4A9EBAu, 0x58C546ADu, NULL, 0, W("04BALIN1.bfl"), 0xEF8EBCECu, 0x9126E92Au, 1,   /* his knife */
+      NULL, NULL, 0, NULL, 0, 0, W("04BALIN1.bfl"), 0x0834F2D4u, 0x4167DADCu, 0 },   /* and his bow (co-op: his ranged weapon's model, brought into
+      * another hero's level: player 2's shots are drawn with it -- twotowers_manual.c, sub_00085FB0) */
+    { "gimli",   "Gimli",   W("04BALIN1.bfg"), 0x71EB3C66u, 0xAAE0DF66u, 0xF35ADE70u, NULL, 0, W("04BALIN1.bfg"), 0x2B9252D0u, 0xAB926BE7u, 1,
+      NULL, NULL, 0, NULL, 0, 0, W("04BALIN1.bfg"), 0xE7EEC090u, 0xAB926BE7u, 0, 1, 0 },   /* his axe; no bow in his hand (he throws: his throwing
+      * axe, E7EEC090, imported as Legolas' bow above -- observed as the ranged weapon object Gimli takes, TT_COOP_TAKELOG) */
+    { "isildur", "Isildur", W("04BALIN1.bfi"), 0x37EA8A4Eu, 0x53DFD442u, 0xCD25E3B2u, NULL, 0, W("04BALIN1.bfi"), 0x13F82514u, 0x29636120u, 1,   /* his sword */
+      NULL, NULL, 0, NULL, 0, 0, W("04BALIN1.bfa"), 0x36AC3F58u, 0xD82C5CABu, 0 },   /* (co-op) Aragorn's bow for his shots as player 2: he has no
+      * ranged weapon of his own (as player 1 he takes none, TT_COOP_TAKELOG), and without a copy his shots left from
+      * player 1's bow */
     { "custom",  "Custom",  NULL, 0, 0, 0, NULL, 0, NULL, 0, 0, 0 },   /* testing: TT_PLAYAS=MESH,ANIM,TEX,LEVEL */
 };
 #define MENU_ANIM_KEY 1u
@@ -139,6 +156,9 @@ static Skin s_skins[] = {
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
 #define N_EXTRA 7              /* in the carousel */
 #define N_SKINS ((int)(sizeof s_skins / sizeof s_skins[0]))
+/* a retail hero's skin (co-op's player 2) */
+static int skin_retail(int sk) { return sk >= N_EXTRA && sk < N_SKINS - 1; }
+static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli, isildur: the hero byte */
 #define FE_KEY(g) (0x21u + (uint32_t)(g))   /* their models' keys in the menu file */
 #define FE_WKEY(g) (0x31u + (uint32_t)(g))  /* their sword-hand weapons there (prop 1200, texture 1250) */
 #define PROP_MAGIC 0x62787270u               /* "prxb" */
@@ -211,6 +231,11 @@ static int skin_by_name(const char *e)
         if (!_stricmp(e, s_skins[i].name)) return i;
     return -1;
 }
+/* co-op (player 2's character, tt_coop_p2_char, set per level in redirect): the level is built with the skin's model, texture and weapons as for TT_PLAYAS,
+ * but the hero's record keeps player 1's; the (hero key -> skin key) pairs are handed to the co-op code
+ * (twotowers_manual.c), which builds player 2 and his weapons from records using them */
+static int s_coop_skin;
+uint32_t tt_coop_skin_pairs[8][2]; int tt_coop_skin_n;
 static int playas(void)
 {
     if (s_playas == -2) {
@@ -231,6 +256,7 @@ static int playas(void)
 /* the skin of the hero being played, or -1 */
 static int active_skin(void)
 {
+    if (s_coop_skin && s_playas >= 0 && !(G8(HERO_BYTE) == 4 && s_guest >= 0)) return s_playas;   /* co-op: player 2's, on any hero's variant */
     if (G8(HERO_BYTE) == 4 && s_guest >= 0) return s_guest;
     if (G8(HERO_BYTE) == 1 && playas() >= 0) return s_playas;
     return -1;
@@ -2340,6 +2366,49 @@ static void hud_ammo_patch(unsigned char *o, const unsigned char *t, size_t tl, 
         tt_dbg("[HEROES]   the ammo counter: %s\n", p2);
     }
 }
+/* co-op: player 2's ammo icon for his HUD (twotowers_manual.c): the HUD's quiver texture (type 350, 64 x 128 swizzled
+ * ARGB, key 6 or 0xD -- whichever player 1's pixels at cur are) from player 2's own hero variant (Balin's Tomb's: the
+ * icons are the hero's in every level), or a guest's as hud_ammo_patch makes it. 1 = out (0x8000 bytes) filled */
+int tt_coop_p2_ammo_pixels(uint32_t cur, unsigned char *out)
+{
+    static const char *const ext[5] = { ".bfa", ".bfa", ".bfl", ".bfg", ".bfi" };
+    static const uint32_t keys[2] = { 6, 0xD };
+    static int last_sk = -2; static unsigned char cache[2][0x8000]; static int have[2];
+    char xp[96], hp[700];
+    unsigned char *t, *o; size_t tl;
+    uint32_t off, e2, ty;
+    int sk = s_coop_skin ? s_playas : -1, hb = G8(HERO_BYTE), v, pick = -1;
+    if (sk < 0 || getenv("TT_COOP_NOAMMOICON")) return 0;
+    if (sk != last_sk) {   /* this player 2's two icons */
+        int retail = skin_retail(sk);
+        last_sk = sk; have[0] = have[1] = 0;
+        snprintf(xp, sizeof xp, "\\Device\\CdRom0\\worlds\\04BALIN1%s", retail ? ext[s_retail_hero[sk - N_EXTRA]] : ".bfa");
+        if (!host_path(xp, hp, sizeof hp) || !(t = read_all(hp, &tl))) return 0;
+        o = t;
+        if (!retail) { o = (unsigned char *)malloc(tl); if (!o) { free(t); return 0; } memcpy(o, t, tl); hud_ammo_patch(o, t, tl, sk, hp); }
+        for (v = 0; v < 2; v++)
+            if (res_find(t, tl, keys[v], 350, &off, &e2, &ty) && e2 - off >= 0x80 + 0x8000) { memcpy(cache[v], o + off + 0x80, 0x8000); have[v] = 1; }
+        if (o != t) free(o);
+        free(t);
+        tt_dbg("[HEROES] co-op: player 2's ammo icons (%s) from %s: %d %d\n", s_skins[sk].name, xp, have[0], have[1]);
+    }
+    {   /* which of the two player 1's is: from his own variant */
+        snprintf(xp, sizeof xp, "\\Device\\CdRom0\\worlds\\04BALIN1%s", ext[hb >= 1 && hb <= 4 ? hb : 1]);
+        if (host_path(xp, hp, sizeof hp) && (t = read_all(hp, &tl))) {
+            for (v = 0; v < 2 && pick < 0; v++)
+                if (res_find(t, tl, keys[v], 350, &off, &e2, &ty) && e2 - off >= 0x80 + 0x8000) {
+                    uint32_t k, same = 1;
+                    for (k = 0; k < 256 && same; k++) if (t[off + 0x80 + k] != G8(cur + k)) same = 0;
+                    if (same) pick = v;
+                }
+            free(t);
+        }
+    }
+    if (pick < 0) pick = 0;
+    if (!have[pick]) return 0;
+    memcpy(out, cache[pick], 0x8000);
+    return 1;
+}
 static int build_file(const char *target, const Add *adds, int nadds, const char *out)
 {
     size_t tl, cap, pos, sl[MAX_ADDS];
@@ -2372,7 +2441,7 @@ static int build_file(const char *target, const Add *adds, int nadds, const char
     n = rd32(t, 4); cnt = rd32(t, n);
     memcpy(o, t, n);
     char_db_patch(o, t, tl, n, s_build_skin);
-    hud_ammo_patch(o, t, tl, s_build_skin, target);
+    if (!s_coop_skin || s_build_skin == s_guest) hud_ammo_patch(o, t, tl, s_build_skin, target);   /* (player 1 a guest: his own icon) */   /* (co-op: the HUD's icon is player 1's; player 2's is his own texture, tt_coop_p2_ammo_pixels) */
     pos = n;
     for (k = 0; k < (uint32_t)nadds; k++) {
         uint32_t a, e2, ty, d1, d2, d3;
@@ -4154,6 +4223,7 @@ static const char *redirect(const char *xp)
     int sk, g;
     b = strrchr(xp, '\\'); b = b ? b + 1 : xp;
     snprintf(base, sizeof base, "%s", b);
+    if (!tt_heroes_on() && playas() < 0 && !strstr(xp, "orlds\\") && !strstr(xp, "ORLDS\\")) return NULL;   /* the mod off (installed for co-op): level files only */
     {   /* The prologue is Isildur's: no guest there -- not his model, his
          * moves, his weapons, his portrait -- whoever hero 4 is on the
          * character select. The guest comes back with the next level or
@@ -4231,26 +4301,39 @@ static const char *redirect(const char *xp)
     if (tt_heroes_on() && (strstr(xp, "ound\\") || strstr(xp, "OUND\\")) && !getenv("TT_NOVOICE")) return voice_bank(xp, base);
     if (tt_heroes_on() && (!_stricmp(base, "upgbigi.BFF") || !_stricmp(base, "upgradei.BFF") || !_stricmp(base, "endlvl.BFF"))) return upg_redirect(xp, base);
     if (!strstr(xp, "orlds\\") && !strstr(xp, "ORLDS\\")) return NULL;
+    { extern void coop_level_reset(void); coop_level_reset(); }   /* (co-op: a level loads; the last one's state goes) */
+    if (!getenv("TT_PLAYAS") && (ends_with(xp, ".bfa") || ends_with(xp, ".bfl") || ends_with(xp, ".bfg") || ends_with(xp, ".bfi"))) {   /* (player 1 a guest: the level is his rebuild; player 2 a copy) */   /* co-op: player 2's character for this level (twotowers_manual.c decides: forced, chosen, or a copy of player 1's hero) */
+        extern const char *tt_coop_p2_char(const char *level);
+        const char *c = tt_coop_p2_char(base);
+        int k = c ? skin_by_name(c) : -1;
+        if (k >= 0 && skin_retail(k) && s_retail_hero[k - N_EXTRA] == (int)G8(HERO_BYTE) && !(G8(HERO_BYTE) == 4 && s_guest >= 0)) { tt_dbg("[HEROES] co-op: %s is player 1's own hero: a copy\n", c); k = -1; }
+        if (k >= 0 && G8(HERO_BYTE) == 4 && s_guest >= 0 && k == s_guest) { tt_dbg("[HEROES] co-op: %s is player 1's own (hero 4): a copy\n", c); k = -1; }
+        s_coop_skin = k >= 0; s_playas = k; tt_coop_skin_n = 0;
+        if (c) tt_dbg("[HEROES] co-op: player 2 in %s is %s%s\n", base, c, k >= 0 ? "" : " (no such skin: a copy of player 1's hero)");
+    }
     sk = -1;
-    if (ends_with(xp, ".bfi") && G8(HERO_BYTE) == 4) sk = s_guest;
+    if (ends_with(xp, ".bfi") && G8(HERO_BYTE) == 4 && s_guest >= 0) sk = s_guest;   /* player 1 a guest: his rebuild (player 2's skin added to it, below) */
+    else if (s_coop_skin && s_playas >= 0 && (ends_with(xp, ".bfa") || ends_with(xp, ".bfl") || ends_with(xp, ".bfg") || ends_with(xp, ".bfi"))) sk = s_playas;   /* co-op: player 2's skin into player 1's variant */
+    else if (ends_with(xp, ".bfi") && G8(HERO_BYTE) == 4) sk = s_guest;
     else if (ends_with(xp, ".bfa") && G8(HERO_BYTE) == 1) sk = playas();
     if (sk < 0) return NULL;
     {
         /* re-rigged guests keep the hero's animations; others bring theirs */
         /* the guest plays on his own skeleton with his own motions (see
          * compose_anims); TT_REMAP=1: on the hero's, with the hero's */
-        const int nat = sk == s_guest && sk < N_EXTRA && !getenv("TT_REMAP");
+        const int nat = (sk == s_guest || (s_coop_skin && !getenv("TT_COOP_REMAP"))) && (sk < N_EXTRA || skin_retail(sk)) && !getenv("TT_REMAP");   /* (co-op: player 2's guest too: re-rigged onto Aragorn's skeleton he came out a mess) */
         const int gv = !nat && sk == s_guest && s_skins[sk].lvar != NULL;   /* another hero's variant */
         s_native = nat;
         /* under keys of their own (PLAYER_KEY): the level's own Boromir, Frodo,
          * Gandalf or Lurtz -- an ally or a foe there -- keeps his model, his
          * texture and his moves */
-        Add a[12] = { { s_skins[sk].src, s_skins[sk].mesh, 100, PLAYER_KEY(s_skins[sk].mesh), gv ? s_skins[sk].lmap : s_skins[sk].map, gv ? s_skins[sk].nlmap : s_skins[sk].nmap },
+        const int p2only = s_coop_skin && sk == s_playas, p2too = s_coop_skin && s_playas >= 0 && sk == s_guest && s_playas != s_guest;
+        Add a[24] = { { s_skins[sk].src, s_skins[sk].mesh, 100, PLAYER_KEY(s_skins[sk].mesh), gv ? s_skins[sk].lmap : s_skins[sk].map, gv ? s_skins[sk].nlmap : s_skins[sk].nmap },
                      { s_skins[sk].src, s_skins[sk].tex,  300, PLAYER_KEY(s_skins[sk].tex), NULL, 0 },
                      { s_skins[sk].src, s_skins[sk].anim, 150, PLAYER_KEY(s_skins[sk].anim), NULL, 0 } };
         char sub[64];
         int na = (s_skins[sk].map && !nat && !getenv("TT_ADDANIM")) ? 2 : 3;
-        if (nat) { a[0].map = s_idmap; a[0].nmap = 256; a[2].compose = sk + 1; }
+        if (nat) { a[0].map = s_idmap; a[0].nmap = 256; if (sk < N_EXTRA) a[2].compose = sk + 1; }   /* (a retail hero's set is whole: nothing composed) */
         {   /* his weapons: model (a prop) and texture */
             int sl;
             for (sl = 0; sl < 3; sl++) {
@@ -4275,18 +4358,35 @@ static const char *redirect(const char *xp)
                 if (weapon_tex2(wm)) { a[na].src = ws; a[na].src_key = a[na].key = weapon_tex2(wm); a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].empty = 0; na++; }
             }
         }
-        snprintf(x, sizeof x, "%.*s%s", (int)(strlen(xp) - 4), xp, gv ? s_skins[sk].lvar : ".bfa");
+        if (p2too) {   /* player 2's character too (player 1 a guest): his model, texture, moves and weapons under his own keys */
+            int q2 = s_playas, sl;
+            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].mesh; a[na].type = 100; a[na].key = PLAYER_KEY(s_skins[q2].mesh); a[na].map = s_idmap; a[na].nmap = 256; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
+            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].tex; a[na].type = 300; a[na].key = PLAYER_KEY(s_skins[q2].tex); a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
+            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].anim; a[na].type = 150; a[na].key = PLAYER_KEY(s_skins[q2].anim); a[na].map = NULL; a[na].nmap = 0; a[na].compose = q2 < N_EXTRA ? q2 + 1 : 0; a[na].empty = 0; a[na].tint = 0; na++;
+            for (sl = 0; sl < 2 && na < 22; sl++) {
+                const char *ws; uint32_t wm, wt; int q, dupm = 0, dupt = 0;
+                if (!skin_weapon(q2, sl, &ws, &wm, &wt)) continue;
+                for (q = 3; q < na; q++) { if (a[q].type == 200 && a[q].key == wm) dupm = 1; if (a[q].type == 300 && a[q].key == wt) dupt = 1; }
+                if (!dupm) { a[na].src = ws; a[na].src_key = a[na].key = wm; a[na].type = 200; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0;
+                    if (wm == EMPTY_PROP_KEY) { a[na].src_key = s_skins[q2].wmesh; a[na].empty = 1; } na++; }
+                if (!dupt) { a[na].src = ws; a[na].src_key = a[na].key = wt; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++; }
+            }
+            tt_dbg("[HEROES] co-op: player 2's %s added to %s's level (%d resources)\n", s_skins[q2].name, s_skins[sk].name, na);
+        }
+        snprintf(x, sizeof x, "%.*s%s", (int)(strlen(xp) - 4), xp, gv ? s_skins[sk].lvar : p2only ? xp + strlen(xp) - 4 : ".bfa");   /* (co-op: player 1's own variant) */
         s_remap_noshadow = gv;   /* (torn volumes on Gimli's skeleton too) */   /* Aragorn's variant (or Gimli's) */
         base[strlen(base) - 4] = 0;
-        strcat(base, ends_with(xp, ".bfi") ? ".bfi" : ".bfa");
+        strcat(base, p2only ? xp + strlen(xp) - 4 : ends_with(xp, ".bfi") ? ".bfi" : ".bfa");
         /* the cache folder names what went into the file, so a changed
          * skin (or this rebuild's version) never picks up a stale one */
-        if (s_skins[sk].map)
+        if (skin_retail(sk))
+            snprintf(sub, sizeof sub, "%s_coop_b%u_%08X", s_skins[sk].name, HEROES_BUILD, (s_skins[sk].mesh ^ s_skins[sk].wmesh * 5u ^ (uint32_t)na * 11u ^ (uint32_t)nat * 19u) + HEROES_BUILD);
+        else if (s_skins[sk].map)
             /* the version on its own as well (b<n>): with it only in the sum, an
              * older build's folder could come out under the same name, and its
              * stale levels were used (Frodo missing from Caradhras' opening
              * scene, and a crash there and in Amon Hen) */
-            snprintf(sub, sizeof sub, "%s%s_b%u_%08X", s_skins[sk].name, nat ? "_own" : "", HEROES_BUILD,
+            snprintf(sub, sizeof sub, "%s%s%s%s_b%u_%08X", s_skins[sk].name, nat ? "_own" : "", p2only ? "_c" : "", p2too ? s_skins[s_playas].name : "", HEROES_BUILD,
                      (s_skins[sk].mesh ^ s_skins[sk].tex * 3u ^ s_skins[sk].wmesh * 5u ^ s_skins[sk].wtex * 7u ^ s_skins[sk].w2mesh * 17u ^ s_skins[sk].xmesh * 23u ^ (uint32_t)na * 11u ^ (uint32_t)gv * 13u ^ (uint32_t)nat * 19u) + HEROES_BUILD + anims_hash(sk));
         else snprintf(sub, sizeof sub, "%s", s_skins[sk].name);
         {
@@ -4626,6 +4726,35 @@ static void rec_switch(int g)
     tt_dbg("[HEROES] hero 4 is now %s\n", g < 0 ? "Isildur" : s_skins[g].name);
 }
 static int s_rec_saving_owner = -2;
+/* co-op: an extra hero's own hero record (0x348 bytes: experience, level, the level's running numbers; the save's
+ * format, 0x4AB598 + hero * 0x348) for player 2, from heroes\records.dat (or hero 4's live one if he is hero 4 now).
+ * 1 = found, 0 = he has none yet (a new hero: the caller starts him fresh, as rec_switch does) */
+/* co-op: a retail hero's hero byte (1..4: [0x4AB69D], his runtime record 0x4AB598 + byte * 0x348), 0 for an extra hero */
+int tt_heroes_retail_byte(const char *skin)
+{
+    int g = skin ? skin_by_name(skin) : -1;
+    return g >= 0 && skin_retail(g) ? s_retail_hero[g - N_EXTRA] : 0;
+}
+int tt_heroes_record_of(const char *skin, unsigned char *out)
+{
+    /* the save's per-hero block (s_rec's 0x4AB944 + h * 0x348) starts 0x64 bytes into the runtime record of hero h + 1
+     * (0x000D26F0: 0x4AB598 + index * 0x348): so it gives the record from +0x64 on (experience +0x6C, level +0x78,
+     * the kill counts); its first 0x64 bytes (the combat meter, the Perfect time) are left to the caller */
+    int g = skin_by_name(skin);
+    if (g >= 0 && skin_retail(g)) {   /* a retail hero: his own record in the save (Isildur's: records.dat's while a guest is hero 4) */
+        int h = s_retail_hero[g - N_EXTRA] - 1; uint32_t i;
+        rec_load_file();
+        if (h == 3 && s_rec_owner >= 0) { if (!s_rec_have[N_EXTRA]) return 0; memcpy(out + 0x64, s_recs[N_EXTRA] + 15 + 120 + 4, 0x348 - 0x64); return 1; }
+        for (i = 0x64; i < 0x348; i++) out[i] = G8(0x4AB944u + (uint32_t)h * 0x348u + (i - 0x64));
+        return 1;
+    }
+    if (g < 0 || g >= N_EXTRA) return 0;
+    rec_load_file();
+    if (s_rec_owner == g) { uint32_t i; for (i = 0x64; i < 0x348; i++) out[i] = G8(0x4AB944u + 3u * 0x348u + (i - 0x64)); return 1; }
+    if (!s_rec_have[g]) return 0;
+    memcpy(out + 0x64, s_recs[g] + 15 + 120 + 4, 0x348 - 0x64);
+    return 1;
+}
 
 /* ===================================================================== */
 /* the level: point the hero's keys at the skin's                         */
@@ -4662,7 +4791,62 @@ static uint32_t key_type(uint32_t (*t)[2], uint32_t n, uint32_t key)
 }
 /* the hero's placement record -- {mesh 100, anim 150, tex 300} after a
  * name with "Hero" in it -- and every reference to its keys -> the skin's */
+/* co-op: player 2's pairs (the level's hero keys -> his skin's, for the twin's record and weapons) and his resources in
+ * the player's pack. hero: the keys the level's hero has now (the hero's own, or a guest's as player 1 after his swap) */
+static void coop_pairs_apply(const uint32_t *hero, const uint32_t *to, int sk)
+{
+    uint32_t va, n = G32(s_buf + 4), cnt = G32(s_buf + n);
+        int k; const char *ws; uint32_t wm, wt;
+        tt_coop_skin_n = 0;
+        for (k = 0; k < 3; k++) if (to[k] != hero[k]) { tt_coop_skin_pairs[tt_coop_skin_n][0] = hero[k]; tt_coop_skin_pairs[tt_coop_skin_n][1] = to[k]; tt_coop_skin_n++; }
+        if (skin_weapon(sk, 1, &ws, &wm, &wt)) {   /* his sword-hand weapon for Aragorn's sword (model, texture: the weapon record's +0x40/+0x50) */
+            tt_coop_skin_pairs[tt_coop_skin_n][0] = 0x4586A62Cu; tt_coop_skin_pairs[tt_coop_skin_n][1] = wm; tt_coop_skin_n++;
+            tt_coop_skin_pairs[tt_coop_skin_n][0] = 0xFFFFFFFFu; tt_coop_skin_pairs[tt_coop_skin_n][1] = wt; tt_coop_skin_n++; }   /* (the texture: matched by position, see the co-op code) */
+        for (k = 0; k < tt_coop_skin_n; k++) tt_dbg("[HEROES] co-op pair %d: %08X -> %08X\n", k, tt_coop_skin_pairs[k][0], tt_coop_skin_pairs[k][1]);
+        {   /* the level's resource lists ({index, key} pairs: ... 14 tex, 13 anim, 12 mesh ...) name the hero's keys; only
+             * what they name gets loaded (the skin's texture missing: player 2 came out flat, observed). The first
+             * TT_COOP_SKINLISTS (1) of them get the skin's texture (and mesh, TT_COOP_SKINLISTMESH), the others keep the hero's */
+            /* (2026-10-19) which list: each sits in a type-500 resource (a pack). The pack keyed 0E01E39C is in every
+             * level (Weathertop's, Balin's Tomb's): the player's own; the others are the level's cutscenes'. The first
+             * list found was a cutscene's on Weathertop and in Balin's Tomb: there the hero was drawn with player 2's
+             * model, moves and texture (a playtest: "Aragorn's animation is weird during the cutscene", "the
+             * character selection should not affect characters during cutscenes"). The player's pack now; the first list only
+             * where a level has none. TT_COOP_SKINPACK: another pack key (0: the first list, as before) */
+            uint32_t want = getenv("TT_COOP_SKINPACK") ? (uint32_t)strtoul(getenv("TT_COOP_SKINPACK"), NULL, 16) : 0x0E01E39Cu, pick = 0, first = 0, e;
+            int lists = getenv("TT_COOP_SKINLISTS") ? atoi(getenv("TT_COOP_SKINLISTS")) : 1, done = 0;
+            for (va = s_buf + 8; va + 0x10 <= s_buf + n; va += 4) {
+                uint32_t best = 0, bkey = 0, rel = va - s_buf;
+                if (G32(va) != hero[2] || G32(va - 4) >= 0x100u || G32(va + 4) >= 0x100u || G32(va + 8) != hero[1]) continue;
+                for (e = 0; e < cnt; e++) { uint32_t ty2 = G32(s_buf + n + 4 + 12 * e), of = G32(s_buf + n + 4 + 12 * e + 4); if (ty2 == 500 && of <= rel && of >= best) { best = of; bkey = G32(s_buf + n + 4 + 12 * e + 8); } }
+                tt_dbg("[HEROES] co-op: the hero's resources listed at +%X, in pack %08X\n", rel, bkey);
+                if (!first) first = va;
+                if (want && bkey == want && !pick) pick = va;
+            }
+            if (!pick) pick = first;
+            for (va = pick; va && va + 0x10 <= s_buf + n && done < lists; va += 4) {
+                if (G32(va) != hero[2] || G32(va - 4) >= 0x100u || G32(va + 4) >= 0x100u || G32(va + 8) != hero[1]) continue;   /* {.., n, tex, n-1, anim, n-2, mesh} */
+                G32(va) = to[2];
+                if (s_native && to[1] != hero[1]) G32(va + 8) = to[1];   /* his own animation set (native: his skeleton, his composed moves) */
+                if ((s_native || getenv("TT_COOP_SKINLISTMESH")) && G32(va + 0x10) == hero[0]) G32(va + 0x10) = to[0];
+                tt_dbg("[HEROES] co-op: resource list at +%X: texture %08X -> %08X%s\n", va - s_buf, hero[2], to[2], s_native ? ", animations and model too (native)" : ""); done++;
+            }
+        }
+}
+static void skin_apply_one(void);
+/* player 1 a guest and player 2 a character of his own: after the guest's swap, player 2's pairs from the guest's keys */
 static void skin_apply(void)
+{
+    skin_apply_one();
+    if (s_coop_skin && s_playas >= 0 && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_playas != s_guest && find_level_buffer()) {
+        const Skin *g = &s_skins[s_guest], *q = &s_skins[s_playas];
+        uint32_t hero[3], to[3];
+        hero[0] = PLAYER_KEY(g->mesh); hero[1] = (g->map && !s_native) ? 0 : PLAYER_KEY(g->anim); hero[2] = PLAYER_KEY(g->tex);
+        to[0] = PLAYER_KEY(q->mesh); to[1] = PLAYER_KEY(q->anim); to[2] = PLAYER_KEY(q->tex);
+        tt_dbg("[HEROES] co-op: player 1 is %s (hero 4), player 2 %s: his pairs from %s's keys\n", g->name, q->name, g->name);
+        if (hero[1]) coop_pairs_apply(hero, to, s_playas);
+    }
+}
+static void skin_apply_one(void)
 {
     int sk = active_skin();
     uint32_t n, cnt, i, va, hero[3] = { 0, 0, 0 }, to[3];
@@ -4692,6 +4876,7 @@ static void skin_apply(void)
     }
     if (!hero[0]) { tt_dbg("[HEROES] no hero record found\n"); return; }
     to[0] = PLAYER_KEY(s_skins[sk].mesh); to[1] = (s_skins[sk].map && !s_native) ? hero[1] : PLAYER_KEY(s_skins[sk].anim); to[2] = PLAYER_KEY(s_skins[sk].tex);
+    if (s_coop_skin && sk == s_playas) { coop_pairs_apply(hero, to, sk); return; }   /* co-op: nothing swapped; the pairs for player 2 */
     {
         int hits = 0, kept = 0;
         for (va = s_buf + 8; va + 4 <= s_buf + n; va += 4) {
@@ -5028,6 +5213,7 @@ static int hero_level_of(int g)   /* g a guest, or -1 Isildur; the level shown (
     return (int)v + 1;
 }
 static int lab_log(void) { static int v = -1; if (v < 0) v = getenv("TT_LABLOG") != NULL; return v; }
+extern int tt_select_unavail; static uint32_t s_unav_mem; static uint32_t unav_text(void);
 static void extra_labels(void)
 {
     int n = places(), p, k = 0;
@@ -5064,6 +5250,8 @@ static void extra_labels(void)
         for (q = 0; q < 2; q++) {   /* the word, then the number */
             e = s_lab_el + (uint32_t)(2 * k + q) * 0xDCu;
             { uint32_t i2; for (i2 = 0; i2 < 0xDCu; i2 += 4) G32(e + i2) = G32((q ? B0 : A0) + i2); }
+            if (q && p == tt_select_unavail) continue;   /* (co-op: player 1's, while player 2 chooses) */
+            if (!q && p == tt_select_unavail && unav_text()) G32(e + 0x34) = s_unav_mem;
             if (q) { uint32_t aa[2] = { e + 0x38, (uint32_t)lv }; tt_gcall(0x000C91A0u, 0, 2, aa); }
             G32(e + 8) = (uint32_t)(int32_t)lroundf(x);
             G32(e + 0xC) = (uint32_t)(int32_t)lroundf(y) + (q ? 0x14u : 0u);
@@ -5250,7 +5438,7 @@ void tt_heroes_init(void)
          * language's (lang.c), which owns xbox_path_redirect */
         extern const char *(*tt_heroes_redirect)(const char *xp);
         extern void tt_lang_init(void);
-        if (tt_heroes_on() || playas() >= 0) tt_heroes_redirect = redirect;
+        tt_heroes_redirect = redirect;   /* (always: co-op resets per level and may build player 2's level variant; with the mod off only level files are looked at) */
         tt_lang_init();
     }
     if (getenv("TT_ANIMWATCH") || getenv("TT_WOBJWATCH") || getenv("TT_POSLOG") || getenv("TT_WOBJSHOW") || getenv("TT_HPFIND") || getenv("TT_HPFREEZE") || getenv("TT_ANIMCYCLE") || getenv("TT_CYCSLOTS")) CreateThread(NULL, 0, aw_thread, NULL, 0, NULL);
@@ -5403,7 +5591,7 @@ static void anim_cycle(void)
 /* testing: TT_WOBJWATCH -- the player's weapon objects' words that change */
 static uint32_t s_sword_res, s_shooter;   /* the guest's sword-hand model as the game holds it */
 static int s_in_launch;
-static uint32_t s_lk_key, s_lk_ty, s_bow_res, s_beam_obj[8], s_beam_n, s_launching;   /* the last resource lookup; the guest's bow-hand model */
+static uint32_t s_lk_key, s_lk_ty, s_bow_res, s_beam_obj[8], s_beam_n, s_launching; static uint32_t s_beam_p2obj[8], s_beam_p2n; static uint32_t s_beam_p2obj_log[8];   /* (co-op) player 2's beam shots */   /* the last resource lookup; the guest's bow-hand model */
 static uint32_t s_wobj[4];   /* the player's bow and sword objects, his actor */
 static void wobj_watch(void)
 {
@@ -6352,8 +6540,45 @@ static int shot_res_is(uint32_t shooter, uint32_t res, uint32_t key)
 /* the level being loaded is the prologue (Isildur's, whoever hero 4 is) */
 static int s_prologue;
 int tt_level_is_prologue(void) { return s_prologue; }
+uint32_t tt_select_obj; unsigned long tt_select_obj_t;
+/* co-op (menus.c): a place player 2 may not take (player 1's hero) while he chooses, -1 none: its label reads
+ * "Unavailable" (the game's word element pointed at our text, its number at an empty one, for the draw) */
+int tt_select_unavail = -1;
+static uint32_t s_unav_mem, s_unav_save[2];
+static uint32_t unav_text(void)
+{
+    static const char t[] = "Unavailable"; int i;
+    if (!s_unav_mem) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_unav_mem = xbox_ContiguousAlloc(64u, 16u); if (!s_unav_mem) return 0;
+        for (i = 0; t[i]; i++) G16(s_unav_mem + 2 * i) = (uint8_t)t[i];
+        G16(s_unav_mem + 2 * i) = 0; G16(s_unav_mem + 0x30) = 0; }
+    return s_unav_mem;
+}
+/* co-op: player 2's beam, its particles spawned once out of his context. Spawned inside it (his launch runs while
+ * the player global and the swapped blocks are his), they stayed for good where they were made (a playtest: "a permanent
+ * trail"); player 1's, spawned in his own, fade */
+static struct { uint32_t pid; int n; float a[3], d[3]; } s_p2beam[4];
+static int s_p2beam_n;
+static void coop_beam_flush(void)
+{
+    extern uint32_t coop_p2_actor(void);
+    uint32_t p2 = coop_p2_actor(), scratch; int b, k, q;
+    if (!s_p2beam_n || (p2 && G32(0x43B15Cu) == p2)) return;
+    scratch = (tt_guest_esp() - 0x3000u) & ~0xFu;
+    for (q = 0; q < 16; q++) GF(scratch + 0x40 + 4 * q) = (q % 5) ? 0.0f : 1.0f;
+    for (b = 0; b < s_p2beam_n; b++)
+        for (k = 0; k <= s_p2beam[b].n; k++) {
+            float f = (float)k / (float)s_p2beam[b].n; uint32_t args[4]; int c;
+            for (c = 0; c < 3; c++) GF(scratch + 4 * c) = s_p2beam[b].a[c] + s_p2beam[b].d[c] * f;
+            GF(scratch + 12) = 1.0f;
+            args[0] = s_p2beam[b].pid; args[1] = scratch; args[2] = scratch + 0x40; args[3] = fbits(getenv("TT_COOP_BEAMLIFE") ? (float)atof(getenv("TT_COOP_BEAMLIFE")) : 0.6f);   /* (its last argument: -1 kept them for good for player 2, observed) */
+            tt_gcall(0x0008E470u, 0, 4, args);
+        }
+    if (getenv("TT_COOP_BEAMLOG")) tt_dbg("[COOPBEAM] %d beam(s) of player 2 spawned out of his context\n", s_p2beam_n);
+    s_p2beam_n = 0;
+}
 int tt_hk(int id, int phase, uint32_t *r)
 {
+    if (s_p2beam_n) coop_beam_flush();
     if (id == 24 && phase == 0 && getenv("TT_INPLOG")) {   /* testing: actors' inputs (this, input id), the player's marked */
         uint32_t inp = G32(r[3] + 4) & 0xFFFFu, act = r[1];
         static const int want[] = { 1, 2, 3, 6, 15, 16, 30, 28 };
@@ -6575,11 +6800,22 @@ int tt_hk(int id, int phase, uint32_t *r)
     }
     if (id == 22 && phase == 0) s_launching = r[1];
     if (id == 22) s_in_launch = phase == 0;   /* (testing, TT_SHOTLOG: the lookups a launch makes) */
-    if (id == 22 && phase == 1 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam && !getenv("TT_NOBEAM")) {
+    {   /* (co-op: player 2's own launches too, when his character shoots a beam -- Gandalf, Sauron: his shots are marked
+         * at the launch, the beam from the shot's own start, the shooter being player 1's bow) */
+        int p2b = 0, q2; for (q2 = 0; q2 < 8; q2++) if (s_launching && s_beam_p2obj[q2] == s_launching) p2b = 1;
+    if (id == 22 && phase == 1 && !getenv("TT_NOBEAM") && (p2b || (tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam))) {
+        int bg = p2b ? s_playas : s_guest;
+        if (p2b && getenv("TT_COOP_BEAMLOG")) { extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), pb = G32(0x43B15Cu), ob = s_launching; static int n; if (n++ < 12 && pa && ob >= 0x80000000u && ob < 0x84000000u) tt_dbg("[COOPBEAM] start %.2f %.2f %.2f aim %.2f %.2f %.2f | P2 %.2f %.2f %.2f | player %08X %.2f %.2f %.2f\n", GF(ob + 0x3E8), GF(ob + 0x3EC), GF(ob + 0x3F0), GF(ob + 0x3F8), GF(ob + 0x3FC), GF(ob + 0x400), GF(pa + 0xF0), GF(pa + 0xF4), GF(pa + 0xF8), pb, GF(pb + 0xF0), GF(pb + 0xF4), GF(pb + 0xF8)); }
+        if (p2b && !getenv("TT_COOP_BEAMGAMESTART")) {   /* player 2's shot starts where player 1's bow is held (5 units over his head, beside him: observed), and the staff's
+             * offset below is from a hand: his own place at hand height (TT_COOP_BEAMZ, 1.4) as the start, for the beam and the bolt's sweep */
+            extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), ob = s_launching;
+            float hz = getenv("TT_COOP_BEAMZ") ? (float)atof(getenv("TT_COOP_BEAMZ")) : 1.4f;
+            if (pa >= 0x80000000u && pa < 0x84000000u && ob >= 0x80000000u && ob < 0x84000000u) { GF(ob + 0x3E8) = GF(pa + 0xF0); GF(ob + 0x3EC) = GF(pa + 0xF4); GF(ob + 0x3F0) = GF(pa + 0xF8) + hz; }
+        }
         uint32_t o = s_launching, scratch = (tt_guest_esp() - 0x3000u) & ~0xFu, pid;
         float a[3], b[3], d[3], len, step;
         int k, n, c, mine = 0, q;
-        for (q = 0; q < 8; q++) if (o && s_beam_obj[q] == o) { mine = 1; s_beam_obj[q] = 0; }
+        for (q = 0; q < 8; q++) if (o && (p2b ? s_beam_p2obj[q] : s_beam_obj[q]) == o) { mine = 1; if (p2b) s_beam_p2obj[q] = 0; else s_beam_obj[q] = 0; }
         if (mine && o >= 0x80000000u && o < 0x84000000u && s_shooter >= 0x80000000u && s_shooter < 0x84000000u) {
             /* (1.7) the bolt flies unseen: only the beam shows. Its model
              * (+0x494, as the weapons') was the arrows' -- the bow hand's
@@ -6620,7 +6856,7 @@ int tt_hk(int id, int phase, uint32_t *r)
                 }
             }
         }
-        if (mine && !strcmp(s_skins[s_guest].name, "sauron")) {   /* (1.7) his last ranged upgrade: red, then blue, in turn */
+        if (mine && !strcmp(s_skins[bg].name, "sauron")) {   /* (1.7) his last ranged upgrade: red, then blue, in turn */
             static unsigned nshot;
             s_bolt_blue = ranged_top() && (nshot++ & 1);
         }
@@ -6634,9 +6870,9 @@ int tt_hk(int id, int phase, uint32_t *r)
                  * world box at +0xE0 (8 corners of 16 bytes): the second four
                  * the far end of the model's long axis -- the head */
                 uint32_t va, ob = 0;
-                if (s_shooter && !shield_on(s_guest)) {   /* (his staff in his model: no object of its own) */
+                if (s_shooter && !shield_on(bg) && !p2b) {   /* (his staff in his model: no object of its own) */
                     const char *ws; uint32_t wm = 0, wt;
-                    skin_weapon(s_guest, 1, &ws, &wm, &wt);
+                    skin_weapon(bg, 1, &ws, &wm, &wt);
                     for (va = s_shooter - 0x4000u; va < s_shooter + 0x4000u && !ob; va += 4)
                         if (va - 0x494u != s_shooter && G32(va) >= 0x80000000u && G32(va) < 0x84000000u
                             && ((s_sword_res && G32(va) == s_sword_res) || (wm && G32(G32(va) + 4) == wm))) ob = va - 0x494u;
@@ -6649,7 +6885,7 @@ int tt_hk(int id, int phase, uint32_t *r)
                 }
                 if (!ob) {   /* off the shot's own start: tip = {ahead, right, up} */
                     float tip[3] = { 1.0f, -1.1f, 2.5f }, fw[2], hl = sqrtf(d[0] * d[0] + d[1] * d[1]);
-                    if (shield_on(s_guest)) { tip[0] = 1.2f; tip[1] = 1.4f; tip[2] = 3.6f; }   /* the staff's head, in his left hand */
+                    if (shield_on(bg)) { tip[0] = 1.2f; tip[1] = 1.4f; tip[2] = 3.6f; }   /* the staff's head, in his left hand */
                     if (getenv("TT_TIP")) sscanf(getenv("TT_TIP"), "%f,%f,%f", &tip[0], &tip[1], &tip[2]);
                     if (hl > 0.01f) {
                         fw[0] = d[0] / hl; fw[1] = d[1] / hl;
@@ -6664,15 +6900,27 @@ int tt_hk(int id, int phase, uint32_t *r)
             if (len > 120.0f) { for (c = 0; c < 3; c++) d[c] *= 120.0f / len; len = 120.0f; }
             n = (int)(len / step); if (n > 72) n = 72; if (n < 1) n = 1;
             for (q = 0; q < 16; q++) GF(scratch + 0x40 + 4 * q) = (q % 5) ? 0.0f : 1.0f;   /* an identity matrix */
+            if (p2b && !getenv("TT_COOP_BEAMNOW")) {   /* player 2's: spawned outside his context (coop_beam_flush) */
+                if (s_p2beam_n < 4) { int c2; s_p2beam[s_p2beam_n].pid = pid; s_p2beam[s_p2beam_n].n = n; for (c2 = 0; c2 < 3; c2++) { s_p2beam[s_p2beam_n].a[c2] = a[c2]; s_p2beam[s_p2beam_n].d[c2] = d[c2]; } s_p2beam_n++; }
+                n = -1;
+            }
             for (k = 0; k <= n && !getenv("TT_BEAMNOPART"); k++) {   /* (TT_BEAMNOPART testing: the bolt alone) */
                 float f = (float)k / (float)n;
                 uint32_t args[4];
                 for (c = 0; c < 3; c++) GF(scratch + 4 * c) = a[c] + d[c] * f;
                 GF(scratch + 12) = 1.0f;
-                args[0] = pid; args[1] = scratch; args[2] = scratch + 0x40; args[3] = fbits(-1.0f);
+                args[0] = pid; args[1] = scratch; args[2] = scratch + 0x40; args[3] = fbits(getenv("TT_COOP_BEAMLIFE") ? (float)atof(getenv("TT_COOP_BEAMLIFE")) : 0.6f);   /* (-1: the particles stayed for good, his own too: observed 2026-10-19) */
                 tt_gcall(0x0008E470u, 0, 4, args);
             }
             if (getenv("TT_PROJLOG")) tt_dbg("[BEAM] %d particles %X over %.1f from %.2f %.2f %.2f\n", n + 1, pid, len, a[0], a[1], a[2]);
+        }
+    }
+    }
+    if (id == 23 && phase == 0 && getenv("TT_COOP_BEAMLOG")) {   /* (research) player 2's bolts as they update */
+        uint32_t o = r[1]; int q; static uint32_t lt[8], cnt[8], first[8], seen[8];
+        for (q = 0; q < 8; q++) {
+            if (!seen[q] && s_beam_p2obj_log[q] == o) { seen[q] = o; first[q] = GetTickCount(); cnt[q] = 0; lt[q] = 0; }
+            if (seen[q] == o) { cnt[q]++; if (GetTickCount() - lt[q] > 1000) { lt[q] = GetTickCount(); tt_dbg("[COOPBEAM] bolt %08X at %lu ms: %u updates, at %.1f %.1f %.1f, +3F8 %.1f %.1f %.1f, +408 %.1f %.1f %.1f\n", o, (unsigned long)(GetTickCount() - first[q]), cnt[q], GF(o + 0xF0), GF(o + 0xF4), GF(o + 0xF8), GF(o + 0x3F8), GF(o + 0x3FC), GF(o + 0x400), GF(o + 0x408), GF(o + 0x40C), GF(o + 0x410)); } }
         }
     }
     if ((id == 22 || id == 23) && getenv("TT_PROJLOG")) {   /* testing: projectiles */
@@ -6828,6 +7076,44 @@ int tt_hk(int id, int phase, uint32_t *r)
             else if (k == 1 && weapon_tex2(s_wop_mesh) && !getenv("TT_NOTEX2")) G32(g_esp + 8) = weapon_tex2(s_wop_mesh);   /* its second layer (Sting's glow) */
         }
     }
+    if (id == 18 && phase == 0) { tt_select_obj = g_ecx; tt_select_obj_t = GetTickCount(); }
+    /* co-op: player 2's shots are his own character's (the launch's owner, [esp+0x18], is player 2; he shoots with
+     * LT held and A or Y, as player 1 does). The projectile ids player 1 fires as each hero (observed, Balin's Tomb):
+     * Aragorn 13, Legolas 19, Gimli 16 (his throwing axe), Isildur 15; Frodo and the Uruk-hai a stone (10, as for them
+     * as hero 4); Gandalf and Sauron 15 (hero 4's, their bolt); other guests the arrow (13) */
+    if (id == 22 && phase == 0 && !getenv("TT_COOP_P2KEEPPROJ")) {
+        extern uint32_t coop_p2_actor(void); extern const char *tt_coop_p2_char_now;
+        uint32_t p2 = coop_p2_actor();
+        if (p2 && G32(g_esp + 0x18) == p2) {
+            static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
+                { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 } };
+            const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
+            if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
+            if (to != pj) G32(g_esp + 16) = to;
+            if (s_coop_skin && s_playas >= 0 && s_skins[s_playas].beam && !getenv("TT_NOBEAM")) { s_beam_p2obj_log[s_beam_p2n & 7] = r[1]; s_beam_p2obj[s_beam_p2n++ & 7] = r[1]; }   /* his bolt: a beam (below) */
+            { static int n; uint32_t sh = G32(g_esp + 4), m = sh >= 0x80000000u && sh < 0x84000000u ? G32(sh + 0x494) : 0;
+              if (n++ < 20) tt_dbg("[COOPSHOT] player 2 (%s) shoots: projectile %u -> %u, shooter %08X model %08X (key %08X)\n", c ? c : "copy", pj, to, sh, m, m >= 0x80000000u && m < 0x84000000u ? G32(m + 4) : 0); }
+        }
+    }
+    if (id == 22 && phase == 0 && getenv("TT_COOP_SHOTLOG")) { extern uint32_t coop_p2_actor(void); static int n; if (n++ < 60) tt_dbg("[COOPSHOT] t %lu launch: ecx %08X args %08X %08X %08X %08X %08X %08X %08X %08X | player now %08X, P1 %08X P2 %08X\n", GetTickCount(), r[1], G32(g_esp + 4), G32(g_esp + 8), G32(g_esp + 12), G32(g_esp + 16), G32(g_esp + 20), G32(g_esp + 24), G32(g_esp + 28), G32(g_esp + 32), G32(0x43B15Cu), G32(0x43B15Cu), coop_p2_actor()); }
+    if (id == 24 && phase == 0) {   /* the game's labels (characters 0..3): player 1's hero's while player 2 chooses */
+        int p = tt_select_unavail; uint32_t num = p < 0 ? 99u : places() ? aid(p) : (uint32_t)p;
+        s_unav_save[0] = s_unav_save[1] = 0xFFFFFFFFu;
+        if (num < 4 && unav_text()) {
+            uint32_t w = 0x42DAB8u + num * 0xDCu, nb = 0x42DE28u + num * 0xDCu;
+            extern volatile uint32_t tt_unav_word_el, tt_unav_text;
+            s_unav_save[0] = 0; s_unav_save[1] = G32(nb + 0x34);
+            tt_unav_word_el = w; tt_unav_text = s_unav_mem;   /* the word: swapped in its own draw (menus.c), the routine sets it again first */
+            G32(nb + 0x34) = s_unav_mem + 0x30;
+        }
+    }
+    if (id == 24 && phase == 1 && s_unav_save[0] != 0xFFFFFFFFu) {
+        int p = tt_select_unavail; uint32_t num = p < 0 ? 99u : places() ? aid(p) : (uint32_t)p;
+        extern volatile uint32_t tt_unav_word_el;
+        if (num < 4) G32(0x42DE28u + num * 0xDCu + 0x34) = s_unav_save[1];
+        tt_unav_word_el = 0;
+        s_unav_save[0] = 0xFFFFFFFFu;
+    }   /* (menus.c: the character select's object, co-op player 2's turn) */
     if (tt_heroes_on()) {
         /* the menu's characters: after the fourth retail one, ours */
         if (id == 17 && phase == 0 && !s_spawning) {
@@ -7067,4 +7353,48 @@ void tt_sndid(uint32_t mgr, uint32_t id)
                    G32(e + 4) < 0x10000000u ? G32(base + G32(e + 4)) : G32(G32(e + 4)), G32(e + 4) < 0x10000000u ? G32(base + G32(e + 4) + 4) : G32(G32(e + 4) + 4));
         }
     }
+}
+
+/* co-op (menus.c, player 2's turn of the character select): the ring's places, and the skin a place stands for
+ * (NULL: a retail hero, 0 Aragorn 1 Legolas 2 Gimli 3 Isildur); its title as the game shows it */
+int tt_select_places(void) { return places(); }
+int tt_coop_skin_on(void) { return s_coop_skin && s_playas >= 0; }   /* (co-op) player 2's skin went into this level */
+const char *tt_select_place_skin(int p)
+{
+    static const char *const retail[4] = { "aragorn", "legolas", "gimli", "isildur" };
+    int g = place_guest(p);
+    if (g >= 0 && g < N_EXTRA) return s_skins[g].name;
+    return p >= 0 && p < 4 ? retail[p] : NULL;
+}
+const char *tt_select_place_title(int p)
+{
+    static const char *const retail[4] = { "Aragorn", "Legolas", "Gimli", "Isildur" };
+    int g = place_guest(p);
+    if (g >= 0 && g < N_EXTRA) return s_skins[g].title;
+    return p >= 0 && p < 4 ? retail[p] : "?";
+}
+/* (co-op) the guests player 2 can reach in the ring: unlocked ones */
+int tt_select_guests_open(void) { int p, n = 0; for (p = 4; p < places(); p++) if (!place_locked(p)) n++; return n; }
+
+/* ---- co-op: the Co-op menu's background (UI\stills3.BFF key 2, Aragorn, Gimli and Legolas on the
+ * plains; a 640 x 448 linear 32-bit still) as the Options background's texture takes it: 512 x 256, swizzled 32-bit
+ * (options.c, draw_coopmenu), darkened for the menu's text. out: 512 * 256 words, alpha full. */
+int tt_coop_menu_bg_pixels(uint32_t *out)
+{
+    char hp[600]; unsigned char *f; size_t fl; uint32_t off, end, ty, *src; int x, y;
+    if (!host_path("\\Device\\CdRom0\\UI\\stills3.BFF", hp, sizeof hp) || !(f = read_all(hp, &fl))) return 0;
+    if (!res_find(f, fl, 2, 350, &off, &end, &ty) || rd32(f, off + 4) != 640 || rd32(f, off + 8) != 448 || off + 0x80 + 640 * 448 * 4 > fl) { free(f); return 0; }
+    src = (uint32_t *)malloc(640 * 448 * 4);
+    if (!src) { free(f); return 0; }
+    for (y = 0; y < 448; y++) for (x = 0; x < 640; x++) src[y * 640 + x] = rd32(f, off + 0x80 + (size_t)(y * 640 + x) * 4) & 0xFFFFFFu;
+    free(f);
+    for (y = 0; y < 256; y++)
+        for (x = 0; x < 512; x++)
+        {   /* darkened (the menu's light text on the bright sky could not be read): 0.5, a little less at the right */
+            uint32_t c = bilerp(src, 640, 448, (x + 0.5f) * 640.0f / 512.0f - 0.5f, (y + 0.5f) * 448.0f / 256.0f - 0.5f);
+            float k = 0.45f + 0.15f * (float)x / 511.0f;
+            out[swz_index((uint32_t)x, (uint32_t)y, 512, 256)] = 0xFF000000u | (uint32_t)(((c >> 16) & 255) * k) << 16 | (uint32_t)(((c >> 8) & 255) * k) << 8 | (uint32_t)((c & 255) * k);
+        }
+    free(src);
+    return 1;
 }

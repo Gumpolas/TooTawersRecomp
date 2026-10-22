@@ -1,5 +1,7 @@
 # The Two Towers Recompiled v1.9.5
 
+> **This fork adds local couch co-op: two players on one PC, one shared camera. See [COOP.md](COOP.md).** Everything below is the port's own README for 1.9.4.
+
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
 > ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. Unlocked frame rates work but are experimental. It is recommended to play the game at no more than 1000 fps. See known issues. 

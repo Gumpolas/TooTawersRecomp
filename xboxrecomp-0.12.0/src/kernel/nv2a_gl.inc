@@ -2972,8 +2972,8 @@ static void gpu_draw_overlays(GSurf *s, int wide)
             g_ovl[i].ver = q[i].ver;
         }
         /* HUD art keeps its 4:3 shape in a widened frame (as the game's own) */
-        x0 = hud_wide_x(q[i].x, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k);
-        x1 = hud_wide_x(q[i].x + q[i].dw, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k);
+        x0 = ovl_wide_x(q[i].x, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k, q[i].ver);
+        x1 = ovl_wide_x(q[i].x + q[i].dw, q[i].x + q[i].dw * 0.5f, q[i].y + q[i].dh * 0.5f, k, q[i].ver);
         {
             float vx = x0 * (float)s->pw / (float)s->w, vy = q[i].y * (float)s->ph / (float)s->h;
             float vw = (x1 - x0) * (float)s->pw / (float)s->w, vh = q[i].dh * (float)s->ph / (float)s->h;
