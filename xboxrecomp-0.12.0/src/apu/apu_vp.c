@@ -132,6 +132,19 @@ uint32_t g_apu_mring[64][4]; unsigned g_apu_mn;
 static void voice_off(MCPXAPUState *d, uint16_t v)
 {
     { extern void *g_apu_offra[]; g_apu_offra[v] = __builtin_return_address(0); }
+#if !defined(_WIN32)
+    {   /* testing: RECOMP_APU_OFFBT=<hex base> -- who turns that sound off (host call stack, offsets from voice_off) */
+        static long want = -2;
+        if (want == -2) { const char *e = getenv("RECOMP_APU_OFFBT"); want = e ? strtol(e, NULL, 16) : -1; }
+        if (want >= 0 && (long)voice_get_mask(d, v, NV_PAVS_VOICE_CUR_PSL_START, NV_PAVS_VOICE_CUR_PSL_START_BA) == want) {
+            extern int backtrace(void **, int);
+            void *bt[28]; int q, k2 = backtrace(bt, 28);
+            fprintf(stderr, "[OFFBT]");
+            for (q = 1; q < k2; q++) fprintf(stderr, " %+ld", (long)((char *)bt[q] - (char *)voice_off));
+            fprintf(stderr, "\n");
+        }
+    }
+#endif
     if (getenv("RECOMP_APU_VTRACE")) { static int n; if (n++ < 4000) fprintf(stderr, "  [APUV] voice_off %04X\n", v); }
     voice_set_mask(d, v, NV_PAVS_VOICE_PAR_STATE,
                    NV_PAVS_VOICE_PAR_STATE_ACTIVE_VOICE, 0);

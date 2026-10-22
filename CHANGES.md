@@ -2508,3 +2508,55 @@ twotowers/src/twotowers_manual.c (1.9.5)
     frame's time goes into the carry.
   - Testing: TT_LVLLOG=1 ([LVLRESET]), TT_DUMP_LVL=1 (pictures by the level
     clock).
+
+-- 1.9.6: couch co-op ---------------------------------------------------
+Co-op was made by Volverine-Dude (github.com/Volverine-Dude/TooTawersRecomp-coop,
+on 1.9.4) and is brought in on 1.9.5; see COOP.md for what it does. The
+toolkit changes it makes, and those made bringing it in:
+
+kernel/nv2a_d3d11.inc, nv2a_d3d11_shaders.h (co-op, Volverine-Dude)
+  - The head markers' depth probe: the frame's depth read at up to four
+    points the title asks for (xbox_zprobe_req / _n), the 24-bit depth
+    given back as 0..1 (xbox_zprobe_res, xbox_zprobe_seq counting results).
+  - HUD exclusion boxes (xbox_hud_excl, xbox_hud_excl_more): pieces inside
+    stay centred and pull no others to the middle; overlay quads kept to the
+    left or right edge by their version's bits 31 / 30.
+kernel/nv2a_gl.inc (co-op, Volverine-Dude)
+  The same edge-pinned overlay quads for OpenGL.
+kernel/kernel_bridge.c (co-op, Volverine-Dude)
+  Testing: TT_SKIPMOVIES -- a film reported missing (the death film kept).
+kernel/nv2a_pb_exec.c (co-op; 1.9.6)
+  The depth probe's variables declared where Direct3D 11 isn't built
+  (Linux, macOS): no results come, the markers are drawn undimmed.
+input/xinput_device.c (1.9.6)
+  - Two players' input, set by the title (xbox_input_two_players): each
+    player's device chosen (xbox_input_dev_choice: -1 automatic, 0 the
+    keyboard and mouse, n the n-th controller found); automatic with one
+    controller gives player 1 the keyboard and mouse and player 2 the
+    controller. The keyboard and mouse go to the port they are chosen for
+    (xbox_InputKeyboardPort), not always port 0.
+  - The controllers found and their names (xbox_InputDeviceCount,
+    xbox_InputDeviceName), the device a player has (xbox_InputPlayerDevice).
+  - Testing: the pad script's right stick (RSU, RSD, RSL, RSR).
+twotowers/src/twotowers_manual.c (1.9.6)
+  - The co-op's XInputGetState answers player 2's virtual pad and leaves
+    the rest to 1.9.5's native controller reading (sub_001697D9_hle); its
+    XInputSetState drops rumble for the virtual pad there too.
+  - The co-op's ground-snap wrapper calls the TT_GSLOG test log.
+  - 64-bit Linux types (GetTickCount, xbox_InputGetState), _strnicmp.
+  - Pickups: Double (sub_0008FC60). Testing: TT_COOP_PICKTEST=1.
+twotowers/src/options.c (1.9.6)
+  - Co-op Options page: Pickups, P1 Device, P2 Device (the Co-op menu keeps
+    its five rows); tt_coop_input_sync turns two players' input on in a
+    co-op game with a human player 2.
+  - The [Coop] settings are read on Linux and macOS (the ini's path was
+    built with a backslash).
+twotowers/src/menus.c (1.9.6)
+  The mouse's steering, aiming and clicks go to the keyboard's player only.
+twotowers/src/twotowers_manual.c, apu/apu_vp.c (1.9.6)
+  - The upgrade screen's points count down after a purchase at 6000 a
+    second at any frame rate (0x0006E830 took 100 off each frame, with the
+    purchase sound playing until the count was done: above 60 fps the count
+    and its sound were cut short). TT_NO_UPGCOUNTFIX=1: as before.
+  - Testing: TT_UPGXP=n (the hero's experience on the upgrade screen),
+    RECOMP_APU_OFFBT=<base> (Linux: who stops a sound).

@@ -54,7 +54,7 @@ extern const char *xbox_GfxItemName(int id, int v);
 #define COL_OFF   0xFF9C978Cu
 
 enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU };
-enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET };   /* (K_BIND: gfx is the action, input_bind.h) */
+enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET, K_DEV };   /* (K_BIND: gfx is the action, input_bind.h; K_DEV: gfx is the player, 0-1) */
 typedef struct {
     const char *label;
     int gfx, kind;
@@ -119,11 +119,11 @@ static Row s_ctl_all[8 + BIND_N_ + 1];
  * (twotowers_manual.c) reads them with tt_coop_setting. Testing: TT_COOP_DIFFICULTY,
  * TT_COOP_ICONS, TT_COOP_ZOOMSET set one for the run (the ini is not changed). */
 #define GFX_COOP 1000
-enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_N };
-static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot" };
-static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT" };
-static const int s_coop_cnt[CO_N] = { 3, 2, 3, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0 };
-static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1 };
+enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_PICK, CO_N };
+static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot", "double_pickups" };
+static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT", "TT_COOP_PICKUPS" };
+static const int s_coop_cnt[CO_N] = { 3, 2, 3, 2, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1 };
+static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1, -1 };
 static const Row s_coop[] = {
     { "Difficulty:", GFX_COOP + CO_DIFF, K_COLS, { "Easy", "Normal", "Expert" } },
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
@@ -131,13 +131,29 @@ static const Row s_coop[] = {
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },   /* player 2 put beside player 1 when too far (the co-op code's catch-up) */
     { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },   /* player 2 played by the co-op code: follows player 1, fights what is near (twotowers_manual.c coop_p2bot) */
 };
+/* (1.9.6) Options > Co-op Options: the Co-op menu's rows (above), then the pickups and each player's device. The
+ * Co-op menu keeps its five */
+static const Row s_coop_page[] = {
+    { "Difficulty:", GFX_COOP + CO_DIFF, K_COLS, { "Easy", "Normal", "Expert" } },
+    { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
+    { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
+    { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },
+    { "Pickups:", GFX_COOP + CO_PICK, K_COLS, { "Normal", "Double" } },   /* Double: a health or ammo pickup can be taken twice (twotowers_manual.c, sub_0008FC60) */
+    { "P1 Device:", 0, K_DEV, { 0 } },
+    { "P2 Device:", 1, K_DEV, { 0 } },
+};
 static void coop_ini(char *p, int n)
 {
     char *sl;
     GetModuleFileNameA(NULL, p, (DWORD)n);
     sl = strrchr(p, '\\'); if (!sl) sl = strrchr(p, '/');
     if (sl) *sl = 0;
+#if defined(_WIN32)
     strncat(p, "\\twotowers_recomp.ini", (size_t)n - strlen(p) - 1);
+#else
+    strncat(p, "/twotowers_recomp.ini", (size_t)n - strlen(p) - 1);   /* (1.9.6: Linux, macOS -- the settings were not read) */
+#endif
 }
 int tt_coop_setting(int i)
 {
@@ -167,6 +183,81 @@ static void coop_set(int i, int v)
 static int opt_count(int id) { return id >= GFX_COOP ? s_coop_cnt[id - GFX_COOP] : xbox_GfxItemCount(id); }
 static int opt_get(int id) { return id >= GFX_COOP ? tt_coop_setting(id - GFX_COOP) : xbox_GfxIndex(id); }
 static void opt_set(int id, int v) { if (id >= GFX_COOP) coop_set(id - GFX_COOP, v); else xbox_GfxSetIndex(id, v); }
+
+/* (1.9.6) each co-op player's device (src/input/xinput_device.c): -1 automatic, 0 the keyboard and mouse, n the n-th
+ * controller connected; kept in [Coop] p1_device / p2_device. In a co-op game with a human player 2 (the P2 Bot off)
+ * the input runs as two players: automatic with one controller gives player 1 the keyboard and mouse and player 2
+ * the controller; with two, one each. Player 2's hero reads input port 1 (twotowers_manual.c, coop_pad2) */
+extern volatile int xbox_input_two_players;
+extern int tt_coop_active(void);
+extern volatile int xbox_input_dev_choice[2];
+extern int xbox_InputDeviceCount(void);
+extern void xbox_InputDeviceName(int i, char *out, int n);
+extern int xbox_InputPlayerDevice(int port);
+extern int xbox_InputKeyboardPort(void);
+static void coop_devices_load(void)
+{
+    static int done;
+    char ini[MAX_PATH];
+    if (done) return;
+    done = 1;
+    coop_ini(ini, sizeof ini);
+    xbox_input_dev_choice[0] = (int)GetPrivateProfileIntA("Coop", "p1_device", -1, ini);
+    xbox_input_dev_choice[1] = (int)GetPrivateProfileIntA("Coop", "p2_device", -1, ini);
+    if (xbox_input_dev_choice[0] < -1) xbox_input_dev_choice[0] = -1;
+    if (xbox_input_dev_choice[1] < -1) xbox_input_dev_choice[1] = -1;
+    if (xbox_input_dev_choice[0] == 0 && xbox_input_dev_choice[1] == 0) xbox_input_dev_choice[1] = -1;
+}
+static void coop_devices_save(void)
+{
+    char ini[MAX_PATH], v[16];
+    coop_ini(ini, sizeof ini);
+    snprintf(v, sizeof v, "%d", xbox_input_dev_choice[0]); WritePrivateProfileStringA("Coop", "p1_device", v, ini);
+    snprintf(v, sizeof v, "%d", xbox_input_dev_choice[1]); WritePrivateProfileStringA("Coop", "p2_device", v, ini);
+    tt_dbg("[OPTIONS] co-op devices: player 1 %d, player 2 %d\n", xbox_input_dev_choice[0], xbox_input_dev_choice[1]);
+}
+/* each frame (twotowers_manual.c, the controller read): two players' input while a co-op game wants a human player 2 */
+void tt_coop_input_sync(void)
+{
+    int two;
+    coop_devices_load();
+    two = tt_coop_active() && !tt_coop_setting(CO_BOT) && !getenv("TT_COOP_PAD2SCRIPT");
+    if (two != xbox_input_two_players) {
+        xbox_input_two_players = two;
+        tt_dbg("[COOPDEV] input as %s (devices: player 1 %d, player 2 %d)\n", two ? "two players" : "one player", xbox_input_dev_choice[0], xbox_input_dev_choice[1]);
+    }
+}
+/* a player's device in words: what is chosen, and (automatic) what that is now */
+static void dev_text(int pl, char *out, int n)
+{
+    int c = xbox_input_dev_choice[pl], now = xbox_InputPlayerDevice(pl);
+    char nm[80];
+    if (c < 0) {
+        if (!xbox_input_two_players) snprintf(out, n, "Automatic");   /* (outside a co-op game every device is player 1's) */
+        else if (now > 0) { xbox_InputDeviceName(now - 1, nm, sizeof nm); snprintf(out, n, "Automatic (%s)", nm); }
+        else snprintf(out, n, pl == xbox_InputKeyboardPort() ? "Automatic (Keyboard & Mouse)" : "Automatic (none connected)");
+    } else if (c == 0) snprintf(out, n, "Keyboard & Mouse");
+    else if (c > xbox_InputDeviceCount()) snprintf(out, n, "Controller %d (not connected)", c);
+    else { xbox_InputDeviceName(c - 1, nm, sizeof nm); snprintf(out, n, "%d: %s", c, nm); }
+}
+/* the choices go round: automatic, the keyboard and mouse, each controller connected (not the other player's) */
+static void dev_change(int pl, int d)
+{
+    int vals[12], nv = 0, i, k, cur = xbox_input_dev_choice[pl], hi = xbox_InputDeviceCount();
+    if (hi < 1) hi = 1;   /* (a controller can be chosen ahead of plugging it in) */
+    if (hi > 8) hi = 8;
+    vals[nv++] = -1;
+    vals[nv++] = 0;
+    for (k = 1; k <= hi; k++) vals[nv++] = k;
+    if (cur > hi && nv < 12) vals[nv++] = cur;   /* (one chosen, unplugged since) */
+    for (i = 0; i < nv && vals[i] != cur; i++) ;
+    if (i == nv) i = 0;
+    i = (i + d + nv) % nv;
+    if (vals[i] > 0 && vals[i] == xbox_input_dev_choice[pl ^ 1]) i = (i + d + nv) % nv;   /* (not the other player's controller) */
+    xbox_input_dev_choice[pl] = vals[i];
+    if (vals[i] == 0 && xbox_input_dev_choice[pl ^ 1] == 0) xbox_input_dev_choice[pl ^ 1] = -1;   /* (the keyboard is one player's) */
+    coop_devices_save();
+}
 
 static const char *s_hub[4] = { "General Options", "Display Options", "Controls", "Co-op Options" };
 /* Co-op Options: on the front end's Options, and the pause menu's only in a co-op game */
@@ -254,7 +345,8 @@ static void marker(int cx, int cy, int ring)
 static const Row *rows(int *n)
 {
     if (s_page == PG_DISPLAY) { *n = NROWS(s_display); return s_display; }
-    if (s_page == PG_COOP || s_page == PG_COOPMENU) { *n = NROWS(s_coop); return s_coop; }
+    if (s_page == PG_COOPMENU) { *n = NROWS(s_coop); return s_coop; }
+    if (s_page == PG_COOP) { coop_devices_load(); *n = NROWS(s_coop_page); return s_coop_page; }
     if (s_page == PG_CONTROLS) {
         if (!s_nctl) {   /* the settings, then a row per action, then Reset */
             int i;
@@ -338,7 +430,13 @@ static void draw_page(void)
             int y = ROW_Y0 + (i - s_top) * ROW_STEP, sel = i == s_sel, k;
             int cnt = w->kind >= K_BIND ? 0 : opt_count(w->gfx), cur = w->kind >= K_BIND ? 0 : opt_get(w->gfx);
             text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
-            if (w->kind == K_BIND) {
+            if (w->kind == K_DEV) {
+                char v[120];
+                dev_text(w->gfx, v, sizeof v);
+                text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
+                text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, v);
+                text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
+            } else if (w->kind == K_BIND) {
                 /* its keys, and (a button) the controller's button for it */
                 char v[96];
                 if (sel && s_cap == 1) snprintf(v, sizeof v, "Press a key...  (Esc: cancel, Delete: clear)");
@@ -477,6 +575,7 @@ static void change(const Row *w, int d)
         return;
     }
     if (w->kind == K_RESET) return;
+    if (w->kind == K_DEV) { dev_change(w->gfx, d); move_sound(); return; }
     cnt = opt_count(w->gfx); cur = opt_get(w->gfx); v = cur + d;
     if (cnt <= 0) return;
     if (w->kind == K_CYCLE) v = (v + cnt) % cnt;
@@ -497,7 +596,7 @@ static void activate(const Row *w)
     } else if (w->kind == K_RESET) {
         xbox_BindResetAll();
         sound(0xA9D, -1.0f);
-    } else if (w->kind == K_CYCLE) change(w, 1);
+    } else if (w->kind == K_CYCLE || w->kind == K_DEV) change(w, 1);
 }
 /* taking a key: the first key or mouse button to go down (Esc cancels,
  * Delete clears the action's keys); then nothing until every one is let go */
@@ -684,6 +783,7 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
             return 1;
         }
         if (w->kind == K_RESET) { if (x < 330) activate(w); return 1; }
+        if (w->kind == K_DEV) { if (x >= s_colx[0] - 20) change(w, x < s_colx[0] + 6 ? -1 : 1); return 1; }
         cnt = opt_count(w->gfx);
         if (w->kind == K_COLS) {
             for (k = 0; k < cnt && k < 3; k++)

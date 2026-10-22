@@ -981,7 +981,13 @@ static void p1_script(XState *st)
         else if (!strcmp(c, "RUP")) st->Gamepad.sThumbRY = 32767; else if (!strcmp(c, "RDOWN")) st->Gamepad.sThumbRY = -32767;   /* (the right stick: the aim's pitch) */
         else if (!strcmp(c, "SHOT")) {   /* a frame dump: <smoke dir from TT_P1SCRIPT_SHOTDIR>\p1s_<from>.bmp, once */
             static DWORD done[64]; if (!done[i] && getenv("TT_P1SCRIPT_SHOTDIR")) { char pth[300]; extern void xbox_PresentDumpRequest(const char *path); done[i] = 1;
-                snprintf(pth, sizeof pth, "%s\\p1s_%lu.bmp", getenv("TT_P1SCRIPT_SHOTDIR"), (unsigned long)ev[i].a); xbox_PresentDumpRequest(pth);
+                snprintf(pth, sizeof pth,
+#if defined(_WIN32)
+                         "%s\\p1s_%lu.bmp",
+#else
+                         "%s/p1s_%lu.bmp",
+#endif
+                         getenv("TT_P1SCRIPT_SHOTDIR"), (unsigned long)ev[i].a); xbox_PresentDumpRequest(pth);
                 tt_dbg("[P1SCRIPT] shot %s (screen %u, menu state %u item %u, co-op %d)\n", pth, G32(FE_SCREEN), G32(MM_OBJ + 0x10), G32(MM_OBJ + 0x14), tt_coop_menu_on); }
             continue; }
         st->dwPacketNumber += 0x100000u * (i + 1);   /* (the game sees a change) */
@@ -1037,8 +1043,12 @@ static void pad_filter(unsigned long port, XState *st)
          * work with mouse steering on. Likewise aiming takes the stick only
          * for a key's or mouse button's ranged button, not the controller's LT */
         extern volatile int xbox_input_kb_lstick, xbox_input_kb_lt;
-        int kb_aim = s_aim_on && p->bAnalogButtons[6] > 30 && xbox_input_kb_lt;
-        if (s_steer_on && !kb_aim && xbox_input_kb_lstick && p->sThumbLY > 3000) {
+        /* (1.9.6, co-op) with two players' input the keyboard and mouse are one player's (Co-op Options' devices):
+         * the mouse steers, aims and clicks for that pad only, the other's controller keeps its own stick */
+        extern volatile int xbox_input_two_players; extern int xbox_InputKeyboardPort(void);
+        int kbm = !xbox_input_two_players || (int)port == xbox_InputKeyboardPort();
+        int kb_aim = kbm && s_aim_on && p->bAnalogButtons[6] > 30 && xbox_input_kb_lt;
+        if (kbm && s_steer_on && !kb_aim && xbox_input_kb_lstick && p->sThumbLY > 3000) {
             float m = p->sThumbLY / 32767.0f;
             if (m > 1.0f) m = 1.0f;
             s_fwd_tick = GetTickCount() | 1;
@@ -1072,7 +1082,7 @@ static void pad_filter(unsigned long port, XState *st)
                 }
             }
         }
-        if (inj) {
+        if (inj && kbm) {
             static unsigned nlog;
             if (mouse_log() && nlog++ < 400) tt_dbg("[MOUSE] pad port %lu: +%05X (packet %08X)\n", port, inj, st->dwPacketNumber);
             p->wButtons |= (uint16_t)(inj & 0xFFFF);
@@ -1085,7 +1095,7 @@ static void pad_filter(unsigned long port, XState *st)
         st->dwPacketNumber += s_inj_serial << 20;
     }
     if (port == 0 && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too */
-        extern unsigned long xbox_InputGetState(unsigned long port, void *state);
+        extern DWORD xbox_InputGetState(DWORD port, void *state);
         XState s2; int k;
         if (xbox_InputGetState(1, &s2) == 0) {
             st->Gamepad.wButtons |= s2.Gamepad.wButtons;

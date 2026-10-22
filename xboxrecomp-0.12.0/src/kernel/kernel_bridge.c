@@ -42,6 +42,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
+#include <wchar.h>   /* (co-op: wcsstr, TT_SKIPMOVIES; macOS) */
 extern const char *recomp_cgetenv(const char *name);
 #define getenv(n) recomp_cgetenv(n)
 

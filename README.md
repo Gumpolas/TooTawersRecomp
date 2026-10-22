@@ -1,6 +1,4 @@
-# The Two Towers Recompiled v1.9.5
-
-> **This fork adds local couch co-op: two players on one PC, one shared camera. See [COOP.md](COOP.md).** Everything below is the port's own README for 1.9.4.
+# The Two Towers Recompiled v1.9.6
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -10,16 +8,16 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9.5-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9.5-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9.5-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
-| `TwoTowers-Recompiled-v1.9.5-source.zip` | Source code |
+| `TwoTowers-Recompiled-v1.9.6-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9.6-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9.6-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
+| `TwoTowers-Recompiled-v1.9.6-source.zip` | Source code |
 
 
 **Ultra textures, GameCube compatibility pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.9.4 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
+Updating from 1.9.5 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
 
 ## What the port adds
 
@@ -32,7 +30,33 @@ Updating from 1.9.4 or earlier: unpack over your old folder, or into a new one a
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
+- **Couch co-op** *(new, alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. Made by [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
+
+## What's new in 1.9.6
+
+### Couch co-op (alpha)
+Co-op was made by **[Volverine-Dude](https://github.com/Volverine-Dude)** in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork and is now part of the main release, on top of 1.9.5. Thank you!
+
+- **Two players on one PC** play the story levels together on one shared camera. Each has their own hero, controller, weapons, health, ammo, experience and upgrades.
+- **Starting:** Main menu > **Co-op** > New Game or Load Game; then each player picks a hero (player 2 can't take player 1's).
+- **A hero who goes down** comes back beside the other after a wait. Both down is a game over.
+- **After a level:** each player's stats and shop in turn, then the save. Player 2's experience and purchases are saved with his hero.
+- **Co-op Options** (Options, and the pause menu in a co-op game): Difficulty (Easy, Normal, Expert), Player Icons ("P1" / "P2" over the heroes), Camera Zoom (the camera zooms out as the heroes part), P2 Teleport, and P2 Bot (the game plays player 2).
+- **New in this release, on top of the fork:**
+  - **Each player's device** (Options > Co-op Options > P1 Device / P2 Device): Automatic, Keyboard & Mouse, or any controller connected. With one controller, player 1 takes the keyboard and mouse and player 2 the controller; with two, one each. The mouse steers and aims only for the keyboard's player.
+  - **Pickups: Double** (default): each hero can take a health or ammo pickup once.
+  - Co-op works on Linux and macOS too (its settings were not read there).
+
+See `COOP.md` for the details.
+
+### Fixes
+- **Upgrade screen at high frame rates:** the points count down at the same speed at any frame rate. Above 60 fps the count, and the purchase sound playing with it, were cut short.
+
+## Tested (1.9.6)
+- Linux (OpenGL): co-op in Weathertop and Balin's Tomb with the P2 Bot and with scripted input for player 2 -- both heroes, the P1/P2 markers and the two-player HUD; player 2 on the keyboard (port 2) while player 1 stays still; Double pickups (player 2 refilled twice from one pickup); the Co-op Options page with the new rows.
+- Windows, Linux and macOS builds compile.
+- Not tested by hand: a second physical controller, Windows play, the macOS build on a Mac.
 
 ## What's new in 1.9.5
 
@@ -135,6 +159,7 @@ Known issues
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
+    - Co-op (1.9.6) is an alpha: head markers are dimmed, not hidden, behind walls (Direct3D 11 only); the P2 Bot can get stuck (the lake before the Gates of Moria's boss) and has trouble with the Watcher's tentacles.
     - Widescreen is experimental: a few full-screen effects may not line up at the edges.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.

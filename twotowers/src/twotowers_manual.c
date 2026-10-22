@@ -7,6 +7,11 @@
  */
 #define RECOMP_GENERATED_CODE
 #include "recomp/gen/recomp_funcs.h"
+#if defined(_WIN32)
+typedef unsigned long tt_dword;
+#else
+typedef uint32_t tt_dword;
+#endif
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
@@ -18,6 +23,7 @@
 #define __declspec(x)
 #define __stdcall
 #define _stricmp strcasecmp
+#define _strnicmp strncasecmp
 #endif
 void tt_dbg(const char *fmt, ...);
 int tt_dbg_on(void);
@@ -283,7 +289,7 @@ static void tt_main_tick(void)
     {   /* (research) TT_COOP_SHOPDUMP=dir: while a shop is up (screen 10), every second the save data 0x4AB000-0x4AD000
          * (all hero records) and the front end 0x4AD050-0x4B9050 to <dir>/s<n>.bin, logged with the hero byte: where a
          * bought upgrade is kept */
-        extern __declspec(dllimport) unsigned long __stdcall GetTickCount(void); extern uint32_t coop_rec_addr;
+        extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); extern uint32_t coop_rec_addr;
         const char *dir = getenv("TT_COOP_SHOPDUMP"); static uint32_t last; static int n;
         if (dir && MEM32(0x4AD050u) == 10 && n < 400 && GetTickCount() - last >= 1000u) {
             extern void *fopen(const char *, const char *); extern size_t fwrite(const void *, size_t, size_t, void *); extern int fclose(void *); extern int sprintf(char *, const char *, ...);
@@ -316,7 +322,7 @@ static void tt_main_tick(void)
         static int sl = -1; static uint8_t l21 = 0xEE, l69 = 0xEE;
         if (sl < 0) sl = !getenv("TT_COOP_SNDLOG");
         if (sl && (MEM8(0x43BD21u) != l21 || MEM8(0x43BD69u) != l69)) {
-            extern __declspec(dllimport) unsigned long __stdcall GetTickCount(void);
+            extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void);
             tt_dbg("[SNDFLAG] t %lu screen %u: fade [43BD21] %u -> %u, [43BD69] %u -> %u, level [1BB2A4] %d\n", GetTickCount(), MEM32(0x4AD050u), l21, MEM8(0x43BD21u), l69, MEM8(0x43BD69u), (int32_t)MEM32(0x1BB2A4u));
             l21 = MEM8(0x43BD21u); l69 = MEM8(0x43BD69u);
         }
@@ -876,7 +882,7 @@ void sub_0004E890(void)
     if (coop_cam_zoom > 1.001f && (MEM32(0x4AD050u) == 6 || MEM32(0x4AD050u) == 8)) {   /* gameplay only */
         extern int tt_in_scene(void);
         float f = MEMF(esp + 4), deg = f > 3.2f ? 57.29578f : 1.0f, r = f / deg, r2 = 2.0f * atanf(tanf(0.5f * r) * coop_cam_zoom);
-        if (getenv("TT_COOP_CAMLOG")) { extern __declspec(dllimport) unsigned long __stdcall GetTickCount(void); static uint32_t lt; if ((uint32_t)GetTickCount() - lt > 3000) { lt = (uint32_t)GetTickCount(); tt_dbg("[COOPCAM] SetPerspective fov %.3f (%s) in scene %d, from %06X\n", f, deg > 1.5f ? "degrees" : "radians", tt_in_scene(), MEM32(esp)); } }
+        if (getenv("TT_COOP_CAMLOG")) { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); static uint32_t lt; if ((uint32_t)GetTickCount() - lt > 3000) { lt = (uint32_t)GetTickCount(); tt_dbg("[COOPCAM] SetPerspective fov %.3f (%s) in scene %d, from %06X\n", f, deg > 1.5f ? "degrees" : "radians", tt_in_scene(), MEM32(esp)); } }
         if (!tt_in_scene() && r > 0.1f && r < 2.5f) { if (r2 > 2.6f) r2 = 2.6f; MEMF(esp + 4) = r2 * deg; coop_persp_fov[0] = f; coop_persp_fov[1] = r2 * deg; }
     }
     /* the shape chosen now (the settings overlay can change it in game) */
@@ -1425,11 +1431,6 @@ void sub_00117AD0(void)
  * runtime's Windows definitions, which clash with this file's) */
 typedef struct { uint32_t dwPacketNumber; struct { uint16_t wButtons; uint8_t bAnalogButtons[8];
     int16_t sThumbLX, sThumbLY, sThumbRX, sThumbRY; } Gamepad; } XBOX_INPUT_STATE;
-#if defined(_WIN32)
-typedef unsigned long tt_dword;
-#else
-typedef uint32_t tt_dword;
-#endif
 extern tt_dword xbox_InputGetState(tt_dword port, XBOX_INPUT_STATE *s);
 extern void xbox_InputSetVibrationDeferred(tt_dword port, unsigned short l, unsigned short r);
 extern void sub_0016989A_gen(void);
@@ -1518,7 +1519,9 @@ void sub_001695FB(void)   /* XInputGetCapabilities: an Xbox controller, every in
     eax = 0;
     esp += 12;
 }
-void sub_001697D9(void)   /* XInputGetState: {DWORD dwPacketNumber; XINPUT_GAMEPAD Gamepad} */
+/* (co-op) the co-op's XInputGetState (below) answers player 2's virtual pad
+ * and calls this for the others */
+static void sub_001697D9_hle(void)   /* XInputGetState: {DWORD dwPacketNumber; XINPUT_GAMEPAD Gamepad} */
 {
     static uint32_t packet;
     static uint8_t last[18];
@@ -2331,9 +2334,10 @@ void sub_000977A0(void)
     sub_000977A0_gen();
 }
 
-/* testing: TT_GSLOG=1 -- an actor's ground snap (0x000821F0, thiscall, 4 args) moving it more than 0.3 */
+/* testing: TT_GSLOG=1 -- an actor's ground snap (0x000821F0, thiscall, 4 args) moving it more than 0.3
+ * (called from the co-op's wrapper of 0x000821F0, below) */
 extern void sub_000821F0_gen(void);
-void sub_000821F0(void)
+static void sub_000821F0_log(void)
 {
     static int on = -1;
     uint32_t obj = ecx, a1 = MEM32(esp + 4), a2 = MEM32(esp + 8), a3 = MEM32(esp + 12), a4 = MEM32(esp + 16);
@@ -2432,7 +2436,7 @@ void sub_000B9530(void)
  * TT_PROBE_HP=n: 10 s after the player first appears, set his health to n (once). */
 #include <stdlib.h>
 extern void tt_dbg(const char *fmt, ...);
-extern __declspec(dllimport) unsigned long __stdcall GetTickCount(void);
+extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void);
 static int coop_probe_on(void) { static int on = -1; if (on < 0) on = getenv("TT_COOPPROBE") != NULL; return on; }
 static uint32_t coop_ms(void) { static uint32_t t0; uint32_t t = GetTickCount(); if (!t0) t0 = t; return t - t0; }
 
@@ -2812,12 +2816,11 @@ static void coop_p2_weapon_ids(const char *when)
         MEM32(w + 0x2F4) = id;
     }
 }
-static uint32_t coop_now(void) { extern __declspec(dllimport) unsigned long __stdcall GetTickCount(void); return (uint32_t)GetTickCount(); }
+static uint32_t coop_now(void) { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); return (uint32_t)GetTickCount(); }
 
 /* -- player 2's pad -- */
 typedef struct { uint16_t buttons; uint8_t analog[8]; int16_t lx, ly, rx, ry; } CoopPad;
 typedef struct { uint32_t packet; CoopPad pad; } CoopHostState;
-extern unsigned long xbox_InputGetState(unsigned long port, void *state);
 static struct { uint32_t a, b; char what[8]; int v; } coop_ps[256];
 static int coop_psn = -1;
 static void coop_pad2(CoopPad *o)
@@ -2861,7 +2864,7 @@ static void coop_pad2(CoopPad *o)
         }
     } else {
         CoopHostState s;
-        if (xbox_InputGetState(1, &s) == 0) *o = s.pad;
+        if (xbox_InputGetState(1, (XBOX_INPUT_STATE *)&s) == 0) *o = s.pad;
     }
     if (getenv("TT_COOP_PAD2SEEK") && coop_p2 >= 0x10000u && coop_p2_t0) {   /* bot test: steer player 2 to his target and attack */
         extern void coop_seek(CoopPad *o); coop_seek(o);
@@ -3396,6 +3399,9 @@ extern void sub_001697D9_gen(void);
 void sub_001697D9(void)
 {
     uint32_t h = MEM32(esp + 4), st = MEM32(esp + 8);
+    {   /* (1.9.6) the devices: two players' input in a co-op game with a human player 2 (options.c) */
+        extern void tt_coop_input_sync(void); uint32_t sa = eax, sc = ecx, sd = edx, sp = esp;
+        tt_coop_input_sync(); eax = sa; ecx = sc; edx = sd; esp = sp; }
     if (h == 0xFEED0000u) {   /* (bot test, TT_COOP_P1PORT) player 1's idle pad on port 0: a pad at rest */
         uint32_t i; static uint32_t packet; MEM32(st) = ++packet; for (i = 4; i < 0x16; i += 2) MEM16(st + i) = 0;
         { extern void (*volatile xbox_pad_filter)(unsigned long port, void *st); if (xbox_pad_filter) xbox_pad_filter(0, (void *)XBOX_PTR(st)); }   /* (TT_P1SCRIPT_INPLAY scripts it) */
@@ -3421,7 +3427,7 @@ void sub_001697D9(void)
         /* player 1 down: his sticks and fight buttons held back, the rest kept (Start, Back, the D-pad, A: the pause menu).
          * At game over nothing is held back: the whole pad zeroed left "Replay mission / Exit to menu" deaf -- "Try
          * again freezes the game" in a playtest */
-        sub_001697D9_gen();
+        sub_001697D9_hle();
         if (!coop_is_gameover()) {
             uint16_t b = MEM16(st + 4); uint32_t i;
             MEM16(st + 4) = (uint16_t)(b & 0x003Fu);   /* d-pad, Start, Back */
@@ -3432,7 +3438,7 @@ void sub_001697D9(void)
     }
     if (getenv("TT_COOP_P1SEEK") && !coop_is_gameover() && coop_p2 && coop_p2_t0 && coop_first_char >= 0x10000u && h) {   /* player 1's pad (the only real handle; port record 2 here): zeroed while he is down; with TT_COOP_P1SEEK (bot test) his steering bot */
         CoopPad p; uint32_t i;
-        sub_001697D9_gen();
+        sub_001697D9_hle();
         memset(&p, 0, sizeof p); { extern int coop_hero_down(int); if (!coop_hero_down(0)) {
             const char *sv = getenv("TT_COOP_P1SEEK");
             if (sv && !strcmp(sv, "2")) {   /* (test) TT_COOP_P1SEEK=2: player 1 to the nearest living enemy as the P2 Bot steers (camera, pathmap route) */
@@ -3446,7 +3452,7 @@ void sub_001697D9(void)
         MEM16(st + 0xE) = (uint16_t)p.lx; MEM16(st + 0x10) = (uint16_t)p.ly; MEM16(st + 0x12) = 0; MEM16(st + 0x14) = 0;
         return;
     }
-    sub_001697D9_gen();
+    sub_001697D9_hle();
 }
 
 /* the game's pad poll: keep port 1's virtual device in place */
@@ -5229,12 +5235,38 @@ void tt_coop_note_actor(uint32_t a)
     }
 }
 
+static int coop_pick_kept(uint32_t pk);   /* (Pickups: Double, below) */
 /* once a second: where both are, and what port 1's record holds */
 void tt_coop_frame(void)
 {
     static uint32_t last; uint32_t now = coop_now(), p1 = MEM32(0x43B15Cu), r = COOP_PADREC(1);
     if (!coop_mode() || now - last < 1000) return;
     last = now;
+    if (getenv("TT_COOP_PICKTEST") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > 12000u && (now / 1000u) % 2u == 0) {
+        /* (testing, Pickups: Double) every 2 s player 2 is put on a health or ammo pickup (vtable 0x1748B0, +0x3F8 bit 2
+         * set: not yet gone), hurt and short of ammo, so his touches come */
+        /* (the pickups' objects found once, in all of memory; then only those looked at) */
+        static uint32_t pks[256]; static int npk = -1; static uint32_t lastpk; uint32_t va; int k;
+        if (npk < 0) {
+            static const uint32_t rgs[2][2] = { { 0x80000000u, 0x84000000u }, { 0x18B000u, 0x4000000u } }; int rg;
+            npk = 0;
+            for (rg = 0; rg < 2; rg++) for (va = rgs[rg][0]; va < rgs[rg][1] && npk < 256; va += 4) if (MEM32(va) == 0x1748B0u) pks[npk++] = va;
+            tt_dbg("[COOPPICK] test: %d pickup objects\n", npk);
+        }
+        for (k = 0; k < npk; k++) {
+            va = pks[k];
+            if (MEM32(va) == 0x1748B0u && ((MEM32(va + 0x3F8) & 2) || coop_pick_kept(va)) && MEMF(va + 0xF0) != 0.0f && va != lastpk) {
+                uint32_t a3[3]; float x = MEMF(va + 0xF0) + 0.2f, y = MEMF(va + 0xF4), z = MEMF(va + 0xF8);
+                memcpy(&a3[0], &x, 4); memcpy(&a3[1], &y, 4); memcpy(&a3[2], &z, 4);
+                if ((int32_t)MEM32(coop_p2 + 0x2FC) > 300) MEM32(coop_p2 + 0x2FC) = 300;
+                MEM16(coop_p2 + 0x304) = 3;
+                tt_dbg("[COOPPICK] test: player 2 put on pickup %08X (kind %u)\n", va, MEM32(va + 0x3D0));
+                tt_gcall(0x000865D0u, coop_p2, 3, a3);   /* (the character's SetPosition) */
+                lastpk = va;
+                break;
+            }
+        }
+    }
     if (coop_p2 && p1 >= 0x10000u)
         tt_dbg("[COOP2] t %6u  P1 %.2f %.2f %.2f hp %d | P2 %.2f %.2f %.2f hp %d +49C %08X | port1 h %08X stick %.2f %.2f held %08X\n",
                now - coop_p2_t0, MEMF(p1 + 0xF0), MEMF(p1 + 0xF4), MEMF(p1 + 0xF8), (int32_t)MEM32(p1 + 0x2FC),
@@ -5599,12 +5631,43 @@ void sub_000922A0(void)
  * his context: observed, player 2 Legolas 1 -> 41 -> 60 from two quivers, player 1 unchanged.
  * TT_COOP_NOP2PICKUP: off. TT_COOP_PICKLOG: each touch, by whom. */
 extern void sub_0008FC60_gen(void);
+static struct { uint32_t pk, at; } coop_pick[64]; static int coop_npick;   /* (Pickups: Double) the pickups touched once */
+static int coop_pick_find(uint32_t pk) { int k; for (k = 0; k < coop_npick; k++) if (coop_pick[k].pk == pk) return k; return -1; }
+static int coop_pick_kept(uint32_t pk) { return coop_pick_find(pk) >= 0; }
 void sub_0008FC60(void)
 {
     extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void);
     uint32_t ty = MEM32(esp + 4) & 0xFFFFu, nd = MEM32(esp + 8), src = nd >= 0x10000u ? MEM32(nd + 4) : 0, pk = ecx; int sw = 0; int16_t a1 = 0, a2 = 0;
     if (ty == 13u && coop_mode() == 3 && coop_p2 >= 0x10000u && src == coop_p2 && !getenv("TT_COOP_NOP2PICKUP")) sw = tt_coop_enter_ctx();
     if (ty == 13u && coop_p2 >= 0x10000u) { a1 = (int16_t)MEM16(coop_first_char + 0x304); a2 = (int16_t)MEM16(coop_p2 + 0x304); }
+    if (ty == 13u && coop_mode() && coop_p2 >= 0x10000u && pk >= 0x10000u && tt_coop_setting(5)) {
+        /* (1.9.6) Pickups: Double (Co-op Options) -- a health or ammo pickup (+0x3F8 bit 2: not yet taken) gives its
+         * refill the first time it is touched (0x0008F960, as the touch would, its flags and effect kept) and stays, for one
+         * more touch 1.5 s later at the soonest, which goes as usual. A touch comes every frame while a hero stands
+         * on it: those in between are dropped (or the same hero had both refills at once, observed) */
+        int k, r = coop_pick_find(pk);
+        if (r >= 0) {
+            if (coop_now() - coop_pick[r].at < 1500u) { if (sw) tt_coop_leave(); esp += 12; return; }
+            coop_pick[r] = coop_pick[--coop_npick];   /* (its second: as usual, below) */
+        } else if (MEM8(pk + 0x3F8) & 2) {
+            if (coop_npick >= 64) { for (k = 1; k < 64; k++) coop_pick[k - 1] = coop_pick[k]; coop_npick--; }
+            coop_pick[coop_npick].pk = pk; coop_pick[coop_npick].at = coop_now(); coop_npick++;
+            {   /* 0x0008F960 gives the refill, then marks the pickup taken (+0x3F8: bit 1 on, bit 2 off, then 4) and
+                 * lets go of its effect (+0x3F4, through 0x0008E1B0): both kept as they were, so it is still there
+                 * and still sends touches */
+                uint32_t fl = MEM32(pk + 0x3F8), fx = MEM32(pk + 0x3F4);
+                MEM32(pk + 0x3F4) = 0;
+                tt_gcall(0x0008F960u, pk, 0, NULL);
+                MEM32(pk + 0x3F8) = fl; MEM32(pk + 0x3F4) = fx;
+            }
+            if (getenv("TT_COOP_PICKLOG")) tt_dbg("[COOPPICK] pickup %08X: its first touch (by %s) refills and it stays for a second | hp P1 %d, P2 %d | ammo P1 %d -> %d, P2 %d -> %d\n", pk,
+                src == coop_p2 ? "P2" : src == coop_first_char ? "P1" : "other", (int32_t)MEM32(coop_first_char + 0x2FC), (int32_t)MEM32(coop_p2 + 0x2FC),
+                a1, (int16_t)MEM16(coop_first_char + 0x304), a2, (int16_t)MEM16(coop_p2 + 0x304));
+            if (sw) tt_coop_leave();
+            esp += 12;   /* (ret 8) */
+            return;
+        }
+    }
     sub_0008FC60_gen();
     if (sw) tt_coop_leave();
     if (ty == 13u && coop_p2 >= 0x10000u && getenv("TT_COOP_PICKLOG")) { static unsigned k; if (k++ < 100)
@@ -6407,7 +6470,7 @@ extern void sub_000813F0_gen(void); void sub_000813F0(void) { int sw = tt_coop_e
 extern void sub_00081440_gen(void); void sub_00081440(void) { int sw = tt_coop_enter(ecx, 0x00081440u); tt_coop_p1_pre(ecx, 0x00081440u); if (coop_probe_on()) coop_count(16); sub_00081440_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000815F0_gen(void); void sub_000815F0(void) { int sw = tt_coop_enter(ecx, 0x000815F0u); tt_coop_p1_pre(ecx, 0x000815F0u); if (coop_probe_on()) coop_count(17); sub_000815F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00081C60_gen(void); void sub_00081C60(void) { int sw = tt_coop_enter(ecx, 0x00081C60u); tt_coop_p1_pre(ecx, 0x00081C60u); if (coop_probe_on()) coop_count(18); sub_00081C60_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_000821F0_gen(void); void sub_000821F0(void) { int sw = tt_coop_enter(ecx, 0x000821F0u); tt_coop_p1_pre(ecx, 0x000821F0u); if (coop_probe_on()) coop_count(19); sub_000821F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+extern void sub_000821F0_gen(void); void sub_000821F0(void) { int sw = tt_coop_enter(ecx, 0x000821F0u); tt_coop_p1_pre(ecx, 0x000821F0u); if (coop_probe_on()) coop_count(19); sub_000821F0_log(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00082670_gen(void); void sub_00082670(void) { int sw = tt_coop_enter(ecx, 0x00082670u); tt_coop_p1_pre(ecx, 0x00082670u); if (coop_probe_on()) coop_count(20); sub_00082670_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000826A0_gen(void); void sub_000826A0(void) { int sw = tt_coop_enter(ecx, 0x000826A0u); tt_coop_p1_pre(ecx, 0x000826A0u); if (coop_probe_on()) coop_count(21); sub_000826A0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00082D60_gen(void); void sub_00082D60(void) { int sw = tt_coop_enter(ecx, 0x00082D60u); tt_coop_p1_pre(ecx, 0x00082D60u); if (coop_probe_on()) coop_count(22); sub_00082D60_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
@@ -6559,5 +6622,58 @@ void coop_level_reset(void)
     coop_npool = 0;
     coop_extra_done = 0;
     coop_ammo_dirty = 1;
+    coop_npick = 0;
 }
 int tt_coop_p2_gauge_on(void) { extern int coop_p2rec_ok; return coop_mode() == 3 && coop_p2 >= 0x10000u && coop_p2rec_ok; }   /* (e3hud.c: player 2's gauge outline) */
+
+/* testing: TT_UPGXP=n -- the hero's experience set to n as the upgrade screen works out his points (0x000D2630, cdecl hero index) */
+extern void sub_000D2630_gen(void);
+void sub_000D2630(void)
+{
+    static int xp = -2;
+    if (xp == -2) { const char *e = getenv("TT_UPGXP"); xp = e ? atoi(e) : -1; }
+    if (xp >= 0) { uint32_t h = MEM32(esp + 4); float f = (float)xp; uint32_t w; memcpy(&w, &f, 4); if (h < 8) MEM32(0x4AB628u + h * 0x348u) = w; }
+    sub_000D2630_gen();
+}
+
+/* (1.9.5) The upgrade screen's points counting down after a purchase, at any
+ * frame rate. The screen's update (0x0006E830, thiscall) takes 100 off the
+ * points it shows (+0x5A4) each frame until they reach the hero's points,
+ * with the purchase sound playing until then -- 6000 a second at the menus'
+ * 60 fps, and ten times that at 600 fps: the count and its sound over in a
+ * blink. Here the count goes at 6000 a second whatever the frame rate.
+ * TT_NO_UPGCOUNTFIX=1: as before. */
+extern void sub_0006E830_gen(void);
+void sub_0006E830(void)
+{
+    static int off = -1;
+    static long long fq, last; static double acc;
+    uint32_t self = ecx;
+    int32_t d0, d1, target, allowed;
+    long long now;
+    double ms;
+    if (off < 0) off = getenv("TT_NO_UPGCOUNTFIX") != NULL;
+    if (off || self < 0x10000u) { sub_0006E830_gen(); return; }
+    d0 = (int32_t)MEM32(self + 0x5A4u);
+    sub_0006E830_gen();
+    d1 = (int32_t)MEM32(self + 0x5A4u);
+    {
+        extern __declspec(dllimport) int __stdcall QueryPerformanceCounter(long long *);
+        extern __declspec(dllimport) int __stdcall QueryPerformanceFrequency(long long *);
+        if (!fq) QueryPerformanceFrequency(&fq);
+        QueryPerformanceCounter(&now);
+        ms = last && fq ? (double)(now - last) * 1000.0 / (double)fq : 1000.0 / 60.0;
+        last = now;
+        if (ms > 100.0 || ms < 0.0) ms = 1000.0 / 60.0;
+    }
+    if (d1 >= d0 || d0 - d1 > 100) { acc = 0; return; }   /* (not counting down this frame) */
+    target = (int32_t)MEM32(0x4AB67Cu);                     /* (the hero's points: what the count goes to) */
+    acc += ms * 6.0;                                        /* 6000 points a second */
+    allowed = (int32_t)acc; acc -= allowed;
+    {
+        int32_t v = d0 - allowed;
+        if (v < target) v = target;
+        if (v > d0) v = d0;
+        MEM32(self + 0x5A4u) = (uint32_t)v;
+    }
+}
