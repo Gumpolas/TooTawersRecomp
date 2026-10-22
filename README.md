@@ -54,6 +54,7 @@ See `COOP.md` for the details.
 - **Upgrade screen at high frame rates:** the points count down at the same speed at any frame rate. Above 60 fps the count, and the purchase sound playing with it, were cut short.
 
 ## Tested (1.9.6)
+ Windows: couch co-op played/tested through the first seven levels and Tower of Orthanc.
 - Linux (OpenGL): co-op in Weathertop and Balin's Tomb with the P2 Bot and with scripted input for player 2 -- both heroes, the P1/P2 markers and the two-player HUD; player 2 on the keyboard (port 2) while player 1 stays still; Double pickups (player 2 refilled twice from one pickup); the Co-op Options page with the new rows.
 - Windows, Linux and macOS builds compile.
 - Not tested by hand: a second physical controller, Windows play, the macOS build on a Mac.
