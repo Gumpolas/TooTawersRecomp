@@ -30,13 +30,13 @@ Updating from 1.9.5 or earlier: unpack over your old folder, or into a new one a
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
-- **Couch co-op** *(new, alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. Made by [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
+- **Couch co-op** *(new, alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 
 ## What's new in 1.9.6
 
 ### Couch co-op (alpha)
-Co-op was made by **[Volverine-Dude](https://github.com/Volverine-Dude)** in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork and is now part of the main release, on top of 1.9.5. Thank you!
+Co-op was in development for the main port when [Volverine-Dude](https://github.com/Volverine-Dude) published his own implementation in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork. 1.9.6 brings the two efforts together on top of 1.9.5, and this release is thanks in large part to his work. Thank you!
 
 - **Two players on one PC** play the story levels together on one shared camera. Each has their own hero, controller, weapons, health, ammo, experience and upgrades.
 - **Starting:** Main menu > **Co-op** > New Game or Load Game; then each player picks a hero (player 2 can't take player 1's).

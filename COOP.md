@@ -4,10 +4,10 @@ Two players on one PC play the story levels together. They share one camera, and
 hero, controller, weapons, health, ammo, experience and upgrades. There is no networking: one game runs, with a
 second hero in it.
 
-Co-op is part of The Two Towers Recompiled from **1.9.6**. It was made by
-[Volverine-Dude](https://github.com/Volverine-Dude) in the
-[TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork (on 1.9.4) and brought into the
-main release on top of 1.9.5, with player 2's device choice and double pickups added. It is still an **alpha**: see
+Co-op is part of The Two Towers Recompiled from **1.9.6**. It was in development for the main port when
+[Volverine-Dude](https://github.com/Volverine-Dude) published his own implementation in the
+[TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork (on 1.9.4). 1.9.6 brings the two
+together on top of 1.9.5, thanks in large part to his work, with player 2's device choice and double pickups added. It is still an **alpha**: see
 [Known issues](#known-issues).
 
 It needs nothing beyond the port itself: the release build has co-op in it, and it plays from the same game (the US
@@ -89,9 +89,8 @@ The `TT_COOP_*` environment variables set up test situations (each one is descri
 
 MIT, as the port (see [LICENSE](LICENSE)); xboxrecomp's licenses are in `xboxrecomp-0.12.0/`.
 
-- **Co-op by [Volverine-Dude](https://github.com/Volverine-Dude)**, first released in
-  [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop); everything above is that work unless
-  marked 1.9.6.
+- **Co-op: thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude)**, whose
+  [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork much of it builds on.
 - [The Two Towers Recompiled](https://github.com/Gumpolas/TooTawersRecomp) by Gumpolas: the port.
 - [xboxrecomp](https://github.com/sp00nznet/xboxrecomp) by sp00nznet: the recompilation toolkit it uses.
 - [Co-op Anything](https://github.com/cranebeaker/coop-anything): the playbook this work followed.

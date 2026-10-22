@@ -2510,8 +2510,9 @@ twotowers/src/twotowers_manual.c (1.9.5)
     clock).
 
 -- 1.9.6: couch co-op ---------------------------------------------------
-Co-op was made by Volverine-Dude (github.com/Volverine-Dude/TooTawersRecomp-coop,
-on 1.9.4) and is brought in on 1.9.5; see COOP.md for what it does. The
+Co-op is thanks in part to Volverine-Dude, whose fork (github.com/
+Volverine-Dude/TooTawersRecomp-coop, on 1.9.4) is brought together with the
+port's own co-op work on 1.9.5; see COOP.md for what it does. The
 toolkit changes it makes, and those made bringing it in:
 
 kernel/nv2a_d3d11.inc, nv2a_d3d11_shaders.h (co-op, Volverine-Dude)
