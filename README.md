@@ -46,7 +46,7 @@ Co-op was in development for the main port when [Volverine-Dude](https://github.
 - **New in this release, on top of the fork:**
   - **Each player's device** (Options > Co-op Options > P1 Device / P2 Device): Automatic, Keyboard & Mouse, or any controller connected. With one controller, player 1 takes the keyboard and mouse and player 2 the controller; with two, one each. The mouse steers and aims only for the keyboard's player.
   - **Pickups: Double** (default): each hero can take a health or ammo pickup once.
-  - Co-op support on Linux and macOS (experimental) too (its settings were not read there).
+  - Co-op support for Linux and macOS (experimental) (settings for those platforms were not read there).
 
 See `COOP.md` for the details.
 
