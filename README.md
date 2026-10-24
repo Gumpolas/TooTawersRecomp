@@ -41,8 +41,8 @@ Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one a
 ### Versus
 Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
 
-- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. Each plays another level's music.
-- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only ones: Three versus exclusive hero's added, the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. Each cries out in his own voice.
+- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
+- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only exclusive hero's added: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. Each cries out in his own voice.
 - **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
 - **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
 - **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
