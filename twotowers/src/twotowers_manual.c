@@ -3034,8 +3034,7 @@ static int coop_bot_route(uint32_t hero, float gx, float gy, float *wx, float *w
     static short prev[B * B]; static int q[B * B];
     uint32_t pm = coop_pathmap(hero); float ox, oy, sz; int c0, r0, c1, r1, qh = 0, qt = 0, i, found = 0, path[B * 2], np = 0, k;
     *wx = gx; *wy = gy;
-    if (!pm || getenv("TT_COOP_BOTNOPATH") || !getenv("TT_COOP_BOTPATHMAP")) return 0;   /* (the pathmap route only on request now: player 2 follows
-                                                                                       * player 1's footsteps, coop_steps -- the owner asked for no AI pathfinding) */
+    if (!pm || getenv("TT_COOP_BOTNOPATH") || getenv("TT_COOP_BOTFOOTSTEPS")) return 0;   /* (TT_COOP_BOTFOOTSTEPS: player 1's footsteps instead, coop_steps -- tried, the owner went back to this) */
     ox = MEMF(pm + 0x48u); oy = MEMF(pm + 0x4Cu); sz = (float)(int)MEM32(pm + 0x68u);
     c0 = (int)floorf((MEMF(hero + 0xF0) - ox) / sz); r0 = (int)floorf((MEMF(hero + 0xF4) - oy) / sz);
     c1 = (int)floorf((gx - ox) / sz); r1 = (int)floorf((gy - oy) / sz);
@@ -3685,7 +3684,7 @@ static void coop_bot_follow(BotView *v, CoopPad *o)
         coop_bot_steer(&s_bk, o, v->p2, v->bx + (side ? -uy : uy) * 3.0f + ux, v->by + (side ? ux : -ux) * 3.0f + uy, 0.2f);
     } else {   /* player 1's footsteps, from the nearest on (coop_steps); none near, or past the last: straight to the goal */
         float sx, sy;
-        if (!getenv("TT_COOP_BOTPATHMAP") && v->d1 > 4.0f && coop_steps_next(v->bx, v->by, &sx, &sy)) {
+        if (getenv("TT_COOP_BOTFOOTSTEPS") && v->d1 > 4.0f && coop_steps_next(v->bx, v->by, &sx, &sy)) {
             static uint32_t sl; if (getenv("TT_COOP_STEPSLOG") && v->now - sl > 1000u) { sl = v->now; tt_dbg("[P2BOT] following player 1's footsteps: to %.1f %.1f (%d kept), player 1 %.1f away\n", sx, sy, coop_steps_n, v->d1); }
             coop_bot_steer(&s_bk, o, v->p2, sx, sy, 0.3f);
         } else if (coop_bot_go(&s_bk, o, v->p2, gx, gy, 2.0f) <= 2.0f) s_bot_following = 0;   /* (at the goal: in the circle) */
@@ -4693,13 +4692,31 @@ void coop_kill_by(int who, uint32_t enemy)
  * enemy credited 3 times). Now, when the enemy's last attacker (+0x4BC, set by the hit, see sub_000849F0) is player
  * 2, the game's own call runs in his context, once, and the health watch gives nothing (TT_COOP_OLDKILL: as before).
  * TT_COOP_KILLLOG: every call. */
+/* who did each enemy's last damage (its health lowered by his hit: 0x849F0 below; 1 player 1, 2 player 2, 0 another): the kill
+ * award goes to the player whose damage took it to 0 (the owner asked: "a check on who did the damage that lead the enemy to
+ * have 0 hp"); the last attacker (+0x4BC) is set by any hit, damage or not, and not by every damage */
+static struct { uint32_t e, t; int who; } coop_lastdmg[64]; static int coop_lastdmg_i;
+static void coop_lastdmg_note(uint32_t e, int who)
+{
+    int i; for (i = 0; i < 64 && coop_lastdmg[i].e != e; i++) ;
+    if (i == 64) { i = coop_lastdmg_i; coop_lastdmg_i = (coop_lastdmg_i + 1) & 63; }
+    coop_lastdmg[i].e = e; coop_lastdmg[i].who = who; coop_lastdmg[i].t = coop_now();
+}
+static int coop_lastdmg_now(uint32_t e) { int i; for (i = 0; i < 64; i++) if (coop_lastdmg[i].e == e) return coop_now() - coop_lastdmg[i].t < 20u; return 0; }   /* (noted this frame) */
+static int coop_lastdmg_who(uint32_t e)   /* -1: not known (none within 5 s) */
+{
+    int i; for (i = 0; i < 64; i++) if (coop_lastdmg[i].e == e && coop_now() - coop_lastdmg[i].t < 5000u) return coop_lastdmg[i].who;
+    return -1;
+}
 extern void sub_00099D40_gen(void);
 void sub_00099D40(void)
 {
     extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void); extern uint32_t coop_rec_addr;
     uint32_t en = MEM32(esp + 4), ra = MEM32(esp), la = en >= 0x10000u ? MEM32(en + 0x4BC) : 0; int sw = 0, mine;
     float b1 = coop_rec_addr ? MEMF(coop_rec_addr + 0x90) : 0, a1;
-    mine = coop_mode() == 3 && coop_p2 >= 0x10000u && ra == 0x00085711u && la == coop_p2 && coop_rec_addr && !getenv("TT_COOP_OLDKILL") && !getenv("TT_COOP_NOP2EXP");
+    {   int lw = en >= 0x10000u && !getenv("TT_COOP_KILLBYLAST") ? coop_lastdmg_who(en) : -1;   /* (whose damage brought it to 0; not known: its last attacker) */
+        mine = coop_mode() == 3 && coop_p2 >= 0x10000u && ra == 0x00085711u && (lw >= 0 ? lw == 2 : la == coop_p2) && coop_rec_addr && !getenv("TT_COOP_OLDKILL") && !getenv("TT_COOP_NOP2EXP");
+        if (lw >= 0 && (lw == 2) != (la == coop_p2) && coop_mode() == 3) { static int n; if (n++ < 20) tt_dbg("[COOPEXP] kill of %08X '%s': the last damage player %d's, its last attacker %s -- the award to player %d\n", en, coop_nm(en), lw, la == coop_p2 ? "player 2" : la == coop_first_char ? "player 1" : "another", mine ? 2 : 1); } }
     if (mine) { sw = tt_coop_enter_ctx(); b1 = MEMF(coop_rec_addr + 0x90); coop_p2pop_until = coop_now() + 2600; }
     sub_00099D40_gen();
     a1 = coop_rec_addr ? MEMF(coop_rec_addr + 0x90) : 0;
@@ -4783,7 +4800,11 @@ static void coop_threat_track(void)   /* once a frame: health lost since last fr
         uint32_t e = coop_chars[i]; int32_t hp; int k = coop_thr_idx(e);
         if (k < 0 || MEM32(e + 0x114) != 3) continue;
         hp = (int32_t)MEM32(e + 0x2FC);
+        if (getenv("TT_COOP_TESTWEAK") && hp > 5) { MEM32(e + 0x2FC) = 5; hp = 5; coop_thr[k].hp = 5; }   /* (bot test: every enemy at 5 health, any blow a kill) */
         if (hp < coop_thr[k].hp && coop_thr[k].lastw && now - coop_thr[k].lastt < 1500) coop_thr[k].th[coop_thr[k].lastw - 1] += (float)(coop_thr[k].hp - hp);
+        if (hp < coop_thr[k].hp && !coop_lastdmg_now(e)) {   /* (a drop no hit noted this frame -- the game's pending damage, taken later: its attacker +0x3F4, else the last attacker) */
+            uint32_t a = MEM32(e + 0x3F4); if (a != coop_first_char && a != coop_p2) a = MEM32(e + 0x4BC);
+            if (a && (a == coop_first_char || a == coop_p2)) coop_lastdmg_note(e, a == coop_p2 ? 2 : 1); }
         if (coop_thr[k].hp > 0 && hp <= 0 && coop_thr[k].lastw && now - coop_thr[k].lastt < 3000) { extern void coop_kill_by(int who, uint32_t enemy); coop_kill_by(coop_thr[k].lastw, e); }   /* who killed it */
         coop_thr[k].hp = hp; coop_thr[k].th[0] *= f; coop_thr[k].th[1] *= f;
     }
@@ -8229,6 +8250,9 @@ void sub_000849F0(void)
         static uint32_t tdb[0x180]; int tdf = troll && getenv("TT_COOP_TROLLDIFF");   /* (research) the troll's fields a hit changes */
         if (tdf) { int q; for (q = 0; q < 0x180; q++) tdb[q] = MEM32(v + 4 * q); }
         sub_000849F0_gen();
+        if (v >= 0x10000u && coop_mode() == 3 && (int32_t)MEM32(v + 0x2FC) < (int32_t)hp0 && MEM32(v + 0x114) == 3) {   /* (its health lowered by this hit: whose) */
+            uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
+            coop_lastdmg_note(v, p2hit ? 2 : (src == coop_first_char || own == coop_first_char || (!src && MEM32(v + 0x4BC) == coop_first_char)) ? 1 : 0); }
         if (tdf) { int q, m = 0; static int n; if (n++ < 40) { tt_dbg("[TROLLDIFF] hit from %s (state %u, block mask +428 %08X +42C %08X, inputs +3E0 %08X +3E4 %08X) changed:", coop_nm(MEM32(msg + 4)), MEM32(v + 0x408), MEM32(v + 0x428), MEM32(v + 0x42C), MEM32(v + 0x3E0), MEM32(v + 0x3E4));
             for (q = 0; q < 0x180 && m < 24; q++) if (MEM32(v + 4 * q) != tdb[q]) { tt_dbg(" +%X %08X->%08X", 4 * q, tdb[q], MEM32(v + 4 * q)); m++; } tt_dbg("\n"); } }
         if (troll) {   /* (research) every hit on the troll: its state then, the source, the health change */
@@ -8404,6 +8428,7 @@ static void coop_pdmg_frame(void)
         if (coop_pdmg[i].dmg > 0 && now > 0 && now > coop_pdmg[i].hp - coop_pdmg[i].dmg && MEM32(v) == 0x1741C0u) {
             int32_t nw = now - coop_pdmg[i].dmg; if (nw < 1) nw = 1;
             MEM32(v + 0x2FC) = (uint32_t)nw; MEM32(v + 0x4BC) = coop_pdmg[i].sh; MEM32(v + 0x3F0) = 0;   /* (its pending damage gone: not taken twice later) */
+            coop_lastdmg_note(v, coop_pdmg[i].sh == coop_p2 ? 2 : 1);
             if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s (state %u) not taken by the game: health %d -> %d here%s\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), MEM32(v + 0x408), now, nw, nw == 1 && now - coop_pdmg[i].dmg < 1 ? " (a killing blow: left at 1)" : "");
         } else if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s: taken by the game (health %d -> %d, damage %d)\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), coop_pdmg[i].hp, now, coop_pdmg[i].dmg);
         coop_pdmg[i].v = 0;
