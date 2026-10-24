@@ -34,6 +34,7 @@ Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one a
 - **Versus** *(new)*: player 1 against player 2, one on one, on every level but Westfold, with any hero; see [COOP.md](COOP.md).
 - **Achievements** *(new)*: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
+- **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
 ## What's new in 1.9.7
 
@@ -41,7 +42,7 @@ Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one a
 Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
 
 - **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. Each plays another level's music.
-- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only ones: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. Each cries out in his own voice.
+- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only ones: Three versus exclusive hero's added, the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. Each cries out in his own voice.
 - **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
 - **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
 - **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
@@ -53,7 +54,7 @@ See `COOP.md` for the details.
 ### Also new
 - **Achievements:** 47, for the story and for Versus, noted in the corner as you earn them and listed on the F10 panel's **Achievements** page. They're kept in `achievements.txt`, only on your PC.
 - **Impossible difficulty:** past Expert, any enemy's second blow fells you. It's right of Expert on the New Game's difficulty screen, or in Options > General Options, and works in co-op too.
-- **F10 > More:** colour grading (Cinema, Rich, Shadow) and its amount, movie sharpness, rumble strength, pause or mute while the window is in the background, and achievements on or off.
+- **F10 > More:** colour grading (Cinema, Rich, Shadow) and its amount, movie sharpness, pause or mute while the window is in the background, and achievements on or off.
 - **F9** hides the HUD; **F8** (or F12, Print Screen) saves a screenshot in the `Screenshots` folder beside the game.
 
 ### Co-op
@@ -67,7 +68,7 @@ See `COOP.md` for the details.
 
 ## Tested (1.9.7)
 - Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left (not yet checked after a full match).
-- Windows: Versus played by hand on the developer's PC.
+- Windows: Versus played by hand on the author's PC.
 - Windows, Linux and macOS builds compile.
 - Not tested: the macOS build on a Mac.
 
