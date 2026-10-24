@@ -31,8 +31,8 @@ Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one a
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
 - **Couch co-op** *(alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
-- **Versus** *(new)*: player 1 against player 2, one on one, on every level but Westfold, with any hero; see [COOP.md](COOP.md). More modes characters and maps to come in future updates. 
-- **Achievements** *(new)*: earned as you play, listed on the F10 panel's Achievements page.
+- **Versus** *(new/alpha)*: player 1 against player 2, one on one, on every level but Westfold, with any hero; see [COOP.md](COOP.md). More modes characters and maps to come in future updates. 
+- **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
