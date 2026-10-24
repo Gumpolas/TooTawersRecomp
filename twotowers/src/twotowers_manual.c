@@ -7784,6 +7784,20 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
     static unsigned done_lv = ~0u; static uint32_t t0; const char *w = tt_coop_p2_char_now; int ty, k, i;
     {   static uint32_t chk; static unsigned clv; if (getenv("TT_COOP_MACHLOG") && coop_twin >= 0x10000u && clv != coop_level_n) { if (!chk) chk = coop_now() | 1; else if (coop_now() - chk > 3000u) { uint32_t c2 = MEM32(coop_twin + 0x494), c1 = MEM32(coop_first_char + 0x494);
         clv = coop_level_n; chk = 0; tt_dbg("[MACH] 3 s on: twin anim %08X brain %08X | player 1 anim %08X brain %08X\n", MEM32(coop_twin + 0x3F8), c2 >= 0x10000u ? MEM32(c2 + 0x50) : 0, MEM32(coop_first_char + 0x3F8), c1 >= 0x10000u ? MEM32(c1 + 0x50) : 0); } } }
+    if (getenv("TT_COOP_BOWLOG")) {   /* (research) every 2 s: the bows on each player's model (instance +0x3D0: weapon list +0x74, count +0x174), their bone and transform */
+        static uint32_t lt; int pl;
+        if (coop_now() - lt > 2000u) { lt = coop_now();
+            for (pl = 0; pl < 2; pl++) { uint32_t c = pl ? coop_twin : coop_first_char, inst = c >= 0x10000u ? MEM32(c + 0x3D0) : 0, n, j;
+                if (inst < 0x10000u) continue;
+                n = MEM32(inst + 0x174); if (n > 32u) n = 0;
+                tt_dbg("[BOWLOG] %s yaw? +F0 %.2f %.2f %.2f, %u attached:", pl ? "P2" : "P1", MEMF(c + 0xF0), MEMF(c + 0xF4), MEMF(c + 0xF8), n);
+                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0; tt_dbg(" %s@%u", h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM16(inst + 0x78 + 8 * j)); }
+                tt_dbg("\n");
+                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, q;
+                    if (m != 0x0834F2D4u) continue;
+                    tt_dbg("[BOWLOG]   bow on bone %u:", MEM16(inst + 0x78 + 8 * j));
+                    for (q = 0x20; q < 0x60; q += 4) tt_dbg(" %.3f", MEMF(o + q));
+                    tt_dbg(" | +90 %.2f %.2f %.2f\n", MEMF(o + 0x90), MEMF(o + 0x94), MEMF(o + 0x98)); } } } }
     if (done_lv == coop_level_n || coop_mode() != 3 || coop_twin < 0x10000u || coop_first_char < 0x10000u || !w || tt_vs_on() || getenv("TT_COOP_P1MACHINE")) return;
     ty = !_stricmp(w, "aragorn") ? 0 : !_stricmp(w, "legolas") ? 7 : !_stricmp(w, "gimli") ? 8 : -1;
     if (ty < 0) { done_lv = coop_level_n; return; }
@@ -7813,13 +7827,15 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     uint32_t vm = MEM32(esp + 4);
     coop_resolved = 0;
     unsigned mlk0 = coop_lkn; int mlog = getenv("TT_COOP_MACHLOG") && (!strcmp(name, "SetAnimMachine") || !strcmp(name, "SetBrainMachine"));
-    if (getenv("TT_COOP_WPNCMDLOG") && coop_p2_t0 && (!strcmp(name, "Activate") || !strcmp(name, "Deactivate") || !strcmp(name, "SetRenderable") || !strcmp(name, "AttachToBone"))) mlog = 2;   /* (research) the weapon commands in play */
+    if (getenv("TT_COOP_WPNCMDLOG") && coop_p2_t0 && (!strcmp(name, "Activate") || !strcmp(name, "Deactivate") || !strcmp(name, "SetRenderable") || !strcmp(name, "AttachToBone") || !strcmp(name, "SetRenderOffset"))) mlog = 2;   /* (research) the weapon commands in play */
     coop_in_attach = !strcmp(name, "AttachToBone");
     gen();
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
         unsigned q; tt_dbg("[%s] t %u @%s%s:", mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "");
         for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
             tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
+        if (!strcmp(name, "SetRenderOffset") && coop_lkn > mlk0) { uint32_t o = coop_lk[(coop_lkn - 1) & 63].obj; tt_dbg(" ->");
+            for (q = 0x20; q < 0x60 && o >= 0x10000u && o < 0x84000000u; q += 4) tt_dbg(" %.3f", MEMF(o + q)); tt_dbg(" (player %08X)", MEM32(0x43B15Cu)); }
         tt_dbg("\n"); }
     coop_in_attach = 0;
     if (!strcmp(name, "SetEnemyID") && coop_p2 >= 0x10000u && coop_p2 == coop_twin) coop_p2_own_type("a later @SetEnemyID");   /* (after the take-over the script's lookups of the player can land on him) */
@@ -7838,6 +7854,10 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     }
 }
 extern void sub_000A6770_gen(void); void sub_000A6770(void) { coop_replay(0x000A6770u, "SetEnemyID", sub_000A6770_gen); }
+extern void sub_000B2320_gen(void); void sub_000B2320(void) {
+    extern int coop_p2_skip_offset(void);
+    if (coop_p2_skip_offset()) { eax = 0; esp += 4; return; }   /* (player 2 Legolas' own: coop_p2_render_offset; cdecl, plain ret) */
+    coop_replay(0x000B2320u, "SetRenderOffset", sub_000B2320_gen); }
 extern void sub_000A0DB0_gen(void); void sub_000A0DB0(void) { coop_replay(0x000A0DB0u, "AttachToBone", sub_000A0DB0_gen); }
 extern void sub_000A5CE0_gen(void); void sub_000A5CE0(void) { coop_replay(0x000A5CE0u, "ObjectCollisionOn", sub_000A5CE0_gen); }
 extern void sub_000B1EF0_gen(void); void sub_000B1EF0(void) { coop_replay(0x000B1EF0u, "SetAlpha", sub_000B1EF0_gen); }
@@ -8868,6 +8888,34 @@ extern void sub_00092000_gen(void); void sub_00092000(void)
  * (coop_p2w); the rest is left. TT_COOP_P2TAKEALL: as before. */
 extern void sub_00085FB0_gen(void);
 static int coop_take_nested;   /* (player 2 Legolas' extra takes, below) */
+/* player 2 Legolas with his own moves (coop_own_machines): the draw and put-away below are his */
+static int coop_p2_draw_on(void)
+{
+    extern const char *tt_coop_p2_char_now;
+    return coop_p2 >= 0x10000u && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8)
+        && tt_coop_p2_char_now && !strcmp(tt_coop_p2_char_now, "legolas") && !getenv("TT_COOP_NOP2SLOTPICK") && !getenv("TT_COOP_NOP2DRAW");
+}
+/* each weapon's place on its bone: a matrix at +0x20..+0x5C, set by @SetRenderOffset (0xB2320) after each attach. Player 1
+ * Legolas' (TT_COOP_WPNCMDLOG at the Gates of Moria): the bow put away (0xA) the first below, in his hand the identity; his
+ * knives put away the second (weaponObj133) and third (134), in his hands the identity. Player 2's moves name the bow with
+ * nothing (no lookup) and the knives as player 1 Aragorn's dagger and bow, which lead to his bow copy: his put-away bow
+ * kept the identity and lay across his shoulders, and his drawn bow got a knife's (bot runs). So his @SetRenderOffset calls
+ * are skipped (sub_000B2320) and each of his takes sets the weapon's here. TT_COOP_NOP2OFFSET: as before */
+static const float coop_off_bow_away[16] = { 0.000f, -0.000f, -1.000f, 0, -0.996f, -0.087f, 0.000f, 0, -0.087f, 0.996f, -0.000f, 0, 0.800f, 0.200f, 0.000f, 1 };
+static const float coop_off_knife_away[2][16] = { { 0.122f, 0.993f, 0.000f, 0, 0.993f, -0.122f, -0.000f, 0, -0.000f, 0.000f, -1.000f, 0, -0.600f, -0.350f, 0.450f, 1 },
+                                                  { -0.000f, 1.000f, 0.000f, 0, 1.000f, 0.000f, -0.000f, 0, -0.000f, -0.000f, -1.000f, 0, -0.600f, -0.450f, 0.250f, 1 } };
+static const float coop_off_none[16] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+static void coop_p2_render_offset(uint32_t w, uint32_t sl)
+{
+    extern uint32_t coop_p2_bow(void); const float *m = coop_off_none; int k, q;
+    if (getenv("TT_COOP_NOP2OFFSET") || w < 0x10000u || MEM32(w) != 0x174980u) return;
+    if (sl == 0xAu) {
+        if (w == coop_p2_bow()) m = coop_off_bow_away;
+        else for (k = 0; k < coop_np2w; k++) if (coop_p2w[k] == w && coop_p2w_slot[k] >= 0 && coop_p2w_slot[k] <= 1) m = coop_off_knife_away[coop_p2w_slot[k]];
+    }
+    for (q = 0; q < 16; q++) MEMF(w + 0x20 + 4 * q) = m[q];
+}
+int coop_p2_skip_offset(void) { return !getenv("TT_COOP_NOP2OFFSET") && coop_p2_draw_on() && MEM32(0x43B15Cu) == coop_p2; }
 void sub_00085FB0(void)
 {
     uint32_t w = MEM32(esp + 4); int nested = coop_take_nested, after_bow_back = 0;
@@ -8982,7 +9030,9 @@ void sub_00085FB0(void)
                 tt_dbg("[TAG] slot %X %s (type %u) inst %08X res %08X -> tag %08X (out %08X):", sl2, nm[i], MEM32(who[i] + 0x2F0), inst, res, t, MEM32(tmp));
                 for (q = 0; q < 0x50 && t >= 0x10000u && t < 0x84000000u; q += 4) tt_dbg(" %08X", MEM32(t + q));
                 tt_dbg("\n"); } } }
-    sub_00085FB0_gen();
+    {   uint32_t fw = MEM32(esp + 4), fsl = MEM32(esp + 8); int mine = ecx == coop_p2 && coop_p2_draw_on();
+        sub_00085FB0_gen();
+        if (mine) coop_p2_render_offset(fw, fsl); }
     if (after_bow_back) { uint32_t a[2] = { 0, 0xAu }; extern uint32_t coop_p2_bow(void); a[0] = coop_p2_bow(); coop_take_nested = 1; tt_gcall(0x00085FB0u, coop_p2, 2, a); coop_take_nested = 0; }
 }
 extern void sub_00097A10_gen(void); void sub_00097A10(void) {
