@@ -7776,6 +7776,19 @@ static void coop_mev_note(int k)
 }
 extern void sub_000C71F0_gen(void); void sub_000C71F0(void) { coop_mev_note(0); sub_000C71F0_gen(); }
 extern void sub_000C7220_gen(void); void sub_000C7220(void) { coop_mev_note(1); sub_000C7220_gen(); }
+/* player 2's hand weapons drawn (+0x110 bit 0x20000, what @SetRenderable sets: 0x00052570). His copies start without it; with
+ * player 1's moves player 1's in-play @SetRenderable on his own (player 1 Legolas' knife weaponObj133) reached the copy of it
+ * and showed it; with his own hero's moves nothing names it: player 2 Aragorn's sword (a copy of player 1 Legolas' knife,
+ * 133b) was attached in his hand and not drawn (a playtest, +0x110 00017D40 in a bot run). So his own melee weapons for
+ * slots 0 and 1 (the hands) are drawn once he has his own moves, and at each take of one. TT_COOP_NOP2SHOW: off */
+void coop_p2_show_hands(uint32_t only)
+{
+    int k;
+    if (getenv("TT_COOP_NOP2SHOW")) return;
+    for (k = 0; k < coop_np2w; k++) { uint32_t q = coop_p2w[k], qh = q >= 0x10000u ? MEM32(q + 0x18) : 0, qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+        if ((only && q != only) || MEM32(q) != 0x174980u || coop_p2w_slot[k] < 0 || coop_p2w_slot[k] > 1 || qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) continue;
+        if (!(MEM32(q + 0x110) & 0x20000u)) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's %08X (slot %d) drawn\n", q, coop_p2w_slot[k]); MEM32(q + 0x110) |= 0x20000u; } }
+}
 static void coop_own_machines(void);
 void coop_own_machines_x(void) { coop_own_machines(); }
 static void coop_own_machines(void)   /* each frame (coop_place): once a level */
@@ -7794,10 +7807,10 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
                 for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0; tt_dbg(" %s@%u", h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM16(inst + 0x78 + 8 * j)); }
                 tt_dbg("\n");
                 for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, q;
-                    if (m != 0x0834F2D4u) continue;
-                    tt_dbg("[BOWLOG]   bow on bone %u:", MEM16(inst + 0x78 + 8 * j));
+                    if (m != 0x0834F2D4u && !getenv("TT_COOP_BOWLOGALL")) continue;
+                    tt_dbg("[BOWLOG]   %s (model %08X) on bone %u:", (const char *)XBOX_PTR(h), m, MEM16(inst + 0x78 + 8 * j));
                     for (q = 0x20; q < 0x60; q += 4) tt_dbg(" %.3f", MEMF(o + q));
-                    tt_dbg(" | +90 %.2f %.2f %.2f\n", MEMF(o + 0x90), MEMF(o + 0x94), MEMF(o + 0x98)); } } } }
+                    tt_dbg(" | +90 %.2f %.2f %.2f +110 %08X +124 %08X\n", MEMF(o + 0x90), MEMF(o + 0x94), MEMF(o + 0x98), MEM32(o + 0x110), MEM32(o + 0x124)); } } } }
     if (done_lv == coop_level_n || coop_mode() != 3 || coop_twin < 0x10000u || coop_first_char < 0x10000u || !w || tt_vs_on() || getenv("TT_COOP_P1MACHINE")) return;
     ty = !_stricmp(w, "aragorn") ? 0 : !_stricmp(w, "legolas") ? 7 : !_stricmp(w, "gimli") ? 8 : -1;
     if (ty < 0) { done_lv = coop_level_n; return; }
@@ -7809,7 +7822,7 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
             for (j = 0; j < coop_mevn[k]; j++) if (coop_mev[k][j].actor == a) {
                 uint32_t args[3] = { coop_mev[k][j].mach, coop_twin, coop_mev[k][j].num };
                 if (getenv("TT_COOP_MACHEVENT")) tt_gcall(k ? 0x000C7220u : 0x000C71F0u, 0x43C628u, 3, args);   /* (queued: never taken in play, observed) */
-                else if (!k) MEM32(coop_twin + 0x3F8) = args[0];   /* (what 0x00061060, the character's setter, does) */
+                else if (!k) { MEM32(coop_twin + 0x3F8) = args[0]; coop_p2_show_hands(0); }   /* (what 0x00061060, the character's setter, does) */
                 else { uint32_t c2 = MEM32(coop_twin + 0x494); if (c2 >= 0x10000u) MEM32(c2 + 0x50) = args[0]; }   /* (the brain machine: component +0x50) */
                 tt_dbg("[COOP2] player 2 (%s) gets the %s machine %08X of %s (type %d; player 1's %08X)\n", w, k ? "brain" : "animation", args[0],
                        (const char *)XBOX_PTR(MEM32(a + 0x18)), ty, k ? 0 : MEM32(coop_first_char + 0x3F8));
@@ -8661,7 +8674,16 @@ void tt_coopprobe_count_dump(unsigned frames)
 extern void sub_000524E0_gen(void); void sub_000524E0(void) { int sw = tt_coop_enter(ecx, 0x000524E0u); tt_coop_p1_pre(ecx, 0x000524E0u); if (coop_probe_on()) coop_count(0); sub_000524E0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00052520_gen(void); void sub_00052520(void) { int sw = tt_coop_enter(ecx, 0x00052520u); tt_coop_p1_pre(ecx, 0x00052520u); if (coop_probe_on()) coop_count(1); sub_00052520_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00052550_gen(void); void sub_00052550(void) { int sw = tt_coop_enter(ecx, 0x00052550u); tt_coop_p1_pre(ecx, 0x00052550u); if (coop_probe_on()) coop_count(2); sub_00052550_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_00052570_gen(void); void sub_00052570(void) { int sw = tt_coop_enter(ecx, 0x00052570u); tt_coop_p1_pre(ecx, 0x00052570u); if (coop_probe_on()) coop_count(3); sub_00052570_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+extern void sub_00052570_gen(void); void sub_00052570(void) {
+    if (getenv("TT_COOP_SHOWLOG")) { int k; for (k = 0; k < coop_np2w; k++) if (coop_p2w[k] == ecx) { static int n; if (n++ < 30) tt_dbg("[SHOWLOG] t %u %08X (slot %d) renderable %u, from %08X %08X %08X %08X, player %08X\n",   /* (research) who shows or hides player 2's weapons */
+        coop_now(), ecx, coop_p2w_slot[k], MEM8(esp + 4), MEM32(esp), MEM32(esp + 0x10), MEM32(esp + 0x20), MEM32(esp + 0x30), MEM32(0x43B15Cu)); } }
+    if (!MEM8(esp + 4) && MEM32(esp) == 0x000B1E39u && coop_twin >= 0x10000u && MEM32(0x43B15Cu) == coop_twin && coop_first_char >= 0x10000u
+        && MEM32(coop_twin + 0x3F8) != MEM32(coop_first_char + 0x3F8) && !getenv("TT_COOP_NOP2SHOW")) {   /* player 2's own hero's moves hiding one of his hand
+        * weapons (@SetRenderable in his event): they name player 1's list, and in player 1 Legolas' level player 2 Aragorn's moves
+        * hid his sword, the copy of Legolas' knife (a bot run: from 0xB1E39, player the twin) -- not hidden (thiscall, ret 4) */
+        int k, hand = 0; for (k = 0; k < coop_np2w; k++) if (coop_p2w[k] == ecx && coop_p2w_slot[k] >= 0 && coop_p2w_slot[k] <= 1) hand = 1;
+        if (hand) { static int n; if (n++ < 4) tt_dbg("[COOPWEAPON] player 2's moves hide his %08X: kept drawn\n", ecx); esp += 8; return; } }
+    int sw = tt_coop_enter(ecx, 0x00052570u); tt_coop_p1_pre(ecx, 0x00052570u); if (coop_probe_on()) coop_count(3); sub_00052570_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000525A0_gen(void); void sub_000525A0(void) { int sw = tt_coop_enter(ecx, 0x000525A0u); tt_coop_p1_pre(ecx, 0x000525A0u); if (coop_probe_on()) coop_count(4); sub_000525A0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00061230_gen(void); void sub_00061230(void) { if (coop_probe_on()) coop_count(5); sub_00061230_gen(); }
 extern void sub_00061240_gen(void); void sub_00061240(void) { if (coop_probe_on()) coop_count(6); sub_00061240_gen(); }
@@ -9031,6 +9053,7 @@ void sub_00085FB0(void)
                 for (q = 0; q < 0x50 && t >= 0x10000u && t < 0x84000000u; q += 4) tt_dbg(" %08X", MEM32(t + q));
                 tt_dbg("\n"); } } }
     {   uint32_t fw = MEM32(esp + 4), fsl = MEM32(esp + 8); int mine = ecx == coop_p2 && coop_p2_draw_on();
+        if (ecx == coop_p2 && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8) && fsl < 8u) { extern void coop_p2_show_hands(uint32_t only); coop_p2_show_hands(fw); }
         sub_00085FB0_gen();
         if (mine) coop_p2_render_offset(fw, fsl); }
     if (after_bow_back) { uint32_t a[2] = { 0, 0xAu }; extern uint32_t coop_p2_bow(void); a[0] = coop_p2_bow(); coop_take_nested = 1; tt_gcall(0x00085FB0u, coop_p2, 2, a); coop_take_nested = 0; }
