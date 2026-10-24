@@ -47,7 +47,7 @@ Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
 - **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
 - **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
 - **Devices:** as for co-op (Options > Co-op Options > P1 Device / P2 Device). With P2 Bot on, the game fights player 1.
-- **Its own menu background, results screen and horns** in the `versus` folder (`menu_bg.bmp`, `results_bg.bmp`, `fight.wav`, `match_win.wav`); add `round_win.wav` for a round won, or replace any of them with your own.
+- **Its own menu background, results screen and sounds** in the `versus` folder (`menu_bg.bmp`, `results_bg.bmp`, `fight.wav`, `match_win.wav`); add `round_win.wav` for a round won, or replace any of them with your own.
 
 See `COOP.md` for the details.
 
