@@ -61,7 +61,7 @@ See `COOP.md` for the details.
 - **Camera:** playing the levels with Camera Zoom (Options > Co-op Options) on **Normal** or **Wide** is recommended, so both heroes stay in view.
 
 ### Fixes
-- **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 30 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
+- **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 60 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
 - **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
   
 ## Tested (1.9.7)
