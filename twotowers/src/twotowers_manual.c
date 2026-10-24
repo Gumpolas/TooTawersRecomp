@@ -432,10 +432,15 @@ static void tt_main_tick(void)
          * runtime record (0x4AB598 + byte * 0x348, which holds the save's block for him from +0x64): what he earns and
          * buys is his hero's, and the game's own save keeps it. Retail heroes only (an extra hero has no slot there).
          * TT_COOP_NOP2SCREENS: off. */
-        static int ph, p2set, p2shoplog; static uint8_t hb1; static int hb2s;
+        static int ph, p2set, p2shoplog, p1shopseen; static uint8_t hb1; static int hb2s;
+        /* (a shop is done only once it has been seen open, its +4 at 0: the shop object keeps the last shop's +4 -- 7, the
+         * save -- and from the second level of a session player 1's shop was taken as done the moment it came up: player
+         * 2's state in it, player 1 unable to buy, player 2's own never shown -- a playtest; the log: "player 1's upgrades
+         * done" with the screen's first frame. Cleared below as player 1's shop comes) */
         extern int tt_heroes_retail_byte(const char *skin); extern const char *tt_coop_p2_char_now; extern uint8_t *coop_p2_state_w(void);
         uint32_t fe = MEM32(C), o9 = C + 0x9474u, o10 = C + 0x9A78u;
-        if (fe == 6 || fe == 1 || fe == 4) ph = p2set = p2shoplog = 0;
+        if (fe == 6 || fe == 1 || fe == 4) ph = p2set = p2shoplog = p1shopseen = 0;
+        if (ph == 2 && fe == 10 && MEM32(o10 + 4) == 0u) p1shopseen = 1;
         { extern int tt_coop_post_ph; tt_coop_post_ph = ph; }   /* (for menus.c: 1 = player 2's stats screen) */
         extern int tt_coop_post_on(void);
         if (tt_coop_post_on() && !getenv("TT_COOP_NOP2SCREENS")) {
@@ -460,7 +465,10 @@ static void tt_main_tick(void)
                 /* each player's shop gets the state his own stats screen left (coop_post_keep; a playtest: "post level stats
                  * showed a level up but not in p1 upgrade shop") */
                 coop_post_keep(2, hb2s); coop_post_keep(-1, hb1);
-            } else if (ph == 2 && fe == 10 && MEM32(o10 + 0x3A0) == 4u) {
+                if (getenv("TT_COOP_TESTSTALE")) { MEM32(o10 + 4) = 7u; tt_dbg("[COOPPOST] test: the shop's +4 left at 7, as after a save\n"); }   /* (bot test: the second level's case in one) */
+                MEM32(o10 + 4) = 0u;   /* (the shop's next screen cleared before player 1's shop: the shop keeps the last one's, 7 after a save, and
+                                        * does not clear it as it opens -- a bot run with it left at 7: his shop stayed at the save question) */
+            } else if (ph == 2 && p1shopseen && fe == 10 && MEM32(o10 + 0x3A0) == 4u) {
                 /* player 1's shop: no "Do you want to save your game?" (its dialog state +0x3A0 = 4, opened when he says he is
                  * finished): closed at once and the shop leaves as its Yes does (0x0006FF57: +4 next screen, the fade state +0x57C
                  * = 3, +0x580 = 1, 0x000C35E0), but for player 2's shop (his Continue goes straight there; player 2's shop
@@ -471,12 +479,12 @@ static void tt_main_tick(void)
                 MEM32(o10 + 0x3A0) = 0; MEM32(o10 + 4) = 10u; MEM32(o10 + 0x57C) = 3u; MEM32(o10 + 0x580) = 0x3F800000u;
                 MEM8(0x4AB69Du) = (uint8_t)hb2s; ph = 3; tt_dbg("[COOPPOST] player 1's upgrades done (no save question): player 2's (audio fade flag %u)\n", MEM8(0x43BD21u));
                 coop_post_keep(-2, hb2s);
-            } else if (ph == 2 && fe == 10 && MEM32(o10 + 4) == 7u) {
+            } else if (ph == 2 && p1shopseen && fe == 10 && MEM32(o10 + 4) == 7u) {
                 MEM8(0x4AB69Du) = (uint8_t)hb2s; MEM32(o10 + 4) = 10u; ph = 3; tt_dbg("[COOPPOST] player 1's upgrades done: player 2's\n");
                 coop_post_keep(-2, hb2s);
             } else if (ph == 3 && fe == 10 && MEM32(o10 + 4) == 0u && !p2shoplog) {
                 p2shoplog = 1; tt_dbg("[COOPPOST] player 2's shop open: audio fade flag [43BD21] %u\n", MEM8(0x43BD21u));
-            } else if (ph == 3 && fe == 10 && (MEM32(o10 + 4) == 7u || MEM32(o10 + 4) == 1u)) {   /* (7: save; 1: no save, to the map) */
+            } else if (ph == 3 && p2shoplog && fe == 10 && (MEM32(o10 + 4) == 7u || MEM32(o10 + 4) == 1u)) {   /* (7: save; 1: no save, to the map) */
                 uint32_t j; uint8_t *s2 = coop_p2_state_w() + 0x400;
                 for (j = 0; j < 0x348u; j += 4) *(uint32_t *)(s2 + j) = MEM32(0x4AB598u + (uint32_t)hb2s * 0x348u + j);
                 MEM8(0x4AB69Du) = hb1; ph = 4;
