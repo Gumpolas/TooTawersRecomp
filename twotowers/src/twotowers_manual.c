@@ -7809,10 +7809,11 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     uint32_t vm = MEM32(esp + 4);
     coop_resolved = 0;
     unsigned mlk0 = coop_lkn; int mlog = getenv("TT_COOP_MACHLOG") && (!strcmp(name, "SetAnimMachine") || !strcmp(name, "SetBrainMachine"));
+    if (getenv("TT_COOP_WPNCMDLOG") && coop_p2_t0 && (!strcmp(name, "Activate") || !strcmp(name, "Deactivate") || !strcmp(name, "SetRenderable") || !strcmp(name, "AttachToBone"))) mlog = 2;   /* (research) the weapon commands in play */
     coop_in_attach = !strcmp(name, "AttachToBone");
     gen();
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
-        unsigned q; tt_dbg("[MACH] @%s%s:", name, coop_replaying ? " (replay)" : "");
+        unsigned q; tt_dbg("[%s] t %u @%s%s:", mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "");
         for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
             tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
         tt_dbg("\n"); }
@@ -8818,6 +8819,25 @@ void sub_00085FB0(void)
         if (n++ < 60) tt_dbg("[TAKE] %s takes %08X '%s' arg2 %08X | model res %08X key %08X | record model %08X texture %08X | id +2F4 %X\n",
             ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
             m, m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
+    }
+    {   /* player 2 with his own hero's animation machine (coop_own_machines) takes his weapons by the slot: that hero's
+         * moves attach "weapon n into slot n" from the actor's list, and the twin's list is player 1's: player 2 Legolas
+         * putting his bow away took player 1 Aragorn's dagger and bow (answered with his bow copies) into slots 0 and 1, and
+         * slot 2 -- where the bow sits, 0xA being slot 2 with the hand bit 8 -- was never filled again: the bow stayed in his
+         * hand (a playtest). So slot 0-3: his own melee weapon built for that slot (coop_p2w_slot); 8 and up (the bow hand):
+         * his ranged copy (the one-bow rule below picks which). TT_COOP_NOP2SLOTPICK: as before */
+        uint32_t sl = MEM32(esp + 8);
+        if (coop_p2 >= 0x10000u && ecx == coop_p2 && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8)
+            && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2SLOTPICK")) {
+            int k; uint32_t pick = 0;
+            for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                int ranged = qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u;
+                if (sl < 8u ? (!ranged && (uint32_t)coop_p2w_slot[k] == sl) : ranged) pick = q; }
+            if (pick && pick != w) {
+                { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2 (own moves): slot %X takes his %08X for %08X\n", sl, pick, w); }
+                MEM32(esp + 4) = pick; w = pick;
+            }
+        }
     }
     {   /* one bow for player 2: he has a copy of each of player 1's ranged weapon objects (two at the Gates of Moria), and
          * with his own hero's animation machine (coop_own_machines) Legolas took both into his bow hand (0xA): two bows
