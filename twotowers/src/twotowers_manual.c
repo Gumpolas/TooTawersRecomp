@@ -6332,9 +6332,12 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
         MEM32(e + 0x20) = w ? 0xFF30C0FFu : 0xFFFFA040u;   /* (ABGR, the markers' colours) player 1 blue, player 2 amber */
         MEM8(e + 0x24) = 1;
         {   /* out of the widescreen HUD's groups, as the head markers (boxes 2, 3): a dot near player 1's sword or a gauge joined its
-             * group and moved it (a playtest). The renderer sees HUD x and frame y (the HUD's 0.93 about 240) */
-            extern volatile float xbox_hud_excl_more[4][5]; float r = sz[w] * 0.5f + 4.0f, fyc = 240.0f + (hy[w] - 240.0f) * 0.93f;
-            xbox_hud_excl_more[2 + w][0] = hx[w] - r; xbox_hud_excl_more[2 + w][1] = hx[w] + r; xbox_hud_excl_more[2 + w][2] = fyc - r; xbox_hud_excl_more[2 + w][3] = fyc + r; xbox_hud_excl_more[2 + w][4] = 1.0f; }
+             * group and moved it (a playtest). The renderer sees frame x and y: the HUD's 0.93 about 240 in y and about 0.92 about 320 in
+             * x (a piece of the dot seen at 195.0 for HUD x 184.7, 175.0 for 162.3: RECOMP_HUDEDGELOG). With the box at the HUD x a dot
+             * away from the middle fell out of its box, made a group of its own and was moved with the edges: off its enemy by a
+             * third of the way to the edge (a playtest: 543 px right of the middle for an orc 305 px right) */
+            extern volatile float xbox_hud_excl_more[4][5]; float r = sz[w] * 0.5f + 8.0f, fyc = 240.0f + (hy[w] - 240.0f) * 0.93f, fxc = 320.0f + (hx[w] - 320.0f) * 0.92f;
+            xbox_hud_excl_more[2 + w][0] = fxc - r; xbox_hud_excl_more[2 + w][1] = fxc + r; xbox_hud_excl_more[2 + w][2] = fyc - r; xbox_hud_excl_more[2 + w][3] = fyc + r; xbox_hud_excl_more[2 + w][4] = 1.0f; }
         coop_el_draw(e);
     }
 }
