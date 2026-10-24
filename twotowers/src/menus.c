@@ -2458,7 +2458,8 @@ void tt_menus_tick(void)
         if (diff_on && !tt_coop_menu_go && fe == 4 && G32(MM_OBJ + 0x10) == 3 && G32(MM_OBJ + 4) != 6 && !s_phase) {
             if (!t_diff) t_diff = GetTickCount() | 1;
             else if (GetTickCount() - t_diff > 700) {
-                G32(MM_OBJ + 0x18) = (uint32_t)(tt_coop_setting(0) > 2 ? 2 : tt_coop_setting(0)); press(PAD_START); t_diff = GetTickCount() | 1;   /* (Impossible: the game's Expert, ours on top) */
+                G32(MM_OBJ + 0x18) = (uint32_t)(G8(0x4AB69Cu) > 2 ? 2 : G8(0x4AB69Cu)); press(PAD_START); t_diff = GetTickCount() | 1;   /* (the solo game's difficulty, 0x4AB69C, kept: in
+                * co-op the game asks the co-op Difficulty instead -- twotowers_manual.c, sub_000D2390. Before, this wrote the co-op one into the solo one) */
                 tt_dbg("[MENU] the Co-op menu's New Game: difficulty %d confirmed\n", tt_coop_setting(0));
             }
         }

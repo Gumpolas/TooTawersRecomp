@@ -8780,8 +8780,26 @@ int tt_impossible(void)
     extern int tt_coop_setting(int i);
     if (tt_vs_on()) return 0;
     if (getenv("TT_IMPOSSIBLE_FORCE")) return 1;
-    return tt_coop_setting(6) == 1 || (coop_mode() && tt_coop_setting(0) == 3);   /* (1.9.7: co-op too by the New Game's / General Options' Impossible, not only the co-op Difficulty) */
+    if (coop_mode() && !getenv("TT_COOP_SOLODIFF")) return tt_coop_setting(0) == 3;   /* co-op: its own Difficulty only -- the solo game's Impossible
+        * (General Options, the New Game's screen) turned it on in co-op too (a playtest asked them apart) */
+    return tt_coop_setting(6) == 1 || (coop_mode() && tt_coop_setting(0) == 3);
 }
+/* the game's difficulty (0x4AB69C: 0 Easy, 1 Normal, 2 Expert; set by 0xD2380, asked by 0xD2390, and by 0xD23A0 / 0xD23B0
+ * through their tables at 0x1BB2B8 / 0x1BB2C4) is the solo game's: the New Game's screen, General Options, the save. The
+ * game's play asks it only through the tables, from 0x84220 (a hero's damage); the byte getter only from the menus and
+ * 0xD0C30. In co-op the tables are asked with the co-op Difficulty (Impossible: Expert, the co-op's rule on top) and the
+ * solo value stays as it was, shown and set by the menus (a General Options page opened from the pause showed Easy, the
+ * co-op's, when the byte getter answered it too: a bot run). TT_COOP_SOLODIFF: as before */
+static int coop_diff_swap(void)
+{
+    extern int tt_opt_up(void); int d = tt_coop_setting(0), fe = (int)MEM32(0x4AD050u);
+    if (!coop_mode() || tt_vs_on() || getenv("TT_COOP_SOLODIFF") || fe == 4 || tt_opt_up()) return -1;   /* (4: the main menu; the Options pages, the pause's too) */
+    { int solo = MEM8(0x4AB69Cu); static unsigned lv = ~0u; MEM8(0x4AB69Cu) = (uint8_t)(d < 0 ? 1 : d > 2 ? 2 : d);
+      if (lv != coop_level_n) { lv = coop_level_n; tt_dbg("[COOPDIFF] the game asks its difficulty: the co-op's %d (the solo game's %d kept)\n", d, solo); }
+      return solo; }
+}
+extern void sub_000D23A0_gen(void); void sub_000D23A0(void) { int s = coop_diff_swap(); sub_000D23A0_gen(); if (s >= 0) MEM8(0x4AB69Cu) = (uint8_t)s; }
+extern void sub_000D23B0_gen(void); void sub_000D23B0(void) { int s = coop_diff_swap(); sub_000D23B0_gen(); if (s >= 0) MEM8(0x4AB69Cu) = (uint8_t)s; }
 static int imp_rule(int32_t h0, int32_t mx, int32_t dmg) { int32_t h = h0 - dmg; if (dmg <= 0) return h0; if (h0 > mx / 2 + 1) return h < mx / 2 ? (h < 1 ? 1 : h) : mx / 2; return 0; }
 extern void sub_00084220_gen(void); void sub_00084220(void)
 {
