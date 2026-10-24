@@ -8418,6 +8418,7 @@ uint32_t coop_p2_ranged_copy(uint32_t w)
     for (i = 0; i < coop_rng_n; i++) if (coop_rng_orig[i] == w) return coop_rng_copy[i];
     return 0;
 }
+int coop_rng_n_x(void) { return coop_rng_n; } uint32_t coop_rng_copy_x(int i) { return coop_rng_copy[i]; }
 uint32_t coop_rng_pair(int copy) { return coop_rng_n ? (copy ? coop_rng_copy[0] : coop_rng_orig[0]) : 0; }   /* (research dumps) */
 /* a weapon copy nobody holds or draws: a ranged copy of someone else's weapon (an NPC's bow), never taken by player 2.
  * Player 2's events name player 1's weapons he has no copy of (Legolas' second knife, for Gimli): those lookups get
@@ -8429,6 +8430,26 @@ uint32_t coop_p2_weapon_sink(void)
     if (coop_rng_lv != coop_level_n) return 0;
     for (i = coop_rng_n - 1; i >= 0; i--) if (coop_rng_orig[i] >= 0x10000u && MEM32(coop_rng_orig[i] + 0x11C) != coop_first_char) return coop_rng_copy[i];
     return 0;
+}
+/* player 2's bow: of his copies of the level's ranged weapons (each dressed in his hero's ranged model), a copy of one of
+ * player 1's hero's kind first (hero byte 0x4AB69D: 1 Aragorn's bow 36AC3F58, 2 Legolas' 0834F2D4, 3 Gimli's axe
+ * E7EEC090), then of any bow, the sink last. Observed with player 1 Aragorn at the Gates of Moria: the copies of his
+ * bows (134j, 150j) were drawn right in player 2 Legolas' hand; the copy of the companion Gimli's throwing axe (140j) wasn't
+ * drawn at all (a playtest: he shot with his blade), the companion Legolas' bow's (142j) hung across his shoulders.
+ * 0: none */
+static uint32_t coop_p2_bow_att; static unsigned coop_p2_bow_lv;
+void coop_p2_bow_attached(uint32_t w) { if (coop_p2_bow_lv != coop_level_n || !coop_p2_bow_att) { coop_p2_bow_lv = coop_level_n; coop_p2_bow_att = w; tt_dbg("[COOPWEAPON] player 2's bow: %08X (attached at his set-up)\n", w); } }
+uint32_t coop_p2_bow(void)
+{
+    if (coop_p2_bow_lv == coop_level_n && coop_p2_bow_att) return coop_p2_bow_att;   /* (the one attached at his set-up, above) */
+    static const uint32_t kind[5] = { 0, 0x36AC3F58u, 0x0834F2D4u, 0xE7EEC090u, 0 };
+    uint32_t want = kind[MEM8(0x4AB69Du) < 5 ? MEM8(0x4AB69Du) : 0], sink = coop_p2_weapon_sink(), best = 0; int i, pass;
+    if (coop_rng_lv != coop_level_n) return 0;
+    for (pass = 0; pass < 3 && !best; pass++)
+        for (i = 0; i < coop_rng_n && !best; i++) { uint32_t o = coop_rng_orig[i], h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, c = coop_rng_copy[i];
+            if (!c || (pass < 2 && c == sink)) continue;
+            if (pass == 0 ? (want && m == want) : (m == 0x0834F2D4u || m == 0x36AC3F58u)) best = c; }
+    return best;
 }
 static uint32_t coop_build_weapon(uint32_t child) { return coop_build_weapon_as(child, coop_attach_bone_seen, 0); }
 static int coop_extra_done;
@@ -8820,7 +8841,15 @@ void sub_00085FB0(void)
             ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
             m, m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
     }
-    {   /* player 2 with his own hero's animation machine (coop_own_machines) takes his weapons by the slot: that hero's
+    {   /* the bow copy the twin's set-up attaches (@AttachToBone replayed: coop_in_attach) is his bow: only a weapon attached
+         * that way is drawn right in his hand (frames at the Gates of Moria: that copy upright in player 2 Legolas' bow hand
+         * as player 1 Legolas', the other copies sideways or not at all -- a playtest: he shot with his blade) */
+        uint32_t hh = w >= 0x10000u ? MEM32(w + 0x18) : 0, mm = hh >= 0x10008u && hh < 0x84000000u ? MEM32(hh - 8 + 0x40) : 0;
+        if (coop_in_attach && coop_twin >= 0x10000u && ecx == coop_twin && MEM32(w) == 0x174980u && (mm == 0x0834F2D4u || mm == 0x36AC3F58u || mm == 0xE7EEC090u)) {
+            extern void coop_p2_bow_attached(uint32_t w); coop_p2_bow_attached(w); }
+    }
+    {   extern int coop_rng_n_x(void); extern uint32_t coop_rng_copy_x(int i);
+        /* player 2 with his own hero's animation machine (coop_own_machines) takes his weapons by the slot: that hero's
          * moves attach "weapon n into slot n" from the actor's list, and the twin's list is player 1's: player 2 Legolas
          * putting his bow away took player 1 Aragorn's dagger and bow (answered with his bow copies) into slots 0 and 1, and
          * slot 2 -- where the bow sits, 0xA being slot 2 with the hand bit 8 -- was never filled again: the bow stayed in his
@@ -8835,34 +8864,38 @@ void sub_00085FB0(void)
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
                     int ranged = qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u;
                     if (!ranged && (uint32_t)coop_p2w_slot[k] == sl) pick = q; }
-            if (!pick && (sl >= 8u || wr)) {   /* the bow (his hand, or a slot he has no melee weapon for: his back): the ranged copy
+            if (!pick && (sl >= 8u || wr)) {   /* (never the sink, coop_p2_weapon_sink: a copy nobody draws; the P2 Bot's moves had made
+                                                 * him its owner, and he aimed with it, his blade showing: a playtest) */
+                extern uint32_t coop_p2_weapon_sink(void); extern uint32_t coop_p2_bow(void); uint32_t sink = coop_p2_weapon_sink();
+                pick = coop_p2_bow();   /* (his hero's kind first: coop_p2_bow; the rules below if none) */
+                /* the bow (his hand, or a slot he has no melee weapon for: his back): the ranged copy
                                                  * he already holds (owner +0x11C), so the one on his back goes to his hand (a playtest
                                                  * from the level's start: one stayed on his back while another copy went to his hand,
                                                  * and he shot with his blade); none held: the one asked for if it is his, else his first */
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && MEM32(q + 0x11C) == coop_p2) pick = q; }
-                for (k = 0; k < coop_np2w && !pick && wr; k++) if (coop_p2w[k] == w) pick = w;
+                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && MEM32(q + 0x11C) == coop_p2 && (q != sink || q == coop_p2_bow())) pick = q; }
+                for (k = 0; k < coop_np2w && !pick && wr && w != sink; k++) if (coop_p2w[k] == w) pick = w;
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                    if (qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) pick = q; }
+                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && q != sink) pick = q; }
             }
             if (pick && pick != w) {
-                { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2 (own moves): slot %X takes his %08X for %08X\n", sl, pick, w); }
+                { extern uint32_t coop_p2_weapon_sink(void); static int n; if (n++ < 40) tt_dbg("[COOPWEAPON] player 2 (own moves): slot %X takes his %08X for %08X (the sink %08X)\n", sl, pick, w, coop_p2_weapon_sink()); }
                 MEM32(esp + 4) = pick; w = pick;
+                if (getenv("TT_COOP_BOWFLAGS")) { int q; for (q = 0; q < coop_rng_n_x(); q++) { uint32_t c = coop_rng_copy_x(q); if (c >= 0x10000u) tt_dbg("[BOWFLAGS] copy %08X '%s': +110 %08X +114 %u +11C %08X +124 %08X +1C %08X +20 %08X +24 %08X%s\n", c, (const char *)XBOX_PTR(MEM32(c + 0x18)), MEM32(c + 0x110), MEM32(c + 0x114), MEM32(c + 0x11C), MEM32(c + 0x124), MEM32(c + 0x1C), MEM32(c + 0x20), MEM32(c + 0x24), c == pick ? " <- picked" : ""); } }
             }
         }
     }
     {   /* one bow for player 2: he has a copy of each of player 1's ranged weapon objects (two at the Gates of Moria), and
          * with his own hero's animation machine (coop_own_machines) Legolas took both into his bow hand (0xA): two bows
-         * drawn. The first one he takes in a level stands for all. TT_COOP_P2ALLBOWS: as before */
+         * drawn. One copy stands for all (coop_p2_bow, else the first he takes). TT_COOP_P2ALLBOWS: as before */
         static uint32_t first; static unsigned lv; extern const char *tt_coop_p2_char_now;
         uint32_t h = w >= 0x10000u ? MEM32(w + 0x18) : 0;
         if (lv != coop_level_n) { lv = coop_level_n; first = 0; }
-        if (coop_p2 >= 0x10000u && ecx == coop_p2 && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")
-            && !(coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8) && !getenv("TT_COOP_NOP2SLOTPICK"))) {   /* (with his own moves the slot pick above chooses) */
+        if (((coop_p2 >= 0x10000u && ecx == coop_p2) || (coop_twin >= 0x10000u && ecx == coop_twin && coop_mode() == 3)) && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {   /* (the twin too: his set-up, before the take-over, puts one on his back) */
             uint32_t m = MEM32(h - 8 + 0x40);
             if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
-                if (!first) first = w;
-                else if (w != first) { static int n; if (n++ < 4) tt_dbg("[COOPWEAPON] player 2's ranged %08X stands in for %08X (one bow)\n", first, w); MEM32(esp + 4) = first; w = first; }
+                if (!first) { extern uint32_t coop_p2_bow(void); first = coop_p2_bow(); if (!first) first = w; }   /* (coop_p2_bow: the copy drawn right; the same one on his back and in his hand) */
+                if (w != first) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's ranged %08X stands in for %08X (one bow)\n", first, w); MEM32(esp + 4) = first; w = first; }
             }
         }
     }
