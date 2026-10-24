@@ -8431,6 +8431,7 @@ static void coop_pdmg_frame(void)
                 * went to others, a playtest; bot run: the troll at 1 through two more arrows) */
             MEM32(v + 0x2FC) = (uint32_t)nw; MEM32(v + 0x4BC) = coop_pdmg[i].sh; MEM32(v + 0x3F0) = 0;   /* (its pending damage gone: not taken twice later) */
             coop_lastdmg_note(v, coop_pdmg[i].sh == coop_p2 ? 2 : 1);
+            if (MEM32(v + 0x114) == 3) MEM8(v + 0x526) = 1;   /* (a hero hurt it: the kill award's flag, as 0x84220 sets it -- sub_00084220) */
             if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s (state %u) not taken by the game: health %d -> %d here%s\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), MEM32(v + 0x408), now, nw, now - coop_pdmg[i].dmg < 1 ? " (a killing blow)" : "");
         } else if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s: taken by the game (health %d -> %d, damage %d)\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), coop_pdmg[i].hp, now, coop_pdmg[i].dmg);
         coop_pdmg[i].v = 0;
@@ -8934,6 +8935,13 @@ extern void sub_00084220_gen(void); void sub_00084220(void)
     int32_t hb = self >= 0x10000u ? (int32_t)MEM32(self + 0x2FC) : 0;   /* (1.9.7) for the More page's damage percentages */
     uint32_t gra = MEM32(esp), garg[4] = { MEM32(esp + 4), MEM32(esp + 8), MEM32(esp + 12), MEM32(esp + 16) };
     tt_coop_p1_pre(ecx, 0x00084220u); if (coop_probe_on()) coop_count(25); sub_00084220_gen(); tt_coop_p1_post();
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && self >= 0x10000u && MEM32(self + 0x114) == 3 && MEM32(self + 0x4BC) == coop_p2 && !MEM8(self + 0x526) && !tt_vs_on() && !getenv("TT_COOP_NOP2REWARD")) {
+        /* an enemy hurt by player 2: its "hurt by the player" flag (+0x526), which the kill award at its death needs (0x856D9: +0x526 set,
+         * +0x538 the award's own "given" mark still 0). 0x84220 sets it only when the last attacker (+0x4BC) is [0x43B15C], player 1 outside
+         * player 2's context -- his arrows are applied outside it: an enemy only player 2 hurt died without an award (a playtest: no reward
+         * after 3 arrow kills) */
+        MEM8(self + 0x526) = 1;
+    }
     {   static int gl = -1; if (gl < 0) gl = getenv("TT_GATELOG") != NULL;
         if (gl && self >= 0x10000u && self == MEM32(0x4ACBACu)) tt_dbg("[GATEHIT] t %u ra %08X args %08X %08X %08X %08X: %d -> %d\n", tt_game_ms, gra, garg[0], garg[1], garg[2], garg[3], hb, (int32_t)MEM32(self + 0x2FC)); }
     if (mode == 0 && self >= 0x10000u && hb > 0 && !tt_vs_on()) {   /* (1.9.7) Damage taken / Enemy damage (F10, More): the blow's damage scaled */
