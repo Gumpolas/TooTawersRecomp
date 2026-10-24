@@ -8426,10 +8426,12 @@ static void coop_pdmg_frame(void)
         if (++coop_pdmg[i].fr < 3) continue;
         now = (int32_t)MEM32(v + 0x2FC);
         if (coop_pdmg[i].dmg > 0 && now > 0 && now > coop_pdmg[i].hp - coop_pdmg[i].dmg && MEM32(v) == 0x1741C0u) {
-            int32_t nw = now - coop_pdmg[i].dmg; if (nw < 1) nw = 1;
+            int32_t nw = now - coop_pdmg[i].dmg; if (nw < 1) nw = getenv("TT_COOP_PDMGKEEP1") ? 1 : 0;   /* (a killing blow to 0: the game's own death follows -- the troll went to its
+                * state 20 at once; left at 1, as before, the enemy stayed at 1 and the next hit, anyone's, got the kill: player 2 Legolas' arrow kills
+                * went to others, a playtest; bot run: the troll at 1 through two more arrows) */
             MEM32(v + 0x2FC) = (uint32_t)nw; MEM32(v + 0x4BC) = coop_pdmg[i].sh; MEM32(v + 0x3F0) = 0;   /* (its pending damage gone: not taken twice later) */
             coop_lastdmg_note(v, coop_pdmg[i].sh == coop_p2 ? 2 : 1);
-            if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s (state %u) not taken by the game: health %d -> %d here%s\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), MEM32(v + 0x408), now, nw, nw == 1 && now - coop_pdmg[i].dmg < 1 ? " (a killing blow: left at 1)" : "");
+            if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s (state %u) not taken by the game: health %d -> %d here%s\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), MEM32(v + 0x408), now, nw, now - coop_pdmg[i].dmg < 1 ? " (a killing blow)" : "");
         } else if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJDMG] %s's hit on %s: taken by the game (health %d -> %d, damage %d)\n", coop_pdmg[i].sh == coop_p2 ? "P2" : "P1", coop_nm(v), coop_pdmg[i].hp, now, coop_pdmg[i].dmg);
         coop_pdmg[i].v = 0;
     }
