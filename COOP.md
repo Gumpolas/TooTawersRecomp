@@ -35,13 +35,22 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 | Player Icons | Off, On | "P1" / "P2" over the heroes' heads, dimmed when something is drawn in front of the head (Direct3D 11 only) |
 | Camera Zoom | Off, Normal, Wide | The shared camera zooms out as the heroes part, up to 1.3 (Normal) or 1.5 (Wide). **Recommended: Normal or Wide** in the levels, so both heroes stay in view |
 | P2 Teleport | Off, On | Player 2's hero is put beside player 1's after falling too far behind |
-| P2 Bot | Off, On | The game plays player 2 (a stopgap AI, below) |
+| P2 Bot | Off, When Idle, Always | The game plays player 2 (a stopgap AI, below). When Idle: any input on player 2's controller hands it to the player for 3 s; Always: the controller is ignored *(1.9.8)* |
+| P2 Controls | (a page) | Player 2's own controller buttons. Co-op menu and Options *(1.9.8)* |
 | Pickups | Normal, Double | Double: a health or ammo pickup can be taken twice, once by each hero (the second at least 1.5 s after the first). Options page only *(1.9.6)* |
 | P1 Device, P2 Device | Automatic, Keyboard & Mouse, a controller | Each player's device (above). Options page only *(1.9.6)* |
 
 - **Camera:** playing the levels with Camera Zoom on **Normal** or **Wide** is recommended; with Off the shared camera
   stays close and a hero can end up off screen.
-- **A hero who goes down** comes back beside the other one after the wait. Both down is a game over.
+- **A hero who goes down** comes back near the other one after the wait, on ground player 1 has stood on (not in a
+  wall or over a drop). Both down is a game over.
+- **Story levels in co-op** *(1.9.8)*: player 2 is Isildur on the prologue and Legolas on Weathertop (with copies of
+  player 1's weapons). A level beaten with a hero shows **Already Beaten** on the mission select for that hero; once
+  the game is cleared every story level is open. Films can be skipped the first time they play.
+- **Aiming** *(1.9.8)*: while a player holds LT, a dot over the enemy his lock is on, in his colour (player 1 blue,
+  player 2 amber), smaller the further it is from the camera. A hero's arrows and thrown axes fly through allies (the
+  other hero, the companions) and hit only the enemy locked on, or a wall; every hit counts (the game took some
+  enemies' damage only in some of their states: the cave troll ignored most arrows). A lock never stays on an ally.
 - **After a level:** player 1's stats, player 2's stats, player 1's shop, player 2's shop, then the save. Player 2's
   experience and purchases are saved in their hero's record and come back when the save is loaded.
 
@@ -104,14 +113,18 @@ Player 1 against player 2, one on one, on the co-op's two heroes.
 - **Moves:** player 2's move picks read player 2's own hero's bought upgrades, not player 1's.
 - **Checkpoints:** after a game over and Replay, player 2's level experience and per-level stats go back to their
   values at the checkpoint, as the game does for player 1.
-- **HUD:** player 2's health, ammo, rings and experience gauge.
+- **HUD:** player 2's health, ammo, rings and experience gauge. The rings (each player's combo meter) show only while
+  a level plays (they stayed on through the stats screens, shops and menus). The head markers and aim dots are drawn
+  under every HUD piece; the boss bar (every boss's) sits under player 2's sword at the top right *(1.9.8)*.
 - **The P2 Bot:** a stopgap AI for player 2, to be replaced once there are proper controller settings for player 2:
   - it keeps inside a circle around player 1 and the companions;
   - it melees enemies near it (it walks up and swings only beside them), and shoots from inside the circle at
     enemies further off;
   - it parries now and then;
   - while player 1 is down, it roams and fights;
-  - at the Gates of Moria's boss, it parries near a tentacle and attacks one after a parry lands.
+  - at the Gates of Moria's boss, it attacks a random idle tentacle and parries strikes near it;
+  - at the cave troll, it stays at reach, attacks, and parries the troll's swings at it *(1.9.8)*;
+  - in Versus it fights player 1.
 
 The code is in `twotowers/src/twotowers_manual.c` (most of it), `menus.c` (the Co-op menu, shops, stats screens),
 `heroes.c` (player 2's models, records and weapons), `options.c` (Co-op Options) and `e3hud.c`, plus small changes
@@ -130,8 +143,8 @@ The `TT_COOP_*` environment variables set up test situations (each one is descri
   head), and only in the Direct3D 11 renderer (OpenGL, Vulkan, Linux and macOS: never dimmed).
 - The P2 Bot's attacks don't land on the Watcher's tentacles in bot runs (neither do player 1's there), so how the
   bot should win that fight is still open.
-- The P2 Bot can get stuck at the lake before the Gates of Moria's boss; no bot test reaches that spot.
-- Big enemies (the cave troll): whether the P2 Bot gets close enough to hit them is untested.
+- An arrow that would kill an enemy whose state ignores the hit leaves it at 1 health (the game's own death path is
+  left to the next hit it takes).
 - A hobbit guest's marker height is a guess; 4:3 screens are unchecked.
 - The bot tests drive player 2 with scripted pads; a second physical controller is not covered by them.
 

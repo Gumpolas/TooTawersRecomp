@@ -1,8 +1,8 @@
-# The co-op bot suite: each scenario runs the game (test copy only) with bots and test switches, then its log is
+﻿# The co-op bot suite: each scenario runs the game (test copy only) with bots and test switches, then its log is
 # checked. Prints PASS/FAIL per check and writes <Out>\suite\summary_<time>.txt. Exit code: number of failed checks.
 # Usage: .\suite.ps1            (all)      .\suite.ps1 -Only kills_post,menus      (some)
 # Restores the test copy's ini after each run and its save after the save scenarios. Don't run it while someone plays the test copy.
-param([string[]]$Only = @())
+param([string[]]$Only = @(), [int]$Extra = 0)   # (-Extra: seconds added to every run, for slower builds: 1.9.6 starts up slower)
 . "$PSScriptRoot\config.ps1"   # $Inst, $Out, $Exe, $SaveBackup: see config.example.ps1
 $SaveDir = "$Inst\game_files\UDATA\45410010"   # (the game's save folder, by its title id)
 $Bot = $PSScriptRoot
@@ -102,8 +102,8 @@ foreach ($s in $Scenarios) {
   if ($s.Env.TT_P1SCRIPT_SHOTDIR) { New-Item -ItemType Directory -Force $s.Env.TT_P1SCRIPT_SHOTDIR | Out-Null }
   foreach ($k in $s.Env.Keys) { Set-Item "Env:$k" $s.Env[$k] }
   $a = $s.Args
-  if ($s.Runner -eq "menu") { & "$Bot\run_menu.ps1" -Script $a.Script -Tag "suite_$($s.Name)" -Seconds $a.Seconds | Out-Null }
-  else { & "$Bot\run_p2char_ms.ps1" -Level $a.Level -Hero $a.Hero -P2 $a.P2 -Pad $a.Pad -Seconds $a.Seconds -Shots $a.Shots -Tag "suite_$($s.Name)" | Out-Null }
+  if ($s.Runner -eq "menu") { & "$Bot\run_menu.ps1" -Script $a.Script -Tag "suite_$($s.Name)" -Seconds ($a.Seconds + $Extra) | Out-Null }
+  else { & "$Bot\run_p2char_ms.ps1" -Level $a.Level -Hero $a.Hero -P2 $a.P2 -Pad $a.Pad -Seconds ($a.Seconds + $Extra) -Shots $a.Shots -Tag "suite_$($s.Name)" | Out-Null }
   foreach ($k in $s.Env.Keys) { Remove-Item "Env:$k" -ErrorAction SilentlyContinue }
   Copy-Item $IniBackup "$Inst\twotowers_recomp.ini" -Force
   $log = Log-Of $s

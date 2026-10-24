@@ -53,8 +53,8 @@ extern const char *xbox_GfxItemName(int id, int v);
 #define COL_ON    0xFF77EAF8u
 #define COL_OFF   0xFF9C978Cu
 
-enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU, PG_GAME };
-enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET, K_DEV, K_VSHERO };   /* (K_BIND: gfx is the action, input_bind.h; K_DEV: gfx is the player, 0-1) */
+enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU, PG_P2CTL, PG_GAME };
+enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET, K_DEV, K_BIND2, K_RESET2, K_PAGE, K_VSHERO };   /* (K_BIND: gfx is the action, input_bind.h; K_DEV: gfx is the player, 0-1; K_BIND2 / K_RESET2: player 2's controller; K_PAGE: A opens player 2's controls; K_VSHERO: a Versus hero, the arena or the rounds) */
 typedef struct {
     const char *label;
     int gfx, kind;
@@ -114,6 +114,18 @@ extern int  xbox_InputKeyDown(int vk);
 extern volatile LONG xbox_fb_wheel;
 #define BIND_PAD_N_ 17
 static Row s_ctl_all[8 + BIND_N_ + 1];
+/* player 2's controller (co-op): its own buttons (input_bind.c's second table, "p2pad_<action>" in [Controls]), which
+ * controller it is, and a line showing what each connected controller presses now */
+extern int  xbox_BindPad2(int action);
+extern void xbox_BindAssignPad2(int action, int src);
+extern void xbox_BindResetPad2(void);
+extern int  xbox_InputPadCount(void);
+extern void xbox_InputPadName(int k, char *out, int n);
+extern int  xbox_InputPadPeek(int k, unsigned short *buttons, unsigned char *lt, unsigned char *rt, short *lx, short *ly, short *rx, short *ry);
+extern int  xbox_InputPlayerPadIndex(int port);
+#define P2BTN_N 16   /* the button actions, A to the right stick's click */
+static Row s_p2ctl[P2BTN_N + 1];
+static int s_np2ctl, s_ret_page = PG_COOP, s_ret_sel;
 
 /* the co-op settings (the Co-op Options page), kept in the ini's [Coop]; the co-op code
  * (twotowers_manual.c) reads them with tt_coop_setting. Testing: TT_COOP_DIFFICULTY,
@@ -122,26 +134,29 @@ static Row s_ctl_all[8 + BIND_N_ + 1];
 enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_PICK, CO_IMP, CO_N };   /* (CO_IMP: the solo game's Impossible, 1.9.7) */
 static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot", "double_pickups", "impossible" };
 static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT", "TT_COOP_PICKUPS", "TT_IMPOSSIBLE" };
-static const int s_coop_cnt[CO_N] = { 4, 2, 3, 2, 2, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1, 0 };
+static const int s_coop_cnt[CO_N] = { 4, 2, 3, 2, 3, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1, 0 };
 static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1, -1, -1 };
 static const Row s_coop[] = {
     { "Difficulty:", GFX_COOP + CO_DIFF, K_CYCLE, { "Easy", "Normal", "Expert", "Impossible" } },
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },   /* player 2 put beside player 1 when too far (the co-op code's catch-up) */
-    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },   /* player 2 played by the co-op code: follows player 1, fights what is near (twotowers_manual.c coop_p2bot) */
+    { "P2 Device:", 1, K_DEV, { 0 } },   /* (1.9.6's device choice, in place of 1.9.4's P2 Controller) */
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "When Idle", "Always" } },   /* player 2 played by the co-op code (twotowers_manual.c coop_p2bot): when his controller is idle (any input hands it over for 3 s), or always */
+    { "P2 Controls", 0, K_PAGE, { 0 } },   /* player 2's own buttons (A: the page) */
 };
-/* (1.9.6) Options > Co-op Options: the Co-op menu's rows (above), then the pickups and each player's device. The
- * Co-op menu keeps its five */
+/* (1.9.6) Options > Co-op Options: the co-op settings, the pickups, each player's device and player 2's controls. The
+ * Co-op menu (above) has seven of them, clear of its Help prompt */
 static const Row s_coop_page[] = {
     { "Difficulty:", GFX_COOP + CO_DIFF, K_CYCLE, { "Easy", "Normal", "Expert", "Impossible" } },
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },
-    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "When Idle", "Always" } },
     { "Pickups:", GFX_COOP + CO_PICK, K_COLS, { "Normal", "Double" } },   /* Double: a health or ammo pickup can be taken twice (twotowers_manual.c, sub_0008FC60) */
     { "P1 Device:", 0, K_DEV, { 0 } },
     { "P2 Device:", 1, K_DEV, { 0 } },
+    { "P2 Controls", 0, K_PAGE, { 0 } },
 };
 static void coop_ini(char *p, int n)
 {
@@ -223,7 +238,7 @@ void tt_coop_input_sync(void)
 {
     int two;
     coop_devices_load();
-    two = tt_coop_active() && !tt_coop_setting(CO_BOT) && !getenv("TT_COOP_PAD2SCRIPT");
+    two = tt_coop_active() && tt_coop_setting(CO_BOT) != 2 && !getenv("TT_COOP_PAD2SCRIPT");   /* (P2 Bot Off or When Idle: a person may play player 2) */
     if (two != xbox_input_two_players) {
         xbox_input_two_players = two;
         tt_dbg("[COOPDEV] input as %s (devices: player 1 %d, player 2 %d)\n", two ? "two players" : "one player", xbox_input_dev_choice[0], xbox_input_dev_choice[1]);
@@ -345,11 +360,13 @@ int tt_vs_arena_level(void) { const char *e = getenv("TT_VS_ARENA"); return e ? 
 static const Row *cm_rows(int *n) { if (s_vsmenu) { *n = (int)(sizeof s_vsrows / sizeof s_vsrows[0]); return s_vsrows; } *n = (int)(sizeof s_coop / sizeof s_coop[0]); return s_coop; }
 static int cm_ntop(void) { return s_vsmenu ? 1 : 2; }
 static const char *cm_top(int i) { return s_vsmenu ? "Start" : s_cm_top[i]; }
-#define CM_TOPX 400
-#define CM_TOPY 60
-#define CM_TOPSTEP 48
-#define CM_ROWY 196
-#define CM_STEP 46                 /* (five rows clear of the Help prompt) */
+#define CM_TITLEY 22               /* the title, then New Game and Load Game, in the middle at the top, in the main menu's font
+                                    * (its table's elements 8..11 at 0x432728: their x, width and font kept) */
+#define CM_TOPY 62
+#define CM_TOPSTEP 36
+#define MM_EL(i) (0x432728u + (uint32_t)(i) * EL_SIZE)
+#define CM_ROWY 150
+#define CM_STEP 38                 /* (seven rows clear of the Help prompt) */
 #define CM_N (cm_ntop() + (s_vsmenu ? (int)(sizeof s_vsrows / sizeof s_vsrows[0]) : (int)(sizeof s_coop / sizeof s_coop[0])))
 static DWORD s_drawn;            /* the Options page last drawn (ticks) */
 static volatile unsigned s_frames, s_drawn_frame;   /* (1.9.3) the game's frames, and the last with Options drawn */
@@ -409,14 +426,29 @@ static void marker(int cx, int cy, int ring)
     G32(e1 + 0xC) = G32(e2 + 0xC) = (uint32_t)(cy - 32);
     G32(e1 + 0xB8) = base + (ring ? 0x60u : 0xA0u);
     G32(e2 + 0xB8) = base + (ring ? 0x40u : 0x80u);
+    if (ring && (s_page == PG_COOPMENU || s_page == PG_COOP) && !getenv("TT_COOP_RINGOVER")) {   /* (co-op pages: the ring drawn over the
+        * words hid the chosen one -- the game draws markers after text, whatever the order -- so there it is smaller, 36
+        * units, just left of the word: cx is the word's x + 64 here) TT_COOP_RINGOVER: as before */
+        G32(e1 + 8) = G32(e2 + 8) = (uint32_t)(cx - 64 - 38);
+        G32(e1 + 0xC) = G32(e2 + 0xC) = (uint32_t)(cy - 18);
+        G32(e1 + 0x10) = G32(e2 + 0x10) = 36; G32(e1 + 0x14) = G32(e2 + 0x14) = 36;
+    }
     draw(e1); draw(e2);
 }
 
 static const Row *rows(int *n)
 {
     if (s_page == PG_DISPLAY) { *n = NROWS(s_display); return s_display; }
-    if (s_page == PG_COOPMENU) return cm_rows(n);
+    if (s_page == PG_COOPMENU) { coop_devices_load(); return cm_rows(n); }
     if (s_page == PG_COOP) { coop_devices_load(); *n = NROWS(s_coop_page); return s_coop_page; }
+    if (s_page == PG_P2CTL) {
+        if (!s_np2ctl) {   /* a row per button (player 2's controller has no keys), then Reset */
+            int i;
+            for (i = 0; i < P2BTN_N; i++) { Row w = { s_bind_label[i], i, K_BIND2, { 0 } }; s_p2ctl[s_np2ctl++] = w; }
+            { Row w = { "Reset P2 Controls", 0, K_RESET2, { 0 } }; s_p2ctl[s_np2ctl++] = w; }
+        }
+        *n = s_np2ctl; return s_p2ctl;
+    }
     if (s_page == PG_GAME) { *n = NROWS(s_game_page); return s_game_page; }
     if (s_page == PG_CONTROLS) {
         if (!s_nctl) {   /* the settings, then a row per action, then Reset */
@@ -437,6 +469,68 @@ static unsigned char s_cap_held[256];
 #define ROW_SHOWN 7
 static const int s_colx[3] = { 222, 340, 466 };   /* (the game's 191, 309, 435, moved over for longer names) */
 
+/* a row's value(s) at height y (sel: the chosen row) */
+static void draw_value(const Row *w, int y, int sel)
+{
+    int k, cnt = w->kind >= K_BIND ? 0 : opt_count(w->gfx), cur = w->kind >= K_BIND ? 0 : opt_get(w->gfx);
+    if (w->kind == K_DEV) {   /* (1.9.6) a player's device */
+        char v[120];
+        dev_text(w->gfx, v, sizeof v);
+        text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
+        text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, v);
+        text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
+    } else if (w->kind == K_BIND) {
+        /* its keys, and (a button) the controller's button for it */
+        char v[96];
+        if (sel && s_cap == 1) snprintf(v, sizeof v, "Press a key...  (Esc: cancel, Delete: clear)");
+        else xbox_BindFormatKeys(w->gfx, v, sizeof v);
+        text_el(T_VALUE, 222, y, sel && s_cap == 1 ? 400 : 260, sel && s_cap == 1 ? COL_ON : COL_OFF, v);
+        if (!(sel && s_cap == 1)) {
+            if (xbox_BindIsButton(w->gfx)) {
+                snprintf(v, sizeof v, sel ? "< %s >" : "%s", xbox_BindPadName(xbox_BindPad(w->gfx)));
+                text_el(T_VALUE, 490, y, 140, sel ? COL_ON : COL_OFF, v);
+            } else if (w->gfx >= 20 && w->gfx <= 23) text_el(T_VALUE, 490, y, 140, COL_OFF, "R Stick");
+            else if (w->gfx == 24) text_el(T_VALUE, 490, y, 140, COL_OFF, "Stick");
+            else text_el(T_VALUE, 490, y, 140, COL_OFF, "L Stick");
+        }
+    } else if (w->kind == K_BIND2) {   /* player 2's controller: the button on it that does this */
+        char v[48];
+        snprintf(v, sizeof v, sel ? "< %s >" : "%s", xbox_BindPadName(xbox_BindPad2(w->gfx)));
+        text_el(T_VALUE, 300, y, 220, sel ? COL_ON : COL_OFF, v);
+    } else if (w->kind == K_RESET || w->kind == K_RESET2) {
+        if (sel) marker(250, y + 17, 1);
+    } else if (w->kind == K_PAGE) {
+        text_el(T_VALUE, s_colx[0], y, 300, sel ? COL_ON : COL_OFF, "Press A");
+    } else if (w->kind == K_COLS) {
+        for (k = 0; k < cnt && k < 3; k++) {
+            if (k == cur) marker(s_colx[k] + 64, y + 17, sel);
+            text_el(T_VALUE, s_colx[k], y, 0, COL_OFF, w->names[k] ? w->names[k] : "");
+        }
+    } else if (w->kind == K_CYCLE) {
+        /* the choice in the middle, arrows either side */
+        if (cur >= 0 && cur < 24) {
+            marker(s_colx[1] + 64, y + 17, sel);
+            text_el(T_VALUE, s_colx[1], y, 0, COL_OFF, w->names[cur] ? w->names[cur] : xbox_GfxItemName(w->gfx, cur));
+        }
+        text_el(T_VALUE, s_colx[0], y, 0, COL_OFF, "<");
+        text_el(T_VALUE, s_colx[2], y, 0, COL_OFF, ">");
+    } else {
+        uint32_t b = el_from(T_BAR);
+        if (b) { G32(b + 8) = 230; G32(b + 0xC) = (uint32_t)y; draw(b); }
+        if (cnt > 1) marker(262 + (317 * cur) / (cnt - 1), y + 25, sel);
+    }
+}
+static void draw_pad_line(int y);
+/* a line in the main menu's font (a copy of its New Game element: x, width and font as the game has them) at y */
+static void mm_text(int y, uint32_t col, const char *t)
+{
+    uint32_t e = el_from(MM_EL(8));
+    if (!e) return;
+    G32(e + 0xC) = (uint32_t)y;
+    G32(e + 0x20) = col;
+    G32(e + 0x34) = word(t);
+    draw(e);
+}
 static void draw_coopmenu(void)
 {
     int i, k;
@@ -471,13 +565,15 @@ static void draw_coopmenu(void)
         if (state == 1 && !getenv("TT_COOP_OLDBG") && (e = el_from(T_BG)) != 0) { G32(e + 0xB8) = obj; draw(e); }
         else draw(T_BG);
     }
-    text_el(T_LABEL, 24, 28, 0, COL_ON, s_vsmenu ? "Versus" : "Co-op");
-    for (i = 0; i < cm_ntop(); i++) text_el(T_LABEL, CM_TOPX, CM_TOPY + i * CM_TOPSTEP, 220, s_sel == i ? COL_ON : COL_OFF, cm_top(i));
+    if (getenv("TT_COOP_ELLOG")) { static int n; if (!n++) { uint32_t t[4] = { T_LABEL, T_MARK1, T_MARK2, MM_EL(8) }, q; int j;
+        for (j = 0; j < 4; j++) { tt_dbg("[COOPEL] %08X:", t[j]); for (q = 0; q < 0x40; q += 4) tt_dbg(" %X:%08X", q, G32(t[j] + q)); tt_dbg("\n"); } } }
+    mm_text(CM_TITLEY, 0xFFFFFFFFu, s_vsmenu ? "Versus" : "Co-op");
+    for (i = 0; i < cm_ntop(); i++) mm_text(CM_TOPY + i * CM_TOPSTEP, s_sel == i ? COL_ON : COL_OFF, cm_top(i));
     { int nr; const Row *rr = cm_rows(&nr);
     if (s_vsmenu) vs_fix();
     for (i = 0; i < nr; i++) {
         const Row *w = &rr[i];
-        int y = CM_ROWY + i * CM_STEP, sel = s_sel == i + cm_ntop(), cnt = w->kind == K_VSHERO ? 0 : opt_count(w->gfx), cur = w->kind == K_VSHERO ? 0 : opt_get(w->gfx);
+        int y = CM_ROWY + i * CM_STEP, sel = s_sel == i + cm_ntop();
         text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
         if (w->kind == K_VSHERO) {
             text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
@@ -485,13 +581,38 @@ static void draw_coopmenu(void)
             text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
             continue;
         }
-        for (k = 0; k < cnt && k < 3; k++) {
-            if (k == cur) marker(s_colx[k] + 64, y + 17, sel);
-            text_el(T_VALUE, s_colx[k], y, 0, COL_OFF, w->names[k] ? w->names[k] : "");
-        }
+        draw_value(w, y, sel);
     } }
     draw(T_HELPI);
     draw(T_HELPT);
+}
+/* the line on player 2's controls page: each connected controller and what it presses now, and which is player 2's */
+static void draw_pad_line(int y)
+{
+    static const struct { unsigned short m; const char *n; } bn[] = {
+        { 0x1000, "A" }, { 0x2000, "B" }, { 0x4000, "X" }, { 0x8000, "Y" }, { 0x0100, "LB" }, { 0x0200, "RB" },
+        { 0x0010, "Start" }, { 0x0020, "Back" }, { 0x0001, "Up" }, { 0x0002, "Down" }, { 0x0004, "Left" }, { 0x0008, "Right" },
+        { 0x0040, "LS" }, { 0x0080, "RS" } };
+    char line[160], nm[48];
+    int k, n = xbox_InputPadCount(), p2 = xbox_InputPlayerPadIndex(1), used = 0;
+    if (n <= 0) { text_el(T_VALUE, 24, y, 600, COL_OFF, "No controller connected"); return; }
+    for (k = 0; k < n && k < 4; k++) {
+        unsigned short b = 0; unsigned char lt = 0, rt = 0; short lx = 0, ly = 0, rx = 0, ry = 0; int j, any = 0;
+        char pr[64]; int pu = 0;
+        pr[0] = 0;
+        if (xbox_InputPadPeek(k, &b, &lt, &rt, &lx, &ly, &rx, &ry)) {
+            for (j = 0; j < (int)(sizeof bn / sizeof bn[0]); j++) if (b & bn[j].m) { pu += snprintf(pr + pu, sizeof pr - (size_t)pu, "%s%s", any ? " " : "", bn[j].n); any = 1; if (pu > 40) break; }
+            if (lt > 30 && pu < 50) { pu += snprintf(pr + pu, sizeof pr - (size_t)pu, "%sLT", any ? " " : ""); any = 1; }
+            if (rt > 30 && pu < 50) { pu += snprintf(pr + pu, sizeof pr - (size_t)pu, "%sRT", any ? " " : ""); any = 1; }
+            if ((lx > 16000 || lx < -16000 || ly > 16000 || ly < -16000) && pu < 50) { pu += snprintf(pr + pu, sizeof pr - (size_t)pu, "%sL stick", any ? " " : ""); any = 1; }
+            if ((rx > 16000 || rx < -16000 || ry > 16000 || ry < -16000) && pu < 50) { pu += snprintf(pr + pu, sizeof pr - (size_t)pu, "%sR stick", any ? " " : ""); any = 1; }
+        }
+        xbox_InputPadName(k, nm, sizeof nm);
+        used += snprintf(line + used, sizeof line - (size_t)used, "%s%d%s: %s", k ? "   " : "", k + 1, k == p2 ? " (P2)" : "", any ? pr : "-");
+        if (used >= (int)sizeof line - 1) break;
+        (void)nm;
+    }
+    text_el(T_VALUE, 24, y, 600, COL_ON, line);
 }
 static void draw_page(void)
 {
@@ -508,52 +629,13 @@ static void draw_page(void)
         if (s_sel >= s_top + ROW_SHOWN) s_top = s_sel - ROW_SHOWN + 1;
         for (i = s_top; i < n && i < s_top + ROW_SHOWN; i++) {
             const Row *w = &r[i];
-            int y = ROW_Y0 + (i - s_top) * ROW_STEP, sel = i == s_sel, k;
-            int cnt = w->kind >= K_BIND ? 0 : opt_count(w->gfx), cur = w->kind >= K_BIND ? 0 : opt_get(w->gfx);
+            int y = ROW_Y0 + (i - s_top) * ROW_STEP, sel = i == s_sel;
             text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
-            if (w->kind == K_DEV) {
-                char v[120];
-                dev_text(w->gfx, v, sizeof v);
-                text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
-                text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, v);
-                text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
-            } else if (w->kind == K_BIND) {
-                /* its keys, and (a button) the controller's button for it */
-                char v[96];
-                if (sel && s_cap == 1) snprintf(v, sizeof v, "Press a key...  (Esc: cancel, Delete: clear)");
-                else xbox_BindFormatKeys(w->gfx, v, sizeof v);
-                text_el(T_VALUE, 222, y, sel && s_cap == 1 ? 400 : 260, sel && s_cap == 1 ? COL_ON : COL_OFF, v);
-                if (!(sel && s_cap == 1)) {
-                    if (xbox_BindIsButton(w->gfx)) {
-                        snprintf(v, sizeof v, sel ? "< %s >" : "%s", xbox_BindPadName(xbox_BindPad(w->gfx)));
-                        text_el(T_VALUE, 490, y, 140, sel ? COL_ON : COL_OFF, v);
-                    } else if (w->gfx >= 20 && w->gfx <= 23) text_el(T_VALUE, 490, y, 140, COL_OFF, "R Stick");
-                    else if (w->gfx == 24) text_el(T_VALUE, 490, y, 140, COL_OFF, "Stick");
-                    else text_el(T_VALUE, 490, y, 140, COL_OFF, "L Stick");
-                }
-            } else if (w->kind == K_RESET) {
-                if (sel) marker(250, y + 17, 1);
-            } else if (w->kind == K_COLS) {
-                for (k = 0; k < cnt && k < 3; k++) {
-                    if (k == cur) marker(s_colx[k] + 64, y + 17, sel);
-                    text_el(T_VALUE, s_colx[k], y, 0, COL_OFF, w->names[k] ? w->names[k] : "");
-                }
-            } else if (w->kind == K_CYCLE) {
-                /* the choice in the middle, arrows either side */
-                if (cur >= 0 && cur < 24) {
-                    marker(s_colx[1] + 64, y + 17, sel);
-                    text_el(T_VALUE, s_colx[1], y, 0, COL_OFF, w->names[cur] ? w->names[cur] : xbox_GfxItemName(w->gfx, cur));
-                }
-                text_el(T_VALUE, s_colx[0], y, 0, COL_OFF, "<");
-                text_el(T_VALUE, s_colx[2], y, 0, COL_OFF, ">");
-            } else {
-                uint32_t b = el_from(T_BAR);
-                if (b) { G32(b + 8) = 230; G32(b + 0xC) = (uint32_t)y; draw(b); }
-                if (cnt > 1) marker(262 + (317 * cur) / (cnt - 1), y + 25, sel);
-            }
+            draw_value(w, y, sel);
         }
         if (s_top > 0) text_el(T_VALUE, 560, 4, 0, COL_OFF, "...");
         if (s_top + ROW_SHOWN < n) text_el(T_VALUE, 560, ROW_Y0 + ROW_SHOWN * ROW_STEP - 10, 0, COL_OFF, "...");
+        if (s_page == PG_P2CTL) draw_pad_line(ROW_Y0 + ROW_SHOWN * ROW_STEP + 14);   /* (below the rows) */
     }
     draw(T_HELPI);
     draw(T_HELPT);
@@ -657,8 +739,14 @@ static void change(const Row *w, int d)
         }
         return;
     }
-    if (w->kind == K_RESET) return;
     if (w->kind == K_DEV) { dev_change(w->gfx, d); move_sound(); return; }
+    if (w->kind == K_BIND2) {   /* player 2's controller: the button on it for this */
+        xbox_BindAssignPad2(w->gfx, (xbox_BindPad2(w->gfx) + d + BIND_PAD_N_) % BIND_PAD_N_);
+        tt_dbg("[OPTIONS] player 2's %s %s\n", w->label, xbox_BindPadName(xbox_BindPad2(w->gfx)));
+        move_sound();
+        return;
+    }
+    if (w->kind == K_RESET || w->kind == K_RESET2 || w->kind == K_PAGE) return;
     cnt = opt_count(w->gfx); cur = opt_get(w->gfx); v = cur + d;
     if (cnt <= 0) return;
     if (w->kind == K_CYCLE) v = (v + cnt) % cnt;
@@ -678,6 +766,16 @@ static void activate(const Row *w)
         sound(0xA9D, -1.0f);
     } else if (w->kind == K_RESET) {
         xbox_BindResetAll();
+        sound(0xA9D, -1.0f);
+    } else if (w->kind == K_RESET2) {
+        xbox_BindResetPad2();
+        tt_dbg("[OPTIONS] player 2's controls reset\n");
+        sound(0xA9D, -1.0f);
+    } else if (w->kind == K_BIND2) change(w, 1);
+    else if (w->kind == K_PAGE) {   /* player 2's controls; B comes back here */
+        s_ret_page = s_page; s_ret_sel = s_sel;
+        s_page = PG_P2CTL; s_sel = 0; s_top = 0;
+        tt_dbg("[OPTIONS] player 2's controls opened\n");
         sound(0xA9D, -1.0f);
     } else if (w->kind == K_CYCLE || w->kind == K_DEV) change(w, 1);
 }
@@ -763,6 +861,7 @@ void tt_opt_tick(void)
                 if (w->kind == K_VSHERO) { vs_hero_change(w->gfx, d); move_sound(); }
                 else change(w, d);
             }
+            if (s_sel >= nt && (edge & B_A) && rr[s_sel - nt].kind != K_VSHERO) { activate(&rr[s_sel - nt]); return; }   /* (P2 Controls: its page; the press is used up -- going on, it chose New Game on the new page's first row) */
             if (s_sel < nt && (edge & (B_A | B_START))) {
                 tt_coop_menu_go = s_sel + 1; s_exit_frames = 8;
                 if (s_vsmenu) { tt_vs_start_pending = 1; tt_vs_menu_on = 1; }
@@ -791,7 +890,11 @@ void tt_opt_tick(void)
         int n;
         const Row *r = rows(&n);
         if (!r) return;
-        if (edge & B_B) { s_page = PG_HUB; s_b_block = 1; move_sound(); return; }
+        if (edge & B_B) {
+            if (s_page == PG_P2CTL) { s_page = s_ret_page; s_sel = s_ret_sel; s_top = 0; }   /* (back where it was opened: Co-op Options or the Co-op menu) */
+            else s_page = PG_HUB;
+            s_b_block = 1; move_sound(); return;
+        }
         if (edge & B_UP) { if (s_sel > 0) { s_sel--; move_sound(); } }
         if (edge & B_DOWN) { if (s_sel < n - 1) { s_sel++; move_sound(); } }
         if (edge & B_LEFT) change(&r[s_sel], -1);
@@ -821,7 +924,7 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
         int hit = -1, k2;
         if (s_exit_frames > 0 || tt_coop_menu_go || G32(0x4AD050u) != 5) return 1;
         int nr, nt = cm_ntop(); const Row *rr = cm_rows(&nr);
-        for (i = 0; i < nt; i++) if (x >= CM_TOPX - 20 && x < CM_TOPX + 220 && fabsf(y - (CM_TOPY + i * CM_TOPSTEP + 15)) < CM_TOPSTEP * 0.5f) hit = i;
+        for (i = 0; i < nt; i++) if (x >= 200 && x < 440 && fabsf(y - (CM_TOPY + i * CM_TOPSTEP + 15)) < CM_TOPSTEP * 0.5f) hit = i;
         for (i = 0; i < nr; i++) if (x >= 10 && x < 630 && fabsf(y - (CM_ROWY + i * CM_STEP + 17)) < CM_STEP * 0.5f) hit = i + nt;
         if (hit >= 0 && (moved || clk) && hit != s_sel) { s_sel = hit; move_sound(); }
         if (hit >= 0 && clk) {
@@ -829,8 +932,10 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
             else { const Row *w = &rr[hit - nt]; int cnt;
                 if (w->kind == K_VSHERO) {   /* (1.9.7) the left half of the value (its "<" too) back, the right half (">") on */
                     if (x >= s_colx[0] - 60) { vs_hero_change(w->gfx, x < (s_colx[0] + 600) / 2 ? -1 : 1); move_sound(); } return 1; }
-                cnt = opt_count(w->gfx);
-                for (k2 = 0; k2 < cnt && k2 < 3; k2++) if (x >= s_colx[k2] - 8 && x < s_colx[k2] + 120 && k2 != opt_get(w->gfx)) { opt_set(w->gfx, k2); move_sound(); } }
+                if (w->kind == K_PAGE) activate(w);
+                else if (w->kind == K_CYCLE) { if (x >= s_colx[0] - 8 && x < s_colx[1] - 4) change(w, -1); else if (x >= s_colx[1] - 4 && x < s_colx[2] + 60) change(w, 1); }
+                else { cnt = opt_count(w->gfx);
+                    for (k2 = 0; k2 < cnt && k2 < 3; k2++) if (x >= s_colx[k2] - 8 && x < s_colx[k2] + 120 && k2 != opt_get(w->gfx)) { opt_set(w->gfx, k2); move_sound(); } } }
         }
         return 1;
     }
@@ -876,7 +981,9 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
             else if (x >= 200 && x < 480) activate(w);
             return 1;
         }
-        if (w->kind == K_RESET) { if (x < 330) activate(w); return 1; }
+        if (w->kind == K_RESET || w->kind == K_RESET2) { if (x < 330) activate(w); return 1; }
+        if (w->kind == K_PAGE) { activate(w); return 1; }
+        if (w->kind == K_BIND2) { if (x >= 290 && x < 530) change(w, x < 410 ? -1 : 1); return 1; }
         if (w->kind == K_DEV) { if (x >= s_colx[0] - 20) change(w, x < s_colx[0] + 6 ? -1 : 1); return 1; }
         cnt = opt_count(w->gfx);
         if (w->kind == K_COLS) {

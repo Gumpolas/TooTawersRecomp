@@ -539,8 +539,10 @@ static void sp_start(void) {}
  * mapped to. */
 #define PAD_NONE 0xFFu
 static volatile LONG s_player_pad[XBOX_MAX_CONTROLLERS] = { PAD_NONE, PAD_NONE, PAD_NONE, PAD_NONE };
-/* (a title's two-player modes) set by the title: with one controller, the
- * keyboard is player 1's and the controller player 2's */
+/* (a title's two-player modes) set by the title: with one controller and both
+ * players on automatic, the controller stays player 1's and player 2 has the
+ * keyboard and mouse (co-op: the controller in hand kept working as the game
+ * switched to two players; 1.9.6 gave it to player 2) */
 volatile int xbox_input_two_players;
 static volatile LONG s_pads_found;
 /* (two players) each player's device: -1 automatic, 0 keyboard and mouse
@@ -556,8 +558,14 @@ void xbox_InputDeviceName(int i, char *out, int n)
     if (i < 0 || i >= s_dev_n) { snprintf(out, n, "(not connected)"); return; }
     pad_name(s_dev_list[i], out, n);
 }
-/* the player the keyboard and mouse are (two players: player 2's when he chose them) */
-int xbox_InputKeyboardPort(void) { return xbox_input_two_players && xbox_input_dev_choice[1] == 0 ? 1 : 0; }
+/* the player the keyboard and mouse are (two players: player 2's when chosen, or
+ * when player 1 has a controller and player 2 none) */
+int xbox_InputKeyboardPort(void)
+{
+    if (!xbox_input_two_players || xbox_input_dev_choice[0] == 0) return 0;
+    if (xbox_input_dev_choice[1] == 0) return 1;
+    return s_player_pad[0] != PAD_NONE && s_player_pad[1] == PAD_NONE ? 1 : 0;
+}
 /* the device player n (0-1) has now: 0 keyboard / none, k the k-th controller */
 int xbox_InputPlayerDevice(int port)
 {
@@ -578,6 +586,9 @@ int xbox_InputPlayerHasDevice(int port)
     if (s_player_pad[port] != PAD_NONE) return 1;
     return port == xbox_InputKeyboardPort();
 }
+/* the connected pads in the scan's order, for a title's settings page
+ * (xbox_InputPadCount / Name / Peek / PlayerPadIndex) */
+static volatile LONG s_found_n, s_found[XBOX_MAX_CONTROLLERS + 8];
 static void pads_scan_once(void)
 {
     DWORD i, k, nf = 0, found[XBOX_MAX_CONTROLLERS + 8];
@@ -619,15 +630,30 @@ static void pads_scan_once(void)
         for (k = 2; k < XBOX_MAX_CONTROLLERS; k++) InterlockedExchange(&s_player_pad[k], (LONG)PAD_NONE);
     } else
     if (xbox_input_two_players && nf == 1) {
-        /* two players, one controller: player 1 has the keyboard and mouse,
-         * player 2 the controller */
-        InterlockedExchange(&s_player_pad[0], (LONG)PAD_NONE);
-        InterlockedExchange(&s_player_pad[1], (LONG)found[0]);
+        /* two players, one controller: player 1 keeps it, player 2 has the
+         * keyboard and mouse (xbox_InputKeyboardPort) */
+        InterlockedExchange(&s_player_pad[0], (LONG)found[0]);
+        InterlockedExchange(&s_player_pad[1], (LONG)PAD_NONE);
         for (k = 2; k < XBOX_MAX_CONTROLLERS; k++) InterlockedExchange(&s_player_pad[k], (LONG)PAD_NONE);
     } else
     for (k = 0; k < XBOX_MAX_CONTROLLERS; k++)
         InterlockedExchange(&s_player_pad[k], (LONG)(k < nf ? found[k] : PAD_NONE));
     InterlockedExchange(&s_pads_found, (LONG)nf);
+    for (k = 0; k < nf && k < XBOX_MAX_CONTROLLERS + 8; k++) InterlockedExchange(&s_found[k], (LONG)found[k]);
+    InterlockedExchange(&s_found_n, (LONG)nf);
+    {   /* each player's device, logged as it changes */
+        static LONG said0 = -2, said1 = -2, said_two = -1, said_kb = -1;
+        LONG p0 = s_player_pad[0], p1 = s_player_pad[1], kb = xbox_InputKeyboardPort();
+        if (p0 != said0 || p1 != said1 || said_two != xbox_input_two_players || said_kb != kb) {
+            said0 = p0; said1 = p1; said_two = xbox_input_two_players; said_kb = kb;
+            fprintf(stderr, "  [INPUT] %s: player 1 %s%ld, player 2 %s%ld, keyboard and mouse player %ld (choices %d / %d, %lu connected)\n",
+                    xbox_input_two_players ? "two players" : "one player",
+                    p0 == (LONG)PAD_NONE ? "no controller " : "pad ", p0 == (LONG)PAD_NONE ? 0L : (long)p0,
+                    p1 == (LONG)PAD_NONE ? "no controller " : "pad ", p1 == (LONG)PAD_NONE ? 0L : (long)p1,
+                    (long)kb + 1, xbox_input_dev_choice[0], xbox_input_dev_choice[1], (unsigned long)nf);
+            fflush(stderr);
+        }
+    }
     {
         static DWORD said = 0xFFFFFFFFu, said_first = 0xFFFFFFFFu;
         if (said != nf || (nf && said_first != found[0])) {
@@ -713,6 +739,45 @@ static DWORD pad_rumble(DWORD p, WORD l, WORD r)
 #endif
     (void)l; (void)r;
     return ERROR_DEVICE_NOT_CONNECTED;
+}
+
+/* The connected controllers, in the scan's order (a title's settings page):
+ * how many, the k-th one's name, and its state as it is (no bindings). */
+int xbox_InputPadCount(void) { pad_for(0); return (int)s_found_n; }
+void xbox_InputPadName(int k, char *out, int n)
+{
+    DWORD p;
+    if (!out || n <= 0) return;
+    out[0] = 0;
+    if (k < 0 || k >= (int)s_found_n) return;
+    p = (DWORD)s_found[k];
+    if (p < 8) { snprintf(out, (size_t)n, "XInput %lu", (unsigned long)p + 1); return; }
+#if HAVE_SDL_PADS
+    if (p - 8 < SP_MAX) { snprintf(out, (size_t)n, "%s", s_sp[p - 8].name); return; }
+#endif
+    snprintf(out, (size_t)n, "pad %lu", (unsigned long)p);
+}
+int xbox_InputPadPeek(int k, unsigned short *buttons, unsigned char *lt, unsigned char *rt, short *lx, short *ly, short *rx, short *ry)
+{
+    HostPad hp;
+    if (k < 0 || k >= (int)s_found_n || pad_read((DWORD)s_found[k], &hp) != ERROR_SUCCESS) return 0;
+    if (buttons) *buttons = hp.buttons;
+    if (lt) *lt = hp.lt;
+    if (rt) *rt = hp.rt;
+    if (lx) *lx = hp.lx;
+    if (ly) *ly = hp.ly;
+    if (rx) *rx = hp.rx;
+    if (ry) *ry = hp.ry;
+    return 1;
+}
+/* which of the connected controllers player 'port' has now (-1: none) */
+int xbox_InputPlayerPadIndex(int port)
+{
+    LONG p, k;
+    if (port < 0 || port >= XBOX_MAX_CONTROLLERS) return -1;
+    p = s_player_pad[port];
+    for (k = 0; k < s_found_n; k++) if (s_found[k] == p) return (int)k;
+    return -1;
 }
 
 /* Is player 1's pad a PlayStation one (for the button prompts). */
@@ -1271,7 +1336,7 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
             XBOX_GAMEPAD_LEFT_THUMB, XBOX_GAMEPAD_RIGHT_THUMB };
         int act;
         for (act = 0; act < BIND_MOVE_UP; act++) {
-            int src = xbox_BindPad(act);
+            int src = dwPort == 1 ? xbox_BindPad2(act) : xbox_BindPad(act);   /* (player 2's controller: its own buttons) */
             BYTE v;
             if (src == 7) v = hp.lt;
             else if (src == 8) v = hp.rt;

@@ -89,6 +89,23 @@ static int press_kb(void)
 }
 volatile uint32_t tt_unav_word_el, tt_unav_text;   /* (heroes.c, co-op) the label word to read "Unavailable" in this draw */
 static uint32_t s_unav_saved; static int s_unav_on;
+/* co-op: the story's levels play once. On the mission select (screen 1; place n is level n, 0-13), a level any hero
+ * has completed (0x000D2420's bytes: 0x4AB68F + hero * 15 + level) is "Already Beaten" in a co-op game: its hero lines
+ * (elements 0x42D590, 0x42D66C, 0x42D748, 0x42D824, filled by 0x00075250) give way to those words, and A / Start on it
+ * do nothing. Once the game is cleared (a hero has completed level 13, the test the map's own Isildur line makes) the
+ * levels are open again, with whatever else the game opens then. TT_COOP_NOLEVELLOCK: off */
+extern volatile int tt_coop_menu_on;
+static int coop_game_cleared(void) { int h; if (getenv("TT_COOP_TESTCLEARED")) return 1;   /* (test: as cleared) */
+    for (h = 1; h <= 3; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + 13u) == 1) return 1; return 0; }
+int tt_coop_level_locked(int lv)
+{
+    int h;
+    if (!tt_coop_menu_on || lv < 0 || lv > 13 || getenv("TT_COOP_NOLEVELLOCK") || coop_game_cleared()) return 0;
+    for (h = 1; h <= 4; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + (uint32_t)lv) == 1) return 1;
+    return 0;
+}
+static uint32_t s_beaten_txt, s_beaten_saved34; static int s_beaten_on, s_beaten_hid[3];
+static int beaten_here(void) { int c = (int)G32(0x4AD050u + 8u + 0x10u); return G32(0x4AD050u) == 1 && c >= 0 && c <= 13 && tt_coop_level_locked(c); }
 #define SHOP_REPLAY_LEAF 0x00425520u   /* the upgrade shop's Replay: its leaf (42, 373) and its word (11, 419) */
 #define SHOP_REPLAY_WORD 0x004256D8u
 #define STATS_REPLAY_LEAF 0x00426CD0u   /* the mission stats' Replay: its leaf (42, 373) and its word (11, 419) */
@@ -178,6 +195,16 @@ static void go_done(uint32_t el)
 }
 void tt_menu_el(uint32_t el, uint32_t ret)
 {
+    if ((el == 0x0042D590u || el == 0x0042D66Cu || el == 0x0042D748u || el == 0x0042D824u) && ret == 0x00076F17u && beaten_here()) {   /* (co-op: "Already Beaten" in the hero lines' place) */
+        if (el == 0x0042D590u) {
+            if (!s_beaten_txt) {
+                extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); extern int tt_tr16(const char *en, uint16_t *out, int max);
+                uint16_t t[48]; int i, n = tt_tr16("Already Beaten", t, 47);
+                if ((s_beaten_txt = xbox_ContiguousAlloc(128, 16u)) != 0) { for (i = 0; i < n; i++) G16(s_beaten_txt + 2 * i) = t[i]; G16(s_beaten_txt + 2 * i) = 0; }
+            }
+            if (s_beaten_txt) { s_beaten_saved34 = G32(el + 0x34); G32(el + 0x34) = s_beaten_txt; s_beaten_on = 1; }
+        } else { int k = el == 0x0042D66Cu ? 0 : el == 0x0042D748u ? 1 : 2; s_beaten_hid[k] = G8(el + 0x24) + 1; G8(el + 0x24) = 0; }
+    }
     diff_layout(el);
     go_layout(el);
     if (getenv("TT_GOLOG") && go_here()) { int x = (int)G32(el + 8), y = (int)G32(el + 0xC); static DWORD lt; static int n;
@@ -250,11 +277,14 @@ void tt_menu_list(uint32_t obj, int x, int y)
 /* after it is drawn: its own colour back */
 void tt_menu_el_done(uint32_t el)
 {
+    if (el == 0x0042D590u && s_beaten_on) { G32(el + 0x34) = s_beaten_saved34; s_beaten_on = 0; }
+    if (el == 0x0042D66Cu || el == 0x0042D748u || el == 0x0042D824u) { int k = el == 0x0042D66Cu ? 0 : el == 0x0042D748u ? 1 : 2; if (s_beaten_hid[k]) { G8(el + 0x24) = (uint8_t)(s_beaten_hid[k] - 1); s_beaten_hid[k] = 0; } }
     { int k = replay_slot(el); if (k >= 0 && s_replay_hidden[k]) { s_replay_hidden[k] = 0; G8(el + 0x24) = 1; } }
     if (s_unav_on && el == tt_unav_word_el) { G32(el + 0x34) = s_unav_saved; s_unav_on = 0; }
-    if (el == 0x00430ADCu) { extern void tt_coop_select_draw(void); tt_coop_select_draw(); }
+    if (G32(FE_SCREEN) == 1) { extern void tt_map_research(void); tt_map_research(); }
+    if (el == 0x00430ADCu) { extern void tt_coop_select_draw(void); tt_coop_select_draw(); }   /* the character select's last element (Help): co-op's prompt on top */
     if (el == DIFF_EXPERT) diff_imp_draw();
-    go_done(el);   /* the character select's last element (Help): co-op's prompt on top */
+    go_done(el);
     if (s_tint_on && el == s_tint_el) { G32(el + 0x20) = s_tint_saved; s_tint_on = 0; }
     if (s_press_on && el == PRESS_EL) { G32(el + 0x34) = s_press_saved; s_press_on = 0; }
     if (s_tint2_on && el == s_tint2_el) { G32(el + 0xB8) = s_tint2_saved; s_tint2_on = 0; }
@@ -882,6 +912,14 @@ static int map_here(void)
     return 0;
 }
 static int map_cur(void) { int c = (int)G32(MAP_OBJ + 0x10); return c >= 0 && c < MAP_NODES ? c : -1; }
+void tt_map_research(void)   /* (research) TT_COOP_MAPLOG: the place, and each hero's completed levels (0x000D2420's table) */
+{
+    static int last = -2; int c = map_cur(), h, l; char row[24];
+    if (!getenv("TT_COOP_MAPLOG") || !map_here() || c == last) return;
+    last = c;
+    tt_dbg("[MAPLOG] place %d (type %u), level [1BB2A4] %d%c", c, c >= 0 ? G32(MAP_NODETAB - 4 + c * 32) : 0, (int)G32(0x1BB2A4u), 10);
+    for (h = 0; h <= 4; h++) { for (l = 0; l < 15; l++) row[l] = (char)('0' + (G8(0x4AB68Fu + h * 15 + l) & 7)); row[15] = 0; tt_dbg("[MAPLOG]   hero %d completed: %s%c", h, row, 10); }
+}
 static int map_node_at(float x, float y)
 {
     int n, best = -1;
@@ -1046,9 +1084,51 @@ static void p2_turn_tick(void)
 /* the prompt, drawn with the select's own (heroes.c: the carousel's drawing, after it) */
 extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
 extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
+/* both picked: "Ready. Press Continue to begin" in the middle, in the main menu's font, with the main menu's selector
+ * flames (effect 0x1A of the particle manager at 0x4A02F8, started at a place by 0x000CB590 and stopped by
+ * 0x000CB4C0; a burst that dies down, so started again each 2.5 s) and its two cues as it appears. The game draws the
+ * select's 2D before its 3D heroes (they hid the line), so the line is a picture the renderer draws on the finished
+ * frame (ready_image, ptr_overlay); if that can't be made, a copy of the main menu's New Game element (font 3).
+ * TT_COOP_NOREADY: off */
+#define READY_Y 225       /* (the middle) */
+static const char s_ready_msg[] = "Ready. Press Continue to begin";
+static int ready_image(const char *msg);
+static volatile DWORD s_rd_show_t; static volatile int s_rd_ok;
+/* the flames: behind the heroes whatever their depth (the game draws its particles before its 3D characters: spawned at
+ * 0.15 of the manager's depth, +8, they still were) */
+static void ready_flames(void)
+{
+    uint32_t a[3] = { 0x1A, 0x140, READY_Y + 15 };
+    tt_gcall(0x000CB590u, MM_SWOOSH, 3, a);
+}
+static void ready_line(uint32_t mem, int on)
+{
+    static int was, tried; static DWORD t;
+    if (on && was && GetTickCount() - t > 2500) { t = GetTickCount(); ready_flames(); }
+    if (on != was) {
+        t = GetTickCount();
+        was = on;
+        if (on) { ready_flames(); play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f); tt_dbg("[P2SELECT] ready: the line and the flames on\n"); }
+        else { uint32_t a[1] = { 0x1A }; tt_gcall(0x000CB4C0u, MM_SWOOSH, 1, a); tt_dbg("[P2SELECT] ready: off\n"); }
+    }
+    if (!on) return;
+    if (!tried) { tried = 1; s_rd_ok = !getenv("TT_COOP_READYEL") && ready_image(s_ready_msg); }
+    if (s_rd_ok) { s_rd_show_t = GetTickCount(); return; }
+    if (mem) {   /* (fallback: behind the heroes) */
+        uint32_t e = mem + 0x400, tx = mem + 0x4E0, i; int n;
+        for (i = 0; i < 0xDC; i += 4) G32(e + i) = G32(MM_TABLE + 8 * EL_SIZE + i);
+        for (n = 0; s_ready_msg[n]; n++) G16(tx + 2 * n) = (uint8_t)s_ready_msg[n];
+        G16(tx + 2 * n) = 0;
+        G32(e + 8) = 20; G32(e + 0x10) = 600; G32(e + 0xC) = READY_Y; G32(e + 0x20) = COL_ON; G32(e + 0x34) = tx; G8(e + 0x24) = 1;
+        tt_gcall(0x000C8940u, e, 0, NULL);
+    }
+}
 void tt_coop_select_draw(void)
 {
     static uint32_t mem; uint32_t e, tmpl = 0; int i, n;
+    int rd = tt_coop_menu_on && s_p2t == 6 && charsel_here() && !getenv("TT_NOP2SELECT") && !getenv("TT_COOP_NOREADY");
+    if (rd && !mem) mem = xbox_ContiguousAlloc(0x600, 16u);
+    ready_line(mem, rd);
     if (!tt_coop_menu_on || (!s_p2msg[0] && !s_p1msg[0]) || !charsel_here() || getenv("TT_NOP2SELECT")) return;
     for (i = 0; i < s_nit; i++) if (s_it[i].ret == 0x00076F37u && s_it[i].text && s_it[i].font == 0) { tmpl = s_it[i].a; break; }   /* (Back, Continue, Help: font 0) */
     if (!tmpl) return;
@@ -1139,6 +1219,60 @@ static int (*s_prev_ovl)(XboxOverlayQuad *q, int max);
 static volatile int s_draw;
 static volatile float s_draw_x, s_draw_y, s_draw_k = 1;
 int (*volatile tt_ovl_extra)(XboxOverlayQuad *q, int max);   /* (coop-anything) extra quads, e.g. player 2's HUD panel; called before the cursor */
+/* co-op's "Ready. Press Continue to begin" as a picture in the main menu's font, drawn by the renderer on the finished
+ * frame (so in front of the select's 3D heroes, which the game draws after its 2D): font 3 (entries at 0x3A7AB8, 8
+ * bytes: its header, its texture object). Header: +8 the number of character ranges (16 bits), +0xC the ranges (12
+ * bytes: count, first character, glyphs); a glyph is 20 bytes: x0, y0, x1, y1 in the texture, then the advance and
+ * the line height (16 bits each). Texture: 256 x 512, NV2A format 0x19 (A8, swizzled), its data object at the
+ * texture object's +0x10 (+4 width, +8 height, +0x30 the pixels' physical address). Fill colour as the main menu's
+ * chosen item, a shadow 2 units down and right. */
+#define RD_MAXW 640
+#define RD_MAXH 40
+static uint32_t s_rd_px[RD_MAXW * RD_MAXH];
+static int s_rd_w, s_rd_h;
+static uint32_t rd_swz(uint32_t x, uint32_t y, int lw, int lh)
+{
+    uint32_t o = 0; int b = 0, i;
+    for (i = 0; i < (lw > lh ? lw : lh); i++) { if (i < lw) o |= ((x >> i) & 1u) << b++; if (i < lh) o |= ((y >> i) & 1u) << b++; }
+    return o;
+}
+static int ready_image(const char *msg)
+{
+    uint32_t h = G32(0x3A7AB8u + 8 * 3), to = G32(0x3A7AB8u + 8 * 3 + 4), d, px, r, g0, c0, cn;
+    int tw, th, lw = 0, lh = 0, w = 0, n, x, y, k;
+    static uint8_t a[RD_MAXW * RD_MAXH];
+    if (h < 0x80000000u || to < 0x80000000u || G16(h + 8) < 1) return 0;
+    d = G32(to + 0x10); if (d < 0x80000000u) return 0;
+    tw = (int)G32(d + 4); th = (int)G32(d + 8); px = 0x80000000u | G32(d + 0x30);
+    if (((G32(d + 0x38) >> 8) & 0xFF) != 0x19 || tw <= 0 || th <= 0 || tw > 4096 || th > 4096) { tt_dbg("[P2SELECT] ready: font 3's texture not as expected (format %08X, %dx%d)\n", G32(d + 0x38), tw, th); return 0; }
+    while ((1 << lw) < tw) lw++;
+    while ((1 << lh) < th) lh++;
+    r = G32(h + 0xC); cn = G32(r); c0 = G32(r + 4); g0 = G32(r + 8);
+    memset(a, 0, sizeof a);
+    for (n = 0; msg[n]; n++) {
+        uint32_t ch = (uint8_t)msg[n], e; int x0, y0, x1, y1;
+        if (ch < c0 || ch >= c0 + cn) continue;
+        e = g0 + 20 * (ch - c0);
+        x0 = (int)G32(e); y0 = (int)G32(e + 4); x1 = (int)G32(e + 8); y1 = (int)G32(e + 12);
+        for (y = y0; y < y1 && y < th; y++) for (x = x0; x < x1 && x < tw; x++) {
+            int ox = w + (x - x0), oy = y - y0;
+            if (ox >= 0 && ox < RD_MAXW - 2 && oy >= 0 && oy < RD_MAXH - 2) { uint8_t v = G8(px + rd_swz((uint32_t)x, (uint32_t)y, lw, lh)); if (v > a[oy * RD_MAXW + ox]) a[oy * RD_MAXW + ox] = v; }
+        }
+        w += G16(e + 16);
+    }
+    if (w <= 0) return 0;
+    if (w > RD_MAXW - 2) w = RD_MAXW - 2;
+    s_rd_w = w + 2; s_rd_h = (int)G16(h + 10) + 2; if (s_rd_h > RD_MAXH) s_rd_h = RD_MAXH;
+    for (y = 0; y < s_rd_h; y++) for (x = 0; x < s_rd_w; x++) {
+        float fa = a[y * RD_MAXW + x] / 255.0f, sa = (x >= 2 && y >= 2 ? a[(y - 2) * RD_MAXW + x - 2] / 255.0f : 0.0f) * 0.75f;
+        float oa = fa + sa * (1.0f - fa); uint32_t R = 0, G = 0, B = 0;
+        if (oa > 0) { R = (uint32_t)(0xF0 * fa / oa); G = (uint32_t)(0xD2 * fa / oa); B = (uint32_t)(0x9F * fa / oa); }
+        k = (int)(oa * 255.0f + 0.5f);
+        s_rd_px[y * s_rd_w + x] = ((uint32_t)k << 24) | (R << 16) | (G << 8) | B;
+    }
+    tt_dbg("[P2SELECT] ready: the line as a picture, %dx%d from font 3 (%dx%d texture)\n", s_rd_w, s_rd_h, tw, th);
+    return 1;
+}
 static int ptr_overlay(XboxOverlayQuad *q, int max)
 {
     int n = s_prev_ovl ? s_prev_ovl(q, max) : 0;
@@ -1149,6 +1283,11 @@ static int ptr_overlay(XboxOverlayQuad *q, int max)
         n++;
     }
     if (tt_ovl_extra && n < max) { int k = tt_ovl_extra(q + n, max - n); if (k > 0) n += k; }
+    if (s_rd_ok && n < max && GetTickCount() - s_rd_show_t < 200) {   /* co-op's Ready line, over the 3D heroes */
+        q[n].px = s_rd_px; q[n].w = s_rd_w; q[n].h = s_rd_h; q[n].ver = 11;
+        q[n].x = 320.0f - s_rd_w * 0.5f; q[n].y = (float)READY_Y; q[n].dw = (float)s_rd_w; q[n].dh = (float)s_rd_h;
+        n++;
+    }
     if (s_draw && n < max) {
         float k = s_draw_k;
         q[n].px = s_cur_px; q[n].w = CUR_W; q[n].h = CUR_H; q[n].ver = 1;
@@ -1368,7 +1507,7 @@ static void pad_filter(unsigned long port, XState *st)
                 }
             }
         }
-        if (inj && kbm) {
+        if (inj && (!xbox_input_two_players || port == 0)) {   /* (our own presses -- menu steps, clicks -- are player 1's: the menus read his pad, and with two players' input the keyboard can be player 2's) */
             static unsigned nlog;
             if (mouse_log() && nlog++ < 400) tt_dbg("[MOUSE] pad port %lu: +%05X (packet %08X)\n", port, inj, st->dwPacketNumber);
             p->wButtons |= (uint16_t)(inj & 0xFFFF);
@@ -1390,6 +1529,16 @@ static void pad_filter(unsigned long port, XState *st)
             if (abs(s2.Gamepad.sThumbLY) > abs(st->Gamepad.sThumbLY)) st->Gamepad.sThumbLY = s2.Gamepad.sThumbLY;
             st->dwPacketNumber += s2.dwPacketNumber << 8;
         }
+    }
+    if (port == 0 && getenv("TT_COOP_MAPJUMP") && map_here()) {   /* (test) TT_COOP_MAPJUMP=n: the map's place n chosen 2 s after the map shows */
+        static DWORD t0; static int done;
+        if (!t0) t0 = GetTickCount();
+        if (!done && GetTickCount() - t0 > 2000) { done = 1; map_jump(atoi(getenv("TT_COOP_MAPJUMP"))); tt_dbg("[COOPLOCK] test: map place %d chosen%c", map_cur(), 10); }
+    }
+    if (port < 4 && beaten_here() && !charsel_here() && s_nls[s_cur ^ 1] == 0) {   /* (co-op: an Already Beaten level can't be started; not while a question's list is up: leaving the map asks to save, and its answers were taken too */
+        static DWORD lt;
+        if ((st->Gamepad.bAnalogButtons[0] > 30 || (st->Gamepad.wButtons & PAD_START)) && GetTickCount() - lt > 1000) { lt = GetTickCount(); tt_dbg("[COOPLOCK] level %d already beaten: not started\n", (int)G32(0x4AD050u + 8u + 0x10u)); }
+        st->Gamepad.bAnalogButtons[0] = 0; st->Gamepad.wButtons &= (uint16_t)~PAD_START;
     }
     if (tt_mm_input(port, st->Gamepad.bAnalogButtons[0] > 30, (st->Gamepad.wButtons & PAD_START) != 0)) {
         st->Gamepad.bAnalogButtons[0] = 0;
