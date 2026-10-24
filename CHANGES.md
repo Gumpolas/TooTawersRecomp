@@ -2561,3 +2561,146 @@ twotowers/src/twotowers_manual.c, apu/apu_vp.c (1.9.6)
     and its sound were cut short). TT_NO_UPGCOUNTFIX=1: as before.
   - Testing: TT_UPGXP=n (the hero's experience on the upgrade screen),
     RECOMP_APU_OFFBT=<base> (Linux: who stops a sound).
+
+-- 1.9.7: Versus -----------------------------------------------------------
+twotowers/src/twotowers_manual.c
+  - Versus (tt_vs_on: a co-op game from the main menu's Versus, or
+    TT_VERSUS=1 with TT_COOP=clone): the heroes' attack boxes get the mask
+    of a character on neither side (0x80008E, sub_000BA020), so each hits
+    the other.
+  - The arena: the level's records of type 2, 3, 5, 11, 16 (but the
+    opening "missionStart" cut-scene), 19 and 29 are not made
+    (sub_000F5BC0; TT_VS_OUT=types, TT_VS_KEEPCAST); messages to no one
+    are dropped (sub_000C6F60; they hung the game).
+  - Rounds (vs_frame): best of three; even health (TT_VS_HP), every move
+    bought (sub_0009CAB0), no respawn wait or game over; the banner in the
+    respawn counter's element.
+  - The P2 Bot and the test bot (TT_COOP_P1SEEK=2) fight the other hero.
+  - The new game (0x000D1C10) becomes the match: the arena's level
+    (0x1BB2A4), player 1's hero (heroes.c tt_heroes_p1_pick), player 2's.
+  - No opening cut-scene (TT_VS_KEEPSTART keeps it): the controls it would
+    hand over ([0x43B1B4] = 0) are given at the first frame of play.
+  - The countdown (vs_state 3, tt_vs_frozen: both pads zeroed): the round,
+    3, 2, 1 (the Options' tick, options.c tt_opt_move_sound) in the rating
+    word's big letters, FIGHT (versus/fight.wav through the APU's software
+    mixer: versus.c tt_vs_play_wav).
+  - A hero at 0 falls (INP_KNOCKDOWN, held at 0 health) and stands at the
+    next round's countdown (from 50: 47, INP_RESSURECT).
+  - Each hero's target (component +0x98) is the other: the player's world
+    pass clears it on everyone outside its lists (0x5A450 -> 0x53B30, now
+    skipped for the heroes' components in Versus).
+  - Ranged: the game's projectiles pass through a hero of the shooter's
+    side, so a shot at the other (the launch, sub_000D9460, [esp+0x18] the
+    shooter) is judged by its flight time: a hit if he is within 2.2 units
+    of where he stood (TT_VS_ARROWDMG, 45; axes x1.5, bolts x1.33, stones
+    x0.67). 10 shots a round (TT_VS_AMMO), one a second (A held back at
+    the pad), none on Weathertop and the prologue (LT held back).
+  - Pickups: the level's dynamic pickups put out (0x8F410, 0x8F640) each
+    round: health in the middle, ammo each side; taken within 1.4 units
+    (vs_pk_touch: their own touch never comes here). Double Pickups off.
+  - The pause menu without Show Upgrades (its count at 0x4B5808).
+  - The results (vs_results_hud): the match's numbers (tt_vs_st) and two
+    awards, HUD text over versus/results_bg.bmp (a texture of our own,
+    heroes.c tt_vs_image_pixels).
+  - Music: the arena's scripts (which start it) are not run, so the
+    donor level's track (versus.c; its bank in place of the arena's,
+    lang.c) is started at the first FIGHT through the front end's own
+    call (0x000C31C0: name, 1 = play, 1, 0); streams of the arena's own
+    are renamed to the donor's (sub_000EBF10).
+  - Find the Shield (tt_vs_mode 1): a pickup on a walkable pathmap cell
+    14-30 units away, no damage until it is taken, the carrier x1.33,
+    1 point for beating him / 2 for him, first to 20.
+  - The Nazgul's fall (vs_flee): his run away from the other for 1.7 s
+    (his matrix turned the way he goes: right +0x60, forward +0x70), then
+    not drawn (+0x110 bit 0x20000, his weapons' too) until he stands.
+  - The shield orc's shield (tt_vs_shield_take): half damage while it
+    holds, six blows (100 or more: two) break it -- its vertices folded
+    onto one point (heroes.c tt_heroes_shield_show); whole each round.
+  - Swings judged where the arena gives heroes no damage (the prologue,
+    Weathertop): a hero's attack box with no real hit within 450 ms.
+  - Fix: a hit could count 0 -- the even-health clamp undid the health
+    guard's +100000 (now only below 50000).
+  - Health 1500 (from 1000), best of five (Deathmatch).
+  - Nobody moves from the level's first frame until FIGHT (player 1's pad
+    was only held once player 2 was in: the first seconds were free).
+  - Pickups stay: a dynamic pickup's item goes at 6 s (0x8F410: +0x430 4 s,
+    +0x434 6 s) and only its glow was left; their age (+0x400) is kept 0.
+  - Voices of our own (versus.c tt_vs_voice, the game's level banks
+    decoded): efforts on swings, cries when struck, the death cry when a
+    hero falls; the game's own were seldom heard.
+  - Amon Hen: the heroes stay within 50 units of the match's start (past
+    it the unfinished level, a brown wall); the shield is put inside.
+  - Our camera is put in again right after the game's camera update
+    (0x68DC0), before the view is made.
+  - The level's sfxVolume objects (type 19) are kept.
+twotowers/src/heroes.c
+  - Versus' three guests (N_EXTRA 10; the select, its menus, voices,
+    unlocks and records keep the seven, N_SEL): the Nazgul (01WEAT1:
+    AEF3DB04 / 066DCD53 / AE89108E, the Ringwraiths' sword C0F2C17C),
+    the shield orc (00ISUL1 OrcMel5: 2D965DE8 / A1D1A7E9 / 3E31996A, his
+    spear 075091FC, his shield 4B82EA5C in his model), Eomer (16ROHAN1
+    rCaptainObj: 5654A508 / 817EFC59 / 4058E474, sword C0F2C17C). Their
+    own swings, flinches, falls and deaths; the hero's kick, parry and
+    throw fitted to them; voices from 01WEAT1, 00ISUL1 and 16ROHAN2; they
+    throw rocks as the Uruk-hai.
+  - A shield in a model whose strip has an odd count (the orc's): one
+    more degenerate index keeps the winding.
+  - records.dat keeps its seven guests (the Versus-only ones not kept).
+twotowers/src/options.c
+  - The arena row: every level but Westfold. The Versus menu's background
+    is versus/menu_bg.bmp. The Mode row (Deathmatch: the smaller arenas,
+    Find the Shield: the bigger); the Versus-only heroes in the hero rows.
+twotowers/src/menus.c
+  - Fix: Co-op or Versus pressed with the keyboard: the safety net set the
+    game's next screen to 0 after the press had been handed over as
+    Options (a null screen object, a hang).
+twotowers/src/menus.c, options.c
+  - The main menu's Versus (item 5, Exit item 6; Help moved to the bottom
+    right) opens the Versus menu: each player's hero, the arena, Start.
+
+--- 1.9.7 release fixes ---
+twotowers/src/twotowers_manual.c
+  - Player 2 drawn on every arena: his own place in the level's draw tree
+    (0x42ED0), not player 1's (Fangorn, the Road to Helm's Deep).
+  - Orthanc: our camera, starting spots on a circle; the stick goes by the
+    view on our-camera arenas (the camera's turn, +0x60 / +0x84).
+  - Starting spots 30 apart on a walkable line; on the bigger arenas the
+    rounds after the first go on where the heroes are.
+  - Kicks do almost no damage; a guard breaks after 4 blocks in a row
+    (the blow then lands).
+  - Each hero's own voice and the blows at full strength through the
+    port's mixer; the voices at their banks' true rate (they were an
+    octave low).
+  - Player 2's health bar as long as player 1's, its silver strip
+    mirrored.
+  - Amon Hen keeps its edge (50 units); the rest of the map is for later.
+twotowers/src/menus.c
+  - The main menu's Co-op / Versus: when the game does not take the press
+    (the menu stayed with Options under it, the next press opened
+    Credits), Start is pressed for it, and if the menu still stays the
+    choice is undone.
+  - Versus' progress kept apart: the save data's hero records, levels and
+    upgrades (0x4AB598-0x4AC740) are kept when the Versus menu opens and
+    put back when Versus is left; heroes.c keeps the extra heroes'
+    records and writes nothing to records.dat meanwhile. Versus' new game
+    and its top level no longer reach the campaign.
+xboxrecomp-0.12.0/src/video/gfx_menu.c
+  - The More page without HDR, HDR paper white, Distant texture detail,
+    Hero damage, Foe damage and Trigger pull needed: they stay at their
+    defaults whatever the ini says.
+  - The stick dead zone off the More page too (still [Input]
+    stick_deadzone in the ini).
+twotowers/src/options.c
+  - The Gameplay Options page removed (Impossible is on the difficulty
+    screens and General Options).
+twotowers/src/twotowers_manual.c (high frame rates)
+  - Fire and blasts: a character's or a gate's update (0x843F0, 0x90240)
+    takes the fire and blast damage 0x87B80 reports every frame, while
+    that damage fades with time -- at 300 fps ten times what 30 fps
+    gave. The Breached Wall's gate fell to the catapults within a minute
+    at 500 fps (tests: 60000 gone by 55 s; about 6000 at 30 fps). The
+    damage is now taken at most once per 1/30 s of game time for each
+    one hit (0x92000 from 0x90503, 0x834B0 / 0x832F0 from 0x848EE /
+    0x8490D); TT_FIRE_PERFRAME: as the game did.
+twotowers/src/twotowers_manual.c (credits)
+  - The credits scroll by time, not by frames (too fast above 30 fps).

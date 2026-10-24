@@ -935,9 +935,27 @@ static const char *lang_copy(const char *xp, const char *src)
 /* language's                                                              */
 /* ===================================================================== */
 const char *(*tt_heroes_redirect)(const char *xp);
+/* (Versus) the arena's streaming sound bank (its music) from another level: tt_vs_music_donor() names the level
+ * (NULL: the arena's own) */
+extern const char *tt_vs_music_donor(const char *level_of_file);
+static const char *vs_music_redirect(const char *xp)
+{
+    static char out[900]; char x[300]; const char *b, *d; size_t L = strlen(xp);
+    if (L < 20 || L > 250) return NULL;
+    b = strrchr(xp, '\\'); if (!b) return NULL; b++;
+    if (_strnicmp(b, "S_WB_", 5) && _strnicmp(b, "S_SB_", 5)) return NULL;
+    {   char lv[16]; size_t i; for (i = 0; i < 15 && b[5 + i] && b[5 + i] != '.'; i++) lv[i] = b[5 + i]; lv[i] = 0;
+        d = tt_vs_music_donor(lv); if (!d) return NULL;
+        snprintf(x, sizeof x, "%.*s%.5s%s%s", (int)(b - xp), xp, b, d, strchr(b, '.') ? strchr(b, '.') : "");
+    }
+    if (!host_path(x, out, sizeof out)) return NULL;
+    { extern void tt_dbg(const char *, ...); tt_dbg("[VS] music: %s -> %s\n", xp, out); }
+    return out;
+}
 static const char *redirect_all(const char *xp)
 {
     const char *r = tt_heroes_redirect ? tt_heroes_redirect(xp) : NULL;
+    { const char *v = vs_music_redirect(xp); if (v) return v; }
     char src[900];
     if (!tt_lang_on() || !texty(xp)) return r;
     if (r) snprintf(src, sizeof src, "%s", r);

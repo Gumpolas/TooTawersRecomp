@@ -190,7 +190,7 @@ static const char s_hlsl_src[] =
 "}\n"
 /* Picture adjustments on the way to the window (b3): post.x = brightness
  * (gamma, 1 = original), post.y = sharpening, post.z = colour saturation. */
-"cbuffer POSTC : register(b3) { float4 post; };\n"
+"cbuffer POSTC : register(b3) { float4 post; float4 look; float4 look2; float4 shade; float4 light; float4 hdr; };\n"
 "float3 sharp_apply(float3 c, float3 n, float3 s, float3 w, float3 e) {\n"
 "  float3 mn = min(c, min(min(n, s), min(w, e))), mx = max(c, max(max(n, s), max(w, e)));\n"
 "  float3 amp = saturate(min(mn, 1.0 - mx) / max(mx, 1e-4));\n"     /* CAS-style: less where contrast is already high */
@@ -226,10 +226,34 @@ static const char s_hlsl_src[] =
 "  }\n"
 "  return c;\n"
 "}\n"
+/* (1.9.7) the colour looks (as Athelas', MIT): look = contrast, pivot, saturation, vibrance; look2 = gamma, strength;
+ * a tint over the shadows and one over the lights. hdr.x on: the picture to linear light for an scRGB swap chain,
+ * normal scenes at paper white (hdr.y) and the brightest tops raised towards the screen's peak (hdr.z times it) */
+"float3 post_look(float3 c) {\n"
+"  if (look2.y <= 0) return c;\n"
+"  float3 in0 = saturate(c);\n"
+"  float3 x = look.y + (pow(in0, look2.x) - look.y) * look.x;\n"
+"  x = max(x, 0);\n"
+"  x = lerp(x, 0.9 + 0.1 * (1 - 2 / (exp(min((x - 0.9) / 0.05, 60)) + 1)), step(0.9, x));\n"
+"  float l = dot(x, float3(0.2126, 0.7152, 0.0722));\n"
+"  float mx = max(x.r, max(x.g, x.b)), mn = min(x.r, min(x.g, x.b));\n"
+"  float sat = look.z * (1 + look.w * (1 - (mx - mn) / (mx + 1e-4)));\n"
+"  float ws = (1 - l) * min(l * 6, 1);\n"
+"  float3 v = l + (x - l) * sat + ws * shade.rgb + l * light.rgb;\n"
+"  return lerp(in0, saturate(v), look2.y);\n"
+"}\n"
+"float3 post_hdr(float3 c) {\n"
+"  if (hdr.x <= 0) return c;\n"
+"  float3 lin = pow(saturate(c), 2.2);\n"
+"  float mx = max(lin.r, max(lin.g, lin.b));\n"
+"  float s = saturate((mx - 0.6) / 0.4);\n"
+"  lin *= 1 + (hdr.z - 1) * s * s * s;\n"
+"  return lin * hdr.y;\n"
+"}\n"
 "float3 post_grade(float3 c) {\n"
 "  c = pow(saturate(c), 1.0 / post.x);\n"
 "  float l = dot(c, float3(0.299, 0.587, 0.114));\n"
-"  return saturate(lerp(l.xxx, c, post.z));\n"
+"  return post_hdr(post_look(saturate(lerp(l.xxx, c, post.z))));\n"
 "}\n"
 "float4 ps_present(PV i) : SV_Target {\n"
 "  float2 f = ds_foot(i.uv);\n"
@@ -237,6 +261,8 @@ static const char s_hlsl_src[] =
 "  float3 c = tx0.Sample(sm0, i.uv).rgb; return float4(post_grade(post_sharp(c, i.uv)), 1);\n"
 "}\n"
 "float4 ps_copy(PV i) : SV_Target { return tx0.Sample(sm0, i.uv); }\n"
+/* (1.9.7) the overlays (F10 panel, notes, banner) on an HDR screen: at paper white, as the picture's normal scenes */
+"float4 ps_menu(PV i) : SV_Target { float4 c = tx0.Sample(sm0, i.uv); if (hdr.x > 0) c.rgb = pow(saturate(c.rgb), 2.2) * hdr.y; return c; }\n"
 /* (1.9) MSAA: a multisampled zeta surface's depth, one sample, into the
  * plain one the title samples as a texture */
 "Texture2DMS<float> txms : register(t7);\n"

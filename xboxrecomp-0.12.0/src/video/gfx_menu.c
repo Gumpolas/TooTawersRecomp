@@ -101,7 +101,39 @@ static GfxItem s_items[GFX_N] = {
       "Portrait, rune orb and EXP readout of the ECTS 2002 demo" },
     { "Mod: Orange health pickups", "e3_pickups", 2, { "Off", "On" }, { "0", "1" },
       "Health pickups are orange, as in pre-release and making-of videos" },
+    /* (1.9.7) the More page */
+    { "Colour grading", "colour_look", 4, { "None", "Cinema", "Rich", "Shadow" }, { "original", "film", "vivid", "dark" },
+      "Cinema: warm lights, cool shadows. Rich: deeper colour. Shadow: colder and darker" },
+    { "Grading amount", "look_strength", 4, { "25%", "50%", "75%", "Full" }, { "0.25", "0.5", "0.75", "1" }, "How much of the colour grading is used" },
+    { "HDR", "hdr", 2, { "Off", "On" }, { "0", "1" }, "For HDR screens with Windows HDR on: fire, sky and lights shine brighter" },
+    { "HDR paper white", "hdr_paper", 5, { "160 nits", "200 nits", "250 nits", "300 nits", "400 nits" }, { "160", "200", "250", "300", "400" },
+      "How bright normal scenes and the HUD are on an HDR screen" },
+    { "Distant texture detail", "lod_bias", 4, { "Original", "More", "Most", "Less" }, { "0", "-0.5", "-1", "0.5" },
+      "More keeps finer texture detail further away (it can shimmer)" },
+    { "Movie sharpness", "movie_sharpening", 4, { "Original", "Low", "Medium", "High" }, { "0", "0.4", "0.7", "1" },
+      "Crisper edges in the 640 x 480 films" },
+    { "Hero damage", "damage_taken", 8, { "25%", "50%", "75%", "Original", "125%", "150%", "200%", "300%" },
+      { "25", "50", "75", "100", "125", "150", "200", "300" }, "How hard enemies hit your heroes (on top of the difficulty)" },
+    { "Foe damage", "enemy_damage", 8, { "25%", "50%", "75%", "Original", "125%", "150%", "200%", "300%" },
+      { "25", "50", "75", "100", "125", "150", "200", "300" }, "How hard your heroes hit enemies" },
+    { "Rumble strength", "vibration", 5, { "Off", "25%", "50%", "75%", "100%" }, { "0", "25", "50", "75", "100" }, "Controller rumble strength" },
+    { "Stick dead zone", "stick_deadzone", 7, { "Off", "5%", "10%", "15%", "20%", "25%", "30%" }, { "0", "5", "10", "15", "20", "25", "30" },
+      "How far a stick must move before it counts; raise it if your hero drifts" },
+    { "Trigger pull needed", "trigger_threshold", 6, { "As the game", "10%", "20%", "30%", "40%", "50%" }, { "0", "10", "20", "30", "40", "50" },
+      "How far the triggers must be pulled to count as pressed" },
+    { "Pause when unfocused", "pause_unfocused", 2, { "Off", "On" }, { "0", "1" }, "The game stops while another window is in front" },
+    { "Mute when unfocused", "mute_unfocused", 2, { "Off", "On" }, { "0", "1" }, "No sound while another window is in front" },
+    { "Achievements", "achievements", 2, { "Off", "On" }, { "0", "1" }, "Off: none are earned and no notes appear (the list is kept)" },
 };
+/* the More page's defaults (index into each item's values) */
+static const int s_more_def[GFX_N - GFX_MORE0] = { 0, 3, 0, 1, 0, 0, 3, 3, 4, 2, 0, 0, 0, 1 };
+/* (1.9.7 release) settings taken off the More page: kept at their defaults (HDR off, original texture distance, original
+ * damage both ways, the game's own trigger pull), whatever an ini says */
+static int more_forced(int k) { return k == GFX_HDR || k == GFX_HDRPAPER || k == GFX_LOD || k == GFX_DMGTAKEN || k == GFX_DMGENEMY || k == GFX_TRIGGER; }
+/* (also off the page: the stick dead zone -- still read from the ini, [Input] stick_deadzone) */
+static int more_hidden(int k) { return more_forced(k) || k == GFX_DEADZONE; }
+static int more_n(void) { int k, n = 0; for (k = GFX_MORE0; k < GFX_N; k++) n += !more_hidden(k); return n; }
+static int more_item(int row) { int k, r = 0; for (k = GFX_MORE0; k < GFX_N; k++) if (!more_hidden(k) && ++r == row) return k; return GFX_MORE0; }
 
 static int s_cur[GFX_N];
 static char s_aspect_custom[32], s_aspect_name[48];
@@ -259,6 +291,17 @@ static void gfx_init(void)
             if (e && (i = find_val(fl[k].item, e)) >= 0) s_cur[fl[k].item] = i;
         }
     }
+    {   /* (1.9.7) the More page: RECOMP_OPT_<key> (the title sets them from its ini), else the defaults */
+        int k, j; char nm[64];
+        for (k = GFX_MORE0; k < GFX_N; k++) {
+            s_cur[k] = s_more_def[k - GFX_MORE0];
+            snprintf(nm, sizeof nm, "RECOMP_OPT_%s", s_items[k].key);
+            for (j = 11; nm[j]; j++) if (nm[j] >= 'a' && nm[j] <= 'z') nm[j] = (char)(nm[j] - 32);
+            e = getenv(nm);
+            if (e && (i = find_val(k, e)) >= 0 && !more_forced(k)) s_cur[k] = i;
+        }
+        if (!getenv("RECOMP_OPT_STICK_DEADZONE") && (e = getenv("RECOMP_STICK_DEADZONE")) && (i = find_val(GFX_DEADZONE, e)) >= 0) s_cur[GFX_DEADZONE] = i;
+    }
     InterlockedExchange(&s_inited, 1);
 }
 
@@ -405,7 +448,26 @@ void xbox_GfxMenuToggle(void)
 /* Pages: 0 = Graphics, 1 = Controls. Row 0 of each page picks the page.
  * Graphics rows 1..GFX_MENU_N are the options; Controls rows 1..BIND_N are the
  * actions and BIND_N + 1 resets every binding. */
-static int s_page, s_row[2], s_top;          /* s_top: first action row shown */
+static int s_page, s_row[4], s_top;          /* s_top: first action row shown */
+/* (1.9.7) page 2: the title's achievements (xbox_GfxSetAchievements), a list to look through */
+static int (*s_ach_n)(void), (*s_ach_got)(int);
+static const char *(*s_ach_name)(int), *(*s_ach_desc)(int);
+static int s_atop;
+#define ACH_ROWS 11
+void xbox_GfxSetAchievements(int (*count)(void), const char *(*name)(int), const char *(*desc)(int), int (*earned)(int))
+{ s_ach_n = count; s_ach_name = name; s_ach_desc = desc; s_ach_got = earned; }
+static int n_pages(void) { return s_ach_n && s_ach_n() > 0 ? 4 : 3; }
+static const char *page_name(int p) { return p == 0 ? "Graphics" : p == 1 ? "Controls" : p == 2 ? "Achievements" : "More"; }
+/* (1.9.7) the pages in order: Graphics, More, Controls, Achievements (ids 0, 3, 1, 2) */
+static int page_next(int p, int d)
+{
+    static const int ord[4] = { 0, 3, 1, 2 };
+    int n = n_pages(), i, k = 0;
+    for (i = 0; i < 4; i++) if (ord[i] == p) k = i;
+    if (k >= n) k = 0;
+    k = (k + d % n + n) % n;
+    return ord[k];
+}
 static int s_capture;                        /* capturing a key for action s_row[1]-1 */
 static unsigned char s_cap_held[256];
 #define CTRL_ROWS 9                          /* action rows visible at once */
@@ -414,7 +476,7 @@ extern int xbox_InputKeyDown(int vk);
 /* (1.9.1) Sauron's sprint is gone: its item stays (the numbers after it
  * keep their places) but no row shows it */
 static int row_item(int row) { int i = row - 1; return i >= GFX_SPRINT ? i + 1 : i; }
-static int page_rows(int p) { return p == 0 ? GFX_MENU_N : BIND_N + 2; }
+static int page_rows(int p) { return p == 0 ? GFX_MENU_N : p == 1 ? BIND_N + 2 : p == 3 ? 1 + more_n() : 1 + (s_ach_n ? s_ach_n() : 0); }
 
 static void gfx_nav(int dy, int dx)
 {
@@ -425,8 +487,10 @@ static void gfx_nav(int dy, int dx)
         s_ver++;
     }
     if (dx) {
-        if (*row == 0) { s_page = !s_page; s_ver++; }
+        if (*row == 0) { s_page = page_next(s_page, dx); s_ver++; }
         else if (s_page == 0) gfx_set(row_item(*row), s_cur[row_item(*row)] + dx);
+        else if (s_page == 3) gfx_set(more_item(*row), s_cur[more_item(*row)] + dx);
+        else if (s_page == 2) ;
         else if (*row <= BIND_N && xbox_BindIsButton(*row - 1)) {
             /* left/right: which button of your controller gives this action */
             int src = (xbox_BindPad(*row - 1) + dx + BIND_PAD_N) % BIND_PAD_N;
@@ -444,9 +508,14 @@ static void gfx_activate(void)
     EnterCriticalSection(&s_lock);
     if (s_page == 0) {
         if (row > 0) gfx_set(row_item(row), s_cur[row_item(row)] + 1);
-        else s_page = 1;
+        else s_page = page_next(s_page, 1);
+    } else if (s_page == 3) {
+        if (row > 0) gfx_set(more_item(row), s_cur[more_item(row)] + 1);
+        else s_page = page_next(s_page, 1);
+    } else if (s_page == 2) {
+        if (row == 0) s_page = page_next(s_page, 1);
     } else if (row == 0) {
-        s_page = 0;
+        s_page = page_next(s_page, 1);
     } else if (row == BIND_N + 1) {
         xbox_BindResetAll();
         fprintf(stderr, "  [GFXMENU] controls reset to the defaults\n");
@@ -509,6 +578,10 @@ void xbox_GfxMenuPad(XBOX_INPUT_STATE *st)
     int lx = st->Gamepad.sThumbLX, ly = st->Gamepad.sThumbLY, a = st->Gamepad.bAnalogButtons[XBOX_BUTTON_A] > 64,
         bb = st->Gamepad.bAnalogButtons[XBOX_BUTTON_B] > 64;
     gfx_init();
+    {   /* testing: RECOMP_GFXMENU_OPEN_AT=ms (from the first pad read) opens it on page RECOMP_GFXMENU_PAGE */
+        static int done; static DWORD t0; const char *e = getenv("RECOMP_GFXMENU_OPEN_AT");
+        if (e && !done) { if (!t0) t0 = now; if (now - t0 >= (DWORD)atoi(e)) { done = 1; if (!s_open) xbox_GfxMenuToggle(); s_page = getenv("RECOMP_GFXMENU_PAGE") ? atoi(getenv("RECOMP_GFXMENU_PAGE")) % 4 : 0; s_row[s_page] = 1; s_ver++; } }
+    }
     /* stick as d-pad */
     if (ly > 16000) b |= XBOX_GAMEPAD_DPAD_UP;
     if (ly < -16000) b |= XBOX_GAMEPAD_DPAD_DOWN;
@@ -559,6 +632,7 @@ void xbox_GfxMenuPad(XBOX_INPUT_STATE *st)
     }
 }
 
+static void panel_body(int pw, int ph, int fp, int lh);
 /* ---------------- drawing (GDI into a DIB, shown by the renderer) -------- */
 #if defined(_WIN32)
 
@@ -602,9 +676,39 @@ static void box(int x, int y, int w, int h, COLORREF c)
     DeleteObject(b);
 }
 
+/* (1.9.7) a second surface for the toast (an achievement's note): drawn with the same txt() and box(), the panel's
+ * globals pointed at it for the while */
+static HDC s_tdc[2]; static HBITMAP s_tbmp[2]; static uint32_t *s_tpxa[2]; static int s_twa[2], s_tha[2], s_tfpx[2];
+static HFONT s_tf[2], s_tfb[2];
+static HDC s_sv_dc; static uint32_t *s_sv_px; static int s_sv_pw, s_sv_ph;
+static int toast_begin(int k, int w, int h, int fp, HFONT *f, HFONT *fb)
+{
+    if (w != s_twa[k] || h != s_tha[k] || !s_tdc[k]) {
+        BITMAPINFO bi;
+        if (!s_tdc[k]) s_tdc[k] = CreateCompatibleDC(NULL);
+        if (s_tbmp[k]) DeleteObject(s_tbmp[k]);
+        memset(&bi, 0, sizeof bi);
+        bi.bmiHeader.biSize = sizeof bi.bmiHeader; bi.bmiHeader.biWidth = w; bi.bmiHeader.biHeight = -h;
+        bi.bmiHeader.biPlanes = 1; bi.bmiHeader.biBitCount = 32;
+        s_tbmp[k] = CreateDIBSection(s_tdc[k], &bi, DIB_RGB_COLORS, (void **)&s_tpxa[k], NULL, 0);
+        if (!s_tbmp[k]) { s_tpxa[k] = NULL; s_twa[k] = 0; return 0; }
+        SelectObject(s_tdc[k], s_tbmp[k]); s_twa[k] = w; s_tha[k] = h;
+    }
+    if (fp != s_tfpx[k]) {
+        if (s_tf[k]) DeleteObject(s_tf[k]);
+        if (s_tfb[k]) DeleteObject(s_tfb[k]);
+        s_tf[k] = mkfont(fp, FW_NORMAL, "Palatino Linotype"); s_tfb[k] = mkfont(fp * 12 / 10, FW_BOLD, "Palatino Linotype"); s_tfpx[k] = fp;
+    }
+    *f = s_tf[k]; *fb = s_tfb[k];
+    s_sv_dc = s_dc; s_sv_px = s_px; s_sv_pw = s_pw; s_sv_ph = s_ph;
+    s_dc = s_tdc[k]; s_px = s_tpxa[k]; s_pw = w; s_ph = h;
+    SetBkMode(s_dc, TRANSPARENT);
+    return 1;
+}
+static void toast_end(void) { GdiFlush(); s_dc = s_sv_dc; s_px = s_sv_px; s_pw = s_sv_pw; s_ph = s_sv_ph; }
 int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver)
 {
-    int fp, lh, pw, ph, y, i, M;
+    int fp, lh, pw, ph;
     if (!s_open) return 0;
     EnterCriticalSection(&s_lock);
     fp = sch / 34;
@@ -637,90 +741,7 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
         s_font_px = fp; s_drawn_ver = 0;
     }
     if (s_drawn_ver != s_ver) {
-        COLORREF gold = RGB(214, 182, 96), parch = RGB(226, 214, 186), dim = RGB(150, 138, 112);
-        COLORREF selc = RGB(255, 236, 170), white = RGB(255, 255, 255);
-        int border = fp / 6 < 2 ? 2 : fp / 6, lx, vx, vw, row = s_row[s_page];
-        char v[96];
-        const char *note = NULL;
-        M = fp;
-        SetBkMode(s_dc, TRANSPARENT);
-        box(0, 0, pw, ph, gold);
-        box(border, border, pw - 2 * border, ph - 2 * border, RGB(16, 13, 9));
-        y = lh / 2;
-        txt(s_page == 0 ? "GRAPHICS SETTINGS" : "CONTROLS", 0, y, pw, lh * 3 / 2, DT_CENTER, gold, s_font_t);
-        y += lh * 3 / 2;
-        box(M, y + lh / 4, pw - 2 * M, border / 2 + 1, RGB(110, 92, 50));
-        y += lh / 2;
-        lx = M + fp / 2; vx = pw / 2 + fp; vw = pw - vx - M - fp / 2;
-        /* row 0: the page */
-        if (row == 0) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
-        txt("Page", lx, y, vx - lx, lh, DT_LEFT, row == 0 ? selc : parch, row == 0 ? s_font_b : s_font);
-        snprintf(v, sizeof v, row == 0 ? "<   %s   >" : "%s", TR(s_page == 0 ? "Graphics" : "Controls"));
-        txt(v, vx, y, vw, lh, DT_CENTER, row == 0 ? white : gold, row == 0 ? s_font_b : s_font);
-        y += lh;
-        if (s_page == 0) {
-            int vis = 0;
-            for (i = 0; i < GFX_MENU_N; i++) {
-                int sel;
-                if (i == GFX_SPRINT) continue;
-                sel = ++vis == row;
-                if (sel) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
-                txt(s_items[i].label, lx, y, vx - lx, lh, DT_LEFT, sel ? selc : parch, sel ? s_font_b : s_font);
-                snprintf(v, sizeof v, sel ? "<   %s   >" : "%s", TR(s_items[i].names[s_cur[i]]));
-                txt(v, vx, y, vw, lh, DT_CENTER, sel ? white : gold, sel ? s_font_b : s_font);
-                y += lh;
-            }
-            note = row > 0 ? s_items[row_item(row)].note : "Left/Right: switch to the Controls page";
-        } else {
-            int kx = M + (pw - 2 * M) * 40 / 100, px2 = M + (pw - 2 * M) * 74 / 100;
-            int kw = px2 - kx - fp / 2, pw2 = pw - M - px2 - fp / 2, n;
-            /* keep the selected action in view */
-            if (row >= 1 && row <= BIND_N) {
-                if (row - 1 < s_top) s_top = row - 1;
-                if (row - 1 >= s_top + CTRL_ROWS) s_top = row - CTRL_ROWS;
-            }
-            txt("Action", lx, y, kx - lx, lh * 4 / 5, DT_LEFT, dim, s_font);
-            txt("Keyboard / mouse", kx, y, kw, lh * 4 / 5, DT_LEFT, dim, s_font);
-            txt("Controller", px2, y, pw2, lh * 4 / 5, DT_LEFT, dim, s_font);
-            y += lh * 4 / 5;
-            for (n = 0; n < CTRL_ROWS; n++) {
-                int act = s_top + n, sel = act + 1 == row;
-                if (act >= BIND_N) break;
-                if (sel) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
-                txt(xbox_BindActionName(act), lx, y, kx - lx, lh, DT_LEFT, sel ? selc : parch, sel ? s_font_b : s_font);
-                if (sel && s_capture == 1) snprintf(v, sizeof v, "press a key...");
-                else xbox_BindFormatKeys(act, v, sizeof v);
-                txt(v, kx, y, kw, lh, DT_LEFT | DT_END_ELLIPSIS, sel ? white : gold, sel ? s_font_b : s_font);
-                if (xbox_BindIsButton(act))
-                    snprintf(v, sizeof v, sel ? "< %s >" : "%s", TR(xbox_BindPadName(xbox_BindPad(act))));
-                else snprintf(v, sizeof v, "left stick");
-                if (act >= BIND_LOOK_UP && act <= BIND_LOOK_RIGHT) snprintf(v, sizeof v, "right stick");
-                if (act == BIND_WALK) snprintf(v, sizeof v, "stick part way");
-                txt(v, px2, y, pw2, lh, DT_LEFT, xbox_BindIsButton(act) ? (sel ? white : gold) : dim,
-                    sel ? s_font_b : s_font);
-                y += lh;
-            }
-            {
-                int sel = row == BIND_N + 1;
-                if (sel) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
-                txt("Reset all controls to the defaults", lx, y, pw - 2 * lx, lh, DT_LEFT, sel ? selc : parch,
-                    sel ? s_font_b : s_font);
-                y += lh;
-            }
-            if (s_capture == 1) note = "Press the key or mouse button.  Esc: cancel.  Delete: clear.";
-            else if (row == BIND_N + 1) note = "A / Enter: reset";
-            else if (row > 0) note = "A / Enter: set a key.   Left/Right: controller button.";
-            else note = "Left/Right: switch to the Graphics page";
-        }
-        y = ph - lh * 3;
-        txt(note ? note : "", 0, y, pw, lh, DT_CENTER, dim, s_font);
-        y += lh;
-        txt("Up/Down: choose     Left/Right or A: change     B / Esc / F10: close", 0, y, pw, lh, DT_CENTER, parch, s_font);
-        y += lh * 3 / 4;
-        txt("Changes are saved automatically", 0, y, pw, lh, DT_CENTER, dim, s_font);
-        GdiFlush();
-        /* GDI leaves alpha at 0: the panel is mostly opaque */
-        for (i = 0; i < pw * ph; i++) s_px[i] = (s_px[i] & 0x00FFFFFFu) | 0xF0000000u;
+        panel_body(pw, ph, fp, lh);
         s_drawn_ver = s_ver;
     }
     *px = s_px; *w = pw; *h = ph; *ver = s_drawn_ver;
@@ -806,9 +827,22 @@ static void txt(const char *str, int x, int y, int w, int h, UINT fmt, COLORREF 
     }
     free(cov);
 }
+static uint32_t *s_tpxa[2]; static int s_twa[2], s_tha[2];
+static TFont s_tfv[2][2];
+static uint32_t *s_sv_px; static int s_sv_pw, s_sv_ph;
+static int toast_begin(int k, int w, int h, int fp, HFONT *f, HFONT *fb)
+{
+    if (w != s_twa[k] || h != s_tha[k] || !s_tpxa[k]) { uint32_t *np = (uint32_t *)realloc(s_tpxa[k], (size_t)w * h * 4); if (!np) return 0; s_tpxa[k] = np; s_twa[k] = w; s_tha[k] = h; }
+    s_tfv[k][0].id = XFONT_SERIF; s_tfv[k][0].px = fp; s_tfv[k][1].id = XFONT_SERIF_BOLD; s_tfv[k][1].px = fp * 12 / 10;
+    *f = &s_tfv[k][0]; *fb = &s_tfv[k][1];
+    s_sv_px = s_px; s_sv_pw = s_pw; s_sv_ph = s_ph;
+    s_px = s_tpxa[k]; s_pw = w; s_ph = h;
+    return 1;
+}
+static void toast_end(void) { s_px = s_sv_px; s_pw = s_sv_pw; s_ph = s_sv_ph; }
 int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver)
 {
-    int fp, lh, pw, ph, y, i, M;
+    int fp, lh, pw, ph;
     if (!s_open) return 0;
     EnterCriticalSection(&s_lock);
     fp = sch / 34;
@@ -831,6 +865,19 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
         s_font_px = fp; s_drawn_ver = 0;
     }
     if (s_drawn_ver != s_ver) {
+        panel_body(pw, ph, fp, lh);
+        s_drawn_ver = s_ver;
+    }
+    *px = s_px; *w = pw; *h = ph; *ver = s_drawn_ver;
+    LeaveCriticalSection(&s_lock);
+    return 1;
+}
+#endif /* _WIN32 drawing */
+
+/* the panel's picture: its page, drawn with the platform's box() and txt() (above) */
+static void panel_body(int pw, int ph, int fp, int lh)
+{
+    int y, i, M;
         COLORREF gold = RGB(214, 182, 96), parch = RGB(226, 214, 186), dim = RGB(150, 138, 112);
         COLORREF selc = RGB(255, 236, 170), white = RGB(255, 255, 255);
         int border = fp / 6 < 2 ? 2 : fp / 6, lx, vx, vw, row = s_row[s_page];
@@ -841,7 +888,7 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
         box(0, 0, pw, ph, gold);
         box(border, border, pw - 2 * border, ph - 2 * border, RGB(16, 13, 9));
         y = lh / 2;
-        txt(s_page == 0 ? "GRAPHICS SETTINGS" : "CONTROLS", 0, y, pw, lh * 3 / 2, DT_CENTER, gold, s_font_t);
+        txt(s_page == 0 ? "GRAPHICS SETTINGS" : s_page == 1 ? "CONTROLS" : s_page == 3 ? "MORE SETTINGS" : "ACHIEVEMENTS", 0, y, pw, lh * 3 / 2, DT_CENTER, gold, s_font_t);
         y += lh * 3 / 2;
         box(M, y + lh / 4, pw - 2 * M, border / 2 + 1, RGB(110, 92, 50));
         y += lh / 2;
@@ -849,7 +896,7 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
         /* row 0: the page */
         if (row == 0) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
         txt("Page", lx, y, vx - lx, lh, DT_LEFT, row == 0 ? selc : parch, row == 0 ? s_font_b : s_font);
-        snprintf(v, sizeof v, row == 0 ? "<   %s   >" : "%s", TR(s_page == 0 ? "Graphics" : "Controls"));
+        snprintf(v, sizeof v, row == 0 ? "<   %s   >" : "%s", TR(page_name(s_page)));
         txt(v, vx, y, vw, lh, DT_CENTER, row == 0 ? white : gold, row == 0 ? s_font_b : s_font);
         y += lh;
         if (s_page == 0) {
@@ -864,7 +911,42 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
                 txt(v, vx, y, vw, lh, DT_CENTER, sel ? white : gold, sel ? s_font_b : s_font);
                 y += lh;
             }
-            note = row > 0 ? s_items[row_item(row)].note : "Left/Right: switch to the Controls page";
+            note = row > 0 ? s_items[row_item(row)].note : "Left/Right: another page";
+        } else if (s_page == 3) {
+            int vr = 0;
+            for (i = GFX_MORE0; i < GFX_N; i++) {
+                int sel;
+                if (more_hidden(i)) continue;
+                sel = ++vr == row;
+                if (sel) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
+                txt(s_items[i].label, lx, y, vx - lx, lh, DT_LEFT, sel ? selc : parch, sel ? s_font_b : s_font);
+                snprintf(v, sizeof v, sel ? "<   %s   >" : "%s", TR(s_items[i].names[s_cur[i]]));
+                txt(v, vx, y, vw, lh, DT_CENTER, sel ? white : gold, sel ? s_font_b : s_font);
+                y += lh;
+            }
+            note = row > 0 ? s_items[more_item(row)].note : "Left/Right: another page.   F9: hide the HUD.   F8: screenshot";
+        } else if (s_page == 2) {
+            int n = s_ach_n ? s_ach_n() : 0, got = 0, k, nx = M + (pw - 2 * M) * 42 / 100;
+            static char cnt[64];
+            for (k = 0; k < n; k++) got += s_ach_got(k) != 0;
+            if (row >= 1) {
+                if (row - 1 < s_atop) s_atop = row - 1;
+                if (row - 1 >= s_atop + ACH_ROWS) s_atop = row - ACH_ROWS;
+            }
+            snprintf(cnt, sizeof cnt, "%d of %d earned", got, n);
+            txt(cnt, lx, y, pw - 2 * lx, lh * 4 / 5, DT_LEFT, dim, s_font);
+            y += lh * 4 / 5;
+            for (k = 0; k < ACH_ROWS; k++) {
+                int a = s_atop + k, sel = a + 1 == row, e;
+                if (a >= n) break;
+                e = s_ach_got(a) != 0;
+                if (sel) box(M, y, pw - 2 * M, lh, RGB(70, 52, 22));
+                txt(e ? "\xE2\x97\x86" : "\xE2\x97\x87", lx, y, fp * 2, lh, DT_LEFT, e ? gold : dim, s_font);   /* (a filled diamond: earned) */
+                txt(s_ach_name(a), lx + fp * 2, y, nx - lx - fp * 2, lh, DT_LEFT | DT_END_ELLIPSIS, e ? (sel ? selc : parch) : dim, sel ? s_font_b : s_font);
+                txt(s_ach_desc(a), nx, y, pw - M - nx - fp / 2, lh, DT_LEFT | DT_END_ELLIPSIS, e ? (sel ? white : gold) : dim, s_font);
+                y += lh;
+            }
+            note = row > 0 ? (s_ach_got(row - 1) ? "Earned" : "Not earned yet") : "Left/Right: another page";
         } else {
             int kx = M + (pw - 2 * M) * 40 / 100, px2 = M + (pw - 2 * M) * 74 / 100;
             int kw = px2 - kx - fp / 2, pw2 = pw - M - px2 - fp / 2, n;
@@ -904,7 +986,7 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
             if (s_capture == 1) note = "Press the key or mouse button.  Esc: cancel.  Delete: clear.";
             else if (row == BIND_N + 1) note = "A / Enter: reset";
             else if (row > 0) note = "A / Enter: set a key.   Left/Right: controller button.";
-            else note = "Left/Right: switch to the Graphics page";
+            else note = "Left/Right: another page";
         }
         y = ph - lh * 3;
         txt(note ? note : "", 0, y, pw, lh, DT_CENTER, dim, s_font);
@@ -915,10 +997,81 @@ int xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, un
         GdiFlush();
         /* GDI leaves alpha at 0: the panel is mostly opaque */
         for (i = 0; i < pw * ph; i++) s_px[i] = (s_px[i] & 0x00FFFFFFu) | 0xF0000000u;
-        s_drawn_ver = s_ver;
     }
-    *px = s_px; *w = pw; *h = ph; *ver = s_drawn_ver;
+
+/* (1.9.7) toasts: a short note in the bottom right corner (an achievement earned), 5 s each, one after another.
+ * xbox_ToastShow from any thread; xbox_ToastRender from the renderer, as the panel's */
+static struct { char t[96], l[160]; } s_toastq[8];
+static int s_tq_n, s_tq_head;
+static DWORD s_toast_t0;
+static unsigned s_toast_ver = 1, s_toast_drawn;
+void xbox_ToastShow(const char *title, const char *line)
+{
+    int k;
+    gfx_init();
+    EnterCriticalSection(&s_lock);
+    if (s_tq_n < 8) { k = (s_tq_head + s_tq_n) % 8; snprintf(s_toastq[k].t, sizeof s_toastq[k].t, "%s", title ? title : ""); snprintf(s_toastq[k].l, sizeof s_toastq[k].l, "%s", line ? line : ""); s_tq_n++; if (s_tq_n == 1) { s_toast_t0 = 0; s_toast_ver++; } }
     LeaveCriticalSection(&s_lock);
+}
+/* a note's picture into surface k: a gold frame, its title and its line */
+static int note_draw(int k, int tw, int th, int fp, const char *t, const char *l)
+{
+    HFONT f, fb; int i, border = fp / 6 < 2 ? 2 : fp / 6;
+    if (!toast_begin(k, tw, th, fp, &f, &fb)) return 0;
+    box(0, 0, tw, th, RGB(214, 182, 96));
+    box(border, border, tw - 2 * border, th - 2 * border, RGB(16, 13, 9));
+    txt(t, fp, fp / 3, tw - 2 * fp, fp * 2, DT_LEFT | DT_END_ELLIPSIS, RGB(214, 182, 96), fb);
+    txt(l, fp, fp * 2, tw - 2 * fp, fp * 3 / 2, DT_LEFT | DT_END_ELLIPSIS, RGB(226, 214, 186), f);
+    for (i = 0; i < tw * th; i++) s_tpxa[k][i] = (s_tpxa[k][i] & 0x00FFFFFFu) | 0xF0000000u;
+    toast_end();
     return 1;
 }
-#endif /* _WIN32 drawing */
+int xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y)
+{
+    int fp, tw, th, k;
+    DWORD now = GetTickCount();
+    if (!s_inited || !s_tq_n) return 0;
+    EnterCriticalSection(&s_lock);
+    if (!s_tq_n) { LeaveCriticalSection(&s_lock); return 0; }
+    if (!s_toast_t0) s_toast_t0 = now ? now : 1;
+    if (now - s_toast_t0 > 5000u) {   /* the next one */
+        s_tq_head = (s_tq_head + 1) % 8; s_tq_n--; s_toast_t0 = s_tq_n ? now : 0; s_toast_ver++;
+        if (!s_tq_n) { LeaveCriticalSection(&s_lock); return 0; }
+    }
+    k = s_tq_head;
+    fp = sch / 40; if (fp < 12) fp = 12;
+    tw = fp * 24; th = fp * 4;
+    if (tw > scw - 16) tw = scw - 16;
+    if (s_toast_drawn != s_toast_ver && note_draw(0, tw, th, fp, s_toastq[k].t, s_toastq[k].l)) s_toast_drawn = s_toast_ver;
+    *px = s_tpxa[0]; *w = s_twa[0]; *h = s_tha[0]; *ver = s_toast_drawn;
+    *x = scw - s_twa[0] - fp; *y = sch - s_tha[0] - fp * 3;
+    LeaveCriticalSection(&s_lock);
+    return s_tpxa[0] != NULL;
+}
+/* (1.9.7) a banner: a note at the top of the screen for as long as it is set (the difficulty screen's Impossible) */
+static char s_ban_t[96], s_ban_l[160];
+static unsigned s_ban_ver = 1, s_ban_drawn;
+void xbox_BannerSet(const char *title, const char *line)
+{
+    gfx_init();
+    EnterCriticalSection(&s_lock);
+    if (!title) title = "";
+    if (!line) line = "";
+    if (strcmp(s_ban_t, title) || strcmp(s_ban_l, line)) { snprintf(s_ban_t, sizeof s_ban_t, "%s", title); snprintf(s_ban_l, sizeof s_ban_l, "%s", line); s_ban_ver++; }
+    LeaveCriticalSection(&s_lock);
+}
+int xbox_BannerRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y)
+{
+    int fp, tw, th;
+    if (!s_inited || !s_ban_t[0]) return 0;
+    EnterCriticalSection(&s_lock);
+    if (!s_ban_t[0]) { LeaveCriticalSection(&s_lock); return 0; }
+    fp = sch / 34; if (fp < 13) fp = 13;
+    tw = fp * 26; th = fp * 4;
+    if (tw > scw - 16) tw = scw - 16;
+    if (s_ban_drawn != s_ban_ver && note_draw(1, tw, th, fp, s_ban_t, s_ban_l)) s_ban_drawn = s_ban_ver;
+    *px = s_tpxa[1]; *w = s_twa[1]; *h = s_tha[1]; *ver = s_ban_drawn;
+    *x = (scw - s_twa[1]) / 2; *y = fp * 2;
+    LeaveCriticalSection(&s_lock);
+    return s_tpxa[1] != NULL;
+}

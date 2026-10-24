@@ -53,8 +53,8 @@ extern const char *xbox_GfxItemName(int id, int v);
 #define COL_ON    0xFF77EAF8u
 #define COL_OFF   0xFF9C978Cu
 
-enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU };
-enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET, K_DEV };   /* (K_BIND: gfx is the action, input_bind.h; K_DEV: gfx is the player, 0-1) */
+enum { PG_HUB, PG_GENERAL, PG_DISPLAY, PG_CONTROLS, PG_COOP, PG_COOPMENU, PG_GAME };
+enum { K_COLS, K_CYCLE, K_SLIDER, K_BIND, K_RESET, K_DEV, K_VSHERO };   /* (K_BIND: gfx is the action, input_bind.h; K_DEV: gfx is the player, 0-1) */
 typedef struct {
     const char *label;
     int gfx, kind;
@@ -119,13 +119,13 @@ static Row s_ctl_all[8 + BIND_N_ + 1];
  * (twotowers_manual.c) reads them with tt_coop_setting. Testing: TT_COOP_DIFFICULTY,
  * TT_COOP_ICONS, TT_COOP_ZOOMSET set one for the run (the ini is not changed). */
 #define GFX_COOP 1000
-enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_PICK, CO_N };
-static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot", "double_pickups" };
-static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT", "TT_COOP_PICKUPS" };
-static const int s_coop_cnt[CO_N] = { 3, 2, 3, 2, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1 };
-static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1, -1 };
+enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_PICK, CO_IMP, CO_N };   /* (CO_IMP: the solo game's Impossible, 1.9.7) */
+static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot", "double_pickups", "impossible" };
+static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT", "TT_COOP_PICKUPS", "TT_IMPOSSIBLE" };
+static const int s_coop_cnt[CO_N] = { 4, 2, 3, 2, 2, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1, 0 };
+static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1, -1, -1 };
 static const Row s_coop[] = {
-    { "Difficulty:", GFX_COOP + CO_DIFF, K_COLS, { "Easy", "Normal", "Expert" } },
+    { "Difficulty:", GFX_COOP + CO_DIFF, K_CYCLE, { "Easy", "Normal", "Expert", "Impossible" } },
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },   /* player 2 put beside player 1 when too far (the co-op code's catch-up) */
@@ -134,7 +134,7 @@ static const Row s_coop[] = {
 /* (1.9.6) Options > Co-op Options: the Co-op menu's rows (above), then the pickups and each player's device. The
  * Co-op menu keeps its five */
 static const Row s_coop_page[] = {
-    { "Difficulty:", GFX_COOP + CO_DIFF, K_COLS, { "Easy", "Normal", "Expert" } },
+    { "Difficulty:", GFX_COOP + CO_DIFF, K_CYCLE, { "Easy", "Normal", "Expert", "Impossible" } },
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },
@@ -168,6 +168,8 @@ int tt_coop_setting(int i)
     }
     return s_coop_v[i];
 }
+static void coop_set(int i, int v);
+void tt_coop_setting_set(int i, int v) { coop_set(i, v); }
 static void coop_set(int i, int v)
 {
     char ini[MAX_PATH], t[8];
@@ -259,11 +261,16 @@ static void dev_change(int pl, int d)
     coop_devices_save();
 }
 
-static const char *s_hub[4] = { "General Options", "Display Options", "Controls", "Co-op Options" };
+static const char *s_hub[4] = { "General Options", "Display Options", "Controls", "Co-op Options" };   /* (1.9.7: Gameplay Options gone -- Impossible is on General Options' Difficulty and the New Game's) */
 /* Co-op Options: on the front end's Options, and the pause menu's only in a co-op game */
 extern int tt_coop_active(void);
 static int hub_n(void) { uint32_t fe = G32(0x4AD050u); return fe == 6 || fe == 8 ? (tt_coop_active() ? 4 : 3) : 4; }
 static int hub_page(int i) { return i == 0 ? PG_GENERAL : i == 1 ? PG_DISPLAY : i == 2 ? PG_CONTROLS : PG_COOP; }
+/* (1.9.7) Options > Gameplay Options: Impossible (the solo game's difficulty past Expert: any enemy's second blow fells
+ * you; chosen on the New Game's difficulty screen too, right of Expert) */
+static const Row s_game_page[] = {
+    { "Impossible:", GFX_COOP + CO_IMP, K_COLS, { "Off", "On" } },
+};
 #define NROWS(a) ((int)(sizeof a / sizeof a[0]))
 static int s_nctl;
 
@@ -275,12 +282,75 @@ static int s_page = PG_HUB, s_sel, s_hub_sel, s_top;
 volatile int tt_coop_screen_req, tt_coop_menu_go;
 static int s_exit_frames;
 static const char *const s_cm_top[2] = { "New Game", "Load Game" };
+/* (1.9.7) the Versus menu (menus.c: the main menu's Versus opens Options on it): Start at the top right, then each
+ * player's hero and the arena. Start goes as the Co-op menu's New Game (tt_coop_menu_go 1: the main menu's New Game
+ * pressed under a cover, the difficulty confirmed); the new game then becomes the match (twotowers_manual.c,
+ * sub_000D1C10: the arena's level, player 1's hero, player 2's). B: back to the main menu */
+volatile int tt_vs_menu_on, tt_vs_screen_req, tt_vs_start_pending;
+static int s_vsmenu;   /* the Co-op menu page shows Versus' */
+#define VS_NHERO 14
+static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c and the co-op, title) */
+    { "aragorn", "Aragorn" }, { "legolas", "Legolas" }, { "gimli", "Gimli" }, { "isildur", "Isildur" },
+    { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
+    { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Uruk-hai" },
+    { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the last three: Versus only) */
+static int s_vs_goal_i = 1;   /* (1.9.7) rounds to win: 3, 5, 7 */
+static const char *const s_vs_goals[3] = { "First to 3", "First to 5", "First to 7" };
+int tt_vs_goal_pick(void) { return 3 + 2 * s_vs_goal_i; }
+static int s_vs_hero[2] = { 0, 1 }, s_vs_arena, s_vs_mode;   /* mode 0 Deathmatch (the smaller arenas), 1 Find the Shield (the bigger) */
+static const char *const s_vs_modes[2] = { "Deathmatch", "Find the Shield" };
+/* the arenas: every level but Westfold (the game's level index, its name) */
+static const struct { int level; const char *name; } s_vs_arenas[] = {
+    { 1, "Weathertop" }, { 3, "Balin's Tomb" }, { 4, "Amon Hen" }, { 5, "Fangorn Forest" }, { 2, "Gates of Moria" },
+    { 6, "Plains of Rohan" }, { 8, "Road to Helm's Deep" }, { 9, "The Deeping Wall" }, { 10, "The Breached Wall" },
+    { 11, "Hornburg Courtyard" }, { 12, "Orthanc" }, { 13, "Orthanc Summit" }, { 0, "Mount Doom" } };
+/* which mode each arena is for: the smaller ones Deathmatch, the bigger (room to run, the shield to find) Find the Shield */
+/* (1.9.7) Find the Shield dropped for now: every arena is a Deathmatch arena */
+static int vs_arena_mode(int i) { (void)i; return 0; }
+#define VS_NARENA ((int)(sizeof s_vs_arenas / sizeof s_vs_arenas[0]))
+static const Row s_vsrows[] = {
+    { "Player 1:", 0, K_VSHERO, { 0 } },
+    { "Player 2:", 1, K_VSHERO, { 0 } },
+    { "Arena:", 2, K_VSHERO, { 0 } },   /* (gfx 2: the arena, shown as the heroes are) */
+    { "Rounds to win:", 3, K_VSHERO, { 0 } },   /* (1.9.7, gfx 3: first to 3, 5 or 7) */
+};
+extern int tt_heroes_on(void);
+/* who may be which: the extra heroes with the Extra heroes mod on; player 1 on Weathertop as Aragorn or an extra
+ * hero (the level has no Legolas, Gimli or Isildur of its own); never both the same */
+static int vs_hero_ok(int pl, int h)
+{
+    if (h < 0 || h >= VS_NHERO) return 0;
+    if (h >= 4 && !tt_heroes_on()) return 0;
+    if (pl == 0 && s_vs_arenas[s_vs_arena].level == 1 && h >= 1 && h <= 3) return 0;
+    return h != s_vs_hero[pl ^ 1];
+}
+static void vs_fix(void)
+{
+    int pl, k;
+    for (k = 0; k < VS_NARENA && vs_arena_mode(s_vs_arena) != s_vs_mode; k++) s_vs_arena = (s_vs_arena + 1) % VS_NARENA;   /* (an arena of the mode) */
+    for (pl = 0; pl < 2; pl++) if (!vs_hero_ok(pl, s_vs_hero[pl])) for (k = 0; k < VS_NHERO; k++) if (vs_hero_ok(pl, k)) { s_vs_hero[pl] = k; break; }
+}
+static void vs_hero_change(int pl, int d)
+{
+    int k, h;
+    if (pl == 3) { s_vs_goal_i = (s_vs_goal_i + d + 3) % 3; return; }   /* (rounds to win) */
+    if (pl == 2) { int k; for (k = 0; k < VS_NARENA; k++) { s_vs_arena = (s_vs_arena + d + VS_NARENA) % VS_NARENA; if (vs_arena_mode(s_vs_arena) == s_vs_mode) break; } vs_fix(); return; }   /* (the arena row: the mode's) */
+    h = s_vs_hero[pl];
+    for (k = 0; k < VS_NHERO; k++) { h = (h + d + VS_NHERO) % VS_NHERO; if (vs_hero_ok(pl, h)) { s_vs_hero[pl] = h; return; } }
+}
+/* the match asked for (twotowers_manual.c at the new game) */
+const char *tt_vs_hero_name(int pl) { return s_vs_heroes[s_vs_hero[pl & 1]][0]; }
+int tt_vs_mode(void) { const char *e = getenv("TT_VS_MODE"); (void)s_vs_mode; return e ? atoi(e) : 0; }   /* (Deathmatch only for now) */
+int tt_vs_arena_level(void) { const char *e = getenv("TT_VS_ARENA"); return e ? atoi(e) : s_vs_arenas[s_vs_arena].level; }   /* (the game's level index, table 0x17B7A4) */
+static const Row *cm_rows(int *n) { if (s_vsmenu) { *n = (int)(sizeof s_vsrows / sizeof s_vsrows[0]); return s_vsrows; } *n = (int)(sizeof s_coop / sizeof s_coop[0]); return s_coop; }
+static int cm_ntop(void) { return s_vsmenu ? 1 : 2; }
+static const char *cm_top(int i) { return s_vsmenu ? "Start" : s_cm_top[i]; }
 #define CM_TOPX 400
 #define CM_TOPY 60
 #define CM_TOPSTEP 48
 #define CM_ROWY 196
 #define CM_STEP 46                 /* (five rows clear of the Help prompt) */
-#define CM_N (2 + (int)(sizeof s_coop / sizeof s_coop[0]))
+#define CM_N (cm_ntop() + (s_vsmenu ? (int)(sizeof s_vsrows / sizeof s_vsrows[0]) : (int)(sizeof s_coop / sizeof s_coop[0])))
 static DWORD s_drawn;            /* the Options page last drawn (ticks) */
 static volatile unsigned s_frames, s_drawn_frame;   /* (1.9.3) the game's frames, and the last with Options drawn */
 static uint32_t s_mem;           /* our elements and words, in the game's memory */
@@ -345,8 +415,9 @@ static void marker(int cx, int cy, int ring)
 static const Row *rows(int *n)
 {
     if (s_page == PG_DISPLAY) { *n = NROWS(s_display); return s_display; }
-    if (s_page == PG_COOPMENU) { *n = NROWS(s_coop); return s_coop; }
+    if (s_page == PG_COOPMENU) return cm_rows(n);
     if (s_page == PG_COOP) { coop_devices_load(); *n = NROWS(s_coop_page); return s_coop_page; }
+    if (s_page == PG_GAME) { *n = NROWS(s_game_page); return s_game_page; }
     if (s_page == PG_CONTROLS) {
         if (!s_nctl) {   /* the settings, then a row per action, then Reset */
             int i;
@@ -378,12 +449,13 @@ static void draw_coopmenu(void)
          * own -- a copy of its texture object {0x1709C4, 0, 0, 0, data} and of its data's 0x80 header (format byte
          * DXT1 0x0C -> swizzled A8R8G8B8 0x06, the pixels' physical address at +0x30), then 512 x 256 x 4 bytes.
          * Not readable: the Options one. TT_COOP_OLDBG: the Options one. */
-        static uint32_t blk, obj; static int state;   /* 0 not tried, 1 ready, -1 failed */
+        static uint32_t blks[2], objs[2]; static int states[2];   /* 0 not tried, 1 ready, -1 failed; [1] Versus' own (versus\menu_bg.bmp) */
+        uint32_t blk = blks[s_vsmenu ? 1 : 0], obj = objs[s_vsmenu ? 1 : 0]; int state = states[s_vsmenu ? 1 : 0];
         uint32_t so = G32(T_BG + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? G32(so + 0x10) : 0, e;
         if (!state && sd >= 0x80000000u && sd < 0x84000000u && G32(sd + 4) == 512u && G32(sd + 8) == 256u && !getenv("TT_COOP_OLDBG")) {
-            extern int tt_coop_menu_bg_pixels(uint32_t *out); static uint32_t px[512 * 256]; uint32_t k;
+            extern int tt_coop_menu_bg_pixels(uint32_t *out); extern int tt_vs_image_pixels(const char *file, uint32_t *out, float k); static uint32_t px[512 * 256]; uint32_t k;
             state = -1;
-            if (tt_coop_menu_bg_pixels(px) && (blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u)) != 0 && (obj = xbox_ContiguousAlloc(0x40u, 16u)) != 0) {
+            if ((s_vsmenu ? (tt_vs_image_pixels("menu_bg.bmp", px, 0.55f) || tt_coop_menu_bg_pixels(px)) : tt_coop_menu_bg_pixels(px)) && (blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u)) != 0 && (obj = xbox_ContiguousAlloc(0x40u, 16u)) != 0) {
                 for (k = 0; k < 0x80u; k += 4) G32(blk + k) = G32(sd + k);
                 G32(blk + 0x38) = (G32(sd + 0x38) & ~0xFF00u) | 0x0600u;
                 G32(blk + 0x3C) = 0;
@@ -394,21 +466,30 @@ static void draw_coopmenu(void)
                 state = 1;
                 tt_dbg("[COOPMENU] background: the three hunters (stills3 key 2), texture %08X, format %08X -> %08X\n", obj, G32(sd + 0x38), G32(blk + 0x38));
             } else tt_dbg("[COOPMENU] background: the still could not be made, the Options one stays\n");
+            blks[s_vsmenu ? 1 : 0] = blk; objs[s_vsmenu ? 1 : 0] = obj; states[s_vsmenu ? 1 : 0] = state;
         }
         if (state == 1 && !getenv("TT_COOP_OLDBG") && (e = el_from(T_BG)) != 0) { G32(e + 0xB8) = obj; draw(e); }
         else draw(T_BG);
     }
-    text_el(T_LABEL, 24, 28, 0, COL_ON, "Co-op");
-    for (i = 0; i < 2; i++) text_el(T_LABEL, CM_TOPX, CM_TOPY + i * CM_TOPSTEP, 220, s_sel == i ? COL_ON : COL_OFF, s_cm_top[i]);
-    for (i = 0; i < NROWS(s_coop); i++) {
-        const Row *w = &s_coop[i];
-        int y = CM_ROWY + i * CM_STEP, sel = s_sel == i + 2, cnt = opt_count(w->gfx), cur = opt_get(w->gfx);
+    text_el(T_LABEL, 24, 28, 0, COL_ON, s_vsmenu ? "Versus" : "Co-op");
+    for (i = 0; i < cm_ntop(); i++) text_el(T_LABEL, CM_TOPX, CM_TOPY + i * CM_TOPSTEP, 220, s_sel == i ? COL_ON : COL_OFF, cm_top(i));
+    { int nr; const Row *rr = cm_rows(&nr);
+    if (s_vsmenu) vs_fix();
+    for (i = 0; i < nr; i++) {
+        const Row *w = &rr[i];
+        int y = CM_ROWY + i * CM_STEP, sel = s_sel == i + cm_ntop(), cnt = w->kind == K_VSHERO ? 0 : opt_count(w->gfx), cur = w->kind == K_VSHERO ? 0 : opt_get(w->gfx);
         text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
+        if (w->kind == K_VSHERO) {
+            text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
+            text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, w->gfx == 3 ? s_vs_goals[s_vs_goal_i] : w->gfx == 2 ? s_vs_arenas[s_vs_arena].name : s_vs_heroes[s_vs_hero[w->gfx]][1]);
+            text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
+            continue;
+        }
         for (k = 0; k < cnt && k < 3; k++) {
             if (k == cur) marker(s_colx[k] + 64, y + 17, sel);
             text_el(T_VALUE, s_colx[k], y, 0, COL_OFF, w->names[k] ? w->names[k] : "");
         }
-    }
+    } }
     draw(T_HELPI);
     draw(T_HELPT);
 }
@@ -486,7 +567,8 @@ int tt_opt_draw(uint32_t obj)
      * it, not time -- a new full-screen resolution held the picture for
      * longer than 400 ms and the page went back to the first one) */
     if (!s_drawn || s_frames - s_drawn_frame > 3) { s_page = PG_HUB; s_hub_sel = 0; s_exit_frames = 0; }
-    if (tt_coop_screen_req) { tt_coop_screen_req = 0; s_page = PG_COOPMENU; s_sel = 0; s_top = 0; tt_dbg("[COOPMENU] the Co-op menu opened\n"); }
+    if (tt_coop_screen_req) { tt_coop_screen_req = 0; s_vsmenu = 0; s_page = PG_COOPMENU; s_sel = 0; s_top = 0; tt_dbg("[COOPMENU] the Co-op menu opened\n"); }
+    if (tt_vs_screen_req) { tt_vs_screen_req = 0; s_vsmenu = 1; s_page = PG_COOPMENU; s_sel = 0; s_top = 0; vs_fix(); tt_dbg("[VSMENU] the Versus menu opened\n"); }
     s_drawn = GetTickCount() | 1;
     s_drawn_frame = s_frames;
     if (getenv("TT_NOOPTPAGES")) s_page = PG_GENERAL;
@@ -542,7 +624,7 @@ void tt_opt_filter(unsigned long port, XState *st)
     }
     if (s_page == PG_COOPMENU && (h & B_B) && !s_b_block) {   /* B: back to the main menu, co-op off */
         extern volatile int tt_coop_menu_on;
-        if (tt_coop_menu_on && !tt_coop_menu_go) { tt_coop_menu_on = 0; tt_dbg("[COOPMENU] back: co-op off\n"); }
+        if (tt_coop_menu_on && !tt_coop_menu_go) { tt_coop_menu_on = 0; tt_vs_menu_on = 0; tt_dbg("[COOPMENU] back: co-op off\n"); }
         if (p->wButtons & 0x20) { p->wButtons &= (uint16_t)~0x20u; p->bAnalogButtons[1] = 255; }
         return;
     }
@@ -563,6 +645,7 @@ static void sound(uint32_t id, float pan)
     tt_gcall(0x000C3640u, 0, 6, a);
 }
 static void move_sound(void) { sound(0xA9D, -1.0f); sound(0xA9E, 1.0f); }
+void tt_opt_move_sound(void) { move_sound(); }   /* (Versus: the countdown's tick) */
 
 static void change(const Row *w, int d)
 {
@@ -674,12 +757,19 @@ void tt_opt_tick(void)
         if (s_exit_frames > 0 || tt_coop_menu_go || G32(0x4AD050u) != 5) return;
         if (edge & B_UP) { if (s_sel > 0) { s_sel--; move_sound(); } }
         if (edge & B_DOWN) { if (s_sel < CM_N - 1) { s_sel++; move_sound(); } }
-        if (s_sel >= 2 && (edge & B_LEFT)) change(&s_coop[s_sel - 2], -1);
-        if (s_sel >= 2 && (edge & B_RIGHT)) change(&s_coop[s_sel - 2], 1);
-        if (s_sel < 2 && (edge & (B_A | B_START))) {
-            tt_coop_menu_go = s_sel + 1; s_exit_frames = 8;
-            sound(0xA9D, -1.0f);
-            tt_dbg("[COOPMENU] %s chosen\n", s_cm_top[s_sel]);
+        {   int nr, nt = cm_ntop(); const Row *rr = cm_rows(&nr);
+            if (s_sel >= nt && (edge & (B_LEFT | B_RIGHT))) {
+                const Row *w = &rr[s_sel - nt]; int d = (edge & B_LEFT) ? -1 : 1;
+                if (w->kind == K_VSHERO) { vs_hero_change(w->gfx, d); move_sound(); }
+                else change(w, d);
+            }
+            if (s_sel < nt && (edge & (B_A | B_START))) {
+                tt_coop_menu_go = s_sel + 1; s_exit_frames = 8;
+                if (s_vsmenu) { tt_vs_start_pending = 1; tt_vs_menu_on = 1; }
+                sound(0xA9D, -1.0f);
+                tt_dbg("[COOPMENU] %s chosen%s\n", cm_top(s_sel), s_vsmenu ? " (Versus)" : "");
+                if (s_vsmenu) tt_dbg("[VSMENU] match: %s, player 1 %s, player 2 %s, arena %s\n", s_vs_modes[s_vs_mode], tt_vs_hero_name(0), tt_vs_hero_name(1), s_vs_arenas[s_vs_arena].name);
+            }
         }
         return;
     }
@@ -730,12 +820,16 @@ int tt_opt_mouse(float x, float y, int moved, int clk, int down)
     if (s_page == PG_COOPMENU) {
         int hit = -1, k2;
         if (s_exit_frames > 0 || tt_coop_menu_go || G32(0x4AD050u) != 5) return 1;
-        for (i = 0; i < 2; i++) if (x >= CM_TOPX - 20 && x < CM_TOPX + 220 && fabsf(y - (CM_TOPY + i * CM_TOPSTEP + 15)) < CM_TOPSTEP * 0.5f) hit = i;
-        for (i = 0; i < NROWS(s_coop); i++) if (x >= 10 && x < 630 && fabsf(y - (CM_ROWY + i * CM_STEP + 17)) < CM_STEP * 0.5f) hit = i + 2;
+        int nr, nt = cm_ntop(); const Row *rr = cm_rows(&nr);
+        for (i = 0; i < nt; i++) if (x >= CM_TOPX - 20 && x < CM_TOPX + 220 && fabsf(y - (CM_TOPY + i * CM_TOPSTEP + 15)) < CM_TOPSTEP * 0.5f) hit = i;
+        for (i = 0; i < nr; i++) if (x >= 10 && x < 630 && fabsf(y - (CM_ROWY + i * CM_STEP + 17)) < CM_STEP * 0.5f) hit = i + nt;
         if (hit >= 0 && (moved || clk) && hit != s_sel) { s_sel = hit; move_sound(); }
         if (hit >= 0 && clk) {
-            if (hit < 2) { tt_coop_menu_go = hit + 1; s_exit_frames = 8; sound(0xA9D, -1.0f); tt_dbg("[COOPMENU] %s chosen (mouse)\n", s_cm_top[hit]); }
-            else { const Row *w = &s_coop[hit - 2]; int cnt = opt_count(w->gfx);
+            if (hit < nt) { tt_coop_menu_go = hit + 1; s_exit_frames = 8; if (s_vsmenu) { tt_vs_start_pending = 1; tt_vs_menu_on = 1; } sound(0xA9D, -1.0f); tt_dbg("[COOPMENU] %s chosen (mouse)\n", cm_top(hit)); }
+            else { const Row *w = &rr[hit - nt]; int cnt;
+                if (w->kind == K_VSHERO) {   /* (1.9.7) the left half of the value (its "<" too) back, the right half (">") on */
+                    if (x >= s_colx[0] - 60) { vs_hero_change(w->gfx, x < (s_colx[0] + 600) / 2 ? -1 : 1); move_sound(); } return 1; }
+                cnt = opt_count(w->gfx);
                 for (k2 = 0; k2 < cnt && k2 < 3; k2++) if (x >= s_colx[k2] - 8 && x < s_colx[k2] + 120 && k2 != opt_get(w->gfx)) { opt_set(w->gfx, k2); move_sound(); } }
         }
         return 1;

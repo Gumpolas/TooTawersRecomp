@@ -212,9 +212,11 @@ static void fe_method(MCPXAPUState *d, uint32_t method, uint32_t argument)
                    method == NV1BA0_PIO_VOICE_RELEASE || method == NV1BA0_PIO_VOICE_PAUSE)) {
             static int n;
             if (n++ < 4000)
-                fprintf(stderr, "  [APUV] %s %04X\n",
+                fprintf(stderr, "  [APUV] %s %04X ba %08X ebo %u t %lu\n",
                         method == NV1BA0_PIO_VOICE_ON ? "ON" : method == NV1BA0_PIO_VOICE_OFF ? "OFF" :
-                        method == NV1BA0_PIO_VOICE_RELEASE ? "REL" : "PAUSE", argument & 0xFFFF);
+                        method == NV1BA0_PIO_VOICE_RELEASE ? "REL" : "PAUSE", argument & 0xFFFF,
+                        (unsigned)voice_get_mask(d, (uint16_t)(argument & 0xFFFF), NV_PAVS_VOICE_CUR_PSL_START, NV_PAVS_VOICE_CUR_PSL_START_BA),
+                        (unsigned)voice_get_mask(d, (uint16_t)(argument & 0xFFFF), NV_PAVS_VOICE_PAR_NEXT, NV_PAVS_VOICE_PAR_NEXT_EBO), (unsigned long)GetTickCount());
         }
     }
 
@@ -1120,6 +1122,7 @@ static int voice_resample(MCPXAPUState *d, uint16_t v, float samples[][2],
  * Voice processing (main per-voice function)
  * ============================================================ */
 
+volatile float xbox_apu_stream_gain = 1.0f, xbox_apu_3d_gain = 1.0f;
 static void voice_process(MCPXAPUState *d,
                           float mixbins[NUM_MIXBINS][NUM_SAMPLES_PER_FRAME],
                           float sample_buf[NUM_SAMPLES_PER_FRAME][2],
@@ -1342,8 +1345,14 @@ static void voice_process(MCPXAPUState *d,
     if (noramp < 0) noramp = getenv("RECOMP_APU_NORAMP") != NULL;
     bool cont = !noramp && s_lastframe[v] == (uint32_t)d->ep_frame_div - 1u;
     s_lastframe[v] = (uint32_t)d->ep_frame_div;
+    /* (1.9.7) a title's balance: its streams (music, speech) and its 3D voices (the characters' sounds) scaled
+     * (Two Towers' Versus: its battle music over the fight's sounds) */
+    extern volatile float xbox_apu_stream_gain, xbox_apu_3d_gain;
+    float tgain = 1.0f;
+    if (voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE)) tgain = xbox_apu_stream_gain;
+    else if (v < MCPX_HW_MAX_3D_VOICES) tgain = xbox_apu_3d_gain;
     for (int b = 0; b < 8; b++) {
-        float g = ea_value;
+        float g = ea_value * tgain;
         float hr;
         if ((v < MCPX_HW_MAX_3D_VOICES) && (b < 4)) {
             hr = (float)(1 << d->vp.hrtf_headroom);

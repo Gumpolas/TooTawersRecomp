@@ -287,6 +287,22 @@ static void fb_mode_apply(int on)
     InterlockedIncrement(&s_mode_seq);
     if (GetTickCount() - s_mode_serviced > 500) { s_mode_done = s_mode_seq; fb_mode_do(on); }
 }
+/* (1.9.7) F9: the title hides its HUD while set; F8 (F12, Print Screen): the picture to Screenshots\<date>_<time>.bmp
+ * beside the game (the renderer's frame dump) */
+volatile int xbox_hud_hidden;
+static void fb_screenshot(void)
+{
+    extern void xbox_PresentDumpRequest(const char *path);
+    char dir[MAX_PATH], path[MAX_PATH + 64], *sl; SYSTEMTIME t;
+    GetModuleFileNameA(NULL, dir, MAX_PATH); sl = strrchr(dir, '\\'); if (!sl) sl = strrchr(dir, '/');
+    if (sl) *sl = 0; else strcpy(dir, ".");
+    strncat(dir, "\\Screenshots", sizeof dir - strlen(dir) - 1);
+    CreateDirectoryA(dir, NULL);
+    GetLocalTime(&t);
+    snprintf(path, sizeof path, "%s\\TwoTowers_%04d%02d%02d_%02d%02d%02d_%03d.bmp", dir, t.wYear, t.wMonth, t.wDay, t.wHour, t.wMinute, t.wSecond, t.wMilliseconds);
+    xbox_PresentDumpRequest(path);
+    fprintf(stderr, "  [FBWIN] screenshot: %s\n", path); fflush(stderr);
+}
 /* testing: RECOMP_TEST_ALTTAB=ms -- that long after the window opens, the
  * game is left (as Alt+Tab) and three seconds later come back to, twice */
 static DWORD WINAPI fb_alttab_test(LPVOID p)
@@ -448,6 +464,11 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
          * which F10 would otherwise enter) */
         if (w == VK_F10) {
             if (!(l & 0x40000000)) xbox_GfxMenuKey(VK_F10);
+            return 0;
+        }
+        if ((w == VK_F9 || w == VK_F8 || w == VK_F12 || w == VK_SNAPSHOT) && !(l & 0x40000000)) {   /* (1.9.7) F9 the HUD hidden / shown; F8 (F12, Print Screen) a screenshot */
+            if (w == VK_F9) { xbox_hud_hidden = !xbox_hud_hidden; fprintf(stderr, "  [FBWIN] F9: the HUD %s\n", xbox_hud_hidden ? "hidden" : "shown"); fflush(stderr); }
+            else fb_screenshot();
             return 0;
         }
         if ((w == VK_RETURN && m == WM_SYSKEYDOWN && !(l & 0x40000000)) || (w == VK_F11 && !(l & 0x40000000))) {
@@ -782,6 +803,7 @@ void xbox_FramebufferWindowStart(void)
 }
 
 #else /* POSIX: an SDL2 window, with an OpenGL 3.3 context for the GL renderer */
+volatile int xbox_hud_hidden;   /* (1.9.7) F1 (Windows only for now) */
 
 #include <stdio.h>
 #include <stdlib.h>

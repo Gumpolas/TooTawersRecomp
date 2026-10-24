@@ -2832,9 +2832,14 @@ static void gpu_readback(uint32_t base, uint32_t pitch)
 
 /* ---------------- graphics settings overlay ---------------- */
 
-static GLuint g_menu_tex;
-static int g_menu_w, g_menu_h;
-static unsigned g_menu_ver;
+static int g_ov;
+static GLuint g_menu_tex_a[3];
+static int g_menu_w_a[3], g_menu_h_a[3];
+static unsigned g_menu_ver_a[3];
+#define g_menu_tex g_menu_tex_a[g_ov]
+#define g_menu_w g_menu_w_a[g_ov]
+#define g_menu_h g_menu_h_a[g_ov]
+#define g_menu_ver g_menu_ver_a[g_ov]
 static void gpu_set_alpha_blend(void)
 {
     glEnable(GL_BLEND);
@@ -2843,10 +2848,11 @@ static void gpu_set_alpha_blend(void)
 }
 /* The panel (src/video/gfx_menu.c) over the finished frame, centred, at one
  * texel per screen pixel; the window framebuffer is current. */
-static void gpu_draw_menu(const uint32_t *px, int w, int h, unsigned ver)
+static void gpu_draw_menu_at(int slot, const uint32_t *px, int w, int h, unsigned ver, int ox, int oy)
 {
     float cb[4] = { 1, 1, 0, 0 };
     int left, top;
+    g_ov = slot % 3;
     if (!g_menu_tex || g_menu_w != w || g_menu_h != h) {
         if (g_menu_tex) glDeleteTextures(1, &g_menu_tex);
         g_menu_tex = gpu_tex2d((uint32_t)w, (uint32_t)h, 0);
@@ -2859,7 +2865,7 @@ static void gpu_draw_menu(const uint32_t *px, int w, int h, unsigned ver)
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, px);
         g_menu_ver = ver;
     }
-    left = (g_sc_w - w) / 2; top = (g_sc_h - h) / 2;
+    left = ox >= 0 ? ox : (g_sc_w - w) / 2; top = oy >= 0 ? oy : (g_sc_h - h) / 2;
     glViewport(left, g_sc_h - top - h, w, h);
     gpu_ub(UB_CLC, cb, 16);
     gpu_set_alpha_blend();
@@ -3100,7 +3106,9 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     {
         const uint32_t *mpx; int mw, mh; unsigned mver;
         xbox_GfxMenuSetAvailable(1);
-        if (xbox_GfxMenuRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu(mpx, mw, mh, mver);
+        if (xbox_GfxMenuRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu_at(0, mpx, mw, mh, mver, -1, -1);
+        { int tx, ty; if (xbox_ToastRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(1, mpx, mw, mh, mver, tx, ty); }
+        { int tx, ty; if (xbox_BannerRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(2, mpx, mw, mh, mver, tx, ty); }
     }
     {
         /* RECOMP_PRESENT_DUMP=prefix: every Nth presented frame as a BMP of

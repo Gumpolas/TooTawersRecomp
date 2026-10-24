@@ -98,6 +98,8 @@ set(GAME_SOURCES
     tools/ultra_textures/lodepng.cpp
     src/menus.c
     src/options.c
+    src/versus.c
+    src/achieve.c
     # Add game-specific sources here, e.g.:
     # src/asset_loader.c
     # src/custom_renderer.c

@@ -43,6 +43,7 @@
 #include <ctype.h>
 #include <wctype.h>
 #include <wchar.h>   /* (co-op: wcsstr, TT_SKIPMOVIES; macOS) */
+int (*volatile xbox_movie_skip_cb)(void);   /* (the title's) 1: a movie opened now is reported missing (Versus: no level movies) */
 extern const char *recomp_cgetenv(const char *name);
 #define getenv(n) recomp_cgetenv(n)
 
@@ -3247,7 +3248,7 @@ static void bridge_NtCreateFile(void)
             && (w[n - 1] | 0x20) == L'k') {
             /* (testing, coop-anything) TT_SKIPMOVIES: the movie reported missing, so bot runs don't sit through it
              * (the levels' preloaded death movie kept: the game-over death cam uses it). The host handle is left open. */
-            if (getenv("TT_SKIPMOVIES") && !wcsstr(w, L"death") && !wcsstr(w, L"DEATH")) { g_eax = 0xC0000034u; fprintf(stderr, "  [MOVIE] skipped (TT_SKIPMOVIES)\n"); }
+            if ((getenv("TT_SKIPMOVIES") || (xbox_movie_skip_cb && xbox_movie_skip_cb())) && !wcsstr(w, L"death") && !wcsstr(w, L"DEATH")) { g_eax = 0xC0000034u; fprintf(stderr, "  [MOVIE] skipped (TT_SKIPMOVIES)\n"); }
             else g_movie_handle = BRIDGE_MEM32(handle_va);
         }
     }

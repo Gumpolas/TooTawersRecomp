@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v1.9.6
+# The Two Towers Recompiled v1.9.7
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,16 +8,16 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9.6-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9.6-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9.6-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
-| `TwoTowers-Recompiled-v1.9.6-source.zip` | Source code |
+| `TwoTowers-Recompiled-v1.9.7-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9.7-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9.7-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
+| `TwoTowers-Recompiled-v1.9.7-source.zip` | Source code |
 
 
 **Ultra textures, GameCube compatibility pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.9.5 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
+Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
 
 ## What the port adds
 
@@ -30,10 +30,48 @@ Updating from 1.9.5 or earlier: unpack over your old folder, or into a new one a
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
-- **Couch co-op** *(new, alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
+- **Couch co-op** *(alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
+- **Versus** *(new)*: player 1 against player 2, one on one, on every level but Westfold, with any hero; see [COOP.md](COOP.md).
+- **Achievements** *(new)*: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 
-## What's new in 1.9.6
+## What's new in 1.9.7
+
+### Versus
+Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
+
+- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. Each plays another level's music.
+- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only ones: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. Each cries out in his own voice.
+- **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
+- **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
+- **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
+- **Devices:** as for co-op (Options > Co-op Options > P1 Device / P2 Device). With P2 Bot on, the game fights player 1.
+- **Its own menu background, results screen and horns** in the `versus` folder (`menu_bg.bmp`, `results_bg.bmp`, `fight.wav`, `match_win.wav`); add `round_win.wav` for a round won, or replace any of them with your own.
+
+See `COOP.md` for the details.
+
+### Also new
+- **Achievements:** 47, for the story and for Versus, noted in the corner as you earn them and listed on the F10 panel's **Achievements** page. They're kept in `achievements.txt`, only on your PC.
+- **Impossible difficulty:** past Expert, any enemy's second blow fells you. It's right of Expert on the New Game's difficulty screen, or in Options > General Options, and works in co-op too.
+- **F10 > More:** colour grading (Cinema, Rich, Shadow) and its amount, movie sharpness, rumble strength, pause or mute while the window is in the background, and achievements on or off.
+- **F9** hides the HUD; **F8** (or F12, Print Screen) saves a screenshot in the `Screenshots` folder beside the game.
+
+### Co-op
+- **Camera:** playing the levels with Camera Zoom (Options > Co-op Options) on **Normal** or **Wide** is recommended, so both heroes stay in view.
+
+### Fixes
+- **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 30 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
+- **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
+- **Main menu:** Co-op and Versus no longer get stuck when the game misses the press. Before, the menu could stay put, and the next press opened Credits or left a black screen.
+- **Co-op:** loading a co-op game no longer stops on a black screen when the window loses focus while it loads.
+
+## Tested (1.9.7)
+- Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left (not yet checked after a full match).
+- Windows: Versus played by hand on the developer's PC.
+- Windows, Linux and macOS builds compile.
+- Not tested: the macOS build on a Mac.
+
+## What 1.9.6 added
 
 ### Couch co-op (alpha)
 Co-op was in development for the main port when [Volverine-Dude](https://github.com/Volverine-Dude) published their own implementation in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork. 1.9.6 brings the two efforts together on top of 1.9.5, and this release is thanks in large part to their work. Thank you!
@@ -160,7 +198,8 @@ Known issues
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
-    - Co-op (1.9.6) is an alpha: head markers are dimmed, not hidden, behind walls (Direct3D 11 only); the P2 Bot can get stuck (the lake before the Gates of Moria's boss) and has trouble with the Watcher's tentacles.
+    - Versus (1.9.7) is new: the arenas are the story levels without their enemies, so parts of the bigger maps can't be reached yet, and Amon Hen's arena ends 50 units from the start.
+    - Co-op is an alpha: play the levels with Camera Zoom on Normal or Wide. Head markers are dimmed, not hidden, behind walls (Direct3D 11 only); the P2 Bot can get stuck (the lake before the Gates of Moria's boss) and has trouble with the Watcher's tentacles.
     - Widescreen is experimental: a few full-screen effects may not line up at the edges.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.

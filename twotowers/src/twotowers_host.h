@@ -162,8 +162,22 @@ static void twotowers_write_default_ini(void)
 }
 
 /* The in-game settings overlay writes its changes here. */
+/* (1.9.7) the F10 menu's More page: [Display], [Gameplay], [Input] or [Window] */
+static const char *tt_more_section(const char *key)
+{
+    if (!strcmp(key, "damage_taken") || !strcmp(key, "enemy_damage") || !strcmp(key, "achievements")) return "Gameplay";
+    if (!strcmp(key, "vibration") || !strcmp(key, "stick_deadzone") || !strcmp(key, "trigger_threshold")) return "Input";
+    if (!strcmp(key, "pause_unfocused") || !strcmp(key, "mute_unfocused")) return "Window";
+    return "Display";
+}
+static const char *const tt_more_keys[] = { "colour_look", "look_strength", "movie_sharpening",
+    "vibration", "stick_deadzone", "pause_unfocused", "mute_unfocused", "achievements" };   /* (1.9.7 release: HDR, texture distance, damage and trigger pull taken off) */
 static void tt_gfx_save(const char *key, const char *value)
 {
+    {   int k; for (k = 0; k < (int)(sizeof tt_more_keys / sizeof tt_more_keys[0]); k++) if (!strcmp(key, tt_more_keys[k])) {
+            WritePrivateProfileStringA(tt_more_section(key), key, value, g_ini_path);
+            if (!strcmp(key, "stick_deadzone")) _putenv_s("RECOMP_STICK_DEADZONE", value);
+            return; } }
     WritePrivateProfileStringA(!strncmp(key, "e3_", 3) ? "Mods" : (!strcmp(key, "prompts") || !strncmp(key, "menu_mouse", 10) || !strncmp(key, "mouse_", 6) || !strcmp(key, "cursor_size") || !strcmp(key, "sprint") || !strcmp(key, "mouse_steer")) ? "Input" : "Display",
                                key, value, g_ini_path);
 }
@@ -297,6 +311,13 @@ static void twotowers_setup_paths_and_log(void)
             for (k = 0; k < (int)(sizeof map / sizeof map[0]); k++)
                 if (!getenv(map[k][2]) && GetPrivateProfileStringA(map[k][0], map[k][1], "", v, sizeof v, g_ini_path) && v[0])
                     _putenv_s(map[k][2], v);
+            for (k = 0; k < (int)(sizeof tt_more_keys / sizeof tt_more_keys[0]); k++) {   /* (1.9.7) the More page's */
+                char en[64]; int j;
+                snprintf(en, sizeof en, "RECOMP_OPT_%s", tt_more_keys[k]);
+                for (j = 11; en[j]; j++) if (en[j] >= 'a' && en[j] <= 'z') en[j] = (char)(en[j] - 32);
+                if (!getenv(en) && GetPrivateProfileStringA(tt_more_section(tt_more_keys[k]), tt_more_keys[k], "", v, sizeof v, g_ini_path) && v[0])
+                    _putenv_s(en, v);
+            }
         }
     }
     {

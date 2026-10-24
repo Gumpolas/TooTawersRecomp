@@ -20,6 +20,7 @@
 
 #include "xinput_xbox.h"
 #include "input_bind.h"
+#include "../video/gfx_menu.h"   /* (1.9.7) the More page: vibration, stick deadzone, trigger sensitivity */
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -764,11 +765,10 @@ int xbox_InputAnyPlayStationModel(void)
 volatile int xbox_input_kb_lstick, xbox_input_kb_lt;
 static void stick_deadzone(SHORT *px, SHORT *py)
 {
-    static float dz = -1.0f;
+    float dz;
     float x = *px, y = *py, m, k;
-    if (dz < 0) {
-        const char *v = getenv("RECOMP_STICK_DEADZONE");
-        int pc = v && *v ? atoi(v) : 10;
+    {   /* (1.9.7) the F10 menu's More page (the ini's [Input] stick_deadzone, RECOMP_STICK_DEADZONE, its start) */
+        float pc = xbox_GfxGetF(GFX_DEADZONE);
         if (pc < 0) pc = 0;
         if (pc > 50) pc = 50;
         dz = pc * 32767.0f / 100.0f;
@@ -1290,6 +1290,10 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
     pState->Gamepad.sThumbRY = hp.ry;
     stick_deadzone(&pState->Gamepad.sThumbLX, &pState->Gamepad.sThumbLY);
     stick_deadzone(&pState->Gamepad.sThumbRX, &pState->Gamepad.sThumbRY);
+    {   /* (1.9.7) trigger sensitivity: a trigger pulled less than this is not pulled (the analog buttons 6, 7) */
+        int pc = (int)xbox_GfxGetF(GFX_TRIGGER), t;
+        if (pc > 0) for (t = 6; t < 8; t++) if (pState->Gamepad.bAnalogButtons[t] * 100 < pc * 255) pState->Gamepad.bAnalogButtons[t] = 0;
+    }
 
     /* Merge the keyboard on top rather than only standing in for a missing
      * pad: a real pad keeps working -- its buttons are already in pState and
@@ -1342,9 +1346,34 @@ extern void xbox_GfxMenuPad(XBOX_INPUT_STATE *st);
 void (*volatile xbox_pad_observer)(DWORD port, const XBOX_INPUT_STATE *st);
 void (*volatile xbox_pad_filter)(DWORD port, XBOX_INPUT_STATE *st);
 static void vib_apply(DWORD port);
+/* (1.9.7) the More page's Pause / Mute in the background: the window itself in front (background input aside) */
+static int window_in_front(void)
+{
+#if defined(_WIN32)
+    HWND fb = (HWND)xbox_FramebufferHwnd();
+    return !fb || GetForegroundWindow() == fb || getenv("RECOMP_PAD_SCRIPT");
+#else
+    return 1;
+#endif
+}
+static void bg_pause_mute(void)
+{
+    extern volatile int g_audio_muted; static int muted_by_us;
+    int front = window_in_front(), mute = !front && (xbox_GfxGet(GFX_BGMUTE) || xbox_GfxGet(GFX_BGPAUSE));
+    if (mute && !muted_by_us) { muted_by_us = 1; g_audio_muted = 1; }
+    else if (!mute && muted_by_us) { muted_by_us = 0; g_audio_muted = 0; }
+    if (!front && xbox_GfxGet(GFX_BGPAUSE)) {   /* the game held here (its pad poll, on its own thread) until the window is back in front */
+        fprintf(stderr, "  [INPUT] paused: the window is in the background\n"); fflush(stderr);
+        while (!window_in_front() && xbox_GfxGet(GFX_BGPAUSE)) Sleep(30);
+        fprintf(stderr, "  [INPUT] back in front: the game goes on\n"); fflush(stderr);
+        if (muted_by_us && !xbox_GfxGet(GFX_BGMUTE)) { muted_by_us = 0; g_audio_muted = 0; }
+    }
+}
 DWORD xbox_InputGetState(DWORD dwPort, XBOX_INPUT_STATE *pState)
 {
-    DWORD r = input_get_raw(dwPort, pState);
+    DWORD r;
+    if (dwPort == 0) bg_pause_mute();
+    r = input_get_raw(dwPort, pState);
     if (r == ERROR_SUCCESS && !game_in_front()) {
         /* in the background: a controller at rest (the packet number still
          * moves, so the release of anything held is seen) */
@@ -1365,7 +1394,7 @@ DWORD xbox_InputGetState(DWORD dwPort, XBOX_INPUT_STATE *pState)
         }
     }
     /* a title's changes (its mouse pointer in the menus: the presses it stands for) */
-    if (r == ERROR_SUCCESS && xbox_pad_filter && game_in_front()) xbox_pad_filter(dwPort, pState);
+    if (r == ERROR_SUCCESS && xbox_pad_filter) xbox_pad_filter(dwPort, pState);   /* (1.9.7: in the background too -- the title's own presses (the menus' scripted steps under a black cover) were lost while another window had the focus, and the screen stayed black; the player's own input is already at rest here) */
     /* what the game is about to see (title mods watch the buttons) */
     if (r == ERROR_SUCCESS && xbox_pad_observer) xbox_pad_observer(dwPort, pState);
     return r;
@@ -1382,6 +1411,10 @@ static void vib_apply(DWORD port)
     XBOX_VIBRATION v = s_vib_want[port];
     if (p == PAD_NONE) return;
     if (!game_in_front()) v.wLeftMotorSpeed = v.wRightMotorSpeed = 0;
+    {   /* (1.9.7) the More page's vibration strength */
+        int pc = (int)xbox_GfxGetF(GFX_VIB);
+        if (pc < 100) { v.wLeftMotorSpeed = (WORD)((uint32_t)v.wLeftMotorSpeed * (uint32_t)pc / 100u); v.wRightMotorSpeed = (WORD)((uint32_t)v.wRightMotorSpeed * (uint32_t)pc / 100u); }
+    }
     if (s_vib_sent[port].known && s_vib_sent[port].pad == p && !memcmp(&v, &s_vib_sent[port].v, sizeof v)) return;
     if (pad_rumble(p, v.wLeftMotorSpeed, v.wRightMotorSpeed) == ERROR_SUCCESS) {
         s_vib_sent[port].pad = p; s_vib_sent[port].v = v; s_vib_sent[port].known = 1;

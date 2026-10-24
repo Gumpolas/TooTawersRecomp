@@ -21,7 +21,7 @@
  */
 #define COBJMACROS
 #include <d3d11.h>
-#include <dxgi1_5.h>   /* (1.9.3) IDXGIFactory5: tearing */
+#include <dxgi1_6.h>   /* (1.9.3) IDXGIFactory5: tearing; (1.9.7) IDXGIOutput6, IDXGISwapChain3: HDR */
 #include <d3dcompiler.h>
 #include "../platform/d3dcompile_dyn.h"
 #include "../platform/d3d11_dyn.h"
@@ -39,7 +39,7 @@ static HWND g_sc_hwnd;
 static UINT g_sc_w, g_sc_h;
 static ID3D11VertexShader *g_vs, *g_vs_quad, *g_vs_present, *g_vs_blit;
 static ID3D11PixelShader *g_ps_sh_one, *g_ps_sh_dil, *g_ps_sh_ero, *g_ps_sh_fill, *g_ps_sh_down;   /* (1.9.3) shadow repair */
-static ID3D11PixelShader *g_ps, *g_ps_clear, *g_ps_present, *g_ps_copy, *g_ps_fxaa, *g_ps_zres, *g_ps_zprobe;
+static ID3D11PixelShader *g_ps, *g_ps_clear, *g_ps_present, *g_ps_copy, *g_ps_fxaa, *g_ps_zres, *g_ps_zprobe, *g_ps_menu;
 
 /* Internal resolution: every render target and depth buffer is allocated at
  * g_rs times the size the title asked for ([Display] render_scale, env
@@ -123,9 +123,11 @@ static int movie_fill(int movie, float ww, float wh, float *pw, float *ph)
     return 1;
 }
 
+static float g_lod_bias;   /* (1.9.7) the More page's texture sharpness (negative: sharper) */
 static void gpu_filter_opts(void)
 {
     if (g_aniso < 0) {
+        g_lod_bias = xbox_GfxGetF(GFX_LOD);
         const char *a = getenv("RECOMP_ANISO"), *m = getenv("RECOMP_MIPMAPS");
         g_aniso = a ? atoi(a) : 1;
         if (g_aniso < 1) g_aniso = 1;
@@ -137,7 +139,32 @@ static void gpu_filter_opts(void)
 
 static ID3D11InputLayout *g_il;
 static ID3D11Buffer *g_vb, *g_ib, *g_cb_vs, *g_cb_ps, *g_cb_cl, *g_cb_post;
-static float g_post[4] = { 1, 0, 1, 0 };   /* brightness (gamma), sharpening, saturation */
+static float g_post[24] = { 1, 0, 1, 0 };   /* brightness (gamma), sharpening, saturation; (1.9.7) the colour look (4 x 4), HDR */
+static int g_hdr_on, g_hdr_want = -1, g_sc_recreate;   /* (1.9.7) HDR: on the screen now, asked for, the swap chain to be made again */
+static float g_hdr_peak = 600.0f;   /* the screen's peak brightness, nits */
+/* (1.9.7) the picture's adjustments from the settings: brightness, sharpening (a movie's own while one plays), saturation,
+ * the colour look (Athelas' four, MIT) and HDR */
+static void post_fill(void)
+{
+    static const float looks[4][13] = {   /* contrast, pivot, sat, vibrance, gamma, shadow rgb, light rgb */
+        { 1.00f, 0.30f, 1.00f, 0.00f, 1.00f,  0.000f, 0.000f,  0.000f,  0.000f, 0.000f,  0.000f },
+        { 1.12f, 0.30f, 1.06f, 0.15f, 0.97f, -0.012f, 0.006f,  0.028f,  0.045f, 0.018f, -0.030f },
+        { 1.08f, 0.30f, 1.30f, 0.35f, 0.93f,  0.000f, 0.000f,  0.000f,  0.010f, 0.005f,  0.000f },
+        { 1.15f, 0.30f, 0.72f, 0.00f, 1.05f, -0.020f, 0.000f,  0.025f,  0.012f, 0.006f, -0.006f } };
+    extern int xbox_MoviePlaying(void);
+    int lk = xbox_GfxGet(GFX_LOOK); float st = xbox_GfxGetF(GFX_LOOKSTR), ms = xbox_GfxGetF(GFX_MOVIESHARP);
+    if (lk < 0 || lk > 3) lk = 0;
+    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR); g_post[3] = 0;
+    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
+    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    if (ms > 0 && xbox_MoviePlaying()) g_post[1] = ms;
+    g_post[4] = looks[lk][0]; g_post[5] = looks[lk][1]; g_post[6] = looks[lk][2]; g_post[7] = looks[lk][3];
+    g_post[8] = looks[lk][4]; g_post[9] = lk ? st : 0.0f; g_post[10] = g_post[11] = 0;
+    g_post[12] = looks[lk][5]; g_post[13] = looks[lk][6]; g_post[14] = looks[lk][7]; g_post[15] = 0;
+    g_post[16] = looks[lk][8]; g_post[17] = looks[lk][9]; g_post[18] = looks[lk][10]; g_post[19] = 0;
+    {   float paper = xbox_GfxGetF(GFX_HDRPAPER); if (paper < 80.0f) paper = 200.0f;
+        g_post[20] = g_hdr_on ? 1.0f : 0.0f; g_post[21] = paper / 80.0f; g_post[22] = g_hdr_peak > paper ? g_hdr_peak / paper : 1.0f; g_post[23] = 0; }
+}
 static UINT g_vb_cap, g_ib_cap;
 static ID3D11SamplerState *g_present_smp;
 
@@ -1035,6 +1062,7 @@ static ID3D11SamplerState *gpu_sampler_ex(uint32_t au, uint32_t av, int linear, 
         if (linear && mip && g_aniso > 1) { d.Filter = D3D11_FILTER_ANISOTROPIC; d.MaxAnisotropy = g_aniso; }
         d.AddressU = m[0]; d.AddressV = m[1]; d.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
         d.MaxLOD = mip ? D3D11_FLOAT32_MAX : 0.0f;
+        if (mip) d.MipLODBias = g_lod_bias;   /* (1.9.7) texture sharpness */
         d.ComparisonFunc = D3D11_COMPARISON_NEVER;
         if (FAILED(ID3D11Device_CreateSamplerState(g_dev, &d, &s))) return NULL;
         gstate_put(g_smp_c, k, s);
@@ -1151,6 +1179,8 @@ static int gpu_init(void)
     }
     if (!(b = gpu_compile("ps_copy", "ps_5_0"))) return 0;
     ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(b), ID3D10Blob_GetBufferSize(b), NULL, &g_ps_copy);
+    {   ID3D10Blob *bm = gpu_compile("ps_menu", "ps_5_0");   /* (1.9.7) the overlays on an HDR screen */
+        if (bm) { ID3D11Device_CreatePixelShader(g_dev, ID3D10Blob_GetBufferPointer(bm), ID3D10Blob_GetBufferSize(bm), NULL, &g_ps_menu); ID3D10Blob_Release(bm); } }
     ID3D10Blob_Release(b);
     {   /* (1.9.3) the shadow repair's passes (none: shadows as the game draws them) */
         static const char *const nm[5] = { "ps_sh_one", "ps_sh_dil", "ps_sh_ero", "ps_sh_fill", "ps_sh_down" };
@@ -1197,10 +1227,8 @@ static int gpu_init(void)
     g_cb_vs = gpu_cbuf(16);
     g_cb_ps = gpu_cbuf(sizeof(float) * 4 * (8 * 7 + 3 + 4 + 2 + 4 + 1 + 2));
     g_cb_cl = gpu_cbuf(16);
-    g_cb_post = gpu_cbuf(16);
-    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR);
-    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
-    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    g_cb_post = gpu_cbuf(sizeof g_post);
+    post_fill();
     if (g_cb_post) ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_post, 0, NULL, g_post, 0, 0);
     g_present_smp = gpu_sampler(3, 3, 1);
     g_copy_smp = g_present_smp;
@@ -2963,13 +2991,21 @@ static void gpu_readback(uint32_t base, uint32_t pitch)
 
 /* The panel (src/video/gfx_menu.c draws it with GDI) over the finished frame,
  * centred, at one texel per screen pixel. */
-static ID3D11Texture2D *g_menu_tex;
-static ID3D11ShaderResourceView *g_menu_srv;
+/* (1.9.7) two overlays: 0 the F10 panel, 1 the toast (each its own texture) */
+static int g_ov;
+static ID3D11Texture2D *g_menu_tex_a[3];
+static ID3D11ShaderResourceView *g_menu_srv_a[3];
+#define g_menu_tex g_menu_tex_a[g_ov]
+#define g_menu_srv g_menu_srv_a[g_ov]
 static ID3D11BlendState *g_menu_bs;
-static int g_menu_w, g_menu_h;
-static unsigned g_menu_ver;
-static void gpu_draw_menu(const uint32_t *px, int w, int h, unsigned ver)
+static int g_menu_w_a[3], g_menu_h_a[3];
+static unsigned g_menu_ver_a[3];
+#define g_menu_w g_menu_w_a[g_ov]
+#define g_menu_h g_menu_h_a[g_ov]
+#define g_menu_ver g_menu_ver_a[g_ov]
+static void gpu_draw_menu_at(int slot, const uint32_t *px, int w, int h, unsigned ver, int ox, int oy)
 {
+    g_ov = slot % 3;
     D3D11_VIEWPORT vp;
     float cb[4] = { 1, 1, 0, 0 };
     if (!g_menu_tex || g_menu_w != w || g_menu_h != h) {
@@ -2999,13 +3035,14 @@ static void gpu_draw_menu(const uint32_t *px, int w, int h, unsigned ver)
         ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_menu_tex, 0, NULL, px, (UINT)w * 4, 0);
         g_menu_ver = ver;
     }
-    vp.TopLeftX = (float)(((int)g_sc_w - w) / 2); vp.TopLeftY = (float)(((int)g_sc_h - h) / 2);
+    vp.TopLeftX = (float)(ox >= 0 ? ox : ((int)g_sc_w - w) / 2); vp.TopLeftY = (float)(oy >= 0 ? oy : ((int)g_sc_h - h) / 2);
     vp.Width = (float)w; vp.Height = (float)h; vp.MinDepth = 0; vp.MaxDepth = 1;
     ID3D11DeviceContext_RSSetViewports(g_ctx, 1, &vp);
     ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_cl, 0, NULL, cb, 0, 0);
     ID3D11DeviceContext_OMSetBlendState(g_ctx, g_menu_bs, NULL, 0xFFFFFFFFu);
     ID3D11DeviceContext_VSSetShader(g_ctx, g_vs_present, NULL, 0);
-    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_copy, NULL, 0);
+    ID3D11DeviceContext_PSSetShader(g_ctx, g_ps_menu ? g_ps_menu : g_ps_copy, NULL, 0);
+    if (g_cb_post) ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 3, 1, &g_cb_post);
     ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 1, &g_menu_srv);
     ID3D11DeviceContext_PSSetSamplers(g_ctx, 0, 1, &g_present_smp);
     ID3D11DeviceContext_Draw(g_ctx, 3, 0);
@@ -3029,14 +3066,14 @@ static void gpu_apply_settings(void)
     g_vsync_on = xbox_GfxGet(GFX_VSYNC);
     g_stretch_on = xbox_GfxGet(GFX_STRETCH);
     g_hwvp_user = xbox_GfxGet(GFX_VP);
-    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR);
-    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
-    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    post_fill();
     if (g_cb_post) ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_post, 0, NULL, g_post, 0, 0);
+    if (g_hdr_want >= 0 && (xbox_GfxGet(GFX_HDR) != 0) != g_hdr_want) g_sc_recreate = 1;   /* (HDR on or off: a new swap chain) */
     gpu_filter_opts();
     aniso = xbox_GfxGet(GFX_ANISO);
     mips = xbox_GfxGet(GFX_MIPS);
-    if (aniso != g_aniso || mips != g_mips) {
+    if (aniso != g_aniso || mips != g_mips || xbox_GfxGetF(GFX_LOD) != g_lod_bias) {
+        g_lod_bias = xbox_GfxGetF(GFX_LOD);
         /* samplers are rebuilt on demand; textures too when mipmaps changed */
         for (i = 0; i < GSTATE_MAX; i++)
             if (g_smp_c[i].obj) ID3D11SamplerState_Release((ID3D11SamplerState *)g_smp_c[i].obj);
@@ -3294,6 +3331,7 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     g_fhash_cur ^= 1; g_fhash_n[g_fhash_cur] = 0;
     GetClientRect(hwnd, &rc);
     if (rc.right - rc.left < 8 || rc.bottom - rc.top < 8) return;   /* minimised */
+    if (g_sc_recreate) { g_sc_recreate = 0; g_sc_hwnd = NULL; }   /* (1.9.7: HDR switched) */
     if (!g_sc || g_sc_hwnd != hwnd) {
         IDXGIDevice *dd = NULL; IDXGIAdapter *ad = NULL; IDXGIFactory *fa = NULL;
         DXGI_SWAP_CHAIN_DESC d;
@@ -3306,6 +3344,27 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         memset(&d, 0, sizeof d);
         d.BufferDesc.Width = rc.right - rc.left; d.BufferDesc.Height = rc.bottom - rc.top;
         d.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+        {   /* (1.9.7) HDR: asked for and the window's screen shows HDR (Windows HDR on): an FP16 scRGB swap chain */
+            g_hdr_want = xbox_GfxGet(GFX_HDR) != 0; g_hdr_on = 0;
+            if (g_hdr_want && ad) {
+                HMONITOR mon = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST); UINT oi; IDXGIOutput *o = NULL;
+                for (oi = 0; IDXGIAdapter_EnumOutputs(ad, oi, &o) == S_OK; oi++) {
+                    DXGI_OUTPUT_DESC od; IDXGIOutput6 *o6 = NULL;
+                    if (SUCCEEDED(IDXGIOutput_GetDesc(o, &od)) && od.Monitor == mon
+                        && SUCCEEDED(IDXGIOutput_QueryInterface(o, &IID_IDXGIOutput6, (void **)&o6)) && o6) {
+                        DXGI_OUTPUT_DESC1 d1;
+                        if (SUCCEEDED(IDXGIOutput6_GetDesc1(o6, &d1)) && d1.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020) {
+                            g_hdr_on = 1; g_hdr_peak = d1.MaxLuminance > 100.0f ? d1.MaxLuminance : 600.0f;
+                        }
+                        IDXGIOutput6_Release(o6);
+                    }
+                    IDXGIOutput_Release(o); o = NULL;
+                }
+                fprintf(stderr, "  [D3D11] HDR %s\n", g_hdr_on ? "on (an FP16 scRGB picture)" : "asked for, but this screen has Windows HDR off (or none): the normal picture");
+                if (g_hdr_on) { fprintf(stderr, "  [D3D11] HDR: the screen's peak %.0f nits\n", g_hdr_peak); }
+            }
+            if (g_hdr_on) d.BufferDesc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+        }
         d.SampleDesc.Count = 1; d.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT; d.BufferCount = 2;
         d.OutputWindow = hwnd; d.Windowed = TRUE;
         if (fa) {
@@ -3339,7 +3398,20 @@ static void gpu_present(uint32_t base, uint32_t pitch)
             if (FAILED(hr)) {
                 g_tear = 0; d.Flags = 0;
                 d.SwapEffect = DXGI_SWAP_EFFECT_DISCARD; d.BufferCount = 1;
+                if (g_hdr_on) { g_hdr_on = 0; d.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; }   /* (no flip model: no HDR) */
                 hr = IDXGIFactory_CreateSwapChain(fa, (IUnknown *)g_dev, &d, &g_sc);
+            }
+            if (SUCCEEDED(hr) && g_hdr_on) {   /* scRGB: linear, 1.0 = 80 nits */
+                IDXGISwapChain3 *s3 = NULL; UINT sup = 0;
+                if (SUCCEEDED(IDXGISwapChain_QueryInterface(g_sc, &IID_IDXGISwapChain3, (void **)&s3)) && s3) {
+                    if (FAILED(IDXGISwapChain3_CheckColorSpaceSupport(s3, DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709, &sup)) || !(sup & DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG_PRESENT)
+                        || FAILED(IDXGISwapChain3_SetColorSpace1(s3, DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709))) {
+                        fprintf(stderr, "  [D3D11] HDR: the screen won't take scRGB: the normal picture\n");
+                        g_hdr_on = 0;
+                    }
+                    IDXGISwapChain3_Release(s3);
+                } else g_hdr_on = 0;
+                if (!g_hdr_on) { IDXGISwapChain_Release(g_sc); g_sc = NULL; d.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM; hr = IDXGIFactory_CreateSwapChain(fa, (IUnknown *)g_dev, &d, &g_sc); }
             }
             if (FAILED(hr)) { fprintf(stderr, "  [D3D11] CreateSwapChain failed: 0x%08lX\n", (unsigned long)hr); fflush(stderr); }
             else fprintf(stderr, "  [D3D11] presenting to the game window (%s)\n",
@@ -3449,6 +3521,11 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         if (g_aa_on < 0) g_aa_on = xbox_GfxFxaa();
         ID3D11DeviceContext_PSSetShader(g_ctx, (g_aa_on && g_ps_fxaa) ? g_ps_fxaa : g_ps_present, NULL, 0);
         ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 2, 1, &g_cb_cl);
+        {   /* (1.9.7) a movie's own sharpening while one plays: the adjustments each frame */
+            static float last[24];
+            post_fill();
+            if (g_cb_post && memcmp(last, g_post, sizeof last)) { memcpy(last, g_post, sizeof last); ID3D11DeviceContext_UpdateSubresource(g_ctx, (ID3D11Resource *)g_cb_post, 0, NULL, g_post, 0, 0); }
+        }
         ID3D11DeviceContext_PSSetConstantBuffers(g_ctx, 3, 1, &g_cb_post);
     }
     ID3D11DeviceContext_PSSetShaderResources(g_ctx, 0, 1, &s->srv);
@@ -3461,7 +3538,9 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     {
         const uint32_t *mpx; int mw, mh; unsigned mver;
         xbox_GfxMenuSetAvailable(1);
-        if (xbox_GfxMenuRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu(mpx, mw, mh, mver);
+        if (xbox_GfxMenuRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu_at(0, mpx, mw, mh, mver, -1, -1);
+        { int tx, ty; if (xbox_ToastRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(1, mpx, mw, mh, mver, tx, ty); }
+        { int tx, ty; if (xbox_BannerRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(2, mpx, mw, mh, mver, tx, ty); }
     }
     {
         HRESULT hr;

@@ -33,15 +33,65 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 |---|---|---|
 | Difficulty | Easy, Normal, Expert | Enemy damage x0.75 / 1 / 1.5, heroes' health x1.5 / 1 / 0.75, enemies from spawners come back 0 / 1 / 2 extra times, a downed hero's wait 15 / 30 / 45 s |
 | Player Icons | Off, On | "P1" / "P2" over the heroes' heads, dimmed when something is drawn in front of the head (Direct3D 11 only) |
-| Camera Zoom | Off, Normal, Wide | The shared camera zooms out as the heroes part, up to 1.3 (Normal) or 1.5 (Wide) |
+| Camera Zoom | Off, Normal, Wide | The shared camera zooms out as the heroes part, up to 1.3 (Normal) or 1.5 (Wide). **Recommended: Normal or Wide** in the levels, so both heroes stay in view |
 | P2 Teleport | Off, On | Player 2's hero is put beside player 1's after falling too far behind |
 | P2 Bot | Off, On | The game plays player 2 (a stopgap AI, below) |
 | Pickups | Normal, Double | Double: a health or ammo pickup can be taken twice, once by each hero (the second at least 1.5 s after the first). Options page only *(1.9.6)* |
 | P1 Device, P2 Device | Automatic, Keyboard & Mouse, a controller | Each player's device (above). Options page only *(1.9.6)* |
 
+- **Camera:** playing the levels with Camera Zoom on **Normal** or **Wide** is recommended; with Off the shared camera
+  stays close and a hero can end up off screen.
 - **A hero who goes down** comes back beside the other one after the wait. Both down is a game over.
 - **After a level:** player 1's stats, player 2's stats, player 1's shop, player 2's shop, then the save. Player 2's
   experience and purchases are saved in their hero's record and come back when the save is loaded.
+
+## Versus (1.9.7)
+
+Player 1 against player 2, one on one, on the co-op's two heroes.
+
+- **Starting:** the main menu's **Versus** (under Co-op). Choose each player's hero and the arena, then **Start**.
+  Heroes: Aragorn, Legolas, Gimli and Isildur, plus the seven extra heroes and Versus' own three when the Extra
+  heroes mod is on (both players can't be the same hero; on Weathertop player 1 is Aragorn or an extra hero).
+- **Mode:** Deathmatch on every arena. **Rounds to win** (the Versus menu): 3, 5 or 7.
+- **Versus-only heroes** (not in the character select, the campaign or co-op), each with his own swings, flinches,
+  falls and voice, the heroes' kick as his special, and a thrown rock for a ranged attack:
+  - **Nazgul** (Weathertop's Ringwraith, his sword). When he falls he flees, as from Aragorn's fire on Weathertop,
+    and is gone until the next round.
+  - **Shield Orc** (the prologue's brown orc, his spear and his shield). The shield halves every blow on him until it
+    breaks: six blows (a heavy one counts twice), then it is gone from his arm for the rest of the round.
+  - **Eomer** (Westfold's captain, the Rohirrim's sword and voices).
+- **Music:** each arena plays another level's track, so no two sound alike.
+- **Voices:** each hero cries out as he swings, when he is struck and when he falls, in his own voice.
+- **Amon Hen:** the arena ends 50 units from where the match begins (past it the level is unfinished).
+- **Starting spots** 30 units apart. On the bigger arenas (Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of
+  Rohan, the Road to Helm's Deep, the Deeping Wall) the rounds after the first go on where the heroes are.
+- **Blocking:** a guard breaks after 4 blocks in a row, and that blow lands. Kicks knock back but do almost no damage.
+- **Progress:** Versus doesn't touch the campaign. Both players are at the top level with every move for the match
+  only; your saves, levels and the extra heroes' records are put back as they were when you leave Versus.
+- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, Gates of Moria, Plains
+  of Rohan, Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit
+  and the prologue (Mount Doom).
+- **The arena:** the level without its story: no other characters, triggers or cut-scenes (the opening one too: the
+  match starts as the level loads). The scenery stays.
+- **Fixed loadouts:** both heroes get the same health (1500) and every move, whatever the saves hold. The pause menu
+  has no Show Upgrades.
+- **Rounds:** each round starts with a countdown (the round, then 3, 2, 1 with the Options' tick, then
+  FIGHT, with `versus/fight.wav` if it is there); nobody moves until it ends. A hero at 0 health falls and stays down;
+  the other wins the round. The first to the rounds chosen wins the match: the **results** (rounds, hits, damage, biggest hit,
+  arrows on target, fastest round, times downed, and two awards the match earned) show for 11 seconds over
+  `versus/results_bg.bmp`, then a new match starts.
+- **Ranged:** each hero is locked on to the other. 10 shots a round, one a second at most; a shot hits if the other
+  is still near where he stood when it was loosed (a step aside dodges it). No ranged attacks on Weathertop and the
+  prologue.
+- **Pickups:** each round a health pickup in the middle and an ammo pickup on each side (not on Weathertop and the
+  prologue); first come, first served.
+- **The menu's background:** `versus/menu_bg.bmp` (the Co-op one without it).
+- **Devices:** as for co-op (Options > Co-op Options > P1 Device / P2 Device).
+- **The P2 Bot** (Co-op Options) fights player 1 in Versus: it walks up and swings, and parries now and then.
+- **Sounds and pictures:** the `versus` folder beside the game: `fight.wav` (the horn with FIGHT), `match_win.wav`
+  (a match won), `menu_bg.bmp` (the Versus menu's background) and `results_bg.bmp` (the results'); add
+  `round_win.wav` for a round won. Replace any of them with your own; any that are missing are left out.
+- Not yet: enemies in the arenas, a power-up, team modes; parts of the bigger maps can't be reached yet.
 
 ## What the co-op changes
 
