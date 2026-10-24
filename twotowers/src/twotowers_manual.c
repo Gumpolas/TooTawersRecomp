@@ -8829,10 +8829,22 @@ void sub_00085FB0(void)
         uint32_t sl = MEM32(esp + 8);
         if (coop_p2 >= 0x10000u && ecx == coop_p2 && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8)
             && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2SLOTPICK")) {
-            int k; uint32_t pick = 0;
-            for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                int ranged = qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u;
-                if (sl < 8u ? (!ranged && (uint32_t)coop_p2w_slot[k] == sl) : ranged) pick = q; }
+            int k; uint32_t pick = 0, wh = MEM32(w + 0x18), wm = wh >= 0x10008u && wh < 0x84000000u ? MEM32(wh - 8 + 0x40) : 0;
+            int wr = wm == 0x0834F2D4u || wm == 0x36AC3F58u || wm == 0xE7EEC090u;
+            if (sl < 8u)   /* slots 0-3: his own melee weapon for that slot (putting the bow away fills 0, 1 and 2) */
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    int ranged = qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u;
+                    if (!ranged && (uint32_t)coop_p2w_slot[k] == sl) pick = q; }
+            if (!pick && (sl >= 8u || wr)) {   /* the bow (his hand, or a slot he has no melee weapon for: his back): the ranged copy
+                                                 * he already holds (owner +0x11C), so the one on his back goes to his hand (a playtest
+                                                 * from the level's start: one stayed on his back while another copy went to his hand,
+                                                 * and he shot with his blade); none held: the one asked for if it is his, else his first */
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && MEM32(q + 0x11C) == coop_p2) pick = q; }
+                for (k = 0; k < coop_np2w && !pick && wr; k++) if (coop_p2w[k] == w) pick = w;
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    if (qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) pick = q; }
+            }
             if (pick && pick != w) {
                 { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2 (own moves): slot %X takes his %08X for %08X\n", sl, pick, w); }
                 MEM32(esp + 4) = pick; w = pick;
@@ -8845,7 +8857,8 @@ void sub_00085FB0(void)
         static uint32_t first; static unsigned lv; extern const char *tt_coop_p2_char_now;
         uint32_t h = w >= 0x10000u ? MEM32(w + 0x18) : 0;
         if (lv != coop_level_n) { lv = coop_level_n; first = 0; }
-        if (coop_p2 >= 0x10000u && ecx == coop_p2 && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {
+        if (coop_p2 >= 0x10000u && ecx == coop_p2 && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")
+            && !(coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8) && !getenv("TT_COOP_NOP2SLOTPICK"))) {   /* (with his own moves the slot pick above chooses) */
             uint32_t m = MEM32(h - 8 + 0x40);
             if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
                 if (!first) first = w;
