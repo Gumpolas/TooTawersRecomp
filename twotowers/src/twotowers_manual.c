@@ -4305,14 +4305,14 @@ static void coop_place(void)
         extern int tt_in_scene(void); extern int coop_hero_down(int);
         static uint32_t t0; static int step; static float sx, sy;
         uint32_t pa = coop_pathmap(a), pb = coop_pathmap(p1);
-        int held = 0, push = MEMF(COOP_PADREC(1) + 0x14u) * MEMF(COOP_PADREC(1) + 0x14u) + MEMF(COOP_PADREC(1) + 0x18u) * MEMF(COOP_PADREC(1) + 0x18u) > 0.25f;
+        int held = 0, push = MEMF(COOP_PADREC(1) + 0x14u) * MEMF(COOP_PADREC(1) + 0x14u) + MEMF(COOP_PADREC(1) + 0x18u) * MEMF(COOP_PADREC(1) + 0x18u) > 0.09f;   /* (past 0.3: in a playtest the bot's stick was at 0.37 part of the time) */
         if (push && a >= 0x10000u && p1 >= 0x10000u && pa && pb && pa != pb && coop_place_frames <= 0 && !tt_in_scene() && !coop_hero_down(0) && !coop_hero_down(1)
             && !getenv("TT_COOP_NOEDGEFIX")) {
             float x = MEMF(a + 0xF0u), y = MEMF(a + 0xF4u);
             int edge = x - MEMF(pa + 0x48u) < 1.0f || MEMF(pa + 0x58u) - x < 1.0f || y - MEMF(pa + 0x4Cu) < 1.0f || MEMF(pa + 0x5Cu) - y < 1.0f;
             int in1 = x >= MEMF(pb + 0x48u) && x <= MEMF(pb + 0x58u) && y >= MEMF(pb + 0x4Cu) && y <= MEMF(pb + 0x5Cu)
                       && MEMF(a + 0xF8u) >= MEMF(pb + 0x50u) && MEMF(a + 0xF8u) <= MEMF(pb + 0x60u);
-            held = edge && in1;
+            held = edge && (in1 || fabsf(MEMF(a + 0xF8u) - MEMF(p1 + 0xF8u)) < 8.0f);   /* (or near player 1's height: a playtest held him 12 s at x -148.55 and the rule never ran, in1 false there) */
         }
         if (!held && step == 0) t0 = 0;
         else if (!t0) { t0 = coop_now() | 1; sx = MEMF(a + 0xF0u); sy = MEMF(a + 0xF4u); }
@@ -6151,7 +6151,17 @@ static void coop_hudlist_dump(void)
  * through the HUD's own placing: y shrunk 0.93 about 240 (observed with the respawn counter) and, wider than 4:3,
  * x narrowed about the middle by the renderer (the markers are kept out of its edge groups, xbox_hud_excl_more).
  * Two elements of their own (the arrows' count, font 0) drawn through a second switched-off HUD slot. */
-static uint32_t coop_boss_tb; static int coop_boss_n;
+static uint32_t coop_boss_tb[4]; static int coop_boss_li[4], coop_boss_n;
+/* a boss bar: the troll's is list 15, the Watcher's list 19 (observed), each 7 pieces: 0 a strip, 1-2 the health bar,
+ * 3 the frame (256x64 near the top), 4 the face (64x64), 5-6 their flash. Told by that shape, not by the list */
+static int coop_is_bossbar(int li)
+{
+    uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), n = MEM32(COOP_HUD_LIST + li * 12 + 4);
+    if (li < 2 || li > 20 || !MEM8(COOP_HUD_ON + li) || tb < 0x10000u || n != 7) return 0;
+    return MEM32(tb + 3 * 0xDC + 0x10) == 256 && MEM32(tb + 3 * 0xDC + 0x14) == 64 && (int32_t)MEM32(tb + 3 * 0xDC + 0xC) < 40
+        && MEM32(tb + 4 * 0xDC + 0x10) == 64 && MEM32(tb + 4 * 0xDC + 0x14) == 64;
+}
+static int coop_bossbar_any(void) { int li; if (getenv("TT_COOP_NOBOSSBARMOVE")) return 0; for (li = 2; li <= 20; li++) if (coop_is_bossbar(li)) return 1; return 0; }
 static uint32_t coop_tag_el; static int coop_tag_slot = -1; static uint32_t coop_tag_saved[2]; static float coop_proj_z; static int coop_tag_hidden[2];
 static int coop_project_old(float wx, float wy, float wz, float *fx, float *fy);
 /* the frame position of a world point through the camera the game draws and culls with: SetPerspective's object
@@ -6298,14 +6308,14 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
         else if (aim && last_e[w] && now - last_t[w] < 400u && (int32_t)MEM32(last_e[w] + 0x2FC) > 0) t = last_e[w];   /* (the lock drops to 0 for a moment now and then while aiming, observed) */
         else continue;
         if (!aim) continue;
-        z = coop_boss_kind(t) == 3 ? 10.0f : 6.0f;   /* (over the head: an orc's or goblin's 6, the troll's 10: from the frames, roughly) */
+        z = coop_boss_kind(t) == 3 ? 9.0f : 4.4f;   /* (its head, as the markers: the dot is lifted in frame units below. A height above the head, 6 / 10 before, put it off the enemy with the camera zoomed out, a playtest) */
         if (getenv("TT_COOP_AIMDOTZ")) z = (float)atof(getenv("TT_COOP_AIMDOTZ"));
         if (!coop_project(MEMF(t + 0xF0), MEMF(t + 0xF4), MEMF(t + 0xF8) + z, &fx, &fy)) continue;
         if (fx < 8.0f || fx > 632.0f || fy < 8.0f || fy > 472.0f) continue;
         if (cm >= 0x10000u) { float ex = MEMF(t + 0xF0) - MEMF(cm + 0x50), ey = MEMF(t + 0xF4) - MEMF(cm + 0x54), ez = MEMF(t + 0xF8) + z - MEMF(cm + 0x58); d = sqrtf(ex * ex + ey * ey + ez * ez); }
         sz[w] = 18.0f * 20.0f / (d > 1.0f ? d : 1.0f);   /* (18 HUD units at 20 units from the camera) */
         if (sz[w] < 6.0f) sz[w] = 6.0f; if (sz[w] > 28.0f) sz[w] = 28.0f;
-        hx[w] = 320.0f + (fx - 320.0f) * kk; hy[w] = 240.0f + (fy - 240.0f) / 0.93f; tg[w] = t; on[w] = 1;
+        fy -= getenv("TT_COOP_AIMDOTLIFT") ? (float)atof(getenv("TT_COOP_AIMDOTLIFT")) : 10.0f; hx[w] = 320.0f + (fx - 320.0f) * kk; hy[w] = 240.0f + (fy - 240.0f) / 0.93f; tg[w] = t; on[w] = 1;
         if (getenv("TT_COOP_AIMDOTLOG")) { static uint32_t lt[2]; if (now - lt[w] > 500u) { lt[w] = now; tt_dbg("[AIMDOT] P%d aiming at %08X (%s), %.1f from the camera: dot %.0f at %.0f,%.0f%s\n", w + 1, t, coop_nm(t), d, sz[w], hx[w], hy[w], ok ? "" : " (the last lock)"); } }
     }
     if (on[0] && on[1] && tg[0] == tg[1]) { float g = (sz[0] + sz[1]) * 0.3f; hx[0] -= g; hx[1] += g; }   /* one enemy: side by side */
@@ -6563,7 +6573,7 @@ void tt_coop_hud_pre(void)
     {   /* the respawn counter, font 0 (centres its text in the box) */
         uint32_t e = COOP_EL + 4 * 0xDC; extern uint32_t coop_down_time(void);
         coop_el_copy(e, a + 26 * 0xDC);   /* the arrows' count "30", font 0 */
-        MEM32(e + 8) = 220; MEM32(e + 0xC) = getenv("TT_COOP_CNTY") ? (uint32_t)atoi(getenv("TT_COOP_CNTY")) : 96; MEM32(e + 0x10) = 200; MEM32(e + 0x14) = 30; if (MEM8(COOP_HUD_ON + 15) && !getenv("TT_COOP_NOBOSSBARMOVE")) MEM32(e + 0xC) = 180;   /* (the boss bar moved under the swords: the counter under it) */   /* (2026-10-18) just under the swords: kept out of the widescreen grouping by the renderer's exclusion box (xbox_hud_excl, set below), so it no longer has to stay 10 units clear of everything (it sat at 178) */   /* centred, under everything in the top band (swords y 25-89, the allies moved down to y 164): the text's drawn pieces span much wider than its box, and at y 110-160 (tested) they merged the whole top band into one centred group; 175 and 200 keep the swords in their corners: more than 10 units from both sword groups, so it neither drags them to the middle nor is pinned */
+        MEM32(e + 8) = 220; MEM32(e + 0xC) = getenv("TT_COOP_CNTY") ? (uint32_t)atoi(getenv("TT_COOP_CNTY")) : 96; MEM32(e + 0x10) = 200; MEM32(e + 0x14) = 30; if (coop_bossbar_any()) MEM32(e + 0xC) = 180;   /* (the boss bar moved under the swords: the counter under it) */   /* (2026-10-18) just under the swords: kept out of the widescreen grouping by the renderer's exclusion box (xbox_hud_excl, set below), so it no longer has to stay 10 units clear of everything (it sat at 178) */   /* centred, under everything in the top band (swords y 25-89, the allies moved down to y 164): the text's drawn pieces span much wider than its box, and at y 110-160 (tested) they merged the whole top band into one centred group; 175 and 200 keep the swords in their corners: more than 10 units from both sword groups, so it neither drags them to the middle nor is pinned */
         {   extern const char *tt_vs_banner(void); const char *vb = tt_vs_banner();
             int d1 = coop_hero_down(0), who = vb ? 9 : tt_vs_on() ? 0 : dn ? 2 : d1 ? 1 : 0;   /* (Versus: no respawn counter) */   /* whichever hero is down (both down is game over); 9: Versus' banner */
             MEM8(e + 0x24) = (uint8_t)(who != 0); MEM32(e + 0x20) = 0xFF4040FFu;
@@ -6663,8 +6673,8 @@ void tt_coop_hud_pre(void)
         }
     }
     {   /* allies' HUD (Frodo's portrait and bar here; any switched-on list but player 1's sword 0 and gauge 1) in the top right moves under player 2's sword for this draw */
-        int li, boss = MEM8(COOP_HUD_ON + 15) && !getenv("TT_COOP_NOBOSSBARMOVE"); int32_t ady = 72 + (boss ? (getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96) : 0); coop_ally_n = 0;   /* (under the boss bar too while it shows, which moves on its own below) */
-        for (li = 2; li < 21; li++) { uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), n = MEM32(COOP_HUD_LIST + li * 12 + 4), j; if (!MEM8(COOP_HUD_ON + li) || tb < 0x10000u || n > 64 || (li == 15 && boss)) continue;
+        int li, boss = coop_bossbar_any(); int32_t ady = 72 + (boss ? (getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96) : 0); coop_ally_n = 0;   /* (under the boss bar too while it shows, which moves on its own below) */
+        for (li = 2; li < 21; li++) { uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), n = MEM32(COOP_HUD_LIST + li * 12 + 4), j; if (!MEM8(COOP_HUD_ON + li) || tb < 0x10000u || n > 64 || (boss && coop_is_bossbar(li))) continue;
             for (j = 0; j < n && coop_ally_n < 96; j++) { uint32_t e = tb + j * 0xDC; int32_t x = (int32_t)MEM32(e + 8), y = (int32_t)MEM32(e + 0xC);
                 if (x >= 400 && y < 200) { coop_ally[coop_ally_n][0] = e; coop_ally[coop_ally_n][1] = (uint32_t)y; coop_ally_n++; MEM32(e + 0xC) = (uint32_t)(y + ady); } } }
     }
@@ -6675,16 +6685,19 @@ void tt_coop_hud_pre(void)
     }
     { static int lg; if (!lg++) tt_dbg("[COOPSWORD] player 2's sword drawn through HUD slot %d (mirror mode %d)\n", coop_sw_slot, mir); }
     coop_aimdot_draw(a + 24 * 0xDC);
-    if (MEM8(COOP_HUD_ON + 15) && !getenv("TT_COOP_NOBOSSBARMOVE")) {   /* the boss bar (list 15, every boss's: health bar, frame, face) under player 2's sword:
+    if (!getenv("TT_COOP_NOBOSSBARMOVE")) {   /* a boss bar (coop_is_bossbar: the troll's list 15, the Watcher's 19) under player 2's sword:
         * drawn from copies moved down (the list's table swapped for the draw): the game slides its pieces from where they are,
         * so moving its own ran them down the screen (observed) */
         extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); static uint32_t copy;
-        uint32_t tb = MEM32(COOP_HUD_LIST + 15 * 12), n = MEM32(COOP_HUD_LIST + 15 * 12 + 4), j; int32_t dy = getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96, dx = getenv("TT_COOP_BOSSBARDX") ? atoi(getenv("TT_COOP_BOSSBARDX")) : 24;   /* (x: all of it in the right half, from 297 to 321, and 18 under the swords: more than the 10 that groups pieces, so the widescreen HUD keeps it and player 2's sword to the right edge; at 297 and 10 under they made one group across the middle, kept in the middle, observed) */
-        if (!copy) copy = xbox_ContiguousAlloc(16 * 0xDC, 16u);
-        if (copy && tb >= 0x10000u && n <= 16) {
-            for (j = 0; j < n; j++) { coop_el_copy(copy + j * 0xDC, tb + j * 0xDC); MEM32(copy + j * 0xDC + 0xC) = (uint32_t)((int32_t)MEM32(tb + j * 0xDC + 0xC) + dy); MEM32(copy + j * 0xDC + 8) = (uint32_t)((int32_t)MEM32(tb + j * 0xDC + 8) + dx); }
-            coop_boss_tb = tb; MEM32(COOP_HUD_LIST + 15 * 12) = copy; coop_boss_n = 1;
-            if (getenv("TT_COOP_BOSSBARLOG")) { static uint32_t lt; if (coop_now() - lt > 2000u) { lt = coop_now(); tt_dbg("[BOSSBAR] %u pieces drawn %d lower; the game's y:", n, dy); for (j = 0; j < n; j++) tt_dbg(" %d", (int32_t)MEM32(tb + j * 0xDC + 0xC)); tt_dbg("\n"); } } } }
+        int32_t dy = getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96, dx = getenv("TT_COOP_BOSSBARDX") ? atoi(getenv("TT_COOP_BOSSBARDX")) : 24;   /* (x: all of it in the right half, from 297 to 321, and 18 under the swords: more than the 10 that groups pieces, so the widescreen HUD keeps it and player 2's sword to the right edge; at 297 and 10 under they made one group across the middle, kept in the middle, observed) */
+        int li;
+        if (!copy) copy = xbox_ContiguousAlloc(4 * 8 * 0xDC, 16u);
+        coop_boss_n = 0;
+        for (li = 2; li <= 20 && copy && coop_boss_n < 4; li++) if (coop_is_bossbar(li)) {
+            uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), c = copy + (uint32_t)coop_boss_n * 8u * 0xDC, j;
+            for (j = 0; j < 7; j++) { coop_el_copy(c + j * 0xDC, tb + j * 0xDC); MEM32(c + j * 0xDC + 0xC) = (uint32_t)((int32_t)MEM32(tb + j * 0xDC + 0xC) + dy); MEM32(c + j * 0xDC + 8) = (uint32_t)((int32_t)MEM32(tb + j * 0xDC + 8) + dx); }
+            coop_boss_tb[coop_boss_n] = tb; coop_boss_li[coop_boss_n++] = li; MEM32(COOP_HUD_LIST + li * 12) = c;
+            if (getenv("TT_COOP_BOSSBARLOG")) { static uint32_t lt; if (coop_now() - lt > 2000u) { lt = coop_now(); tt_dbg("[BOSSBAR] list %d drawn %d lower; the game's y:", li, dy); for (j = 0; j < 7; j++) tt_dbg(" %d", (int32_t)MEM32(tb + j * 0xDC + 0xC)); tt_dbg("\n"); } } } }
     if (mir && !getenv("TT_COOP_NOTEETH")) {   /* (1.9.7) the silver strip under the blade (player 1's sword's elements 1-6, the
                                                  * teeth, and 9), mirrored as the sword's art, through a slot of its own */
         extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); static const int src[13] = { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15 }; int j, n = 0;
@@ -6726,7 +6739,7 @@ void tt_coop_hud_post(void)
     while (coop_ally_n > 0) { coop_ally_n--; MEM32(coop_ally[coop_ally_n][0] + 0xC) = coop_ally[coop_ally_n][1]; }   /* allies back in place */
     if (coop_arrow_n == 3) { MEM32(COOP_P1SWORD + 24 * 0xDC + 8) = coop_arrow_saved[0]; MEM32(COOP_P1SWORD + 25 * 0xDC + 8) = coop_arrow_saved[1]; MEM32(COOP_P1SWORD + 26 * 0xDC + 8) = coop_arrow_saved[2]; }   /* player 1's arrows back */
     coop_arrow_n = 0;
-    if (coop_boss_n) { coop_boss_n = 0; MEM32(COOP_HUD_LIST + 15 * 12) = coop_boss_tb; }   /* the boss bar's own table back */
+    while (coop_boss_n > 0) { coop_boss_n--; MEM32(COOP_HUD_LIST + coop_boss_li[coop_boss_n] * 12) = coop_boss_tb[coop_boss_n]; }   /* the boss bars' own tables back */
     if (coop_tag_slot >= 0) {
         MEM32(COOP_HUD_LIST + coop_tag_slot * 12) = coop_tag_saved[0]; MEM32(COOP_HUD_LIST + coop_tag_slot * 12 + 4) = coop_tag_saved[1];
         MEM8(COOP_HUD_ON + coop_tag_slot) = 0; coop_tag_slot = -1;
