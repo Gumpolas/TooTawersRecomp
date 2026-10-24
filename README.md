@@ -213,6 +213,9 @@ Bug reports are welcome, especially for Mac and Linux users. Please include twot
 
 Screenshots and Gameplay:
 
+<img width="3840" height="2160" alt="New folder (14) Screenshot 2026 10 24 - 02 00 33 07" src="https://github.com/user-attachments/assets/35a356e3-651a-4a39-8d08-a72952829d13" />
+
+
 <img width="3840" height="2160" alt="Screenshot 2026-10-16 11-55-43" src="https://github.com/user-attachments/assets/5c4c73fe-d546-4551-bac5-64c1f05abbdd" />
 
 
