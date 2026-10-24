@@ -3034,7 +3034,8 @@ static int coop_bot_route(uint32_t hero, float gx, float gy, float *wx, float *w
     static short prev[B * B]; static int q[B * B];
     uint32_t pm = coop_pathmap(hero); float ox, oy, sz; int c0, r0, c1, r1, qh = 0, qt = 0, i, found = 0, path[B * 2], np = 0, k;
     *wx = gx; *wy = gy;
-    if (!pm || getenv("TT_COOP_BOTNOPATH")) return 0;
+    if (!pm || getenv("TT_COOP_BOTNOPATH") || !getenv("TT_COOP_BOTPATHMAP")) return 0;   /* (the pathmap route only on request now: player 2 follows
+                                                                                       * player 1's footsteps, coop_steps -- the owner asked for no AI pathfinding) */
     ox = MEMF(pm + 0x48u); oy = MEMF(pm + 0x4Cu); sz = (float)(int)MEM32(pm + 0x68u);
     c0 = (int)floorf((MEMF(hero + 0xF0) - ox) / sz); r0 = (int)floorf((MEMF(hero + 0xF4) - oy) / sz);
     c1 = (int)floorf((gx - ox) / sz); r1 = (int)floorf((gy - oy) / sz);
@@ -3097,6 +3098,49 @@ static float coop_bot_steer(CoopSeek *k, CoopPad *o, uint32_t hero, float tx, fl
     return d;
 }
 /* to a goal (stop within R of it), by the pathmap's way (coop_bot_route, again every 250 ms); the distance to the goal */
+/* player 1's footsteps: where he went, a spot every 1.5 units, the last 128 (a jump of more than 16 units in a frame -- a
+ * teleport, a new level -- starts them again). The P2 Bot follows them from the one nearest to him on toward player 1's
+ * latest (coop_bot_follow), so it goes where player 1 went, round what he went round */
+static struct { float x, y; } coop_steps[128]; static int coop_steps_n, coop_steps_i; static unsigned coop_steps_lv; static unsigned coop_steps_seq;
+static void coop_steps_frame(uint32_t p1)
+{
+    float x, y;
+    if (p1 < 0x10000u) return;
+    x = MEMF(p1 + 0xF0); y = MEMF(p1 + 0xF4);
+    if (coop_steps_lv != coop_level_n) { coop_steps_lv = coop_level_n; coop_steps_n = coop_steps_i = 0; }
+    if (coop_steps_n) { int l = (coop_steps_i + 127) & 127; float dx = x - coop_steps[l].x, dy = y - coop_steps[l].y, dd = dx * dx + dy * dy;
+        if (dd > 64.0f * 4.0f) { coop_steps_n = coop_steps_i = 0; coop_steps_lv = ~0u - 1u; }   /* (16 units: a jump, not a walk: begin again) */
+        else if (dd < 2.25f) return; }
+    coop_steps[coop_steps_i].x = x; coop_steps[coop_steps_i].y = y; coop_steps_i = (coop_steps_i + 1) & 127; if (coop_steps_n < 128) coop_steps_n++; coop_steps_seq++;
+}
+/* the next footstep for the bot at (bx, by), forward only: the one it is going to (counted from the level's first, so it
+ * never goes back to an older one -- player 1's way can cross itself, and "the one past the nearest" flipped between two
+ * at Gates of Moria's start, the bot stuck behind the Fellowship, a bot run); reached (1.2 units): the next; no nearer to
+ * it for 1.5 s: four on; further than 12 units from all of them, or past the last: 0 (then straight at player 1) */
+/* (coop_steps_seq: footsteps kept since the trail began; the newest is number seq - 1) */
+static int coop_steps_next(float bx, float by, float *gx, float *gy)
+{
+    static unsigned want, lv = ~0u; static uint32_t prog_t; static float prog_d;
+    unsigned first = coop_steps_seq - (unsigned)coop_steps_n, k; uint32_t now = coop_now(); float bd = 144.0f;
+    if (!coop_steps_n) return 0;
+    if (lv != coop_steps_lv || want < first || want > coop_steps_seq) {   /* (new level, a new trail, or too old: from the nearest) */
+        int best = -1, j;
+        lv = coop_steps_lv;
+        for (j = 0; j < coop_steps_n; j++) { int r = (coop_steps_i - coop_steps_n + j + 128) & 127; float dx = coop_steps[r].x - bx, dy = coop_steps[r].y - by, d = dx * dx + dy * dy; if (d <= bd) { bd = d; best = j; } }
+        if (best < 0) return 0;
+        want = first + (unsigned)best; prog_t = now; prog_d = 1e9f;
+    }
+    for (k = want; k < coop_steps_seq; k++) {
+        int r = (int)(k - first + (unsigned)(coop_steps_i - coop_steps_n + 128)) & 127; float dx = coop_steps[r].x - bx, dy = coop_steps[r].y - by, d = dx * dx + dy * dy;
+        if (d <= 1.44f) continue;   /* (reached) */
+        if (d > 144.0f) return 0;   /* (lost the trail) */
+        if (k != want) { want = k; prog_t = now; prog_d = d; }
+        if (d < prog_d - 0.25f) { prog_d = d; prog_t = now; }
+        else if (now - prog_t > 1500u) { want = k + 4 < coop_steps_seq ? k + 4 : coop_steps_seq - 1; prog_t = now; prog_d = 1e9f; continue; }
+        *gx = coop_steps[r].x; *gy = coop_steps[r].y; return 1;
+    }
+    return 0;
+}
 static float coop_bot_go(CoopSeek *k, CoopPad *o, uint32_t hero, float gx, float gy, float R)
 {
     static struct { uint32_t hero, t; float wx, wy, lgx, lgy; int how; } rs[2]; static int nlog;   /* (a route per bot: player 2's, player 1's test bot) */
@@ -3639,7 +3683,13 @@ static void coop_bot_follow(BotView *v, CoopPad *o)
         float ux = gx - v->bx, uy = gy - v->by, un = sqrtf(ux * ux + uy * uy);
         if (un > 1e-3f) { ux /= un; uy /= un; }
         coop_bot_steer(&s_bk, o, v->p2, v->bx + (side ? -uy : uy) * 3.0f + ux, v->by + (side ? ux : -ux) * 3.0f + uy, 0.2f);
-    } else if (coop_bot_go(&s_bk, o, v->p2, gx, gy, 2.0f) <= 2.0f) s_bot_following = 0;   /* (at the goal: in the circle) */
+    } else {   /* player 1's footsteps, from the nearest on (coop_steps); none near, or past the last: straight to the goal */
+        float sx, sy;
+        if (!getenv("TT_COOP_BOTPATHMAP") && v->d1 > 4.0f && coop_steps_next(v->bx, v->by, &sx, &sy)) {
+            static uint32_t sl; if (getenv("TT_COOP_STEPSLOG") && v->now - sl > 1000u) { sl = v->now; tt_dbg("[P2BOT] following player 1's footsteps: to %.1f %.1f (%d kept), player 1 %.1f away\n", sx, sy, coop_steps_n, v->d1); }
+            coop_bot_steer(&s_bk, o, v->p2, sx, sy, 0.3f);
+        } else if (coop_bot_go(&s_bk, o, v->p2, gx, gy, 2.0f) <= 2.0f) s_bot_following = 0;   /* (at the goal: in the circle) */
+    }
 }
 
 /* (1.9.7, Versus) the P2 Bot fights player 1: walks up, swings beside him in beats, parries now and then. 1 = the frame is his */
@@ -4284,7 +4334,7 @@ static void coop_place(void)
 {
     uint32_t p1 = MEM32(0x43B15Cu), a = coop_p2, k;
     static int after, place_have, place_nopm, place_off_ok; static float place_x, place_y, place_ox, place_oy;
-    coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
+    coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); coop_steps_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
     if (getenv("TT_COOP_AIMSTATE") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero's state, lock and pad record, 4 times a second */
         static uint32_t lt; if (coop_now() - lt >= 250u) { int w, j; lt = coop_now();
             for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
@@ -4717,6 +4767,9 @@ void coop_threat_hit(uint32_t enemy, uint32_t weapon)
     int i = coop_thr_idx(enemy), j, w = -1;
     if (i < 0) return;
     for (j = 0; j < coop_nwpn; j++) { if (weapon == coop_wpn_orig[j]) w = 0; if (weapon == coop_wpn_copy[j]) w = 1; }
+    for (j = 0; j < coop_np2w; j++) if (weapon && weapon == coop_p2w[j]) w = 1;   /* (every weapon of his: his own melee weapons and his ranged copies are
+        * not in the pairs above, so his hits gave no threat and the cave troll stayed on player 1 -- a playtest; a bot run: 0 switches while
+        * player 2 took its health from 1000 to 961) */
     if (weapon == coop_first_char) w = 0; if (weapon == coop_p2 && weapon) w = 1;
     if (w < 0) return;
     coop_thr[i].lastw = w + 1; coop_thr[i].lastt = coop_now();
@@ -7274,8 +7327,10 @@ void tt_coop_weapon_methods_dump(void)
     coop_cur_fn = fn; coop_pre[0] = MEMF(self + 0xF0); coop_pre[1] = MEMF(self + 0xF4); coop_pre[2] = MEMF(self + 0xF8);
     return 1;
 }
+static int coop_ctx_out;   /* player 2's context left early (coop_scene_cmd): the leave that ends it only clears the depth */
 void tt_coop_leave(void)
 {
+    if (coop_ctx_out) { coop_ctx_out = 0; coop_depth = 0; coop_n_leave++; return; }
     if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOLEASH") && coop_now() - coop_bot_drove_t > 500u) {   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
         extern float coop_leash_radius(void); extern unsigned coop_leash_stops;
         uint32_t q = coop_s1_player(), a = coop_p2; float R = coop_leash_radius();
@@ -7882,6 +7937,22 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     }
 }
 extern void sub_000A6770_gen(void); void sub_000A6770(void) { coop_replay(0x000A6770u, "SetEnemyID", sub_000A6770_gen); }
+/* an in-game cutscene started by player 2: a trigger he crosses runs its script in his context (he is "the player" there, so
+ * he can set triggers off), and the cutscene it starts showed him -- the one to the cave troll's upper platform (a playtest:
+ * player 1 should be seen). At the first cutscene command (@SetSceneMode, @LetterBox, @CinematicPlay) inside his context,
+ * the rest of the script runs as player 1's: his globals back (as tt_coop_leave does) and the lookups no longer answered with
+ * player 2. TT_COOP_P2SCENE: as before */
+static void coop_scene_cmd(const char *name, void (*gen)(void))
+{
+    if (coop_depth && !coop_ctx_out && coop_p2 >= 0x10000u && !tt_vs_on() && !getenv("TT_COOP_P2SCENE")) {
+        coop_save(coop_s2); coop_load(coop_s1); coop_ctx_out = 1; coop_twin_ev = 0;
+        tt_dbg("[COOPSCENE] @%s in player 2's context: the cutscene runs as player 1's\n", name);
+    }
+    gen();
+}
+extern void sub_000A6AF0_gen(void); void sub_000A6AF0(void) { coop_scene_cmd("SetSceneMode", sub_000A6AF0_gen); }
+extern void sub_000A3F20_gen(void); void sub_000A3F20(void) { coop_scene_cmd("LetterBox", sub_000A3F20_gen); }
+extern void sub_000A40A0_gen(void); void sub_000A40A0(void) { coop_scene_cmd("CinematicPlay", sub_000A40A0_gen); }
 extern void sub_000B2320_gen(void); void sub_000B2320(void) {
     extern int coop_p2_skip_offset(void);
     if (coop_p2_skip_offset()) { eax = 0; esp += 4; return; }   /* (player 2 Legolas' own: coop_p2_render_offset; cdecl, plain ret) */
@@ -7905,6 +7976,15 @@ static void coop_spawnlog(const char *name, void (*gen)(void))
     if (on) { o = tt_gcall(0x0009E180u, 0, 0, NULL); n0 = coop_lkn; }
     gen();
     if (!on) return;
+    {   /* (every 10 s: each command's calls since, and the living enemies in play: where, their state) */
+        static const char *nms[8]; static unsigned nn[8]; static uint32_t lt; int j;
+        for (j = 0; j < 8 && nms[j] && nms[j] != name; j++) ;
+        if (j < 8) { nms[j] = name; nn[j]++; }
+        if (coop_now() - lt > 10000u) { unsigned i, al = 0; lt = coop_now(); tt_dbg("[SPAWNSUM] calls in 10 s:"); for (j = 0; j < 8 && nms[j]; j++) { tt_dbg(" %s %u", nms[j], nn[j]); nn[j] = 0; } tt_dbg("\n");
+            for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || (MEM32(e + 0x110) & 0x200000u)) continue;
+                if (al++ < 12) tt_dbg("[SPAWNSUM]   alive %08X '%s' hp %d state %u at %.1f %.1f %.1f\n", e, coop_nm(e), (int32_t)MEM32(e + 0x2FC), MEM32(e + 0x408), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8)); }
+            tt_dbg("[SPAWNSUM]   %u enemies alive in play\n", al); }
+    }
     h = o >= 0x10000u ? MEM32(o + 0x18) : 0;
     for (q = 0; q < 39 && h >= 0x10000u && MEM8(h + q) >= 32 && MEM8(h + q) < 127; q++) nm[q] = (char)MEM8(h + q);
     nm[q] = 0;
@@ -7948,7 +8028,9 @@ extern void sub_000AB520_gen(void); void sub_000AB520(void)
     coop_spawnlog("SpawnAnObject", sub_000AB520_gen);
     if (!sp || sp < 0x10000u || MEM32(sp) != 0x174B60u || getenv("TT_COOP_MULTNOSPAWN")) return;
     ra = eax; m = coop_enemy_mult();
-    for (i = 1; i < m && (int32_t)MEM32(sp + 0x3D0) > 0; i++) {
+    for (i = 1; i < m && (int32_t)MEM32(sp + 0x3D0) > 1; i++) {   /* (one always left ready for the script: its own next @SpawnAnObject finding the
+        * list empty ended that spawner's loop -- at the cave troll the orcs stopped coming within a minute with the extras, and came all
+        * along without them: 3-8 spawns every 10 s for 200 s, bot runs) */
         uint32_t v = 0, nx = coop_spawner_next(sp), got;
         if (!coop_mult_kind(nx)) { static int n; if (n++ < 60) tt_dbg("[COOPMULT] @SpawnAnObject on %08X: no extra, its next is '%s' (not a melee orc)\n", sp, nx ? coop_nm(nx) : "-"); break; }
         got = tt_gcall(MEM32(MEM32(sp) + 0xC4u), sp, 1, &v);
@@ -7996,7 +8078,7 @@ static void coop_pool_frame(void)
         if (coop_pool[k].pend && (MEM32(a + 0x110) & 0x200000u)) {   /* back in the ready list: the spawner sends one out now (its vtable +0xC4, as @SpawnAnObject does; the level's script spawns in bursts and may not ask again) */
             uint32_t sp = coop_pool[k].spawner, v = 0, got;
             coop_pool[k].pend = 0;
-            if (sp >= 0x10000u && MEM32(sp) == 0x174B60u && !getenv("TT_COOP_MULTNOSPAWN") && coop_mult_kind(coop_spawner_next(sp))) {
+            if (sp >= 0x10000u && MEM32(sp) == 0x174B60u && !getenv("TT_COOP_MULTNOSPAWN") && (int32_t)MEM32(sp + 0x3D0) > 1 && coop_mult_kind(coop_spawner_next(sp))) {   /* (one left ready, as above) */
                 got = tt_gcall(MEM32(MEM32(sp) + 0xC4u), sp, 1, &v);
                 if (got >= 0x10000u) MEM8(got + 0x3B8) = 0;
                 coop_pool[k].sent = got;   /* (left set, the spawner's next update took him straight back into its pool, hidden; observed) */
