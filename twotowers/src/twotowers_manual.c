@@ -4273,7 +4273,7 @@ static void coop_place(void)
 {
     uint32_t p1 = MEM32(0x43B15Cu), a = coop_p2, k;
     static int after, place_have, place_nopm, place_off_ok; static float place_x, place_y, place_ox, place_oy;
-    coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
+    coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
     if (getenv("TT_COOP_AIMSTATE") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero's state, lock and pad record, 4 times a second */
         static uint32_t lt; if (coop_now() - lt >= 250u) { int w, j; lt = coop_now();
             for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
@@ -7751,7 +7751,60 @@ static int coop_replay_on(const char *name)
     size_t n = strlen(name);
     return s && (s == l || s[-1] == ',') && (s[n] == 0 || s[n] == ',');
 }
-static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
+/* player 2's own machines. The level's scripts build every hero's animation and brain machines (createLegolasAnimMachine,
+ * createLegolasBrainMachine ... are in every hero's level file): the played hero's for player 1 and the others' for the
+ * companions. The twin, set up as a copy of player 1, got player 1's: player 2 Legolas aimed with Aragorn's moves and
+ * bow slots (a playtest). @SetAnimMachine / @SetBrainMachine (0xA0F30 / 0xA1840) queue events 0x30 / 0x31 through
+ * 0x000C71F0 / 0x000C7220 (thiscall on the queue 0x43C628: machine, actor, a number; ret 12). Each character's are kept
+ * here; once the companion of player 2's hero shows its hero's type (+0x2F0: Aragorn 0, Legolas 7, Gimli 8), the same
+ * events are queued for the twin: he shares that hero's machines, as characters of one type share theirs. Player 1's
+ * and the companion's own are left alone. No such companion (Isildur at the Gates): player 1's, as before.
+ * TT_COOP_P1MACHINE: as before; TT_COOP_P2OWNBRAIN: the brain machine too (research). */
+static struct { uint32_t actor, mach, num; } coop_mev[2][64]; static int coop_mevn[2]; static unsigned coop_mev_lv;
+static void coop_mev_note(int k)
+{
+    uint32_t m = MEM32(esp + 4), a = MEM32(esp + 8), n = MEM32(esp + 0xC); int i;
+    if (coop_mev_lv != coop_level_n) { coop_mev_lv = coop_level_n; coop_mevn[0] = coop_mevn[1] = 0; }
+    if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u || coop_mode() != 3) return;
+    for (i = 0; i < coop_mevn[k]; i++) if (coop_mev[k][i].actor == a) break;
+    if (i == coop_mevn[k]) { if (i >= 64) return; coop_mevn[k]++; }
+    coop_mev[k][i].actor = a; coop_mev[k][i].mach = m; coop_mev[k][i].num = n;
+}
+extern void sub_000C71F0_gen(void); void sub_000C71F0(void) { coop_mev_note(0); sub_000C71F0_gen(); }
+extern void sub_000C7220_gen(void); void sub_000C7220(void) { coop_mev_note(1); sub_000C7220_gen(); }
+static void coop_own_machines(void);
+void coop_own_machines_x(void) { coop_own_machines(); }
+static void coop_own_machines(void)   /* each frame (coop_place): once a level */
+{
+    extern const char *tt_coop_p2_char_now; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
+    static unsigned done_lv = ~0u; static uint32_t t0; const char *w = tt_coop_p2_char_now; int ty, k, i;
+    {   static uint32_t chk; static unsigned clv; if (getenv("TT_COOP_MACHLOG") && coop_twin >= 0x10000u && clv != coop_level_n) { if (!chk) chk = coop_now() | 1; else if (coop_now() - chk > 3000u) { uint32_t c2 = MEM32(coop_twin + 0x494), c1 = MEM32(coop_first_char + 0x494);
+        clv = coop_level_n; chk = 0; tt_dbg("[MACH] 3 s on: twin anim %08X brain %08X | player 1 anim %08X brain %08X\n", MEM32(coop_twin + 0x3F8), c2 >= 0x10000u ? MEM32(c2 + 0x50) : 0, MEM32(coop_first_char + 0x3F8), c1 >= 0x10000u ? MEM32(c1 + 0x50) : 0); } } }
+    if (done_lv == coop_level_n || coop_mode() != 3 || coop_twin < 0x10000u || coop_first_char < 0x10000u || !w || tt_vs_on() || getenv("TT_COOP_P1MACHINE")) return;
+    ty = !_stricmp(w, "aragorn") ? 0 : !_stricmp(w, "legolas") ? 7 : !_stricmp(w, "gimli") ? 8 : -1;
+    if (ty < 0) { done_lv = coop_level_n; return; }
+    if (coop_mev_lv != coop_level_n) return;
+    if (!t0) t0 = coop_now() | 1;
+    for (i = 0; i < coop_mevn[0]; i++) { uint32_t a = coop_mev[0][i].actor;
+        if (a == coop_first_char || a == coop_twin || MEM32(a) != 0x1741C0u || MEM32(a + 0x114) != 2 || MEM32(a + 0x2F0) != (uint32_t)ty) continue;
+        for (k = 0; k < 2; k++) { int j; if (k == 1 && !getenv("TT_COOP_P2OWNBRAIN")) continue;   /* (the brain: set, it went back to player 1's within 3 s, observed; the animation machine alone gives the moves) */
+            for (j = 0; j < coop_mevn[k]; j++) if (coop_mev[k][j].actor == a) {
+                uint32_t args[3] = { coop_mev[k][j].mach, coop_twin, coop_mev[k][j].num };
+                if (getenv("TT_COOP_MACHEVENT")) tt_gcall(k ? 0x000C7220u : 0x000C71F0u, 0x43C628u, 3, args);   /* (queued: never taken in play, observed) */
+                else if (!k) MEM32(coop_twin + 0x3F8) = args[0];   /* (what 0x00061060, the character's setter, does) */
+                else { uint32_t c2 = MEM32(coop_twin + 0x494); if (c2 >= 0x10000u) MEM32(c2 + 0x50) = args[0]; }   /* (the brain machine: component +0x50) */
+                tt_dbg("[COOP2] player 2 (%s) gets the %s machine %08X of %s (type %d; player 1's %08X)\n", w, k ? "brain" : "animation", args[0],
+                       (const char *)XBOX_PTR(MEM32(a + 0x18)), ty, k ? 0 : MEM32(coop_first_char + 0x3F8));
+            } }
+        done_lv = coop_level_n; t0 = 0; return;
+    }
+    if (coop_now() - t0 > 10000u) {   /* no companion of his hero within 10 s of the level's start */
+        tt_dbg("[COOP2] player 2 (%s): no companion of his hero (type %d) among %d machine users: player 1's machines kept\n", w, ty, coop_mevn[0]);
+        if (getenv("TT_COOP_MACHLOG")) for (i = 0; i < coop_mevn[0]; i++) { uint32_t a = coop_mev[0][i].actor; if (MEM32(a + 0x114) == 2) tt_dbg("[MACH]   %s type %u\n", (const char *)XBOX_PTR(MEM32(a + 0x18)), MEM32(a + 0x2F0)); }
+        done_lv = coop_level_n; t0 = 0;
+    }
+}
+static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
 {
     uint32_t vm = MEM32(esp + 4);
     coop_resolved = 0;
@@ -7761,7 +7814,7 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
         unsigned q; tt_dbg("[MACH] @%s%s:", name, coop_replaying ? " (replay)" : "");
         for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
-            tt_dbg(" %08X '%s' (vt %08X, +3F8 %08X)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x3F8) : 0); }
+            tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
         tt_dbg("\n"); }
     coop_in_attach = 0;
     if (!strcmp(name, "SetEnemyID") && coop_p2 >= 0x10000u && coop_p2 == coop_twin) coop_p2_own_type("a later @SetEnemyID");   /* (after the take-over the script's lookups of the player can land on him) */
@@ -8765,6 +8818,20 @@ void sub_00085FB0(void)
         if (n++ < 60) tt_dbg("[TAKE] %s takes %08X '%s' arg2 %08X | model res %08X key %08X | record model %08X texture %08X | id +2F4 %X\n",
             ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
             m, m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
+    }
+    {   /* one bow for player 2: he has a copy of each of player 1's ranged weapon objects (two at the Gates of Moria), and
+         * with his own hero's animation machine (coop_own_machines) Legolas took both into his bow hand (0xA): two bows
+         * drawn. The first one he takes in a level stands for all. TT_COOP_P2ALLBOWS: as before */
+        static uint32_t first; static unsigned lv; extern const char *tt_coop_p2_char_now;
+        uint32_t h = w >= 0x10000u ? MEM32(w + 0x18) : 0;
+        if (lv != coop_level_n) { lv = coop_level_n; first = 0; }
+        if (coop_p2 >= 0x10000u && ecx == coop_p2 && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {
+            uint32_t m = MEM32(h - 8 + 0x40);
+            if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
+                if (!first) first = w;
+                else if (w != first) { static int n; if (n++ < 4) tt_dbg("[COOPWEAPON] player 2's ranged %08X stands in for %08X (one bow)\n", first, w); MEM32(esp + 4) = first; w = first; }
+            }
+        }
     }
     if (coop_p2 >= 0x10000u && ecx == coop_p2 && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2TAKEALL")) {
         int i, mine = 0; for (i = 0; i < coop_np2w; i++) if (coop_p2w[i] == w) mine = 1;
