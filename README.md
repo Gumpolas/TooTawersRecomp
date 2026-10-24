@@ -65,7 +65,7 @@ See `COOP.md` for the details.
 - **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
   
 ## Tested (1.9.7)
-- Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left (not yet checked after a full match).
+- Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left.
 - Windows: Versus played by hand on the author's PC.
 - Windows, Linux and macOS builds compile.
 - Not tested: the macOS build on a Mac.
