@@ -6328,6 +6328,10 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
         MEM32(e + 0x10) = (uint32_t)(int32_t)(sz[w] + 0.5f); MEM32(e + 0x14) = (uint32_t)(int32_t)(sz[w] + 0.5f);
         MEM32(e + 0x20) = w ? 0xFF30C0FFu : 0xFFFFA040u;   /* (ABGR, the markers' colours) player 1 blue, player 2 amber */
         MEM8(e + 0x24) = 1;
+        {   /* out of the widescreen HUD's groups, as the head markers (boxes 2, 3): a dot near player 1's sword or a gauge joined its
+             * group and moved it (a playtest). The renderer sees HUD x and frame y (the HUD's 0.93 about 240) */
+            extern volatile float xbox_hud_excl_more[4][5]; float r = sz[w] * 0.5f + 4.0f, fyc = 240.0f + (hy[w] - 240.0f) * 0.93f;
+            xbox_hud_excl_more[2 + w][0] = hx[w] - r; xbox_hud_excl_more[2 + w][1] = hx[w] + r; xbox_hud_excl_more[2 + w][2] = fyc - r; xbox_hud_excl_more[2 + w][3] = fyc + r; xbox_hud_excl_more[2 + w][4] = 1.0f; }
         coop_el_draw(e);
     }
 }
@@ -7751,8 +7755,14 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
 {
     uint32_t vm = MEM32(esp + 4);
     coop_resolved = 0;
+    unsigned mlk0 = coop_lkn; int mlog = getenv("TT_COOP_MACHLOG") && (!strcmp(name, "SetAnimMachine") || !strcmp(name, "SetBrainMachine"));
     coop_in_attach = !strcmp(name, "AttachToBone");
     gen();
+    if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
+        unsigned q; tt_dbg("[MACH] @%s%s:", name, coop_replaying ? " (replay)" : "");
+        for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
+            tt_dbg(" %08X '%s' (vt %08X, +3F8 %08X)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x3F8) : 0); }
+        tt_dbg("\n"); }
     coop_in_attach = 0;
     if (!strcmp(name, "SetEnemyID") && coop_p2 >= 0x10000u && coop_p2 == coop_twin) coop_p2_own_type("a later @SetEnemyID");   /* (after the take-over the script's lookups of the player can land on him) */
     if (coop_mode() == 3 && coop_resolved && coop_twin >= 0x10000u && !coop_replaying && !coop_p2 && coop_replay_on(name)) {   /* set-up only: until player 2 takes over */
