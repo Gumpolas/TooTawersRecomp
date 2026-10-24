@@ -63,9 +63,7 @@ See `COOP.md` for the details.
 ### Fixes
 - **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 30 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
 - **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
-- **Main menu:** Co-op and Versus no longer get stuck when the game misses the press. Before, the menu could stay put, and the next press opened Credits or left a black screen.
-- **Co-op:** loading a co-op game no longer stops on a black screen when the window loses focus while it loads.
-
+  
 ## Tested (1.9.7)
 - Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left (not yet checked after a full match).
 - Windows: Versus played by hand on the author's PC.
