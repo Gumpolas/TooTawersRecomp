@@ -7804,7 +7804,7 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
         done_lv = coop_level_n; t0 = 0;
     }
 }
-static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
+static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
 {
     uint32_t vm = MEM32(esp + 4);
     coop_resolved = 0;
