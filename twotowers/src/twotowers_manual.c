@@ -2705,6 +2705,7 @@ static float coop_hp_scale(void)
 static uint32_t coop_p2, coop_p2_ally, coop_p2_t0;
 static unsigned coop_level_n;   /* levels loaded (coop_level_reset): once-a-level code compares it */
 static int coop_depth;
+static int coop_head_cmd;   /* a heading command run in player 2's context (coop_replay): its lookup of player 1 answers him (sub_000B4690) */
 int coop_in_p2_ctx(void) { return coop_depth; }
 /* bought moves per player (player 2 only does what he bought). A hero's upgrades are bytes at 0x4AC5B0 + hero * 0x50
  * (0xD2710; 0xD25B0 asks one, 0xD2570 sets one: the shop's buy), and the player's move picks (0x99A90, 0x9A1F0-0x9C37E:
@@ -7139,6 +7140,22 @@ void sub_0009C380(void)
         coop_depth = 0;
         eax = ra; ecx = rc; edx = rd;
     }
+    /* player 2's turn speeds: each character's movement node (+0x164: +4 the next node, +8 its owner) holds them at +0x34 / +0x38
+     * (@SetTurnSpeed writes there). Player 1's were 94.2 and 9.4 on Balin's Tomb, the twin's 40 and 20, so he turned at under half the
+     * rate (a playtest: "p2 doesnt match p1 rotation speed"). Player 1's copied into his own node every frame. TT_COOP_NOTURNSPEED: off */
+    if (coop_p2 >= 0x10000u && p1 >= 0x10000u && p1 != coop_p2 && !getenv("TT_COOP_NOTURNSPEED")) {
+        uint32_t a = MEM32(coop_p2 + 0x164), c = MEM32(p1 + 0x164);
+        if (a >= 0x10000u && c >= 0x10000u && a != c && MEM32(a + 8) == coop_p2 && MEM32(c + 8) == p1 && (MEM32(a + 0x34) != MEM32(c + 0x34) || MEM32(a + 0x38) != MEM32(c + 0x38))) {
+            static int n; if (n++ < 4) tt_dbg("[COOPTURN] player 2's turn speeds %.3f %.3f -> player 1's %.3f %.3f\n", MEMF(a + 0x34), MEMF(a + 0x38), MEMF(c + 0x34), MEMF(c + 0x38));
+            MEM32(a + 0x34) = MEM32(c + 0x34); MEM32(a + 0x38) = MEM32(c + 0x38);
+        }
+    }
+    if (getenv("TT_COOP_TURNLOG") && coop_p2 >= 0x10000u && p1 >= 0x10000u) {   /* (research) each hero's facing, state and stick, every frame */
+        uint32_t r1 = 0x6B2758u + 0x14Cu * 0u, r2 = 0x6B2758u + 0x14Cu * 1u;
+        tt_dbg("[TURN] t %u dt %.4f | P1 f %.3f %.3f %.3f st %u stick %.2f %.2f ts %.3f %.3f (%08X) | P2 f %.3f %.3f %.3f st %u stick %.2f %.2f ts %.3f %.3f (%08X)\n", coop_now(), *(float *)&(uint32_t){ MEM32(0x1B0C54u) },
+               MEMF(p1 + 0x70), MEMF(p1 + 0x74), MEMF(p1 + 0x78), MEM32(p1 + 0x408), MEMF(r1 + 0x14), MEMF(r1 + 0x18), MEM32(p1 + 0x164) >= 0x10000u ? MEMF(MEM32(p1 + 0x164) + 0x34) : 0.0f, MEM32(p1 + 0x164) >= 0x10000u ? MEMF(MEM32(p1 + 0x164) + 0x38) : 0.0f, MEM32(p1 + 0x164),
+               MEMF(coop_p2 + 0x70), MEMF(coop_p2 + 0x74), MEMF(coop_p2 + 0x78), MEM32(coop_p2 + 0x408), MEMF(r2 + 0x14), MEMF(r2 + 0x18), MEM32(coop_p2 + 0x164) >= 0x10000u ? MEMF(MEM32(coop_p2 + 0x164) + 0x34) : 0.0f, MEM32(coop_p2 + 0x164) >= 0x10000u ? MEMF(MEM32(coop_p2 + 0x164) + 0x38) : 0.0f, MEM32(coop_p2 + 0x164));
+    }
 }
 
 /* a placed character registered by the loader (0x000C5E20): remember the level's friendly one */
@@ -7823,6 +7840,7 @@ void sub_000B4690(void)
     }
     if (coop_wid_on && eax >= 0x10000u && MEM32(eax) == 0x174980u && !coop_wid_obj) { uint32_t k; coop_wid_obj = eax; for (k = 0; k < 0x200; k++) coop_wid_snap[k] = MEM32(eax + 4 * k); }
     if (coop_in_attach && ra == 0x000A0E2Au && eax >= 0x10000u) { if (coop_new_weapon_now) eax = coop_new_weapon_now; else { coop_attach_child_seen = eax; coop_attach_bone_seen = (int)ebx; } }   /* (ebx: the handler's second argument, the slot) */
+    if (coop_head_cmd && eax >= 0x10000u && eax == coop_first_char && coop_p2 >= 0x10000u) { static int n; if (n++ < 3) tt_dbg("[COOPHEAD] a heading command in player 2's context names player 1: him instead\n"); eax = coop_p2; }
     if (coop_mode() == 3 && eax >= 0x10000u && eax == coop_first_char && coop_twin >= 0x10000u) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_twin; }
     else if (coop_mode() == 3 && eax >= 0x10000u && MEM32(eax) == 0x174980u && !coop_in_attach) { int i; for (i = 0; i < coop_nwpn; i++) if (coop_wpn_orig[i] == eax) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_wpn_copy[i]; break; } }
     if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && coop_p2 >= 0x10000u && eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x174980u
@@ -7962,10 +7980,19 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     coop_resolved = 0;
     unsigned mlk0 = coop_lkn; int mlog = getenv("TT_COOP_MACHLOG") && (!strcmp(name, "SetAnimMachine") || !strcmp(name, "SetBrainMachine"));
     if (getenv("TT_COOP_WPNCMDLOG") && coop_p2_t0 && (!strcmp(name, "Activate") || !strcmp(name, "Deactivate") || !strcmp(name, "SetRenderable") || !strcmp(name, "AttachToBone") || !strcmp(name, "SetRenderOffset"))) mlog = 2;   /* (research) the weapon commands in play */
+    if (getenv("TT_COOP_HEADLOG") && coop_p2_t0 && (!strcmp(name, "LockHeading") || !strcmp(name, "UnlockHeading") || !strcmp(name, "LockHeadingToTarget") || !strcmp(name, "SetTurnSpeed")
+        || !strcmp(name, "LockOutAttack") || !strcmp(name, "SetTargetLock") || !strcmp(name, "SetHeading") || !strcmp(name, "Rotate") || !strcmp(name, "SetRotation"))) mlog = 3;   /* (research) the heading commands in play */
     coop_in_attach = !strcmp(name, "AttachToBone");
+    /* player 2's own heading commands: his swings' @LockHeading / @UnlockHeading / @LockHeadingToTarget, run in his step, name
+     * "the player" and found player 1 (the lookup answers him only inside his brain's messages), so his heading stayed locked
+     * through a swing while player 1's was unlocked (a playtest: "cant rotate during melee attack unlike p1"; a bot run: 133
+     * of them in his context, all on player 1). TT_COOP_NOHEADREDIR: as before */
+    coop_head_cmd = coop_depth && !coop_ctx_out && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOHEADREDIR") && (!strcmp(name, "LockHeading") || !strcmp(name, "UnlockHeading")
+        || !strcmp(name, "LockHeadingToTarget") || !strcmp(name, "SetTurnSpeed") || !strcmp(name, "SetHeading"));
     gen();
+    coop_head_cmd = 0;
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
-        unsigned q; tt_dbg("[%s] t %u @%s%s:", mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "");
+        unsigned q; tt_dbg("[%s] t %u @%s%s%s:", mlog == 3 ? "HEAD" : mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "", mlog == 3 ? (coop_depth ? " (player 2's context)" : " (player 1's context)") : "");
         for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
             tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
         if (!strcmp(name, "SetRenderOffset") && coop_lkn > mlk0) { uint32_t o = coop_lk[(coop_lkn - 1) & 63].obj; tt_dbg(" ->");
@@ -8016,6 +8043,22 @@ extern void sub_000B2930_gen(void); void sub_000B2930(void) { coop_replay(0x000B
 extern void sub_000A1840_gen(void); void sub_000A1840(void) { coop_replay(0x000A1840u, "SetBrainMachine", sub_000A1840_gen); }
 extern void sub_000A7760_gen(void); void sub_000A7760(void) { coop_replay(0x000A7760u, "PlayerLargeMass", sub_000A7760_gen); }
 extern void sub_000A59B0_gen(void); void sub_000A59B0(void) { coop_replay(0x000A59B0u, "UnlockHeading", sub_000A59B0_gen); }
+extern void sub_000A5960_gen(void);
+void sub_000A5960(void) { coop_replay(0x000A5960u, "LockHeading", sub_000A5960_gen); }
+extern void sub_000A5850_gen(void);
+void sub_000A5850(void) { coop_replay(0x000A5850u, "LockHeadingToTarget", sub_000A5850_gen); }
+extern void sub_000B0310_gen(void);
+void sub_000B0310(void) { coop_replay(0x000B0310u, "SetTurnSpeed", sub_000B0310_gen); }
+extern void sub_000A5A70_gen(void);
+void sub_000A5A70(void) { coop_replay(0x000A5A70u, "LockOutAttack", sub_000A5A70_gen); }
+extern void sub_000B0670_gen(void);
+void sub_000B0670(void) { coop_replay(0x000B0670u, "SetTargetLock", sub_000B0670_gen); }
+extern void sub_000A56D0_gen(void);
+void sub_000A56D0(void) { coop_replay(0x000A56D0u, "SetHeading", sub_000A56D0_gen); }
+extern void sub_000A8E30_gen(void);
+void sub_000A8E30(void) { coop_replay(0x000A8E30u, "Rotate", sub_000A8E30_gen); }
+extern void sub_000A91D0_gen(void);
+void sub_000A91D0(void) { coop_replay(0x000A91D0u, "SetRotation", sub_000A91D0_gen); }
 extern void sub_000A0F30_gen(void); void sub_000A0F30(void) { coop_replay(0x000A0F30u, "SetAnimMachine", sub_000A0F30_gen); }
 int coop_resolved_hook(void) { if (coop_replaying) return 1; coop_resolved = 1; return 0; }
 /* (research, for the enemy multiplier) the spawn pool's script commands: which levels use them, on which objects.
