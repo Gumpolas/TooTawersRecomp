@@ -3022,7 +3022,7 @@ static uint32_t coop_bot_drove_t;   /* the P2 Bot last wrote pad 2 (the leash is
  * into the rocks going straight): a breadth-first search over walkable cells (8 ways, no corner cut past a blocked
  * cell) within a 64 x 64 box round player 2's cell, then the furthest cell up to 4 steps on that is in a straight
  * walkable line from him. Without a pathmap, a blocked goal or start, or no way within the box: straight at it.
- * TT_COOP_BOTNOPATH: always straight. */
+ * TT_COOP_BOTNOPATH: always straight. Player 2's bot: straight unless TT_COOP_BOTPATH (2026-10-25). */
 static uint32_t coop_pathmap(uint32_t actor); static int coop_pm_cell(uint32_t pm, int c, int r);
 #define COOP_PM_WALK(v) ((v) == 0 || (v) == 2)   /* walkable pathmap states (2: player 1 stands on them) */
 static int coop_pm_line(uint32_t pm, int c0, int r0, int c1, int r1)   /* the cells on the line from (c0,r0) to (c1,r1) all walkable */
@@ -3037,6 +3037,10 @@ static int coop_bot_route(uint32_t hero, float gx, float gy, float *wx, float *w
     static short prev[B * B]; static int q[B * B];
     uint32_t pm = coop_pathmap(hero); float ox, oy, sz; int c0, r0, c1, r1, qh = 0, qt = 0, i, found = 0, path[B * 2], np = 0, k;
     *wx = gx; *wy = gy;
+    /* (player 2 straight at his goal, off the companions' pathmaps: a playtest, Gates of Moria and Amon Hen, "remove p2 bot from
+     * the npc pathmaps and revert the bot to simply follow p1 group radius and p1 when alone"; TT_COOP_BOTPATH: routed as before.
+     * The test bots for player 1 keep the route) */
+    if (hero == coop_p2 && !getenv("TT_COOP_BOTPATH")) return 0;
     if (!pm || getenv("TT_COOP_BOTNOPATH") || getenv("TT_COOP_BOTFOOTSTEPS")) return 0;   /* (TT_COOP_BOTFOOTSTEPS: player 1's footsteps instead, coop_steps -- tried, the owner went back to this) */
     ox = MEMF(pm + 0x48u); oy = MEMF(pm + 0x4Cu); sz = (float)(int)MEM32(pm + 0x68u);
     c0 = (int)floorf((MEMF(hero + 0xF0) - ox) / sz); r0 = (int)floorf((MEMF(hero + 0xF4) - oy) / sz);
