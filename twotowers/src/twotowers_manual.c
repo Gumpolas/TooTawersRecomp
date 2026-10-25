@@ -2953,7 +2953,8 @@ static void coop_pad2(CoopPad *o)
         if (xbox_InputGetState(1, (XBOX_INPUT_STATE *)&s) == 0) *o = s.pad;
     }
     if (getenv("TT_COOP_PAD2SEEK") && coop_p2 >= 0x10000u && coop_p2_t0) {   /* bot test: steer player 2 to his target and attack */
-        extern void coop_seek(CoopPad *o); coop_seek(o);
+        extern void coop_seek(CoopPad *o); extern void coop_seek_near(CoopPad *o);
+        if (!strcmp(getenv("TT_COOP_PAD2SEEK"), "2")) coop_seek_near(o); else coop_seek(o);
     }
     { extern void coop_p2bot(CoopPad *o); coop_p2bot(o); }   /* the Co-op menu's P2 Bot */
 }
@@ -3552,6 +3553,18 @@ static int coop_bot_boss(BotView *v, CoopPad *o)
     return v->boss;
 }
 
+/* (test) TT_COOP_PAD2SEEK=2: player 2 to the nearest living enemy, X and Y in turn beside it -- as TT_COOP_P1SEEK=2 drives
+ * player 1, so the two can be compared under one driver */
+void coop_seek_near(CoopPad *o)
+{
+    static CoopSeek k2 = { 1, 0 }; uint32_t g = 0, h = coop_p2; float bd = 1e18f; int i;
+    memset(o, 0, sizeof *o);
+    for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; float ex, ey;
+        if (e == h || e == coop_first_char || MEM32(e) != 0x1741C0u || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
+        ex = MEMF(e + 0xF0) - MEMF(h + 0xF0); ey = MEMF(e + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < bd) { bd = ex * ex + ey * ey; g = e; } }
+    if (g && coop_bot_go(&k2, o, h, MEMF(g + 0xF0), MEMF(g + 0xF4), 4.6f) <= 4.6f && coop_now() % 600 < 200) o->analog[(coop_now() / 600) & 1 ? 3 : 2] = 255;
+}
+
 /* 3c. ranged: inside the group's circle with no enemy near him and ammo left, a shot from where he stands at one within
  * 35 units (45 was tried and set back), never at the boss or during the Watcher's fight. The game's own target for him
  * first (a playtest: "if he can target an enemy with the targeting system he can shoot at the target"): a living enemy,
@@ -3883,7 +3896,11 @@ void sub_000E7DB0(void)
 /* -- the per-player globals of the control step -- */
 static const struct { uint32_t a, n; } coop_blk[] = {
     { 0x43B114u, 0x48 }, { 0x43B168u, 0x58 }, { 0x43B1C1u, 0x5F }, { 0x43B298u, 0xF8 }, { 0x43B3A4u, 0x10 },
-    { 0x1B0C40u, 0x20 }, { 0x1B1080u, 0x24 }, { 0x43B15Cu, 4 }, { 0x43B160u, 4 }, { 0x1CB8B4u, 4 } };
+    { 0x1B0C40u, 0x20 }, { 0x1B1078u, 4 }, { 0x1B1080u, 0x24 }, { 0x43B15Cu, 4 }, { 0x43B160u, 4 }, { 0x1CB8B4u, 4 } };
+    /* (0x1B1078: the grade of the player's current attack, set by his moves (0x98980 sets 3); a hit on an enemy raises the
+     * combat meter by it (0x99E00 from 0x849F0: 0, 1 and 3 a raise, 2 the 0xB event). Shared, player 2's hits were graded by
+     * player 1's last attack -- his killing blows raised nothing while player 1's raised 30 (bot runs, one driver for both;
+     * a playtest: "p2 still gains very little experience after 8 kills") */
     /* (0x43B0E8, once swapped here as "the player's weapons list", is not per player: it is the list of objects the
      * level script puts up for the player's weapon test, @ForcePlayerWeaponObbTestOn -- the Watcher's stretched
      * tentacles. It was empty at every take-over, and player 2's copy of it stayed empty in the fight, so his swings
@@ -8345,7 +8362,7 @@ void sub_000849F0(void)
         { float mb = coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f; uint32_t m1 = MEM32(esp + 4), wsrc = m1 >= 0x10000u && MEM32(m1) == 0x103u ? MEM32(m1 + 4) : 0;
         sub_000849F0_gen();
         if (getenv("TT_COOP_HITSRCLOG") && v >= 0x10000u && MEM32(v + 0x114) == 3 && (p2hit || wsrc == coop_first_char || (wsrc >= 0x10000u && wsrc < 0x84000000u && MEM32(wsrc + 0x11C) == coop_first_char))) { static int k; if (k++ < 150)
-            tt_dbg("[HITAFT] t %u %s hit %08X: hp %d -> %d, state %u -> %u, last attacker %08X -> %08X, player %08X, meter %.1f -> %.1f, msg +8..+18 %08X %08X %08X %08X %08X\n", coop_now(), p2hit ? "P2" : "P1", v, (int32_t)hp0, (int32_t)MEM32(v + 0x2FC), st0, MEM32(v + 0x408), at, MEM32(v + 0x4BC),
+            tt_dbg("[HITAFT] t %u %s hit by %s %08X: hp %d -> %d, state %u -> %u, last attacker %08X -> %08X, player %08X, meter %.1f -> %.1f, msg +8..+18 %08X %08X %08X %08X %08X\n", coop_now(), p2hit ? "P2" : "P1", coop_nm(wsrc), v, (int32_t)hp0, (int32_t)MEM32(v + 0x2FC), st0, MEM32(v + 0x408), at, MEM32(v + 0x4BC),
                    MEM32(0x43B15Cu), mb, coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f, MEM32(m1 + 8), MEM32(m1 + 0xC), MEM32(m1 + 0x10), MEM32(m1 + 0x14), MEM32(m1 + 0x18)); } }
         if (v >= 0x10000u && coop_mode() == 3 && (int32_t)MEM32(v + 0x2FC) < (int32_t)hp0 && MEM32(v + 0x114) == 3) {   /* (its health lowered by this hit: whose) */
             uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
