@@ -2705,6 +2705,7 @@ static float coop_hp_scale(void)
 static uint32_t coop_p2, coop_p2_ally, coop_p2_t0;
 static unsigned coop_level_n;   /* levels loaded (coop_level_reset): once-a-level code compares it */
 static int coop_depth;
+static int coop_triglog_on(void) { static int tl = -1; if (tl < 0) { extern int fclose(void *); void *tf = fopen("triglog.on", "rb"); tl = getenv("TT_COOP_TRIGLOG") || tf; if (tf) fclose(tf); } return tl; }   /* (or a file triglog.on in the game folder: a playtest) */
 static int coop_head_cmd;   /* a heading command run in player 2's context (coop_replay): its lookup of player 1 answers him (sub_000B4690) */
 int coop_in_p2_ctx(void) { return coop_depth; }
 /* bought moves per player (player 2 only does what he bought). A hero's upgrades are bytes at 0x4AC5B0 + hero * 0x50
@@ -6945,6 +6946,12 @@ void sub_0009C380(void)
         tt_coop_p1_pre(MEM32(0x43B15Cu), 0x0009C380u); sub_0009C380_gen(); tt_coop_p1_post();
         if (on2) MEM32(0x1CB8B4u) = port0; }
     if (!coop_mode()) return;
+    {   /* the player's trigger flag (0x43B058: the trigger planes see [0x43B15C] only while it is set; @ToggleTriggerObjs ->
+         * 0x94060 sets it): every change, with the time (a playtest: the Watcher's cutscene never came with player 1 on its spot) */
+        static int lv = -1; int v = MEM8(0x43B058u);
+        if (v != lv) { tt_dbg("[COOPTRIGS] t %u: the player's triggers %s (0x43B058 %d -> %d), player 1 at %.1f %.1f\n", coop_now(), v ? "on" : "off", lv, v,
+            coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF0) : 0.0f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF4) : 0.0f); lv = v; }
+    }
     coop_place();
     coop_sync_listeners();
     coop_p2_target();
@@ -8070,7 +8077,10 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     unsigned mlk0 = coop_lkn; int mlog = getenv("TT_COOP_MACHLOG") && (!strcmp(name, "SetAnimMachine") || !strcmp(name, "SetBrainMachine"));
     if (getenv("TT_COOP_WPNCMDLOG") && coop_p2_t0 && (!strcmp(name, "Activate") || !strcmp(name, "Deactivate") || !strcmp(name, "SetRenderable") || !strcmp(name, "AttachToBone") || !strcmp(name, "SetRenderOffset"))) mlog = 2;   /* (research) the weapon commands in play */
     if (getenv("TT_COOP_HEADLOG") && coop_p2_t0 && (!strcmp(name, "LockHeading") || !strcmp(name, "UnlockHeading") || !strcmp(name, "LockHeadingToTarget") || !strcmp(name, "SetTurnSpeed")
-        || !strcmp(name, "LockOutAttack") || !strcmp(name, "SetTargetLock") || !strcmp(name, "SetHeading") || !strcmp(name, "Rotate") || !strcmp(name, "SetRotation"))) mlog = 3;   /* (research) the heading commands in play */
+        || !strcmp(name, "LockOutAttack") || !strcmp(name, "SetTargetLock") || !strcmp(name, "SetHeading") || !strcmp(name, "Rotate") || !strcmp(name, "SetRotation"))) mlog = 3;
+    { int tl = coop_triglog_on();
+    if (tl && coop_p2_t0 && (!strcmp(name, "IsPlayer") || !strcmp(name, "HeroSpecificTrigger") || !strcmp(name, "SetToTriggerOnPlayer") || !strcmp(name, "ToggleTriggerObjs")
+        || !strcmp(name, "Trigger") || !strcmp(name, "AreaActivate") || !strcmp(name, "GetPlayer") || !strcmp(name, "KilledByPlayer"))) { static int tn; if (tn++ < 300) mlog = 3; } }   /* (research) the trigger commands in play, the first 300 */   /* (research) the heading commands in play */
     coop_in_attach = !strcmp(name, "AttachToBone");
     /* player 2's own heading commands: his swings' @LockHeading / @UnlockHeading / @LockHeadingToTarget, run in his step, name
      * "the player" and found player 1 (the lookup answers him only inside his brain's messages), so his heading stayed locked
@@ -8081,7 +8091,7 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     gen();
     coop_head_cmd = 0;
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
-        unsigned q; tt_dbg("[%s] t %u @%s%s%s:", mlog == 3 ? "HEAD" : mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "", mlog == 3 ? (coop_depth ? " (player 2's context)" : " (player 1's context)") : "");
+        unsigned q; tt_dbg("[%s] t %u @%s%s%s ret %08X:", mlog == 3 ? "HEAD" : mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "", mlog == 3 ? (coop_depth ? " (player 2's context)" : " (player 1's context)") : "", eax);
         for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
             tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
         if (!strcmp(name, "SetRenderOffset") && coop_lkn > mlk0) { uint32_t o = coop_lk[(coop_lkn - 1) & 63].obj; tt_dbg(" ->");
@@ -8167,6 +8177,20 @@ extern void sub_000B2930_gen(void); void sub_000B2930(void) { coop_replay(0x000B
 extern void sub_000A1840_gen(void); void sub_000A1840(void) { coop_replay(0x000A1840u, "SetBrainMachine", sub_000A1840_gen); }
 extern void sub_000A7760_gen(void); void sub_000A7760(void) { coop_replay(0x000A7760u, "PlayerLargeMass", sub_000A7760_gen); }
 extern void sub_000A59B0_gen(void); void sub_000A59B0(void) { coop_replay(0x000A59B0u, "UnlockHeading", sub_000A59B0_gen); }
+extern void sub_000A6850_gen(void);
+void sub_000A6850(void) { coop_replay(0x000A6850u, "IsPlayer", sub_000A6850_gen); }
+extern void sub_000A6F60_gen(void);
+void sub_000A6F60(void) { coop_replay(0x000A6F60u, "HeroSpecificTrigger", sub_000A6F60_gen); }
+extern void sub_000ABF30_gen(void);
+void sub_000ABF30(void) { coop_replay(0x000ABF30u, "SetToTriggerOnPlayer", sub_000ABF30_gen); }
+extern void sub_000A68C0_gen(void);
+void sub_000A68C0(void) { coop_replay(0x000A68C0u, "ToggleTriggerObjs", sub_000A68C0_gen); }
+extern void sub_000A6300_gen(void);
+void sub_000A6300(void) { coop_replay(0x000A6300u, "Trigger", sub_000A6300_gen); }
+extern void sub_000B0410_gen(void);
+void sub_000B0410(void) { coop_replay(0x000B0410u, "AreaActivate", sub_000B0410_gen); }
+extern void sub_000AF610_gen(void);
+void sub_000AF610(void) { coop_replay(0x000AF610u, "GetPlayer", sub_000AF610_gen); }
 extern void sub_000A5960_gen(void);
 void sub_000A5960(void) { coop_replay(0x000A5960u, "LockHeading", sub_000A5960_gen); }
 extern void sub_000A5850_gen(void);
@@ -8698,7 +8722,7 @@ void sub_000C7030(void)
     }
     if (coop_mode() == 3 && coop_p2 >= 0x10000u && ty >= 0xDu && ty <= 0xFu && pl >= 0x10000u && pl < 0x84000000u) {
         h = MEM32(pl + 0x18); if (h >= 0x10000u && h < 0x84000000u) nm = (const char *)XBOX_PTR(h);
-        if (getenv("TT_COOP_TRIGLOG")) { static int n; if (n++ < 400) tt_dbg("[TRIGLOG] t %u event %u plane %08X '%s' actor %08X (%s)\n", coop_now(), ty, pl, nm,
+        if (coop_triglog_on()) { static int n; if (n++ < 400) tt_dbg("[TRIGLOG] t %u event %u plane %08X '%s' actor %08X (%s)\n", coop_now(), ty, pl, nm,
             ac, ac == coop_p2 ? "player 2" : ac == coop_first_char ? "player 1" : "other"); }
         if (ac == coop_p2 && h && !_strnicmp(nm, "camera", 6) && !getenv("TT_COOP_P2CAMTRIG")) {
             static int n; if (n++ < 8) tt_dbg("[COOPCAM] player 2's event %u on '%s' dropped: the camera is player 1's\n", ty, nm);
