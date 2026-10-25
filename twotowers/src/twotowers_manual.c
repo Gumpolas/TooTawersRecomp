@@ -7140,14 +7140,21 @@ void sub_0009C380(void)
         coop_depth = 0;
         eax = ra; ecx = rc; edx = rd;
     }
-    /* player 2's turn speeds: each character's movement node (+0x164: +4 the next node, +8 its owner) holds them at +0x34 / +0x38
-     * (@SetTurnSpeed writes there). Player 1's were 94.2 and 9.4 on Balin's Tomb, the twin's 40 and 20, so he turned at under half the
-     * rate (a playtest: "p2 doesnt match p1 rotation speed"). Player 1's copied into his own node every frame. TT_COOP_NOTURNSPEED: off */
+    /* player 2's turning: each character's movement node (+0x164: +4 the next node, +8 its owner) holds the turn acceleration at
+     * +0x34 and the top turn speed at +0x38 (rad/s; @SetTurnSpeed writes them). Player 1's are 94.2 and 9.4 on Balin's Tomb, the
+     * twin's 40 and 20 (a playtest: "p2 doesnt match p1 rotation speed"). Player 1's top speed never holds him back (his 180 degree
+     * turn speeds up the whole way, to 21 degrees a frame), while the twin's held him at 9.4 (a playtest: "p1 can quickly snap 180
+     * rotation where p2 just steer"); with the acceleration as his top speed too, his turns matched player 1's frame for frame (bot
+     * runs). Every frame. TT_COOP_NOTURNSPEED: off; TT_COOP_P2TURNMAX=rad/s: his top speed (research) */
     if (coop_p2 >= 0x10000u && p1 >= 0x10000u && p1 != coop_p2 && !getenv("TT_COOP_NOTURNSPEED")) {
         uint32_t a = MEM32(coop_p2 + 0x164), c = MEM32(p1 + 0x164);
-        if (a >= 0x10000u && c >= 0x10000u && a != c && MEM32(a + 8) == coop_p2 && MEM32(c + 8) == p1 && (MEM32(a + 0x34) != MEM32(c + 0x34) || MEM32(a + 0x38) != MEM32(c + 0x38))) {
-            static int n; if (n++ < 4) tt_dbg("[COOPTURN] player 2's turn speeds %.3f %.3f -> player 1's %.3f %.3f\n", MEMF(a + 0x34), MEMF(a + 0x38), MEMF(c + 0x34), MEMF(c + 0x38));
-            MEM32(a + 0x34) = MEM32(c + 0x34); MEM32(a + 0x38) = MEM32(c + 0x38);
+        if (a >= 0x10000u && c >= 0x10000u && a != c && MEM32(a + 8) == coop_p2 && MEM32(c + 8) == p1) {
+            float acc = MEMF(c + 0x34), top = MEMF(c + 0x38) > acc ? MEMF(c + 0x38) : acc;
+            if (getenv("TT_COOP_P2TURNMAX")) top = (float)atof(getenv("TT_COOP_P2TURNMAX"));
+            if (MEMF(a + 0x34) != acc || MEMF(a + 0x38) != top) {
+                static int n; if (n++ < 4) tt_dbg("[COOPTURN] player 2's turn %.3f %.3f -> %.3f %.3f (player 1's %.3f %.3f)\n", MEMF(a + 0x34), MEMF(a + 0x38), acc, top, MEMF(c + 0x34), MEMF(c + 0x38));
+                MEMF(a + 0x34) = acc; MEMF(a + 0x38) = top;
+            }
         }
     }
     if (getenv("TT_COOP_TURNLOG") && coop_p2 >= 0x10000u && p1 >= 0x10000u) {   /* (research) each hero's facing, state and stick, every frame */
