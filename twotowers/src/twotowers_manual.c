@@ -8104,6 +8104,41 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     }
 }
 extern void sub_000A6770_gen(void); void sub_000A6770(void) { coop_replay(0x000A6770u, "SetEnemyID", sub_000A6770_gen); }
+/* the level's experience commands. @GiveExperience(amount) (0xA88E0: the current hero, 0xD2310, then 0xD25D0 -> 0x9DD90 on
+ * his record) reached only player 1's record: player 2 never had the level's bonus (a playtest: "p2 legolas doesnt level up at
+ * all"; at a level's end player 1 went 609 -> 5609, player 2 stayed at his kills, 88). Run once more in player 2's context
+ * (his record copy in place); @AddToMaxExperience too. TT_COOP_NOP2GIVEEXP: as before. The other award commands are only logged.
+ * Weathertop's script gives 1000 early (bot run: player 2 0 -> 1000 after it) */
+static void coop_exp_cmd(uint32_t fn, const char *name, void (*gen)(void), int replay)
+{
+    extern uint32_t coop_rec_addr; extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void);
+    uint32_t vm = MEM32(esp + 4); float b1 = coop_rec_addr ? MEMF(coop_rec_addr + 0x90) : 0.0f, b2;
+    gen();
+    b2 = coop_rec_addr ? MEMF(coop_rec_addr + 0x90) : 0.0f;
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u) tt_dbg("[COOPEXP] @%s in %s context: his level experience %.0f -> %.0f\n", name, coop_depth ? "player 2's" : "player 1's", b1, b2);
+    if (replay && coop_mode() == 3 && coop_p2 >= 0x10000u && coop_rec_addr && !coop_depth && !getenv("TT_COOP_NOP2GIVEEXP")) {
+        uint32_t sp = esp, ra = eax, rc = ecx, rd = edx; int sw = tt_coop_enter_ctx(); float c1 = MEMF(coop_rec_addr + 0x90);
+        PUSH32(esp, vm); PUSH32(esp, fn); gen(); esp += 4;   /* cdecl (vm) */
+        tt_dbg("[COOPEXP] @%s again for player 2: his level experience %.0f -> %.0f%s; esp %s\n", name, c1, MEMF(coop_rec_addr + 0x90), sw ? "" : " (NOT in his context)", esp == sp ? "balanced" : "NOT balanced");
+        if (sw) tt_coop_leave();
+        esp = sp; eax = ra; ecx = rc; edx = rd;
+    }
+}
+/* (research) TT_COOP_EXPADDLOG: every experience add (0x9DD90, thiscall record, amount): the record, the amount, the screen, the callers */
+extern void sub_0009DD90_gen(void);
+void sub_0009DD90(void)
+{
+    extern uint32_t coop_rec_addr; uint32_t rec = ecx, a1 = MEM32(esp + 4); float before = rec >= 0x10000u ? MEMF(rec + 0x90) : 0.0f;
+    uint32_t cs[8] = { 0 }; int m = 0; uint32_t q; if (getenv("TT_COOP_EXPADDLOG")) for (q = 0; q < 0x300 && m < 8; q += 4) { uint32_t x = MEM32(esp + q); if (x >= 0x12000u && x < 0x170000u) cs[m++] = x; }
+    sub_0009DD90_gen();
+    if (getenv("TT_COOP_EXPADDLOG")) { static int n; if (n++ < 80) tt_dbg("[EXPADD] record %08X%s +90 %.0f -> %.0f (arg %08X = %d / %.2f) screen %u depth %d | %X %X %X %X %X %X %X %X\n", rec, rec == coop_rec_addr ? " (the current hero's)" : "",
+        before, rec >= 0x10000u ? MEMF(rec + 0x90) : 0.0f, a1, (int32_t)a1, *(float *)&a1, MEM32(0x4AD050u), coop_depth, cs[0], cs[1], cs[2], cs[3], cs[4], cs[5], cs[6], cs[7]); }
+}
+extern void sub_000A88E0_gen(void); void sub_000A88E0(void) { coop_exp_cmd(0x000A88E0u, "GiveExperience", sub_000A88E0_gen, 1); }
+extern void sub_000ACA40_gen(void); void sub_000ACA40(void) { coop_exp_cmd(0x000ACA40u, "AwardSpecialPoints", sub_000ACA40_gen, 0); }
+extern void sub_000A69D0_gen(void); void sub_000A69D0(void) { coop_exp_cmd(0x000A69D0u, "AwardRangerPoints", sub_000A69D0_gen, 0); }
+extern void sub_000A8930_gen(void); void sub_000A8930(void) { coop_exp_cmd(0x000A8930u, "AddToMaxExperience", sub_000A8930_gen, 1); }   /* (0x9D3E0 on the current record: the level's possible experience) */
+extern void sub_000B03D0_gen(void); void sub_000B03D0(void) { coop_exp_cmd(0x000B03D0u, "SetLevelExperienceMultipler", sub_000B03D0_gen, 0); }
 /* an in-game cutscene started by player 2: a trigger he crosses runs its script in his context (he is "the player" there, so
  * he can set triggers off), and the cutscene it starts showed him -- the one to the cave troll's upper platform (a playtest:
  * player 1 should be seen). At the first cutscene command (@SetSceneMode, @LetterBox, @CinematicPlay) inside his context,
