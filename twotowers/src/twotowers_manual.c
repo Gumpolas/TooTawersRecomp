@@ -3234,7 +3234,11 @@ static int coop_bot_defend(CoopPad *o, uint32_t p2, uint32_t now)
  * lunges. (Tried and dropped: "no closer for 0.6 s", "he stands still", "the distance held" alone.) Nonzero when
  * beside; then the stick toward it, gently (as the boss's tentacle attack does), so his swing goes at it. Called
  * every frame he is after e in melee. */
-static uint32_t coop_bot_unreach_e, coop_bot_unreach_until;   /* an enemy he could not get to: left out of his melee picks till then */
+static uint32_t coop_bot_unreach_e[8], coop_bot_unreach_until[8];   /* enemies he could not get to: each left out of his melee picks till then
+                                                                     * (8: with one, two blocked orcs took turns as his pick, a bot run) */
+static int coop_bot_unreach(uint32_t e, uint32_t now) { int i; for (i = 0; i < 8; i++) if (coop_bot_unreach_e[i] == e && (int32_t)(coop_bot_unreach_until[i] - now) > 0) return 1; return 0; }
+static void coop_bot_unreach_set(uint32_t e, uint32_t now) { int i, k = 0; for (i = 0; i < 8; i++) { if (coop_bot_unreach_e[i] == e) { k = i; break; } if ((int32_t)(coop_bot_unreach_until[i] - coop_bot_unreach_until[k]) < 0) k = i; }
+    coop_bot_unreach_e[k] = e; coop_bot_unreach_until[k] = now + 5000u; }
 static int coop_bot_beside(CoopPad *o, uint32_t p2, uint32_t e, float df, uint32_t now)
 {
     static uint32_t ap_e, ap_t, ap_last, hd_t, mn_e[16]; static float ap_d, hd_d, hd_ex, hd_ey, cd, mn_d[16]; static int was, mn_k;
@@ -3258,7 +3262,7 @@ static int coop_bot_beside(CoopPad *o, uint32_t p2, uint32_t e, float df, uint32
                    MEM32(e + 0x408), o->lx, o->ly, b);
             bl = now; lpx = px; lpy = py; lex = ex; ley = ey; } }
     if (!b && now - ap_t >= 2500u) {   /* no closer in 2.5 s: out of his reach (a run walked 10 s at an orc 4.2-5.4 off), left 5 s */
-        coop_bot_unreach_e = e; coop_bot_unreach_until = now + 5000u; ap_t = now;
+        coop_bot_unreach_set(e, now); ap_t = now;
         tt_dbg("[P2BOT] can't get to %08X (%.1f away, height %.1f): left out of melee for 5 s\n", e, df, MEMF(e + 0xF8) - MEMF(p2 + 0xF8));
     }
     if (b && cm >= 0x10000u) {
@@ -3373,18 +3377,73 @@ static void coop_bot_view(BotView *v)
     if (v->now - glog > 5000u) { glog = v->now; tt_dbg("[P2BOT] group: player 1 and %d companions, centre %.1f %.1f, radius %.1f, player 2 %.1f from the centre\n", n - 1, v->gcx, v->gcy, v->gr, v->dc); }
 }
 
-/* the enemy for melee: the nearest within 6 units of him, anywhere; else the nearest inside the group's circle (2 units
- * of slack) -- near if within 12 units (TT_COOP_BOTNEAR); further off it is shot at if it can be, walked up to if not.
- * (A playtest: the whole circle "seems too far" for melee; then 6 units gave ranged "90% of the time".) Not the Watcher,
- * not one he couldn't get to lately (coop_bot_beside) */
+/* the enemy for melee: his melee radius (TT_COOP_BOTMELEER, 10 units round him; one leaves it 2 units further out) keeps
+ * the enemies in the order they came into it, and he fights the first still in it; with none in it, no melee at all -- he
+ * shoots if he can, else follows (a playtest: "a radius to p2 bot that made him attack enemies in order they entered the
+ * radius and the bot doesnt do melee when nothing is in the radius"). Until then: the nearest within 6 units, else the
+ * nearest in the group's circle, walked up to (TT_COOP_BOTOLDPICK: as before). Not the Watcher, not the troll's chain, not
+ * one he couldn't get to lately (coop_bot_beside) */
+static void coop_bot_pick_melee_old(BotView *v);
 static void coop_bot_pick_melee(BotView *v)
+{
+    static uint32_t qe[32], qt[32], ge[32], gt[32]; static int qn, gn; static uint32_t lfoe;
+    float r = getenv("TT_COOP_BOTMELEER") ? (float)atof(getenv("TT_COOP_BOTMELEER")) : 10.0f, ro = r + 2.0f; int i, j;
+    if (getenv("TT_COOP_BOTOLDPICK")) { coop_bot_pick_melee_old(v); return; }
+    v->foe = 0; v->bd = 1e18f; v->near = 0;
+    for (j = 0; j < qn; ) {   /* out: dead, gone, past the outer edge */
+        uint32_t e = qe[j]; float de = 1e18f; int ok = 0;
+        for (i = 0; i < coop_nchars; i++) if (coop_chars[i] == e) { ok = 1; break; }
+        if (ok && MEM32(e) == 0x1741C0u && MEM32(e + 0x114) == 3 && (int32_t)MEM32(e + 0x2FC) > 0)
+            de = (MEMF(e + 0xF0) - v->bx) * (MEMF(e + 0xF0) - v->bx) + (MEMF(e + 0xF4) - v->by) * (MEMF(e + 0xF4) - v->by);
+        if (de > ro * ro || fabsf(MEMF(e + 0xF8) - MEMF(v->p2 + 0xF8)) > 4.0f) { int q; for (q = j; q + 1 < qn; q++) { qe[q] = qe[q + 1]; qt[q] = qt[q + 1]; } qn--; } else j++;   /* (in order kept) */
+    }
+    for (i = 0; i < coop_nchars; i++) {   /* in: the ones that came within the radius, stamped */
+        uint32_t e = coop_chars[i]; float de;
+        if (e == v->p1 || e == v->p2 || MEM32(e) != 0x1741C0u || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) == 2 || coop_boss_kind(e) == 4) continue;
+        de = (MEMF(e + 0xF0) - v->bx) * (MEMF(e + 0xF0) - v->bx) + (MEMF(e + 0xF4) - v->by) * (MEMF(e + 0xF4) - v->by);
+        if (de > r * r || fabsf(MEMF(e + 0xF8) - MEMF(v->p2 + 0xF8)) > 3.0f) continue;   /* (not one on a ledge over him: a bot run, two orcs 4.8 up) */
+        for (j = 0; j < qn && qe[j] != e; j++) ;
+        if (j == qn && qn < 32) { qe[qn] = e; qt[qn] = v->now | 1; qn++; }
+    }
+    {   /* the first in, still in */
+        int best = -1;
+        for (j = 0; j < qn; j++) { if (coop_bot_unreach(qe[j], v->now)) continue; if (best < 0 || (int32_t)(qt[j] - qt[best]) < 0) best = j; }
+        if (best >= 0) { uint32_t e2 = qe[best]; v->foe = e2; v->near = 1;
+            v->bd = (MEMF(e2 + 0xF0) - v->bx) * (MEMF(e2 + 0xF0) - v->bx) + (MEMF(e2 + 0xF4) - v->by) * (MEMF(e2 + 0xF4) - v->by); }
+    }
+    /* the group's circle (player 1 and the companions, coop_bot_view): with none in his own radius he goes only toward one that
+     * came into it, the first in first (left 2 units past its edge); his radius then takes over (a playtest: "the p2 bot only
+     * go toward an enemies that entered that radius, our new p2 bot attack radius should take care of the rest") */
+    for (j = 0; j < gn; ) {
+        uint32_t e = ge[j]; float dg = 1e18f; int ok = 0;
+        for (i = 0; i < coop_nchars; i++) if (coop_chars[i] == e) { ok = 1; break; }
+        if (ok && MEM32(e) == 0x1741C0u && MEM32(e + 0x114) == 3 && (int32_t)MEM32(e + 0x2FC) > 0)
+            dg = (MEMF(e + 0xF0) - v->gcx) * (MEMF(e + 0xF0) - v->gcx) + (MEMF(e + 0xF4) - v->gcy) * (MEMF(e + 0xF4) - v->gcy);
+        if (dg > (v->gr + 2.0f) * (v->gr + 2.0f)) { int q; for (q = j; q + 1 < gn; q++) { ge[q] = ge[q + 1]; gt[q] = gt[q + 1]; } gn--; } else j++;
+    }
+    for (i = 0; i < coop_nchars; i++) {
+        uint32_t e = coop_chars[i]; float dg;
+        if (e == v->p1 || e == v->p2 || MEM32(e) != 0x1741C0u || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) == 2 || coop_boss_kind(e) == 4) continue;
+        dg = (MEMF(e + 0xF0) - v->gcx) * (MEMF(e + 0xF0) - v->gcx) + (MEMF(e + 0xF4) - v->gcy) * (MEMF(e + 0xF4) - v->gcy);
+        if (dg > v->gr * v->gr) continue;
+        for (j = 0; j < gn && ge[j] != e; j++) ;
+        if (j == gn && gn < 32) { ge[gn] = e; gt[gn] = v->now | 1; gn++; }
+    }
+    if (!v->foe) for (j = 0; j < gn; j++) { uint32_t e = ge[j];
+        if (coop_bot_unreach(e, v->now)) continue;
+        v->foe = e; v->near = 0; v->bd = (MEMF(e + 0xF0) - v->bx) * (MEMF(e + 0xF0) - v->bx) + (MEMF(e + 0xF4) - v->by) * (MEMF(e + 0xF4) - v->by); break; }
+    if (v->foe != lfoe) { if (v->foe && !v->near) tt_dbg("[P2BOT] group circle %.1f: %u in it, going to the first in %08X '%s' %.1f away\n", v->gr, (unsigned)gn, v->foe, coop_nm(v->foe), sqrtf(v->bd));
+        else if (v->foe) tt_dbg("[P2BOT] melee radius %.0f: %u in it, the first in %08X '%s' %.1f away\n", r, (unsigned)qn, v->foe, coop_nm(v->foe), sqrtf(v->bd));
+        else if (lfoe) tt_dbg("[P2BOT] melee radius %.0f: none in it\n", r); lfoe = v->foe; }
+}
+static void coop_bot_pick_melee_old(BotView *v)
 {
     float bn = 1e18f, near_r = getenv("TT_COOP_BOTNEAR") ? (float)atoi(getenv("TT_COOP_BOTNEAR")) : 12.0f; uint32_t en = 0; int i;
     v->foe = 0; v->bd = 1e18f; v->near = 0;
     for (i = 0; i < coop_nchars; i++) {
         uint32_t e = coop_chars[i]; float ex, ey, de, dg;
         if (e == v->p1 || e == v->p2 || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) == 2 || coop_boss_kind(e) == 4) continue;   /* (not the Watcher, nor the troll's chain) */
-        if (e == coop_bot_unreach_e && v->now < coop_bot_unreach_until) continue;
+        if (coop_bot_unreach(e, v->now)) continue;
         ex = MEMF(e + 0xF0); ey = MEMF(e + 0xF4);
         de = (ex - v->bx) * (ex - v->bx) + (ey - v->by) * (ey - v->by); dg = (ex - v->gcx) * (ex - v->gcx) + (ey - v->gcy) * (ey - v->gcy);
         if (de < bn) { bn = de; en = e; }
@@ -3405,7 +3464,7 @@ static int coop_bot_roam(BotView *v, CoopPad *o)
     if (!coop_hero_down(0) || getenv("TT_COOP_BOTNOROAM") || coop_boss_fight_on(v->bx, v->by)) return 0;
     for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; float de;
         if (e == v->p1 || e == v->p2 || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) == 4) continue;
-        if (e == coop_bot_unreach_e && v->now < coop_bot_unreach_until) continue;
+        if (coop_bot_unreach(e, v->now)) continue;
         de = (MEMF(e + 0xF0) - v->bx) * (MEMF(e + 0xF0) - v->bx) + (MEMF(e + 0xF4) - v->by) * (MEMF(e + 0xF4) - v->by);
         if (de < be) { be = de; e2 = e; } }
     if (e2) {
