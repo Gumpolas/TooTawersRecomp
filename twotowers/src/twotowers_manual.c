@@ -7611,6 +7611,21 @@ extern void sub_000BA020_gen(void);
 void sub_000BA020(void)
 {
     uint32_t a[9], k; for (k = 0; k < 9; k++) a[k] = MEM32(esp + 4 + 4 * k);
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && a[0] == coop_twin && a[1] >= 0x10000u && a[1] < 0x84000000u && MEM32(a[1]) == 0x174980u && !tt_vs_on() && !getenv("TT_COOP_NOP2BLADE")) {
+        /* player 2's attack box (the second argument its weapon): his own melee weapon, not a ranged copy. His boxes came with his bow
+         * copies (the one at his set-up and another), so his swings hit as the bow and did no damage (4 of 4 hits in a bot run, health
+         * unchanged; a playtest: no melee kills). His bow: his slot-0 melee weapon; another ranged copy: his slot-1 one (Legolas' second
+         * knife), else slot 0 */
+        extern uint32_t coop_p2_bow(void);
+        uint32_t h = MEM32(a[1] + 0x18), m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want, pass, j;
+        if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u || m == 0x4586A62Cu) {
+            want = a[1] == coop_p2_bow() ? 0 : 1;
+            for (pass = 0; pass < 2 && !pick; pass++, want = 0)
+                for (j = 0; j < coop_np2w && !pick; j++) { uint32_t q = coop_p2w[j], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    if (coop_p2w_slot[j] == want && !(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u || qm == 0x4586A62Cu)) pick = q; }
+            if (pick) { static int n; if (n++ < 6) tt_dbg("[COOPWEAPON] player 2's attack box: his %08X in place of the ranged %08X '%s'\n", pick, a[1], coop_nm(a[1])); MEM32(esp + 8) = pick; a[1] = pick; }
+        }
+    }
     sub_000BA020_gen();
     if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && (a[0] == coop_first_char || a[0] == coop_twin) && !getenv("TT_VS_NOPVP")) {
         /* (Versus) a hero's attack box gets the mask of a character on neither side (0x80008E: the enemies' bit 8 and the
@@ -7807,6 +7822,18 @@ void sub_000B4690(void)
     if (coop_in_attach && ra == 0x000A0E2Au && eax >= 0x10000u) { if (coop_new_weapon_now) eax = coop_new_weapon_now; else { coop_attach_child_seen = eax; coop_attach_bone_seen = (int)ebx; } }   /* (ebx: the handler's second argument, the slot) */
     if (coop_mode() == 3 && eax >= 0x10000u && eax == coop_first_char && coop_twin >= 0x10000u) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_twin; }
     else if (coop_mode() == 3 && eax >= 0x10000u && MEM32(eax) == 0x174980u && !coop_in_attach) { int i; for (i = 0; i < coop_nwpn; i++) if (coop_wpn_orig[i] == eax) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_wpn_copy[i]; break; } }
+    if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && coop_p2 >= 0x10000u && eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x174980u
+        && (ra == 0x000A5DB3u || ra == 0x000A5E53u || ra == 0x000AA632u || ra == 0x000A5CC3u) && MEM32(eax + 0x11C) != coop_p2 && !getenv("TT_COOP_NOP2BLADE")) {
+        /* a weapon's hit box switched in player 2's moves (@ObjectWeaponCollisionOn / Off, @WeaponCollisionOn / Off): his own melee weapon.
+         * His moves name player 1's weapons: player 2 Legolas' knives came out as player 1 Aragorn's dagger (no copy of his: the sink, his
+         * bow) and bow (his bow copy), so his swings hit with his bow and did no damage -- 4 of 4 hits in a bot run, health unchanged (a
+         * playtest: no damage, no melee kills). Player 1's ranged weapon: his slot-1 melee weapon, any other: his slot-0 one (none: as before) */
+        uint32_t h = MEM32(eax + 0x18), m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want = (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) ? 1 : 0, k, pass;
+        for (pass = 0; pass < 2 && !pick; pass++, want = 0)
+            for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                if (coop_p2w_slot[k] == want && !(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u || qm == 0x4586A62Cu)) pick = q; }
+        if (pick) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's hit box: %08X '%s' -> his %08X (from %06X)\n", eax, coop_nm(eax), pick, ra); eax = pick; }
+    }
     if (coop_twin_ev && eax >= 0x10000u) {   /* inside the twin's event: player 1 -> twin, his weapons -> the copies */
         if (eax == coop_first_char) { eax = coop_twin; coop_twin_ev_redir++; }
         else if (MEM32(eax) == 0x174980u) { int i, hit = 0; for (i = 0; i < coop_nwpn; i++) if (coop_wpn_orig[i] == eax) { eax = coop_wpn_copy[i]; coop_twin_ev_redir++; hit = 1; break; }
