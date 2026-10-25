@@ -4664,6 +4664,7 @@ static uint32_t coop_p2rec_va(void)
 #define COOP_P2REC coop_p2rec_va()
 int coop_p2rec_ok;
 static int coop_kill_who; static uint32_t coop_kill_t; uint32_t coop_p2pop_until;
+uint32_t coop_p2_drain_t;   /* the game's own damage drain (0x9DEC0) on player 2's record, last time (coop_ratelog) */
 static unsigned coop_exp_moved[2];
 static uint32_t coop_hero_rec(void) { uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, h; PUSH32(esp, 0x000D2310u); sub_000D2310(); h = eax; esp = sp; eax = r0; ecx = r1; edx = r2; return 0x4AB598u + h * 0x348u; }
 /* a kill by player 2 (his weapon hit it last): the game's own kill award (0x99D40, cdecl enemy: rating from the
@@ -4739,6 +4740,11 @@ static void coop_p2_meter(void)
     static int32_t prev = -1; int32_t hp; extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void); extern uint32_t coop_rec_addr;
     if (!coop_rec_addr || coop_p2 < 0x10000u || getenv("TT_COOP_NOP2METER")) return;
     hp = (int32_t)MEM32(coop_p2 + 0x2FC);
+    /* (the game drains it itself now that enemy boxes on him run in his context, sub_000BAD10: then this call was a second
+     * drain -- a bot run: 5 hits taken, 10 drains, player 1 one a hit; a playtest: "his combo meter never raise") */
+    if (prev > 0 && hp < prev && coop_p2_drain_t && coop_now() - coop_p2_drain_t < 250u && !getenv("TT_COOP_P2DRAIN2")) {
+        static int n; if (n++ < 4) tt_dbg("[COOPEXP] player 2 took %d: the game drained his meter already (now %.2f)\n", prev - hp, coop_p2_state() ? *(const float *)(coop_p2_state() + 0x400 + 4) : -1.0f);
+        prev = hp; return; }
     if (prev > 0 && hp < prev) {
         uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; int sw = tt_coop_enter_ctx();
         PUSH32(esp, (uint32_t)(prev - (hp < 0 ? 0 : hp))); PUSH32(esp, 0x00098EF0u); sub_00098EF0();
@@ -8282,6 +8288,7 @@ static void coop_ratelog(int idx, uint32_t fn, void (*gen)(void))
     int who = MEM32(0x43B15Cu) == coop_p2 && coop_p2 ? 1 : 0, on = getenv("TT_COOP_RATELOG") != 0, isrec = rec == coop_rec_addr && rec;
     b = isrec ? MEMF(rec + 4) : 0;
     gen();
+    if (idx == 1 && who) { extern uint32_t coop_p2_drain_t; coop_p2_drain_t = coop_now() | 1; }
     if (!on || !coop_rec_addr) return;
     af = MEMF(coop_rec_addr + 4);
     coop_rl_n[idx][who]++;
@@ -8313,6 +8320,12 @@ void sub_000849F0(void)
         if (m >= 0x10000u && MEM32(m) == 0x103u) p2hit = src && (src == coop_p2 || (src >= 0x10000u && MEM32(src + 0x11C) == coop_p2));
         else p2hit = v >= 0x10000u && MEM32(v + 0x4BC) == coop_p2;
     }
+    if (getenv("TT_COOP_HITSRCLOG") && coop_p2 && v >= 0x10000u && MEM32(v + 0x114) == 3) {   /* (research) each hit on an enemy: its source, the source's owner, whose */
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; static int k;
+        uint32_t ow = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
+        if (m >= 0x10000u && MEM32(m) == 0x103u && (src == coop_p2 || src == coop_first_char || ow == coop_p2 || ow == coop_first_char) && k++ < 120) tt_dbg("[HITSRC] t %u on %08X: source %08X '%s' owner +11C %08X -> %s (depth %d, player 2 %08X, his meter %.1f)\n", coop_now(), v, src, coop_nm(src),
+            src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, p2hit ? "player 2's" : "not his", coop_depth, coop_p2, coop_rec_addr ? MEMF(coop_rec_addr + 4) : -1.0f);
+    }
     if (!off && coop_mode() == 3 && coop_p2 && !coop_depth && v >= 0x10000u && v != coop_p2 && p2hit) {
         sw = tt_coop_enter_ctx(); { static unsigned n; if ((n++ & 63) == 0) tt_dbg("[COOPEXP] hits by player 2 handled in his context: %u (victim %08X hp %d)\n", n, v, (int32_t)MEM32(v + 0x2FC)); } }
     {   /* (research) TT_COOP_HITLOG: each hit's victim, its last attacker and its health before and after */
@@ -8329,7 +8342,11 @@ void sub_000849F0(void)
         if (msg >= 0x10000u && MEM32(msg) == 0x103u && v >= 0x10000u) { extern void coop_pdmg_msg(uint32_t v, int32_t dmg); coop_pdmg_msg(v, (int32_t)MEM32(msg + 0x14));   /* (the damage: msg +0x14) */ }
         static uint32_t tdb[0x180]; int tdf = troll && getenv("TT_COOP_TROLLDIFF");   /* (research) the troll's fields a hit changes */
         if (tdf) { int q; for (q = 0; q < 0x180; q++) tdb[q] = MEM32(v + 4 * q); }
+        { float mb = coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f; uint32_t m1 = MEM32(esp + 4), wsrc = m1 >= 0x10000u && MEM32(m1) == 0x103u ? MEM32(m1 + 4) : 0;
         sub_000849F0_gen();
+        if (getenv("TT_COOP_HITSRCLOG") && v >= 0x10000u && MEM32(v + 0x114) == 3 && (p2hit || wsrc == coop_first_char || (wsrc >= 0x10000u && wsrc < 0x84000000u && MEM32(wsrc + 0x11C) == coop_first_char))) { static int k; if (k++ < 150)
+            tt_dbg("[HITAFT] t %u %s hit %08X: hp %d -> %d, state %u -> %u, last attacker %08X -> %08X, player %08X, meter %.1f -> %.1f, msg +8..+18 %08X %08X %08X %08X %08X\n", coop_now(), p2hit ? "P2" : "P1", v, (int32_t)hp0, (int32_t)MEM32(v + 0x2FC), st0, MEM32(v + 0x408), at, MEM32(v + 0x4BC),
+                   MEM32(0x43B15Cu), mb, coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f, MEM32(m1 + 8), MEM32(m1 + 0xC), MEM32(m1 + 0x10), MEM32(m1 + 0x14), MEM32(m1 + 0x18)); } }
         if (v >= 0x10000u && coop_mode() == 3 && (int32_t)MEM32(v + 0x2FC) < (int32_t)hp0 && MEM32(v + 0x114) == 3) {   /* (its health lowered by this hit: whose) */
             uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
             coop_lastdmg_note(v, p2hit ? 2 : (src == coop_first_char || own == coop_first_char || (!src && MEM32(v + 0x4BC) == coop_first_char)) ? 1 : 0); }
