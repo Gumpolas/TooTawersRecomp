@@ -453,6 +453,11 @@ static void twotowers_setup_paths_and_log(void)
         char log_path[MAX_PATH];
         FILE *sink;
         snprintf(log_path, sizeof(log_path), "%s" TT_SEP "twotowers_log.txt", g_exe_dir);
+        {   /* the last session's log kept as twotowers_log_prev.txt: a crash's log was gone once the game was started again */
+            char prev_path[MAX_PATH];
+            snprintf(prev_path, sizeof(prev_path), "%s" TT_SEP "twotowers_log_prev.txt", g_exe_dir);
+            remove(prev_path); rename(log_path, prev_path);
+        }
         /* A GUI-subsystem exe starts with no stdout/stderr descriptors, so
          * redirecting by descriptor alone did nothing on Windows (it only
          * worked under Wine). The usual recipe: give each stream a real

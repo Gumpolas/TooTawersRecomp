@@ -6952,6 +6952,26 @@ void sub_0009C380(void)
         if (v != lv) { tt_dbg("[COOPTRIGS] t %u: the player's triggers %s (0x43B058 %d -> %d), player 1 at %.1f %.1f\n", coop_now(), v ? "on" : "off", lv, v,
             coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF0) : 0.0f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF4) : 0.0f); lv = v; }
     }
+    {   /* player 2 not drawn in an in-game cutscene (a playtest: "he appears sometimes beside p1 and create funny scenarios"):
+         * after 0.4 s of one (tt_in_scene), his and his weapons' draw bit (+0x110 0x20000) kept clear, each put back as it was
+         * after. TT_COOP_P2INSCENE: drawn as before */
+        static uint32_t obj[48], bit[48], t_in; static int n_obj, hidden;
+        int sc = coop_p2 >= 0x10000u && coop_mode() == 3 && tt_in_scene() && !tt_vs_on() && !getenv("TT_COOP_P2INSCENE"); int i;
+        if (sc) { if (!t_in) t_in = coop_now() | 1; } else t_in = 0;
+        if (sc && !hidden && coop_now() - t_in >= 400u) {
+            extern uint32_t coop_wobjs[]; extern int coop_nwobjs; n_obj = 0;
+            obj[n_obj] = coop_p2; bit[n_obj++] = MEM32(coop_p2 + 0x110) & 0x20000u;
+            for (i = 0; i < coop_nwobjs && n_obj < 48; i++) { uint32_t q = coop_wobjs[i]; if (q >= 0x10000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == coop_p2) { obj[n_obj] = q; bit[n_obj++] = MEM32(q + 0x110) & 0x20000u; } }
+            for (i = 0; i < coop_nwpn && n_obj < 48; i++) { uint32_t q = coop_wpn_copy[i]; int k, dup = 0; for (k = 0; k < n_obj; k++) if (obj[k] == q) dup = 1;
+                if (!dup && q >= 0x10000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == coop_p2) { obj[n_obj] = q; bit[n_obj++] = MEM32(q + 0x110) & 0x20000u; } }
+            hidden = 1; tt_dbg("[COOPSCENE] a cutscene: player 2 and %d of his weapons not drawn\n", n_obj - 1);
+        }
+        if (hidden && sc) for (i = 0; i < n_obj; i++) MEM32(obj[i] + 0x110) &= ~0x20000u;
+        if (hidden && !sc) {
+            for (i = 0; i < n_obj; i++) if (obj[i] >= 0x10000u && (MEM32(obj[i]) == 0x174980u || obj[i] == coop_p2)) MEM32(obj[i] + 0x110) = (MEM32(obj[i] + 0x110) & ~0x20000u) | bit[i];
+            hidden = 0; tt_dbg("[COOPSCENE] the cutscene is over: player 2 drawn again\n");
+        }
+    }
     coop_place();
     coop_sync_listeners();
     coop_p2_target();
@@ -8724,9 +8744,21 @@ void sub_000C7030(void)
         h = MEM32(pl + 0x18); if (h >= 0x10000u && h < 0x84000000u) nm = (const char *)XBOX_PTR(h);
         if (coop_triglog_on()) { static int n; if (n++ < 400) tt_dbg("[TRIGLOG] t %u event %u plane %08X '%s' actor %08X (%s)\n", coop_now(), ty, pl, nm,
             ac, ac == coop_p2 ? "player 2" : ac == coop_first_char ? "player 1" : "other"); }
+        /* every plane and trigger is player 1's: player 2's events on them are dropped (a playtest: "p2 seems to fire triggers it
+         * shouldnt, only p1 can triggers everything"; before, only the camera planes were). TT_COOP_P2TRIGGERS: as before */
+        if (getenv("TT_COOP_TESTDROPALL") && h) {   /* (test) every plane event dropped, player 1's too: the drop's own stack handling */
+            static int n; if (n++ < 12) tt_dbg("[COOPTRIG] test: event %u on '%s' by %08X dropped%s\n", ty, nm, ac, getenv("TT_COOP_TESTDROPOLD") ? " (the old 4-byte pop)" : "");
+            if (getenv("TT_COOP_TESTDROPOLD")) { esp += 4; return; }
+            eax = 0; esp += 20; return;
+        }
+        if (ac == coop_p2 && h && _strnicmp(nm, "camera", 6) && _strnicmp(nm, "dynamicPickup", 13) && !getenv("TT_COOP_P2TRIGGERS")) {   /* (pickups are his to take) */
+            static int n; if (n++ < 12) tt_dbg("[COOPTRIG] player 2's event %u on '%s' dropped: triggers are player 1's\n", ty, nm);
+            eax = 0; esp += 20; return;   /* (thiscall, 4 arguments: ret 16) */
+        }
         if (ac == coop_p2 && h && !_strnicmp(nm, "camera", 6) && !getenv("TT_COOP_P2CAMTRIG")) {
             static int n; if (n++ < 8) tt_dbg("[COOPCAM] player 2's event %u on '%s' dropped: the camera is player 1's\n", ty, nm);
-            esp += 4; return;
+            eax = 0; esp += 20; return;   /* (ret 16: with esp += 4, as until 2026-10-25, each dropped event left 16 bytes on the
+                                             * stack -- with every trigger dropped, a hang at the next call: a bad VA, 0x108828) */
         }
     }
     sub_000C7030_gen();
