@@ -290,6 +290,7 @@ static const Row s_game_page[] = {
 static int s_nctl;
 
 static int s_page = PG_HUB, s_sel, s_hub_sel, s_top;
+static volatile uint32_t s_fe_before = 4;   /* the last screen before Options (5, both the main menu's and the pause's): tt_opt_filter */
 /* the Co-op menu (menus.c: the main menu's Co-op opens the Options screen on this page): New Game and Load Game at the
  * top right, the co-op settings below. New / Load: the page leaves (B for the game) and menus.c, under a black cover,
  * presses that item of the main menu with co-op kept on (New Game: then the difficulty screen with the co-op
@@ -463,6 +464,9 @@ static const Row *rows(int *n)
     return NULL;
 }
 static volatile int s_cap;          /* a key being taken for s_sel's action: 1 waiting, 2 waiting for every key to be let go */
+/* one of the co-op pages is up (the first page, which leads to Co-op Options, Co-op Options, the Co-op menu, player 2's controls) and no
+ * key is being taken: every controller drives it (menus.c merges them; a playtest: only player 1's did) */
+int tt_opt_coop_page(void) { return ours() && !s_cap && (s_page == PG_HUB || s_page == PG_COOP || s_page == PG_COOPMENU || s_page == PG_P2CTL); }
 static unsigned char s_cap_held[256];
 #define ROW_Y0   28
 #define ROW_STEP 52
@@ -614,6 +618,7 @@ static void draw_pad_line(int y)
     }
     text_el(T_VALUE, 24, y, 600, COL_ON, line);
 }
+static int row_locked(const Row *w);
 static void draw_page(void)
 {
     int n, i;
@@ -630,7 +635,7 @@ static void draw_page(void)
         for (i = s_top; i < n && i < s_top + ROW_SHOWN; i++) {
             const Row *w = &r[i];
             int y = ROW_Y0 + (i - s_top) * ROW_STEP, sel = i == s_sel;
-            text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
+            text_el(T_LABEL, 24, y, 0, row_locked(w) ? (sel ? 0xFF8A8A80u : 0xFF4C4A46u) : sel ? COL_ON : COL_OFF, w->label);   /* (locked: dim) */
             draw_value(w, y, sel);
         }
         if (s_top > 0) text_el(T_VALUE, 560, 4, 0, COL_OFF, "...");
@@ -672,6 +677,7 @@ static volatile uint32_t s_held_last;  /* (1.9.3) what the pad's last read held 
 static volatile int s_b_block;         /* B took us back to the first page: the game does not see it until let go */
 void tt_opt_filter(unsigned long port, XState *st)
 {
+    {   uint32_t fe = G32(0x4AD050u); if (fe != 5) s_fe_before = fe; }   /* (row_locked: Options opened from play) */
     XPad *p = &st->Gamepad;
     uint32_t h = 0;
     (void)port;
@@ -729,9 +735,18 @@ static void sound(uint32_t id, float pan)
 static void move_sound(void) { sound(0xA9D, -1.0f); sound(0xA9E, 1.0f); }
 void tt_opt_move_sound(void) { move_sound(); }   /* (Versus: the countdown's tick) */
 
+/* the co-op Difficulty and P2 Bot locked during play (the pause's Co-op Options: screens 6 / 8 are play's): set on the main
+ * menu's Co-op menu or Options only (the owner asked). Drawn dim; left / right and clicks do nothing. TT_COOP_NOLOCK: off */
+static int row_locked(const Row *w)
+{
+    uint32_t fe = s_fe_before;
+    if (getenv("TT_COOP_LOCKLOG")) { static DWORD lt; if (GetTickCount() - lt > 1000) { lt = GetTickCount(); tt_dbg("[OPTIONS] lock check: screen %u, before it %u\n", G32(0x4AD050u), fe); } }
+    return G32(0x4AD050u) == 5 && (fe == 6 || fe == 8) && (w->gfx == GFX_COOP + CO_DIFF || w->gfx == GFX_COOP + CO_BOT) && (w->kind == K_CYCLE || w->kind == K_COLS) && !getenv("TT_COOP_NOLOCK");
+}
 static void change(const Row *w, int d)
 {
     int cnt, cur, v;
+    if (row_locked(w)) { static DWORD lt; if (GetTickCount() - lt > 1000) { lt = GetTickCount(); tt_dbg("[OPTIONS] %s locked during play\n", w->label); } return; }
     if (w->kind == K_BIND) {   /* left / right: the controller's button for it */
         if (xbox_BindIsButton(w->gfx)) {
             xbox_BindAssignPad(w->gfx, (xbox_BindPad(w->gfx) + d + BIND_PAD_N_) % BIND_PAD_N_);

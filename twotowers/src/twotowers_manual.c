@@ -3314,9 +3314,12 @@ static int coop_bot_pad_free(CoopPad *o, uint32_t now)
     static uint32_t human_t;
     int i, any;
     if (tt_coop_setting(4) == 2) return 1;   /* Always */
-    any = o->buttons != 0 || o->lx > 8000 || o->lx < -8000 || o->ly > 8000 || o->ly < -8000 || o->rx > 8000 || o->rx < -8000 || o->ry > 8000 || o->ry < -8000;
+    any = o->buttons != 0 || o->lx > 5000 || o->lx < -5000 || o->ly > 5000 || o->ly < -5000 || o->rx > 5000 || o->rx < -5000 || o->ry > 5000 || o->ry < -5000;   /* (5000: a gentle walk, 6000 in a bot run, was under 8000 and the bot cut in; still above a resting stick's drift) */
     for (i = 0; i < 8; i++) if (o->analog[i] > 30) any = 1;
-    if (any) { if (!human_t || now - human_t > 3000) tt_dbg("[P2BOT] pad 2 used: the player's for 3 s\n"); human_t = now | 1; }
+    if (any) { if (!human_t || now - human_t > 3000) tt_dbg("[P2BOT] pad 2 used: the player's for 3 s\n"); human_t = now ? now : 1; }   /* (not now | 1: on an even
+        * millisecond that is now + 1, now - human_t wrapped round to over 4 billion and the bot took the frame -- with the stick held, every other
+        * frame was the bot's, which inside its circle stood him still: a playtest, "player 2 constantly stops"; a bot run, 45 of 68 samples) */
+    if (getenv("TT_COOP_PADFREELOG")) { static uint32_t lt; if (now - lt > 500u) { lt = now; tt_dbg("[PADFREE] t %u: pad 2 stick %d %d buttons %04X: %s\n", now - coop_p2_t0, o->lx, o->ly, o->buttons, (human_t && now - human_t < 3000) ? "the player's" : "the bot's"); } }   /* (research) */
     return !(human_t && now - human_t < 3000);
 }
 
