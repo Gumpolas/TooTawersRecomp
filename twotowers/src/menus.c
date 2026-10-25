@@ -1574,13 +1574,19 @@ static void pad_filter(unsigned long port, XState *st)
          * port too (a playtest: "every available input device can interact with the coop menu and coop options") */
         extern int tt_opt_coop_page(void); extern DWORD xbox_InputGetState(DWORD port, void *state);
         uint32_t prim = G32(0x1CB8B4u);
-        if (tt_opt_coop_page() && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
+        extern volatile int xbox_input_two_players; uint32_t fe = G32(FE_SCREEN);
+        /* (and every other front-end screen while co-op splits the devices: the one controller went to player 2, and the load
+         * screen and the main menu then heard only player 1's keyboard -- a playtest: "p2 lose input as soon as he leaves coop
+         * menu"; not in play, 6 / 8, nor on the stats and shops, 9 / 10, which are each player's in turn) */
+        if ((tt_opt_coop_page() || (xbox_input_two_players && fe != 6 && fe != 8 && fe != 9 && fe != 10)) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
             unsigned long q; int k, got;
             for (q = 0; q < 4; q++) { XState s2;
                 if (q == port) continue;
                 s_pad_merging = 1; got = xbox_InputGetState((DWORD)q, &s2) == 0; s_pad_merging = 0;   /* (raw: this filter would run for that port too,
                                                                                                          * and its idle read took the place of player 1's press -- a bot run) */
                 if (!got) continue;
+                if (s2.Gamepad.wButtons && !tt_opt_coop_page()) { static uint32_t lt; if (GetTickCount() - lt > 2000u) { lt = GetTickCount();
+                    tt_dbg("[MENUMERGE] screen %u: port %lu's buttons %04X go to the menus (player 1 on port %lu)\n", fe, q, s2.Gamepad.wButtons, port); } }
                 st->Gamepad.wButtons |= s2.Gamepad.wButtons;
                 for (k = 0; k < 8; k++) if (s2.Gamepad.bAnalogButtons[k] > st->Gamepad.bAnalogButtons[k]) st->Gamepad.bAnalogButtons[k] = s2.Gamepad.bAnalogButtons[k];
                 if (abs(s2.Gamepad.sThumbLX) > abs(st->Gamepad.sThumbLX)) st->Gamepad.sThumbLX = s2.Gamepad.sThumbLX;
