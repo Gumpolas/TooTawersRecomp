@@ -2722,7 +2722,8 @@ void sub_0009CAB0(void)
     static int on = -1; static uint32_t seen[128]; static int ns; uint32_t blk = ecx, it = MEM32(esp + 4), ret = MEM32(esp);
     if (on < 0) on = getenv("TT_COOP_MOVELOG") != 0;
     sub_0009CAB0_gen();
-    if (tt_vs_on() && blk >= 0x4AC5B0u && blk < 0x4AC800u && !getenv("TT_VS_OWNUPGRADES")) eax = (eax & ~0xFFu) | 1u;   /* (Versus: fixed loadouts -- every hero with every move bought) */
+    if (tt_vs_on() && blk >= 0x4AC5B0u && blk < 0x4AC800u && !getenv("TT_VS_OWNUPGRADES")) eax = (eax & ~0xFFu) | 1u;
+    if (getenv("TT_COOP_TESTALLMOVES") && blk >= 0x4AC5B0u && blk < 0x4AC800u) eax = (eax & ~0xFFu) | 1u;   /* (test) every move bought, both heroes */   /* (Versus: fixed loadouts -- every hero with every move bought) */
     if (on && coop_depth && blk >= 0x4AC5B0u && blk < 0x4AC800u && ns < 128) {
         uint32_t key = ((blk - 0x4AC5B0u) / 0x50u) << 16 | (it & 0xFF) << 8 | (eax & 0xFF); int i;
         for (i = 0; i < ns && seen[i] != key; i++) ;
@@ -3958,9 +3959,14 @@ void sub_000E7DB0(void)
 }
 
 /* -- the per-player globals of the control step -- */
-static const struct { uint32_t a, n; } coop_blk[] = {
+static struct { uint32_t a, n; } coop_blk[] = {
     { 0x43B114u, 0x48 }, { 0x43B168u, 0x58 }, { 0x43B1C1u, 0x5F }, { 0x43B298u, 0xF8 }, { 0x43B3A4u, 0x10 },
-    { 0x1B0C40u, 0x20 }, { 0x1B1078u, 4 }, { 0x1B1080u, 0x24 }, { 0x43B15Cu, 4 }, { 0x43B160u, 4 }, { 0x1CB8B4u, 4 } };
+    { 0x1B0C40u, 0x20 }, { 0x1B1078u, 4 }, { 0x1B1080u, 0x24 }, { 0x43B15Cu, 4 }, { 0x43B160u, 4 }, { 0x1CB8B4u, 4 },
+    { 0x43B264u, 0x20 } };
+    /* (0x43B264..0x43B283: the combo block -- presses counted since the last attack and their timers, read by the combo
+     * matcher 0x9A1F0 from the control step, which raises INP_COMBO1-5 (24, 39, 54, 56, 60) on [0x43B15C]. Shared, both
+     * players' presses went into one count: an idle player 2 had 16 combo inputs raised on him from player 1's presses
+     * (a bot run; a playtest asked player 2 his own combos, "p2 still affect p1 input reading for combo") */
     /* (0x1B1078: the grade of the player's current attack, set by his moves (0x98980 sets 3); a hit on an enemy raises the
      * combat meter by it (0x99E00 from 0x849F0: 0, 1 and 3 a raise, 2 the 0xB event). Shared, player 2's hits were graded by
      * player 1's last attack -- his killing blows raised nothing while player 1's raised 30 (bot runs, one driver for both;
@@ -3974,8 +3980,9 @@ static uint8_t coop_s1[0x800], coop_s2[0x800];
 /* + the current hero's record (0x4AB598 + hero*0x348: upgrades, experience, the level's running experience and combat
  * rating), at +0x400 of each state: whatever runs in player 2's context uses his own copy (set at the take-over) */
 uint32_t coop_rec_addr;
-static void coop_save(uint8_t *s) { uint32_t i, j, o = 0; for (i = 0; i < COOP_NBLK; i++) for (j = 0; j < coop_blk[i].n; j++) s[o++] = MEM8(coop_blk[i].a + j); if (coop_rec_addr) for (j = 0; j < 0x348; j += 4) *(uint32_t *)(s + 0x400 + j) = MEM32(coop_rec_addr + j); }
-static void coop_load(const uint8_t *s) { uint32_t i, j, o = 0; for (i = 0; i < COOP_NBLK; i++) for (j = 0; j < coop_blk[i].n; j++) MEM8(coop_blk[i].a + j) = s[o++]; if (coop_rec_addr) for (j = 0; j < 0x348; j += 4) MEM32(coop_rec_addr + j) = *(const uint32_t *)(s + 0x400 + j); }
+static void coop_blk_opts(void) { static int done; if (!done) { done = 1; if (getenv("TT_COOP_NOCOMBOSWAP")) coop_blk[COOP_NBLK - 1].n = 0; } }   /* (test: the combo block shared, as before) */
+static void coop_save(uint8_t *s) { uint32_t i, j, o = 0; coop_blk_opts(); for (i = 0; i < COOP_NBLK; i++) for (j = 0; j < coop_blk[i].n; j++) s[o++] = MEM8(coop_blk[i].a + j); if (coop_rec_addr) for (j = 0; j < 0x348; j += 4) *(uint32_t *)(s + 0x400 + j) = MEM32(coop_rec_addr + j); }
+static void coop_load(const uint8_t *s) { uint32_t i, j, o = 0; coop_blk_opts(); for (i = 0; i < COOP_NBLK; i++) for (j = 0; j < coop_blk[i].n; j++) MEM8(coop_blk[i].a + j) = s[o++]; if (coop_rec_addr) for (j = 0; j < 0x348; j += 4) MEM32(coop_rec_addr + j) = *(const uint32_t *)(s + 0x400 + j); }
 const uint8_t *coop_p2_state(void) { return coop_s2; }
 uint8_t *coop_p2_state_w(void) { return coop_s2; }
 
@@ -5005,6 +5012,11 @@ void sub_00053090(void)
         }
     }
     if (in == 3u && (a == coop_first_char || (coop_p2 >= 0x10000u && a == coop_p2))) { extern int tt_vs_on(void); extern void tt_vs_kb_in(int v); if (tt_vs_on()) tt_vs_kb_in(a == coop_p2); }
+    if (coop_mode() == 3 && getenv("TT_COOP_COMBOLOG") && (in == 24u || in == 39u || in == 54u || in == 56u || in == 60u) && a >= 0x10000u) {   /* (research) INP_COMBO1-5: whose, from where, the combo block */
+        static int n; if (n++ < 5000) tt_dbg("[COMBO] t %u INP_COMBO%d on %s (from %06X) in %s context | block 264..283: %d %d %d %d %d %d %d %d | grade 1B1078 %d\n", coop_now(),
+            in == 24u ? 1 : in == 39u ? 2 : in == 54u ? 3 : in == 56u ? 4 : 5, a == coop_p2 ? "player 2" : a == coop_first_char ? "player 1" : "other", MEM32(esp), coop_depth ? "player 2's" : "player 1's",
+            (int32_t)MEM32(0x43B264u), (int32_t)MEM32(0x43B268u), (int32_t)MEM32(0x43B26Cu), (int32_t)MEM32(0x43B270u), (int32_t)MEM32(0x43B274u), (int32_t)MEM32(0x43B278u), (int32_t)MEM32(0x43B27Cu), (int32_t)MEM32(0x43B280u), (int32_t)MEM32(0x1B1078u));
+    }
     if (coop_mode() == 3 && getenv("TT_COOP_INPLOG") && (a == coop_p2 || a == coop_first_char) && in != 63u && in != 37u && in != 9u && in != 59u) {   /* (37 INP_ARROWS: every frame) */
         static int n; if (n++ < 3000) tt_dbg("[COOPINP] t %lu P%d input %u state %u\n", (unsigned long)coop_now(), a == coop_p2 ? 2 : 1, in, MEM32(a + 0x408));
     }
@@ -6975,6 +6987,15 @@ void sub_0009C380(void)
             for (i = 0; i < n_obj; i++) if (obj[i] >= 0x10000u && (MEM32(obj[i]) == 0x174980u || obj[i] == coop_p2)) MEM32(obj[i] + 0x110) = (MEM32(obj[i] + 0x110) & ~0x20000u) | bit[i];
             hidden = 0; tt_dbg("[COOPSCENE] the cutscene is over: player 2 drawn again\n");
         }
+    }
+    if (getenv("TT_COOP_HUDVISLOG")) {   /* (research) HUD list 1 (0x4A3D80, 0xDC each): each element's shown flag +0x24 as it changes */
+        static uint8_t lv[32]; static int init; int k;
+        {   /* (research) TT_COOP_HUDSHOTDIR=dir: a frame the third time each element shows (dir/hudel<k>.bmp) */
+            static int cnt[32]; extern void xbox_PresentDumpRequest(const char *path); const char *dd = getenv("TT_COOP_HUDSHOTDIR"); static char pth[32][300];
+            for (k = 0; dd && init && k < 32; k++) { uint8_t v = MEM8(0x4A3D80u + k * 0xDCu + 0x24u); if (v && !lv[k] && ++cnt[k] == 3 && (!getenv("TT_COOP_HUDSHOTEL") || atoi(getenv("TT_COOP_HUDSHOTEL")) == k)) { snprintf(pth[k], sizeof pth[k], "%s\\hudel%d.bmp", dd, k); xbox_PresentDumpRequest(pth[k]); tt_dbg("[HUDVIS] frame for element %d: %s\n", k, pth[k]); } }
+        }
+        for (k = 0; k < 32; k++) { uint8_t v = MEM8(0x4A3D80u + k * 0xDCu + 0x24u); if (init && v != lv[k]) tt_dbg("[HUDVIS] t %u list 1 element %d shown %u -> %u (texture %08X)\n", coop_now(), k, lv[k], v, MEM32(0x4A3D80u + k * 0xDCu)); lv[k] = v; }
+        init = 1;
     }
     coop_place();
     coop_sync_listeners();
