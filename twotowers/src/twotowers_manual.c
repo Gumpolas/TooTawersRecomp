@@ -6888,6 +6888,10 @@ void tt_coop_hud_pre(void)
         break;
     }
     { static int lg; if (!lg++) tt_dbg("[COOPSWORD] player 2's sword drawn through HUD slot %d (mirror mode %d)\n", coop_sw_slot, mir); }
+    if (getenv("TT_COOP_SWLOG")) {   /* (research) player 2's sword pieces (elements 0-3) each time one's shown flag or place changes */
+        static uint32_t last[4]; int q; for (q = 0; q < 4; q++) { uint32_t e = COOP_EL + q * 0xDC, key = MEM8(e + 0x24) | (MEM32(e + 8) & 0xFFF) << 8 | (MEM32(e + 0xC) & 0xFFF) << 20;
+            if (key != last[q]) { last[q] = key; tt_dbg("[COOPSW] t %u piece %d shown %u at %d,%d size %d,%d texture %08X (slot %d)\n", coop_now(), q, MEM8(e + 0x24), (int32_t)MEM32(e + 8), (int32_t)MEM32(e + 0xC), (int32_t)MEM32(e + 0x10), (int32_t)MEM32(e + 0x14), MEM32(e + 0xB8), coop_sw_slot); } }
+    }
     coop_aimdot_draw(a + 24 * 0xDC);
     if (!getenv("TT_COOP_NOBOSSBARMOVE")) {   /* a boss bar (coop_is_bossbar: the troll's list 15, the Watcher's 19) under player 2's sword:
         * drawn from copies moved down (the list's table swapped for the draw): the game slides its pieces from where they are,
@@ -8175,7 +8179,13 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
      * of them in his context, all on player 1). TT_COOP_NOHEADREDIR: as before */
     coop_head_cmd = coop_depth && !coop_ctx_out && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOHEADREDIR") && (!strcmp(name, "LockHeading") || !strcmp(name, "UnlockHeading")
         || !strcmp(name, "LockHeadingToTarget") || !strcmp(name, "SetTurnSpeed") || !strcmp(name, "SetHeading"));
+    { uint32_t atb3 = 0;   /* (@AttachToBone's weapon name entry, argument 3: kept for player 2's swings below) */
+      if (!strcmp(name, "AttachToBone") && !coop_replaying && vm >= 0x10000u) { uint32_t base = MEM32(vm + 0x10); if (base >= 0x10000u && ((MEM32(vm) - base) >> 3) >= 3u && MEM32(base + 16u) == 3u) atb3 = MEM32(base + 20u); }
     gen();
+      /* player 1's main-hand weapon (slot 0) from the level's set-up: player 2's swings then have a name before player 1 swings */
+      if (atb3 && coop_resolved && coop_attach_child_seen && coop_attach_bone_seen == 0 && coop_mode() == 3 && !getenv("TT_COOP_NOP2WEAPONARG")) {
+          coop_p2_wpnarg_p1 = atb3; { static int n; if (n++ < 4) tt_dbg("[COOPWEAPON] player 1's main-hand weapon name kept from the set-up (%08X '%s')\n", coop_attach_child_seen, coop_nm(coop_attach_child_seen)); } }
+    }
     coop_head_cmd = 0;
     if (coop_p2_wpnarg_learn) { if (coop_lkn > coop_p2_wpnarg_lk && coop_lk[coop_p2_wpnarg_lk & 63].obj == coop_first_char && coop_first_char) coop_p2_wpnarg_p1 = coop_p2_wpnarg_learn; coop_p2_wpnarg_learn = 0; }
     if (coop_p2_wpnarg_ent) { MEM32(coop_p2_wpnarg_ent) = coop_p2_wpnarg_k; MEM32(coop_p2_wpnarg_ent + 4) = coop_p2_wpnarg_v; coop_p2_wpnarg_ent = 0; }   /* (the script's own argument back) */
