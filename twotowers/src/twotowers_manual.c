@@ -6563,8 +6563,8 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
              * x (a piece of the dot seen at 195.0 for HUD x 184.7, 175.0 for 162.3: RECOMP_HUDEDGELOG). With the box at the HUD x a dot
              * away from the middle fell out of its box, made a group of its own and was moved with the edges: off its enemy by a
              * third of the way to the edge (a playtest: 543 px right of the middle for an orc 305 px right) */
-            extern volatile float xbox_hud_excl_more[4][5]; float r = sz[w] * 0.5f + 8.0f, fyc = 240.0f + (hy[w] - 240.0f) * 0.93f, fxc = 320.0f + (hx[w] - 320.0f) * 0.92f;
-            xbox_hud_excl_more[2 + w][0] = fxc - r; xbox_hud_excl_more[2 + w][1] = fxc + r; xbox_hud_excl_more[2 + w][2] = fyc - r; xbox_hud_excl_more[2 + w][3] = fyc + r; xbox_hud_excl_more[2 + w][4] = 1.0f; }
+            extern volatile uint32_t xbox_hud_own_col[8]; xbox_hud_own_col[2 + w] = MEM32(e + 0x20);   /* (2026-10-26) by its colour, not a box: a box also took the game's
+                                                                                             * pieces under it out of their groups (the enemy counter, Frodo's bar, the boss bar jumped, a playtest) */ }
         coop_el_draw(e);
     }
 }
@@ -6632,11 +6632,11 @@ static void coop_tags(uint32_t tmpl)
         MEM32(e + 8) = (uint32_t)(int32_t)(hx - 30.0f); MEM32(e + 0xC) = (uint32_t)(int32_t)(hy - 26.0f); MEM32(e + 0x10) = 60; MEM32(e + 0x14) = 30;
         MEM32(e + 0x20) = w ? 0xFF30C0FFu : 0xFFFFA040u;   /* (ABGR) player 1 blue, player 2 amber */
         if (tt_vs_on()) MEM32(e + 0x20) = w ? 0xFF1888FFu : 0xFF2828FFu;   /* (1.9.7, Versus: player 1 red, player 2 orange -- not co-op's) */
-        if (coop_hero_down(w)) MEM32(e + 0x20) = 0xFF909090u;
+        if (coop_hero_down(w)) MEM32(e + 0x20) = 0xFF8A8C8Au;   /* (grey, not the greyed art's 909090: the renderer tells the markers by their colour) */
         if (w && getenv("TT_COOP_TAGDIMTEST")) dimw = 1;   /* (bot test: player 2's marker always dimmed, to see it) */
         if (dimw) MEM32(e + 0x20) = (MEM32(e + 0x20) & 0x00FFFFFFu) | 0x50000000u;   /* behind something: a third */
         coop_el_text(e, t); MEM8(e + 0x24) = 1; any = 1;
-        xbox_hud_excl_more[w][0] = hx - 34.0f; xbox_hud_excl_more[w][1] = hx + 34.0f;   /* (the renderer sees the HUD x, before its narrowing: a box at the screen x let a letter fall in an edge group, "P" and "1" apart, observed) */ xbox_hud_excl_more[w][2] = fy - 30.0f; xbox_hud_excl_more[w][3] = fy + 10.0f; xbox_hud_excl_more[w][4] = 1.0f;
+        { extern volatile uint32_t xbox_hud_own_col[8]; xbox_hud_own_col[w] = MEM32(e + 0x20); }   /* kept out of the widescreen groups by its colour (hud_is_own), so a game piece under it keeps its place (with a box it did not, a playtest) */
         if (getenv("TT_COOP_TAGLOG")) { static uint32_t lt[2]; if (coop_now() - lt[w] > (uint32_t)atoi(getenv("TT_COOP_TAGLOG")) * 1u) { lt[w] = coop_now(); tt_dbg("[COOPTAG] P%d head %.1f %.1f %.1f -> frame %.0f,%.0f -> HUD %.0f,%.0f (wide x%.2f)\n", w + 1, MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0xF8) + z, fx, fy, hx, hy, kk); } }
     }
     if (!any) return;
@@ -6760,7 +6760,7 @@ int tt_vs_res_overlay(CoopOvlQuad *q)   /* (coop_overlay) the panel behind the r
 }
 void tt_coop_hud_pre(void)
 {
-    { extern volatile float xbox_hud_excl_more[4][5]; int q; for (q = 0; q < 4; q++) xbox_hud_excl_more[q][4] = 0.0f; }
+    { extern volatile float xbox_hud_excl_more[4][5]; extern volatile uint32_t xbox_hud_own_col[8]; int q; for (q = 0; q < 4; q++) xbox_hud_excl_more[q][4] = 0.0f; for (q = 0; q < 8; q++) xbox_hud_own_col[q] = 0; }
     static int checked, ok = 1; extern int coop_hero_down(int); extern uint32_t coop_down_time(void);
     coop_hudlist_dump();
     { extern volatile float xbox_hud_excl[5]; xbox_hud_excl[4] = 0.0f; }   /* set again below while the respawn counter shows */
@@ -6813,11 +6813,12 @@ void tt_coop_hud_pre(void)
         MEM32(e + 8) = 220; MEM32(e + 0xC) = getenv("TT_COOP_CNTY") ? (uint32_t)atoi(getenv("TT_COOP_CNTY")) : 96; MEM32(e + 0x10) = 200; MEM32(e + 0x14) = 30; if (coop_bossbar_any()) MEM32(e + 0xC) = 180;   /* (the boss bar moved under the swords: the counter under it) */   /* (2026-10-18) just under the swords: kept out of the widescreen grouping by the renderer's exclusion box (xbox_hud_excl, set below), so it no longer has to stay 10 units clear of everything (it sat at 178) */   /* centred, under everything in the top band (swords y 25-89, the allies moved down to y 164): the text's drawn pieces span much wider than its box, and at y 110-160 (tested) they merged the whole top band into one centred group; 175 and 200 keep the swords in their corners: more than 10 units from both sword groups, so it neither drags them to the middle nor is pinned */
         {   extern const char *tt_vs_banner(void); const char *vb = tt_vs_banner();
             int d1 = coop_hero_down(0), who = vb ? 9 : tt_vs_on() ? 0 : dn ? 2 : d1 ? 1 : 0;   /* (Versus: no respawn counter) */   /* whichever hero is down (both down is game over); 9: Versus' banner */
-            MEM8(e + 0x24) = (uint8_t)(who != 0); MEM32(e + 0x20) = 0xFF4040FFu;
+            MEM8(e + 0x24) = (uint8_t)(who != 0); MEM32(e + 0x20) = 0xFF3F41FDu;   /* (4040FF nudged: a colour of its own, the renderer tells it by that) */
             {   /* the counter's pieces out of the widescreen grouping (frame units: HUD y shrunk 0.93 about 240; x 220-405 keeps the allies' HUD, from HUD x 400, out) */
                 extern volatile float xbox_hud_excl[5]; float y0 = (float)(int32_t)MEM32(e + 0xC) - 8.0f, y1 = y0 + 46.0f;
                 xbox_hud_excl[0] = who == 9 ? 120.0f : 220.0f; xbox_hud_excl[1] = who == 9 ? 520.0f : 405.0f; xbox_hud_excl[2] = 240.0f + (y0 - 240.0f) * 0.93f; xbox_hud_excl[3] = 240.0f + (y1 - 240.0f) * 0.93f;
-                xbox_hud_excl[4] = (who && !getenv("TT_COOP_NOHUDEXCL")) ? 1.0f : 0.0f; }
+                xbox_hud_excl[4] = (who == 9 && !getenv("TT_COOP_NOHUDEXCL")) ? 1.0f : 0.0f;   /* (Versus' banner: still its box) */
+                { extern volatile uint32_t xbox_hud_own_col[8]; xbox_hud_own_col[4] = (who && who != 9) ? 0xFF3F41FDu : 0; } }   /* (2026-10-26) the respawn counter by its colour instead (hud_is_own): its box took the game's pieces under it out of their groups */
             if (who == 9) {
                 int big = (vb[0] >= '1' && vb[0] <= '9' && !vb[1]) || !strcmp(vb, "FIGHT!");
                 if (big && !getenv("TT_VS_SMALLCD")) {   /* the countdown in the rating word's big letters, in the middle */
