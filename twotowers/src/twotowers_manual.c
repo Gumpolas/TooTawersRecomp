@@ -2707,7 +2707,7 @@ static unsigned coop_level_n;   /* levels loaded (coop_level_reset): once-a-leve
 static int coop_depth;
 static int coop_triglog_on(void) { static int tl = -1; if (tl < 0) { extern int fclose(void *); void *tf = fopen("triglog.on", "rb"); tl = getenv("TT_COOP_TRIGLOG") || tf; if (tf) fclose(tf); } return tl; }   /* (or a file triglog.on in the game folder: a playtest) */
 static uint32_t coop_p2_wpnarg_ent, coop_p2_wpnarg_k, coop_p2_wpnarg_v, coop_p2_wpnarg_p1, coop_p2_wpnarg_learn; static unsigned coop_p2_wpnarg_lk;   /* (coop_replay: player 2's weapon argument while it is patched) */
-static uint32_t coop_lurtz_hit;   /* (sub_000849F0: player 2's hit on Lurtz, handled as player 1's) */
+static uint32_t coop_lurtz_hit; uint32_t coop_lurtz_p2_hits;   /* (sub_000849F0: player 2's hit on Lurtz, handled as player 1's) */
 static int coop_head_cmd;   /* a heading command run in player 2's context (coop_replay): its lookup of player 1 answers him (sub_000B4690) */
 int coop_in_p2_ctx(void) { return coop_depth; }
 /* bought moves per player (player 2 only does what he bought). A hero's upgrades are bytes at 0x4AC5B0 + hero * 0x50
@@ -4826,6 +4826,18 @@ void sub_00099D40(void)
     a1 = coop_rec_addr ? MEMF(coop_rec_addr + 0x90) : 0;
     if (mine) coop_exp_moved[1] += (unsigned)(a1 - b1 + 0.5f);
     if (sw) tt_coop_leave();
+    {   /* Lurtz: player 2's hits on him count as player 1's (coop_is_lurtz), so the game's award is player 1's; if player 2 hit him in
+         * the fight, the award runs once more in his context (a playtest: "make it so p2 also earn reward on lurtz death").
+         * TT_COOP_NOLURTZSHARE: player 1's only */
+        extern int coop_is_lurtz(uint32_t e); extern uint32_t coop_lurtz_p2_hits;
+        if (!mine && coop_mode() == 3 && coop_p2 >= 0x10000u && coop_rec_addr && ra == 0x00085711u && coop_is_lurtz(en) && coop_lurtz_p2_hits && !getenv("TT_COOP_NOLURTZSHARE")) {
+            uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; int sw2 = tt_coop_enter_ctx(); float c1 = MEMF(coop_rec_addr + 0x90);
+            PUSH32(esp, en); PUSH32(esp, 0x00085711u); sub_00099D40_gen(); esp = sp;
+            tt_dbg("[COOPEXP] Lurtz's award for player 2 too (%u hits of his): +%.0f\n", coop_lurtz_p2_hits, MEMF(coop_rec_addr + 0x90) - c1);
+            coop_p2pop_until = coop_now() + 2600; coop_lurtz_p2_hits = 0;
+            if (sw2) tt_coop_leave(); eax = r0; ecx = r1; edx = r2;
+        }
+    }
     if (mine) tt_dbg("[COOPEXP] kill by player 2 (enemy %08X, the game's award%s): +%.0f (now %.0f)\n", en, sw ? " in his context" : ", already his context", a1 - b1, a1);
     if (getenv("TT_COOP_KILLLOG") && coop_p2) { static unsigned k; if (k++ < 200)
         tt_dbg("[KILLLOG] award for %08X from %06X | last attacker %08X (%s) | player %08X | +526 %u +538 %.2f | +%.0f\n", en, ra, la, la == coop_p2 ? "P2" : la == coop_first_char ? "P1" : "other",
@@ -6376,7 +6388,9 @@ static int coop_is_bossbar(int li)
 /* the game's own HUD pieces in the top right (allies' bars, boss bars, counters) stay where the game draws them; player 2's HUD
  * goes under them instead (a playtest: "all coop hud elements should go under all the main hud elements ... moving hud
  * elements is distracting"). TT_COOP_HUDMOVE: moved under player 2's sword, as before */
-static int coop_hud_move_on(void) { static int v = -1; if (v < 0) v = getenv("TT_COOP_HUDMOVE") != NULL; return v; }
+static int coop_hud_move_on(void) { static int v = -1; if (v < 0) v = getenv("TT_COOP_HUDNOMOVE") == NULL; return v; }   /* (2026-10-26: below player 2's bar
+    * again, at fixed offsets -- a playtest screenshot: the enemy counter and Frodo's ring on his bar; the earlier version moved
+    * them by 72 or 168 as a boss bar came and went, and that moving was what distracted. TT_COOP_HUDNOMOVE: the game's places) */
 static int coop_bossbar_any(void) { int li; if (getenv("TT_COOP_NOBOSSBARMOVE") || !coop_hud_move_on()) return 0; for (li = 2; li <= 20; li++) if (coop_is_bossbar(li)) return 1; return 0; }
 static uint32_t coop_tag_el; static int coop_tag_slot = -1; static uint32_t coop_tag_saved[2]; static float coop_proj_z; static int coop_tag_hidden[2];
 static int coop_project_old(float wx, float wy, float wz, float *fx, float *fy);
@@ -6896,12 +6910,12 @@ void tt_coop_hud_pre(void)
         }
     }
     {   /* allies' HUD (Frodo's portrait and bar here; any switched-on list but player 1's sword 0 and gauge 1) in the top right moves under player 2's sword for this draw */
-        int li, boss = coop_bossbar_any(); int32_t ady = 72 + (boss ? (getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96) : 0); coop_ally_n = 0;   /* (under the boss bar too while it shows, which moves on its own below) */
+        int li, boss = coop_bossbar_any(); int32_t ady = getenv("TT_COOP_ALLYDY") ? atoi(getenv("TT_COOP_ALLYDY")) : 72; (void)boss;   /* (fixed: the first row under his bar, boss bar or not) */ coop_ally_n = 0;   /* (under the boss bar too while it shows, which moves on its own below) */
         for (li = 2; li < 21 && coop_hud_move_on(); li++) { uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), n = MEM32(COOP_HUD_LIST + li * 12 + 4), j; if (!MEM8(COOP_HUD_ON + li) || tb < 0x10000u || n > 64 || (boss && coop_is_bossbar(li))) continue;
             for (j = 0; j < n && coop_ally_n < 96; j++) { uint32_t e = tb + j * 0xDC; int32_t x = (int32_t)MEM32(e + 8), y = (int32_t)MEM32(e + 0xC);
                 if (x >= 400 && y < 200) { coop_ally[coop_ally_n][0] = e; coop_ally[coop_ally_n][1] = (uint32_t)y; coop_ally_n++; MEM32(e + 0xC) = (uint32_t)(y + ady); } } }
     }
-    for (k = coop_hud_move_on() ? 20 : 2; coop_hud_move_on() ? k >= 0 : k <= 20; k += coop_hud_move_on() ? -1 : 1) if (!MEM8(COOP_HUD_ON + k)) {   /* a switched-off slot of the list table draws them:
+    for (k = 2; k <= 20; k++) if (!MEM8(COOP_HUD_ON + k)) {   /* a switched-off slot of the list table draws them:
         * the lowest (lists are drawn in order), so the game's own lists after it draw over player 2's HUD */
         coop_sw_slot = k; coop_sw_saved[0] = MEM32(COOP_HUD_LIST + k * 12); coop_sw_saved[1] = MEM32(COOP_HUD_LIST + k * 12 + 4);
         MEM32(COOP_HUD_LIST + k * 12) = COOP_EL; MEM32(COOP_HUD_LIST + k * 12 + 4) = COOP_EL_N; MEM8(COOP_HUD_ON + k) = 1;
@@ -6917,7 +6931,7 @@ void tt_coop_hud_pre(void)
         * drawn from copies moved down (the list's table swapped for the draw): the game slides its pieces from where they are,
         * so moving its own ran them down the screen (observed) */
         extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); static uint32_t copy;
-        int32_t dy = getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 96, dx = getenv("TT_COOP_BOSSBARDX") ? atoi(getenv("TT_COOP_BOSSBARDX")) : 24;   /* (x: all of it in the right half, from 297 to 321, and 18 under the swords: more than the 10 that groups pieces, so the widescreen HUD keeps it and player 2's sword to the right edge; at 297 and 10 under they made one group across the middle, kept in the middle, observed) */
+        int32_t dy = getenv("TT_COOP_BOSSBARDY") ? atoi(getenv("TT_COOP_BOSSBARDY")) : 168,   /* (fixed: the second row, under the allies' row) */ dx = getenv("TT_COOP_BOSSBARDX") ? atoi(getenv("TT_COOP_BOSSBARDX")) : 24;   /* (x: all of it in the right half, from 297 to 321, and 18 under the swords: more than the 10 that groups pieces, so the widescreen HUD keeps it and player 2's sword to the right edge; at 297 and 10 under they made one group across the middle, kept in the middle, observed) */
         int li;
         if (!copy) copy = xbox_ContiguousAlloc(4 * 8 * 0xDC, 16u);
         coop_boss_n = 0;
@@ -8593,7 +8607,7 @@ void sub_000849F0(void)
         if (m >= 0x10000u && MEM32(m) == 0x103u && (src == coop_p2 || src == coop_first_char || ow == coop_p2 || ow == coop_first_char) && k++ < 120) tt_dbg("[HITSRC] t %u on %08X: source %08X '%s' owner +11C %08X -> %s (depth %d, player 2 %08X, his meter %.1f)\n", coop_now(), v, src, coop_nm(src),
             src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, p2hit ? "player 2's" : "not his", coop_depth, coop_p2, coop_rec_addr ? MEMF(coop_rec_addr + 4) : -1.0f);
     }
-    { extern int coop_is_lurtz(uint32_t e); if (p2hit && coop_is_lurtz(v)) { static int n; if (n++ < 4) tt_dbg("[COOPLURTZ] player 2's hit on %s: handled as player 1's\n", coop_nm(v)); p2hit = 0; coop_lurtz_hit = v; } }
+    { extern int coop_is_lurtz(uint32_t e); if (p2hit && coop_is_lurtz(v)) { static int n; if (n++ < 4) tt_dbg("[COOPLURTZ] player 2's hit on %s: handled as player 1's\n", coop_nm(v)); p2hit = 0; coop_lurtz_hit = v; coop_lurtz_p2_hits++; } }
     if (!off && coop_mode() == 3 && coop_p2 && !coop_depth && v >= 0x10000u && v != coop_p2 && p2hit) {
         sw = tt_coop_enter_ctx(); { static unsigned n; if ((n++ & 63) == 0) tt_dbg("[COOPEXP] hits by player 2 handled in his context: %u (victim %08X hp %d)\n", n, v, (int32_t)MEM32(v + 0x2FC)); } }
     {   /* (research) TT_COOP_HITLOG: each hit's victim, its last attacker and its health before and after */
@@ -9638,7 +9652,7 @@ void coop_level_reset(void)
     coop_world = coop_rec = coop_key = coop_last_char = coop_hero_sel = coop_twin = coop_first_char = 0;
     coop_nwpn = 0; memset(coop_wpn_copy, 0, sizeof coop_wpn_copy); memset(coop_wpn_orig, 0, sizeof coop_wpn_orig); coop_np2w = 0;
     coop_nchars = 0; memset(coop_thr, 0, sizeof coop_thr); { extern int coop_nwobjs; coop_nwobjs = 0; }
-    coop_rec_addr = 0; coop_p2rec_ok = 0; coop_p2pop_until = 0; coop_p2_wpnarg_p1 = 0;   /* (player 1's weapon name: the level's script data) */
+    coop_rec_addr = 0; coop_p2rec_ok = 0; coop_p2pop_until = 0; coop_p2_wpnarg_p1 = 0;   /* (player 1's weapon name: the level's script data) */ { extern uint32_t coop_lurtz_p2_hits; coop_lurtz_p2_hits = 0; }
     if (coop_p2rec_mem) { uint32_t j; for (j = 0; j < 0x400u; j += 4) MEM32(coop_p2rec_mem + j) = 0; }   /* (his gauge's copy, ours: zeroed again, or the next co-op level refused it as in use and showed no gauge) */
     memset(coop_down, 0, sizeof coop_down); memset(coop_down_t, 0, sizeof coop_down_t); memset(coop_upwatch, 0, sizeof coop_upwatch);
     coop_gameover = 0; coop_gameover_t = 0; coop_end_seen = 0; coop_real_death_pending = 0;
