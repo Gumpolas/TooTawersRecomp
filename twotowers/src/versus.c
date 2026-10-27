@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 #include "../../xboxrecomp-0.12.0/src/apu/apu.h"
 #if defined(_WIN32)
 #include <windows.h>
@@ -20,7 +21,7 @@ extern void tt_dbg(const char *fmt, ...);
 static int strncasecmp_vs(const char *a, const char *b) { while (*b) { int x = *a++, y = *b++; if (x >= 'a' && x <= 'z') x -= 32; if (y >= 'a' && y <= 'z') y -= 32; if (x != y) return 1; } return 0; }
 
 typedef struct { char name[32]; int16_t *pcm; uint32_t bytes, ch, rate; int slot, tried; } VsSnd;
-static VsSnd s_snd[8]; static int s_nsnd;
+static VsSnd s_snd[16]; static int s_nsnd;
 
 static uint32_t rd32(const uint8_t *p) { return p[0] | p[1] << 8 | p[2] << 16 | (uint32_t)p[3] << 24; }
 static uint16_t rd16(const uint8_t *p) { return (uint16_t)(p[0] | p[1] << 8); }
@@ -61,12 +62,75 @@ static int load_wav(VsSnd *s)
     return 1;
 }
 
+/* (1.9.9) Troll Battle's own sound if there is one (versus/troll_<name>), else the usual (versus/<name>) */
+extern int tt_vs_troll_mode(void);
+static int wav_present(const char *name)
+{
+    int i; for (i = 0; i < s_nsnd; i++) if (!strcmp(s_snd[i].name, name)) return s_snd[i].pcm != 0;
+    if (s_nsnd >= 16) return 0;
+    { VsSnd *s = &s_snd[s_nsnd++]; memset(s, 0, sizeof *s); snprintf(s->name, sizeof s->name, "%s", name); s->slot = -1; s->tried = 1; load_wav(s); return s->pcm != 0; }
+}
+void tt_vs_play_wav(const char *name, float vol);
+void tt_vs_play_mode_wav(const char *name, float vol)
+{
+    char t[64];
+    if (tt_vs_troll_mode()) { snprintf(t, sizeof t, "troll_%s", name); if (wav_present(t)) { tt_vs_play_wav(t, vol); return; } }
+    tt_vs_play_wav(name, vol);
+}
+/* (1.9.9) Troll Battle's records, kept beside the game (troll_records.txt): the biggest smash, the fastest round, the
+ * most damage in a match -- each with who set it (P1/P2) and when */
+typedef struct { long v; char who[4]; char when[12]; } TrollRec;
+static TrollRec s_trec[3]; static int s_trec_loaded;
+static void trec_path(char *p, size_t n)
+{
+    char *sl; GetModuleFileNameA(NULL, p, (unsigned long)n - 32);
+    sl = strrchr(p, '\\'); if (!sl) sl = strrchr(p, '/');
+    if (sl) sl[1] = 0; else p[0] = 0;
+    strcat(p, "troll_records.txt");
+}
+static void trec_load(void)
+{
+    char p[700], ln[160]; FILE *f; int k;
+    if (s_trec_loaded) return; s_trec_loaded = 1;
+    trec_path(p, sizeof p);
+    if (!(f = fopen(p, "r"))) return;
+    while (fgets(ln, sizeof ln, f)) { long v; char w[4], d[12];
+        if (sscanf(ln, "%d %ld %3s %11s", &k, &v, w, d) == 4 && k >= 0 && k < 3) { s_trec[k].v = v; snprintf(s_trec[k].who, 4, "%s", w); snprintf(s_trec[k].when, 12, "%s", d); } }
+    fclose(f);
+}
+static void trec_save(void)
+{
+    char p[700]; FILE *f; int k;
+    trec_path(p, sizeof p);
+    if (!(f = fopen(p, "w"))) return;
+    for (k = 0; k < 3; k++) if (s_trec[k].v) fprintf(f, "%d %ld %s %s\n", k, s_trec[k].v, s_trec[k].who, s_trec[k].when);
+    fclose(f);
+}
+/* a match's best: kind 0 biggest smash, 1 fastest round (ms; lower wins), 2 most damage; 1 if it is a new record */
+int tt_troll_record(int kind, long v, int who)
+{
+    TrollRec *r; time_t t = time(NULL); struct tm *tm = localtime(&t);
+    if (kind < 0 || kind > 2 || v <= 0) return 0;
+    trec_load(); r = &s_trec[kind];
+    if (r->v && (kind == 1 ? v >= r->v : v <= r->v)) return 0;
+    r->v = v; snprintf(r->who, 4, "P%d", who + 1);
+    if (tm) snprintf(r->when, 12, "%02d/%02d/%02d", tm->tm_mon + 1, tm->tm_mday, tm->tm_year % 100); else snprintf(r->when, 12, "-");
+    trec_save();
+    tt_dbg("[VS] Troll Battle record %d: %ld by %s\n", kind, v, r->who);
+    return 1;
+}
+long tt_troll_record_get(int kind, const char **who, const char **when)
+{
+    trec_load(); if (kind < 0 || kind > 2) return 0;
+    if (who) *who = s_trec[kind].who; if (when) *when = s_trec[kind].when;
+    return s_trec[kind].v;
+}
 /* plays versus/<name> once (at volume 0..1); nothing if the file is missing */
 void tt_vs_play_wav(const char *name, float vol)
 {
     VsSnd *s = 0; APUMixerVoice *v; int i;
     for (i = 0; i < s_nsnd; i++) if (!strcmp(s_snd[i].name, name)) s = &s_snd[i];
-    if (!s) { if (s_nsnd >= 8) return; s = &s_snd[s_nsnd++]; memset(s, 0, sizeof *s); snprintf(s->name, sizeof s->name, "%s", name); s->slot = -1; }
+    if (!s) { if (s_nsnd >= 16) return; s = &s_snd[s_nsnd++]; memset(s, 0, sizeof *s); snprintf(s->name, sizeof s->name, "%s", name); s->slot = -1; }
     if (!s->tried) { s->tried = 1; load_wav(s); }
     if (!s->pcm) return;
     if (s->slot < 0) s->slot = apu_mixer_alloc_voice();

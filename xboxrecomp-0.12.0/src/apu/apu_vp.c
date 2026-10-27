@@ -1349,7 +1349,16 @@ static void voice_process(MCPXAPUState *d,
      * (Two Towers' Versus: its battle music over the fight's sounds) */
     extern volatile float xbox_apu_stream_gain, xbox_apu_3d_gain;
     float tgain = 1.0f;
-    if (voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE)) tgain = xbox_apu_stream_gain;
+    {   /* (testing) RECOMP_APU_STREAMLOG: each stream voice's gains, every 2 s */
+        static int on = -1; static uint32_t lt[MCPX_HW_MAX_VOICES];
+        if (on < 0) on = getenv("RECOMP_APU_STREAMLOG") != NULL;
+        if (on && voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE) && (uint32_t)d->ep_frame_div - lt[v] > 3000u) {
+            lt[v] = (uint32_t)d->ep_frame_div;
+            fprintf(stderr, "  [STREAMV] frame %u voice %u ba %06X env %.3f vol %.4f %.4f %.4f %.4f bins %d %d\n", (uint32_t)d->ep_frame_div, v,
+                    (unsigned)voice_get_mask(d, v, NV_PAVS_VOICE_CUR_PSL_START, NV_PAVS_VOICE_CUR_PSL_START_BA), ea_value, attenuate(vol[0]), attenuate(vol[1]), attenuate(vol[2]), attenuate(vol[3]), bin[0], bin[1]);
+        }
+    }
+    if (voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE)) { static float tg = -1.0f; if (tg < 0) { const char *e = getenv("RECOMP_APU_STREAMTEST"); tg = e ? (float)atof(e) : 1.0f; } tgain = xbox_apu_stream_gain * tg; }   /* (testing: the streams' share of the mix) */
     else if (v < MCPX_HW_MAX_3D_VOICES) tgain = xbox_apu_3d_gain;
     for (int b = 0; b < 8; b++) {
         float g = ea_value * tgain;

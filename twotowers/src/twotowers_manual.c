@@ -5325,6 +5325,8 @@ static void coop_diff_health(void)
  * shown for 6 s, then a new match starts. The banner (round, score, winner) is the respawn counter's element at the top
  * (tt_vs_banner, coop's HUD). TT_VS_HP: the health (default 1000) */
 #define VS_HP 2000   /* (1.9.7: from 1000 -- falls came too fast; 1.9.9: 1500 -> 2000, rounds a little longer, a playtest) */
+#define VS_TROLL_HP 4000   /* (1.9.9) Troll Battle: twice the health -- the clubs fell a troll in a few blows (a playtest). TT_VS_TROLLHP */
+static int vs_hp(void) { extern int tt_vs_troll_mode(void); if (getenv("TT_VS_HP")) return atoi(getenv("TT_VS_HP")); if (tt_vs_troll_mode()) return getenv("TT_VS_TROLLHP") ? atoi(getenv("TT_VS_TROLLHP")) : VS_TROLL_HP; return VS_HP; }
 static int vs_score[2], vs_round, vs_state, vs_have, vs_last_win = -1;   /* state: 0 fighting, 1 a round won (wait), 2 the match won (wait), 3 the countdown (frozen) */
 /* the match's numbers per player, for the results (tt_vs_stats) */
 typedef struct { int hits, dmg, taken, shots, shots_hit, rounds, downs, best_hit, parried; uint32_t fastest_ms; } VsStats;
@@ -5332,6 +5334,7 @@ VsStats tt_vs_st[2]; static uint32_t vs_round_t0; static int vs_was_down[2];
 int tt_vs_frozen(void) { return tt_vs_on() && (vs_state == 3 || !vs_have); }   /* (and before the first round: nobody moves until the countdown ends) */
 static int vs_skip_movies(void) { extern volatile int tt_vs_menu_on; int r = tt_vs_menu_on && !getenv("TT_VS_MOVIES"); { static int n; if (n++ < 20) tt_dbg("[VS] a movie opened: %s\n", r ? "skipped (Versus)" : "played"); } return r; }
 void tt_vs_install(void) { extern int (*volatile xbox_movie_skip_cb)(void); if (!xbox_movie_skip_cb) xbox_movie_skip_cb = vs_skip_movies; }
+int tt_vs_trec_new[3];
 int tt_vs_res_win, tt_vs_res_score[2], tt_vs_res_award[2][2] = { { -1, 0 }, { -1, 0 } };
 #define VS_RESULTS_MS 11000u
 int tt_vs_results_shown(void) { return tt_vs_on() && vs_state == 2 && !getenv("TT_VS_NORESULTS"); }
@@ -5351,6 +5354,15 @@ static void vs_pick_awards(int win)   /* two of the awards the match earned (a c
     tt_vs_res_award[0][0] = tt_vs_res_award[1][0] = -1;
     for (i = 0; i < 2 && nc > 0; i++) { int k = (int)((seed >> (8 + 5 * i)) % (uint32_t)nc); tt_vs_res_award[i][0] = c[k][0]; tt_vs_res_award[i][1] = c[k][1]; c[k][0] = c[nc - 1][0]; c[k][1] = c[nc - 1][1]; nc--; }
     tt_vs_res_win = win; tt_vs_res_score[0] = vs_score[0]; tt_vs_res_score[1] = vs_score[1];
+    {   /* (1.9.9) Troll Battle's records (versus.c, troll_records.txt): new ones marked on the results */
+        extern int tt_vs_troll_mode(void); extern int tt_troll_record(int kind, long v, int who); int w2, k2;
+        for (k2 = 0; k2 < 3; k2++) tt_vs_trec_new[k2] = 0;
+        if (tt_vs_troll_mode()) for (w2 = 0; w2 < 2; w2++) {
+            if (tt_troll_record(0, tt_vs_st[w2].best_hit, w2)) tt_vs_trec_new[0] = 1;
+            if (tt_troll_record(1, (long)tt_vs_st[w2].fastest_ms, w2)) tt_vs_trec_new[1] = 1;
+            if (tt_troll_record(2, tt_vs_st[w2].dmg, w2)) tt_vs_trec_new[2] = 1;
+        }
+    }
     tt_dbg("[VS] results: P1 hits %d dmg %d shots %d/%d | P2 hits %d dmg %d shots %d/%d | awards %d (P%d) %d (P%d)\n", a->hits, a->dmg, a->shots_hit, a->shots, b->hits, b->dmg, b->shots_hit, b->shots,
            tt_vs_res_award[0][0], tt_vs_res_award[0][1] + 1, tt_vs_res_award[1][0], tt_vs_res_award[1][1] + 1);
 }
@@ -5713,7 +5725,7 @@ static void vs_place(uint32_t a, const float *p)
 }
 static void vs_full(uint32_t a)
 {
-    int hp = getenv("TT_VS_HP") ? atoi(getenv("TT_VS_HP")) : VS_HP;
+    int hp = vs_hp();
     MEM32(a + 0x300) = (uint32_t)hp; MEM32(a + 0x2FC) = (uint32_t)hp;
 }
 /* ---- (Versus) Find the Shield: the bigger arenas. The shield lies somewhere on the map (a pickup of the level's own,
@@ -5891,6 +5903,7 @@ static void vs_round_start(void)
     if (vs_shield_mode()) snprintf(t, sizeof t, vs_carrier < 0 ? "FIND THE SHIELD   P1 %d - %d P2" : "P1 %d - %d P2", vs_score[0], vs_score[1]);
     else snprintf(t, sizeof t, "ROUND %d   P1 %d - %d P2", vs_round, vs_score[0], vs_score[1]);
     vs_say(t, 1000u);
+    { extern void tt_vs_play_mode_wav(const char *name, float vol); tt_vs_play_mode_wav("round_start.wav", 1.0f); }   /* (1.9.9: versus\round_start.wav, Troll Battle's troll_round_start.wav; none: silent) */
 }
 /* (Versus) the arena's music: the donor level's track (versus.c; its bank in place of the arena's, lang.c), started as
  * the front end starts its own (0x000C31C0: name, 1 = play, 1, 0 -- the stream player [0x43BCF8]) once a level, at
@@ -5899,8 +5912,10 @@ static void vs_music_start(void)
 {
     extern const char *tt_vs_music_track_for_stream(const char *stream); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
     static uint32_t lvl_done = ~0u, g; uint32_t li = MEM32(0x1BB2A4u), sp, r0, r1, r2; const char *t; int i;
-    if (lvl_done == li || getenv("TT_VS_NOMUSIC")) return;
-    lvl_done = li;
+    /* (1.9.9) once a level load (coop_level_n), not once a level index: the second match on an arena (Amon Hen twice
+     * running, a playtest) had no music at all */
+    if (lvl_done == coop_level_n || getenv("TT_VS_NOMUSIC")) return;
+    lvl_done = coop_level_n;
     t = tt_vs_music_track_for_stream("0ALT");   /* (any of the arena's music names maps to the track) */
     if (!t || MEM32(0x43BCF8u) < 0x10000u) { tt_dbg("[VS] music: none for level %u\n", li); return; }
     if (!g && !(g = xbox_ContiguousAlloc(64u, 16u))) return;
@@ -5919,7 +5934,7 @@ static void vs_countdown(uint32_t now)
     if (t_of != vs_t) { t_of = vs_t; shown = 0; }
     if (k > shown && k >= 1 && k <= 3) { char t[8]; shown = k; snprintf(t, sizeof t, "%d", 4 - k); vs_say(t, 1000u);
         { extern int tt_vs_play_ring(void); if (!tt_vs_play_ring()) { uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; tt_opt_move_sound(); esp = sp; eax = r0; ecx = r1; edx = r2; } } }
-    if (k >= 4) { vs_state = 0; vs_round_t0 = now; vs_say("FIGHT!", 1200u); tt_vs_play_wav("fight.wav", 1.0f); vs_music_start(); }
+    if (k >= 4) { extern void tt_vs_play_mode_wav(const char *name, float vol); vs_state = 0; vs_round_t0 = now; vs_say("FIGHT!", 1200u); tt_vs_play_mode_wav("fight.wav", 1.0f); vs_music_start(); }
 }
 static void coop_down_pose(uint32_t now)
 {
@@ -6232,7 +6247,7 @@ static void vs_frame(void)
     if (getenv("TT_VS_SHSHOT") && vs_sh_broke_t && now - vs_sh_broke_t < 4000u) { static uint32_t nx; extern void xbox_PresentDumpRequest(const char *path); char pth[300];   /* (testing) after the break */
         if (now - vs_sh_broke_t < 100u) nx = 400u; if (now - vs_sh_broke_t >= nx) { snprintf(pth, sizeof pth, "%s/after_%04u.bmp", getenv("TT_VS_SHSHOT"), nx); xbox_PresentDumpRequest(pth); nx += 600u; } }
     for (w = 0; w < 2; w++) {   /* the same most health for both, whoever they are (Sauron's 1600, upgrades: no) */
-        uint32_t a = w ? coop_p2 : coop_first_char; int32_t mx = getenv("TT_VS_HP") ? atoi(getenv("TT_VS_HP")) : VS_HP;
+        uint32_t a = w ? coop_p2 : coop_first_char; int32_t mx = vs_hp();
         if ((int32_t)MEM32(a + 0x300) != mx) MEM32(a + 0x300) = (uint32_t)mx;
         if ((int32_t)MEM32(a + 0x2FC) > mx && (int32_t)MEM32(a + 0x2FC) < 50000) MEM32(a + 0x2FC) = (uint32_t)mx;   /* (not during a hit: the health guard holds it 100000 up) */
     }
@@ -6284,8 +6299,8 @@ static void vs_frame(void)
             if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 46 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) t[q] = (char)MEM16(tp + 2 * q); t[q] = 0;
             tt_dbg("[P2NAMETEST] P1's element shown %u at x %d | P2's shown %u at x %d '%s'\n", MEM8(p15 + 0x24), (int32_t)MEM32(p15 + 8), MEM8(e15 + 0x24), (int32_t)MEM32(e15 + 8), t); }
     }
-    if (getenv("TT_VS_TESTROUND") && vs_state == 0 && !coop_down[1] && now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_TESTROUND"))) {   /* (test) player 2 down now */
-        coop_down[1] = 1; coop_down_t[1] = now; MEM32(coop_p2 + 0x2FC) = 1; }
+    if (getenv("TT_VS_TESTROUND") && vs_state == 0) { int tw = getenv("TT_VS_TESTROUNDP") ? atoi(getenv("TT_VS_TESTROUNDP")) & 1 : 1;   /* (test) player 2 (or TT_VS_TESTROUNDP's) down now */
+        if (!coop_down[tw] && now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_TESTROUND"))) { coop_down[tw] = 1; coop_down_t[tw] = now; MEM32((tw ? coop_p2 : coop_first_char) + 0x2FC) = 1; } }
     if (vs_state == 0) {
         int d0 = coop_down[0] || vs_fell[0], d1 = coop_down[1] || vs_fell[1];
         if (d0 || d1) {
@@ -6301,9 +6316,9 @@ static void vs_frame(void)
             if (win >= 0 && vs_score[win] >= vs_goal()) { extern void tt_ach_vs_match(const char *skin, int shield_mode); extern void tt_ach_vs_event(int kind, int who, int a, int b, const char *skin);
                 extern void tt_vs_play_wav(const char *name, float vol);
                 tt_ach_vs_match(vs_skin_name(win), vs_shield_mode()); tt_ach_vs_event(5, win, (int)MEM32(0x1BB2A4u), vs_score[win ^ 1], vs_skin_name(win));
-                tt_vs_play_wav("match_win.wav", 1.0f);   /* (1.9.7) the user's sounds, beside the game in versus\ (none: silent) */ vs_state = 2; snprintf(t, sizeof t, "PLAYER %d WINS THE MATCH  %d - %d", win + 1, vs_score[win], vs_score[win ^ 1]); vs_say(t, getenv("TT_VS_NORESULTS") ? 6000u : 1u); vs_pick_awards(win); }
+                { extern void tt_vs_play_mode_wav(const char *name, float vol); tt_vs_play_mode_wav("match_win.wav", 1.0f); }   /* (1.9.7) the user's sounds, beside the game in versus\ (none: silent) */ vs_state = 2; snprintf(t, sizeof t, "PLAYER %d WINS THE MATCH  %d - %d", win + 1, vs_score[win], vs_score[win ^ 1]); vs_say(t, getenv("TT_VS_NORESULTS") ? 6000u : 1u); vs_pick_awards(win); }
             else if (win >= 0 && vs_shield_mode()) { snprintf(t, sizeof t, "PLAYER %d +%d   P1 %d - %d P2", win + 1, pts, vs_score[0], vs_score[1]); vs_say(t, 3000u); }
-            else if (win >= 0) { extern void tt_vs_play_wav(const char *name, float vol); snprintf(t, sizeof t, "PLAYER %d WINS ROUND %d", win + 1, vs_round); vs_say(t, 4000u); tt_vs_play_wav("round_win.wav", 1.0f); }
+            else if (win >= 0) { extern void tt_vs_play_wav(const char *name, float vol); snprintf(t, sizeof t, "PLAYER %d WINS ROUND %d", win + 1, vs_round); vs_say(t, 4000u); { extern void tt_vs_play_mode_wav(const char *name, float vol); tt_vs_play_mode_wav("round_win.wav", 1.0f); } }
             else { snprintf(t, sizeof t, "ROUND %d: A DRAW", vs_round); vs_say(t, 4000u); }
         }
     } else if (vs_state == 1 && now - vs_t >= (vs_shield_mode() ? 3000u : 4000u)) vs_round_start();
@@ -6970,16 +6985,17 @@ static void vs_res_box(int *n, uint32_t btmpl, int x, int y, int w, int h, uint3
 static uint32_t vs_res_texture(uint32_t tel)
 {
     extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); extern int tt_vs_image_pixels(const char *file, uint32_t *out, float k);
-    static uint32_t obj; static int state;
+    static uint32_t objs[2]; static int states[2]; extern int tt_vs_troll_mode(void); int md = tt_vs_troll_mode() ? 1 : 0;
+    uint32_t obj = objs[md]; int state = states[md];
     uint32_t so = MEM32(tel + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? MEM32(so + 0x10) : 0, blk, k;
     static uint32_t px[512 * 256];
     if (state) return state > 0 ? obj : 0;
     if (sd < 0x80000000u || sd >= 0x84000000u || getenv("TT_VS_NORESPIC")) return 0;
-    state = -1;
+    states[md] = -1;
     tt_dbg("[VS] results picture: template texture %08X data %08X: +4 %u +8 %u +30 %08X +38 %08X +3C %08X\n", so, sd, MEM32(sd + 4), MEM32(sd + 8), MEM32(sd + 0x30), MEM32(sd + 0x38), MEM32(sd + 0x3C));
     { char b[900]; int q = 0; for (k = 0; k < 0xDC && q < 860; k += 4) q += snprintf(b + q, sizeof b - q, " %X:%08X", k, MEM32(tel + k)); tt_dbg("[VS] template element:%s\n", b); }
-    if (!tt_vs_image_pixels("results_bg.bmp", px, 1.0f)) return 0;
-    blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u); obj = xbox_ContiguousAlloc(0x40u, 16u);
+    if (!(md && tt_vs_image_pixels("troll_results_bg.bmp", px, 1.0f)) && !tt_vs_image_pixels("results_bg.bmp", px, 1.0f)) return 0;   /* (Troll Battle: versus\troll_results_bg.bmp first) */
+    blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u); obj = xbox_ContiguousAlloc(0x40u, 16u); objs[md] = obj;
     if (!blk || !obj) return 0;
     for (k = 0; k < 0x80u; k += 4) MEM32(blk + k) = MEM32(sd + k);
     MEM32(blk + 4) = 512; MEM32(blk + 8) = 256;
@@ -6989,7 +7005,7 @@ static uint32_t vs_res_texture(uint32_t tel)
     for (k = 0; k < 512u * 256u; k++) MEM32(blk + 0x80u + 4 * k) = px[k];
     for (k = 0; k < 0x20u; k += 4) MEM32(obj + k) = MEM32(so + k);
     MEM32(obj + 0x10) = blk;
-    state = 1;
+    states[md] = 1;
     return obj;
 }
 static void vs_results_hud(uint32_t tmpl)
@@ -7013,6 +7029,37 @@ static void vs_results_hud(uint32_t tmpl)
         vs_res_box(&n, bt, 90, 90, 460, 3, 0xFF40A0C8u); vs_res_box(&n, bt, 90, 417, 460, 3, 0xFF40A0C8u);
         vs_res_box(&n, bt, 90, 90, 3, 330, 0xFF40A0C8u); vs_res_box(&n, bt, 547, 90, 3, 330, 0xFF40A0C8u);
         vs_res_box(&n, bt, 110, 154, 420, 2, 0xC040A0C8u); }
+    {   extern int tt_vs_troll_mode(void);
+        if (tt_vs_troll_mode()) {   /* (1.9.9) Troll Battle's own results: the trolls' numbers, then its records (the leaderboard, kept) */
+            extern long tt_troll_record_get(int kind, const char **who, const char **when); extern int tt_vs_trec_new[3];
+            static const char *lab[6] = { "ROUNDS WON", "CLUB BLOWS LANDED", "DAMAGE DEALT", "BIGGEST SMASH", "LOGS ON TARGET", "FASTEST KNOCKOUT" };
+            static const char *rl[3] = { "BIGGEST SMASH", "FASTEST KNOCKOUT", "MOST DAMAGE IN A MATCH" };
+            vs_res_line(&n, tmpl, 120, 104, 400, "TROLL BATTLE RESULTS", 0xFF60D8FFu);
+            vs_res_line(&n, tmpl, 120, 128, 400, t, 0xFFFFFFFFu);
+            vs_res_line(&n, tmpl, 360, 160, 80, "P1", 0xFFFFC060u); vs_res_line(&n, tmpl, 450, 160, 80, "P2", 0xFF60C0FFu);
+            for (i = 0; i < 6; i++) {
+                int y = 182 + i * 20; vs_res_line(&n, tmpl, 110, y, 240, lab[i], 0xFFC8E0E8u);
+                for (k = 0; k < 2; k++) { const VsStats *q = &tt_vs_st[k];
+                    switch (i) {
+                    case 0: snprintf(t, sizeof t, "%d", q->rounds); break;
+                    case 1: snprintf(t, sizeof t, "%d", q->hits); break;
+                    case 2: snprintf(t, sizeof t, "%d", q->dmg); break;
+                    case 3: snprintf(t, sizeof t, "%d", q->best_hit); break;
+                    case 4: snprintf(t, sizeof t, "%d/%d", q->shots_hit, q->shots); break;
+                    default: if (q->fastest_ms) snprintf(t, sizeof t, "%u.%us", q->fastest_ms / 1000u, (q->fastest_ms / 100u) % 10u); else snprintf(t, sizeof t, "-"); break; }
+                    vs_res_line(&n, tmpl, k ? 450 : 360, y, 80, t, 0xFFFFFFFFu); }
+            }
+            {   uint32_t bt = COOP_P1SWORD + 7 * 0xDC; vs_res_box(&n, bt, 110, 306, 420, 2, 0xC040A0C8u); }
+            vs_res_line(&n, tmpl, 110, 312, 420, "TROLL BATTLE RECORDS", 0xFF40E0FFu);
+            for (i = 0; i < 3; i++) { const char *who = "", *when = ""; long v = tt_troll_record_get(i, &who, &when); int y = 336 + i * 22;
+                vs_res_line(&n, tmpl, 110, y, 250, rl[i], 0xFFC8E0E8u);
+                if (!v) snprintf(t, sizeof t, "-");
+                else if (i == 1) snprintf(t, sizeof t, "%ld.%lds %s %s%s", v / 1000, (v / 100) % 10, who, when, tt_vs_trec_new[i] ? " NEW!" : "");
+                else snprintf(t, sizeof t, "%ld %s %s%s", v, who, when, tt_vs_trec_new[i] ? " NEW!" : "");
+                vs_res_line(&n, tmpl, 330, y, 210, t, tt_vs_trec_new[i] ? 0xFF40FF80u : 0xFFFFFFFFu); }
+            goto res_slot;
+        }
+    }
     vs_res_line(&n, tmpl, 120, 104, 400, "MATCH RESULTS", 0xFF60D8FFu);
     vs_res_line(&n, tmpl, 120, 128, 400, t, 0xFFFFFFFFu);
     vs_res_line(&n, tmpl, 360, 160, 80, "P1", 0xFFFFC060u); vs_res_line(&n, tmpl, 450, 160, 80, "P2", 0xFF60C0FFu);
@@ -7033,6 +7080,7 @@ static void vs_results_hud(uint32_t tmpl)
     for (i = 0; i < 2; i++) { int a = tt_vs_res_award[i][0], w = tt_vs_res_award[i][1];
         if (a < 0) continue;
         snprintf(t, sizeof t, "%s: PLAYER %d", aw[a], w + 1); vs_res_line(&n, tmpl, 110, 350 + i * 22, 420, t, 0xFF40E0FFu); (void)awd; }
+res_slot:
     for (k = 20; k >= 0; k--) if (!MEM8(COOP_HUD_ON + k) && k != coop_sw_slot && k != coop_tag_slot) {
         vs_res_slot = k; vs_res_saved[0] = MEM32(COOP_HUD_LIST + k * 12); vs_res_saved[1] = MEM32(COOP_HUD_LIST + k * 12 + 4);
         MEM32(COOP_HUD_LIST + k * 12) = vs_res_el; MEM32(COOP_HUD_LIST + k * 12 + 4) = (uint32_t)n; MEM8(COOP_HUD_ON + k) = 1;

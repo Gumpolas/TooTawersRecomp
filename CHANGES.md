@@ -2899,3 +2899,26 @@ twotowers/src/heroes.c
     own falls (the Uruk-hai's) instead of the hero's.
   - (test) TT_ZSCAN and TT_SLOTSCAN print how far each move leaves the
     ground.
+
+-- 1.9.9: Troll Battle's health, results and records; Versus music; own first swings --
+twotowers/src/twotowers_manual.c
+  - Troll Battle: 4000 health (TT_VS_TROLLHP), twice Deathmatch's.
+  - Troll Battle's own results: the trolls' numbers and its records
+    (biggest smash, fastest knockout, most damage in a match; kept in
+    troll_records.txt beside the game, new ones marked NEW!).
+  - Sounds per mode: versus\round_start.wav at each round's banner (new);
+    in Troll Battle versus\troll_<name>.wav first (fight, round_start,
+    round_win, match_win), else the usual. Its results picture
+    versus\troll_results_bg.bmp first, else results_bg.bmp.
+  - Versus music started once a level load, not once a level index: the
+    second match on an arena (Amon Hen twice running) had none.
+  - (test) TT_VS_TESTROUNDP: whose fall TT_VS_TESTROUND makes.
+twotowers/src/versus.c
+  - tt_vs_play_mode_wav, the Troll Battle records (tt_troll_record).
+twotowers/src/heroes.c
+  - Slot 35, the first swing from the stance, is a light attack: the
+    guests swung Aragorn's (retargeted) before their own -- Lurtz, the
+    trolls. Lurtz without the hero's thrust ('t'): his own swings only.
+  - The ground fix at 0.3 of the hero's height (Lurtz lay 1.3 up).
+xboxrecomp-0.12.0/src/apu/apu_vp.c
+  - (test) RECOMP_APU_STREAMTEST (the streams' share), RECOMP_APU_STREAMLOG.

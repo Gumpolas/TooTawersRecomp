@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 145u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 147u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -611,6 +611,8 @@ static int anim_class(int s)
     switch (s) {
     case 152: case 153: case 154: case 155: case 196: case 197: case 41: case 42: case 44: case 47:
     case 57: case 59: case 191: case 193: case 81: case 82: case 83: case 86: case 87: case 88: case 90:
+    case 35:   /* (1.9.9) the first swing from the stance (600 ms, a lunge 4.5 ahead): counted as no move, the guests got
+                * Aragorn's retargeted and swung his first, then their own (a playtest: Lurtz, the trolls) */
         return AC_SPEED;
     case 45: case 46: case 43: case 48: case 54: case 58: case 60: case 104: case 194: case 133: case 134:
         return AC_FIERCE;
@@ -652,7 +654,7 @@ static const AnimPools s_pools[] = {
     { "frodo",   { "34,33", "9", "41",               "43",         "176", "20",   "20", "27", "27", "175" }, 1.0f, "krp" },
     /* 25 es la reaccion del jefe atrapado en el arbol, no una caida.
      * Retargetear solo las caidas/levantadas del jugador; ataques propios. */
-    { "lurtz",   { "34,33", "9", "45,74",            "43,69",      "111", "187", "20", "", "", "188" }, 1.0f, "nt" },
+    { "lurtz",   { "34,33", "9", "45,74",            "43,69",      "111", "187", "20", "", "", "188" }, 1.0f, "n" },   /* (1.9.9: not the hero's thrust, 't' -- in the light chain, Aragorn's swing came first; his own only) */
     /* (no parry of their own: the kick, or for Sauron a swing) */
     { "elrond",  { "34,33", "9", "66",                "66",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "krp" },
     { "sauron",  { "34,33", "2,0,1", "43,41",            "41,43",      "43",  "43",   "20", "27", "", "43" }, 0, "" },
@@ -1124,7 +1126,7 @@ static unsigned char *rt_ground_fix(const unsigned char *A, size_t alen, uint32_
     float hl0 = rt_stand_low(A, alen), gl0 = rt_stand_low(G, glen), dz[64], most = 0;
     /* (the hero's own falls keep him well off the floor -- lying, his lowest bone 1.8 over his standing feet; the guests' own
      * lie about 0.9 over theirs (the Uruk-hai's, measured): half the hero's height, so he lies on the ground) */
-    float kf = getenv("TT_RT_GROUNDK") ? (float)atof(getenv("TT_RT_GROUNDK")) : 0.5f;
+    float kf = getenv("TT_RT_GROUNDK") ? (float)atof(getenv("TT_RT_GROUNDK")) : 0.3f;   /* (0.5 left Lurtz lying 1.3 over the floor) */
     unsigned char *o2; int16_t px[64][3];
     if (gn == 0 || gn > 128 || gbt + 4 * gn > olen || hl0 > 1e8f || gl0 > 1e8f || dur == 0) return NULL;
     off0 = rd32(o, gbt); if (off0 + 4 > olen) return NULL;
