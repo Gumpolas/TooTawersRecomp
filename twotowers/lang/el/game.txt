@@ -1452,3 +1452,90 @@ P:Elrond	
 P:Sauron	
 P:Uruk-hai	-
 P:the left thumbstick	  
+P:Co-op	
+P:Versus	
+P:Co-op Options	 
+P:Difficulty:	:
+P:Easy	
+P:Normal	
+P:Expert	
+P:Impossible	
+P:Impossible:	:
+P:Player Icons:	 :
+P:Camera Zoom:	 :
+P:Wide	
+P:P2 Teleport:	 P2:
+P:P2 Device:	 P2:
+P:P1 Device:	 P1:
+P:P2 Bot:	Bot P2:
+P:When Idle	 
+P:Always	
+P:Pickups:	:
+P:Double	
+P:P2 Controls	 P2
+P:New Game	 
+P:Load Game	
+P:Player 1:	 1:
+P:Player 2:	 2:
+P:Arena:	:
+P:Rounds to win:	  :
+P:First to 3	3 
+P:First to 5	5 
+P:First to 7	7 
+P:Deathmatch	Deathmatch
+P:Find the Shield	  
+P:Keyboard & Mouse	/
+P:Automatic ({1})	 ({1})
+P:Automatic (Keyboard & Mouse)	 (/)
+P:Automatic (none connected)	 ( )
+P:Controller {1} (not connected)	 {1} ( )
+P:No controller connected	  
+P:Press A	 A
+P:Already Beaten	 
+P:Weathertop	
+P:Balin's Tomb	  
+P:Amon Hen	 
+P:Fangorn Forest	 
+P:Gates of Moria	  
+P:Plains of Rohan	  
+P:Road to Helm's Deep	     
+P:The Deeping Wall	  
+P:The Breached Wall	 
+P:Hornburg Courtyard	  
+P:Orthanc	
+P:Orthanc Summit	  
+P:Mount Doom	  
+P:Aragorn	
+P:Legolas	
+P:Gimli	
+P:Isildur	
+P:Eomer	
+P:Nazgul	
+P:Shield Orc	  
+P:FIGHT!	!
+P:PLAYER {1} WINS ROUND {2}	  {1}    {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	  {1}     {2} - {3}
+P:ROUND {1}: A DRAW	 {1}: 
+P:P{1} GUARD BROKEN	P{1}:   
+P:P{1}'S SHIELD CRACKS!	   P{1} !
+P:P{1}'S SHIELD IS BROKEN!	   P{1} !
+P:PLAYER {1} HAS THE SHIELD!	  {1}   !
+P:P{1} RESPAWN {2}	P{1}   {2}
+P:DOWN  RESPAWN {1}	    {1}
+P:MATCH RESULTS	 
+P:PLAYER {1} WINS  {2} - {3}	   {1}  {2} - {3}
+P:ROUNDS WON	  
+P:HITS LANDED	 
+P:DAMAGE DEALT	  
+P:BIGGEST HIT	 
+P:ARROWS ON TARGET	  
+P:FASTEST ROUND	 
+P:TIMES DOWNED	  
+P:SHARPSHOOTER: PLAYER {1}	:  {1}
+P:HEAVY HITTER: PLAYER {1}	 :  {1}
+P:IRON WALL: PLAYER {1}	 :  {1}
+P:SPEED DEMON: PLAYER {1}	:  {1}
+P:BRAWLER: PLAYER {1}	:  {1}
+P:RELENTLESS: PLAYER {1}	:  {1}
+P:Start Match	 
+P:ROUND {1}   P{2} {3} - {4} P{5}	 {1}   P{2} {3} - {4} P{5}

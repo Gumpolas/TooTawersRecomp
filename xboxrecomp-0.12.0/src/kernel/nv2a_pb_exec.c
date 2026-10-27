@@ -37,6 +37,7 @@
 #include "../d3d/d3d8_swizzle.h"
 extern const char *recomp_cgetenv(const char *name);
 #define getenv(n) recomp_cgetenv(n)
+extern int xbox_bridge_handles_used(void); extern uint32_t xbox_ContiguousAllocatedBytes(void); extern uint32_t xbox_ContiguousFreeBytes(void);
 static int gpu_on(void);
 
 extern ptrdiff_t xbox_GetMemoryOffset(void);
@@ -1939,6 +1940,9 @@ static int s_hud_ng;
  * pieces to the middle (a title's text drawn between its corner groups; set every frame, [4] = on) */
 volatile float xbox_hud_excl[5];
 volatile float xbox_hud_excl_more[4][5];   /* more such boxes (the co-op heroes' head markers) */
+volatile float xbox_hud_right[5];   /* (1.9.8) a box whose pieces all go against the right edge together (co-op: the allies' and
+                                     * bosses' icons moved under player 2's sword -- grouped piece by piece, a big icon was cut in half
+                                     * or came and went as it slid) */
 static void hud_note(float x0, float x1, float y0, float y1)
 {
     if (xbox_hud_excl[4] != 0.0f) { float cx = 0.5f * (x0 + x1), cy = 0.5f * (y0 + y1);
@@ -1989,6 +1993,8 @@ static float hud_wide_x(float x, float cx, float cy, float kk)
     if (xbox_hud_excl[4] != 0.0f && cx >= xbox_hud_excl[0] && cx <= xbox_hud_excl[1] && cy >= xbox_hud_excl[2] && cy <= xbox_hud_excl[3]) centre = 1;
     for (i = 0; i < 4 && !centre; i++)
         if (xbox_hud_excl_more[i][4] != 0.0f && cx >= xbox_hud_excl_more[i][0] && cx <= xbox_hud_excl_more[i][1] && cy >= xbox_hud_excl_more[i][2] && cy <= xbox_hud_excl_more[i][3]) centre = 1;
+    if (!centre && xbox_hud_right[4] != 0.0f && cx >= xbox_hud_right[0] && cx <= xbox_hud_right[1] && cy >= xbox_hud_right[2] && cy <= xbox_hud_right[3])
+        return 640.0f - (640.0f - x) / kk;
     if (!centre)
         for (i = 0; i < s_hud_ng; i++) {
             const float *b = s_hud_grp[i];
@@ -2573,6 +2579,8 @@ void nv2a_pb_exec_method(uint32_t subch, uint32_t method, uint32_t param)
                     fprintf(stderr, "  [FPS] %u flips, apu %u periods in %lu ms (frames 1/2/3/4+ vblanks: %u %u %u %u); sound voices short of data %u; sound frames held %u\n",
                             nf, g_apu_periods - ap0, (unsigned long)(now - t0), hist[0], hist[1], hist[2], hist[3], g_apu_short - sh0, g_apu_feheld - fh0);
                     sh0 = g_apu_short; fh0 = g_apu_feheld;
+                    { extern volatile int g_apu_list_n[3], g_apu_list_active[3]; static unsigned k;
+                      if ((k++ % 60) == 0 && getenv("RECOMP_APUVOICELOG")) fprintf(stderr, "  [APUVOICES] contig %u KB (%u KB free again) handles %d lists 2D %d (%d active) 3D %d (%d active) MP %d (%d active)\n", xbox_ContiguousAllocatedBytes() >> 10, xbox_ContiguousFreeBytes() >> 10, xbox_bridge_handles_used(), g_apu_list_n[0], g_apu_list_active[0], g_apu_list_n[1], g_apu_list_active[1], g_apu_list_n[2], g_apu_list_active[2]); }
                 }
                 {   /* (1.9.3) where a frame's time goes on the CPU: the GPU commands
                      * turned into Direct3D 11 calls (the pushbuffer runs, on the

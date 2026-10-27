@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	Пакетът текст
 L:Could not write textures_ultra/index.bin.	Неуспешен запис на textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Вкл. (задръж W: тича накъдето бута мишката; Ходене ходи)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Задръж W: тича накъдето бута мишката (Ходене ходи)
+P:Co-op	Кооперация
+P:Versus	Двубой
+P:Co-op Options	Настройки за кооперация
+P:Difficulty:	Трудност:
+P:Easy	Лесна
+P:Normal	Нормална
+P:Expert	Експертна
+P:Impossible	Невъзможна
+P:Impossible:	Невъзможна:
+P:Player Icons:	Икони на играчите:
+P:Camera Zoom:	Камера:
+P:Wide	Широка
+P:P2 Teleport:	Телепорт P2:
+P:P2 Device:	Устройство P2:
+P:P1 Device:	Устройство P1:
+P:P2 Bot:	Бот P2:
+P:When Idle	При бездействие
+P:Always	Винаги
+P:Pickups:	Плячка:
+P:Double	Двойна
+P:P2 Controls	Управление P2
+P:New Game	Нова игра
+P:Load Game	Зареди игра
+P:Player 1:	Играч 1:
+P:Player 2:	Играч 2:
+P:Arena:	Арена:
+P:Rounds to win:	Рундове за победа:
+P:First to 3	До 3 победи
+P:First to 5	До 5 победи
+P:First to 7	До 7 победи
+P:Deathmatch	Смъртен мач
+P:Find the Shield	Намери щита
+P:Keyboard & Mouse	Клавиатура и мишка
+P:Automatic ({1})	Автоматично ({1})
+P:Automatic (Keyboard & Mouse)	Автоматично (клавиатура и мишка)
+P:Automatic (none connected)	Автоматично (няма свързани)
+P:Controller {1} (not connected)	Контролер {1} (не е свързан)
+P:No controller connected	Няма свързан контролер
+P:Press A	Натиснете A
+P:Already Beaten	Вече завършено
+P:Weathertop	Бурният връх
+P:Balin's Tomb	Гробницата на Балин
+P:Amon Hen	Амон Хен
+P:Fangorn Forest	Гората Фангорн
+P:Gates of Moria	Портите на Мория
+P:Plains of Rohan	Равнините на Рохан
+P:Road to Helm's Deep	Пътят към Хелмово усое
+P:The Deeping Wall	Стената на Усоето
+P:The Breached Wall	Пробитата стена
+P:Hornburg Courtyard	Дворът на Хорнбург
+P:Orthanc	Ортанк
+P:Orthanc Summit	Върхът на Ортанк
+P:Mount Doom	Съдбовната планина
+P:Aragorn	Арагорн
+P:Legolas	Леголас
+P:Gimli	Гимли
+P:Isildur	Исилдур
+P:Eomer	Йомер
+P:Nazgul	Назгул
+P:Shield Orc	Орк с щит
+P:FIGHT!	БИТКА!
+P:PLAYER {1} WINS ROUND {2}	ИГРАЧ {1} ПЕЧЕЛИ РУНД {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	ИГРАЧ {1} ПЕЧЕЛИ МАЧА  {2} - {3}
+P:ROUND {1}: A DRAW	РУНД {1}: РАВЕНСТВО
+P:P{1} GUARD BROKEN	ЗАЩИТАТА НА P{1} Е ПРОБИТА
+P:P{1}'S SHIELD CRACKS!	ЩИТЪТ НА P{1} СЕ ПРОПУКВА!
+P:P{1}'S SHIELD IS BROKEN!	ЩИТЪТ НА P{1} Е СЧУПЕН!
+P:PLAYER {1} HAS THE SHIELD!	ЩИТЪТ Е У ИГРАЧ {1}!
+P:P{1} RESPAWN {2}	P{1} ВЪЗРАЖДАНЕ {2}
+P:DOWN  RESPAWN {1}	НА ЗЕМЯТА  ВЪЗРАЖДАНЕ {1}
+P:MATCH RESULTS	РЕЗУЛТАТИ ОТ МАЧА
+P:PLAYER {1} WINS  {2} - {3}	ПЕЧЕЛИ ИГРАЧ {1}  {2} - {3}
+P:ROUNDS WON	СПЕЧЕЛЕНИ РУНДОВЕ
+P:HITS LANDED	НАНЕСЕНИ УДАРИ
+P:DAMAGE DEALT	НАНЕСЕНИ ЩЕТИ
+P:BIGGEST HIT	НАЙ-СИЛЕН УДАР
+P:ARROWS ON TARGET	ТОЧНИ СТРЕЛИ
+P:FASTEST ROUND	НАЙ-БЪРЗ РУНД
+P:TIMES DOWNED	ПОВАЛЯНИЯ
+P:SHARPSHOOTER: PLAYER {1}	ТОЧЕН СТРЕЛЕЦ: ИГРАЧ {1}
+P:HEAVY HITTER: PLAYER {1}	ТЕЖКА РЪКА: ИГРАЧ {1}
+P:IRON WALL: PLAYER {1}	ЖЕЛЕЗНА СТЕНА: ИГРАЧ {1}
+P:SPEED DEMON: PLAYER {1}	ДЕМОН НА СКОРОСТТА: ИГРАЧ {1}
+P:BRAWLER: PLAYER {1}	ПОБОЙНИК: ИГРАЧ {1}
+P:RELENTLESS: PLAYER {1}	БЕЗМИЛОСТЕН: ИГРАЧ {1}
+P:Start Match	Начало на мача
+P:ROUND {1}   P{2} {3} - {4} P{5}	РУНД {1}   P{2} {3} - {4} P{5}

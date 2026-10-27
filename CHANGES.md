@@ -2704,3 +2704,47 @@ twotowers/src/twotowers_manual.c (high frame rates)
     0x8490D); TT_FIRE_PERFRAME: as the game did.
 twotowers/src/twotowers_manual.c (credits)
   - The credits scroll by time, not by frames (too fast above 30 fps).
+
+-- 1.9.8: co-op, the second round ----------------------------------------------
+twotowers/src (co-op, with Volverine-Dude's PR #7)
+  - Player 2's own animation machine (a companion of his hero's), weapons
+    by slot, combo presses and attack grade per player, the combat meter
+    drained once per hit, kill rewards and arrow kills for player 2, his
+    own controller buttons (Co-op Options > P2 Controls), the aim dot over
+    each player's lock, level triggers kept player 1's, player 2 hidden in
+    cutscenes, the co-op difficulty apart from the solo game's, every
+    controller in the front-end menus, the P2 Bot on the pathmaps.
+  - Player 2 kept active whenever player 1 is; a late @Activate replayed
+    for him; his shots leave his own hand; a beam strikes every enemy it
+    touches; his health sword from his own state.
+  - Explosive props (vtable 0x174980, +0x114 7) take a hit's damage
+    through 0x91920 only from a role in their +0x574 mask (the player's);
+    player 2's hits on them are taken as the player's
+    (TT_COOP_NOP2PROPHIT).
+  - A ranged killing blow the game didn't take is left at 1 with its
+    damage pending, so the game's own death follows (set to 0, the enemy
+    never died: no @ObjectDie, no death state). TT_COOP_PDMGKILL0.
+  - An extra hero as player 2: composed on Gimli's or Legolas' set where a
+    level has none of Aragorn's four (he was never built in Fangorn Forest,
+    the Westfold and Legolas' levels); a box on a weapon not his goes on
+    his own melee weapon (TT_COOP_NOP2BOXOWN), and is tested with his
+    +0x466 up (TT_COOP_NOP2ATKFLAG).
+  - A downed hero gets up from death states 52 and 54 as from 50.
+  - No enemy multiplier in Fangorn Forest (its script waits on its orcs).
+  - Co-op and Versus menus translated (P: keys, numbers templated).
+twotowers/src/lang.c, twotowers_manual.c
+  - startup.BFF's larger area for many-letter languages made in the
+    contiguous window, not the game's 32 MB pool (Hindi co-op crashed at
+    a level's start). TT_LANG_AREAINPOOL.
+twotowers/src/options.c, menus.c
+  - No input on a PC up more than 24.9 days: the Options' quiet times
+    compared as signed differences and only once set.
+  - The title takes the pad whose Start / A / Enter reaches it when the
+    game has picked none; pad 0's handle shared between opens.
+  - Back on the first Options page and a Back leaf on our pages.
+xboxrecomp-0.12.0/src/kernel/xbox_memory_layout.c, kernel_bridge.c
+  - Freed contiguous blocks reused (DirectSound's stream packets were
+    never given back: sound went silent some forty minutes in).
+xboxrecomp-0.12.0/src/kernel/nv2a_sw3d.inc
+  - A texture slot's "looks like a movie" count reset after 1.5 s without
+    a decode (Ultra text dropped off menus after reloads).

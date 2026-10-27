@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	Gói texture GLOS69 khôn
 L:Could not write textures_ultra/index.bin.	Không thể ghi textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Bật (giữ W: chạy theo hướng chuột đẩy; Đi bộ thì đi bộ)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Giữ W: chạy theo hướng chuột đẩy (Đi bộ thì đi bộ)
+P:Co-op	Hợp tác
+P:Versus	Đối kháng
+P:Co-op Options	Tùy chọn hợp tác
+P:Difficulty:	Độ khó:
+P:Easy	Dễ
+P:Normal	Thường
+P:Expert	Chuyên gia
+P:Impossible	Bất khả thi
+P:Impossible:	Bất khả thi:
+P:Player Icons:	Biểu tượng người chơi:
+P:Camera Zoom:	Thu phóng camera:
+P:Wide	Rộng
+P:P2 Teleport:	Dịch chuyển P2:
+P:P2 Device:	Thiết bị P2:
+P:P1 Device:	Thiết bị P1:
+P:P2 Bot:	Bot P2:
+P:When Idle	Khi không dùng
+P:Always	Luôn luôn
+P:Pickups:	Vật phẩm:
+P:Double	Gấp đôi
+P:P2 Controls	Điều khiển P2
+P:New Game	Game mới
+P:Load Game	Tải game
+P:Player 1:	Người chơi 1:
+P:Player 2:	Người chơi 2:
+P:Arena:	Đấu trường:
+P:Rounds to win:	Số hiệp thắng:
+P:First to 3	Thắng trước 3
+P:First to 5	Thắng trước 5
+P:First to 7	Thắng trước 7
+P:Deathmatch	Tử chiến
+P:Find the Shield	Tìm khiên
+P:Keyboard & Mouse	Bàn phím/chuột
+P:Automatic ({1})	Tự động ({1})
+P:Automatic (Keyboard & Mouse)	Tự động (bàn phím/chuột)
+P:Automatic (none connected)	Tự động (chưa kết nối)
+P:Controller {1} (not connected)	Tay cầm {1} (chưa kết nối)
+P:No controller connected	Chưa kết nối tay cầm
+P:Press A	Nhấn A
+P:Already Beaten	Đã hoàn thành
+P:Weathertop	Đỉnh Gió
+P:Balin's Tomb	Lăng mộ Balin
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Rừng Fangorn
+P:Gates of Moria	Cổng Moria
+P:Plains of Rohan	Đồng bằng Rohan
+P:Road to Helm's Deep	Đường đến Thung lũng Helm
+P:The Deeping Wall	Tường Deeping
+P:The Breached Wall	Tường bị phá
+P:Hornburg Courtyard	Sân Hornburg
+P:Orthanc	Orthanc
+P:Orthanc Summit	Đỉnh Orthanc
+P:Mount Doom	Núi Diệt Vong
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Orc cầm khiên
+P:FIGHT!	CHIẾN ĐẤU!
+P:PLAYER {1} WINS ROUND {2}	NGƯỜI CHƠI {1} THẮNG HIỆP {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	NGƯỜI CHƠI {1} THẮNG TRẬN  {2} - {3}
+P:ROUND {1}: A DRAW	HIỆP {1}: HÒA
+P:P{1} GUARD BROKEN	P{1} BỊ PHÁ THẾ THỦ
+P:P{1}'S SHIELD CRACKS!	KHIÊN CỦA P{1} NỨT!
+P:P{1}'S SHIELD IS BROKEN!	KHIÊN CỦA P{1} ĐÃ VỠ!
+P:PLAYER {1} HAS THE SHIELD!	NGƯỜI CHƠI {1} CÓ KHIÊN!
+P:P{1} RESPAWN {2}	P{1} HỒI SINH SAU {2}
+P:DOWN  RESPAWN {1}	GỤC NGÃ  HỒI SINH SAU {1}
+P:MATCH RESULTS	KẾT QUẢ TRẬN ĐẤU
+P:PLAYER {1} WINS  {2} - {3}	NGƯỜI CHƠI {1} THẮNG  {2} - {3}
+P:ROUNDS WON	HIỆP THẮNG
+P:HITS LANDED	ĐÒN TRÚNG
+P:DAMAGE DEALT	SÁT THƯƠNG GÂY RA
+P:BIGGEST HIT	ĐÒN MẠNH NHẤT
+P:ARROWS ON TARGET	MŨI TÊN TRÚNG ĐÍCH
+P:FASTEST ROUND	HIỆP NHANH NHẤT
+P:TIMES DOWNED	SỐ LẦN GỤC
+P:SHARPSHOOTER: PLAYER {1}	XẠ THỦ: NGƯỜI CHƠI {1}
+P:HEAVY HITTER: PLAYER {1}	QUẢ ĐẤM THÉP: NGƯỜI CHƠI {1}
+P:IRON WALL: PLAYER {1}	BỨC TƯỜNG THÉP: NGƯỜI CHƠI {1}
+P:SPEED DEMON: PLAYER {1}	THẦN TỐC: NGƯỜI CHƠI {1}
+P:BRAWLER: PLAYER {1}	ĐẤU SĨ: NGƯỜI CHƠI {1}
+P:RELENTLESS: PLAYER {1}	KHÔNG KHOAN NHƯỢNG: NGƯỜI CHƠI {1}
+P:Start Match	Bắt đầu trận
+P:ROUND {1}   P{2} {3} - {4} P{5}	HIỆP {1}   P{2} {3} - {4} P{5}

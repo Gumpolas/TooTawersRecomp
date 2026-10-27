@@ -3027,24 +3027,119 @@ void xbox_FreeThreadStack(uint32_t stack_top)
  * title allocates once. */
 static uint32_t g_contig_next = XBOX_CONTIG_BASE;
 
+/* What the window has handed out and what came back (1.9.8).
+ *
+ * "Allocated once" holds for framebuffers and pushbuffers and not for sound:
+ * DirectSound takes every stream's packets from here -- 18 or 36 KB each time a
+ * piece of music, a line of speech or a cutscene's track starts -- and gives
+ * them back when it ends. With no reuse the window crept up a few hundred KB a
+ * level until, some forty minutes in, it was full: the next stream got no
+ * buffer and stayed silent -- the music gone, the cutscenes' voices and some
+ * effects with it (a player's report and video). Freed blocks are now kept and
+ * handed out again, first fit, before the window grows. Blocks are page-sized;
+ * the list is in address order, so a freed block joins a free neighbour. */
+#define XBOX_CONTIG_MAX_BLOCKS 8192
+static struct { uint32_t addr, size, t; uint8_t free; } g_cblk[XBOX_CONTIG_MAX_BLOCKS];
+/* (a freed block rests a while before it is handed out again: a sound voice or the GPU's commands may still be
+ * reading it for a frame or two) */
+#define XBOX_CONTIG_REST_MS 3000u
+static int g_cblk_n;
+volatile int xbox_contig_testfill_now;
+static int contig_reuse_on(void) { static int on = -1; if (on < 0) on = getenv("RECOMP_CONTIG_NOREUSE") == NULL; return on; }
+
+static void contig_note(uint32_t addr, uint32_t size)   /* a block handed out from the top (address order kept) */
+{
+    if (g_cblk_n >= XBOX_CONTIG_MAX_BLOCKS) return;   /* (untracked: never reused, as before) */
+    g_cblk[g_cblk_n].addr = addr; g_cblk[g_cblk_n].size = size; g_cblk[g_cblk_n].free = 0; g_cblk_n++;
+}
+
+static uint32_t contig_from_free(uint32_t size, uint32_t alignment)
+{
+    int i;
+    for (i = 0; i < g_cblk_n; i++) {
+        uint32_t a, lead, tail;
+        if (!g_cblk[i].free || GetTickCount() - g_cblk[i].t < XBOX_CONTIG_REST_MS) continue;
+        a = (g_cblk[i].addr + alignment - 1) & ~(alignment - 1);
+        lead = a - g_cblk[i].addr;
+        if ((uint64_t)lead + size > g_cblk[i].size) continue;
+        tail = g_cblk[i].size - lead - size;
+        if (g_cblk_n + (lead ? 1 : 0) + (tail ? 1 : 0) > XBOX_CONTIG_MAX_BLOCKS) return 0;
+        if (lead) {   /* the part before the alignment stays free, as its own block */
+            memmove(&g_cblk[i + 1], &g_cblk[i], (size_t)(g_cblk_n - i) * sizeof g_cblk[0]); g_cblk_n++;
+            g_cblk[i].size = lead; g_cblk[i].free = 1; i++;
+            g_cblk[i].addr = a; g_cblk[i].size -= lead;
+        }
+        if (tail) {   /* and the rest after it */
+            memmove(&g_cblk[i + 1], &g_cblk[i], (size_t)(g_cblk_n - i) * sizeof g_cblk[0]); g_cblk_n++;
+            g_cblk[i + 1].addr = a + size; g_cblk[i + 1].size = tail; g_cblk[i + 1].free = 1; g_cblk[i + 1].t = 0;
+        }
+        g_cblk[i].addr = a; g_cblk[i].size = size; g_cblk[i].free = 0;
+        return a;
+    }
+    return 0;
+}
+
+/* Give a block back (MmFreeContiguousMemory). 1: it was one of ours. */
+int xbox_ContiguousFree(uint32_t addr)
+{
+    int lo = 0, hi = g_cblk_n - 1, i = -1;
+    if (addr < XBOX_CONTIG_BASE || addr >= XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE) return 0;
+    while (lo <= hi) { int m = (lo + hi) / 2; if (g_cblk[m].addr == addr) { i = m; break; } if (g_cblk[m].addr < addr) lo = m + 1; else hi = m - 1; }
+    if (i < 0 || g_cblk[i].free) return 0;
+    if (!contig_reuse_on()) return 1;
+    g_cblk[i].free = 1; g_cblk[i].t = GetTickCount();
+    if (i + 1 < g_cblk_n && g_cblk[i + 1].free && g_cblk[i].addr + g_cblk[i].size == g_cblk[i + 1].addr) {
+        g_cblk[i].size += g_cblk[i + 1].size;
+        memmove(&g_cblk[i + 1], &g_cblk[i + 2], (size_t)(g_cblk_n - i - 2) * sizeof g_cblk[0]); g_cblk_n--;
+    }
+    if (i > 0 && g_cblk[i - 1].free && g_cblk[i - 1].addr + g_cblk[i - 1].size == g_cblk[i].addr) {
+        g_cblk[i - 1].size += g_cblk[i].size; g_cblk[i - 1].t = g_cblk[i].t;
+        memmove(&g_cblk[i], &g_cblk[i + 1], (size_t)(g_cblk_n - i - 1) * sizeof g_cblk[0]); g_cblk_n--;
+    }
+    return 1;
+}
+
+/* What is free again below the top (for the log) */
+uint32_t xbox_ContiguousFreeBytes(void)
+{
+    uint32_t n = 0; int i;
+    for (i = 0; i < g_cblk_n; i++) if (g_cblk[i].free) n += g_cblk[i].size;
+    return n;
+}
+
 uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
 {
     uint32_t result;
 
     if (alignment < 4096) alignment = 4096;
+    size = (size + 4095u) & ~4095u;   /* (whole pages: what comes back is reusable as it is) */
+    if (!size) size = 4096;
+
+    {   /* testing: RECOMP_CONTIG_TESTFILL=KB -- that much of the window taken once the level is up (the screen's first
+         * 6 = play, by a caller's word: xbox_contig_testfill_now), as a long session would have it */
+        extern volatile int xbox_contig_testfill_now; static int done;
+        if (!done && xbox_contig_testfill_now && getenv("RECOMP_CONTIG_TESTFILL")) { uint32_t kb = (uint32_t)atoi(getenv("RECOMP_CONTIG_TESTFILL")); done = 1;
+            g_contig_next = (g_contig_next + kb * 1024u + 4095u) & ~4095u; fprintf(stderr, "  [CONTIG] test: %u KB taken (%u KB used)\n", kb, (g_contig_next - XBOX_CONTIG_BASE) >> 10); }
+    }
+    if (contig_reuse_on() && (result = contig_from_free(size, alignment)) != 0) {
+        memset((void *)((uintptr_t)result + g_memory_offset), 0, size);
+        return result;
+    }
+
     result = (g_contig_next + alignment - 1) & ~(alignment - 1);
 
     /* Leave the top of the window for GPU instance memory. */
     if ((uint64_t)result + size >
             (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE
                 - XBOX_GPU_INSTANCE_DEFAULT) {
-        fprintf(stderr, "  [CONTIG] arena exhausted (%u requested, %u of %u used)\n",
+        fprintf(stderr, "  [CONTIG] arena exhausted (%u requested, %u of %u used, %u free in pieces)\n",
                 size, g_contig_next - XBOX_CONTIG_BASE,
-                (unsigned)XBOX_CONTIG_SIZE);
+                (unsigned)XBOX_CONTIG_SIZE, xbox_ContiguousFreeBytes());
         fflush(stderr);
         return 0;
     }
 
+    contig_note(result, size);
     g_contig_next = result + size;
     memset((void *)((uintptr_t)result + g_memory_offset), 0, size);
     return result;
@@ -3055,7 +3150,7 @@ uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
  * Lets a caller holding a physical address decide whether it names contiguous
  * memory this runtime allocated. The pushbuffer executor needs exactly that:
  * a surface offset is physical, and only the window makes it addressable. */
-void xbox_ContiguousSetAllocatedBytes(uint32_t n) { g_contig_next = XBOX_CONTIG_BASE + n; }
+void xbox_ContiguousSetAllocatedBytes(uint32_t n) { g_contig_next = XBOX_CONTIG_BASE + n; g_cblk_n = 0; }
 size_t xbox_GetMemorySize(void) { return g_memory_size; }
 
 uint32_t xbox_ContiguousAllocatedBytes(void)

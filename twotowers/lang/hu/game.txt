@@ -1452,3 +1452,90 @@ P:Elrond	Elrond
 P:Sauron	Szauron
 P:Uruk-hai	Uruk-hai
 P:the left thumbstick	a bal kart
+P:Co-op	Kooperatív
+P:Versus	Versus
+P:Co-op Options	Kooperatív beállítások
+P:Difficulty:	Nehézség:
+P:Easy	Könny
+P:Normal	Normál
+P:Expert	Szakért
+P:Impossible	Lehetetlen
+P:Impossible:	Lehetetlen:
+P:Player Icons:	Játékosjelölk:
+P:Camera Zoom:	Kamera zoom:
+P:Wide	Széles
+P:P2 Teleport:	P2 teleport:
+P:P2 Device:	P2 eszköze:
+P:P1 Device:	P1 eszköze:
+P:P2 Bot:	P2 bot:
+P:When Idle	Tétlenségkor
+P:Always	Mindig
+P:Pickups:	Felvehetk:
+P:Double	Dupla
+P:P2 Controls	P2 irányítása
+P:New Game	Új játék
+P:Load Game	Játék betöltése
+P:Player 1:	1. játékos:
+P:Player 2:	2. játékos:
+P:Arena:	Aréna:
+P:Rounds to win:	Gyzelemhez kell:
+P:First to 3	3 gyzelemig
+P:First to 5	5 gyzelemig
+P:First to 7	7 gyzelemig
+P:Deathmatch	Deathmatch
+P:Find the Shield	Keresd a pajzsot
+P:Keyboard & Mouse	Billentyzet és egér
+P:Automatic ({1})	Automatikus ({1})
+P:Automatic (Keyboard & Mouse)	Automatikus (billentyzet és egér)
+P:Automatic (none connected)	Automatikus (nincs csatlakoztatva)
+P:Controller {1} (not connected)	{1}. kontroller (nincs csatlakoztatva)
+P:No controller connected	Nincs csatlakoztatott kontroller
+P:Press A	Nyomd meg: A
+P:Already Beaten	Már teljesítve
+P:Weathertop	Széltet
+P:Balin's Tomb	Balin sírja
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangorn erd
+P:Gates of Moria	Mória kapui
+P:Plains of Rohan	Rohan síkságai
+P:Road to Helm's Deep	Út a Helm-szurdokhoz
+P:The Deeping Wall	A Szurdokfal
+P:The Breached Wall	Áttört fal
+P:Hornburg Courtyard	A Kürtvár udvara
+P:Orthanc	Orthanc
+P:Orthanc Summit	Orthanc csúcsa
+P:Mount Doom	Végzet-hegy
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Pajzsos ork
+P:FIGHT!	HARC!
+P:PLAYER {1} WINS ROUND {2}	{2}. KÖR: {1}. JÁTÉKOS NYERT
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	{1}. JÁTÉKOS NYERTE A MECCSET  {2} - {3}
+P:ROUND {1}: A DRAW	{1}. KÖR: DÖNTETLEN
+P:P{1} GUARD BROKEN	P{1} VÉDEKEZÉSE ÁTTÖRVE
+P:P{1}'S SHIELD CRACKS!	P{1} PAJZSA MEGREPED!
+P:P{1}'S SHIELD IS BROKEN!	P{1} PAJZSA ÖSSZETÖRT!
+P:PLAYER {1} HAS THE SHIELD!	{1}. JÁTÉKOSNÁL A PAJZS!
+P:P{1} RESPAWN {2}	P{1} ÚJRAÉLEDÉS {2}
+P:DOWN  RESPAWN {1}	KIÜTVE  ÚJRAÉLEDÉS {1}
+P:MATCH RESULTS	A MECCS EREDMÉNYE
+P:PLAYER {1} WINS  {2} - {3}	{1}. JÁTÉKOS NYERT  {2} - {3}
+P:ROUNDS WON	MEGNYERT KÖRÖK
+P:HITS LANDED	TALÁLATOK
+P:DAMAGE DEALT	OKOZOTT SEBZÉS
+P:BIGGEST HIT	LEGNAGYOBB ÜTÉS
+P:ARROWS ON TARGET	CÉLBA TALÁLT NYILAK
+P:FASTEST ROUND	LEGGYORSABB KÖR
+P:TIMES DOWNED	ELESÉSEK
+P:SHARPSHOOTER: PLAYER {1}	MESTERLÖVÉSZ: {1}. JÁTÉKOS
+P:HEAVY HITTER: PLAYER {1}	PÖRÖLY: {1}. JÁTÉKOS
+P:IRON WALL: PLAYER {1}	VASFAL: {1}. JÁTÉKOS
+P:SPEED DEMON: PLAYER {1}	VILLÁMGYORS: {1}. JÁTÉKOS
+P:BRAWLER: PLAYER {1}	VEREKED: {1}. JÁTÉKOS
+P:RELENTLESS: PLAYER {1}	KÖNYÖRTELEN: {1}. JÁTÉKOS
+P:Start Match	Meccs indítása
+P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. KÖR   P{2} {3} - {4} P{5}

@@ -30,4 +30,9 @@ void        xbox_BindClearKeys(int action);
 void        xbox_BindAssignPad(int action, int src);
 void        xbox_BindResetAll(void);
 int         xbox_BindSet(const char *key, const char *value);
+/* player 2's controller (port 1) has a button table of its own ("p2pad_<action>"
+ * in the settings); keys are player 1's only */
+int         xbox_BindPad2(int action);          /* pad source 0..16 */
+void        xbox_BindAssignPad2(int action, int src);
+void        xbox_BindResetPad2(void);
 #endif

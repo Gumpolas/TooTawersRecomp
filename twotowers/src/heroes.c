@@ -2542,10 +2542,15 @@ static int build_file(const char *target, const Add *adds, int nadds, const char
         pos = ((pos + 0xFFF) & ~(size_t)0xFFF) + (a & 0xFFF);
         if (adds[k].compose) {
             /* the hero's set in the target: Aragorn's */
-            static const uint32_t hk[] = { 0xDE94124Au, 0xE39B82A6u, 0x44E6E72Au, 0x53DFD442u };
-            uint32_t ha = 0, he = 0, ht, q;
+            /* (1.9.8) and last the player's own set (0xAAE0DF66, in every level: Fangorn Forest and the Westfold have none of
+             * the four -- an extra hero as co-op's player 2 there could not be built, and was not drawn at all, a playtest) */
+            /* (1.9.8) Gimli's set (0xAAE0DF66) is only in his own variants of a level (.bfg); Legolas' (0xEE4A9EBA) in his
+             * (.bfl): with player 1 Legolas in the Westfold player 2 Sauron could not be built -- unseen, and leaving the level
+             * froze on the loading screen (a playtest) */
+            static const uint32_t hk[] = { 0xDE94124Au, 0xE39B82A6u, 0x44E6E72Au, 0x53DFD442u, 0xAAE0DF66u, 0xEE4A9EBAu };
+            uint32_t ha = 0, he = 0, ht, q, nq = getenv("TT_HEROES_NOPLAYERSET") ? 4u : 6u;
             size_t got = 0;
-            for (q = 0; q < 4 && !got; q++)
+            for (q = 0; q < nq && !got; q++)
                 if (adds[k].type == 1100 ? (q == 0 && res_find(t, tl, s_compose_hkey, 1100, &ha, &he, &ht)) : res_find(t, tl, hk[q], 150, &ha, &he, &ht))
                     got = compose_anims(t + ha, he - ha, s[k] + a, e2 - a, adds[k].compose - 1, o + pos, cap - pos - 0x10000);
             if (!got) { tt_dbg("[HEROES] could not compose the animations\n"); goto done; }
@@ -4358,7 +4363,7 @@ static const char *redirect(const char *xp)
          * the menu. */
         static int saved = -2;
         int world = strstr(xp, "orlds\\") || strstr(xp, "ORLDS\\");
-        if (world && _strnicmp(base, "00ISUL1.", 8)) s_vsp1 = -1;   /* (Versus' Mount Doom skin: that level only) */
+        if (world && _strnicmp(base, "00ISUL1.", 8) && _strnicmp(base, "01WEAT1.", 8)) s_vsp1 = -1;   /* (Versus' Mount Doom skin: that level only) */
         if (world && (!_strnicmp(base, "00ISUL1.", 8)) && !tt_vs_on()) {
             if (saved == -2) {
                 saved = s_guest; s_guest = -1;
@@ -6953,11 +6958,30 @@ int tt_hk(int id, int phase, uint32_t *r)
     if (id == 22 && phase == 1 && !getenv("TT_NOBEAM") && (p2b || (tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam))) {
         int bg = p2b ? s_playas : s_guest;
         if (p2b && getenv("TT_COOP_BEAMLOG")) { extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), pb = G32(0x43B15Cu), ob = s_launching; static int n; if (n++ < 12 && pa && ob >= 0x80000000u && ob < 0x84000000u) tt_dbg("[COOPBEAM] start %.2f %.2f %.2f aim %.2f %.2f %.2f | P2 %.2f %.2f %.2f | player %08X %.2f %.2f %.2f\n", GF(ob + 0x3E8), GF(ob + 0x3EC), GF(ob + 0x3F0), GF(ob + 0x3F8), GF(ob + 0x3FC), GF(ob + 0x400), GF(pa + 0xF0), GF(pa + 0xF4), GF(pa + 0xF8), pb, GF(pb + 0xF0), GF(pb + 0xF4), GF(pb + 0xF8)); }
-        if (p2b && !getenv("TT_COOP_BEAMGAMESTART")) {   /* player 2's shot starts where player 1's bow is held (5 units over his head, beside him: observed), and the staff's
+        if (p2b && getenv("TT_COOP_P2GAMESTART") && !getenv("TT_COOP_BEAMGAMESTART")) {   /* (1.9.8: his shot leaves his hand now, coop_launch_pre; this only with TT_COOP_P2GAMESTART) */   /* player 2's shot starts where player 1's bow is held (5 units over his head, beside him: observed), and the staff's
              * offset below is from a hand: his own place at hand height (TT_COOP_BEAMZ, 1.4) as the start, for the beam and the bolt's sweep */
             extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), ob = s_launching;
             float hz = getenv("TT_COOP_BEAMZ") ? (float)atof(getenv("TT_COOP_BEAMZ")) : 1.4f;
-            if (pa >= 0x80000000u && pa < 0x84000000u && ob >= 0x80000000u && ob < 0x84000000u) { GF(ob + 0x3E8) = GF(pa + 0xF0); GF(ob + 0x3EC) = GF(pa + 0xF4); GF(ob + 0x3F0) = GF(pa + 0xF8) + hz; }
+            if (pa >= 0x80000000u && pa < 0x84000000u && ob >= 0x80000000u && ob < 0x84000000u) { GF(ob + 0x3E8) = GF(pa + 0xF0); GF(ob + 0x3EC) = GF(pa + 0xF4); GF(ob + 0x3F0) = GF(pa + 0xF8) + hz;
+                /* (1.9.8) ... and its end at his lock: the shot's aim (+0x3F8) is worked out in his context from player 1's
+                 * (a playtest: Gandalf's bolts hit nothing; a test, at the enemy's feet 130 units under or 100 units past it).
+                 * With his lock on a living enemy: its chest (TT_COOP_BEAMAIMZ, 2.6), the beam going on past it to the length
+                 * the game gave (the bolt sweeps it all); without, straight ahead of him at the game's length.
+                 * TT_COOP_BEAMGAMEAIM: as before */
+                if (!getenv("TT_COOP_BEAMGAMEAIM")) {
+                    uint32_t c2 = G32(pa + 0x494), t = c2 >= 0x80000000u && c2 < 0x84000000u ? G32(c2 + 0x98) : 0; float e[3], d[3], l, L0; int c3;
+                    for (c3 = 0; c3 < 3; c3++) d[c3] = GF(ob + 0x3F8 + 4 * c3) - GF(ob + 0x3E8 + 4 * c3);
+                    L0 = sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); if (L0 < 20.0f || L0 > 200.0f) L0 = 60.0f;
+                    if (t >= 0x80000000u && t < 0x84000000u && G32(t) == 0x1741C0u && G32(t + 0x114) == 3 && (int32_t)G32(t + 0x2FC) > 0) {
+                        e[0] = GF(t + 0xF0); e[1] = GF(t + 0xF4); e[2] = GF(t + 0xF8) + (getenv("TT_COOP_BEAMAIMZ") ? (float)atof(getenv("TT_COOP_BEAMAIMZ")) : 2.6f);
+                    } else { float fx = GF(pa + 0x70), fy = GF(pa + 0x74), fn = sqrtf(fx * fx + fy * fy);   /* (his facing, +0x70 / +0x74, as Versus sets it) */
+                        if (fn < 1e-3f) { fx = 1.0f; fy = 0.0f; fn = 1.0f; }
+                        e[0] = GF(ob + 0x3E8) + fx / fn * 10.0f; e[1] = GF(ob + 0x3EC) + fy / fn * 10.0f; e[2] = GF(ob + 0x3F0); t = 0; }
+                    for (c3 = 0; c3 < 3; c3++) d[c3] = e[c3] - GF(ob + 0x3E8 + 4 * c3);
+                    l = sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+                    if (l > 0.5f) { float k = (t ? (l + 6.0f > L0 ? l + 6.0f : L0) : L0) / l; for (c3 = 0; c3 < 3; c3++) GF(ob + 0x3F8 + 4 * c3) = GF(ob + 0x3E8 + 4 * c3) + d[c3] * k; }
+                    if (getenv("TT_COOP_BEAMLOG")) tt_dbg("[COOPBEAM] aimed at %s %08X: %.2f %.2f %.2f, the beam %.1f long\n", t ? "his lock" : "(no lock) ahead", t, e[0], e[1], e[2], t ? (l + 6.0f > L0 ? l + 6.0f : L0) : L0);
+                } }
         }
         uint32_t o = s_launching, scratch = (tt_guest_esp() - 0x3000u) & ~0xFu, pid;
         float a[3], b[3], d[3], len, step;
@@ -7228,6 +7252,13 @@ int tt_hk(int id, int phase, uint32_t *r)
      * LT held and A or Y, as player 1 does). The projectile ids player 1 fires as each hero (observed, Balin's Tomb):
      * Aragorn 13, Legolas 19, Gimli 16 (his throwing axe), Isildur 15; Frodo and the Uruk-hai a stone (10, as for them
      * as hero 4); Gandalf and Sauron 15 (hero 4's, their bolt); other guests the arrow (13) */
+    if (id == 22 && phase == 0) {   /* (1.9.8, co-op) each hero's shot noted with his lock as it leaves (in his own context), and whether it is a beam */
+        extern void coop_proj_note(uint32_t proj, uint32_t shooter, int beam); extern uint32_t coop_p2_actor(void);
+        uint32_t shr = G32(g_esp + 0x18); int bm = 0;
+        if (shr && shr == coop_p2_actor()) bm = s_coop_skin && s_playas >= 0 && s_skins[s_playas].beam && !getenv("TT_NOBEAM");
+        else bm = tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam && !getenv("TT_NOBEAM");
+        coop_proj_note(r[1], shr, bm);
+    }
     if (id == 22 && phase == 0 && !getenv("TT_COOP_P2KEEPPROJ")) {
         extern uint32_t coop_p2_actor(void); extern const char *tt_coop_p2_char_now;
         uint32_t p2 = coop_p2_actor();
@@ -7558,6 +7589,12 @@ int tt_heroes_p1_pick(const char *name)
         if (k < 3 && G32(0x1BB2A4u) == 0 && !getenv("TT_VS_NOP1SKIN")) {   /* Mount Doom: Isildur's level -- hero 4 there, wearing the pick */
             s_vsp1 = skin_by_name(name);
             tt_dbg("[HEROES] Versus on Mount Doom: player 1 is %s (hero 4, his skin built into the level)\n", name);
+            return 4;
+        }
+        if (k >= 1 && G32(0x1BB2A4u) == 1 && tt_heroes_on() && !getenv("TT_VS_NOP1SKIN")) {   /* (1.9.8) Weathertop has only Aragorn: hero 4 there, as an extra hero is, wearing the pick */
+            s_guest = -1; rec_switch(-1); name_set(s_skins[skin_by_name(name)].title); upn_set(-1);
+            s_vsp1 = skin_by_name(name);
+            tt_dbg("[HEROES] Versus on Weathertop: player 1 is %s (hero 4, his skin built into the level)\n", name);
             return 4;
         }
         return k + 1;

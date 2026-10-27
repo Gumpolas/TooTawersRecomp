@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69 टेक्सच
 L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin नहीं लिखी जा सकी।
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	चालू (W दबाए रखें: माउस जिधर धकेले, उधर दौड़ता है; धीरे चलें से धीरे चलता है)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	W दबाए रखें: माउस जिधर धकेले, उधर दौड़ता है (धीरे चलें से धीरे चलता है)
+P:Co-op	को-ऑप
+P:Versus	वर्सस
+P:Co-op Options	को-ऑप विकल्प
+P:Difficulty:	कठिनाई:
+P:Easy	आसान
+P:Normal	सामान्य
+P:Expert	विशेषज्ञ
+P:Impossible	असंभव
+P:Impossible:	असंभव:
+P:Player Icons:	खिलाड़ी आइकन:
+P:Camera Zoom:	कैमरा ज़ूम:
+P:Wide	चौड़ा
+P:P2 Teleport:	P2 टेलीपोर्ट:
+P:P2 Device:	P2 डिवाइस:
+P:P1 Device:	P1 डिवाइस:
+P:P2 Bot:	P2 बॉट:
+P:When Idle	निष्क्रिय होने पर
+P:Always	हमेशा
+P:Pickups:	पिकअप:
+P:Double	दोगुने
+P:P2 Controls	P2 नियंत्रण
+P:New Game	नया गेम
+P:Load Game	गेम लोड करें
+P:Player 1:	खिलाड़ी 1:
+P:Player 2:	खिलाड़ी 2:
+P:Arena:	अखाड़ा:
+P:Rounds to win:	जीत के लिए राउंड:
+P:First to 3	पहले 3 जीत
+P:First to 5	पहले 5 जीत
+P:First to 7	पहले 7 जीत
+P:Deathmatch	डेथमैच
+P:Find the Shield	ढाल खोजो
+P:Keyboard & Mouse	कीबोर्ड / माउस
+P:Automatic ({1})	स्वचालित ({1})
+P:Automatic (Keyboard & Mouse)	स्वचालित (कीबोर्ड / माउस)
+P:Automatic (none connected)	स्वचालित (कोई कनेक्ट नहीं)
+P:Controller {1} (not connected)	कंट्रोलर {1} (कनेक्ट नहीं)
+P:No controller connected	कोई कंट्रोलर कनेक्ट नहीं है
+P:Press A	A दबाएँ
+P:Already Beaten	पहले ही पूरा
+P:Weathertop	वेदरटॉप
+P:Balin's Tomb	बालिन का मक़बरा
+P:Amon Hen	अमोन हेन
+P:Fangorn Forest	फ़ैंगोर्न का जंगल
+P:Gates of Moria	मोरिया के द्वार
+P:Plains of Rohan	रोहन के मैदान
+P:Road to Helm's Deep	हेल्म्स डीप की राह
+P:The Deeping Wall	डीपिंग की दीवार
+P:The Breached Wall	टूटी हुई दीवार
+P:Hornburg Courtyard	हॉर्नबर्ग का आँगन
+P:Orthanc	ओर्थैंक
+P:Orthanc Summit	ओर्थैंक का शिखर
+P:Mount Doom	माउंट डूम
+P:Aragorn	अरागॉर्न
+P:Legolas	लेगोलस
+P:Gimli	गिमली
+P:Isildur	इसिलडर
+P:Eomer	एओमर
+P:Nazgul	नाज़गुल
+P:Shield Orc	ढाल वाला ऑर्क
+P:FIGHT!	लड़ो!
+P:PLAYER {1} WINS ROUND {2}	खिलाड़ी {1} ने राउंड {2} जीता
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	खिलाड़ी {1} ने मैच जीता  {2} - {3}
+P:ROUND {1}: A DRAW	राउंड {1}: बराबरी
+P:P{1} GUARD BROKEN	P{1} का बचाव टूटा
+P:P{1}'S SHIELD CRACKS!	P{1} की ढाल में दरार!
+P:P{1}'S SHIELD IS BROKEN!	P{1} की ढाल टूट गई!
+P:PLAYER {1} HAS THE SHIELD!	खिलाड़ी {1} के पास ढाल है!
+P:P{1} RESPAWN {2}	P{1} वापसी {2}
+P:DOWN  RESPAWN {1}	गिर गए  वापसी {1}
+P:MATCH RESULTS	मैच परिणाम
+P:PLAYER {1} WINS  {2} - {3}	खिलाड़ी {1} जीता  {2} - {3}
+P:ROUNDS WON	जीते गए राउंड
+P:HITS LANDED	सफल वार
+P:DAMAGE DEALT	दी गई क्षति
+P:BIGGEST HIT	सबसे बड़ा वार
+P:ARROWS ON TARGET	निशाने पर तीर
+P:FASTEST ROUND	सबसे तेज़ राउंड
+P:TIMES DOWNED	कितनी बार गिरे
+P:SHARPSHOOTER: PLAYER {1}	अचूक निशानेबाज़: खिलाड़ी {1}
+P:HEAVY HITTER: PLAYER {1}	ज़ोरदार प्रहारक: खिलाड़ी {1}
+P:IRON WALL: PLAYER {1}	लौह दीवार: खिलाड़ी {1}
+P:SPEED DEMON: PLAYER {1}	तूफ़ानी रफ़्तार: खिलाड़ी {1}
+P:BRAWLER: PLAYER {1}	लड़ाका: खिलाड़ी {1}
+P:RELENTLESS: PLAYER {1}	अथक: खिलाड़ी {1}
+P:Start Match	मुकाबला शुरू करें
+P:ROUND {1}   P{2} {3} - {4} P{5}	राउंड {1}   P{2} {3} - {4} P{5}

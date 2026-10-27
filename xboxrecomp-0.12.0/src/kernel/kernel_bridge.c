@@ -700,6 +700,7 @@ static void bridge_NtClose(void)
 /* ── MmAllocateContiguousMemory (ordinal 165) ─────────────
  * PVOID MmAllocateContiguousMemory(ULONG NumberOfBytes)
  */
+extern uint32_t xbox_ContiguousAllocatedBytes(void);
 static void bridge_MmAllocateContiguousMemory(void)
 {
     uint32_t size = STACK_ARG(0);
@@ -709,6 +710,7 @@ static void bridge_MmAllocateContiguousMemory(void)
      * is how a driver converts between the address it holds and the one it
      * hands the hardware. See xbox_ContiguousAlloc. */
     uint32_t xbox_va = xbox_ContiguousAlloc(size, 4096);
+    if (getenv("RECOMP_CONTIGLOG")) { fprintf(stderr, "  [CONTIGLOG] alloc %u at %08X from %08X (used %u KB)\n", size, xbox_va, g_xbox_kernel_caller, xbox_ContiguousAllocatedBytes() >> 10); fflush(stderr); }
 
     if (KERNEL_LOG_ON_HALF()) {
         fprintf(stderr, "  [KERNEL] MmAllocateContiguousMemory: size=%u → Xbox VA 0x%08X\n",
@@ -807,6 +809,7 @@ static void bridge_MmAllocateContiguousMemoryEx(void)
 
     if (align < 4096) align = 4096;
     xbox_va = xbox_ContiguousAlloc(size, align);
+    if (getenv("RECOMP_CONTIGLOG")) { fprintf(stderr, "  [CONTIGLOG] allocEx %u at %08X from %08X (used %u KB)\n", size, xbox_va, g_xbox_kernel_caller, xbox_ContiguousAllocatedBytes() >> 10); fflush(stderr); }
 
     if (KERNEL_LOG_ON_HALF()) {
         fprintf(stderr, "  [KERNEL] MmAllocateContiguousMemoryEx: size=%u align=%u → Xbox VA 0x%08X\n",
@@ -823,7 +826,10 @@ static void bridge_MmAllocateContiguousMemoryEx(void)
 static void bridge_MmFreeContiguousMemory(void)
 {
     uint32_t addr = STACK_ARG(0);
-    xbox_HeapFree(addr);
+    extern int xbox_ContiguousFree(uint32_t addr);
+    int ours = xbox_ContiguousFree(addr);   /* (1.9.8) the window's blocks come back for reuse (xbox_memory_layout.c) */
+    if (getenv("RECOMP_CONTIGLOG")) { fprintf(stderr, "  [CONTIGLOG] free %08X from %08X%s\n", addr, g_xbox_kernel_caller, ours ? "" : " (not the window's)"); fflush(stderr); }
+    if (!ours) xbox_HeapFree(addr);
     g_eax = 0;
 }
 
@@ -2982,6 +2988,7 @@ static void bridge_write_iostatus(uint32_t ios_va, NTSTATUS status, uint32_t inf
 #define BRIDGE_HANDLE_MAX  16384
 static HANDLE s_handle_table[BRIDGE_HANDLE_MAX];
 
+int xbox_bridge_handles_used(void) { int i, n = 0; for (i = 1; i < BRIDGE_HANDLE_MAX; i++) if (s_handle_table[i]) n++; return n; }
 static uint32_t bridge_handle_token(HANDLE h)
 {
     int i;

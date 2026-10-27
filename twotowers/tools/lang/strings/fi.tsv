@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69-tekstuuripaketti e
 L:Could not write textures_ultra/index.bin.	Tiedostoa textures_ultra/index.bin ei voitu kirjoittaa.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Päällä (pidä W: hän juoksee sinne, minne hiiri työntää; Kävele kävelee)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Pidä W: hän juoksee sinne, minne hiiri työntää (Kävele kävelee)
+P:Co-op	Yhteispeli
+P:Versus	Vastakkain
+P:Co-op Options	Yhteispelin asetukset
+P:Difficulty:	Vaikeustaso:
+P:Easy	Helppo
+P:Normal	Normaali
+P:Expert	Asiantuntija
+P:Impossible	Mahdoton
+P:Impossible:	Mahdoton:
+P:Player Icons:	Pelaajakuvakkeet:
+P:Camera Zoom:	Kameran zoomaus:
+P:Wide	Laaja
+P:P2 Teleport:	P2:n siirto:
+P:P2 Device:	P2:n laite:
+P:P1 Device:	P1:n laite:
+P:P2 Bot:	P2-botti:
+P:When Idle	Kun toimeton
+P:Always	Aina
+P:Pickups:	Esineet:
+P:Double	Tuplat
+P:P2 Controls	P2:n ohjaimet
+P:New Game	Uusi peli
+P:Load Game	Lataa peli
+P:Player 1:	Pelaaja 1:
+P:Player 2:	Pelaaja 2:
+P:Arena:	Areena:
+P:Rounds to win:	Erät voittoon:
+P:First to 3	3 voittoa
+P:First to 5	5 voittoa
+P:First to 7	7 voittoa
+P:Deathmatch	Kuolonottelu
+P:Find the Shield	Löydä kilpi
+P:Keyboard & Mouse	Näppäimistö/hiiri
+P:Automatic ({1})	Automaattinen ({1})
+P:Automatic (Keyboard & Mouse)	Automaattinen (näppäimistö/hiiri)
+P:Automatic (none connected)	Automaattinen (ei yhdistetty)
+P:Controller {1} (not connected)	Peliohjain {1} (ei yhdistetty)
+P:No controller connected	Peliohjainta ei ole yhdistetty
+P:Press A	Paina A
+P:Already Beaten	Jo läpäisty
+P:Weathertop	Viimapää
+P:Balin's Tomb	Balinin hauta
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangornin metsä
+P:Gates of Moria	Morian portit
+P:Plains of Rohan	Rohanin tasangot
+P:Road to Helm's Deep	Tie Helmin syvänteelle
+P:The Deeping Wall	Ankanmuuri
+P:The Breached Wall	Murrettu muuri
+P:Hornburg Courtyard	Ämyrilinnan piha
+P:Orthanc	Orthanc
+P:Orthanc Summit	Orthancin huippu
+P:Mount Doom	Tuomiovuori
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Kilpiörkki
+P:FIGHT!	TAISTELE!
+P:PLAYER {1} WINS ROUND {2}	PELAAJA {1} VOITTAA ERÄN {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	PELAAJA {1} VOITTAA OTTELUN  {2} - {3}
+P:ROUND {1}: A DRAW	ERÄ {1}: TASAPELI
+P:P{1} GUARD BROKEN	P{1}: TORJUNTA MURTUI
+P:P{1}'S SHIELD CRACKS!	P{1}:N KILPI HALKEAA!
+P:P{1}'S SHIELD IS BROKEN!	P{1}:N KILPI ON RIKKI!
+P:PLAYER {1} HAS THE SHIELD!	PELAAJALLA {1} ON KILPI!
+P:P{1} RESPAWN {2}	P{1} PALAA: {2}
+P:DOWN  RESPAWN {1}	KAATUNUT  PALAA: {1}
+P:MATCH RESULTS	OTTELUN TULOKSET
+P:PLAYER {1} WINS  {2} - {3}	PELAAJA {1} VOITTAA  {2} - {3}
+P:ROUNDS WON	VOITETUT ERÄT
+P:HITS LANDED	OSUMAT
+P:DAMAGE DEALT	AIHEUTETTU VAHINKO
+P:BIGGEST HIT	KOVIN ISKU
+P:ARROWS ON TARGET	OSUNEET NUOLET
+P:FASTEST ROUND	NOPEIN ERÄ
+P:TIMES DOWNED	KAATUMISET
+P:SHARPSHOOTER: PLAYER {1}	TARKKA-AMPUJA: PELAAJA {1}
+P:HEAVY HITTER: PLAYER {1}	MOUKARI: PELAAJA {1}
+P:IRON WALL: PLAYER {1}	RAUTAMUURI: PELAAJA {1}
+P:SPEED DEMON: PLAYER {1}	SALAMA: PELAAJA {1}
+P:BRAWLER: PLAYER {1}	TAPPELUPUKARI: PELAAJA {1}
+P:RELENTLESS: PLAYER {1}	ARMOTON: PELAAJA {1}
+P:Start Match	Aloita ottelu
+P:ROUND {1}   P{2} {3} - {4} P{5}	ERÄ {1}   P{2} {3} - {4} P{5}

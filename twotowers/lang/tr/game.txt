@@ -1452,3 +1452,90 @@ P:Elrond	Elrond
 P:Sauron	Sauron
 P:Uruk-hai	Uruk-hai
 P:the left thumbstick	sol analog çubuu
+P:Co-op	Ortak Oyun
+P:Versus	Karlama
+P:Co-op Options	Ortak Oyun Seçenekleri
+P:Difficulty:	Zorluk:
+P:Easy	Kolay
+P:Normal	Normal
+P:Expert	Uzman
+P:Impossible	mkânsz
+P:Impossible:	mkânsz:
+P:Player Icons:	Oyuncu Simgeleri:
+P:Camera Zoom:	Kamera Yaknlatrma:
+P:Wide	Geni
+P:P2 Teleport:	P2 Inlanma:
+P:P2 Device:	P2 Cihaz:
+P:P1 Device:	P1 Cihaz:
+P:P2 Bot:	P2 Bot:
+P:When Idle	Botayken
+P:Always	Her Zaman
+P:Pickups:	Nesneler:
+P:Double	Çift
+P:P2 Controls	P2 Kontrolleri
+P:New Game	Yeni Oyun
+P:Load Game	Oyun Yükle
+P:Player 1:	Oyuncu 1:
+P:Player 2:	Oyuncu 2:
+P:Arena:	Arena:
+P:Rounds to win:	Kazanmak çin Tur:
+P:First to 3	3 Galibiyet
+P:First to 5	5 Galibiyet
+P:First to 7	7 Galibiyet
+P:Deathmatch	Ölüm Maç
+P:Find the Shield	Kalkan Bul
+P:Keyboard & Mouse	Klavye/Fare
+P:Automatic ({1})	Otomatik ({1})
+P:Automatic (Keyboard & Mouse)	Otomatik (Klavye/Fare)
+P:Automatic (none connected)	Otomatik (bal cihaz yok)
+P:Controller {1} (not connected)	Kumanda {1} (bal deil)
+P:No controller connected	Bal kumanda yok
+P:Press A	A'ya basn
+P:Already Beaten	Zaten tamamland
+P:Weathertop	Hava Tepesi
+P:Balin's Tomb	Balin'in Mezar
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangorn Orman
+P:Gates of Moria	Moria Kaplar
+P:Plains of Rohan	Rohan Ovalar
+P:Road to Helm's Deep	Mifer Dibi Yolu
+P:The Deeping Wall	Dip Duvar
+P:The Breached Wall	Yklan Duvar
+P:Hornburg Courtyard	Hornburg Avlusu
+P:Orthanc	Orthanc
+P:Orthanc Summit	Orthanc Zirvesi
+P:Mount Doom	Hüküm Da
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Kalkanl Ork
+P:FIGHT!	DÖVÜ!
+P:PLAYER {1} WINS ROUND {2}	{2}. TURU OYUNCU {1} KAZANDI
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	MAÇI OYUNCU {1} KAZANDI  {2} - {3}
+P:ROUND {1}: A DRAW	{1}. TUR: BERABERE
+P:P{1} GUARD BROKEN	P{1} SAVUNMASI KIRILDI
+P:P{1}'S SHIELD CRACKS!	P{1} KALKANI ÇATLIYOR!
+P:P{1}'S SHIELD IS BROKEN!	P{1} KALKANI KIRILDI!
+P:PLAYER {1} HAS THE SHIELD!	KALKAN OYUNCU {1} ELNDE!
+P:P{1} RESPAWN {2}	P{1} DÖNÜ: {2}
+P:DOWN  RESPAWN {1}	YERDESN  DÖNÜ: {1}
+P:MATCH RESULTS	MAÇ SONUÇLARI
+P:PLAYER {1} WINS  {2} - {3}	OYUNCU {1} KAZANDI  {2} - {3}
+P:ROUNDS WON	KAZANILAN TUR
+P:HITS LANDED	SABETL VURU
+P:DAMAGE DEALT	VERLEN HASAR
+P:BIGGEST HIT	EN SERT VURU
+P:ARROWS ON TARGET	SABETL OK
+P:FASTEST ROUND	EN HIZLI TUR
+P:TIMES DOWNED	YERE DÜME
+P:SHARPSHOOTER: PLAYER {1}	KESKN NANCI: OYUNCU {1}
+P:HEAVY HITTER: PLAYER {1}	AIR YUMRUK: OYUNCU {1}
+P:IRON WALL: PLAYER {1}	DEMR DUVAR: OYUNCU {1}
+P:SPEED DEMON: PLAYER {1}	HIZ CANAVARI: OYUNCU {1}
+P:BRAWLER: PLAYER {1}	KAVGACI: OYUNCU {1}
+P:RELENTLESS: PLAYER {1}	AMANSIZ: OYUNCU {1}
+P:Start Match	Maç Balat
+P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. TUR   P{2} {3} - {4} P{5}

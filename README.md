@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v1.9.7
+# The Two Towers Recompiled v1.9.8
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,16 +8,16 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9.7-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9.7-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9.7-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
-| `TwoTowers-Recompiled-v1.9.7-source.zip` | Source code |
+| `TwoTowers-Recompiled-v1.9.8-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v1.9.8-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v1.9.8-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (through Rosetta 2) |
+| `TwoTowers-Recompiled-v1.9.8-source.zip` | Source code |
 
 
 **Ultra textures, GameCube compatibility pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
+Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves and settings carry over. Copy the new `textures_ultra\pairs.txt` too (it comes with the download); a prepared `GLOS69` pack is not prepared again.
 
 ## What the port adds
 
@@ -35,6 +35,39 @@ Updating from 1.9.6 or earlier: unpack over your old folder, or into a new one a
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
+
+## What's new in 1.9.8
+
+### Co-op, the second round
+With [Volverine-Dude](https://github.com/Volverine-Dude)'s co-op work (PR #7). Thank you!
+
+- **Player 2's own hero:** his own moves, weapons in each hand, combos and attack grade, kill rewards and arrow kills.
+- **Player 2's own buttons:** Options > Co-op Options > **P2 Controls**.
+- **Aiming:** while a player holds LT, a dot over the enemy his lock is on (player 1 blue, player 2 amber). Arrows and thrown axes fly through allies and every hit counts.
+- **A better P2 Bot:** it follows the levels' paths, keeps with the group and takes enemies in order.
+- **Story levels:** level triggers are player 1's, player 2 is hidden in cutscenes, and the co-op difficulty is kept apart from the solo game's.
+- **Menus:** every controller works in the front-end menus; the Co-op and Versus menus are in every language.
+- **Extra heroes as player 2** are built and drawn in every level (before, he was missing in Fangorn Forest, the Westfold and with player 1 Legolas), and his melee blows land.
+- **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts.
+- **No more unkillable enemies:** an enemy felled by a ranged hit always dies. Before, one could stand up again and again and hold up a wave (likely what kept the Hornburg courtyard's rescue of Legolas from ending).
+- **A downed player 1** gets up again from either death pose.
+
+### Fixes
+- **Sound after a long session:** music, cutscene voices and some effects no longer go silent some forty minutes in.
+- **Languages with many letters** (Hindi, Japanese, Chinese, Korean) no longer crash a level at its start.
+- **Ultra textures** no longer drop off the menus' text.
+- **Title screen:** Start / Enter work on a PC that has been up for more than 24.9 days, and the controller that pressed Start is taken as player 1's.
+- **Options:** Back works on the first page and our own pages have a Back leaf; full screen is set again after Alt+Tab.
+
+### Known issues (1.9.8)
+- Player 2 as Aragorn, Legolas or Gimli keeps player 1's hero's pace of attacks in a level with no companion of his hero (Fangorn Forest, the Westfold).
+- Player 2's controller doesn't rumble yet.
+
+## Tested (1.9.8)
+- Linux (OpenGL): co-op bot runs in the Westfold, Fangorn Forest and Balin's Tomb with extra and retail heroes as player 2.
+- Windows: co-op played by hand on the author's PC.
+- Windows, Linux and macOS builds compile.
+- Not tested: the macOS build on a Mac.
 
 ## What's new in 1.9.7
 

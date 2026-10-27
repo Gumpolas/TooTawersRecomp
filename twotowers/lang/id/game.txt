@@ -1452,3 +1452,90 @@ P:Elrond	Elrond
 P:Sauron	Sauron
 P:Uruk-hai	Uruk-hai
 P:the left thumbstick	stik analog kiri
+P:Co-op	Co-op
+P:Versus	Versus
+P:Co-op Options	Opsi Co-op
+P:Difficulty:	Kesulitan:
+P:Easy	Mudah
+P:Normal	Normal
+P:Expert	Ahli
+P:Impossible	Mustahil
+P:Impossible:	Mustahil:
+P:Player Icons:	Ikon Pemain:
+P:Camera Zoom:	Zoom Kamera:
+P:Wide	Lebar
+P:P2 Teleport:	Teleportasi P2:
+P:P2 Device:	Perangkat P2:
+P:P1 Device:	Perangkat P1:
+P:P2 Bot:	Bot P2:
+P:When Idle	Saat Diam
+P:Always	Selalu
+P:Pickups:	Item:
+P:Double	Ganda
+P:P2 Controls	Kontrol P2
+P:New Game	Game Baru
+P:Load Game	Muat Game
+P:Player 1:	Pemain 1:
+P:Player 2:	Pemain 2:
+P:Arena:	Arena:
+P:Rounds to win:	Ronde untuk Menang:
+P:First to 3	Pertama ke 3
+P:First to 5	Pertama ke 5
+P:First to 7	Pertama ke 7
+P:Deathmatch	Deathmatch
+P:Find the Shield	Temukan Tameng
+P:Keyboard & Mouse	Keyboard/Mouse
+P:Automatic ({1})	Otomatis ({1})
+P:Automatic (Keyboard & Mouse)	Otomatis (Keyboard/Mouse)
+P:Automatic (none connected)	Otomatis (tidak ada terhubung)
+P:Controller {1} (not connected)	Kontroler {1} (tidak terhubung)
+P:No controller connected	Tidak ada kontroler terhubung
+P:Press A	Tekan A
+P:Already Beaten	Sudah Tamat
+P:Weathertop	Weathertop
+P:Balin's Tomb	Makam Balin
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Hutan Fangorn
+P:Gates of Moria	Gerbang Moria
+P:Plains of Rohan	Dataran Rohan
+P:Road to Helm's Deep	Jalan ke Helm's Deep
+P:The Deeping Wall	Tembok Deeping
+P:The Breached Wall	Tembok yang Jebol
+P:Hornburg Courtyard	Pelataran Hornburg
+P:Orthanc	Orthanc
+P:Orthanc Summit	Puncak Orthanc
+P:Mount Doom	Gunung Maut
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Orc Bertameng
+P:FIGHT!	BERTARUNG!
+P:PLAYER {1} WINS ROUND {2}	PEMAIN {1} MENANG RONDE {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	PEMAIN {1} MEMENANGI PERTANDINGAN  {2} - {3}
+P:ROUND {1}: A DRAW	RONDE {1}: SERI
+P:P{1} GUARD BROKEN	PERTAHANAN P{1} JEBOL
+P:P{1}'S SHIELD CRACKS!	TAMENG P{1} RETAK!
+P:P{1}'S SHIELD IS BROKEN!	TAMENG P{1} HANCUR!
+P:PLAYER {1} HAS THE SHIELD!	PEMAIN {1} MEMEGANG TAMENG!
+P:P{1} RESPAWN {2}	P{1} KEMBALI DALAM {2}
+P:DOWN  RESPAWN {1}	TUMBANG  KEMBALI DALAM {1}
+P:MATCH RESULTS	HASIL PERTANDINGAN
+P:PLAYER {1} WINS  {2} - {3}	PEMAIN {1} MENANG  {2} - {3}
+P:ROUNDS WON	RONDE DIMENANGI
+P:HITS LANDED	PUKULAN KENA
+P:DAMAGE DEALT	KERUSAKAN DIBERIKAN
+P:BIGGEST HIT	PUKULAN TERKUAT
+P:ARROWS ON TARGET	PANAH KENA SASARAN
+P:FASTEST ROUND	RONDE TERCEPAT
+P:TIMES DOWNED	KALI TUMBANG
+P:SHARPSHOOTER: PLAYER {1}	PENEMBAK JITU: PEMAIN {1}
+P:HEAVY HITTER: PLAYER {1}	PUKULAN MAUT: PEMAIN {1}
+P:IRON WALL: PLAYER {1}	TEMBOK BAJA: PEMAIN {1}
+P:SPEED DEMON: PLAYER {1}	SECEPAT KILAT: PEMAIN {1}
+P:BRAWLER: PLAYER {1}	PETARUNG: PEMAIN {1}
+P:RELENTLESS: PLAYER {1}	TAK KENAL AMPUN: PEMAIN {1}
+P:Start Match	Mulai Laga
+P:ROUND {1}   P{2} {3} - {4} P{5}	RONDE {1}   P{2} {3} - {4} P{5}

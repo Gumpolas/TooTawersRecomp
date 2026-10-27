@@ -221,6 +221,7 @@ void xbox_FramebufferKeyClear(int vk)
  * F11 toggles; RECOMP_FULLSCREEN=1 starts that way. */
 static int s_fs;          /* 0 windowed, 1 borderless full screen, 2 exclusive (the renderer takes the display) */
 static int s_fs_kind = 1;  /* the full-screen kind Alt+Enter / F11 goes to */
+static int s_fs_back_kind; /* (1.9.8) the kind to go back to after the refresh on coming back (WM_TIMER) */
 static WINDOWPLACEMENT s_fs_saved = { sizeof(WINDOWPLACEMENT) };
 /* (1.9.3) Exclusive full screen: the display is switched to the chosen
  * resolution ([Display] fs_resolution; "desktop" keeps its own) at the
@@ -531,8 +532,32 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
     case WM_KILLFOCUS:
         memset((void *)s_key_down, 0, sizeof s_key_down);
         return 0;
+    case WM_TIMER:
+        if (w == 0x7701) {   /* (1.9.8) back in the game after Alt+Tab, full screen: its kind left and taken again */
+            KillTimer(h, 0x7701);
+            if (s_fs && !IsIconic(h) && GetForegroundWindow() == h) {
+                /* (exclusive taken again the same way left the films slow, a playtest log: borderless kept for the session.
+                 * RECOMP_FS_BACK_EXCLUSIVE: exclusive again 700 ms later, as before) */
+                int back = s_fs == 2 && !getenv("RECOMP_FS_BACK_EXCLUSIVE") ? 0 : s_fs;
+                s_fs_back_kind = back;
+                fprintf(stderr, "  [FBWIN] back in the game: full screen set again (%s%s)\n", s_fs == 2 ? "exclusive" : "borderless", back ? "" : "; borderless from now on, this session"); fflush(stderr);
+                fb_set_fullscreen(h, s_fs == 2 ? 1 : 2);
+                if (back) SetTimer(h, 0x7702, 700, NULL);
+            }
+            return 0;
+        }
+        if (w == 0x7702) {   /* ... and back to the kind it was */
+            KillTimer(h, 0x7702);
+            if (s_fs && s_fs_back_kind && s_fs != s_fs_back_kind) fb_set_fullscreen(h, s_fs_back_kind);
+            s_fs_back_kind = 0;
+            return 0;
+        }
+        break;
     case WM_ACTIVATEAPP:
         if (!w) memset((void *)s_key_down, 0, sizeof s_key_down);
+        /* (1.9.8) coming back in full screen, the films played slowly until the full-screen kind was changed and changed
+         * back (F10, a playtest): done here a moment after coming back. RECOMP_NO_FS_REFRESH: off */
+        if (w && s_fs && !getenv("RECOMP_NO_FS_REFRESH")) SetTimer(h, 0x7701, 1200, NULL);
         if (s_fs == 2) {   /* exclusive: the desktop's mode while away */
             if (!w && s_mode_want != 0) { fb_mode_apply(0); ShowWindow(h, SW_MINIMIZE); }
             else if (w) {

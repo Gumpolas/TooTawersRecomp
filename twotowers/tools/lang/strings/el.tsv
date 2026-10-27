@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	Το πακέτο υφώ�
 L:Could not write textures_ultra/index.bin.	Δεν ήταν δυνατή η εγγραφή του textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Ναι (κράτα το W: τρέχει όπου σπρώχνει το ποντίκι· το Περπάτημα περπατά)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Κράτα το W: τρέχει όπου σπρώχνει το ποντίκι (το Περπάτημα περπατά)
+P:Co-op	Συνεργασία
+P:Versus	Αναμέτρηση
+P:Co-op Options	Επιλογές συνεργασίας
+P:Difficulty:	Δυσκολία:
+P:Easy	Εύκολη
+P:Normal	Κανονική
+P:Expert	Έμπειρος
+P:Impossible	Αδύνατη
+P:Impossible:	Αδύνατη:
+P:Player Icons:	Εικονίδια παικτών:
+P:Camera Zoom:	Ζουμ κάμερας:
+P:Wide	Ευρύ
+P:P2 Teleport:	Τηλεμεταφορά P2:
+P:P2 Device:	Συσκευή P2:
+P:P1 Device:	Συσκευή P1:
+P:P2 Bot:	Bot P2:
+P:When Idle	Σε αδράνεια
+P:Always	Πάντα
+P:Pickups:	Αντικείμενα:
+P:Double	Διπλά
+P:P2 Controls	Χειρισμός P2
+P:New Game	Νέο παιχνίδι
+P:Load Game	Φόρτωση
+P:Player 1:	Παίκτης 1:
+P:Player 2:	Παίκτης 2:
+P:Arena:	Αρένα:
+P:Rounds to win:	Γύροι για νίκη:
+P:First to 3	3 νίκες
+P:First to 5	5 νίκες
+P:First to 7	7 νίκες
+P:Deathmatch	Deathmatch
+P:Find the Shield	Βρες την ασπίδα
+P:Keyboard & Mouse	Πληκτρολόγιο/ποντίκι
+P:Automatic ({1})	Αυτόματο ({1})
+P:Automatic (Keyboard & Mouse)	Αυτόματο (πληκτρολόγιο/ποντίκι)
+P:Automatic (none connected)	Αυτόματο (κανένα συνδεδεμένο)
+P:Controller {1} (not connected)	Χειριστήριο {1} (μη συνδεδεμένο)
+P:No controller connected	Κανένα συνδεδεμένο χειριστήριο
+P:Press A	Πάτησε A
+P:Already Beaten	Ήδη ολοκληρώθηκε
+P:Weathertop	Ανεμοκορφή
+P:Balin's Tomb	Τάφος του Μπάλιν
+P:Amon Hen	Άμον Χεν
+P:Fangorn Forest	Δάσος Φάνγκορν
+P:Gates of Moria	Πύλες της Μόρια
+P:Plains of Rohan	Πεδιάδες του Ρόχαν
+P:Road to Helm's Deep	Δρόμος για το Φαράγγι του Χελμ
+P:The Deeping Wall	Τείχος του Φαραγγιού
+P:The Breached Wall	Γκρεμισμένο τείχος
+P:Hornburg Courtyard	Αυλή του Χόρνμπουργκ
+P:Orthanc	Όρθανκ
+P:Orthanc Summit	Κορυφή του Όρθανκ
+P:Mount Doom	Όρος του Χαμού
+P:Aragorn	Άραγκορν
+P:Legolas	Λέγκολας
+P:Gimli	Γκίμλι
+P:Isildur	Ισίλντουρ
+P:Eomer	Έομερ
+P:Nazgul	Ναζγκούλ
+P:Shield Orc	Ορκ με ασπίδα
+P:FIGHT!	ΜΑΧΗ!
+P:PLAYER {1} WINS ROUND {2}	Ο ΠΑΙΚΤΗΣ {1} ΚΕΡΔΙΖΕΙ ΤΟΝ ΓΥΡΟ {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	Ο ΠΑΙΚΤΗΣ {1} ΚΕΡΔΙΖΕΙ ΤΟΝ ΑΓΩΝΑ  {2} - {3}
+P:ROUND {1}: A DRAW	ΓΥΡΟΣ {1}: ΙΣΟΠΑΛΙΑ
+P:P{1} GUARD BROKEN	P{1}: Η ΑΜΥΝΑ ΕΣΠΑΣΕ
+P:P{1}'S SHIELD CRACKS!	Η ΑΣΠΙΔΑ ΤΟΥ P{1} ΡΑΓΙΖΕΙ!
+P:P{1}'S SHIELD IS BROKEN!	Η ΑΣΠΙΔΑ ΤΟΥ P{1} ΕΣΠΑΣΕ!
+P:PLAYER {1} HAS THE SHIELD!	Ο ΠΑΙΚΤΗΣ {1} ΕΧΕΙ ΤΗΝ ΑΣΠΙΔΑ!
+P:P{1} RESPAWN {2}	P{1} ΕΠΙΣΤΡΟΦΗ ΣΕ {2}
+P:DOWN  RESPAWN {1}	ΕΠΕΣΕΣ  ΕΠΙΣΤΡΟΦΗ ΣΕ {1}
+P:MATCH RESULTS	ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΓΩΝΑ
+P:PLAYER {1} WINS  {2} - {3}	ΝΙΚΗΤΗΣ Ο ΠΑΙΚΤΗΣ {1}  {2} - {3}
+P:ROUNDS WON	ΓΥΡΟΙ ΠΟΥ ΚΕΡΔΙΣΕ
+P:HITS LANDED	ΕΥΣΤΟΧΑ ΧΤΥΠΗΜΑΤΑ
+P:DAMAGE DEALT	ΖΗΜΙΑ ΠΟΥ ΠΡΟΚΑΛΕΣΕ
+P:BIGGEST HIT	ΔΥΝΑΤΟΤΕΡΟ ΧΤΥΠΗΜΑ
+P:ARROWS ON TARGET	ΒΕΛΗ ΣΤΟ ΣΤΟΧΟ
+P:FASTEST ROUND	ΤΑΧΥΤΕΡΟΣ ΓΥΡΟΣ
+P:TIMES DOWNED	ΦΟΡΕΣ ΠΟΥ ΕΠΕΣΕ
+P:SHARPSHOOTER: PLAYER {1}	ΣΚΟΠΕΥΤΗΣ: ΠΑΙΚΤΗΣ {1}
+P:HEAVY HITTER: PLAYER {1}	ΒΑΡΥ ΧΕΡΙ: ΠΑΙΚΤΗΣ {1}
+P:IRON WALL: PLAYER {1}	ΣΙΔΕΡΕΝΙΟ ΤΕΙΧΟΣ: ΠΑΙΚΤΗΣ {1}
+P:SPEED DEMON: PLAYER {1}	ΑΣΤΡΑΠΗ: ΠΑΙΚΤΗΣ {1}
+P:BRAWLER: PLAYER {1}	ΚΑΒΓΑΤΖΗΣ: ΠΑΙΚΤΗΣ {1}
+P:RELENTLESS: PLAYER {1}	ΑΝΗΛΕΗΣ: ΠΑΙΚΤΗΣ {1}
+P:Start Match	Έναρξη αγώνα
+P:ROUND {1}   P{2} {3} - {4} P{5}	ΓΥΡΟΣ {1}   P{2} {3} - {4} P{5}

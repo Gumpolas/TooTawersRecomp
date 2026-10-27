@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69 doku paketi oyunun
 L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin yazılamadı.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Açık (W'yi basılı tut: farenin ittiği yöne koşar; Yürü yürütür)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	W'yi basılı tut: farenin ittiği yöne koşar (Yürü yürütür)
+P:Co-op	Ortak Oyun
+P:Versus	Karşılaşma
+P:Co-op Options	Ortak Oyun Seçenekleri
+P:Difficulty:	Zorluk:
+P:Easy	Kolay
+P:Normal	Normal
+P:Expert	Uzman
+P:Impossible	İmkânsız
+P:Impossible:	İmkânsız:
+P:Player Icons:	Oyuncu Simgeleri:
+P:Camera Zoom:	Kamera Yakınlaştırma:
+P:Wide	Geniş
+P:P2 Teleport:	P2 Işınlanma:
+P:P2 Device:	P2 Cihazı:
+P:P1 Device:	P1 Cihazı:
+P:P2 Bot:	P2 Bot:
+P:When Idle	Boştayken
+P:Always	Her Zaman
+P:Pickups:	Nesneler:
+P:Double	Çift
+P:P2 Controls	P2 Kontrolleri
+P:New Game	Yeni Oyun
+P:Load Game	Oyun Yükle
+P:Player 1:	Oyuncu 1:
+P:Player 2:	Oyuncu 2:
+P:Arena:	Arena:
+P:Rounds to win:	Kazanmak İçin Tur:
+P:First to 3	3 Galibiyet
+P:First to 5	5 Galibiyet
+P:First to 7	7 Galibiyet
+P:Deathmatch	Ölüm Maçı
+P:Find the Shield	Kalkanı Bul
+P:Keyboard & Mouse	Klavye/Fare
+P:Automatic ({1})	Otomatik ({1})
+P:Automatic (Keyboard & Mouse)	Otomatik (Klavye/Fare)
+P:Automatic (none connected)	Otomatik (bağlı cihaz yok)
+P:Controller {1} (not connected)	Kumanda {1} (bağlı değil)
+P:No controller connected	Bağlı kumanda yok
+P:Press A	A'ya basın
+P:Already Beaten	Zaten tamamlandı
+P:Weathertop	Hava Tepesi
+P:Balin's Tomb	Balin'in Mezarı
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangorn Ormanı
+P:Gates of Moria	Moria Kapıları
+P:Plains of Rohan	Rohan Ovaları
+P:Road to Helm's Deep	Miğfer Dibi Yolu
+P:The Deeping Wall	Dip Duvarı
+P:The Breached Wall	Yıkılan Duvar
+P:Hornburg Courtyard	Hornburg Avlusu
+P:Orthanc	Orthanc
+P:Orthanc Summit	Orthanc Zirvesi
+P:Mount Doom	Hüküm Dağı
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Kalkanlı Ork
+P:FIGHT!	DÖVÜŞ!
+P:PLAYER {1} WINS ROUND {2}	{2}. TURU OYUNCU {1} KAZANDI
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	MAÇI OYUNCU {1} KAZANDI  {2} - {3}
+P:ROUND {1}: A DRAW	{1}. TUR: BERABERE
+P:P{1} GUARD BROKEN	P{1} SAVUNMASI KIRILDI
+P:P{1}'S SHIELD CRACKS!	P{1} KALKANI ÇATLIYOR!
+P:P{1}'S SHIELD IS BROKEN!	P{1} KALKANI KIRILDI!
+P:PLAYER {1} HAS THE SHIELD!	KALKAN OYUNCU {1} ELİNDE!
+P:P{1} RESPAWN {2}	P{1} DÖNÜŞ: {2}
+P:DOWN  RESPAWN {1}	YERDESİN  DÖNÜŞ: {1}
+P:MATCH RESULTS	MAÇ SONUÇLARI
+P:PLAYER {1} WINS  {2} - {3}	OYUNCU {1} KAZANDI  {2} - {3}
+P:ROUNDS WON	KAZANILAN TUR
+P:HITS LANDED	İSABETLİ VURUŞ
+P:DAMAGE DEALT	VERİLEN HASAR
+P:BIGGEST HIT	EN SERT VURUŞ
+P:ARROWS ON TARGET	İSABETLİ OK
+P:FASTEST ROUND	EN HIZLI TUR
+P:TIMES DOWNED	YERE DÜŞME
+P:SHARPSHOOTER: PLAYER {1}	KESKİN NİŞANCI: OYUNCU {1}
+P:HEAVY HITTER: PLAYER {1}	AĞIR YUMRUK: OYUNCU {1}
+P:IRON WALL: PLAYER {1}	DEMİR DUVAR: OYUNCU {1}
+P:SPEED DEMON: PLAYER {1}	HIZ CANAVARI: OYUNCU {1}
+P:BRAWLER: PLAYER {1}	KAVGACI: OYUNCU {1}
+P:RELENTLESS: PLAYER {1}	AMANSIZ: OYUNCU {1}
+P:Start Match	Maçı Başlat
+P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. TUR   P{2} {3} - {4} P{5}

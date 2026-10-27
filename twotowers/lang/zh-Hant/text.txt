@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69 材質包不在遊
 L:Could not write textures_ultra/index.bin.	無法寫入 textures_ultra/index.bin。
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	開（按住 W：朝滑鼠推動的方向奔跑；步行鍵則步行）
 L:Hold W: he runs the way the mouse pushes (Walk walks)	按住 W：朝滑鼠推動的方向奔跑（步行鍵則步行）
+P:Co-op	合作模式
+P:Versus	對戰模式
+P:Co-op Options	合作選項
+P:Difficulty:	難度：
+P:Easy	簡單
+P:Normal	普通
+P:Expert	專家
+P:Impossible	不可能
+P:Impossible:	不可能：
+P:Player Icons:	玩家圖示：
+P:Camera Zoom:	鏡頭縮放：
+P:Wide	廣角
+P:P2 Teleport:	P2傳送：
+P:P2 Device:	P2裝置：
+P:P1 Device:	P1裝置：
+P:P2 Bot:	P2電腦代打：
+P:When Idle	閒置時
+P:Always	總是
+P:Pickups:	補給：
+P:Double	雙份
+P:P2 Controls	P2操作控制
+P:New Game	新遊戲
+P:Load Game	載入遊戲
+P:Player 1:	玩家1：
+P:Player 2:	玩家2：
+P:Arena:	場地：
+P:Rounds to win:	獲勝局數：
+P:First to 3	先贏3局
+P:First to 5	先贏5局
+P:First to 7	先贏7局
+P:Deathmatch	死鬥
+P:Find the Shield	尋找盾牌
+P:Keyboard & Mouse	鍵盤／滑鼠
+P:Automatic ({1})	自動（{1}）
+P:Automatic (Keyboard & Mouse)	自動（鍵盤／滑鼠）
+P:Automatic (none connected)	自動（未連接）
+P:Controller {1} (not connected)	控制器{1}（未連接）
+P:No controller connected	未連接控制器
+P:Press A	請按 A
+P:Already Beaten	已通關
+P:Weathertop	風雲頂
+P:Balin's Tomb	巴林之墓
+P:Amon Hen	阿蒙漢
+P:Fangorn Forest	法貢森林
+P:Gates of Moria	摩瑞亞之門
+P:Plains of Rohan	洛汗平原
+P:Road to Helm's Deep	聖盔谷之路
+P:The Deeping Wall	深溪牆
+P:The Breached Wall	城牆破口
+P:Hornburg Courtyard	號角堡中庭
+P:Orthanc	歐散克
+P:Orthanc Summit	歐散克之巔
+P:Mount Doom	末日火山
+P:Aragorn	亞拉岡
+P:Legolas	勒苟拉斯
+P:Gimli	金靂
+P:Isildur	埃西鐸
+P:Eomer	伊歐墨
+P:Nazgul	戒靈
+P:Shield Orc	持盾半獸人
+P:FIGHT!	開戰！
+P:PLAYER {1} WINS ROUND {2}	玩家{1}贏得第{2}回合
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	玩家{1}贏得比賽  {2} - {3}
+P:ROUND {1}: A DRAW	第{1}回合：平手
+P:P{1} GUARD BROKEN	P{1} 防禦被破
+P:P{1}'S SHIELD CRACKS!	P{1}的盾牌裂開了！
+P:P{1}'S SHIELD IS BROKEN!	P{1}的盾牌碎了！
+P:PLAYER {1} HAS THE SHIELD!	玩家{1}拿到了盾牌！
+P:P{1} RESPAWN {2}	P{1} 復活 {2}
+P:DOWN  RESPAWN {1}	倒下  復活 {1}
+P:MATCH RESULTS	比賽結果
+P:PLAYER {1} WINS  {2} - {3}	玩家{1}獲勝  {2} - {3}
+P:ROUNDS WON	獲勝回合
+P:HITS LANDED	命中次數
+P:DAMAGE DEALT	造成傷害
+P:BIGGEST HIT	最強一擊
+P:ARROWS ON TARGET	箭矢命中
+P:FASTEST ROUND	最快回合
+P:TIMES DOWNED	倒地次數
+P:SHARPSHOOTER: PLAYER {1}	神射手：玩家{1}
+P:HEAVY HITTER: PLAYER {1}	重擊手：玩家{1}
+P:IRON WALL: PLAYER {1}	鐵壁：玩家{1}
+P:SPEED DEMON: PLAYER {1}	速度狂魔：玩家{1}
+P:BRAWLER: PLAYER {1}	格鬥狂：玩家{1}
+P:RELENTLESS: PLAYER {1}	勢不可擋：玩家{1}
+P:Start Match	開始對戰
+P:ROUND {1}   P{2} {3} - {4} P{5}	第{1}回合   P{2} {3} - {4} P{5}

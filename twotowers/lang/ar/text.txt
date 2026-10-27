@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	حزمة الخامات G
 L:Could not write textures_ultra/index.bin.	تعذرت كتابة textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	تشغيل (اضغط مع الاستمرار على W: يركض حيث تدفع الفأرة؛ والمشي للمشي)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	اضغط مع الاستمرار على W: يركض حيث تدفع الفأرة (والمشي للمشي)
+P:Co-op	تعاوني
+P:Versus	مواجهة
+P:Co-op Options	خيارات اللعب التعاوني
+P:Difficulty:	الصعوبة:
+P:Easy	سهل
+P:Normal	عادي
+P:Expert	خبير
+P:Impossible	مستحيل
+P:Impossible:	مستحيل:
+P:Player Icons:	أيقونات اللاعبين:
+P:Camera Zoom:	تقريب الكاميرا:
+P:Wide	واسع
+P:P2 Teleport:	انتقال P2:
+P:P2 Device:	جهاز P2:
+P:P1 Device:	جهاز P1:
+P:P2 Bot:	بوت P2:
+P:When Idle	عند الخمول
+P:Always	دائمًا
+P:Pickups:	العناصر:
+P:Double	مضاعفة
+P:P2 Controls	تحكم P2
+P:New Game	لعبة جديدة
+P:Load Game	تحميل لعبة
+P:Player 1:	اللاعب 1:
+P:Player 2:	اللاعب 2:
+P:Arena:	الساحة:
+P:Rounds to win:	جولات الفوز:
+P:First to 3	أول من يفوز بـ3
+P:First to 5	أول من يفوز بـ5
+P:First to 7	أول من يفوز بـ7
+P:Deathmatch	قتال حتى الموت
+P:Find the Shield	ابحث عن الدرع
+P:Keyboard & Mouse	لوحة المفاتيح / الفأرة
+P:Automatic ({1})	تلقائي ({1})
+P:Automatic (Keyboard & Mouse)	تلقائي (لوحة المفاتيح / الفأرة)
+P:Automatic (none connected)	تلقائي (غير متصل)
+P:Controller {1} (not connected)	وحدة التحكم {1} (غير متصلة)
+P:No controller connected	لا توجد وحدة تحكم متصلة
+P:Press A	اضغط A
+P:Already Beaten	مكتملة مسبقًا
+P:Weathertop	ويذرتوب
+P:Balin's Tomb	ضريح بالين
+P:Amon Hen	آمون هين
+P:Fangorn Forest	غابة فانغورن
+P:Gates of Moria	بوابات موريا
+P:Plains of Rohan	سهول روهان
+P:Road to Helm's Deep	الطريق إلى هيلمز ديب
+P:The Deeping Wall	جدار ديبينغ
+P:The Breached Wall	الجدار المخترق
+P:Hornburg Courtyard	فناء هورنبرغ
+P:Orthanc	أورثانك
+P:Orthanc Summit	قمة أورثانك
+P:Mount Doom	جبل الهلاك
+P:Aragorn	أراغورن
+P:Legolas	ليغولاس
+P:Gimli	غيملي
+P:Isildur	إيسيلدور
+P:Eomer	إيومر
+P:Nazgul	نازغول
+P:Shield Orc	أورك بدرع
+P:FIGHT!	قاتل!
+P:PLAYER {1} WINS ROUND {2}	اللاعب {1} يفوز بالجولة {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	اللاعب {1} يفوز بالمباراة  {2} - {3}
+P:ROUND {1}: A DRAW	الجولة {1}: تعادل
+P:P{1} GUARD BROKEN	انكسر دفاع P{1}
+P:P{1}'S SHIELD CRACKS!	درع P{1} يتشقق!
+P:P{1}'S SHIELD IS BROKEN!	تحطم درع P{1}!
+P:PLAYER {1} HAS THE SHIELD!	الدرع مع اللاعب {1}!
+P:P{1} RESPAWN {2}	P{1} يعود خلال {2}
+P:DOWN  RESPAWN {1}	سقطت  العودة خلال {1}
+P:MATCH RESULTS	نتائج المباراة
+P:PLAYER {1} WINS  {2} - {3}	اللاعب {1} يفوز  {2} - {3}
+P:ROUNDS WON	الجولات المكسوبة
+P:HITS LANDED	الضربات الناجحة
+P:DAMAGE DEALT	الضرر المُلحق
+P:BIGGEST HIT	أقوى ضربة
+P:ARROWS ON TARGET	سهام أصابت الهدف
+P:FASTEST ROUND	أسرع جولة
+P:TIMES DOWNED	مرات السقوط
+P:SHARPSHOOTER: PLAYER {1}	القناص: اللاعب {1}
+P:HEAVY HITTER: PLAYER {1}	الضارب القوي: اللاعب {1}
+P:IRON WALL: PLAYER {1}	الجدار الحديدي: اللاعب {1}
+P:SPEED DEMON: PLAYER {1}	شيطان السرعة: اللاعب {1}
+P:BRAWLER: PLAYER {1}	المشاكس: اللاعب {1}
+P:RELENTLESS: PLAYER {1}	لا يرحم: اللاعب {1}
+P:Start Match	ابدأ المباراة
+P:ROUND {1}   P{2} {3} - {4} P{5}	الجولة {1}   P{2} {3} - {4} P{5}

@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	Пакета тексту
 L:Could not write textures_ultra/index.bin.	Не удалось записать textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Вкл. (удерживайте W: бежит туда, куда ведёт мышь; Шаг — идёт шагом)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Удерживайте W: бежит туда, куда ведёт мышь (Шаг — идёт шагом)
+P:Co-op	Кооператив
+P:Versus	Дуэль
+P:Co-op Options	Настройки кооператива
+P:Difficulty:	Сложность:
+P:Easy	Лёгкая
+P:Normal	Обычная
+P:Expert	Эксперт
+P:Impossible	Невозможная
+P:Impossible:	Невозможная:
+P:Player Icons:	Значки игроков:
+P:Camera Zoom:	Камера:
+P:Wide	Широкая
+P:P2 Teleport:	Телепорт P2:
+P:P2 Device:	Устройство P2:
+P:P1 Device:	Устройство P1:
+P:P2 Bot:	Бот P2:
+P:When Idle	При бездействии
+P:Always	Всегда
+P:Pickups:	Добыча:
+P:Double	Двойная
+P:P2 Controls	Управление P2
+P:New Game	Новая игра
+P:Load Game	Загрузить игру
+P:Player 1:	Игрок 1:
+P:Player 2:	Игрок 2:
+P:Arena:	Арена:
+P:Rounds to win:	Раундов для победы:
+P:First to 3	До 3 побед
+P:First to 5	До 5 побед
+P:First to 7	До 7 побед
+P:Deathmatch	Бой насмерть
+P:Find the Shield	Найди щит
+P:Keyboard & Mouse	Клавиатура и мышь
+P:Automatic ({1})	Авто ({1})
+P:Automatic (Keyboard & Mouse)	Авто (клавиатура и мышь)
+P:Automatic (none connected)	Авто (нет подключённых)
+P:Controller {1} (not connected)	Контроллер {1} (не подключён)
+P:No controller connected	Контроллер не подключён
+P:Press A	Нажмите A
+P:Already Beaten	Уже пройдено
+P:Weathertop	Заверть
+P:Balin's Tomb	Гробница Балина
+P:Amon Hen	Амон Хен
+P:Fangorn Forest	Лес Фангорн
+P:Gates of Moria	Ворота Мории
+P:Plains of Rohan	Равнины Рохана
+P:Road to Helm's Deep	Дорога к Хельмовой Пади
+P:The Deeping Wall	Стена Пади
+P:The Breached Wall	Пробитая стена
+P:Hornburg Courtyard	Двор Хорнбурга
+P:Orthanc	Ортханк
+P:Orthanc Summit	Вершина Ортханка
+P:Mount Doom	Роковая гора
+P:Aragorn	Арагорн
+P:Legolas	Леголас
+P:Gimli	Гимли
+P:Isildur	Исильдур
+P:Eomer	Эомер
+P:Nazgul	Назгул
+P:Shield Orc	Орк со щитом
+P:FIGHT!	БОЙ!
+P:PLAYER {1} WINS ROUND {2}	ИГРОК {1} ВЫИГРАЛ РАУНД {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	ИГРОК {1} ВЫИГРАЛ МАТЧ  {2} - {3}
+P:ROUND {1}: A DRAW	РАУНД {1}: НИЧЬЯ
+P:P{1} GUARD BROKEN	ЗАЩИТА P{1} ПРОБИТА
+P:P{1}'S SHIELD CRACKS!	ЩИТ P{1} ТРЕСНУЛ!
+P:P{1}'S SHIELD IS BROKEN!	ЩИТ P{1} РАЗБИТ!
+P:PLAYER {1} HAS THE SHIELD!	ЩИТ У ИГРОКА {1}!
+P:P{1} RESPAWN {2}	P{1} ВОЗРОЖДЕНИЕ {2}
+P:DOWN  RESPAWN {1}	ВЫ ПОВЕРЖЕНЫ  ВОЗРОЖДЕНИЕ {1}
+P:MATCH RESULTS	ИТОГИ МАТЧА
+P:PLAYER {1} WINS  {2} - {3}	ПОБЕДИЛ ИГРОК {1}  {2} - {3}
+P:ROUNDS WON	ВЫИГРАНО РАУНДОВ
+P:HITS LANDED	ТОЧНЫЕ УДАРЫ
+P:DAMAGE DEALT	НАНЕСЁННЫЙ УРОН
+P:BIGGEST HIT	СИЛЬНЕЙШИЙ УДАР
+P:ARROWS ON TARGET	СТРЕЛ В ЦЕЛЬ
+P:FASTEST ROUND	САМЫЙ БЫСТРЫЙ РАУНД
+P:TIMES DOWNED	ПАДЕНИЙ
+P:SHARPSHOOTER: PLAYER {1}	МЕТКИЙ СТРЕЛОК: ИГРОК {1}
+P:HEAVY HITTER: PLAYER {1}	ТЯЖЁЛАЯ РУКА: ИГРОК {1}
+P:IRON WALL: PLAYER {1}	ЖЕЛЕЗНАЯ СТЕНА: ИГРОК {1}
+P:SPEED DEMON: PLAYER {1}	ДЕМОН СКОРОСТИ: ИГРОК {1}
+P:BRAWLER: PLAYER {1}	ЗАБИЯКА: ИГРОК {1}
+P:RELENTLESS: PLAYER {1}	НЕУМОЛИМЫЙ: ИГРОК {1}
+P:Start Match	Начать бой
+P:ROUND {1}   P{2} {3} - {4} P{5}	РАУНД {1}   P{2} {3} - {4} P{5}

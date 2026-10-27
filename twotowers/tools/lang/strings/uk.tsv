@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	Пакета тексту
 L:Could not write textures_ultra/index.bin.	Не вдалося записати textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Увімк. (утримуйте W: біжить туди, куди веде миша; Хода — іде кроком)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Утримуйте W: біжить туди, куди веде миша (Хода — іде кроком)
+P:Co-op	Кооператив
+P:Versus	Дуель
+P:Co-op Options	Параметри кооперативу
+P:Difficulty:	Складність:
+P:Easy	Легка
+P:Normal	Звичайна
+P:Expert	Експерт
+P:Impossible	Неможлива
+P:Impossible:	Неможлива:
+P:Player Icons:	Значки гравців:
+P:Camera Zoom:	Камера:
+P:Wide	Широка
+P:P2 Teleport:	Телепорт P2:
+P:P2 Device:	Пристрій P2:
+P:P1 Device:	Пристрій P1:
+P:P2 Bot:	Бот P2:
+P:When Idle	При бездіяльності
+P:Always	Завжди
+P:Pickups:	Здобич:
+P:Double	Подвійна
+P:P2 Controls	Керування P2
+P:New Game	Нова гра
+P:Load Game	Завантажити гру
+P:Player 1:	Гравець 1:
+P:Player 2:	Гравець 2:
+P:Arena:	Арена:
+P:Rounds to win:	Раундів до перемоги:
+P:First to 3	До 3 перемог
+P:First to 5	До 5 перемог
+P:First to 7	До 7 перемог
+P:Deathmatch	Бій на смерть
+P:Find the Shield	Знайди щит
+P:Keyboard & Mouse	Клавіатура й миша
+P:Automatic ({1})	Автоматично ({1})
+P:Automatic (Keyboard & Mouse)	Автоматично (клавіатура й миша)
+P:Automatic (none connected)	Автоматично (немає підключених)
+P:Controller {1} (not connected)	Контролер {1} (не підключено)
+P:No controller connected	Контролер не підключено
+P:Press A	Натисніть A
+P:Already Beaten	Уже пройдено
+P:Weathertop	Вітряна Вершина
+P:Balin's Tomb	Гробниця Баліна
+P:Amon Hen	Амон Ген
+P:Fangorn Forest	Ліс Фанґорн
+P:Gates of Moria	Брама Морії
+P:Plains of Rohan	Рівнини Рохану
+P:Road to Helm's Deep	Дорога до Гелмової Паді
+P:The Deeping Wall	Мур Паді
+P:The Breached Wall	Проламаний мур
+P:Hornburg Courtyard	Двір Горнбурга
+P:Orthanc	Ортханк
+P:Orthanc Summit	Вершина Ортханка
+P:Mount Doom	Фатальна гора
+P:Aragorn	Арагорн
+P:Legolas	Леголас
+P:Gimli	Ґімлі
+P:Isildur	Ісілдур
+P:Eomer	Еомер
+P:Nazgul	Назґул
+P:Shield Orc	Орк зі щитом
+P:FIGHT!	БІЙ!
+P:PLAYER {1} WINS ROUND {2}	ГРАВЕЦЬ {1} ВИГРАВ РАУНД {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	ГРАВЕЦЬ {1} ВИГРАВ МАТЧ  {2} - {3}
+P:ROUND {1}: A DRAW	РАУНД {1}: НІЧИЯ
+P:P{1} GUARD BROKEN	ЗАХИСТ P{1} ПРОБИТО
+P:P{1}'S SHIELD CRACKS!	ЩИТ P{1} ТРІСНУВ!
+P:P{1}'S SHIELD IS BROKEN!	ЩИТ P{1} РОЗБИТО!
+P:PLAYER {1} HAS THE SHIELD!	ЩИТ У ГРАВЦЯ {1}!
+P:P{1} RESPAWN {2}	P{1} ВІДРОДЖЕННЯ {2}
+P:DOWN  RESPAWN {1}	ВАС ПОВАЛЕНО  ВІДРОДЖЕННЯ {1}
+P:MATCH RESULTS	ПІДСУМКИ МАТЧУ
+P:PLAYER {1} WINS  {2} - {3}	ПЕРЕМІГ ГРАВЕЦЬ {1}  {2} - {3}
+P:ROUNDS WON	ВИГРАНО РАУНДІВ
+P:HITS LANDED	ВЛУЧНІ УДАРИ
+P:DAMAGE DEALT	ЗАВДАНА ШКОДА
+P:BIGGEST HIT	НАЙСИЛЬНІШИЙ УДАР
+P:ARROWS ON TARGET	СТРІЛ У ЦІЛЬ
+P:FASTEST ROUND	НАЙШВИДШИЙ РАУНД
+P:TIMES DOWNED	ПАДІНЬ
+P:SHARPSHOOTER: PLAYER {1}	ВЛУЧНИЙ СТРІЛЕЦЬ: ГРАВЕЦЬ {1}
+P:HEAVY HITTER: PLAYER {1}	ВАЖКА РУКА: ГРАВЕЦЬ {1}
+P:IRON WALL: PLAYER {1}	ЗАЛІЗНА СТІНА: ГРАВЕЦЬ {1}
+P:SPEED DEMON: PLAYER {1}	ДЕМОН ШВИДКОСТІ: ГРАВЕЦЬ {1}
+P:BRAWLER: PLAYER {1}	ЗАБІЯКА: ГРАВЕЦЬ {1}
+P:RELENTLESS: PLAYER {1}	НЕВБЛАГАННИЙ: ГРАВЕЦЬ {1}
+P:Start Match	Почати бій
+P:ROUND {1}   P{2} {3} - {4} P{5}	РАУНД {1}   P{2} {3} - {4} P{5}

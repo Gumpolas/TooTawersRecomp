@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69 텍스처 팩이 �
 L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin을 쓸 수 없습니다.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	켜기 (W 누르고 있기: 마우스가 미는 방향으로 달림, 걷기는 걷기)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	W를 누르고 있으면 마우스가 미는 방향으로 달림 (걷기는 걷기)
+P:Co-op	협동
+P:Versus	대전
+P:Co-op Options	협동 옵션
+P:Difficulty:	난이도:
+P:Easy	쉬움
+P:Normal	보통
+P:Expert	전문가
+P:Impossible	불가능
+P:Impossible:	불가능:
+P:Player Icons:	플레이어 아이콘:
+P:Camera Zoom:	카메라 줌:
+P:Wide	넓게
+P:P2 Teleport:	P2 순간이동:
+P:P2 Device:	P2 입력 장치:
+P:P1 Device:	P1 입력 장치:
+P:P2 Bot:	P2 봇:
+P:When Idle	입력이 없을 때
+P:Always	항상
+P:Pickups:	아이템:
+P:Double	두 배
+P:P2 Controls	P2 조작
+P:New Game	새 게임
+P:Load Game	불러오기
+P:Player 1:	플레이어 1:
+P:Player 2:	플레이어 2:
+P:Arena:	경기장:
+P:Rounds to win:	승리 라운드:
+P:First to 3	3선승
+P:First to 5	5선승
+P:First to 7	7선승
+P:Deathmatch	데스매치
+P:Find the Shield	방패 찾기
+P:Keyboard & Mouse	키보드 / 마우스
+P:Automatic ({1})	자동 ({1})
+P:Automatic (Keyboard & Mouse)	자동 (키보드 / 마우스)
+P:Automatic (none connected)	자동 (연결 없음)
+P:Controller {1} (not connected)	컨트롤러 {1} (연결 안 됨)
+P:No controller connected	연결된 컨트롤러 없음
+P:Press A	A 누르기
+P:Already Beaten	이미 완료
+P:Weathertop	바람마루
+P:Balin's Tomb	발린의 무덤
+P:Amon Hen	아몬 헨
+P:Fangorn Forest	팡고른 숲
+P:Gates of Moria	모리아의 관문
+P:Plains of Rohan	로한 평원
+P:Road to Helm's Deep	헬름협곡 가는 길
+P:The Deeping Wall	협곡벽
+P:The Breached Wall	무너진 성벽
+P:Hornburg Courtyard	나팔산성 안뜰
+P:Orthanc	오르상크
+P:Orthanc Summit	오르상크 꼭대기
+P:Mount Doom	운명의 산
+P:Aragorn	아라곤
+P:Legolas	레골라스
+P:Gimli	김리
+P:Isildur	이실두르
+P:Eomer	에오메르
+P:Nazgul	나즈굴
+P:Shield Orc	방패 오크
+P:FIGHT!	파이트!
+P:PLAYER {1} WINS ROUND {2}	플레이어 {1} 라운드 {2} 승리
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	플레이어 {1} 경기 승리  {2} - {3}
+P:ROUND {1}: A DRAW	라운드 {1}: 무승부
+P:P{1} GUARD BROKEN	P{1} 가드 브레이크
+P:P{1}'S SHIELD CRACKS!	P{1}의 방패에 금이 갔다!
+P:P{1}'S SHIELD IS BROKEN!	P{1}의 방패가 부서졌다!
+P:PLAYER {1} HAS THE SHIELD!	플레이어 {1} 방패 획득!
+P:P{1} RESPAWN {2}	P{1} 부활 {2}
+P:DOWN  RESPAWN {1}	쓰러짐  부활 {1}
+P:MATCH RESULTS	경기 결과
+P:PLAYER {1} WINS  {2} - {3}	플레이어 {1} 승리  {2} - {3}
+P:ROUNDS WON	이긴 라운드
+P:HITS LANDED	적중 횟수
+P:DAMAGE DEALT	가한 피해
+P:BIGGEST HIT	최대 일격
+P:ARROWS ON TARGET	화살 명중
+P:FASTEST ROUND	최단 라운드
+P:TIMES DOWNED	쓰러진 횟수
+P:SHARPSHOOTER: PLAYER {1}	명사수: 플레이어 {1}
+P:HEAVY HITTER: PLAYER {1}	강타자: 플레이어 {1}
+P:IRON WALL: PLAYER {1}	철벽: 플레이어 {1}
+P:SPEED DEMON: PLAYER {1}	질풍: 플레이어 {1}
+P:BRAWLER: PLAYER {1}	싸움꾼: 플레이어 {1}
+P:RELENTLESS: PLAYER {1}	무자비: 플레이어 {1}
+P:Start Match	대전 시작
+P:ROUND {1}   P{2} {3} - {4} P{5}	라운드 {1}   P{2} {3} - {4} P{5}

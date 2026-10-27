@@ -1746,3 +1746,90 @@ L:The GLOS69 texture pack is not in the game's folder.	ไม่​มี​แ�
 L:Could not write textures_ultra/index.bin.	ไม่​สามารถ​เขียน textures_ultra/index.bin ได้
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	เปิด (กด​ค้าง W: วิ่ง​ไป​ทาง​ที่​เมาส์​ดัน เดิน​ช้า​จะ​เดิน​ช้า)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	กด​ค้าง W: วิ่ง​ไป​ทาง​ที่​เมาส์​ดัน (เดิน​ช้า​จะ​เดิน​ช้า)
+P:Co-op	ร่วม​มือ
+P:Versus	ประลอง
+P:Co-op Options	ตัว​เลือก​โหมด​ร่วม​มือ
+P:Difficulty:	ระดับ​ความ​ยาก:
+P:Easy	ง่าย
+P:Normal	ปกติ
+P:Expert	ผู้​เชี่ยวชาญ
+P:Impossible	เป็น​ไป​ไม่​ได้
+P:Impossible:	เป็น​ไป​ไม่​ได้:
+P:Player Icons:	ไอคอน​ผู้​เล่น:
+P:Camera Zoom:	ซูม​กล้อง:
+P:Wide	กว้าง
+P:P2 Teleport:	วาร์ป P2:
+P:P2 Device:	อุปกรณ์ P2:
+P:P1 Device:	อุปกรณ์ P1:
+P:P2 Bot:	บอท P2:
+P:When Idle	เมื่อ​ไม่​มี​การ​กด
+P:Always	ตลอด​เวลา
+P:Pickups:	ไอเทม:
+P:Double	สอง​เท่า
+P:P2 Controls	การ​ควบคุม P2
+P:New Game	เกม​ใหม่
+P:Load Game	โหลด​เกม
+P:Player 1:	ผู้​เล่น 1:
+P:Player 2:	ผู้​เล่น 2:
+P:Arena:	สนาม:
+P:Rounds to win:	รอบ​ที่​ต้อง​ชนะ:
+P:First to 3	ชนะ 3 รอบ​ก่อน
+P:First to 5	ชนะ 5 รอบ​ก่อน
+P:First to 7	ชนะ 7 รอบ​ก่อน
+P:Deathmatch	เดธ​แมตช์
+P:Find the Shield	ตาม​หา​โล่
+P:Keyboard & Mouse	คีย์บอร์ด / เมาส์
+P:Automatic ({1})	อัตโนมัติ ({1})
+P:Automatic (Keyboard & Mouse)	อัตโนมัติ (คีย์บอร์ด / เมาส์)
+P:Automatic (none connected)	อัตโนมัติ (ไม่​ได้​เชื่อม​ต่อ)
+P:Controller {1} (not connected)	คอนโทรลเลอร์ {1} (ไม่​ได้​เชื่อม​ต่อ)
+P:No controller connected	ไม่​มี​คอนโทรลเลอร์​เชื่อม​ต่อ
+P:Press A	กด A
+P:Already Beaten	เคย​ผ่าน​แล้ว
+P:Weathertop	เวเธอร์ท็อป
+P:Balin's Tomb	สุสาน​บาลิน
+P:Amon Hen	อามอน​เฮน
+P:Fangorn Forest	ป่า​ฟางกอร์น
+P:Gates of Moria	ประตู​โมเรีย
+P:Plains of Rohan	ทุ่ง​ราบ​โรฮัน
+P:Road to Helm's Deep	เส้น​ทาง​สู่​หุบผาเฮล์ม
+P:The Deeping Wall	กำแพง​ดีพปิง
+P:The Breached Wall	กำแพง​ที่​ถูก​เจาะ
+P:Hornburg Courtyard	ลาน​ฮอร์นเบิร์ก
+P:Orthanc	ออร์ธองค์
+P:Orthanc Summit	ยอด​ออร์ธองค์
+P:Mount Doom	ภูเขา​มรณะ
+P:Aragorn	อารากอร์น
+P:Legolas	เลโกลัส
+P:Gimli	กิมลี
+P:Isildur	อิซิลดูร์
+P:Eomer	เอโอเมอร์
+P:Nazgul	นาซกูล
+P:Shield Orc	ออร์ค​ถือ​โล่
+P:FIGHT!	สู้!
+P:PLAYER {1} WINS ROUND {2}	ผู้​เล่น {1} ชนะ​รอบ​ที่ {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	ผู้​เล่น {1} ชนะ​การ​แข่งขัน  {2} - {3}
+P:ROUND {1}: A DRAW	รอบ​ที่ {1}: เสมอ
+P:P{1} GUARD BROKEN	การ​ป้องกัน​ของ P{1} ถูก​ทำลาย
+P:P{1}'S SHIELD CRACKS!	โล่​ของ P{1} ร้าว!
+P:P{1}'S SHIELD IS BROKEN!	โล่​ของ P{1} แตก​แล้ว!
+P:PLAYER {1} HAS THE SHIELD!	ผู้​เล่น {1} ได้​โล่​แล้ว!
+P:P{1} RESPAWN {2}	P{1} เกิด​ใหม่​ใน {2}
+P:DOWN  RESPAWN {1}	ล้ม  เกิด​ใหม่​ใน {1}
+P:MATCH RESULTS	ผล​การ​แข่งขัน
+P:PLAYER {1} WINS  {2} - {3}	ผู้​เล่น {1} ชนะ  {2} - {3}
+P:ROUNDS WON	รอบ​ที่​ชนะ
+P:HITS LANDED	จำนวน​ครั้ง​ที่​โจมตี​โดน
+P:DAMAGE DEALT	ความ​เสียหาย​ที่​ทำ
+P:BIGGEST HIT	การ​โจมตี​ที่​แรง​ที่สุด
+P:ARROWS ON TARGET	ลูก​ธนู​ที่​เข้า​เป้า
+P:FASTEST ROUND	รอบ​ที่​เร็ว​ที่สุด
+P:TIMES DOWNED	จำนวน​ครั้ง​ที่​ล้ม
+P:SHARPSHOOTER: PLAYER {1}	จอม​แม่น​ธนู: ผู้​เล่น {1}
+P:HEAVY HITTER: PLAYER {1}	จอม​พลัง: ผู้​เล่น {1}
+P:IRON WALL: PLAYER {1}	กำแพง​เหล็ก: ผู้​เล่น {1}
+P:SPEED DEMON: PLAYER {1}	จอม​สปีด: ผู้​เล่น {1}
+P:BRAWLER: PLAYER {1}	นัก​บู๊: ผู้​เล่น {1}
+P:RELENTLESS: PLAYER {1}	ไม่​ลด​ละ: ผู้​เล่น {1}
+P:Start Match	เริ่ม​การ​ต่อสู้
+P:ROUND {1}   P{2} {3} - {4} P{5}	รอบ​ที่ {1}   P{2} {3} - {4} P{5}

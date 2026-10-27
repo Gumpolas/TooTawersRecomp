@@ -1387,7 +1387,10 @@ ULONGLONG GetTickCount64(void)
 {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    return (ULONGLONG)ts.tv_sec * 1000ULL + (ULONGLONG)ts.tv_nsec / 1000000ULL;
+    {   /* testing: RECOMP_UPTIME_MS=n -- the PC as if up n ms more (a Windows PC up 24.9 days has GetTickCount past 2^31) */
+        static long long off = -1; if (off < 0) { const char *e = getenv("RECOMP_UPTIME_MS"); off = e ? atoll(e) : 0; }
+        return (ULONGLONG)ts.tv_sec * 1000ULL + (ULONGLONG)ts.tv_nsec / 1000000ULL + (ULONGLONG)off;
+    }
 }
 
 DWORD GetTickCount(void) { return (DWORD)GetTickCount64(); }

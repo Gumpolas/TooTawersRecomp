@@ -1452,3 +1452,90 @@ P:Elrond	Elrond
 P:Sauron	Sauron
 P:Uruk-hai	Uruk-hai
 P:the left thumbstick	cn analog trái
+P:Co-op	Hp tác
+P:Versus	Ði kháng
+P:Co-op Options	Tùy chn hp tác
+P:Difficulty:	Ð khó:
+P:Easy	D
+P:Normal	Thng
+P:Expert	Chuyên gia
+P:Impossible	Bt kh thi
+P:Impossible:	Bt kh thi:
+P:Player Icons:	Biu tng ngi chi:
+P:Camera Zoom:	Thu phóng camera:
+P:Wide	Rng
+P:P2 Teleport:	Dch chuyn P2:
+P:P2 Device:	Thit b P2:
+P:P1 Device:	Thit b P1:
+P:P2 Bot:	Bot P2:
+P:When Idle	Khi không dùng
+P:Always	Luôn luôn
+P:Pickups:	Vt phm:
+P:Double	Gp ôi
+P:P2 Controls	Ðiu khin P2
+P:New Game	Game mi
+P:Load Game	Ti game
+P:Player 1:	Ngi chi 1:
+P:Player 2:	Ngi chi 2:
+P:Arena:	Ðu trng:
+P:Rounds to win:	S hip thng:
+P:First to 3	Thng trc 3
+P:First to 5	Thng trc 5
+P:First to 7	Thng trc 7
+P:Deathmatch	T chin
+P:Find the Shield	Tìm khiên
+P:Keyboard & Mouse	Bàn phím/chut
+P:Automatic ({1})	T ng ({1})
+P:Automatic (Keyboard & Mouse)	T ng (bàn phím/chut)
+P:Automatic (none connected)	T ng (cha kt ni)
+P:Controller {1} (not connected)	Tay cm {1} (cha kt ni)
+P:No controller connected	Cha kt ni tay cm
+P:Press A	Nhn A
+P:Already Beaten	Ðã hoàn thành
+P:Weathertop	Ðnh Gió
+P:Balin's Tomb	Lng m Balin
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Rng Fangorn
+P:Gates of Moria	Cng Moria
+P:Plains of Rohan	Ðng bng Rohan
+P:Road to Helm's Deep	Ðng n Thung lng Helm
+P:The Deeping Wall	Tng Deeping
+P:The Breached Wall	Tng b phá
+P:Hornburg Courtyard	Sân Hornburg
+P:Orthanc	Orthanc
+P:Orthanc Summit	Ðnh Orthanc
+P:Mount Doom	Núi Dit Vong
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Orc cm khiên
+P:FIGHT!	CHIN ÐU!
+P:PLAYER {1} WINS ROUND {2}	NGI CHI {1} THNG HIP {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	NGI CHI {1} THNG TRN  {2} - {3}
+P:ROUND {1}: A DRAW	HIP {1}: HÒA
+P:P{1} GUARD BROKEN	P{1} B PHÁ TH TH
+P:P{1}'S SHIELD CRACKS!	KHIÊN CA P{1} NT!
+P:P{1}'S SHIELD IS BROKEN!	KHIÊN CA P{1} ÐÃ V!
+P:PLAYER {1} HAS THE SHIELD!	NGI CHI {1} CÓ KHIÊN!
+P:P{1} RESPAWN {2}	P{1} HI SINH SAU {2}
+P:DOWN  RESPAWN {1}	GC NGÃ  HI SINH SAU {1}
+P:MATCH RESULTS	KT QU TRN ÐU
+P:PLAYER {1} WINS  {2} - {3}	NGI CHI {1} THNG  {2} - {3}
+P:ROUNDS WON	HIP THNG
+P:HITS LANDED	ÐÒN TRÚNG
+P:DAMAGE DEALT	SÁT THNG GÂY RA
+P:BIGGEST HIT	ÐÒN MNH NHT
+P:ARROWS ON TARGET	MI TÊN TRÚNG ÐÍCH
+P:FASTEST ROUND	HIP NHANH NHT
+P:TIMES DOWNED	S LN GC
+P:SHARPSHOOTER: PLAYER {1}	X TH: NGI CHI {1}
+P:HEAVY HITTER: PLAYER {1}	QU ÐM THÉP: NGI CHI {1}
+P:IRON WALL: PLAYER {1}	BC TNG THÉP: NGI CHI {1}
+P:SPEED DEMON: PLAYER {1}	THN TC: NGI CHI {1}
+P:BRAWLER: PLAYER {1}	ÐU S: NGI CHI {1}
+P:RELENTLESS: PLAYER {1}	KHÔNG KHOAN NHNG: NGI CHI {1}
+P:Start Match	Bt u trn
+P:ROUND {1}   P{2} {3} - {4} P{5}	HIP {1}   P{2} {3} - {4} P{5}

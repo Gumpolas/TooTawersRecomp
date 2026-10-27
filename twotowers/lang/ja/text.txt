@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69 テクスチャパ
 L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin を書き込めませんでした。
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	オン（W長押し：マウスで押した方向へ走る、歩くキーでは歩き）
 L:Hold W: he runs the way the mouse pushes (Walk walks)	W長押しでマウスで押した方向へ走る（歩くキーでは歩き）
+P:Co-op	協力プレイ
+P:Versus	対戦
+P:Co-op Options	協力プレイオプション
+P:Difficulty:	難易度：
+P:Easy	イージー
+P:Normal	ノーマル
+P:Expert	エキスパート
+P:Impossible	インポッシブル
+P:Impossible:	インポッシブル：
+P:Player Icons:	プレイヤーアイコン：
+P:Camera Zoom:	カメラズーム：
+P:Wide	ワイド
+P:P2 Teleport:	P2テレポート：
+P:P2 Device:	P2入力機器：
+P:P1 Device:	P1入力機器：
+P:P2 Bot:	P2ボット：
+P:When Idle	操作がない時
+P:Always	常時
+P:Pickups:	アイテム：
+P:Double	2人分
+P:P2 Controls	P2操作設定
+P:New Game	ニューゲーム
+P:Load Game	ロード
+P:Player 1:	プレイヤー1：
+P:Player 2:	プレイヤー2：
+P:Arena:	ステージ：
+P:Rounds to win:	勝利ラウンド数：
+P:First to 3	3本先取
+P:First to 5	5本先取
+P:First to 7	7本先取
+P:Deathmatch	デスマッチ
+P:Find the Shield	盾を探せ
+P:Keyboard & Mouse	キーボード／マウス
+P:Automatic ({1})	自動（{1}）
+P:Automatic (Keyboard & Mouse)	自動（キーボード／マウス）
+P:Automatic (none connected)	自動（未接続）
+P:Controller {1} (not connected)	コントローラー{1}（未接続）
+P:No controller connected	コントローラーが接続されていません
+P:Press A	Aを押す
+P:Already Beaten	クリア済み
+P:Weathertop	風見が丘
+P:Balin's Tomb	バーリンの墓
+P:Amon Hen	アモン・ヘン
+P:Fangorn Forest	ファンゴルンの森
+P:Gates of Moria	モリアの門
+P:Plains of Rohan	ローハンの平原
+P:Road to Helm's Deep	ヘルム峡谷への道
+P:The Deeping Wall	奥出での石垣
+P:The Breached Wall	破られた石垣
+P:Hornburg Courtyard	角笛城の中庭
+P:Orthanc	オルサンク
+P:Orthanc Summit	オルサンクの頂上
+P:Mount Doom	滅びの山
+P:Aragorn	アラゴルン
+P:Legolas	レゴラス
+P:Gimli	ギムリ
+P:Isildur	イシルドゥア
+P:Eomer	エオメル
+P:Nazgul	ナズグル
+P:Shield Orc	盾持ちオーク
+P:FIGHT!	ファイト！
+P:PLAYER {1} WINS ROUND {2}	ラウンド{2}：プレイヤー{1}の勝利
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	プレイヤー{1}が試合に勝利  {2} - {3}
+P:ROUND {1}: A DRAW	ラウンド{1}：引き分け
+P:P{1} GUARD BROKEN	P{1} ガードブレイク
+P:P{1}'S SHIELD CRACKS!	P{1}の盾にひびが！
+P:P{1}'S SHIELD IS BROKEN!	P{1}の盾が壊れた！
+P:PLAYER {1} HAS THE SHIELD!	プレイヤー{1}が盾を手に入れた！
+P:P{1} RESPAWN {2}	P{1} 復活まで{2}
+P:DOWN  RESPAWN {1}	ダウン  復活まで{1}
+P:MATCH RESULTS	試合結果
+P:PLAYER {1} WINS  {2} - {3}	プレイヤー{1}の勝利  {2} - {3}
+P:ROUNDS WON	勝利ラウンド
+P:HITS LANDED	ヒット数
+P:DAMAGE DEALT	与ダメージ
+P:BIGGEST HIT	最大ダメージ
+P:ARROWS ON TARGET	矢の命中数
+P:FASTEST ROUND	最速ラウンド
+P:TIMES DOWNED	ダウン回数
+P:SHARPSHOOTER: PLAYER {1}	名射手：プレイヤー{1}
+P:HEAVY HITTER: PLAYER {1}	剛腕：プレイヤー{1}
+P:IRON WALL: PLAYER {1}	鉄壁：プレイヤー{1}
+P:SPEED DEMON: PLAYER {1}	韋駄天：プレイヤー{1}
+P:BRAWLER: PLAYER {1}	喧嘩屋：プレイヤー{1}
+P:RELENTLESS: PLAYER {1}	容赦なし：プレイヤー{1}
+P:Start Match	対戦開始
+P:ROUND {1}   P{2} {3} - {4} P{5}	ラウンド{1}   P{2} {3} - {4} P{5}

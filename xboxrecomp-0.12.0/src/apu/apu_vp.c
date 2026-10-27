@@ -1398,6 +1398,7 @@ static void voice_process(MCPXAPUState *d,
  * Simplified single-threaded version (no worker threads initially)
  * ============================================================ */
 
+volatile int g_apu_list_n[3], g_apu_list_active[3];   /* (1.9.8, research) voices on each list, and of them active, at the last frame */
 void mcpx_apu_vp_frame(MCPXAPUState *d,
                         float mixbins[NUM_MIXBINS][NUM_SAMPLES_PER_FRAME])
 {
@@ -1410,12 +1411,17 @@ void mcpx_apu_vp_frame(MCPXAPUState *d,
         next = voice_list_regs[list].next;
 
         d->regs[current] = d->regs[top];
+        int cnt = 0, act = 0;
+        g_apu_list_n[list] = 0; g_apu_list_active[list] = 0;
 
         for (int i = 0; d->regs[current] != 0xFFFF; i++) {
             if (i >= MCPX_HW_MAX_VOICES) {
                 DPRINTF("Voice list contains invalid entry!\n");
                 break;
             }
+            cnt++;
+            if (voice_get_mask(d, (uint16_t)d->regs[current], NV_PAVS_VOICE_PAR_STATE, NV_PAVS_VOICE_PAR_STATE_ACTIVE_VOICE)) act++;
+            g_apu_list_n[list] = cnt; g_apu_list_active[list] = act;
 
             uint16_t v = (uint16_t)d->regs[current];
             d->regs[next] = voice_get_mask(d, v, NV_PAVS_VOICE_TAR_PITCH_LINK,

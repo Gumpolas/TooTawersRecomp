@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	חבילת הטקסטור
 L:Could not write textures_ultra/index.bin.	לא ניתן לכתוב את textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	פעיל (החזקת W: רץ לכיוון שהעכבר דוחף; הליכה – הולך)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	החזקת W: רץ לכיוון שהעכבר דוחף (הליכה – הולך)
+P:Co-op	שיתופי
+P:Versus	ראש בראש
+P:Co-op Options	אפשרויות משחק שיתופי
+P:Difficulty:	רמת קושי:
+P:Easy	קל
+P:Normal	רגיל
+P:Expert	מומחה
+P:Impossible	בלתי אפשרי
+P:Impossible:	בלתי אפשרי:
+P:Player Icons:	סמלי שחקנים:
+P:Camera Zoom:	זום מצלמה:
+P:Wide	רחב
+P:P2 Teleport:	שיגור P2:
+P:P2 Device:	התקן P2:
+P:P1 Device:	התקן P1:
+P:P2 Bot:	בוט P2:
+P:When Idle	כשאין פעילות
+P:Always	תמיד
+P:Pickups:	פריטים:
+P:Double	כפול
+P:P2 Controls	שליטה P2
+P:New Game	משחק חדש
+P:Load Game	טען משחק
+P:Player 1:	שחקן 1:
+P:Player 2:	שחקן 2:
+P:Arena:	זירה:
+P:Rounds to win:	סיבובים לניצחון:
+P:First to 3	הראשון ל-3
+P:First to 5	הראשון ל-5
+P:First to 7	הראשון ל-7
+P:Deathmatch	קרב עד המוות
+P:Find the Shield	מצא את המגן
+P:Keyboard & Mouse	מקלדת / עכבר
+P:Automatic ({1})	אוטומטי ({1})
+P:Automatic (Keyboard & Mouse)	אוטומטי (מקלדת / עכבר)
+P:Automatic (none connected)	אוטומטי (אין חיבור)
+P:Controller {1} (not connected)	בקר {1} (לא מחובר)
+P:No controller connected	אין בקר מחובר
+P:Press A	לחץ על A
+P:Already Beaten	כבר הושלם
+P:Weathertop	צריח הרוחות
+P:Balin's Tomb	קבר באלין
+P:Amon Hen	אמון הן
+P:Fangorn Forest	יער פאנגורן
+P:Gates of Moria	שערי מוריה
+P:Plains of Rohan	מישורי רוהאן
+P:Road to Helm's Deep	הדרך לערוץ הלם
+P:The Deeping Wall	חומת הערוץ
+P:The Breached Wall	החומה הפרוצה
+P:Hornburg Courtyard	חצר הורנבורג
+P:Orthanc	אורתנק
+P:Orthanc Summit	פסגת אורתנק
+P:Mount Doom	הר האבדון
+P:Aragorn	אראגורן
+P:Legolas	לגולס
+P:Gimli	גימלי
+P:Isildur	איסילדור
+P:Eomer	אאומר
+P:Nazgul	נזגול
+P:Shield Orc	אורק נושא מגן
+P:FIGHT!	הילחמו!
+P:PLAYER {1} WINS ROUND {2}	שחקן {1} ניצח בסיבוב {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	שחקן {1} ניצח במשחק  {2} - {3}
+P:ROUND {1}: A DRAW	סיבוב {1}: תיקו
+P:P{1} GUARD BROKEN	ההגנה של P{1} נשברה
+P:P{1}'S SHIELD CRACKS!	המגן של P{1} נסדק!
+P:P{1}'S SHIELD IS BROKEN!	המגן של P{1} נשבר!
+P:PLAYER {1} HAS THE SHIELD!	המגן אצל שחקן {1}!
+P:P{1} RESPAWN {2}	P{1} חוזר בעוד {2}
+P:DOWN  RESPAWN {1}	נפלת  חזרה בעוד {1}
+P:MATCH RESULTS	תוצאות המשחק
+P:PLAYER {1} WINS  {2} - {3}	שחקן {1} ניצח  {2} - {3}
+P:ROUNDS WON	סיבובים שנוצחו
+P:HITS LANDED	פגיעות
+P:DAMAGE DEALT	נזק שנגרם
+P:BIGGEST HIT	המכה החזקה ביותר
+P:ARROWS ON TARGET	חיצים שפגעו
+P:FASTEST ROUND	הסיבוב המהיר ביותר
+P:TIMES DOWNED	מספר נפילות
+P:SHARPSHOOTER: PLAYER {1}	צלף: שחקן {1}
+P:HEAVY HITTER: PLAYER {1}	יד כבדה: שחקן {1}
+P:IRON WALL: PLAYER {1}	חומת ברזל: שחקן {1}
+P:SPEED DEMON: PLAYER {1}	שד מהירות: שחקן {1}
+P:BRAWLER: PLAYER {1}	מתגושש: שחקן {1}
+P:RELENTLESS: PLAYER {1}	בלתי נלאה: שחקן {1}
+P:Start Match	התחל קרב
+P:ROUND {1}   P{2} {3} - {4} P{5}	סיבוב {1}   P{2} {3} - {4} P{5}

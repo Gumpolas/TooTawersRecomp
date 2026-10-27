@@ -758,6 +758,7 @@ typedef struct {
     long trev;               /* xbox_tex_rev when decoded */
     int uidx;                /* its Ultra textures picture, or -1 (nv2a_ultra.inc) */
     int redec;               /* decoded again with new content (a movie's frames, streamed pictures) */
+    uint32_t dec_ms;         /* (1.9.8) when it was last decoded (GetTickCount) */
 } TexCacheEnt;
 extern volatile uint32_t g_pb_runs;
 static TexCacheEnt s_texc[TEXC_SLOTS];
@@ -1102,7 +1103,15 @@ static const uint32_t *texc_get(const Texture *t)
         g_slow_dec_n++;
         if (px > g_slow_big_px) { g_slow_big_px = px; g_slow_big_w = t->width; g_slow_big_h = t->height; g_slow_big_fmt = t->color; g_slow_big_off = t->offset; g_slow_big_why = why; }
     }
-    if (e && e->trev == xbox_tex_rev) e->redec++;
+    /* (1.9.8) decoded again soon after the last time (a movie's frames, a picture the game keeps rewriting) counts; again
+     * after a while (a menu's or a level's file loaded again into the same memory) starts the count over. Counted
+     * forever, the menus' fonts and pictures went past 2 as the front end loaded its files again and again, and were
+     * never paired with their Ultra textures again -- the upscaled text "turning off by itself" (a playtest).
+     * RECOMP_TEX_REDEC_KEEP: as before */
+    if (e && e->trev == xbox_tex_rev) {
+        static int keep = -1; if (keep < 0) keep = getenv("RECOMP_TEX_REDEC_KEEP") != NULL;
+        if (!keep && GetTickCount() - e->dec_ms > 1500u) e->redec = 0; else e->redec++;
+    }
     if (e && e->gen == gen && e->trev == xbox_tex_rev && e->sum != sum && e->redec >= 2) s_tex_dyn[(t->offset >> 12) & 16383u] = 1;   /* (changed twice: not just a new level in the same memory) */
     if (!e) {
         e = victim;
@@ -1115,6 +1124,7 @@ static const uint32_t *texc_get(const Texture *t)
     e->sum = sum;
     e->gen = gen;
     e->trev = xbox_tex_rev;
+    e->dec_ms = GetTickCount();
     e->run = ep;
     { static uint32_t vc; e->ver = ++vc; s_texc_last_ver = e->ver; }
     e->last_use = s_texc_clock;

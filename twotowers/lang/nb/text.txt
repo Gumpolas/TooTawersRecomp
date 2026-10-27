@@ -1747,3 +1747,90 @@ L:The GLOS69 texture pack is not in the game's folder.	GLOS69-teksturpakken er i
 L:Could not write textures_ultra/index.bin.	Kunne ikke skrive textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	På (hold W: han løper dit musen skyver; Gå sakte går sakte)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Hold W: han løper dit musen skyver (Gå sakte går sakte)
+P:Co-op	Samarbeid
+P:Versus	Versus
+P:Co-op Options	Samarbeidsalternativer
+P:Difficulty:	Vanskelighetsgrad:
+P:Easy	Lett
+P:Normal	Normal
+P:Expert	Ekspert
+P:Impossible	Umulig
+P:Impossible:	Umulig:
+P:Player Icons:	Spillerikoner:
+P:Camera Zoom:	Kamerazoom:
+P:Wide	Vid
+P:P2 Teleport:	P2-teleport:
+P:P2 Device:	P2-enhet:
+P:P1 Device:	P1-enhet:
+P:P2 Bot:	P2-bot:
+P:When Idle	Ved inaktivitet
+P:Always	Alltid
+P:Pickups:	Påfyll:
+P:Double	Doble
+P:P2 Controls	P2-kontroller
+P:New Game	Nytt spill
+P:Load Game	Last inn spill
+P:Player 1:	Spiller 1:
+P:Player 2:	Spiller 2:
+P:Arena:	Arena:
+P:Rounds to win:	Runder for seier:
+P:First to 3	Først til 3
+P:First to 5	Først til 5
+P:First to 7	Først til 7
+P:Deathmatch	Deathmatch
+P:Find the Shield	Finn skjoldet
+P:Keyboard & Mouse	Tastatur/mus
+P:Automatic ({1})	Automatisk ({1})
+P:Automatic (Keyboard & Mouse)	Automatisk (tastatur/mus)
+P:Automatic (none connected)	Automatisk (ingen tilkoblet)
+P:Controller {1} (not connected)	Kontroller {1} (ikke tilkoblet)
+P:No controller connected	Ingen kontroller tilkoblet
+P:Press A	Trykk på A
+P:Already Beaten	Allerede fullført
+P:Weathertop	Vêrtopp
+P:Balin's Tomb	Balins grav
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangornskogen
+P:Gates of Moria	Morias porter
+P:Plains of Rohan	Rohans sletter
+P:Road to Helm's Deep	Veien til Helmsdypet
+P:The Deeping Wall	Dypingmuren
+P:The Breached Wall	Den brutte muren
+P:Hornburg Courtyard	Hornborgens borggård
+P:Orthanc	Orthanc
+P:Orthanc Summit	Toppen av Orthanc
+P:Mount Doom	Dommedagsfjellet
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Skjoldork
+P:FIGHT!	KJEMP!
+P:PLAYER {1} WINS ROUND {2}	SPILLER {1} VINNER RUNDE {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	SPILLER {1} VINNER KAMPEN  {2} - {3}
+P:ROUND {1}: A DRAW	RUNDE {1}: UAVGJORT
+P:P{1} GUARD BROKEN	P{1}: GARDEN BRUTT
+P:P{1}'S SHIELD CRACKS!	P{1}S SKJOLD SPREKKER!
+P:P{1}'S SHIELD IS BROKEN!	P{1}S SKJOLD ER KNUST!
+P:PLAYER {1} HAS THE SHIELD!	SPILLER {1} HAR SKJOLDET!
+P:P{1} RESPAWN {2}	P{1} TILBAKE OM {2}
+P:DOWN  RESPAWN {1}	NEDE  TILBAKE OM {1}
+P:MATCH RESULTS	KAMPRESULTATER
+P:PLAYER {1} WINS  {2} - {3}	SPILLER {1} VINNER  {2} - {3}
+P:ROUNDS WON	VUNNE RUNDER
+P:HITS LANDED	TREFF
+P:DAMAGE DEALT	PÅFØRT SKADE
+P:BIGGEST HIT	HARDESTE SLAG
+P:ARROWS ON TARGET	PILER I MÅL
+P:FASTEST ROUND	RASKESTE RUNDE
+P:TIMES DOWNED	GANGER FELT
+P:SHARPSHOOTER: PLAYER {1}	SKARPSKYTTER: SPILLER {1}
+P:HEAVY HITTER: PLAYER {1}	KRAFTKAR: SPILLER {1}
+P:IRON WALL: PLAYER {1}	JERNMUR: SPILLER {1}
+P:SPEED DEMON: PLAYER {1}	FARTSDJEVEL: SPILLER {1}
+P:BRAWLER: PLAYER {1}	SLÅSSKJEMPE: SPILLER {1}
+P:RELENTLESS: PLAYER {1}	UBØNNHØRLIG: SPILLER {1}
+P:Start Match	Start kamp
+P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDE {1}   P{2} {3} - {4} P{5}

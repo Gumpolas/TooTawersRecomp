@@ -1198,6 +1198,11 @@ uint64_t xbox_ReadTimeStampCounter(void)
             }
             if (sc > 0 && (double)ticks > after) ticks = (uint64_t)(after + ((double)ticks - after) * sc);
         }
+        {   /* testing: RECOMP_TSC_OFFSET=s -- the guest's clock starts s seconds on (a long session's clock at once) */
+            static double off = -1;
+            if (off < 0) { const char *e = getenv("RECOMP_TSC_OFFSET"); off = e ? atof(e) : 0; if (!(off > 0)) off = 0; }
+            if (off > 0) ticks += (uint64_t)(off * (double)freq.QuadPart);
+        }
         /* Split the scaling so a long run cannot overflow: whole seconds
          * first, then the remainder. */
         uint64_t secs = ticks / (uint64_t)freq.QuadPart;

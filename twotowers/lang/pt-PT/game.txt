@@ -1452,3 +1452,90 @@ P:Elrond	Elrond
 P:Sauron	Sauron
 P:Uruk-hai	Uruk-hai
 P:the left thumbstick	o manípulo esquerdo
+P:Co-op	Cooperativo
+P:Versus	Versus
+P:Co-op Options	Opções do Cooperativo
+P:Difficulty:	Dificuldade:
+P:Easy	Fácil
+P:Normal	Normal
+P:Expert	Perito
+P:Impossible	Impossível
+P:Impossible:	Impossível:
+P:Player Icons:	Ícones de Jogador:
+P:Camera Zoom:	Zoom da Câmara:
+P:Wide	Amplo
+P:P2 Teleport:	Teletransporte J2:
+P:P2 Device:	Dispositivo J2:
+P:P1 Device:	Dispositivo J1:
+P:P2 Bot:	Bot J2:
+P:When Idle	Se Inativo
+P:Always	Sempre
+P:Pickups:	Itens:
+P:Double	Duplos
+P:P2 Controls	Controlos J2
+P:New Game	Novo Jogo
+P:Load Game	Carregar Jogo
+P:Player 1:	Jogador 1:
+P:Player 2:	Jogador 2:
+P:Arena:	Arena:
+P:Rounds to win:	Rondas p/ Vencer:
+P:First to 3	Primeiro a 3
+P:First to 5	Primeiro a 5
+P:First to 7	Primeiro a 7
+P:Deathmatch	Deathmatch
+P:Find the Shield	Encontra o Escudo
+P:Keyboard & Mouse	Teclado e Rato
+P:Automatic ({1})	Automático ({1})
+P:Automatic (Keyboard & Mouse)	Automático (Teclado e Rato)
+P:Automatic (none connected)	Automático (nenhum ligado)
+P:Controller {1} (not connected)	Comando {1} (não ligado)
+P:No controller connected	Nenhum comando ligado
+P:Press A	Prime A
+P:Already Beaten	Já Concluído
+P:Weathertop	Cimo do Vento
+P:Balin's Tomb	Túmulo de Balin
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Floresta de Fangorn
+P:Gates of Moria	Portas de Moria
+P:Plains of Rohan	Planícies de Rohan
+P:Road to Helm's Deep	Caminho p/ o Abismo de Helm
+P:The Deeping Wall	A Muralha do Abismo
+P:The Breached Wall	Muralha Rompida
+P:Hornburg Courtyard	Pátio de Hornburg
+P:Orthanc	Orthanc
+P:Orthanc Summit	Cume de Orthanc
+P:Mount Doom	Montanha da Perdição
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Éomer
+P:Nazgul	Nazgûl
+P:Shield Orc	Orc com Escudo
+P:FIGHT!	LUTEM!
+P:PLAYER {1} WINS ROUND {2}	JOGADOR {1} VENCE A RONDA {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	JOGADOR {1} VENCE A PARTIDA  {2} - {3}
+P:ROUND {1}: A DRAW	RONDA {1}: EMPATE
+P:P{1} GUARD BROKEN	DEFESA DO J{1} QUEBRADA
+P:P{1}'S SHIELD CRACKS!	O ESCUDO DO J{1} ESTÁ A RACHAR!
+P:P{1}'S SHIELD IS BROKEN!	O ESCUDO DO J{1} PARTIU-SE!
+P:PLAYER {1} HAS THE SHIELD!	O JOGADOR {1} TEM O ESCUDO!
+P:P{1} RESPAWN {2}	J{1} VOLTA EM {2}
+P:DOWN  RESPAWN {1}	CAÍDO  VOLTAS EM {1}
+P:MATCH RESULTS	RESULTADOS DA PARTIDA
+P:PLAYER {1} WINS  {2} - {3}	JOGADOR {1} VENCE  {2} - {3}
+P:ROUNDS WON	RONDAS GANHAS
+P:HITS LANDED	GOLPES CERTEIROS
+P:DAMAGE DEALT	DANO CAUSADO
+P:BIGGEST HIT	MAIOR GOLPE
+P:ARROWS ON TARGET	FLECHAS NO ALVO
+P:FASTEST ROUND	RONDA MAIS RÁPIDA
+P:TIMES DOWNED	VEZES DERRUBADO
+P:SHARPSHOOTER: PLAYER {1}	ATIRADOR DE ELITE: JOGADOR {1}
+P:HEAVY HITTER: PLAYER {1}	MÃO PESADA: JOGADOR {1}
+P:IRON WALL: PLAYER {1}	MURALHA DE FERRO: JOGADOR {1}
+P:SPEED DEMON: PLAYER {1}	RELÂMPAGO: JOGADOR {1}
+P:BRAWLER: PLAYER {1}	ARRUACEIRO: JOGADOR {1}
+P:RELENTLESS: PLAYER {1}	IMPLACÁVEL: JOGADOR {1}
+P:Start Match	Iniciar Combate
+P:ROUND {1}   P{2} {3} - {4} P{5}	RONDA {1}   P{2} {3} - {4} P{5}

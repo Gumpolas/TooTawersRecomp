@@ -433,6 +433,59 @@ int tt_tr16(const char *en, uint16_t *out, int max)
     out[n] = 0;
     return n;
 }
+/* (1.9.8) a text with numbers in it (the co-op and Versus words: "PLAYER 2 WINS ROUND 3"): its numbers taken out as {1},
+ * {2}... ("PLAYER {1} WINS ROUND {2}"), that looked up, and the numbers put back in the language's places; no such key:
+ * tt_tr16 of the whole */
+static int put_tmpl(const uint16_t *v, int vn, const char args[][48], int na, uint16_t *out, int max)
+{
+    int i, n = 0;
+    for (i = 0; i < vn && n < max - 1; i++) {
+        if (v[i] == '{' && i + 2 < vn && v[i + 2] == '}' && v[i + 1] >= '1' && v[i + 1] <= '9' && v[i + 1] - '1' < na) {
+            const char *a = args[v[i + 1] - '1']; int k;
+            for (k = 0; a[k] && n < max - 1; k++) out[n++] = (uint8_t)a[k];
+            i += 2; continue;
+        }
+        out[n++] = v[i];
+    }
+    out[n] = 0;
+    return n;
+}
+int tt_tr16n(const char *en, uint16_t *out, int max)
+{
+    char k[600], args[6][48];
+    int na = 0, o = 2, i;
+    const Str16 *r;
+    if (max <= 0) return 0;
+    if (!en || !tt_lang_on()) return tt_tr16(en, out, max);
+    k[0] = 'P'; k[1] = ':';
+    for (i = 0; en[i] && o < (int)sizeof k - 4; ) {
+        if (en[i] >= '0' && en[i] <= '9' && na < 6) {
+            int j = 0;
+            while (en[i] >= '0' && en[i] <= '9' && j < 47) args[na][j++] = en[i++];
+            args[na][j] = 0;
+            k[o++] = '{'; k[o++] = (char)('1' + na); k[o++] = '}'; na++;
+            continue;
+        }
+        k[o++] = en[i++];
+    }
+    k[o] = 0;
+    if (!na || !(r = find_g(k))) return tt_tr16(en, out, max);
+    return put_tmpl(r->v, r->n, (const char (*)[48])args, na, out, max);
+}
+/* ...and a text with a name in it: tmpl's {1} the name (a device's: Latin-1 as it is) */
+int tt_tr16s(const char *tmpl, const char *a1, uint16_t *out, int max)
+{
+    char k[600], args[1][48];
+    const Str16 *r = NULL;
+    uint16_t u[300];
+    int n;
+    if (max <= 0) return 0;
+    snprintf(args[0], sizeof args[0], "%s", a1 ? a1 : "");
+    if (tmpl && tt_lang_on()) { snprintf(k, sizeof k, "P:%s", tmpl); r = find_g(k); }
+    if (r) return put_tmpl(r->v, r->n, (const char (*)[48])args, 1, out, max);
+    for (n = 0; tmpl && tmpl[n] && n < 299; n++) u[n] = (uint8_t)tmpl[n];
+    return put_tmpl(u, n, (const char (*)[48])args, 1, out, max);
+}
 /* a game string by its English (UTF-16 units): the language's, or NULL */
 static uint32_t fnv16(const uint16_t *s, int n)
 {
