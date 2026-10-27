@@ -140,7 +140,7 @@ static Skin s_skins[] = {
     { "sauron",  "Sauron",  W("00ISUL1.bfa"),  0x33B93016u, 0xCD95CCEEu, 0x1748140Cu, MAP(s_map_sauron), W("00ISUL1.bfa"), 0xAD71B240u, 0xB4F6DCDDu, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 1 },
     /* the black Uruk-hai: the Berserker (Fangorn, Helm's Deep), his great sword, his own attacks */
-    { "uruk",    "Uruk",    W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
+    { "uruk",    "Berserker", W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (no bow of his own: nothing in that hand) */
     /* (1.9.9) Saruman, in the character select after Sauron: the Orthanc Summit's (21ORTH2: his model of two parts, his 90-bone skeleton, his texture
      * EF4942FD -- the lookups his creation makes there, TT_LKLOG), his black staff (30028EA4); his shots a beam */
@@ -191,7 +191,7 @@ static Skin s_skins[] = {
 #define MENU_ANIM_KEY 1u
 #define UPG_FIG_KEY 9u   /* the upgrade screen's 3D figure (upgbigi.BFF: mesh 1050 / texture 1150 key 9) */
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
-#define N_SEL 8                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests and Saruman (1.9.9) */
+#define N_SEL 7                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests (1.9.9: Saruman is Versus-only again, a playtest) */
 #define N_EXTRA 15             /* (1.9.9: 15 with the other troll, player 2's in Troll Battle) */ /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
 #define SK_TROLL 9             /* the cave troll's skin (heroes_weapon_profile.h and the build's troll patches name 9 too) */
 /* (1.9.9) the cave troll's shots: Fangorn's trolls' log -- projectile 8, drawn (the level's dynamicProjectileObj, entry 8)
@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 142u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 145u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -652,14 +652,14 @@ static const AnimPools s_pools[] = {
     { "frodo",   { "34,33", "9", "41",               "43",         "176", "20",   "20", "27", "27", "175" }, 1.0f, "krp" },
     /* 25 es la reaccion del jefe atrapado en el arbol, no una caida.
      * Retargetear solo las caidas/levantadas del jugador; ataques propios. */
-    { "lurtz",   { "34,33", "9", "42,45,41",         "43,69",      "111", "187", "20", "", "", "188" }, 1.0f, "nt" },
+    { "lurtz",   { "34,33", "9", "45,74",            "43,69",      "111", "187", "20", "", "", "188" }, 1.0f, "nt" },
     /* (no parry of their own: the kick, or for Sauron a swing) */
     { "elrond",  { "34,33", "9", "66",                "66",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "krp" },
     { "sauron",  { "34,33", "2,0,1", "43,41",            "41,43",      "43",  "43",   "20", "27", "", "43" }, 0, "" },
     { "uruk",    { "34,33", "9", "104,43,69",         "43,69",      "69",  "110",  "20", "27", "24", "69" }, 0, "" },
     /* Saruman: no walk of his own (he stands on Orthanc): the hero's moves fitted to him ('m'); his casts */
     { "saruman", { "34,33", "", "64,62", "65,66", "20", "49", "22", "", "", "20" }, 1.0f, "kpn" },
-    { "urukcap", { "34,33", "9", "41", "43,172", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
+    { "urukcap", { "34,33", "9", "41", "172,69", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krp" },   /* (1.9.9: his own falls, the Uruk-hai's -- the hero's, retargeted, laid him flat in the air) */
     { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
     /* (Versus only) the elven warrior: his own swing, the hero's falls */
     { "elvenwarrior", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
@@ -710,7 +710,6 @@ static const char *s_menu_moves[N_SEL][3] = {   /* stance, chosen pose, confirm 
     { "34,33", "66,33", "66,33" },          /* elrond: his sword swing when chosen too (1.9.1; 33 is a stance: nothing moved) */
     { "34", "41,43", "43,41" },             /* sauron */
     { "34,33", "43,41", "41,43" },          /* uruk */
-    { "34,33", "106,34", "49,34" },         /* saruman: his own from Orthanc -- chosen, his long gesture (106, as he laughs); confirmed, his rising cast (49) */
 };
 /* the composed set's settings, for the cache name */
 static void hudammo_path(int sk, char *p2, size_t n);
@@ -897,6 +896,8 @@ static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0
 /* (a cutscene's clips, cine_clips_build: 255) the most rotation
  * keys a bone gets, and root position keys kept */
 static int s_rt_maxnt = 96, s_rt_maxpos = 64;
+static unsigned char *rt_ground_fix(const unsigned char *A, size_t alen, uint32_t rec, const unsigned char *G, size_t glen,
+                                    const unsigned char *o, size_t *plen, uint32_t dur, float vscale);
 static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t hs, const unsigned char *G, size_t glen,
                                    const uint8_t *map, int nmap, float scale, size_t *len)
 {
@@ -1038,6 +1039,15 @@ static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t
         wr32(o, 0x24, 0xFFFF); wr32(o, 0x28, (uint32_t)p); wr32(o, 0x2C, 0);
         wr32(o, 0x30, 0); wr32(o, 0x34, 0); wr32(o, 0x38, 0);
     }
+    {   /* (1.9.9) a fall or a hit: his lowest point kept where the hero's is (in proportion), by his root's height -- turned as
+         * the hero turns, his longer body lay in the air: the Uruk captain knocked down flat at another hero's chest, Lurtz the
+         * same (a playtest video). TT_RT_NOGROUND: as before */
+        int cl = anim_class((int)hs);
+        if ((cl == AC_KNOCK || cl == AC_HIT || cl == AC_DEATH) && !getenv("TT_RT_NOGROUND")) {
+            unsigned char *o2 = rt_ground_fix(A, alen, rec, G, glen, o, &p, dur, vscale);
+            if (o2) { free(o); o = o2; }
+        }
+    }
     *len = p;
     return o;
 }
@@ -1091,6 +1101,67 @@ static int rt_pose(const unsigned char *S, size_t len, const unsigned char *rec,
     }
     memcpy(s_pose_Q, Q, sizeof(Quat) * (size_t)nb);
     return nb;
+}
+/* (1.9.9) the lowest bone's height in set S's record at time t (1e9: none) */
+static float rt_lowest(const unsigned char *S, size_t len, const unsigned char *rec, size_t rlen, float t)
+{
+    static float P[128][3]; int n = rt_pose(S, len, rec, rlen, t, P), b; float lo = 1e9f;
+    for (b = 0; b < n; b++) if (P[b][2] < lo) lo = P[b][2];
+    return lo;
+}
+/* standing: the lowest bone at the start of his stance (34, else 0) */
+static float rt_stand_low(const unsigned char *S, size_t len)
+{
+    uint32_t tab = rd32(S, 0x10), ns = rd16(S, 6), r = ns > 34 ? rd32(S, tab + 4 * 34) : 0;
+    if (!r && ns) r = rd32(S, tab);
+    if (!r || r >= len) return 1e9f;
+    return rt_lowest(S, len, S + r, len - r, 0);
+}
+static unsigned char *rt_ground_fix(const unsigned char *A, size_t alen, uint32_t rec, const unsigned char *G, size_t glen,
+                                    const unsigned char *o, size_t *plen, uint32_t dur, float vscale)
+{
+    size_t olen = *plen, q; uint32_t gbt = rd32(o, 0x20), gn = rd32(G, 0x40 + 8), b, off0, nr0, np0, K, k;
+    float hl0 = rt_stand_low(A, alen), gl0 = rt_stand_low(G, glen), dz[64], most = 0;
+    /* (the hero's own falls keep him well off the floor -- lying, his lowest bone 1.8 over his standing feet; the guests' own
+     * lie about 0.9 over theirs (the Uruk-hai's, measured): half the hero's height, so he lies on the ground) */
+    float kf = getenv("TT_RT_GROUNDK") ? (float)atof(getenv("TT_RT_GROUNDK")) : 0.5f;
+    unsigned char *o2; int16_t px[64][3];
+    if (gn == 0 || gn > 128 || gbt + 4 * gn > olen || hl0 > 1e8f || gl0 > 1e8f || dur == 0) return NULL;
+    off0 = rd32(o, gbt); if (off0 + 4 > olen) return NULL;
+    nr0 = o[off0]; np0 = o[off0 + 1];
+    K = (uint32_t)s_rt_maxpos < 64u ? (uint32_t)s_rt_maxpos : 64u; { uint32_t want = dur / 33u + 2u; if (want < K) K = want; } if (K < 2) K = 2;
+    for (k = 0; k < K; k++) {
+        float t = (float)dur * (float)k / (float)(K - 1), hl = rt_lowest(A, alen, A + rec, alen - rec, t), gl = rt_lowest(G, glen, o, olen, t), v[3] = { 0, 0, 0 }, want;
+        if (hl > 1e8f || gl > 1e8f) return NULL;
+        want = gl0 + (hl - hl0) * vscale * kf;
+        dz[k] = want - gl; if (dz[k] > 3.0f) dz[k] = 3.0f; if (dz[k] < -3.0f) dz[k] = -3.0f;
+        if (fabsf(dz[k]) > fabsf(most)) most = dz[k];
+        if (np0) rt_sample(o + off0 + 4 + 8 * nr0, (int)np0, t, v);
+        px[k][0] = (int16_t)lroundf(v[0]); px[k][1] = (int16_t)lroundf(v[1]); px[k][2] = (int16_t)lroundf(v[2] + dz[k] * 256.0f);
+    }
+    if (fabsf(most) < 0.15f) return NULL;   /* (close enough already) */
+    o2 = (unsigned char *)calloc(1, olen + 8 * K + 16);
+    if (!o2) return NULL;
+    memcpy(o2, o, 0x40); q = 0x40;
+    {   uint32_t offs[128];
+        for (b = 0; b < gn; b++) {
+            uint32_t ob = rd32(o, gbt + 4 * b), nr = o[ob], np = o[ob + 1];
+            offs[b] = (uint32_t)q;
+            if (b == 0) {
+                o2[q] = (unsigned char)nr; o2[q + 1] = (unsigned char)K; q += 4;
+                memcpy(o2 + q, o + ob + 4, 8 * nr); q += 8 * nr;
+                for (k = 0; k < K; k++) { wr16(o2, q, (uint16_t)lroundf((float)dur * (float)k / (float)(K - 1))); wr16(o2, q + 2, (uint16_t)px[k][0]); wr16(o2, q + 4, (uint16_t)px[k][1]); wr16(o2, q + 6, (uint16_t)px[k][2]); q += 8; }
+            } else { memcpy(o2 + q, o + ob, 4 + 8 * (nr + np)); q += 4 + 8 * (nr + np); }
+        }
+        q = (q + 3) & ~(size_t)3;
+        {   size_t evo = q;
+            for (b = 0; b < gn; b++) { wr32(o2, q, offs[b]); q += 4; }
+            wr32(o2, 0x14, (uint32_t)q); wr32(o2, 0x1C, (uint32_t)evo); wr32(o2, 0x20, (uint32_t)evo); wr32(o2, 0x28, (uint32_t)q);
+        }
+    }
+    if (log_on()) tt_dbg("[HEROES]   ground: his lowest point kept to the hero's (moved up to %.2f)\n", most);
+    *plen = q;
+    return o2;
 }
 /* when a swing is at its fastest: the hand bone's speed relative to the
  * root, sampled every 33 ms; its time in ms, or -1 */
@@ -1817,11 +1888,12 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                    bone_travel(out + pos, n, 0), bone_travel(out + pos, n, 1), bone_travel(out + pos, n, 2), bone_travel(a, a5, 0), bone_travel(a, a5, 1), bone_travel(a, a5, 2));
         if (getenv("TT_ZSCAN") && !s_compose_menu) {   /* testing: each composed move's root height (lowest, and over the lowest bone), his and the hero's */
             static float PZ[128][3];
-            float mr = 1e9f, mg = 1e9f, hr = 1e9f, hg = 1e9f, t3; int nb4, b4;
+            float mr = 1e9f, mg = 1e9f, hr = 1e9f, hg = 1e9f, t3, lmin = 1e9f, lmax = -1e9f; int nb4, b4;
             for (t3 = 0; t3 <= (float)target; t3 += 33.0f) {
                 nb4 = rt_pose(out, cap, out + pos, n, t3, PZ);
-                if (nb4 > 0) { float lo4 = 1e9f; for (b4 = 0; b4 < nb4; b4++) if (PZ[b4][2] < lo4) lo4 = PZ[b4][2]; if (PZ[0][2] < mr) mr = PZ[0][2]; if (PZ[0][2] - lo4 < mg) mg = PZ[0][2] - lo4; }
+                if (nb4 > 0) { float lo4 = 1e9f; for (b4 = 0; b4 < nb4; b4++) if (PZ[b4][2] < lo4) lo4 = PZ[b4][2]; if (PZ[0][2] < mr) mr = PZ[0][2]; if (PZ[0][2] - lo4 < mg) mg = PZ[0][2] - lo4; if (lo4 < lmin) lmin = lo4; if (lo4 > lmax) lmax = lo4; }
             }
+            tt_dbg("[ZSCAN] slot %u: his lowest point from %.2f to %.2f (off the ground %.2f), at the end %.2f (the hero's: standing %.2f, at the end %.2f)\n", s, lmin, lmax, lmax - lmin, rt_lowest(out, cap, out + pos, n, (float)target), rt_stand_low(A, alen), rt_lowest(A, alen, a, a5, (float)rd32(a, 8)));
             for (t3 = 0; t3 <= (float)rd32(a, 8); t3 += 33.0f) {
                 nb4 = rt_pose(A, alen, a, a5, t3, PZ);
                 if (nb4 > 0) { float lo4 = 1e9f; for (b4 = 0; b4 < nb4; b4++) if (PZ[b4][2] < lo4) lo4 = PZ[b4][2]; if (PZ[0][2] < hr) hr = PZ[0][2]; if (PZ[0][2] - lo4 < hg) hg = PZ[0][2] - lo4; }
@@ -1864,6 +1936,11 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                     l2 = 0;
                     for (hq = tl0; hq < sz && hq < tl0 + 0x60; hq += 2) l2 += snprintf(hx + l2, sizeof hx - l2, "%04X ", rd16(S2, r + hq));
                     tt_dbg("[TAIL] %u tail %s\n", q, hx);
+                }
+                {   /* (1.9.9) how high his lowest point goes during it: off the ground */
+                    float lmx = -1e9f, t4; int b5, n5;
+                    for (t4 = 0; t4 <= (float)du; t4 += 33.0f) { float lo5 = 1e9f; n5 = rt_pose(S2, L2, S2 + r, L2 - r, t4, PP); for (b5 = 0; b5 < n5; b5++) if (PP[b5][2] < lo5) lo5 = PP[b5][2]; if (n5 > 0 && lo5 > lmx) lmx = lo5; }
+                    tt_dbg("[SLOTLIFT] %s %u highest low %.2f\n", w2 ? "his " : "hero", q, lmx);
                 }
                 tt_dbg("[SLOT] %s %u dur %u height %.2f -> %.2f (low %.2f -> %.2f) swing %.2f at %d reach %.2f root moves %.2f fwd %.2f side\n", w2 ? "his " : "hero", q, du, top[0] - lo[0], top[1] - lo[1], lo[0], lo[1],
                            sqrtf(spd), pk, reach, -(r1[1] - r0[1]), r1[0] - r0[0]);
@@ -3054,7 +3131,7 @@ static void wins_saved(const char *key)
 /* guest g's own unlock: Isildur's finishes of the secret level -- the 2nd
  * Boromir, 3rd Gandalf, 4th Frodo, 5th Lurtz, 6th Elrond, 7th the Uruk-hai,
  * 8th Sauron. TT_WINS=n: as if n finishes (testing, over extra_heroes=2) */
-static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7, 9 };   /* (1.9.9: Saruman after Sauron) */
+static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7 };
 static int guest_unlocked(int g)
 {
     if (getenv("TT_WINS")) return g >= 0 && g < N_SEL && atoi(getenv("TT_WINS")) >= s_unlock_at[g];
@@ -3081,7 +3158,6 @@ static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 40, 80 },                           /* Elrond: his face texture */
     { NULL, 0, 0, 0, 70, 100 },                          /* Sauron: his helm */
     { "stills3.BFF", 7, 120, 0, 520, 448 },              /* the Uruk-hai host */
-    { NULL, 0, 0, 0, 40, 80 },                           /* Saruman: his face texture */
 };
 static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] = {
     { s_name_boromir_fill, s_name_boromir_edge, NAME_BOROMIR_W, NAME_BOROMIR_H },
@@ -3091,7 +3167,6 @@ static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] 
     { s_name_elrond_fill, s_name_elrond_edge, NAME_ELROND_W, NAME_ELROND_H },
     { s_name_sauron_fill, s_name_sauron_edge, NAME_SAURON_W, NAME_SAURON_H },
     { s_name_urukhai_fill, s_name_urukhai_edge, NAME_URUKHAI_W, NAME_URUKHAI_H },
-    { s_name_saruman_fill, s_name_saruman_edge, NAME_SARUMAN_W, NAME_SARUMAN_H },
 };
 
 static void c565(uint16_t c, int *o) { o[0] = ((c >> 11) & 31) * 255 / 31; o[1] = ((c >> 5) & 63) * 255 / 63; o[2] = (c & 31) * 255 / 31; }
@@ -4174,7 +4249,6 @@ static const Confirm s_confirm[N_SEL] = {
     { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 },      /* Elrond: a sword */
     { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 },     /* Sauron: a heavy swing */
     { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 },      /* the Uruk-hai: his blade */
-    { VC("21ORTH2", 552, 1.0f, 1.0f), VC("21ORTH2", 2621, 1.0f, 2.5f), 0.4f },   /* Saruman: his staff's cast (552), then his laugh */
 };
 #undef VC
 /* a source at 22050 Hz with its pitch applied (resampled) */
@@ -4859,7 +4933,7 @@ static const UpgName s_upn_elrond[] = {
 static const UpgName s_upn_sauron[] = {
     { "Isildur's Swift Terror", "Sauron's Dance" }, { "Isildur's Deliverance", "The One Ring's Will" }, { "Isildur's Death Charge", "Dark Lord's Charge" }, { "Isildur's Gambit", "Annatar's Gambit" }, { "Isildur's War Rush", "Mordor War Rush" }, { "Isildur's Judgment", "Eye of Sauron" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Cast like the Dark Bolt, the fire of Barad-dur does serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "The flames of Mount Doom do terrible damage.  (Requires Hellfire)" }, { "Fire with the A button", "Cast with the A button" }, { "Isildur's", "Sauron's" }, { "Ranger Fury", "Dark Fury" }, { "Sword Parry", "Mace Parry" }, { "Dunedain Bow", "Dark Bolt" }, { "Rohan Bow", "Hellfire" }, { "Gondor Bow", "Doom Fire" }, { "Strength of the Stewards", "Strength of Barad-dur" }, { "Strength of Isildur", "Strength of Mordor" }, { "Strength of Elendil", "Might of the Ring" }, { "Strength of the Argonath", "Strength of Mount Doom" }, { "Wilderness Rage", "Mordor Rage" }, { "Master Swordsman", "Master of Maces" }, { "Wrath of Numenor", "Wrath of Mordor" }, { "Bane of Saruman", "Bane of Elves" }, { NULL, NULL } };
 static const UpgName s_upn_uruk[] = {
-    { "Isildur's Swift Terror", "Berserker Frenzy" }, { "Isildur's Deliverance", "Torch of the Deep" }, { "Isildur's Death Charge", "Deeping Wall Charge" }, { "Isildur's Gambit", "Uruk-hai Gambit" }, { "Isildur's War Rush", "Siege Rush" }, { "Isildur's Judgment", "Wrath of the Pits" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Thrown like Crag Rocks, these rocks from the pits do serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Molten rocks do terrible damage.  (Requires War Rocks)" }, { "Fire with the A button", "Hurl with the A button" }, { "Isildur's", "Uruk's" }, { "Ranger Fury", "Uruk Fury" }, { "Sword Parry", "Blade Parry" }, { "Dunedain Bow", "Crag Rocks" }, { "Rohan Bow", "War Rocks" }, { "Gondor Bow", "Lava Rocks" }, { "Strength of the Stewards", "Strength of Isengard" }, { "Strength of Isildur", "Might of the Pits" }, { "Strength of Elendil", "Strength of Saruman" }, { "Strength of the Argonath", "Strength of the Uruk-hai" }, { "Wilderness Rage", "Berserker Rage" }, { "Master Swordsman", "Master Berserker" }, { "Wrath of Numenor", "Wrath of Orthanc" }, { NULL, NULL } };
+    { "Isildur's Swift Terror", "Berserker Frenzy" }, { "Isildur's Deliverance", "Torch of the Deep" }, { "Isildur's Death Charge", "Deeping Wall Charge" }, { "Isildur's Gambit", "Berserker Gambit" }, { "Isildur's War Rush", "Siege Rush" }, { "Isildur's Judgment", "Wrath of the Pits" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Thrown like Crag Rocks, these rocks from the pits do serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Molten rocks do terrible damage.  (Requires War Rocks)" }, { "Fire with the A button", "Hurl with the A button" }, { "Isildur's", "Berserker's" }, { "Ranger Fury", "Berserker Fury" }, { "Sword Parry", "Blade Parry" }, { "Dunedain Bow", "Crag Rocks" }, { "Rohan Bow", "War Rocks" }, { "Gondor Bow", "Lava Rocks" }, { "Strength of the Stewards", "Strength of Isengard" }, { "Strength of Isildur", "Might of the Pits" }, { "Strength of Elendil", "Strength of Saruman" }, { "Strength of the Argonath", "Strength of the Berserker" }, { "Wilderness Rage", "Berserker Rage" }, { "Master Swordsman", "Master Berserker" }, { "Wrath of Numenor", "Wrath of Orthanc" }, { NULL, NULL } };
 #include "heroes_ampliacion_textos.inc"
 static const UpgName *upn_list(int g)
 {
@@ -5535,7 +5609,7 @@ static void hero4_actor(int g)
 /* the number place p's character answers to now */
 /* the carousel's order of the extra heroes (1.8: Sauron last, after the
  * Uruk-hai): place 4 + i holds guest s_place_order[i] */
-static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5, 7 };
+static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5 };
 static int place_actor(int p) { return p >= 4 && p < 4 + N_SEL ? 4 + s_place_order[p - 4] : p; }
 static int guest_place(int g) { int i; for (i = 0; i < N_SEL; i++) if (s_place_order[i] == g) return 4 + i; return 4 + g; }
 static uint32_t aid(int p) { int q = place_actor(p); return s_actor[q] ? G32(s_actor[q] + 0x1B8) : (uint32_t)q; }
@@ -5821,7 +5895,7 @@ static void layout(uint32_t menu)
         {
             /* Lurtz is a head taller than the others: a step further back,
              * so that his name above him stays clear */
-            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f, 0.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f, 0.1f };   /* the tall ones further back */
+            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f };   /* the tall ones further back */
             /* eight round a ring made for four: a wider ring (its front
              * where the four's front is, the ring's centre moved back), so
              * they stand further apart */

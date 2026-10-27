@@ -2867,3 +2867,35 @@ twotowers/src/lang.c, setup_launcher.cpp, main.c, menus.c
     launcher's interface-language and DLSS 5 buttons, the DLSS 5 hooks and
     the USA-XBE-only check taken out (dlss5.inc, lang_fmv.inc,
     xbe_version.inc removed).
+
+-- 1.9.9: Versus falls, player 2's move names, the Berserker, Lurtz and the captain on the ground --
+twotowers/src/twotowers_manual.c
+  - Versus: none of the co-op's rules that put player 2 beside player 1
+    (start of play, catch-up, a fall below him, player 1's jump, the
+    pathmap edge, the leash). They undid the arena's spacing and wrote
+    player 1's height at a spot on other ground: under a rise there, a
+    hero fell through the map and the screen went black (Fangorn).
+  - A hero set on a new spot (the spread at the start, going on in the
+    bigger arenas) is put TT_VS_LIFT (8) units over the higher of the two
+    and drops onto the ground there.
+  - The edge guard: the spot he is put back on counts as safe only once
+    he stands there; put back and fallen again at once, beside the other.
+  - Only a kick off a ledge ends a round (within TT_VS_KICKFALLMS, 4 s,
+    of the other's kick); a hero who falls on his own is put back.
+  - Player 2's special move name: 0xCCB30 hooked -- raised in his
+    context it is his, shown on his side; a retail hero's own name for
+    the move (the game's table), a guest's from heroes.c. The old check
+    waited for the shown flag, which comes a tick later, and missed all.
+  - (test) TT_VS_TESTROUND, TT_COOP_P2NAMETEST.
+twotowers/src/heroes.c
+  - Saruman is Versus-only again (the carousel back to seven).
+  - The Uruk-hai is the Berserker: his name, his name picture
+    (tools/names), Versus' list and his upgrade names.
+  - Retargeted falls and hits keep his lowest point at half the hero's
+    height over the floor (rt_ground_fix, TT_RT_GROUNDK, TT_RT_NOGROUND):
+    Lurtz lay flat in the air (lowest bone 3.7 over the floor, now 1.6).
+  - Lurtz's light attacks 45 and 74 (his 41/42 are a leap, 1.8 off the
+    ground); the captain's heavies 172 and 69 (43 left the ground), his
+    own falls (the Uruk-hai's) instead of the hero's.
+  - (test) TT_ZSCAN and TT_SLOTSCAN print how far each move leaves the
+    ground.

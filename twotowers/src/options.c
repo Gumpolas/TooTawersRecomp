@@ -312,7 +312,7 @@ static int s_vsmenu;   /* the Co-op menu page shows Versus' */
 static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c and the co-op, title) */
     { "aragorn", "Aragorn" }, { "legolas", "Legolas" }, { "gimli", "Gimli" }, { "isildur", "Isildur" },
     { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
-    { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Uruk-hai" },
+    { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Berserker" },
     { "troll", "Cave Troll" }, { "urukcap", "Uruk Captain" }, { "saruman", "Saruman" },   /* (1.9.9) */
     { "elvenwarrior", "Elven Warrior" },
     { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the elven warrior and the last three: Versus only) */
