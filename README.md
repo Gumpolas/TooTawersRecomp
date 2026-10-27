@@ -36,6 +36,30 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes.
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
+## What's new in 1.9.9
+
+### Six more extra heroes, by The128ReBits
+With [The128ReBits](https://github.com/The128ReBits)' Definitive Mod R8 (PR #11). Thank you!
+
+- **New playable heroes** built from the disc's own characters: an **Elf Warrior**, an **Elf Archer**, the **Cave Troll**, a **Rohan Captain**, an **Uruk Captain** and **Gandalf the White**, each with his own moves, weapons and records (Extra heroes mod on).
+- They work in the **campaign**, as **co-op player 2** and in **Versus**.
+- **Better animations** for the extra heroes: decoded as the Xbox does, so the first seven move better too.
+- **Languages:** text, subtitles, in-game voices, cutscene voices and films can be chosen apart; community film subtitles; the Spanish, Italian, French and German voices on the USA disc.
+- **Saves** are kept in a `saves` folder beside the game. The ones you had are copied there the first time (the originals stay where they were).
+
+### Linux AppImage
+- `TwoTowers-Recompiled-v1.9.9-x86_64.AppImage`: one file with SDL2 inside (used when your system has none). Make it executable (`chmod +x`, or Properties > Permissions) and run it; the first time it asks for your disc image.
+- The game's folder (settings, saves, log, game files) is `TwoTowers-Recompiled` beside the AppImage, or `~/.local/share/TwoTowers-Recompiled` when that can't be written. A newer AppImage updates the program there and keeps your saves and settings.
+
+### Fixes
+- **Co-op:** player 2 as Legolas, Aragorn or Isildur hits enemies and kicks the ladders down again beside a different player 1 hero (on the Deeping Wall only Gimli and the extra heroes could).
+
+## Tested (1.9.9)
+- Linux (OpenGL): the six new heroes solo on the Deeping Wall, as co-op player 2 with the P2 Bot, and as Versus player 2 (built, swinging); player 2 Legolas and Aragorn on the Deeping Wall.
+- Linux: the AppImage's game folder and its SDL2, with the system's and with its own.
+- Windows, Linux and macOS builds compile.
+- Not tested: the AppImage on a real desktop; the macOS build on a Mac.
+
 ## What's new in 1.9.8
 
 ### Co-op fixes

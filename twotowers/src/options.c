@@ -314,7 +314,7 @@ static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c an
     { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
     { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Uruk-hai" },
     { "elvenwarrior", "Elf Warrior" }, { "elvenarcher", "Elf Archer" }, { "troll", "Cave Troll" },   /* (1.9.9, The128ReBits' six) */
-    { "rohan", "Rohan Soldier" }, { "urukcap", "Uruk Captain" }, { "gandalfwhite", "Gandalf the White" },
+    { "rohan", "Rohan Captain" }, { "urukcap", "Uruk Captain" }, { "gandalfwhite", "Gandalf the White" },
     { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the last three: Versus only) */
 static int s_vs_goal_i = 1;   /* (1.9.7) rounds to win: 3, 5, 7 */
 static const char *const s_vs_goals[3] = { "First to 3", "First to 5", "First to 7" };

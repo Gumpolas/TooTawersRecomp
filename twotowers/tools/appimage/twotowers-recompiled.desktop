@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=The Two Towers Recompiled
+Comment=The Lord of the Rings: The Two Towers, recompiled for the PC
+Exec=AppRun %F
+Icon=twotowers
+Categories=Game;ActionGame;
+Terminal=false

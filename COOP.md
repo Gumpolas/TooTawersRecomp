@@ -54,6 +54,11 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 - **Extra heroes as player 2** *(1.9.8)*: built and drawn in every level, also in Fangorn Forest, the Westfold and
   with player 1 Legolas; his blows on a hand he has no weapon in land on his own weapon, and they are tested for hits
   as his swings.
+- **The128ReBits' heroes as player 2** *(1.9.9)*: the Elf Warrior, the Elf Archer, the Cave Troll, the Rohan Captain,
+  the Uruk Captain and Gandalf the White can be player 2 in every level, as the first seven.
+- **Player 2 as Legolas, Aragorn or Isildur** *(1.9.9)*: beside a different player 1 hero, his blows land and he kicks
+  ladders down again (he moves in player 1's hero's machine, which kept his attack flag down for most of his swings:
+  on the Deeping Wall only Gimli and the extra heroes hit anything). TT_COOP_P2ATKFLAGGUEST: as 1.9.8.
 - **Explosives** *(1.9.8)*: player 2's shots set off the Westfold's bomb stacks and carts, as player 1's do.
 - **After a level:** player 1's stats, player 2's stats, player 1's shop, player 2's shop, then the save. Player 2's
   experience and purchases are saved in their hero's record and come back when the save is loaded.
@@ -63,7 +68,7 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 Player 1 against player 2, one on one, on the co-op's two heroes.
 
 - **Starting:** the main menu's **Versus** (under Co-op). Choose each player's hero and the arena, then **Start**.
-  Heroes: Aragorn, Legolas, Gimli and Isildur, plus the seven extra heroes and Versus' own three when the Extra
+  Heroes: Aragorn, Legolas, Gimli and Isildur, plus the thirteen extra heroes and Versus' own three when the Extra
   heroes mod is on (both players can't be the same hero; on Weathertop player 1 is Aragorn or an extra hero).
 - **Mode:** Deathmatch on every arena. **Rounds to win** (the Versus menu): 3, 5 or 7.
 - **Versus-only heroes** (not in the character select, the campaign or co-op), each with his own swings, flinches,

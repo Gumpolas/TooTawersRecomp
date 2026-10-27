@@ -45,7 +45,8 @@ if ! ./twotowers-setup status -q; then
 ${msg:-Extraction was cancelled.}"
         fi
         rm -f "$log"
-        if zenity --question --title="$TITLE" --width=420 \
+        # (an AppImage: the menu entry is the AppImage's own, through AppImageLauncher or the like)
+        if [ -z "$TT_APPIMAGE_HOME" ] && zenity --question --title="$TITLE" --width=420 \
                --text="The game files are installed.\n\nAdd The Two Towers to your applications menu?" 2>/dev/null; then
             ./twotowers-setup desktop >/dev/null
         fi

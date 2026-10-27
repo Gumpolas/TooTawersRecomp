@@ -1,0 +1,36 @@
+#!/bin/sh
+# The Two Towers Recompiled -- AppImage entry point.
+#
+# The AppImage itself is read-only, and the game keeps its settings, saves and
+# the game files (extracted from your disc on the first start) beside its own
+# program. So the game's files are put in a folder of their own, where they can
+# be written to:
+#   - TwoTowers-Recompiled/ beside the AppImage, when that folder can be written;
+#   - otherwise ~/.local/share/TwoTowers-Recompiled ($XDG_DATA_HOME);
+#   - or wherever TT_HOME points.
+# Each start brings the program and its own files there up to date (newer files
+# only); your settings, saves and game files are never touched.
+HERE="$(dirname "$(readlink -f "$0")")"
+PAYLOAD="$HERE/usr/share/twotowers"
+
+if [ -n "$TT_HOME" ]; then
+    DATA="$TT_HOME"
+else
+    DATA="$(dirname "${APPIMAGE:-$HERE}")/TwoTowers-Recompiled"
+    if ! mkdir -p "$DATA" 2>/dev/null || [ ! -w "$DATA" ]; then
+        DATA="${XDG_DATA_HOME:-$HOME/.local/share}/TwoTowers-Recompiled"
+    fi
+fi
+mkdir -p "$DATA" || { echo "Cannot create $DATA" >&2; exit 1; }
+cp -Rpu "$PAYLOAD/." "$DATA/" || { echo "Cannot write to $DATA" >&2; exit 1; }
+
+# SDL2: the system's when it has one (it knows the desktop best: Wayland,
+# PipeWire), else the copy in the AppImage (X11 / XWayland, PulseAudio, ALSA)
+if ! { command -v ldconfig >/dev/null 2>&1 && ldconfig -p 2>/dev/null | grep -q 'libSDL2-2\.0\.so\.0'; } \
+   && [ ! -e /usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 ] && [ ! -e /usr/lib64/libSDL2-2.0.so.0 ] && [ ! -e /usr/lib/libSDL2-2.0.so.0 ]; then
+    LD_LIBRARY_PATH="$HERE/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    export LD_LIBRARY_PATH
+fi
+
+export TT_APPIMAGE_HOME="$DATA"
+cd "$DATA" && exec ./TwoTowers.sh "$@"

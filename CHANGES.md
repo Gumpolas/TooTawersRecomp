@@ -2748,3 +2748,30 @@ xboxrecomp-0.12.0/src/kernel/xbox_memory_layout.c, kernel_bridge.c
 xboxrecomp-0.12.0/src/kernel/nv2a_sw3d.inc
   - A texture slot's "looks like a movie" count reset after 1.5 s without
     a decode (Ultra text dropped off menus after reloads).
+
+-- 1.9.9: The128ReBits' R8 -------------------------------------------------------
+twotowers/src (The128ReBits' R8, PR #11, merged on 1.9.8)
+  - Six new extra heroes from the disc's NPC assets (elvenwarrior,
+    elvenarcher, troll, rohan, urukcap, gandalfwhite; skins 7-12, the
+    Versus-only three after them), the Xbox animation codec fix, native
+    combos and weapon profiles, the playable troll, per-character records
+    by name (TTH3), atomic unlocks, extra_heroes modes 0-3.
+  - Five language axes (text, subtitles, in-game voices, cutscene voices,
+    films); SRT film subtitles drawn over Bink (Windows); non-USA XBEs
+    refused; the optional DLSS-5 hook; tools/regions.
+xboxrecomp-0.12.0/src/kernel/kernel_path.c
+  - Partition1's UDATA and TDATA under save_dir (<game>/saves), with the
+    old ones copied there once (Win32, and POSIX in 1.9.9).
+On top of the merge
+  - lang.c / lang_fmv.inc / heroes: build on Linux and macOS (directory
+    listing, rename(), the SRT overlay Windows-only for now).
+  - The six as co-op player 2 (their projectiles: troll and Uruk captain
+    a rock, the elves Legolas' arrow, Gandalf the White Gandalf's) and in
+    the Versus hero list; their short names in English.
+  - Player 2 as a retail hero beside a different player 1 hero: his box
+    tested with +0x466 up, as the extra heroes' since 1.9.8 (Deeping Wall:
+    69 boxes, 17 with the flag up, 6 contacts; after: all, 71 contacts).
+    TT_COOP_P2ATKFLAGGUEST.
+twotowers/tools/appimage
+  - The Linux AppImage: AppRun (the game's folder beside the AppImage),
+    pysquashfs.py (a SquashFS 4.0 writer in Python), make_appimage.sh.
