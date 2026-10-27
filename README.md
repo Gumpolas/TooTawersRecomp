@@ -54,6 +54,7 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 
 ### Known issues (1.9.8)
 - Player 2's controller doesn't rumble yet.
+-  Legolas can sometimes be unable to attack or gather fire on his torch during the Weathertop level in Co-Op
 
 ## Tested (1.9.8)
 - Linux (OpenGL): co-op bot runs in the Westfold, Fangorn Forest and Balin's Tomb with extra and retail heroes as player 2.
