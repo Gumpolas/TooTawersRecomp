@@ -1343,7 +1343,7 @@ static void p1_script(XState *st)
         else if (!strcmp(c, "START")) st->Gamepad.wButtons |= PAD_START; else if (!strcmp(c, "BACK")) st->Gamepad.wButtons |= 0x20;
         else if (!strcmp(c, "UP")) st->Gamepad.wButtons |= PAD_UP; else if (!strcmp(c, "DOWN")) st->Gamepad.wButtons |= PAD_DOWN;
         else if (!strcmp(c, "LEFT")) st->Gamepad.wButtons |= PAD_LEFT; else if (!strcmp(c, "RIGHT")) st->Gamepad.wButtons |= PAD_RIGHT;
-        else if (!strcmp(c, "LUP")) st->Gamepad.sThumbLY = 32767; else if (!strcmp(c, "LDOWN")) st->Gamepad.sThumbLY = -32767;
+        else if (!strcmp(c, "LUP")) st->Gamepad.sThumbLY = 32767; else if (!strncmp(c, "LY=", 3)) st->Gamepad.sThumbLY = (int16_t)atoi(c + 3);   /* (test: a part push, a walk) */ else if (!strcmp(c, "LDOWN")) st->Gamepad.sThumbLY = -32767;
         else if (!strcmp(c, "LLEFT")) st->Gamepad.sThumbLX = -32767; else if (!strcmp(c, "LRIGHT")) st->Gamepad.sThumbLX = 32767;
         else if (!strcmp(c, "RUP")) st->Gamepad.sThumbRY = 32767; else if (!strcmp(c, "RDOWN")) st->Gamepad.sThumbRY = -32767;   /* (the right stick: the aim's pitch) */
         else if (!strcmp(c, "SHOT")) {   /* a frame dump: <smoke dir from TT_P1SCRIPT_SHOTDIR>\p1s_<from>.bmp, once */

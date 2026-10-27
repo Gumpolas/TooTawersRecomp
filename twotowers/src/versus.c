@@ -252,7 +252,7 @@ int tt_vs_hero_sound(const char *skin, uint32_t id, float vol)
     {   /* (1.9.9) the cave troll's own: his motions are the hero's (their sounds the sword's whoosh, 183-190); his club's
          * blow is his Balin's Tomb sounds' -- the slam (926) and the crash (930) his own attacks play there */
         static unsigned n; uint32_t tid = 0;
-        if (!strcmp(skin, "troll") && id >= 183u && id <= 190u && !getenv("TT_VS_TROLLWHOOSH")) { tid = 926u; (void)n; }
+        if (!strcmp(skin, "troll") && id >= 183u && id <= 190u && getenv("TT_VS_TROLLWHOOSH"))   /* (1.9.9: the whoosh his own; the slam after it, tt_troll_slam_tick) */ { tid = 930u; (void)n; }
         if (tid && (x = vox_get("04BALIN1", tid))) { li = 3; goto play; }
     }
     if (li > 13 || !(x = vox_get(lvl[li], id))) {   /* (1.9.9) not in the arena's bank: his home level's (the orc's prologue, ...) */

@@ -2811,3 +2811,30 @@ twotowers/src/versus.c
 twotowers/src/e3hud.c
   - Combo runes and labels per player: player 2's (port 1) on his side,
     mirrored; alone, any controller is player 1's.
+
+-- 1.9.9: walking, the troll's log, Saruman in the campaign ------------------------
+twotowers/src/twotowers_manual.c
+  - Co-op and Versus: the walk timer (0x43B0FC: the control step raises
+    INP_WALK once a part push has been held a moment) is per player now;
+    the other player's step put it back to 0 each frame, so neither could
+    walk and an idle hero stood in the walk's first steps over and over.
+  - Versus: a hero's lock on the other only while he fights (a press in
+    the last 1.5 s, TT_VS_TGTMS) and within 7 units (TT_VS_TGTR): held from
+    anywhere it kept him in the engage stance's loop at rest and steered
+    his moves round the other (TT_VS_OLDTGT: as before).
+  - The heroes take more hits: full health 125% in the campaign and co-op
+    (TT_HPPCT), Versus 2000 (was 1500).
+  - The cave troll's club ends each swing with Balin's Tomb's slam (930)
+    in every mode (TT_TROLLSLAM_MS, TT_NOTROLLSLAM).
+twotowers/src/heroes.c
+  - Saruman in the character select after Sauron (one win more), his
+    name picture (tools/names), the campaign and co-op.
+  - The troll throws Fangorn's trolls' log (projectile 8; its prop wears
+    the bark texture, added from Fangorn Forest, in his levels).
+    TT_TROLLROCK: the rock.
+  - Troll Battle: player 2 is the other troll, Fangorn's lighter one, on
+    the cave troll's moves (his bones put in the cave troll's order).
+  - Troll back at skin 9 (heroes_weapon_profile.h and the build's troll
+    patches name it there).
+twotowers/src/menus.c
+  - (test) TT_P1SCRIPT steps "LY=<value>": a part push of the stick.

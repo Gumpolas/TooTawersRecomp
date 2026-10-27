@@ -244,7 +244,7 @@ static void draw_orb(uint32_t *p, int w, int h, float cx, float cy, float r)
 
 /* ---- the character's face ---- */
 /* per hero 1-4, and 5-8 for the Extra heroes mod's guests (hero 4 then) */
-#define N_FACE 19   /* the originals and the 14 guests; 0 unused */
+#define N_FACE 20   /* the originals and the 15 guests; 0 unused */
 static uint32_t *volatile s_face[N_FACE];   /* alpha-masked; FACE_PX square unless an icon */
 static int s_face_w[N_FACE], s_face_h[N_FACE];   /* an icon's own size (0: FACE_PX square) */
 static int s_icon_tried[N_FACE];

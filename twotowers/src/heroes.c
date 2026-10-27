@@ -142,14 +142,14 @@ static Skin s_skins[] = {
     /* the black Uruk-hai: the Berserker (Fangorn, Helm's Deep), his great sword, his own attacks */
     { "uruk",    "Uruk",    W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (no bow of his own: nothing in that hand) */
-    /* (132) the cave troll (Balin's Tomb): his club; he throws (heroes_troll_*.h) */
-    { "troll", "Troll", W("04BALIN1.BFA"), 0x712933FEu, 0x29BDD2CAu, 0x964E271Eu, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
-      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
-    { "urukcap", "Captain", W("18HOLE1.BFA"), 0x99F5D594u, 0xE6F0C52Bu, 0xF5E0EF8Eu, MAP(s_map_urukcap), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1 },
-    /* (1.9.9, Versus) Saruman: the Orthanc Summit's (21ORTH2: his model of two parts, his 90-bone skeleton, his texture
+    /* (1.9.9) Saruman, in the character select after Sauron: the Orthanc Summit's (21ORTH2: his model of two parts, his 90-bone skeleton, his texture
      * EF4942FD -- the lookups his creation makes there, TT_LKLOG), his black staff (30028EA4); his shots a beam */
     { "saruman", "Saruman", W("21ORTH2.bfa"), 0x8F3B37CAu, 0x56D8D87Cu, 0xEF4942FDu, MAP(s_map_saruman), W("21ORTH2.bfa"), 0x30028EA4u, 0xAEBFF748u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 1 },
+    { "urukcap", "Captain", W("18HOLE1.BFA"), 0x99F5D594u, 0xE6F0C52Bu, 0xF5E0EF8Eu, MAP(s_map_urukcap), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1 },
+    /* (132) the cave troll (Balin's Tomb): his club; he throws (heroes_troll_*.h) */
+    { "troll", "Troll", W("04BALIN1.BFA"), 0x712933FEu, 0x29BDD2CAu, 0x964E271Eu, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
+      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
     /* (1.9.9) Versus only: the Deeping Wall's elven warrior (The128ReBits), 44 bones checked against Elrond's */
     { "elvenwarrior", "Elf", W("17TOP1.bfa"), 0x22C529AAu, 0xB427C34Cu, 0x7064A295u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
     /* Versus only (1.9.7): not in the character select, the campaign or co-op. The Nazgul: Weathertop's, his sword
@@ -163,6 +163,12 @@ static Skin s_skins[] = {
     /* Eomer: Westfold's Rohirrim captain (rCaptainObj) */
     { "eomer",   "Eomer",   W("16ROHAN1.bfa"), 0x5654A508u, 0x817EFC59u, 0x4058E474u, MAP(s_map_eomer), W("16ROHAN1.bfa"), 0xC0F2C17Cu, 0xB798D03Au, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (the Rohirrim's sword, weaponObj there; he throws) */
+    /* (1.9.9) the other troll: Fangorn Forest's (trollObj there), lighter skinned -- player 2 when both players are the
+     * cave troll (Troll Battle), so they are not the same troll. His model (AC0EA11A) and texture (F6036F71) on the cave
+     * troll's moves: the same skeleton with its bones in another order (s_map_fang2cave), so he plays the cave troll's
+     * own set (the same key: player 1's) and fights as he does. TT_NOTROLL2: a copy, as before */
+    { "troll2", "Troll", W("14FANG2.bfa"), 0xAC0EA11Au, 0x29BDD2CAu, 0xF6036F71u, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
+      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
     /* co-op only (player 2, the character select): the retail heroes from their own level variants -- the hero
      * record's mesh / animation set / texture (the same keys in every level, local/re/hero_keys.py) and the weapon
      * the level script attaches to them for the sword's hand (@AttachToBone, observed in Balin's Tomb). Their
@@ -185,9 +191,16 @@ static Skin s_skins[] = {
 #define MENU_ANIM_KEY 1u
 #define UPG_FIG_KEY 9u   /* the upgrade screen's 3D figure (upgbigi.BFF: mesh 1050 / texture 1150 key 9) */
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
-#define N_SEL 7                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests */
-#define N_EXTRA 14             /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
-#define SK_TROLL 7             /* the cave troll's skin */
+#define N_SEL 8                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests and Saruman (1.9.9) */
+#define N_EXTRA 15             /* (1.9.9: 15 with the other troll, player 2's in Troll Battle) */ /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
+#define SK_TROLL 9             /* the cave troll's skin (heroes_weapon_profile.h and the build's troll patches name 9 too) */
+/* (1.9.9) the cave troll's shots: Fangorn's trolls' log -- projectile 8, drawn (the level's dynamicProjectileObj, entry 8)
+ * with prop 899C9984, the same log in every level, which only Fangorn Forest textures as bark (545EE9C8); elsewhere it
+ * wore a rock's. Levels built with him get the bark texture and entry 8 wears it. TT_TROLLROCK: the rock as before */
+#define SK_TROLL2 14            /* the other (Fangorn) troll: player 2 beside a cave troll */
+#define TROLL_LOG_PROJ 8
+#define TROLL_LOG_PROP 0x899C9984u
+#define TROLL_LOG_TEX  0x545EE9C8u
 #define N_SKINS ((int)(sizeof s_skins / sizeof s_skins[0]))
 /* a retail hero's skin (co-op's player 2) */
 static int skin_retail(int sk) { return sk >= N_EXTRA && sk < N_SKINS - 1; }
@@ -199,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 139u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 140u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -468,6 +481,10 @@ static uint32_t merge_slots(unsigned char *m, size_t len, uint32_t p, uint32_t c
  * u32 count, count x {skeleton bone, model bone}, padded to 4 */
 static int s_native;   /* the level's guest is on his own skeleton */
 static uint8_t s_idmap[256];   /* the identity: a guest on his own bones */
+/* (1.9.9) the Fangorn troll's bones -> the cave troll's (the inverse of heroes_troll_throw.h's table; his three bones the
+ * cave troll lacks go to their parent's) */
+static const uint8_t s_map_fang2cave[56] = { 0, 1, 2, 3, 1, 1, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 24, 25, 26,
+    27, 28, 29, 30, 32, 33, 34, 31, 35, 36, 37, 38, 39, 40, 41, 43, 44, 45, 42, 46, 47, 48, 49, 50, 51, 52, 53, 54 };
 static int s_remap_noshadow;   /* set by the caller: blank the shadow data anyway */
 static void remap_bones(unsigned char *m, size_t len, const uint8_t *map, int nmap)
 {
@@ -691,6 +708,7 @@ static const char *s_menu_moves[N_SEL][3] = {   /* stance, chosen pose, confirm 
     { "34,33", "66,33", "66,33" },          /* elrond: his sword swing when chosen too (1.9.1; 33 is a stance: nothing moved) */
     { "34", "41,43", "43,41" },             /* sauron */
     { "34,33", "43,41", "41,43" },          /* uruk */
+    { "34,33", "36,35", "35,57" },          /* saruman: as Gandalf (his moves the staff's) */
 };
 /* the composed set's settings, for the cache name */
 static void hudammo_path(int sk, char *p2, size_t n);
@@ -873,7 +891,7 @@ static uint32_t skel_point_bone(const unsigned char *S, size_t len, int k);
  * either side; Sauron's only square on -- turned, as Aragorn's. Elrond,
  * Gandalf, Lurtz and the Uruk-hai fell it as Aragorn does or wider, and
  * from further off (Elrond 4.5 back, where Aragorn's misses). */
-static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0 };
+static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 /* (a cutscene's clips, cine_clips_build: 255) the most rotation
  * keys a bone gets, and root position keys kept */
 static int s_rt_maxnt = 96, s_rt_maxpos = 64;
@@ -2652,6 +2670,27 @@ int tt_coop_p2_ammo_pixels(uint32_t cur, unsigned char *out)
     return 1;
 }
 #include "heroes_weapon_profile.h"
+/* (1.9.9) the level's projectile models (its dynamicProjectileObj: entries {index, prop, 0, 0, texture}): entry
+ * TROLL_LOG_PROJ, the log prop, wears the bark (TROLL_LOG_TEX, added from Fangorn Forest with him) */
+static void troll_log_patch(unsigned char *o, const unsigned char *t, uint32_t n)
+{
+    uint32_t cnt = rd32(t, n), i, a, q, sz;
+    if (getenv("TT_TROLLROCK")) return;
+    for (i = 0; i < cnt; i++) {
+        if (rd32(t, n + 4 + 12 * i) != 500) continue;
+        a = rd32(t, n + 4 + 12 * i + 4);
+        if (a + 0x200 > n || memcmp(t + a + 8, "dynamicProjectileObj", 21)) continue;
+        sz = rd32(t, a + 0x2C);
+        for (q = 0; q < sz && q < 64; q++) {
+            uint32_t e = a + 0x30 + 0x14 * q;
+            if (e + 0x14 > n || rd32(t, e) != q) break;
+            if (q == TROLL_LOG_PROJ && rd32(t, e + 4) == TROLL_LOG_PROP) {
+                wr32(o, e + 0x10, TROLL_LOG_TEX);
+                tt_dbg("[HEROES] the troll's log: projectile %u's texture %08X -> the bark %08X\n", q, rd32(t, e + 0x10), TROLL_LOG_TEX);
+            }
+        }
+    }
+}
 static int build_file(const char *target, const Add *adds, int nadds, const char *out)
 {
     size_t tl, cap, pos, sl[MAX_ADDS];
@@ -2685,8 +2724,9 @@ static int build_file(const char *target, const Add *adds, int nadds, const char
     memcpy(o, t, n);
     char_db_patch(o, t, tl, n, s_build_skin);
     weapon_db_patch(o, t, tl, n, s_build_skin);
-    if(s_build_skin==9&&!troll_weapon_db_patch(o,t,tl,n))goto done;
-    if(s_build_skin==9&&!troll_weapon_damage_patch(o,t,tl,n))tt_dbg("[TROLL-NPC] dano del arma sin cambiar (DB inesperada)\n");
+    if(s_build_skin==SK_TROLL&&!troll_weapon_db_patch(o,t,tl,n))goto done;
+    if (s_build_skin == SK_TROLL || (s_coop_skin && (s_playas == SK_TROLL || s_playas == SK_TROLL2))) troll_log_patch(o, t, n);
+    if(s_build_skin==SK_TROLL&&!troll_weapon_damage_patch(o,t,tl,n))tt_dbg("[TROLL-NPC] dano del arma sin cambiar (DB inesperada)\n");
     if (!s_coop_skin || s_build_skin == s_guest) hud_ammo_patch(o, t, tl, s_build_skin, target);   /* (player 1 a guest: his own icon) */   /* (co-op: the HUD's icon is player 1's; player 2's is his own texture, tt_coop_p2_ammo_pixels) */
     pos = n;
     for (k = 0; k < (uint32_t)nadds; k++) {
@@ -3012,7 +3052,7 @@ static void wins_saved(const char *key)
 /* guest g's own unlock: Isildur's finishes of the secret level -- the 2nd
  * Boromir, 3rd Gandalf, 4th Frodo, 5th Lurtz, 6th Elrond, 7th the Uruk-hai,
  * 8th Sauron. TT_WINS=n: as if n finishes (testing, over extra_heroes=2) */
-static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7 };
+static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7, 9 };   /* (1.9.9: Saruman after Sauron) */
 static int guest_unlocked(int g)
 {
     if (getenv("TT_WINS")) return g >= 0 && g < N_SEL && atoi(getenv("TT_WINS")) >= s_unlock_at[g];
@@ -3039,6 +3079,7 @@ static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 40, 80 },                           /* Elrond: his face texture */
     { NULL, 0, 0, 0, 70, 100 },                          /* Sauron: his helm */
     { "stills3.BFF", 7, 120, 0, 520, 448 },              /* the Uruk-hai host */
+    { NULL, 0, 0, 0, 40, 80 },                           /* Saruman: his face texture */
 };
 static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] = {
     { s_name_boromir_fill, s_name_boromir_edge, NAME_BOROMIR_W, NAME_BOROMIR_H },
@@ -3048,6 +3089,7 @@ static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] 
     { s_name_elrond_fill, s_name_elrond_edge, NAME_ELROND_W, NAME_ELROND_H },
     { s_name_sauron_fill, s_name_sauron_edge, NAME_SAURON_W, NAME_SAURON_H },
     { s_name_urukhai_fill, s_name_urukhai_edge, NAME_URUKHAI_W, NAME_URUKHAI_H },
+    { s_name_saruman_fill, s_name_saruman_edge, NAME_SARUMAN_W, NAME_SARUMAN_H },
 };
 
 static void c565(uint16_t c, int *o) { o[0] = ((c >> 11) & 31) * 255 / 31; o[1] = ((c >> 5) & 63) * 255 / 63; o[2] = (c & 31) * 255 / 31; }
@@ -3892,18 +3934,18 @@ static const Voice s_voice[N_EXTRA] = {
     { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
         VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
       VA("17TOP1", 826, 1.0f, 2.2f), 0.3f },
+    /* Saruman: Gandalf's (Gimli's, deeper), far deeper still */
+    { { VA("17TOP1", 265, 0.84f, 1.5f), VA("17TOP1", 266, 0.84f, 1.5f), VA("17TOP1", 267, 0.84f, 1.5f), VA("17TOP1", 271, 0.84f, 1.5f),
+        VA("17TOP1", 268, 0.84f, 1.5f), VA("17TOP1", 269, 0.84f, 1.5f), VA("17TOP1", 273, 0.84f, 1.5f), VA("17TOP1", 272, 0.84f, 1.5f), VA("17TOP1", 269, 0.78f, 1.5f) },
+      VA("INTRFACE", 2731, 0.84f, 4.0f), 0.0f },
+    { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
+        VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
+      VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* the Uruk captain: the Uruk-hai's */
     /* the cave troll: his own, Balin's Tomb's (his motions' sound events there: 1406 and 1408 as he swings, 1409 struck,
      * 1410, 1412 and 1414 as he dies) */
     { { VA("04BALIN1", 1406, 1.0f, 1.6f), VA("04BALIN1", 1408, 1.0f, 1.6f), VA("04BALIN1", 1406, 0.94f, 1.6f), VA("04BALIN1", 1408, 0.94f, 1.6f),
         VA("04BALIN1", 1409, 1.0f, 1.4f), VA("04BALIN1", 1410, 1.0f, 1.4f), VA("04BALIN1", 1409, 0.92f, 1.4f), VA("04BALIN1", 1412, 1.0f, 2.2f), VA("04BALIN1", 1414, 1.0f, 2.4f) },
       VA("04BALIN1", 1406, 1.0f, 2.2f), 0.3f },
-    { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
-        VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
-      VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* the Uruk captain: the Uruk-hai's */
-    /* Saruman: Gandalf's (Gimli's, deeper), far deeper still */
-    { { VA("17TOP1", 265, 0.84f, 1.5f), VA("17TOP1", 266, 0.84f, 1.5f), VA("17TOP1", 267, 0.84f, 1.5f), VA("17TOP1", 271, 0.84f, 1.5f),
-        VA("17TOP1", 268, 0.84f, 1.5f), VA("17TOP1", 269, 0.84f, 1.5f), VA("17TOP1", 273, 0.84f, 1.5f), VA("17TOP1", 272, 0.84f, 1.5f), VA("17TOP1", 269, 0.78f, 1.5f) },
-      VA("INTRFACE", 2731, 0.84f, 4.0f), 0.0f },
     /* (Versus only) the elven warrior: Legolas's */
     { { VA("17TOP1", 278, 1.0f, 1.5f), VA("17TOP1", 279, 1.0f, 1.5f), VA("17TOP1", 280, 1.0f, 1.5f), VA("17TOP1", 284, 1.0f, 1.5f),
         VA("17TOP1", 281, 1.0f, 1.5f), VA("17TOP1", 282, 1.0f, 1.5f), VA("17TOP1", 283, 1.0f, 1.5f), VA("17TOP1", 285, 1.0f, 1.5f), VA("17TOP1", 282, 0.92f, 1.5f) },
@@ -3921,6 +3963,11 @@ static const Voice s_voice[N_EXTRA] = {
     { { VA("16ROHAN2", 2101, 1.0f, 1.3f), VA("16ROHAN2", 2102, 1.0f, 1.3f), VA("16ROHAN2", 2103, 1.0f, 1.3f), VA("16ROHAN2", 2101, 1.05f, 1.3f),
         VA("16ROHAN2", 2105, 1.0f, 1.0f), VA("16ROHAN2", 2106, 1.0f, 1.0f), VA("16ROHAN2", 2105, 0.95f, 1.0f), VA("16ROHAN2", 2109, 1.0f, 1.6f), VA("16ROHAN2", 2107, 0.9f, 1.6f) },
       VA("16ROHAN2", 2101, 1.0f, 2.0f), 0.0f },
+    /* (the other troll) the cave troll's own, Balin's Tomb's (his motions' sound events there: 1406 and 1408 as he swings, 1409 struck,
+     * 1410, 1412 and 1414 as he dies) */
+    { { VA("04BALIN1", 1406, 1.0f, 1.6f), VA("04BALIN1", 1408, 1.0f, 1.6f), VA("04BALIN1", 1406, 0.94f, 1.6f), VA("04BALIN1", 1408, 0.94f, 1.6f),
+        VA("04BALIN1", 1409, 1.0f, 1.4f), VA("04BALIN1", 1410, 1.0f, 1.4f), VA("04BALIN1", 1409, 0.92f, 1.4f), VA("04BALIN1", 1412, 1.0f, 2.2f), VA("04BALIN1", 1414, 1.0f, 2.4f) },
+      VA("04BALIN1", 1406, 1.0f, 2.2f), 0.3f },
 };
 #undef VA
 /* (Versus) a hero's voice for our own sounds (versus.c tt_vs_voice): slot 0-3 his efforts, 4-6 blows taken, 7 the
@@ -4125,6 +4172,7 @@ static const Confirm s_confirm[N_SEL] = {
     { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 },      /* Elrond: a sword */
     { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 },     /* Sauron: a heavy swing */
     { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 },      /* the Uruk-hai: his blade */
+    { VC(NULL, 0, 0, 0), VC(NULL, 0, 0, 0), 0 },                  /* Saruman: the game's own, as Gandalf */
 };
 #undef VC
 /* a source at 22050 Hz with its pitch applied (resampled) */
@@ -4653,6 +4701,7 @@ static const char *redirect(const char *xp)
         const char *c = tt_coop_p2_char(base);
         int k = c ? skin_by_name(c) : -1;
         if (k >= 0 && skin_retail(k) && s_retail_hero[k - N_EXTRA] == (int)G8(HERO_BYTE) && !(G8(HERO_BYTE) == 4 && LVG >= 0)) { tt_dbg("[HEROES] co-op: %s is player 1's own hero: a copy\n", c); k = -1; }
+        if (k == SK_TROLL && G8(HERO_BYTE) == 4 && LVG == SK_TROLL && !getenv("TT_NOTROLL2")) { k = SK_TROLL2; tt_dbg("[HEROES] co-op: both players the cave troll: player 2 the other troll (Fangorn's)\n"); }
         if (k >= 0 && G8(HERO_BYTE) == 4 && LVG >= 0 && k == LVG) { tt_dbg("[HEROES] co-op: %s is player 1's own (hero 4): a copy\n", c); k = -1; }
         s_coop_skin = k >= 0; s_playas = k; tt_coop_skin_n = 0;
         if (c) tt_dbg("[HEROES] co-op: player 2 in %s is %s%s\n", base, c, k >= 0 ? "" : " (no such skin: a copy of player 1's hero)");
@@ -4706,9 +4755,10 @@ static const char *redirect(const char *xp)
         }
         if (p2too) {   /* player 2's character too (player 1 a guest): his model, texture, moves and weapons under his own keys */
             int q2 = s_playas, sl;
-            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].mesh; a[na].type = 100; a[na].key = PLAYER_KEY(s_skins[q2].mesh); a[na].map = s_idmap; a[na].nmap = 256; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
+            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].mesh; a[na].type = 100; a[na].key = PLAYER_KEY(s_skins[q2].mesh); a[na].map = q2 == SK_TROLL2 ? s_map_fang2cave : s_idmap; a[na].nmap = q2 == SK_TROLL2 ? 56 : 256; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
             a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].tex; a[na].type = 300; a[na].key = PLAYER_KEY(s_skins[q2].tex); a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
-            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].anim; a[na].type = 150; a[na].key = PLAYER_KEY(s_skins[q2].anim); a[na].map = NULL; a[na].nmap = 0; a[na].compose = q2 < N_EXTRA ? q2 + 1 : 0; a[na].empty = 0; a[na].tint = 0; na++;
+            if (s_skins[q2].anim != s_skins[sk].anim) {   /* (the other troll: player 1's set, already in) */
+            a[na].src = s_skins[q2].src; a[na].src_key = s_skins[q2].anim; a[na].type = 150; a[na].key = PLAYER_KEY(s_skins[q2].anim); a[na].map = NULL; a[na].nmap = 0; a[na].compose = q2 < N_EXTRA ? q2 + 1 : 0; a[na].empty = 0; a[na].tint = 0; na++; }
             for (sl = 0; sl < 2 && na < 22; sl++) {
                 const char *ws; uint32_t wm, wt; int q, dupm = 0, dupt = 0;
                 if (!skin_weapon(q2, sl, &ws, &wm, &wt)) continue;
@@ -4718,6 +4768,9 @@ static const char *redirect(const char *xp)
                 if (!dupt) { a[na].src = ws; a[na].src_key = a[na].key = wt; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++; }
             }
             tt_dbg("[HEROES] co-op: player 2's %s added to %s's level (%d resources)\n", s_skins[q2].name, s_skins[sk].name, na);
+        }
+        if ((sk == SK_TROLL || (s_coop_skin && (s_playas == SK_TROLL || s_playas == SK_TROLL2))) && na < 24 && !getenv("TT_TROLLROCK")) {   /* (1.9.9) his log's bark (troll_log_patch) */
+            a[na].src = W("14FANG2.bfa"); a[na].src_key = a[na].key = TROLL_LOG_TEX; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;
         }
         snprintf(x, sizeof x, "%.*s%s", (int)(strlen(xp) - 4), xp, gv ? s_skins[sk].lvar : p2only ? xp + strlen(xp) - 4 : ".bfa");   /* (co-op: player 1's own variant) */
         s_remap_noshadow = gv;   /* (torn volumes on Gimli's skeleton too) */   /* Aragorn's variant (or Gimli's) */
@@ -5454,7 +5507,7 @@ static void hero4_actor(int g)
 /* the number place p's character answers to now */
 /* the carousel's order of the extra heroes (1.8: Sauron last, after the
  * Uruk-hai): place 4 + i holds guest s_place_order[i] */
-static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5 };
+static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5, 7 };
 static int place_actor(int p) { return p >= 4 && p < 4 + N_SEL ? 4 + s_place_order[p - 4] : p; }
 static int guest_place(int g) { int i; for (i = 0; i < N_SEL; i++) if (s_place_order[i] == g) return 4 + i; return 4 + g; }
 static uint32_t aid(int p) { int q = place_actor(p); return s_actor[q] ? G32(s_actor[q] + 0x1B8) : (uint32_t)q; }
@@ -5740,7 +5793,7 @@ static void layout(uint32_t menu)
         {
             /* Lurtz is a head taller than the others: a step further back,
              * so that his name above him stays clear */
-            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f };   /* the tall ones further back */
+            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f, 0.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f, 0.1f };   /* the tall ones further back */
             /* eight round a ring made for four: a wider ring (its front
              * where the four's front is, the ring's centre moved back), so
              * they stand further apart */
@@ -6895,7 +6948,7 @@ void tt_framelog(void)
     }
     if (getenv("TT_PPOS") && G32(0x43B15Cu) >= 0x80000000u) {   /* testing: the player (0x43B15C)'s place (+0xF0) and matrix (+0x60), twice a second */
         static DWORD lt; uint32_t a = G32(0x43B15Cu);
-        if (GetTickCount() - lt > (DWORD)(getenv("TT_PPOSMS") ? atoi(getenv("TT_PPOSMS")) : 500)) { lt = GetTickCount(); tt_dbg("[PPOS] t %u ", (unsigned)lt); tt_dbg("[PPOS] %08X %.2f %.2f %.2f | %.2f %.2f %.2f | x %.2f %.2f y %.2f %.2f\n", a, GF(a + 0xF0), GF(a + 0xF4), GF(a + 0xF8), GF(a + 0x90), GF(a + 0x94), GF(a + 0x98), GF(a + 0x60), GF(a + 0x64), GF(a + 0x70), GF(a + 0x74)); }
+        if (GetTickCount() - lt > (DWORD)(getenv("TT_PPOSMS") ? atoi(getenv("TT_PPOSMS")) : 500)) { lt = GetTickCount(); tt_dbg("[PPOS] t %u pad %.3f %.3f %.3f %.3f st %u ", (unsigned)lt, GF(0x6B2758u + 0x14), GF(0x6B2758u + 0x18), GF(0x6B2758u + 0x1C), GF(0x6B2758u + 0x20), G32(a + 0x408)); tt_dbg("[PPOS] %08X %.2f %.2f %.2f | %.2f %.2f %.2f | x %.2f %.2f y %.2f %.2f\n", a, GF(a + 0xF0), GF(a + 0xF4), GF(a + 0xF8), GF(a + 0x90), GF(a + 0x94), GF(a + 0x98), GF(a + 0x60), GF(a + 0x64), GF(a + 0x70), GF(a + 0x74)); }
     }
     if (getenv("TT_PTP") && G32(0x43B15Cu) >= 0x80000000u) {   /* testing: "x,y,z,deg,frame" -- the player put there (with +0xF0) */
         static int fr; float x, y, z, hd; int at;
@@ -7021,14 +7074,14 @@ void tt_sweep(uint32_t a0, double res)
  * by the vector transform sub_000FF13D (out, v, m) -- the guests' swings
  * pass a little off the hero's (their arms are not his), so their blade's
  * samples reach further: {0, y * reach, 0} for the player's weapon (id 1). */
-static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.5f, 1.35f, 1.35f, 1.6f, 1.35f, 1.5f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
+static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.5f, 1.35f, 1.35f, 1.6f, 1.35f, 1.5f, 1.35f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
  * the enemies, who stand further from him, half as often as the hero's -- 9 to 13% of the hit tests at 1.65 and 1.9, Aragorn's 15 to 18%) */
 /* and lower: Gandalf's and Sauron's own swings carry their weapon high
  * (Sauron is half again as tall as the heroes), over the heads of the
  * orcs they strike at -- measured at the hit tests, their weapon's tip
  * about 2 and 2.7 higher than Aragorn's. Their samples taken that much
  * lower, so a blow that looks to land does. */
-static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 3.0f, 0, 3.2f, 0, 0, 0, 0 };
+static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 3.2f, 0, 3.0f, 0, 0, 0, 0, 3.0f };
 /* 128: primero la consulta nativa; solo si falla, cuatro sondas sobre
  * cinco cortes de la envolvente convexa de la cabeza 830B7594. Mango, reloj,
  * matrices, pose y lista de victimas nativos. Sin estirar/bajar el arma.
@@ -7286,7 +7339,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         && (!strcmp(s_skins[s_guest].name, "uruk") || !strcmp(s_skins[s_guest].name, "troll")
             || !strcmp(s_skins[s_guest].name, "nazgul") || !strcmp(s_skins[s_guest].name, "orc") || !strcmp(s_skins[s_guest].name, "eomer"))   /* (and Versus' three: they throw as he does) */
         && shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY)) {
-        int pj = getenv("TT_URUKPROJ") ? atoi(getenv("TT_URUKPROJ")) : 10;
+        int pj = getenv("TT_URUKPROJ") ? atoi(getenv("TT_URUKPROJ")) : !strcmp(s_skins[s_guest].name, "troll") && !getenv("TT_TROLLROCK") ? TROLL_LOG_PROJ : 10;   /* (1.9.9) the troll: Fangorn's trolls' log */
         /* (1.9.1) at the Gates of Moria too: his rock (and its upgrades), struck
          * as the arrow he had, as Frodo's stone is -- the Watcher takes no
          * harm from a rock (he threw the bow's arrows there) */
@@ -7351,6 +7404,13 @@ int tt_hk(int id, int phase, uint32_t *r)
     }
     if (id == 22 && phase == 1) clog_rock_launched(s_launching);   /* (137) registro: la roca del troll ya lanzada */
     if (id == 23) clog_rock_update(phase, r[1]);
+    if (id == 22 && phase == 1 && getenv("TT_PRJSCAN")) {   /* (research) the launched object's pointers to models and textures */
+        uint32_t o = s_launching, q, p, p2;
+        for (q = 0; o >= 0x80000000u && q < 0x600; q += 4) { p = G32(o + q); if (p < 0x80000000u || p >= 0x83FFFF00u) continue;
+            p2 = G32(p);
+            if (p2 == PROP_MAGIC || p2 == 0x47425820u) tt_dbg("[PRJSCAN] +%X -> %08X model (%08X)\n", q, p, G32(p + 4));
+            else if (p2 >= 0x80000000u && p2 < 0x83FFFF00u && (G32(p2) == PROP_MAGIC || G32(p2) == 0x47425820u)) tt_dbg("[PRJSCAN] +%X -> %08X -> %08X model, +4 %08X +8 %08X\n", q, p, p2, G32(p + 4), G32(p + 8)); }
+    }
     if (id == 22 && phase == 1 && s_rock_rec) {   /* his rock: on its own entry */
         uint32_t o = s_launching;
         if (o >= 0x80000000u && o < 0x84000000u && G32(o + 0x3DC) == s_rock_rec && G32(o + 0x3D0) == 10u) {
@@ -7719,7 +7779,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (p2 && G32(g_esp + 0x18) == p2) {
             static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
                 { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 },
-                { "troll", 10 }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 } };   /* (1.9.9) */
+                { "troll", TROLL_LOG_PROJ }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 } };   /* (1.9.9) */
             const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
             if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
             if (to != pj) G32(g_esp + 16) = to;

@@ -49,8 +49,8 @@ static unsigned mq_ease(unsigned char *r,size_t len,const unsigned char *G,size_
 }
 /* Ritmo por perfil de ataques nativos. El juego y sus FPS no se alteran. */
 static uint32_t mq_attack_limit(int g,uint32_t duration){
-    static const unsigned pct[N_EXTRA]={115,130,115,120,115,150,135,175,140,130,115,115,115,115};   /* (1.9.9: the troll, the Uruk captain, Saruman, then Versus' four) */
-    static const unsigned extra[N_EXTRA]={50,65,50,55,50,85,70,100,75,65,50,50,50,50};
+    static const unsigned pct[N_EXTRA]={115,130,115,120,115,150,135,130,140,175,115,115,115,115,175};   /* (1.9.9: Saruman, the Uruk captain, the troll, then Versus' four) */
+    static const unsigned extra[N_EXTRA]={50,65,50,55,50,85,70,65,75,100,50,50,50,50,100};
     return g>=0 &&g<N_EXTRA?duration*pct[g]/100+extra[g]:duration*115/100+50;
 }
 #endif
