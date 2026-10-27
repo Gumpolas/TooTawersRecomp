@@ -42,9 +42,8 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 
 - **Player 2's own buttons:** Options > Co-op Options > **P2 Controls**.
 - **Aiming:** while a player holds LT, a dot over the enemy his lock is on (player 1 blue, player 2 amber). Arrows and thrown axes fly through allies and every hit counts.
-- **A better P2 Bot:** it follows the levels' paths, keeps with the group and takes enemies in order.
-- **Story levels:** level triggers are player 1's, player 2 is hidden in cutscenes, and the co-op difficulty is kept apart from the solo game's.
-- **Menus:** every controller works in the front-end menus; the Co-op and Versus menus are in every language.
+- **P2 bot improvements:** it follows the levels' paths, keeps with the group and takes enemies in order.
+- **Menus:** every controller works in the front-end menus;
 - **Extra heroes as player 2** are built and drawn in every level (before, certain extra heros would be missing in Fangorn Forest, and certain things would be unbreakable. Extra hero's (Sauron) would also sometimes be missing in the Westfold and with player 1 as Legolas), and their ranged blows wouldn't land. 
 - **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts properly.
 
