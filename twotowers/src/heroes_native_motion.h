@@ -60,14 +60,14 @@ static size_t npc_clip_range(const unsigned char *S,size_t len,const unsigned ch
 static size_t npc_attack_slice(int g,unsigned src,unsigned serial,const unsigned char *S,size_t len,
  const unsigned char *r,size_t rl,unsigned char *o,size_t cap,unsigned *cut_start){
     const char *name=s_pools[g].name;
-    if(strcmp(name,"frodo")&&strcmp(name,"uruk")&&strcmp(name,"urukcap")&&strcmp(name,"troll")&&strcmp(name,"lurtz")&&strcmp(name,"boromir")&&strcmp(name,"elrond")&&strcmp(name,"elvenwarrior")&&strcmp(name,"elvenarcher")&&strcmp(name,"rohan"))return 0;
+    if(strcmp(name,"frodo")&&strcmp(name,"uruk")&&strcmp(name,"urukcap")&&strcmp(name,"troll")&&strcmp(name,"lurtz")&&strcmp(name,"boromir")&&strcmp(name,"elrond")&&strcmp(name,"elvenwarrior"))return 0;
     int allowed=src==41||src==43;
     if(!strcmp(name,"uruk")||!strcmp(name,"lurtz"))allowed=allowed||src==69;
     if(!strcmp(name,"troll")||!strcmp(name,"lurtz"))allowed=allowed||src==45;
     if(!strcmp(name,"troll"))allowed=allowed||src==113;
     if(!strcmp(name,"urukcap"))allowed=allowed||src==172;
     if(!strcmp(name,"lurtz"))allowed=allowed||src==42;
-    if(!strcmp(name,"elrond")||!strcmp(name,"elvenwarrior")||!strcmp(name,"elvenarcher"))allowed=src==66;
+    if(!strcmp(name,"elrond")||!strcmp(name,"elvenwarrior"))allowed=src==66;
     if(!allowed)return 0; /* No recortar levantadas, muertes o interacciones. */
     if(rl<64||cap<64||len<0x4c)return 0;
     unsigned nb=rd32(S,0x48),dur=rd32(r,8),bt=rd32(r,0x20),nw=rd32(r,0x30),wt=rd32(r,0x34);
@@ -75,7 +75,7 @@ static size_t npc_attack_slice(int g,unsigned src,unsigned serial,const unsigned
     unsigned first=0,last=nw;
     /* Dos golpes de Frodo/capitan y cuatro del berserker: uno por eslabon
      * del combo. No comprimir la secuencia entera en una sola pulsacion. */
-    int chain=(src==41&&(!strcmp(name,"frodo")||!strcmp(name,"urukcap")||!strcmp(name,"uruk")||!strcmp(name,"lurtz")))||src==66||(!strcmp(name,"rohan")&&src==43);
+    int chain=(src==41&&(!strcmp(name,"frodo")||!strcmp(name,"urukcap")||!strcmp(name,"uruk")||!strcmp(name,"lurtz")))||src==66;
     if(chain && !(nw&1)){
         int valid=1;for(unsigned j=0;j<nw;j+=2)if(rd16(r,wt+4*j)>=rd16(r,wt+4*(j+1)) || (j&&rd16(r,wt+4*j)<rd16(r,wt+4*(j-1))))valid=0;
         if(valid){first=2*(serial%(nw/2));last=first+2;}

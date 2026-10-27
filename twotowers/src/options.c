@@ -308,19 +308,20 @@ static const char *const s_cm_top[2] = { "New Game", "Load Game" };
  * sub_000D1C10: the arena's level, player 1's hero, player 2's). B: back to the main menu */
 volatile int tt_vs_menu_on, tt_vs_screen_req, tt_vs_start_pending;
 static int s_vsmenu;   /* the Co-op menu page shows Versus' */
-#define VS_NHERO 20
+#define VS_NHERO 18
 static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c and the co-op, title) */
     { "aragorn", "Aragorn" }, { "legolas", "Legolas" }, { "gimli", "Gimli" }, { "isildur", "Isildur" },
     { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
     { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Uruk-hai" },
-    { "elvenwarrior", "Elf Warrior" }, { "elvenarcher", "Elf Archer" }, { "troll", "Cave Troll" },   /* (1.9.9, The128ReBits' six) */
-    { "rohan", "Rohan Captain" }, { "urukcap", "Uruk Captain" }, { "gandalfwhite", "Gandalf the White" },
-    { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the last three: Versus only) */
+    { "troll", "Cave Troll" }, { "urukcap", "Uruk Captain" }, { "saruman", "Saruman" },   /* (1.9.9) */
+    { "elvenwarrior", "Elven Warrior" },
+    { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the elven warrior and the last three: Versus only) */
 static int s_vs_goal_i = 1;   /* (1.9.7) rounds to win: 3, 5, 7 */
 static const char *const s_vs_goals[3] = { "First to 3", "First to 5", "First to 7" };
 int tt_vs_goal_pick(void) { return 3 + 2 * s_vs_goal_i; }
 static int s_vs_hero[2] = { 0, 1 }, s_vs_arena, s_vs_mode;   /* mode 0 Deathmatch (the smaller arenas), 1 Find the Shield (the bigger) */
-static const char *const s_vs_modes[2] = { "Deathmatch", "Find the Shield" };
+static const char *const s_vs_modes[2] = { "Deathmatch", "Troll Battle" };   /* (1.9.9: mode 1, both players the cave troll) */
+#define VS_TROLL_HERO 11   /* (s_vs_heroes: the cave troll -- Troll Battle's only hero, in no other mode) */
 /* the arenas: every level but Westfold (the game's level index, its name) */
 static const struct { int level; const char *name; } s_vs_arenas[] = {
     { 1, "Weathertop" }, { 3, "Balin's Tomb" }, { 4, "Amon Hen" }, { 5, "Fangorn Forest" }, { 2, "Gates of Moria" },
@@ -328,13 +329,16 @@ static const struct { int level; const char *name; } s_vs_arenas[] = {
     { 11, "Hornburg Courtyard" }, { 12, "Orthanc" }, { 13, "Orthanc Summit" }, { 0, "Mount Doom" } };
 /* which mode each arena is for: the smaller ones Deathmatch, the bigger (room to run, the shield to find) Find the Shield */
 /* (1.9.7) Find the Shield dropped for now: every arena is a Deathmatch arena */
-static int vs_arena_mode(int i) { (void)i; return 0; }
+/* (1.9.9) Troll Battle: Balin's Tomb (his own), Amon Hen and Mount Doom; Deathmatch: every arena */
+static int vs_arena_troll(int i) { return s_vs_arenas[i].level == 3 || s_vs_arenas[i].level == 4 || s_vs_arenas[i].level == 0; }
+static int vs_arena_mode(int i) { return s_vs_mode == 1 && vs_arena_troll(i) ? 1 : s_vs_mode == 1 ? -1 : 0; }
 #define VS_NARENA ((int)(sizeof s_vs_arenas / sizeof s_vs_arenas[0]))
 static const Row s_vsrows[] = {
     { "Player 1:", 0, K_VSHERO, { 0 } },
     { "Player 2:", 1, K_VSHERO, { 0 } },
     { "Arena:", 2, K_VSHERO, { 0 } },   /* (gfx 2: the arena, shown as the heroes are) */
     { "Rounds to win:", 3, K_VSHERO, { 0 } },   /* (1.9.7, gfx 3: first to 3, 5 or 7) */
+    { "Mode:", 4, K_VSHERO, { 0 } },   /* (1.9.9, gfx 4: Deathmatch or Troll Battle) */
 };
 extern int tt_heroes_on(void);
 /* who may be which: the extra heroes with the Extra heroes mod on; player 1 on Weathertop as Aragorn or an extra
@@ -343,6 +347,8 @@ static int vs_hero_ok(int pl, int h)
 {
     if (h < 0 || h >= VS_NHERO) return 0;
     if (h >= 4 && !tt_heroes_on()) return 0;
+    if (s_vs_mode == 1) return h == VS_TROLL_HERO;   /* (1.9.9) Troll Battle: the troll against the troll */
+    if (h == VS_TROLL_HERO) return 0;                /* (and in no other mode) */
     if (pl == 0 && s_vs_arenas[s_vs_arena].level == 1 && h >= 1 && h <= 3 && getenv("TT_VS_HEROBYARENA")) return 0;
     return h != s_vs_hero[pl ^ 1];
 }
@@ -360,13 +366,15 @@ static void vs_hero_change(int pl, int d)
 {
     int k, h;
     if (pl == 3) { s_vs_goal_i = (s_vs_goal_i + d + 3) % 3; return; }   /* (rounds to win) */
+    if (pl == 4) { if (!tt_heroes_on()) return; s_vs_mode ^= 1; if (s_vs_mode == 0) { s_vs_hero[0] = 0; s_vs_hero[1] = 1; } vs_fix(); return; }   /* (1.9.9) the mode */
     if (pl == 2) { int k; for (k = 0; k < VS_NARENA; k++) { s_vs_arena = (s_vs_arena + d + VS_NARENA) % VS_NARENA; if (vs_arena_mode(s_vs_arena) == s_vs_mode && vs_arena_ok(s_vs_arena)) break; } vs_fix(); return; }   /* (the arena row: the mode's) */
     h = s_vs_hero[pl];
     for (k = 0; k < VS_NHERO; k++) { h = (h + d + VS_NHERO) % VS_NHERO; if (vs_hero_ok(pl, h)) { s_vs_hero[pl] = h; vs_fix(); return; } }
 }
 /* the match asked for (twotowers_manual.c at the new game) */
 const char *tt_vs_hero_name(int pl) { return s_vs_heroes[s_vs_hero[pl & 1]][0]; }
-int tt_vs_mode(void) { const char *e = getenv("TT_VS_MODE"); (void)s_vs_mode; return e ? atoi(e) : 0; }   /* (Deathmatch only for now) */
+int tt_vs_mode(void) { const char *e = getenv("TT_VS_MODE"); return e ? atoi(e) : 0; }   /* (Find the Shield: TT_VS_MODE=1, testing only) */
+int tt_vs_troll_mode(void) { return getenv("TT_VS_TROLL") ? 1 : s_vs_mode == 1; }   /* (1.9.9) Troll Battle */
 int tt_vs_arena_level(void) { const char *e = getenv("TT_VS_ARENA"); return e ? atoi(e) : s_vs_arenas[s_vs_arena].level; }   /* (the game's level index, table 0x17B7A4) */
 static const Row *cm_rows(int *n) { if (s_vsmenu) { *n = (int)(sizeof s_vsrows / sizeof s_vsrows[0]); return s_vsrows; } *n = (int)(sizeof s_coop / sizeof s_coop[0]); return s_coop; }
 static int cm_ntop(void) { return s_vsmenu ? 1 : 2; }
@@ -594,7 +602,7 @@ static void draw_coopmenu(void)
         text_el(T_LABEL, 24, y, 0, sel ? COL_ON : COL_OFF, w->label);
         if (w->kind == K_VSHERO) {
             text_el(T_VALUE, s_colx[0] - 8, y, 0, COL_OFF, "<");
-            text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, w->gfx == 3 ? s_vs_goals[s_vs_goal_i] : w->gfx == 2 ? s_vs_arenas[s_vs_arena].name : s_vs_heroes[s_vs_hero[w->gfx]][1]);
+            text_el(T_VALUE, s_colx[0] + 12, y, 340, sel ? COL_ON : COL_OFF, w->gfx == 4 ? s_vs_modes[s_vs_mode] : w->gfx == 3 ? s_vs_goals[s_vs_goal_i] : w->gfx == 2 ? s_vs_arenas[s_vs_arena].name : s_vs_heroes[s_vs_hero[w->gfx]][1]);
             text_el(T_VALUE, 585, y, 40, COL_OFF, ">");
             continue;
         }

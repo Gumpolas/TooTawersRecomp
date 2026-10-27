@@ -2775,3 +2775,39 @@ On top of the merge
 twotowers/tools/appimage
   - The Linux AppImage: AppRun (the game's folder beside the AppImage),
     pysquashfs.py (a SquashFS 4.0 writer in Python), make_appimage.sh.
+
+-- 1.9.9: the roster, Troll Battle, player 2 ---------------------------------------
+twotowers/src/heroes.c, heroes_ampliacion_textos.inc, heroes_troll_throw.h
+  - Gandalf the White replaced by Saruman (Orthanc's: mesh 8F3B37CA, set
+    56D8D87C, texture EF4942FD, his staff 30028EA4), his own map of the
+    hero's slots, his own upgrade names and green-yellow / yellow beams
+    (effect modes 3 and 4, by turns).
+  - The Rohan captain and the elven archer removed; the elven warrior,
+    the troll, the Uruk captain and Saruman are Versus heroes (the menus
+    keep the seven originals, N_SEL 7).
+  - The troll's ranged attack: Fangorn Forest's troll's throw (14FANG2
+    set 0x0215F674, slot 66) with its bones put in the cave troll's order,
+    in place of the bow. TT_TROLLBOWTHROW. His voices are Balin's Tomb's
+    (1406-1414).
+twotowers/src/options.c
+  - Versus "Mode:" row: Deathmatch, or Troll Battle (both players the
+    cave troll; Balin's Tomb, Amon Hen or Mount Doom).
+twotowers/src/twotowers_manual.c
+  - Versus: the players start further apart (42); a player off a ledge
+    loses the round (TT_VS_NOFALLLOSS); the kill move (RT) does no damage
+    the first two times in a round ("STAB GUARD: n LEFT") and then at most
+    40% of full health (TT_VS_STABPCT); a parried blow rings with the
+    campaign's clang (0xDD), a landed one with the flesh hit the game last
+    played; the shield orc's shield rings, his grunt under it, a crack and
+    his cry when it breaks (TT_VS_NOSHIELDSND).
+  - Player 2's rumble: the game's per-port rumble run (0x1F8A0) made for
+    port 1 too, and his virtual pad's motors sent to the PC's second
+    controller (TT_COOP_NOP2RUMBLE).
+twotowers/src/versus.c
+  - A random level's music for each match (TT_VS_FIXEDMUSIC); the heroes'
+    blows at full strength and their steps louder; a hero's sound not in
+    the arena's bank taken from his own level's; the troll's swings his
+    club's slam (TT_VS_TROLLWHOOSH).
+twotowers/src/e3hud.c
+  - Combo runes and labels per player: player 2's (port 1) on his side,
+    mirrored; alone, any controller is player 1's.

@@ -8,7 +8,7 @@
  * las salidas 60/194 no abren arma ni emiten eventos. No convertir
  * la salida de un golpe ya completo en otro ataque sin dano. */
 static int troll_recovery(int g,unsigned slot,const unsigned char *r,size_t len){
-    return g==9&&len>=64&&(slot==42||slot==44||slot==46||slot==60||slot==194)
+    return g==SK_TROLL&&len>=64&&(slot==42||slot==44||slot==46||slot==60||slot==194)
         &&rd32(r,0x30)==0&&rd32(r,0x18)==0;
 }
 static int troll_damage_pair(const unsigned char *r,size_t len,unsigned index[2]){
@@ -26,7 +26,7 @@ static int troll_damage_pair(const unsigned char *r,size_t len,unsigned index[2]
 static int troll_native_attack(int g,int cls,const unsigned char *a,size_t al,
  const unsigned char *r,size_t rl){
     unsigned ha[2],na[2];
-    return g==9&&(cls==AC_SPEED||cls==AC_FIERCE)
+    return g==SK_TROLL&&(cls==AC_SPEED||cls==AC_FIERCE)
         &&troll_damage_pair(a,al,ha)&&troll_damage_pair(r,rl,na);
 }
 static int troll_native_damage(unsigned char *o,size_t ol,const unsigned char *r,size_t rl){

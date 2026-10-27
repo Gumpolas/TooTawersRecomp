@@ -114,7 +114,7 @@ typedef struct {
 #define W(x) "\\Device\\CdRom0\\worlds\\" x
 #define MAP(m) m, (int)sizeof m
 static const uint8_t s_map_troll[56] = { 2, 2, 2, 2, 5, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12, 13, 13, 14, 9, 10, 10, 11, 15, 40, 16, 16, 30, 31, 33, 33, 34, 33, 33, 33, 33, 33, 37, 21, 22, 24, 24, 24, 24, 25, 28, 24, 24, 24, 40, 40, 40, 40, 40, 39 };
-static const uint8_t s_map_rohan[49] = { 2, 2, 2, 2, 5, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12, 13, 14, 9, 10, 11, 15, 16, 16, 16, 21, 22, 24, 25, 24, 24, 24, 28, 30, 31, 33, 34, 33, 33, 33, 37, 40, 40, 40, 40, 40, 40, 40, 40 };
+static const uint8_t s_map_saruman[90] = { 2,2,2,2,4,5,2,2,2,2,9,10,9,9,9,9,9,11,12,13,12,12,12,12,12,14,15,16,16,16,21,22,21,21,21,21,24,22,22,22,22,22,22,24,24,24,25,24,24,24,24,28,24,24,30,31,30,30,30,30,33,31,31,31,31,31,31,34,33,33,33,37,39,39,39,40,40,39,39,39,39,40,40,39,39,39,39,39,39,39 };   /* (1.9.9, tools/rig/chain.py on 21ORTH2) */
 static const uint8_t s_map_urukcap[49] = { 2, 2, 2, 2, 4, 5, 2, 2, 2, 2, 2, 2, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16, 21, 22, 24, 24, 24, 25, 24, 28, 24, 24, 40, 40, 40, 40, 40, 39, 39, 30, 31, 33, 34, 33, 33, 33, 33, 33, 37 };
 static Skin s_skins[] = {
     /* Boromir: his sword, and his shield on his other arm (the bow's hand) */
@@ -142,15 +142,16 @@ static Skin s_skins[] = {
     /* the black Uruk-hai: the Berserker (Fangorn, Helm's Deep), his great sword, his own attacks */
     { "uruk",    "Uruk",    W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (no bow of his own: nothing in that hand) */
-    /* Elfo de Helm, 44 huesos verificados contra Elrond. */
-    { "elvenwarrior", "Elf", W("17TOP1.bfa"), 0x22C529AAu, 0xB427C34Cu, 0x7064A295u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
-    { "elvenarcher", "Archer", W("17TOP1.BFA"), 0x59B3BA22u, 0x36159E38u, 0x1783AA81u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
-    /* (132) sin arco: lanza rocas desde la mano vacia, como el Uruk-hai */
+    /* (132) the cave troll (Balin's Tomb): his club; he throws (heroes_troll_*.h) */
     { "troll", "Troll", W("04BALIN1.BFA"), 0x712933FEu, 0x29BDD2CAu, 0x964E271Eu, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
-    { "rohan", "Rohan", W("16ROHAN1.BFA"), 0x5654A508u, 0x817EFC59u, 0x4058E474u, MAP(s_map_rohan), W("04BALIN1.bfa"), 0x13F82514u, 0x29636120u, 1 },
     { "urukcap", "Captain", W("18HOLE1.BFA"), 0x99F5D594u, 0xE6F0C52Bu, 0xF5E0EF8Eu, MAP(s_map_urukcap), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1 },
-    { "gandalfwhite", "Gandalf", W("16ROHAN2.BFA"), 0x85FCA5B6u, 0xDDAEA31Cu, 0xEC2C4C93u, MAP(s_map_gandalf), W("16ROHAN2.bfa"), 0x13F82514u, 0x29636120u, 1, NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 1 },
+    /* (1.9.9, Versus) Saruman: the Orthanc Summit's (21ORTH2: his model of two parts, his 90-bone skeleton, his texture
+     * EF4942FD -- the lookups his creation makes there, TT_LKLOG), his black staff (30028EA4); his shots a beam */
+    { "saruman", "Saruman", W("21ORTH2.bfa"), 0x8F3B37CAu, 0x56D8D87Cu, 0xEF4942FDu, MAP(s_map_saruman), W("21ORTH2.bfa"), 0x30028EA4u, 0xAEBFF748u, 1,
+      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 1 },
+    /* (1.9.9) Versus only: the Deeping Wall's elven warrior (The128ReBits), 44 bones checked against Elrond's */
+    { "elvenwarrior", "Elf", W("17TOP1.bfa"), 0x22C529AAu, 0xB427C34Cu, 0x7064A295u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
     /* Versus only (1.9.7): not in the character select, the campaign or co-op. The Nazgul: Weathertop's, his sword
      * (weaponObj1-5 there, on the Ringwraiths RW1-5); he throws, as the Uruk-hai */
     { "nazgul",  "Nazgul",  W("01WEAT1.bfa"),  0xAEF3DB04u, 0x066DCD53u, 0xAE89108Eu, MAP(s_map_nazgul), W("01WEAT1.bfa"), 0xC0F2C17Cu, 0xB798D03Au, 1,
@@ -184,8 +185,9 @@ static Skin s_skins[] = {
 #define MENU_ANIM_KEY 1u
 #define UPG_FIG_KEY 9u   /* the upgrade screen's 3D figure (upgbigi.BFF: mesh 1050 / texture 1150 key 9) */
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
-#define N_SEL 13               /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests and The128ReBits' six (1.9.9) */
-#define N_EXTRA 16             /* the guests: those and the Versus-only three (Nazgul, the shield orc, Eomer) */
+#define N_SEL 7                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests */
+#define N_EXTRA 14             /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
+#define SK_TROLL 7             /* the cave troll's skin */
 #define N_SKINS ((int)(sizeof s_skins / sizeof s_skins[0]))
 /* a retail hero's skin (co-op's player 2) */
 static int skin_retail(int sk) { return sk >= N_EXTRA && sk < N_SKINS - 1; }
@@ -197,7 +199,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 138u     /* bump when the level rebuild changes (1.9.9: The128ReBits' R8 heroes on 1.9.8, 137 in his build) */
+#define HEROES_BUILD 139u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -638,14 +640,13 @@ static const AnimPools s_pools[] = {
     { "elrond",  { "34,33", "9", "66",                "66",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "krp" },
     { "sauron",  { "34,33", "2,0,1", "43,41",            "41,43",      "43",  "43",   "20", "27", "", "43" }, 0, "" },
     { "uruk",    { "34,33", "9", "104,43,69",         "43,69",      "69",  "110",  "20", "27", "24", "69" }, 0, "" },
-    /* Faltan 27/30: n retargetea caidas/levantadas; muerte del heroe. */
-    { "elvenwarrior", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
-    { "elvenarcher", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
-    { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },
-    { "rohan", { "34,33", "9", "41", "43", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
+    { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
     { "urukcap", { "34,33", "9", "41", "43,172", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
-    { "gandalfwhite", { "34,33", "9", "41,43,55", "57,55", "56", "35", "20", "27", "27", "43" }, 0, "" },
-    /* the Versus-only three: their own swings, flinches, falls and deaths; the hero's kick (their special), parry and
+    /* Saruman: no walk of his own (he stands on Orthanc): the hero's moves fitted to him ('m'); his casts */
+    { "saruman", { "34,33", "", "64,62", "65,66", "20", "49", "22", "", "", "20" }, 1.0f, "kpn" },
+    /* (Versus only) the elven warrior: his own swing, the hero's falls */
+    { "elvenwarrior", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
+    /* the Versus-only three (with the elven warrior above): their own swings, flinches, falls and deaths; the hero's kick (their special), parry and
      * throw fitted to them. The Nazgul has no fall of his own: his flight (2, the run he takes from Weathertop's fire) */
     { "nazgul",  { "34,33", "9", "69,41,45",          "43,45",      "37",  "41",   "20,21", "2,2,2,34", "2", "41" }, 1.0f, "kpr" },
     { "orc",     { "34,33", "9", "41,104,69",         "43,45",      "40",  "41",   "20,21", "27", "24", "69" }, 1.0f, "kpr" },
@@ -690,12 +691,6 @@ static const char *s_menu_moves[N_SEL][3] = {   /* stance, chosen pose, confirm 
     { "34,33", "66,33", "66,33" },          /* elrond: his sword swing when chosen too (1.9.1; 33 is a stance: nothing moved) */
     { "34", "41,43", "43,41" },             /* sauron */
     { "34,33", "43,41", "41,43" },          /* uruk */
-    { "34,33", "66,33", "66,33" },          /* Elfo: gesto propio 66 */
-    { "34,33", "66,33", "66,33" }, /* elvenarcher: gestos propios */
-    { "34,33", "41,33", "43,41" }, /* troll: gestos propios */
-    { "34,33", "41,33", "43,41" }, /* rohan: gestos propios */
-    { "34,33", "41,33", "43,41" }, /* urukcap: gestos propios */
-    { "34,33", "36,35", "35,57" }, /* gandalfwhite: gestos propios */
 };
 /* the composed set's settings, for the cache name */
 static void hudammo_path(int sk, char *p2, size_t n);
@@ -748,7 +743,7 @@ static uint32_t anims_hash(int g)
     if (getenv("TT_HITBONE")) h += 113u * (uint32_t)atoi(getenv("TT_HITBONE"));
     /* 126: la opcion cambia el banco generado; separar ambas caches para
      * que el retorno a la preparacion completa funcione sin borrar nada. */
-    if (g == 9 && getenv("TT_TROLLFULLWIND")) h ^= 0x126F011Du;
+    if (g == SK_TROLL && getenv("TT_TROLLFULLWIND")) h ^= 0x126F011Du;
     return h;
 }
 /* ---- retargeting: the hero's motion onto a guest's skeleton ----
@@ -878,7 +873,7 @@ static uint32_t skel_point_bone(const unsigned char *S, size_t len, int k);
  * either side; Sauron's only square on -- turned, as Aragorn's. Elrond,
  * Gandalf, Lurtz and the Uruk-hai fell it as Aragorn does or wider, and
  * from further off (Elrond 4.5 back, where Aragorn's misses). */
-static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0 };
 /* (a cutscene's clips, cine_clips_build: 255) the most rotation
  * keys a bone gets, and root position keys kept */
 static int s_rt_maxnt = 96, s_rt_maxpos = 64;
@@ -1242,6 +1237,7 @@ static int hero_still(const unsigned char *a, const unsigned char *gr, uint32_t 
 }
 #include "heroes_motion_quality.h"
 #include "heroes_troll_reaction.h"
+#include "heroes_troll_throw.h"
 #include "heroes_ground_reaction.h"
 /* the shots' own sounds (1.7): which (synth_shot's kinds: 0 Gandalf's bolt,
  * 1 Sauron's, 2 a stone, 3 a burning rock), or -1 (the bow's, as the hero) */
@@ -1298,6 +1294,8 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                 ovr[s]=npc_troll_reaction(g,s,A+at[s],alen-at[s],G,glen,&l2);
             if(!ovr[s]&&!s_compose_menu&&!getenv("TT_LEGACY_GROUND")&&at[s])
                 ovr[s]=npc_ground_hold(g,s,A+at[s],alen-at[s],G,glen,&l2);
+            if(!ovr[s]&&!s_compose_menu&&g==SK_TROLL&&at[s]&&anim_class((int)s)==AC_RANGED)   /* (1.9.9) his own throw */
+                ovr[s]=troll_throw_rec(G,glen,&l2);
             /* the kick is the hero's for every guest (1.8): the game's kick
              * lands where his foot goes (knocking enemies back, and the
              * Deeping Wall's ladders off the wall), and his own swings in
@@ -1550,7 +1548,7 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             src = (uint32_t)pk;
         }
         a = A + at[s];
-        if(!ovr[s]&&!s_compose_menu&&g==9){
+        if(!ovr[s]&&!s_compose_menu&&g==SK_TROLL){
             troll_exit=troll_recovery(g,s,a,rd32(a,0x14));
             unsigned pair[2];
             int melee=troll_damage_pair(a,rd32(a,0x14),pair);
@@ -2336,15 +2334,12 @@ static void char_db_patch(unsigned char *o, const unsigned char *t, size_t tl, s
         { "troll", 0x056A06A4u, 1750 },
         { "troll", 0xF3023D1Du, 550 },
         { "troll", 0x2DD1F42Bu, 0x461C4000u },
-        { "rohan", 0x056A06A4u, 1200 },
-        { "rohan", 0xF3023D1Du, 260 },
-        { "rohan", 0x2DD1F42Bu, 0x43480000u },
         { "urukcap", 0x056A06A4u, 1450 },
         { "urukcap", 0xF3023D1Du, 400 },
         { "urukcap", 0x2DD1F42Bu, 0x447A0000u },
-        { "gandalfwhite", 0x056A06A4u, 1575 },
-        { "gandalfwhite", 0xF3023D1Du, 480 },
-        { "gandalfwhite", 0x2DD1F42Bu, 0x459C4000u },
+        { "saruman", 0x056A06A4u, 1575 },
+        { "saruman", 0xF3023D1Du, 480 },
+        { "saruman", 0x2DD1F42Bu, 0x459C4000u },
         { "sauron", 0x056A06A4u, 1600 },      /* health (the heroes' 1000) */
         { "sauron", 0xF3023D1Du, 600 },       /* ENEMY_EXPERIENCE (200; the names: the game's hash, sub_0006BE30) */
         { "sauron", 0x2DD1F42Bu, 0x461C4000u },   /* his weight against knockbacks: 10000.0f (a float; the heroes 100, the troll 10000) */
@@ -2558,7 +2553,7 @@ static void hud_ammo_patch(unsigned char *o, const unsigned char *t, size_t tl, 
     for (v = 0; v < 2; v++) {
         if (!res_find(t, tl, keys[v], 350, &off[v], &e2, &ty) || e2 - off[v] < 0x80 + 0x8000 || rd32(t, off[v] + 4) != 64 || rd32(t, off[v] + 8) != 128) return;
     }
-    if (!strcmp(s_skins[sk].name, "elrond") || !strcmp(s_skins[sk].name, "elvenwarrior") || !strcmp(s_skins[sk].name, "elvenarcher")) {   /* Legolas's */
+    if (!strcmp(s_skins[sk].name, "elrond") || !strcmp(s_skins[sk].name, "elvenwarrior")) {   /* Legolas's */
         char p2[700]; size_t l2, n2; unsigned char *b;
         snprintf(p2, sizeof p2, "%s", target);
         l2 = strlen(p2);
@@ -3017,7 +3012,7 @@ static void wins_saved(const char *key)
 /* guest g's own unlock: Isildur's finishes of the secret level -- the 2nd
  * Boromir, 3rd Gandalf, 4th Frodo, 5th Lurtz, 6th Elrond, 7th the Uruk-hai,
  * 8th Sauron. TT_WINS=n: as if n finishes (testing, over extra_heroes=2) */
-static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7, 9, 10, 11, 12, 13, 14 };
+static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7 };
 static int guest_unlocked(int g)
 {
     if (getenv("TT_WINS")) return g >= 0 && g < N_SEL && atoi(getenv("TT_WINS")) >= s_unlock_at[g];
@@ -3035,12 +3030,6 @@ static int guest_unlocked(int g)
  * Frodo, Lurtz) or, for Boromir (no still of him), a cameo made from his
  * model's face texture, faded into the background, and the name. */
 #include "heroes_names.inc"
-#include "heroes_elfo_name.inc"
-#include "heroes_gandalfwhite_name.inc"
-#include "heroes_urukcap_name.inc"
-#include "heroes_rohan_name.inc"
-#include "heroes_troll_name.inc"
-#include "heroes_elvenarcher_name.inc"
 typedef struct { const char *stills; uint32_t key; int x0, y0, x1, y1; } UpgSrc;
 static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 46, 84 },                           /* Boromir: his face texture */
@@ -3050,12 +3039,6 @@ static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 40, 80 },                           /* Elrond: his face texture */
     { NULL, 0, 0, 0, 70, 100 },                          /* Sauron: his helm */
     { "stills3.BFF", 7, 120, 0, 520, 448 },              /* the Uruk-hai host */
-    { NULL, 0, 0, 0, 40, 80 }, /* Elfo: encuadre de Elrond, pendiente de revision visual */
-    { NULL, 0, 0, 0, 40, 80 }, /* elvenarcher: figura/rostro propios */
-    { NULL, 0, 0, 0, 40, 80 }, /* troll: figura/rostro propios */
-    { NULL, 0, 0, 0, 40, 80 }, /* rohan: figura/rostro propios */
-    { NULL, 0, 0, 0, 40, 80 }, /* urukcap: figura/rostro propios */
-    { NULL, 0, 0, 0, 40, 80 }, /* gandalfwhite: figura/rostro propios */
 };
 static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] = {
     { s_name_boromir_fill, s_name_boromir_edge, NAME_BOROMIR_W, NAME_BOROMIR_H },
@@ -3065,12 +3048,6 @@ static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] 
     { s_name_elrond_fill, s_name_elrond_edge, NAME_ELROND_W, NAME_ELROND_H },
     { s_name_sauron_fill, s_name_sauron_edge, NAME_SAURON_W, NAME_SAURON_H },
     { s_name_urukhai_fill, s_name_urukhai_edge, NAME_URUKHAI_W, NAME_URUKHAI_H },
-    { s_name_elfo_fill, s_name_elfo_edge, NAME_ELFO_W, NAME_ELFO_H },
-    { s_name_elvenarcher_fill, s_name_elvenarcher_edge, NAME_ELVENARCHER_W, NAME_ELVENARCHER_H },
-    { s_name_troll_fill, s_name_troll_edge, NAME_TROLL_W, NAME_TROLL_H },
-    { s_name_rohan_fill, s_name_rohan_edge, NAME_ROHAN_W, NAME_ROHAN_H },
-    { s_name_urukcap_fill, s_name_urukcap_edge, NAME_URUKCAP_W, NAME_URUKCAP_H },
-    { s_name_gandalfwhite_fill, s_name_gandalfwhite_edge, NAME_GANDALFWHITE_W, NAME_GANDALFWHITE_H },
 };
 
 static void c565(uint16_t c, int *o) { o[0] = ((c >> 11) & 31) * 255 / 31; o[1] = ((c >> 5) & 63) * 255 / 63; o[2] = (c & 31) * 255 / 31; }
@@ -3915,25 +3892,22 @@ static const Voice s_voice[N_EXTRA] = {
     { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
         VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
       VA("17TOP1", 826, 1.0f, 2.2f), 0.3f },
-    /* Elfo: donante de Elrond, Legolas; no hay voz nueva. */
+    /* the cave troll: his own, Balin's Tomb's (his motions' sound events there: 1406 and 1408 as he swings, 1409 struck,
+     * 1410, 1412 and 1414 as he dies) */
+    { { VA("04BALIN1", 1406, 1.0f, 1.6f), VA("04BALIN1", 1408, 1.0f, 1.6f), VA("04BALIN1", 1406, 0.94f, 1.6f), VA("04BALIN1", 1408, 0.94f, 1.6f),
+        VA("04BALIN1", 1409, 1.0f, 1.4f), VA("04BALIN1", 1410, 1.0f, 1.4f), VA("04BALIN1", 1409, 0.92f, 1.4f), VA("04BALIN1", 1412, 1.0f, 2.2f), VA("04BALIN1", 1414, 1.0f, 2.4f) },
+      VA("04BALIN1", 1406, 1.0f, 2.2f), 0.3f },
+    { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
+        VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
+      VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* the Uruk captain: the Uruk-hai's */
+    /* Saruman: Gandalf's (Gimli's, deeper), far deeper still */
+    { { VA("17TOP1", 265, 0.84f, 1.5f), VA("17TOP1", 266, 0.84f, 1.5f), VA("17TOP1", 267, 0.84f, 1.5f), VA("17TOP1", 271, 0.84f, 1.5f),
+        VA("17TOP1", 268, 0.84f, 1.5f), VA("17TOP1", 269, 0.84f, 1.5f), VA("17TOP1", 273, 0.84f, 1.5f), VA("17TOP1", 272, 0.84f, 1.5f), VA("17TOP1", 269, 0.78f, 1.5f) },
+      VA("INTRFACE", 2731, 0.84f, 4.0f), 0.0f },
+    /* (Versus only) the elven warrior: Legolas's */
     { { VA("17TOP1", 278, 1.0f, 1.5f), VA("17TOP1", 279, 1.0f, 1.5f), VA("17TOP1", 280, 1.0f, 1.5f), VA("17TOP1", 284, 1.0f, 1.5f),
         VA("17TOP1", 281, 1.0f, 1.5f), VA("17TOP1", 282, 1.0f, 1.5f), VA("17TOP1", 283, 1.0f, 1.5f), VA("17TOP1", 285, 1.0f, 1.5f), VA("17TOP1", 282, 0.92f, 1.5f) },
       VA("INTRFACE", 2733, 1.0f, 4.0f), 0.0f },
-    { { VA("17TOP1", 278, 1.0f, 1.5f), VA("17TOP1", 279, 1.0f, 1.5f), VA("17TOP1", 280, 1.0f, 1.5f), VA("17TOP1", 284, 1.0f, 1.5f),
-        VA("17TOP1", 281, 1.0f, 1.5f), VA("17TOP1", 282, 1.0f, 1.5f), VA("17TOP1", 283, 1.0f, 1.5f), VA("17TOP1", 285, 1.0f, 1.5f), VA("17TOP1", 282, 0.92f, 1.5f) },
-      VA("INTRFACE", 2733, 1.0f, 4.0f), 0.0f }, /* elvenarcher: audio donado */
-    { { VA("13AMON1", 1606, 0.78f, 1.4f), VA("13AMON1", 1607, 0.78f, 1.4f), VA("13AMON1", 1608, 0.78f, 1.4f), VA("13AMON1", 1609, 0.78f, 1.4f),
-        VA("13AMON1", 1610, 0.78f, 1.3f), VA("13AMON1", 1611, 0.78f, 1.3f), VA("13AMON1", 1612, 0.78f, 1.3f), VA("13AMON1", 1614, 0.75f, 1.8f), VA("13AMON1", 1613, 0.72f, 1.8f) },
-      VA("13AMON1", 1608, 0.72f, 2.2f), 0.3f }, /* troll: audio donado */
-    { { VA(NULL, 1, 0.90f, 1.5f), VA(NULL, 3, 0.90f, 1.5f), VA(NULL, 4, 0.90f, 1.5f), VA(NULL, 6, 0.90f, 1.5f),
-        VA(NULL, 7, 0.90f, 1.5f), VA(NULL, 8, 0.90f, 1.5f), VA(NULL, 10, 0.90f, 1.5f), VA(NULL, 11, 0.90f, 1.5f), VA(NULL, 12, 0.90f, 2.0f) },
-      VA("INTRFACE", 2729, 0.90f, 4.0f), 0.0f }, /* rohan: audio donado */
-    { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
-        VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
-      VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* urukcap: audio donado */
-    { { VA("17TOP1", 265, 0.93f, 1.5f), VA("17TOP1", 266, 0.93f, 1.5f), VA("17TOP1", 267, 0.93f, 1.5f), VA("17TOP1", 271, 0.93f, 1.5f),
-        VA("17TOP1", 268, 0.93f, 1.5f), VA("17TOP1", 269, 0.93f, 1.5f), VA("17TOP1", 273, 0.93f, 1.5f), VA("17TOP1", 272, 0.93f, 1.5f), VA("17TOP1", 269, 0.86f, 1.5f) },
-      VA("INTRFACE", 2731, 0.93f, 4.0f), 0.0f }, /* gandalfwhite: audio donado */
     /* (Versus only) the Nazgul: Weathertop's own -- the efforts his swings play (1736, 1737), short shrieks struck,
      * the long scream (1746) and the cry his flight plays (1701) */
     { { VA("01WEAT1", 1736, 1.0f, 1.3f), VA("01WEAT1", 1737, 1.0f, 1.3f), VA("01WEAT1", 1736, 1.08f, 1.3f), VA("01WEAT1", 1737, 1.08f, 1.3f),
@@ -4151,12 +4125,6 @@ static const Confirm s_confirm[N_SEL] = {
     { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 },      /* Elrond: a sword */
     { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 },     /* Sauron: a heavy swing */
     { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 },      /* the Uruk-hai: his blade */
-    { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* Elfo: Elrond */
-    { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* elvenarcher */
-    { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 }, /* troll */
-    { VC("17TOP1", 183, 0.90f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* rohan */
-    { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 }, /* urukcap */
-    { VC(NULL, 0, 0, 0), VC(NULL, 0, 0, 0), 0 }, /* gandalfwhite */
 };
 #undef VC
 /* a source at 22050 Hz with its pitch applied (resampled) */
@@ -4842,7 +4810,7 @@ static const UpgName *upn_list(int g)
 {
     static const struct { const char *n; const UpgName *l; } L[] = {
         { "boromir", s_upn_boromir }, { "gandalf", s_upn_gandalf }, { "frodo", s_upn_frodo }, { "lurtz", s_upn_lurtz },
-        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "gandalfwhite", s_upn_gandalfwhite_nuevo }, { "urukcap", s_upn_urukcap_nuevo }, { "rohan", s_upn_rohan_nuevo }, { "troll", s_upn_troll_nuevo }, { "elvenarcher", s_upn_elvenarcher_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
+        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
     int k;
     if (g < 0 || g >= N_SKINS) return NULL;
     for (k = 0; k < (int)(sizeof L / sizeof L[0]); k++) if (!strcmp(L[k].n, s_skins[g].name)) return L[k].l;
@@ -4966,8 +4934,8 @@ static int hl_set(int g)
     int i, j, ok = 0;
     extern const char *tt_lang_code(void);
     int nuevo=g>=7 && g<N_EXTRA;
-    /* Blanco conserva las descripciones de magia; los demas tienen arco. */
-    if(g==12)who="gandalf";
+    /* (1.9.9) Saruman: Gandalf's spell texts in the languages (theirs are a wizard's, the others' a bow's) */
+    if(who&&!strcmp(who,"saruman"))who="gandalf";
     if (s_hla_n < 0) hl_find();
     for (i = 0; i < s_hla_n; i++) {
         const uint16_t *ou, *tu = NULL;
@@ -4980,9 +4948,9 @@ static int hl_set(int g)
             if (s_hl[j].from == s_hla[i].from && !strcmp(s_hl[j].hero, who)) { tn = tt_lang_key16(s_hl[j].to, &tu); break; }
         uint16_t own[256];
         if(nuevo)for(unsigned z=0;z<sizeof s_new_es/sizeof s_new_es[0];z++){
-            if(s_new_es[z].guest!=g ||s_new_es[z].hash!=s_hla[i].from)continue;
+            if(strcmp(s_new_es[z].guest,s_skins[g].name) ||s_new_es[z].hash!=s_hla[i].from)continue;
             const char *text=NULL;
-            if(s_hla[i].from==0xDEEF44C1u || !strcmp(tt_lang_code(),"es"))text=s_new_es[z].text;
+            if(!strcmp(tt_lang_code(),"es"))text=s_new_es[z].text; else if(s_hla[i].from==0xDEEF44C1u)text=s_new_es[z].en;   /* (1.9.9: his title in English outside Spanish) */
             if(text){tn=(int)strlen(text);for(k=0;k<tn;k++)own[k]=(uint16_t)(unsigned char)text[k];tu=own;}break;
         }
         if (tn <= 0 || tn > on + HL_ROOM || tn > 255) { tu = ou; tn = on; }
@@ -5486,7 +5454,7 @@ static void hero4_actor(int g)
 /* the number place p's character answers to now */
 /* the carousel's order of the extra heroes (1.8: Sauron last, after the
  * Uruk-hai): place 4 + i holds guest s_place_order[i] */
-static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5, 7, 8, 9, 10, 11, 12 };
+static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5 };
 static int place_actor(int p) { return p >= 4 && p < 4 + N_SEL ? 4 + s_place_order[p - 4] : p; }
 static int guest_place(int g) { int i; for (i = 0; i < N_SEL; i++) if (s_place_order[i] == g) return 4 + i; return 4 + g; }
 static uint32_t aid(int p) { int q = place_actor(p); return s_actor[q] ? G32(s_actor[q] + 0x1B8) : (uint32_t)q; }
@@ -5772,7 +5740,7 @@ static void layout(uint32_t menu)
         {
             /* Lurtz is a head taller than the others: a step further back,
              * so that his name above him stays clear */
-            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f, 0, 0, 5.5f, 0, 0, 0 }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f, 0, 0, 1.5f, 0, 0, 0 };   /* the tall ones further back */
+            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f };   /* the tall ones further back */
             /* eight round a ring made for four: a wider ring (its front
              * where the four's front is, the ring's centre moved back), so
              * they stand further apart */
@@ -6454,6 +6422,8 @@ static void effect_colour(uint32_t id, int mode)
                     m = r > g ? (r > b ? r : b) : (g > b ? g : b);
                     if (mode == 1) out = getenv("TT_BOLTRGB") ? (uint32_t)strtoul(getenv("TT_BOLTRGB"), NULL, 16) : (a << 24 | (r / 8) << 16 | (g / 8) << 8 | m);
                     else if (mode == 2) { uint32_t w = m + (255 - m) / 2; out = getenv("TT_WHITERGB") ? (uint32_t)strtoul(getenv("TT_WHITERGB"), NULL, 16) : (a << 24 | w << 16 | w << 8 | w); }
+                    else if (mode == 3) out = a << 24 | (m / 10) << 16 | m << 8 | (m * 3 / 5);         /* (1.9.9, Saruman) green-yellow (ABGR) */
+                    else if (mode == 4) out = a << 24 | (m / 10) << 16 | (m * 9 / 10) << 8 | m;       /* (1.9.9, Saruman) yellow */
                     else out = o;
                     if (out != v) { G32(va) = out; if (log_on()) tt_dbg("[HEROES] effect %X emitter %u: colour %08X -> %08X\n", id, k, v, out); }
                     s_ec[j].mine = out;
@@ -6471,7 +6441,7 @@ static int bolt_mode(void)
 {
     if (s_guest < 0) return 0;
     if (!strcmp(s_skins[s_guest].name, "sauron")) return getenv("TT_NOREDBOLT") ? 0 : s_bolt_blue ? 0 : 1;
-    if (!strcmp(s_skins[s_guest].name, "gandalfwhite")) return 2;
+    if (!strcmp(s_skins[s_guest].name, "saruman")) return s_bolt_blue ? 4 : 3;   /* (1.9.9) green-yellow, yellow */
     if (!strcmp(s_skins[s_guest].name, "gandalf")) return ranged_top() && !getenv("TT_NOWHITEBOLT") ? 2 : 0;
     return -1;
 }
@@ -7051,14 +7021,14 @@ void tt_sweep(uint32_t a0, double res)
  * by the vector transform sub_000FF13D (out, v, m) -- the guests' swings
  * pass a little off the hero's (their arms are not his), so their blade's
  * samples reach further: {0, y * reach, 0} for the player's weapon (id 1). */
-static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.35f, 1.35f, 1.35f, 1.5f, 1.35f, 1.6f, 1.35f, 1.5f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
+static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.5f, 1.35f, 1.35f, 1.6f, 1.35f, 1.5f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
  * the enemies, who stand further from him, half as often as the hero's -- 9 to 13% of the hit tests at 1.65 and 1.9, Aragorn's 15 to 18%) */
 /* and lower: Gandalf's and Sauron's own swings carry their weapon high
  * (Sauron is half again as tall as the heroes), over the heads of the
  * orcs they strike at -- measured at the hit tests, their weapon's tip
  * about 2 and 2.7 higher than Aragorn's. Their samples taken that much
  * lower, so a blow that looks to land does. */
-static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 0, 0, 3.0f, 0, 0, 3.2f, 0, 0, 0 };
+static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 3.0f, 0, 3.2f, 0, 0, 0, 0 };
 /* 128: primero la consulta nativa; solo si falla, cuatro sondas sobre
  * cinco cortes de la envolvente convexa de la cabeza 830B7594. Mango, reloj,
  * matrices, pose y lista de victimas nativos. Sin estirar/bajar el arma.
@@ -7118,7 +7088,7 @@ int tt_wvec(uint32_t out, uint32_t v, uint32_t m, uint32_t ret)
     if (ret != 0xBA2AEu && ret != 0xBA314u) return 0;   /* the sweep's two samples */
     if (off < 0) { off = getenv("TT_NOWAXIS") ? 1 : 0; reach = getenv("TT_WREACH") ? (float)atof(getenv("TT_WREACH")) : 0.0f; }
     if (off || s_guest < 0 || s_guest >= N_EXTRA || G8(HERO_BYTE) != 4) return 0;
-    if(s_guest==9&&!getenv("TT_LEGACYMACE")){
+    if(s_guest==SK_TROLL&&!getenv("TT_LEGACYMACE")){
         float p[3];uint32_t w=s_sweep_weapon;
         if(getenv("TT_NOMACEVOLUME")||G8(0x43BABCu)||s_sweep_lane<1||s_sweep_lane>4
           ||w<0x80000000u||w>=0x83FFF000u||(m!=w+0x60&&m!=w+0xA0)
@@ -7137,7 +7107,7 @@ int tt_wvec(uint32_t out, uint32_t v, uint32_t m, uint32_t ret)
     }
     if (!obj) return 0;
     for (c = 0; c < 16; c++) M[c] = GF(m + 4u * (uint32_t)c);
-    if(s_guest==9&&s_sweep_lane>=0&&s_sweep_lane<5&&obj==s_wobj[1]){
+    if(s_guest==SK_TROLL&&s_sweep_lane>=0&&s_sweep_lane<5&&obj==s_wobj[1]){
         static const float cross[5][2]={{0,0},{-1.5f,0},{1.5f,0},{0,-1.0f},{0,1.0f}};
         /* Los 5 puntos originales [-.5,5] cubren ahora [-2,5.5]. */
         float y=-2.0f+(GF(v+4)+.5f)*(7.5f/5.5f),sx=cross[s_sweep_lane][0],sz=cross[s_sweep_lane][1];
@@ -7514,6 +7484,7 @@ int tt_hk(int id, int phase, uint32_t *r)
             static unsigned nshot;
             s_bolt_blue = ranged_top() && (nshot++ & 1);
         }
+        if (mine && !strcmp(s_skins[bg].name, "saruman")) { static unsigned nshot; s_bolt_blue = nshot++ & 1; }   /* (1.9.9) his: green-yellow, then yellow, in turn */
         if (mine && bolt_mode() >= 0) effect_colour(0x135u, bolt_mode());
         if (mine) {
             pid = getenv("TT_BEAMPART") ? (uint32_t)strtoul(getenv("TT_BEAMPART"), NULL, 0) : 0x135u;
@@ -7748,7 +7719,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (p2 && G32(g_esp + 0x18) == p2) {
             static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
                 { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 },
-                { "troll", 10 }, { "elvenarcher", 19 }, { "elvenwarrior", 19 }, { "gandalfwhite", 15 }, { "urukcap", 10 } };   /* (1.9.9: The128ReBits' heroes) */
+                { "troll", 10 }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 } };   /* (1.9.9) */
             const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
             if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
             if (to != pj) G32(g_esp + 16) = to;
@@ -8107,3 +8078,12 @@ int tt_vs_image_pixels(const char *file, uint32_t *out, float k)
     return 1;
 }
 int tt_host_path(const char *xbox_path, char *out, size_t n) { return host_path(xbox_path, out, n); }   /* (versus.c) */
+/* (1.9.9, Versus) the level whose sound bank a skin's own sounds are in (its resources' level: "00ISUL1", ...), or NULL */
+int tt_heroes_skin_bank(const char *skin, char *bank, size_t bn)
+{
+    int g = skin_by_name(skin); const char *p, *e; size_t n;
+    if (g < 0 || !s_skins[g].src || !(p = strrchr(s_skins[g].src, '\\')) || !(e = strchr(++p, '.'))) return 0;
+    n = (size_t)(e - p); if (n + 1 > bn) return 0;
+    memcpy(bank, p, n); bank[n] = 0;
+    return 1;
+}

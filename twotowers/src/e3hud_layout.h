@@ -104,5 +104,6 @@
  * of the developer-switch table at 0x4B91F0, which retail never fills) */
 #define E3_EL_LABEL  0x4BA000u
 #define E3_EL_EXP    (0x4BA000u + 0xDCu)
+#define E3_EL_LABEL2 (0x4BA000u + 0x1B8u)   /* (1.9.9) player 2's combo label: up to 0x4BA294 -- menus.c's co-op element at 0x4BA1C0 is the main menu's only, set before each of its draws */
 
 #endif

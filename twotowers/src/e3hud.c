@@ -79,42 +79,48 @@ static int e3_id(int which)
  * Retail controls: A = speed attack, Y = fierce attack, B = knock back
  * (X is parry and makes no rune). */
 enum { R_NONE, R_SPEED, R_FIERCE, R_SPECIAL };
-static volatile int s_rune[4], s_nrune;
-static volatile DWORD s_last_hit, s_label_until;
-static volatile int s_label;           /* 0 none, 1 speed, 2 fierce, 3 special, 4 mixed */
+/* (1.9.9) one set per player: in co-op and Versus player 2's hero reads input port 1 (twotowers_manual.c,
+ * coop_pad2), so port 1's presses are his runes and his label, drawn on his side; alone, any controller's presses
+ * are player 1's (the runtime's port numbers are not the game's, so no matching against 0x1CB8B4) */
+static volatile int s_runes[2][4], s_nrunes[2];
+static volatile DWORD s_last_hits[2], s_label_untils[2];
+static volatile int s_labels[2];       /* 0 none, 1 speed, 2 fierce, 3 special, 4 mixed */
+#define s_rune s_runes[0]
+#define s_nrune s_nrunes[0]
+#define s_label s_labels[0]
 static volatile int s_in_game;
 static volatile unsigned s_state_ver = 1;
 
-static void combo_end(void)
+static void combo_end_p(int w)
 {
     int i, same = 1;
-    if (!s_nrune) return;
-    for (i = 1; i < s_nrune; i++) if (s_rune[i] != s_rune[0]) same = 0;
-    s_label = same ? s_rune[0] : 4;
-    s_label_until = GetTickCount() + 1600;
+    if (!s_nrunes[w]) return;
+    for (i = 1; i < s_nrunes[w]; i++) if (s_runes[w][i] != s_runes[w][0]) same = 0;
+    s_labels[w] = same ? s_runes[w][0] : 4;
+    s_label_untils[w] = GetTickCount() + 1600;
     s_state_ver++;
 }
 
+static int e3_two_players(void) { extern int tt_coop_active(void); return tt_coop_active(); }
 static void e3_pad(unsigned long port, const XState *st)
 {
     static uint8_t prevs[4][8];
     static const int map[3][2] = { { 0, R_SPEED }, { 3, R_FIERCE }, { 1, R_SPECIAL } };   /* A, Y, B */
     DWORD now = GetTickCount();
     uint8_t *prev;
-    int k;
+    int k, w;
     if (port > 3) return;
-    /* (one player: any controller's presses count; the runtime's port
-     * numbers are not the game's, so no matching against 0x1CB8B4) */
     prev = prevs[port];
-    if (!s_in_game || !xbox_GfxGet(GFX_E3HUD)) { memcpy(prev, st->Gamepad.bAnalogButtons, 8); return; }
+    w = e3_two_players() ? (port == 1 ? 1 : port == 0 ? 0 : -1) : 0;
+    if (w < 0 || !s_in_game || !xbox_GfxGet(GFX_E3HUD)) { memcpy(prev, st->Gamepad.bAnalogButtons, 8); return; }
     for (k = 0; k < 3; k++) {
         int b = map[k][0];
         if (st->Gamepad.bAnalogButtons[b] > 64 && prev[b] <= 64) {
-            if (s_label || s_nrune >= 4) { s_nrune = 0; s_label = 0; }
-            s_rune[s_nrune++] = map[k][1];
-            s_last_hit = now;
+            if (s_labels[w] || s_nrunes[w] >= 4) { s_nrunes[w] = 0; s_labels[w] = 0; }
+            s_runes[w][s_nrunes[w]++] = map[k][1];
+            s_last_hits[w] = now;
             s_state_ver++;
-            if (s_nrune == 4) combo_end();
+            if (s_nrunes[w] == 4) combo_end_p(w);
         }
     }
     memcpy(prev, st->Gamepad.bAnalogButtons, 8);
@@ -124,9 +130,10 @@ static void combo_tick(void)
 {
     DWORD now = GetTickCount();
     static const char *test = (const char *)1;
+    int w;
     if (test == (const char *)1) test = getenv("TT_E3HUD_TEST");   /* testing: a fixed orb */
     if (test) {
-        /* "ayb" = speed, fierce, special runes; "L2" = show label 2 */
+        /* "ayb" = speed, fierce, special runes; "L2" = show label 2; "P2" = player 2's label too */
         int k, n = 0, l;
         for (k = 0; test[k] && n < 4; k++)
             if (test[k] == 'a' || test[k] == 'y' || test[k] == 'b')
@@ -135,10 +142,13 @@ static void combo_tick(void)
         s_nrune = n;
         l = strchr(test, 'L') ? atoi(strchr(test, 'L') + 1) : 0;
         if (l != s_label) { s_label = l; s_state_ver++; }
+        s_labels[1] = strchr(test, 'P') ? atoi(strchr(test, 'P') + 1) : 0;
         return;
     }
-    if (s_nrune && !s_label && now - s_last_hit > 900) combo_end();
-    if (s_label && (LONG)(now - s_label_until) > 0) { s_label = 0; s_nrune = 0; s_state_ver++; }
+    for (w = 0; w < 2; w++) {
+        if (s_nrunes[w] && !s_labels[w] && now - s_last_hits[w] > 900) combo_end_p(w);
+        if (s_labels[w] && (LONG)(now - s_label_untils[w]) > 0) { s_labels[w] = 0; s_nrunes[w] = 0; s_state_ver++; }
+    }
 }
 
 /* ---- drawing helpers (32-bit ARGB, straight alpha) ---- */
@@ -234,7 +244,7 @@ static void draw_orb(uint32_t *p, int w, int h, float cx, float cy, float r)
 
 /* ---- the character's face ---- */
 /* per hero 1-4, and 5-8 for the Extra heroes mod's guests (hero 4 then) */
-#define N_FACE 18   /* originales y 13 extras; cero reservado */
+#define N_FACE 19   /* the originals and the 14 guests; 0 unused */
 static uint32_t *volatile s_face[N_FACE];   /* alpha-masked; FACE_PX square unless an icon */
 static int s_face_w[N_FACE], s_face_h[N_FACE];   /* an icon's own size (0: FACE_PX square) */
 static int s_icon_tried[N_FACE];
@@ -371,6 +381,15 @@ int tt_e3hud_predraw(void)
         G32(E3_EL_LABEL + 0x20) = lcol[l];
         el_text(E3_EL_LABEL, lbl[l]);
     }
+    /* player 2's: on his side, mirrored about the screen's middle (co-op and Versus) */
+    el_setup(E3_EL_LABEL2, HUD_RATING, 640 - LBL_HX - 220, LBL_HY, 220, 40);
+    if (s_labels[1] > 0 && s_labels[1] <= 4) G32(E3_EL_LABEL2 + 0x08) = (uint32_t)(640 - LBL_HX - (int)strlen(lbl[s_labels[1]]) * 19);   /* (its right end where player 1's starts, mirrored: the rating font is about 19 units a letter) */
+    G8(E3_EL_LABEL2 + 0x24) = 0;
+    if (e3_two_players() && s_labels[1] > 0 && s_labels[1] <= 4) {
+        G8(E3_EL_LABEL2 + 0x24) = 1;
+        G32(E3_EL_LABEL2 + 0x20) = lcol[s_labels[1]];
+        el_text(E3_EL_LABEL2, lbl[s_labels[1]]);
+    }
     el_setup(E3_EL_EXP, HUD_ARROWS_TEXT, EXP_HX, EXP_HY, 200, 30);
     G8(E3_EL_EXP + 0x24) = 0;
     meter_read(&v, &m);
@@ -392,7 +411,7 @@ int tt_e3hud_predraw(void)
             s_slot_ptr = G32(HUD_LIST + k * 12);
             s_slot_cnt = G32(HUD_LIST + k * 12 + 4);
             G32(HUD_LIST + k * 12) = E3_EL_LABEL;
-            G32(HUD_LIST + k * 12 + 4) = 2;
+            G32(HUD_LIST + k * 12 + 4) = 3;
             G8(HUD_LIST_ON + k) = 1;
             break;
         }
@@ -532,7 +551,7 @@ static int e3_overlay(XboxOverlayQuad *q, int max)
             s_icon_tried[hero] = 1;
             ic = hero <= 4 ? icon_load(hero, &w, &h) : icon_load_named(tt_heroes_guest_name(hero - 5), &w, &h);
             /* Retrato provisional compartido con Elrond. El propio opcional tiene prioridad. */
-            if (!ic && hero == 12) ic = icon_load_named("elrond", &w, &h);
+            if (!ic && hero >= 5 && !strcmp(tt_heroes_guest_name(hero - 5), "elvenwarrior")) ic = icon_load_named("elrond", &w, &h);
             if (ic) { s_face[hero] = ic; s_face_w[hero] = w; s_face_h[hero] = h; s_face_ver[hero] = 2000; s_face_tried[hero] = 1; }
         }
         if (!s_face[hero] && !s_face_tried[hero] && hero == 4) { s_face_tried[hero] = 1; s_face[hero] = face_build(hero); }

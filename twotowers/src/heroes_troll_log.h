@@ -39,7 +39,7 @@ static int clog_ready(void){
     }
     return !s_clog_off&&s_clog&&s_clog_bytes<CLOG_MAX_BYTES;
 }
-static int clog_active(void){return s_guest==9&&G8(HERO_BYTE)==4&&!G8(0x43BABCu)&&clog_ptr(G32(0x43B15Cu));}
+static int clog_active(void){return s_guest==SK_TROLL&&G8(HERO_BYTE)==4&&!G8(0x43BABCu)&&clog_ptr(G32(0x43B15Cu));}
 static void clog_seen(uint32_t a){
     if(!clog_ptr(a)||a==G32(0x43B15Cu))return;
     DWORD now=GetTickCount();int free_i=-1,old_i=0;

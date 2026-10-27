@@ -10,6 +10,11 @@
 #include <windows.h>
 #else
 extern unsigned long GetModuleFileNameA(void *m, char *p, unsigned long n);
+#include <time.h>
+static unsigned long vs_ticks(void) { struct timespec t; clock_gettime(CLOCK_MONOTONIC, &t); return (unsigned long)t.tv_sec * 1000ul + (unsigned long)(t.tv_nsec / 1000000); }
+#endif
+#if defined(_WIN32)
+static unsigned long vs_ticks(void) { return GetTickCount(); }
 #endif
 extern void tt_dbg(const char *fmt, ...);
 static int strncasecmp_vs(const char *a, const char *b) { while (*b) { int x = *a++, y = *b++; if (x >= 'a' && x <= 'z') x -= 32; if (y >= 'a' && y <= 'z') y -= 32; if (x != y) return 1; } return 0; }
@@ -82,14 +87,30 @@ static const struct { const char *arena, *donor, *track; } s_music[] = {
     { "16ROHAN2", "02GATE2", "02G2GAL1_L" }, { "16ROHAN3", "16ROHAN1", "16R1ALT1_L" }, { "17TOP1", "16ROHAN3", "16R3ALT2_L" },
     { "18HOLE1", "00ISUL1", "00I1BASE_L" }, { "20YARD1", "16ROHAN2", "16R2ALT2_L" }, { "21ORTH1", "01WEAT1", "01WEALT1_L" },
     { "21ORTH2", "16ROHAN2", "16R2ALT5_L" } };
+/* (1.9.9) a track picked at random for each match (any level's but the arena's own; TT_VS_FIXEDMUSIC: the arena's pairing
+ * above): chosen when the arena's bank is redirected at its load, kept for its streams */
+static char s_mpick_arena[16]; static int s_mpick = -1;
 static int music_i(const char *level)
 {
-    int i; if (!level) return -1;
-    for (i = 0; i < (int)(sizeof s_music / sizeof s_music[0]); i++) if (!strncasecmp_vs(level, s_music[i].arena)) return i;
-    return -1;
+    int i, n = (int)(sizeof s_music / sizeof s_music[0]), own = -1; if (!level) return -1;
+    for (i = 0; i < n; i++) if (!strncasecmp_vs(level, s_music[i].arena)) own = i;
+    if (own < 0 || getenv("TT_VS_FIXEDMUSIC")) return own;
+    if (s_mpick < 0 || strncasecmp_vs(level, s_mpick_arena)) {
+        static unsigned seed; int k;
+        seed = seed * 1103515245u + 12345u + (unsigned)vs_ticks();
+        for (k = 0; k < 8; k++) { i = (int)((seed >> 8) % (unsigned)n); if (strncasecmp_vs(s_music[i].donor, level)) break; seed = seed * 1103515245u + 12345u; }
+        s_mpick = i; snprintf(s_mpick_arena, sizeof s_mpick_arena, "%s", s_music[own].arena);
+        { extern void tt_dbg(const char *, ...); tt_dbg("[VS] music for %s this match: %s's \"%s\"\n", level, s_music[i].donor, s_music[i].track); }
+    }
+    return s_mpick;
 }
 static int s_music_off(void) { return getenv("TT_VS_NOMUSIC") != NULL; }
-const char *tt_vs_music_donor(const char *level) { int i; if (!tt_vs_on() || s_music_off()) return NULL; i = music_i(level); return i >= 0 ? s_music[i].donor : NULL; }
+const char *tt_vs_music_donor(const char *level)
+{   /* (called as the arena's banks open at its load: a new pick for each load, WB and SB a moment apart) */
+    static unsigned long last; int i; if (!tt_vs_on() || s_music_off()) return NULL;
+    if (vs_ticks() - last > 10000u) s_mpick = -1;
+    last = vs_ticks(); i = music_i(level); return i >= 0 ? s_music[i].donor : NULL;
+}
 const char *tt_vs_music_track(const char *level) { int i = music_i(level); if (getenv("TT_VS_TRACK")) return getenv("TT_VS_TRACK"); return i >= 0 ? s_music[i].track : NULL; }
 
 /* the Options' ring (the interface wave bank's entries 11 and 12, the cues 0xA9D / 0xA9E the Options play left and
@@ -228,13 +249,23 @@ int tt_vs_hero_sound(const char *skin, uint32_t id, float vol)
     if (vol < 0.05f) vol = 0.05f; if (vol > 1.0f) vol = 1.0f;
     slot = tt_heroes_voice_slot(id);
     if (slot >= 0) return tt_vs_voice(skin, slot, 0.55f + 0.45f * vol);
-    if (li > 13 || !(x = vox_get(lvl[li], id))) return 0;
+    {   /* (1.9.9) the cave troll's own: his motions are the hero's (their sounds the sword's whoosh, 183-190); his club's
+         * blow is his Balin's Tomb sounds' -- the slam (926) and the crash (930) his own attacks play there */
+        static unsigned n; uint32_t tid = 0;
+        if (!strcmp(skin, "troll") && id >= 183u && id <= 190u && !getenv("TT_VS_TROLLWHOOSH")) { tid = 926u; (void)n; }
+        if (tid && (x = vox_get("04BALIN1", tid))) { li = 3; goto play; }
+    }
+    if (li > 13 || !(x = vox_get(lvl[li], id))) {   /* (1.9.9) not in the arena's bank: his home level's (the orc's prologue, ...) */
+        extern int tt_heroes_skin_bank(const char *skin, char *bank, size_t bn); static char hb[16];
+        if (!tt_heroes_skin_bank(skin, hb, sizeof hb) || !(x = vox_get(hb, id))) return 0;
+    }
+play:
     s = next++ & 7;
     if (slots[s] < 0) slots[s] = apu_mixer_alloc_voice();
     if (slots[s] < 0 || !(v = apu_mixer_get_voice(slots[s]))) return 0;
     apu_mixer_stop(slots[s]);
     v->pcm_data = x->pcm; v->pcm_bytes = x->n * 2; v->num_channels = 1; v->sample_rate = x->rate;
-    v->volume = (getenv("TT_VS_HEROSFX") ? (float)atof(getenv("TT_VS_HEROSFX")) : 0.8f) * vol * (id == 3000u ? 0.4f : 1.0f);   /* (3000: his steps, softer) */
+    v->volume = (getenv("TT_VS_HEROSFX") ? (float)atof(getenv("TT_VS_HEROSFX")) : 1.0f) * vol * (id == 3000u ? 0.75f : 1.0f);   /* (3000: his steps, a little softer; 1.9.9: 0.75, was 0.4 -- "way too quiet") */
     apu_mixer_set_position(slots[s], 0); apu_mixer_play(slots[s], 0);
     { static int n; if (n++ < 30) tt_dbg("[VS] %s's sound %u from %s (%.2f s)\n", skin, id, lvl[li], (double)x->n / x->rate); }
     return 1;

@@ -1614,7 +1614,13 @@ void sub_00169845(void)
     static int log = -1, n;
     uint32_t h = MEM32(esp + 4), fb = MEM32(esp + 8);
     if (log < 0) log = getenv("TT_RUMBLE_LOG") != NULL;
-    if (h == 0xFEED0001u) { eax = 0; esp += 12; return; }   /* (coop-anything: player 2's virtual pad has no device) */
+    if (h == 0xFEED0001u) {   /* player 2's virtual pad: his record's motors (the game's rumble for player 2, port record 1) to the PC's
+        * second controller (1.9.9: a playtest asked for player 2's rumble in co-op and Versus). TT_COOP_NOP2RUMBLE: dropped */
+        if (fb && !getenv("TT_COOP_NOP2RUMBLE")) { uint16_t l = MEM16(fb + 0x42), r = MEM16(fb + 0x44); static int said;
+            if (!said && (l || r)) { said = 1; tt_dbg("  [INPUT] rumble for player 2 (left %u, right %u): passed to his controller\n", l, r); }
+            if (log && n < 400 && (l || r)) { n++; tt_dbg("[RUMBLE] P2 SetState L=%u R=%u\n", l, r); }
+            xbox_InputSetVibrationDeferred(1, l, r); MEM32(fb) = 0; }
+        eax = 0; esp += 12; return; }
     if (!tt_usb_hle()) {
         sub_00169845_gen();
         if (log && n < 40) {
@@ -5152,6 +5158,7 @@ uint32_t coop_p2_actor(void) { return coop_mode() == 3 ? coop_p2 : 0; }
  * within 3 s of the last) has his guard broken by the next -- it reaches him as a hit (INP_TAKEDAMAGE 5) and costs him
  * TT_VS_GUARDPCT (6) per cent of his health (vs_frame). A blow taken ends the run */
 static int vs_guard_n[2]; static uint32_t vs_guard_t[2], vs_guard_broke[2];
+static void vs_clang(uint32_t at);
 extern void sub_00053090_gen(void);
 void sub_00053090(void)
 {
@@ -5163,6 +5170,7 @@ void sub_00053090(void)
             else {
                 int lim = getenv("TT_VS_GUARDN") ? atoi(getenv("TT_VS_GUARDN")) : 4;
                 if (now - vs_guard_t[w] > 3000u) vs_guard_n[w] = 0;
+                if (now - vs_guard_t[w] > 150u) vs_clang(a);   /* (1.9.9) the parry's ring of steel, as on the campaign's foes */
                 vs_guard_t[w] = now;
                 if (++vs_guard_n[w] > lim) { vs_guard_n[w] = 0; vs_guard_broke[w] = now | 1u; MEM32(esp + 4) = 5u; tt_dbg("[VS] P%d's guard broken (%d blocks in a row)\n", w + 1, lim); }
             }
@@ -5399,6 +5407,41 @@ static uint32_t vs_kb_in_t[2];   /* the game's own knock back reached him (INP_K
 void tt_vs_kb_in(int v) { if (v >= 0 && v < 2) vs_kb_in_t[v] = coop_now() | 1u; }
 int tt_vs_last_box_kick(int who) { return who >= 0 && who < 2 && vs_box_k4[who] == 3; }
 void tt_vs_box_kind(int who, uint32_t k2, uint32_t k4) { if (who >= 0 && who < 2) { vs_box_k2[who] = (int)k2; vs_box_k4[who] = (int)k4; } }
+/* (1.9.9) the kill move (RT: the thrust into a foe on the ground; its attack box is kind 6, 1030 damage) in Versus:
+ * a hero shrugs off the first two each round (the banner counts them down, as the guard's), and from the third it
+ * takes at most TT_VS_STABPCT (40) per cent of his most health -- fatal only when he is already that low. Before,
+ * one thrust ended the round from full health. TT_VS_NOSTABRULE: the game's own */
+static int vs_stab_n[2];
+void tt_vs_stab_rule(uint32_t v, uint32_t msg)
+{
+    extern int tt_vs_on(void); int w, a; int32_t dmg, mx, cap, hp; char t[48];
+    if (!tt_vs_on() || getenv("TT_VS_NOSTABRULE") || (v != coop_first_char && v != coop_p2) || v < 0x10000u) return;
+    w = v == coop_p2; a = w ^ 1;
+    if (vs_box_k2[a] != 6) return;
+    dmg = (int32_t)MEM32(msg + 0x14); if (dmg <= 0) return;
+    {   /* (one thrust sends more than one hit: they are one stab -- held off together, or together at most the cap) */
+        static uint32_t st[2]; static int held[2]; static int32_t dealt[2]; uint32_t now = coop_now();
+        if (st[w] && now - st[w] < 700u) {
+            if (held[w]) { MEM32(msg + 0x14) = 0; return; }
+            mx = (int32_t)MEM32(v + 0x300); cap = mx * (getenv("TT_VS_STABPCT") ? atoi(getenv("TT_VS_STABPCT")) : 40) / 100;
+            if (dmg > cap - dealt[w]) dmg = cap - dealt[w] > 0 ? cap - dealt[w] : 0;
+            MEM32(msg + 0x14) = (uint32_t)dmg; dealt[w] += dmg; return;
+        }
+        st[w] = now | 1u; held[w] = vs_stab_n[w] < 2; dealt[w] = 0;
+        if (!held[w]) { mx = (int32_t)MEM32(v + 0x300); cap = mx * (getenv("TT_VS_STABPCT") ? atoi(getenv("TT_VS_STABPCT")) : 40) / 100; dealt[w] = dmg < cap ? dmg : cap; }
+    }
+    if (vs_stab_n[w] < 2) {
+        vs_stab_n[w]++; MEM32(msg + 0x14) = 0;
+        snprintf(t, sizeof t, "P%d STAB GUARD: %d LEFT", w + 1, 2 - vs_stab_n[w]);
+        vs_say(t, 1500u);
+        tt_dbg("[VS] P%d's kill move on P%d held off (%d of 2)\n", a + 1, w + 1, vs_stab_n[w]);
+        return;
+    }
+    mx = (int32_t)MEM32(v + 0x300); hp = (int32_t)MEM32(v + 0x2FC);
+    cap = mx * (getenv("TT_VS_STABPCT") ? atoi(getenv("TT_VS_STABPCT")) : 40) / 100;
+    if (dmg > cap) MEM32(msg + 0x14) = (uint32_t)cap;
+    tt_dbg("[VS] P%d's kill move on P%d: %d damage (health %d of %d)%s\n", a + 1, w + 1, (int32_t)MEM32(msg + 0x14), hp, mx, hp <= cap ? ": fatal" : "");
+}
 static struct { uint32_t t0; float dx, dy, done; } vs_push[2];
 static void vs_push_start(int v, uint32_t from)
 {
@@ -5449,12 +5492,26 @@ static void vs_impact(uint32_t victim)
     extern uint32_t tt_snd3d_hit_id, tt_snd3d_hit_vol, tt_snd3d_hit_pitch; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
     uint32_t a[10], sp = esp, r0 = eax, r1 = ecx, r2 = edx; float one = 1.0f, m1 = -1.0f, vol = 1.0f;
     if (victim < 0x10000u || getenv("TT_VS_NOHITSND")) return;
-    { extern int tt_vs_hero_sound(const char *skin, uint32_t id, float vol); if (tt_vs_hero_sound("blow", getenv("TT_VS_HITSND") ? (uint32_t)strtoul(getenv("TT_VS_HITSND"), NULL, 0) : 0xE1u, 1.0f)) return; }   /* (1.9.7: through the port's mixer, at full strength) */
+    { extern int tt_vs_hero_sound(const char *skin, uint32_t id, float vol); uint32_t hid = getenv("TT_VS_HITSND") ? (uint32_t)strtoul(getenv("TT_VS_HITSND"), NULL, 0) : tt_snd3d_hit_id ? tt_snd3d_hit_id : 0xE1u;   /* (1.9.9: the flesh hit the game last played, as the comment says -- 0xE1 is the parry's clang) */
+      if (tt_vs_hero_sound("blow", hid, 1.0f)) return; }   /* (1.9.7: through the port's mixer, at full strength) */
     (void)tt_snd3d_hit_id; (void)tt_snd3d_hit_vol; (void)tt_snd3d_hit_pitch;
     a[0] = getenv("TT_VS_HITSND") ? (uint32_t)strtoul(getenv("TT_VS_HITSND"), NULL, 0) : 0xE1u;   /* (the game's blow landing: 0x82EB0's 0xE1) */
     { float v75 = 0.75f, p0 = 0.0f; (void)vol; (void)one; memcpy(&a[1], &v75, 4); memcpy(&a[2], &p0, 4); }
     a[3] = MEM32(victim + 0xF0); a[4] = MEM32(victim + 0xF4); a[5] = MEM32(victim + 0xF8); memcpy(&a[6], &one, 4);
     memcpy(&a[7], &m1, 4); a[8] = 0; a[9] = 0;
+    tt_gcall(0x000C3B90u, 0, 10, a);
+    esp = sp; eax = r0; ecx = r1; edx = r2;
+}
+/* (1.9.9) a blow parried: the game's clang (0x82EB0's 0xDD, the blocked blow's) at the parrying hero, at full strength through
+ * the port's mixer as the blows' are (TT_VS_PARRYSND: another id) */
+static void vs_clang(uint32_t at)
+{
+    extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); extern int tt_vs_hero_sound(const char *skin, uint32_t id, float vol);
+    uint32_t a[10], sp = esp, r0 = eax, r1 = ecx, r2 = edx, id = getenv("TT_VS_PARRYSND") ? (uint32_t)strtoul(getenv("TT_VS_PARRYSND"), NULL, 0) : 0xDDu; float one = 1.0f, m1 = -1.0f, v75 = 0.85f, p0 = 0.0f;
+    if (at < 0x10000u || getenv("TT_VS_NOPARRYSND")) return;
+    if (tt_vs_hero_sound("blow", id, 1.0f)) return;
+    a[0] = id; memcpy(&a[1], &v75, 4); memcpy(&a[2], &p0, 4);
+    a[3] = MEM32(at + 0xF0); a[4] = MEM32(at + 0xF4); a[5] = MEM32(at + 0xF8); memcpy(&a[6], &one, 4); memcpy(&a[7], &m1, 4); a[8] = 0; a[9] = 0;
     tt_gcall(0x000C3B90u, 0, 10, a);
     esp = sp; eax = r0; ecx = r1; edx = r2;
 }
@@ -5688,7 +5745,7 @@ static void vs_shield_frame(uint32_t now)
 }
 static void vs_orc_shield_round(void);
 /* (1.9.7) how far apart the heroes start: TT_VS_SPREAD (12 units) */
-static float vs_spacing(void) { return getenv("TT_VS_SPREAD") ? (float)atof(getenv("TT_VS_SPREAD")) : 30.0f; }
+static float vs_spacing(void) { return getenv("TT_VS_SPREAD") ? (float)atof(getenv("TT_VS_SPREAD")) : 42.0f; }   /* (1.9.9: 42, was 30 -- "still too close") */
 /* the bigger arenas (Gates of Moria, Amon Hen, Fangorn, the Plains of Rohan, the Road to Helm's Deep, the Deeping
  * Wall): after the first round the heroes go on from where they are */
 static int vs_big_arena(void) { uint32_t lv = MEM32(0x1BB2A4u); return !getenv("TT_VS_RESETSPOTS") && (lv == 2u || lv == 4u || lv == 5u || lv == 6u || lv == 8u || lv == 9u); }
@@ -5698,10 +5755,10 @@ static void vs_free_spot(uint32_t hero, float ox, float oy, float dx, float dy, 
 {
     uint32_t pm = coop_pathmap(hero); float n = sqrtf(dx * dx + dy * dy), d0 = d; int k, tries;
     if (n < 1e-3f) { dx = 1.0f; dy = 0.0f; } else { dx /= n; dy /= n; }
-    if (!pm && d > 12.0f) d = 12.0f;   /* (no pathmap: nothing to tell a wall or a drop by -- not far) */
+    if (!pm && d > 18.0f) d = 18.0f;   /* (no pathmap: nothing to tell a wall or a drop by -- not far; 1.9.9: 18, was 12) */
     *x = ox + dx * d; *y = oy + dy * d;
     if (!pm) return;
-    for (tries = 0; tries < 5; tries++, d = d0 * (1.0f - 0.15f * (float)tries)) {   /* (the whole way first, then a little nearer) */
+    for (tries = 0; tries < 7; tries++, d = d0 * (1.0f - 0.1f * (float)tries)) {   /* (the whole way first, then a little nearer) */
     {   float px = MEMF(pm + 0x48), py = MEMF(pm + 0x4C), sz = (float)(int32_t)MEM32(pm + 0x68);
         int c0 = (int)floorf((ox - px) / sz), r0 = (int)floorf((oy - py) / sz);
         if (sz <= 0) return;
@@ -5713,12 +5770,13 @@ static void vs_free_spot(uint32_t hero, float ox, float oy, float dx, float dy, 
         }
     }
     }
-    *x = ox + dx * 12.0f; *y = oy + dy * 12.0f;   /* (nowhere clear: as before) */
+    *x = ox + dx * 16.0f; *y = oy + dy * 16.0f;   /* (nowhere clear: 16 units, 1.9.9) */
 }
 /* (1.9.7) a hero off the edge of the map (the campaign's fall volumes and collision planes are the story's scripts,
  * left out in Versus: he fell through the sky forever, his tag over a grey nothing -- Gates of Moria, Fangorn, Amon
  * Hen): put back where he last stood on walkable ground once he is 10 units below it */
 static float vs_safe[2][3]; static int vs_safe_ok[2];
+static int vs_fell[2];   /* (1.9.9) off the map this round: the round lost (a kick off a ledge wins it) */
 static void vs_edge_guard(void)
 {
     int w;
@@ -5744,12 +5802,14 @@ static void vs_edge_guard(void)
             float p[3]; p[0] = vs_safe[w][0]; p[1] = vs_safe[w][1]; p[2] = vs_safe[w][2] + 0.5f;
             vs_place(h, p); MEMF(h + 0x90) = p[0]; MEMF(h + 0x94) = p[1]; MEMF(h + 0x98) = p[2];
             tt_dbg("[VS] P%d fell off the map at %.1f %.1f %.1f: back at %.1f %.1f %.1f\n", w + 1, x, y, z, p[0], p[1], p[2]);
+            if (vs_state == 0 && !getenv("TT_VS_NOFALLLOSS")) { vs_fell[w] = 1; tt_dbg("[VS] P%d off the edge: the round is P%d's\n", w + 1, 2 - w); }
         }
     }
 }
 static void vs_round_start(void)
 {
     char t[48]; int w, keep = vs_round > 0 && (vs_shield_mode() || vs_big_arena());
+    vs_fell[0] = vs_fell[1] = 0; vs_stab_n[0] = vs_stab_n[1] = 0;
     for (w = 0; w < 2; w++) {
         uint32_t a = w ? coop_p2 : coop_first_char;
         if (a < 0x10000u) continue;
@@ -5889,7 +5949,7 @@ static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(g
  * them further apart is undone for whoever made it (both, if both did) */
 static void vs_leash(void)
 {
-    static float px[2], py[2]; static unsigned lvl = ~0u; float R = getenv("TT_VS_LEASH") ? (float)atof(getenv("TT_VS_LEASH")) : 36.0f, s1, s0;   /* (1.9.7: 36, the heroes start 30 apart) */
+    static float px[2], py[2]; static unsigned lvl = ~0u; float R = getenv("TT_VS_LEASH") ? (float)atof(getenv("TT_VS_LEASH")) : 48.0f, s1, s0;   /* (1.9.9: 48, the heroes start 42 apart; 1.9.7: 36) */
     uint32_t h[2] = { coop_first_char, coop_p2 }; int w;
     if (h[0] < 0x10000u || h[1] < 0x10000u || getenv("TT_VS_NOLEASH")) return;
     if (lvl != coop_level_n || vs_state == 3) { lvl = coop_level_n; for (w = 0; w < 2; w++) { px[w] = MEMF(h[w] + 0xF0); py[w] = MEMF(h[w] + 0xF4); } return; }
@@ -5948,6 +6008,16 @@ int tt_vs_shield_take(int v, int dmg)
     if (v < 0 || v > 1 || dmg <= 0 || vs_shp[v] <= 0 || !tt_vs_on()) return dmg;
     if (getenv("TT_VS_SHSHOT")) { extern void xbox_PresentDumpRequest(const char *path); static char pth[300]; static int k; snprintf(pth, sizeof pth, "%s/sh_%02d.bmp", getenv("TT_VS_SHSHOT"), k++); xbox_PresentDumpRequest(pth); }   /* (testing) */
     vs_shp[v] -= dmg >= 100 ? 2 : 1;
+    {   /* (1.9.9) the shield's own sounds, as on the campaign's shield orcs: the blow rings on it (0x82EB0's clang for a
+         * blocked blow, 0xDD), the orc grunts under it; its breaking, the heavier crack (0xE1 with it) and his cry.
+         * TT_VS_NOSHIELDSND: none */
+        extern int tt_vs_voice(const char *who, int slot, float vol); static uint32_t lt[2]; uint32_t hv = v ? coop_p2 : coop_first_char, now = coop_now();
+        if (!getenv("TT_VS_NOSHIELDSND") && (now - lt[v] > 120u || vs_shp[v] <= 0)) {
+            lt[v] = now; vs_clang(hv);
+            if (vs_shp[v] <= 0) { extern int tt_vs_hero_sound(const char *skin, uint32_t id, float vol); tt_vs_hero_sound("blow", 0xE1u, 1.0f); tt_vs_voice("orc", 4, 1.0f); }
+            else if (vs_shp[v] & 1) tt_vs_voice("orc", 4, 0.7f);
+        }
+    }
     if (vs_shp[v] > 0) { if (vs_shp[v] <= full / 2 && vs_shp[v] + (dmg >= 100 ? 2 : 1) > full / 2) { char t[40]; snprintf(t, sizeof t, "P%d'S SHIELD CRACKS!", v + 1); vs_say(t, 1200u); } return dmg / 2; }
     vs_shp[v] = 0;
     { char t[40]; snprintf(t, sizeof t, "P%d'S SHIELD IS BROKEN!", v + 1); vs_say(t, 2000u); }
@@ -6065,7 +6135,7 @@ static void vs_frame(void)
              * (0, 0), looking in from outside the hero (as in the story, observed: the eye 20 units further out, 8.5 up), so
              * the stick's left and right take him round the floor. The level starts him 5 units from the middle, where
              * that circle is so small he all but turned on the spot: the heroes start TT_VS_ORTHR (20) out instead, 8 apart */
-            float R = getenv("TT_VS_ORTHR") ? (float)atof(getenv("TT_VS_ORTHR")) : 20.0f, half = asinf(0.5f * vs_spacing() / R), base = -1.5707963f;
+            float R = getenv("TT_VS_ORTHR") ? (float)atof(getenv("TT_VS_ORTHR")) : 20.0f, half = asinf(fminf(0.5f * vs_spacing() / R, 0.95f)), base = -1.5707963f;
             vs_spot[0][0] = R * cosf(base - half); vs_spot[0][1] = R * sinf(base - half);
             vs_spot[1][0] = R * cosf(base + half); vs_spot[1][1] = R * sinf(base + half);
         }
@@ -6083,6 +6153,7 @@ static void vs_frame(void)
     if (getenv("TT_VS_HEADLOG")) { static uint32_t tl; if (now - tl > (getenv("TT_VS_HEADMS") ? (uint32_t)atoi(getenv("TT_VS_HEADMS")) : 100u) && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u) { tl = now;
         tt_dbg("[VSHEAD] t %u P1 st %u fwd %.2f %.2f pos %.2f %.2f | P2 st %u fwd %.2f %.2f pos %.2f %.2f\n", now, MEM32(coop_first_char + 0x408), MEMF(coop_first_char + 0x70), MEMF(coop_first_char + 0x74), MEMF(coop_first_char + 0xF0), MEMF(coop_first_char + 0xF4),
                MEM32(coop_p2 + 0x408), MEMF(coop_p2 + 0x70), MEMF(coop_p2 + 0x74), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4)); } }
+    if (getenv("TT_VS_POSLOG")) { static uint32_t tl; if (now - tl > 500u) { tl = now; tt_dbg("[VSPOS] t %u P1 %.1f %.1f st %u | P2 %.1f %.1f st %u\n", now, MEMF(coop_first_char + 0xF0), MEMF(coop_first_char + 0xF4), MEM32(coop_first_char + 0x408), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEM32(coop_p2 + 0x408)); } }   /* (test) */
     if (getenv("TT_VS_DISTLOG")) { static uint32_t tl; if (now - tl > 500u) { uint32_t cm = MEM32(0x43B164u); int w; tl = now;
         for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char; float ex = MEMF(cm + 0x50) - MEMF(h + 0xF0), ey = MEMF(cm + 0x54) - MEMF(h + 0xF4), ez = MEMF(cm + 0x58) - MEMF(h + 0xF8);
             tt_dbg("[VSDIST] t %u P%d 448 %.2f 504 %.2f 534 %.2f 2C8 %.2f eye %.2f | cam %.1f %.1f %.1f\n", now, w + 1, MEMF(h + 0x448), MEMF(h + 0x504), MEMF(h + 0x534), MEMF(h + 0x2C8), sqrtf(ex * ex + ey * ey + ez * ez), MEMF(cm + 0x50), MEMF(cm + 0x54), MEMF(cm + 0x58)); } } }
@@ -6149,7 +6220,7 @@ static void vs_frame(void)
     if (getenv("TT_VS_TESTEND") && vs_state == 0 && now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_TESTEND"))) {   /* (test) the match won by player 1 now */
         vs_score[0] = 2; vs_state = 2; vs_t = now; vs_say("PLAYER 1 WINS THE MATCH  2 - 0", 1u); vs_pick_awards(0); }
     if (vs_state == 0) {
-        int d0 = coop_down[0], d1 = coop_down[1];
+        int d0 = coop_down[0] || vs_fell[0], d1 = coop_down[1] || vs_fell[1];
         if (d0 || d1) {
             int win = d0 && d1 ? -1 : d0 ? 1 : 0, pts = 1;
             if (vs_shield_mode() && win >= 0) { pts = vs_carrier == win ? 2 : 1; if (vs_carrier == (win ^ 1)) vs_carrier = -1; }   /* (the carrier beaten: the shield goes) */
@@ -8915,6 +8986,7 @@ void sub_000849F0(void)
                 tt_dbg("[PROJSTACK] marks %03X (bits: 0 DB150 1 DE630 2 DAD20 3 D6B40 4 D6530 5 D62F0 6 D5820 7 D50D0 8 D5960), projectile in update %08X\n", coop_proj_mark, coop_proj_cur);
                 tt_dbg("[PROJSTACK] %s (vtable %08X) hits %08X '%s': msg %08X %08X %08X %08X %08X | stack:", (const char *)XBOX_PTR(sh), MEM32(src), v, coop_nm(v), MEM32(msg), MEM32(msg + 4), MEM32(msg + 8), MEM32(msg + 0xC), MEM32(msg + 0x10));
                 for (q = 0; q < 0x400 && k < 14; q += 4) { uint32_t r = MEM32(esp + q); if (r >= 0x11000u && r < 0x170000u) { tt_dbg(" +%X:%06X", q, r); k++; } } tt_dbg("\n"); } }
+        if (msg >= 0x10000u && MEM32(msg) == 0x103u && v >= 0x10000u) { extern void tt_vs_stab_rule(uint32_t v, uint32_t msg); tt_vs_stab_rule(v, msg); }   /* (1.9.9) Versus: the kill move's damage */
         if (msg >= 0x10000u && MEM32(msg) == 0x103u && v >= 0x10000u) { extern void coop_pdmg_msg(uint32_t v, int32_t dmg); coop_pdmg_msg(v, (int32_t)MEM32(msg + 0x14));   /* (the damage: msg +0x14) */ }
         static uint32_t tdb[0x180]; int tdf = troll && getenv("TT_COOP_TROLLDIFF");   /* (research) the troll's fields a hit changes */
         if (tdf) { int q; for (q = 0; q < 0x180; q++) tdb[q] = MEM32(v + 4 * q); }
@@ -10297,4 +10369,20 @@ void sub_00091920(void)
     sub_00091920_gen();
     if (add && MEM32(o) == 0x174980u) MEM32(o + 0x574) &= ~add;
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
+}
+
+/* (1.9.9) player 2's rumble. The game's rumble effects are kept per controller port (0x1E6908 + port * 0x78; asked for
+ * with 0x1F6C0 on the port of [0x1CB8B4], which is player 2's, 1, in his context) and run once a frame by 0x0001F8A0
+ * (cdecl: the frame's time) -- for player 1's port only, so player 2's never reached his motors. Now the frame's run is
+ * made for port 1 too, and his motors go to the PC's second controller (sub_00169845). TT_COOP_NOP2RUMBLE: as before */
+extern void sub_0001F8A0_gen(void);
+void sub_0001F8A0(void)
+{
+    uint32_t dt = MEM32(esp + 4), sp, pp;
+    sub_0001F8A0_gen();
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && MEM32(0x1CB8B4u) != 1u && !getenv("TT_COOP_NOP2RUMBLE")) {
+        sp = esp; pp = MEM32(0x1CB8B4u); MEM32(0x1CB8B4u) = 1u;
+        PUSH32(esp, dt); PUSH32(esp, 0x0001F8A0u); sub_0001F8A0_gen();
+        esp = sp; MEM32(0x1CB8B4u) = pp;
+    }
 }
