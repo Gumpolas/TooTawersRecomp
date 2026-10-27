@@ -50,7 +50,7 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 
 ### Fixes
 - **Sound after a long session:** music, cut scene voices and some effects no longer go silent some forty minutes in.
-- **Languages support for co op and Versus menus
+- **Language support for co op and Versus menus
 - **Ultra textures** no longer drop off the menus' text at times.
 
 ### Known issues (1.9.8)
