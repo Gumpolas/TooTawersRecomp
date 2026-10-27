@@ -2699,11 +2699,13 @@ static void gpu_batch(void)
             if (!samples_frame && (mxx - mnx) < 400.0f && (mxx - mnx) * (mxy - mny) < 0.2f * 640.0f * 480.0f
                 && g_cur_rt && g_cur_rt->w >= 640)
             {
+                s_hud_own = n > 0 && hud_own_piece(vertex_color(s_gpu.idx[0]), mnx, mxx, mny, mxy);
                 hud_note(mnx, mxx, mny, mxy);
                 for (k = 0; k < nverts; k++) if (g_vok[k]) {
                     float w = g_verts[k].p[3], x = g_verts[k].p[0] / w;
                     g_verts[k].p[0] = hud_wide_x(x, (mnx + mxx) * 0.5f, (mny + mxy) * 0.5f, kk) * w;
                 }
+                s_hud_own = 0;   /* (the overlay's quads use hud_wide_x too) */
             }
             goto cpu_verts_ready;
         }

@@ -1943,8 +1943,40 @@ volatile float xbox_hud_excl_more[4][5];   /* more such boxes (the co-op heroes'
 volatile float xbox_hud_right[5];   /* (1.9.8) a box whose pieces all go against the right edge together (co-op: the allies' and
                                      * bosses' icons moved under player 2's sword -- grouped piece by piece, a big icon was cut in half
                                      * or came and went as it slid) */
+/* the co-op HUD's own pieces (head markers, aim dots, the respawn counter) told by their colour, not by an area: set every
+ * frame (ARGB, 0 = unused), alpha ignored. They stay centred and out of the groups, and a game piece under one keeps its
+ * place (with boxes, the enemy counter, Frodo's bar and the boss bar under a marker or a dot lost their edge, a playtest) */
+volatile uint32_t xbox_hud_own_col[8];
+static int s_hud_own;   /* this piece is one of them (hud_note, hud_wide_x) */
+static unsigned s_hud_own_n, s_hud_own_fr;   /* (RECOMP_HUDOWNLOG: how many were seen) */
+static int hud_is_own(uint32_t c)
+{
+    int i, s;
+    for (i = 0; i < 8; i++) { uint32_t o = xbox_hud_own_col[i];
+        if (!o) continue;
+        for (s = 0; s < 2; s++) {   /* (either byte order: ARGB or ABGR) */
+            uint32_t q = s ? ((o & 0xFF00FF00u) | ((o >> 16) & 0xFFu) | ((o & 0xFFu) << 16)) : o; int k, ok = 1;
+            for (k = 0; k < 24 && ok; k += 8) { int d = (int)((c >> k) & 0xFFu) - (int)((q >> k) & 0xFFu); if (d < -1 || d > 1) ok = 0; }
+            if (ok) return 1; } }
+    return 0;
+}
+/* one of them, or a black piece on one (a text's drop shadow, drawn in black: told by its colour alone it was moved
+ * as the game's pieces, a dark "P2" off its marker, observed); the shadow may come before its text: last frame's too */
+static float s_own_box[2][16][4]; static int s_own_nb[2], s_own_cur;
+static int hud_own_piece(uint32_t c, float x0, float x1, float y0, float y1)
+{
+    int f, i;
+    if (hud_is_own(c)) {
+        if (s_own_nb[s_own_cur] < 16) { float *b = s_own_box[s_own_cur][s_own_nb[s_own_cur]++]; b[0] = x0; b[1] = x1; b[2] = y0; b[3] = y1; }
+        return 1; }
+    if ((c & 0xFFu) > 0x20u || ((c >> 8) & 0xFFu) > 0x20u || ((c >> 16) & 0xFFu) > 0x20u) return 0;
+    for (f = 0; f < 2; f++) for (i = 0; i < s_own_nb[f]; i++) { const float *b = s_own_box[f][i];
+        if (fabsf(x0 - b[0]) <= 6.0f && fabsf(x1 - b[1]) <= 6.0f && fabsf(y0 - b[2]) <= 6.0f && fabsf(y1 - b[3]) <= 6.0f) return 1; }
+    return 0;
+}
 static void hud_note(float x0, float x1, float y0, float y1)
 {
+    if (s_hud_own) { s_hud_own_n++; return; }
     if (xbox_hud_excl[4] != 0.0f) { float cx = 0.5f * (x0 + x1), cy = 0.5f * (y0 + y1);
         if (cx >= xbox_hud_excl[0] && cx <= xbox_hud_excl[1] && cy >= xbox_hud_excl[2] && cy <= xbox_hud_excl[3]) return; }
     {   float cx = 0.5f * (x0 + x1), cy = 0.5f * (y0 + y1); int i;
@@ -1954,6 +1986,10 @@ static void hud_note(float x0, float x1, float y0, float y1)
 }
 static void hud_frame_end(void)
 {
+    s_own_cur ^= 1; s_own_nb[s_own_cur] = 0;   /* (hud_own_piece: this frame's become the last frame's) */
+    {   static int lg = -1; if (lg < 0) lg = getenv("RECOMP_HUDOWNLOG") != NULL;
+        if (lg && ++s_hud_own_fr >= 60) { fprintf(stderr, "[HUDOWN] %u co-op pieces in 60 frames (colours %08X %08X %08X %08X %08X)\n", s_hud_own_n,
+            xbox_hud_own_col[0], xbox_hud_own_col[1], xbox_hud_own_col[2], xbox_hud_own_col[3], xbox_hud_own_col[4]); s_hud_own_fr = 0; s_hud_own_n = 0; } }
     const float gap = 10.0f;
     int i, j, n = s_hud_nb, merged = 1;
     float g[HUD_MAXB][4];
@@ -1987,7 +2023,7 @@ static void present_map_set(float x, float y, float w, float h, float k)
 void xbox_PresentMap(float m[5]) { int i; for (i = 0; i < 5; i++) m[i] = s_present_map[i]; }
 static float hud_wide_x(float x, float cx, float cy, float kk)
 {
-    int centre = xbox_GfxGet(GFX_HUDPOS) == 1, i;
+    int centre = xbox_GfxGet(GFX_HUDPOS) == 1 || s_hud_own, i;
     /* a piece in one of the excluded boxes stays centred, also inside an edge group's box (a co-op head marker
      * beside player 2's ammo counter had its "2" pulled to the edge, observed) */
     if (xbox_hud_excl[4] != 0.0f && cx >= xbox_hud_excl[0] && cx <= xbox_hud_excl[1] && cy >= xbox_hud_excl[2] && cy <= xbox_hud_excl[3]) centre = 1;
