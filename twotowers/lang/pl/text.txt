@@ -1834,3 +1834,6 @@ P:BRAWLER: PLAYER {1}	ZABIJAKA: GRACZ {1}
 P:RELENTLESS: PLAYER {1}	BEZLITOSNY: GRACZ {1}
 P:Start Match	Rozpocznij walkę
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDA {1}   P{2} {3} - {4} P{5}
+L:Films:	Filmy:
+L:Voices:	Głosy:
+L:(as the text)	(jak tekst)

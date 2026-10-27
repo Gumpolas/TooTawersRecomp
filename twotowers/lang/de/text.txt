@@ -1834,3 +1834,6 @@ P:BRAWLER: PLAYER {1}	RAUFBOLD: SPIELER {1}
 P:RELENTLESS: PLAYER {1}	UNERBITTLICH: SPIELER {1}
 P:Start Match	Kampf starten
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDE {1}   P{2} {3} - {4} P{5}
+L:Films:	Filme:
+L:Voices:	Stimmen:
+L:(as the text)	(wie der Text)

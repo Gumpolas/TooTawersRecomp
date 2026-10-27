@@ -447,6 +447,13 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
             xbox_InputStopRumble();       /* no pad left shaking */
         }
         InterlockedExchange(&s_fb_running, 0);
+        /* Igual que Salir en el menu: detener ESTE proceso. Dejar solo la
+         * ventana detenida permitia que el invitado siguiera enviando frames
+         * al HWND destruido (y redimensionase el swapchain con datos invalidos). */
+        if (m == WM_CLOSE) {
+            fflush(stdout); fflush(stderr);
+            TerminateProcess(GetCurrentProcess(), 0);
+        }
         return 0;
 
     case WM_SETFOCUS:

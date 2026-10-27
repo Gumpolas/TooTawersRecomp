@@ -1834,3 +1834,6 @@ P:BRAWLER: PLAYER {1}	ARRUACEIRO: JOGADOR {1}
 P:RELENTLESS: PLAYER {1}	IMPLACÁVEL: JOGADOR {1}
 P:Start Match	Iniciar Combate
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDA {1}   P{2} {3} - {4} P{5}
+L:Films:	Filmes:
+L:Voices:	Vozes:
+L:(as the text)	(como o texto)

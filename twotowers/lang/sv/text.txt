@@ -1834,3 +1834,6 @@ P:BRAWLER: PLAYER {1}	SLAGSKÄMPE: SPELARE {1}
 P:RELENTLESS: PLAYER {1}	OBEVEKLIG: SPELARE {1}
 P:Start Match	Starta matchen
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROND {1}   P{2} {3} - {4} P{5}
+L:Films:	Filmer:
+L:Voices:	Röster:
+L:(as the text)	(som texten)

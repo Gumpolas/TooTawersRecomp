@@ -1834,3 +1834,6 @@ P:BRAWLER: PLAYER {1}	PENDENCIERO: JUGADOR {1}
 P:RELENTLESS: PLAYER {1}	IMPLACABLE: JUGADOR {1}
 P:Start Match	Iniciar combate
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDA {1}   P{2} {3} - {4} P{5}
+L:Films:	Películas:
+L:Voices:	Voces:
+L:(as the text)	(como el texto)

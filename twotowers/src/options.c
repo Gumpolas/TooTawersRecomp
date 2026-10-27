@@ -308,11 +308,13 @@ static const char *const s_cm_top[2] = { "New Game", "Load Game" };
  * sub_000D1C10: the arena's level, player 1's hero, player 2's). B: back to the main menu */
 volatile int tt_vs_menu_on, tt_vs_screen_req, tt_vs_start_pending;
 static int s_vsmenu;   /* the Co-op menu page shows Versus' */
-#define VS_NHERO 14
+#define VS_NHERO 20
 static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c and the co-op, title) */
     { "aragorn", "Aragorn" }, { "legolas", "Legolas" }, { "gimli", "Gimli" }, { "isildur", "Isildur" },
     { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
     { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Uruk-hai" },
+    { "elvenwarrior", "Elf Warrior" }, { "elvenarcher", "Elf Archer" }, { "troll", "Cave Troll" },   /* (1.9.9, The128ReBits' six) */
+    { "rohan", "Rohan Soldier" }, { "urukcap", "Uruk Captain" }, { "gandalfwhite", "Gandalf the White" },
     { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the last three: Versus only) */
 static int s_vs_goal_i = 1;   /* (1.9.7) rounds to win: 3, 5, 7 */
 static const char *const s_vs_goals[3] = { "First to 3", "First to 5", "First to 7" };

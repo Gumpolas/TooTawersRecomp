@@ -144,6 +144,7 @@ if(WIN32)
         # Lets the fault handler resolve the host RIP back to the generated
         # function's symbol, i.e. to the guest function that faulted.
         dbghelp
+        bcrypt
     )
 else()
     # Linux: SDL2 (window, OpenGL context, sound, controllers); OpenGL itself

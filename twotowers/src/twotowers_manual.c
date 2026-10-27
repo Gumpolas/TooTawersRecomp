@@ -1839,6 +1839,17 @@ void sub_000D2130(void)
     tt_hk(12, 1, r);
     eax = r[0];
 }
+/* Preserve the original result handler and its ABI, including failures.
+ * The extra shares only flags changed by this particular result. */
+extern void sub_000D2B90_gen(void);
+extern void tt_heroes_result(uint32_t level, int success);
+void sub_000D2B90(void)
+{
+    uint32_t level = MEM32(0x1BB2A4);
+    int success = MEM8(esp + 8) != 0;
+    sub_000D2B90_gen();
+    tt_heroes_result(level, success);
+}
 /* developer switches (HERO=, LEVEL=) */
 extern void sub_0007F000_gen(void);
 void sub_0007F000(void)
@@ -2095,14 +2106,23 @@ void sub_000B4220(void)
 /* the melee sweep (testing: heroes.c counts its hits) */
 extern void sub_000BA110_gen(void);
 extern void tt_sweep(uint32_t a0, double res);
+#include "heroes_sweep_query.inc"
 void sub_000BA110(void)
 {
     uint32_t a0 = MEM32(esp + 4), a1 = MEM32(esp + 8);
     extern void tt_sweep2(uint32_t, uint32_t, double);
-    sub_000BA110_gen();
+    tt_sweep_query(a0);
     tt_sweep(a0, g_fp_stack[g_fp_top]);
     tt_sweep2(a0, a1, g_fp_stack[g_fp_top]);
 }
+
+/* (135, The128ReBits) the melee hit routine: heroes.c logs the troll's swings (reads only) -- in sub_000BE0D0 below */
+
+/* El simbolo original de C7610 se renombra solo al compilar su unidad.
+ * No se modifica src/recomp/gen. Conservar tambien SSE/FPU/SEH al llamar
+ * al codigo host, como en la consulta geometrica. Una sola llamada al
+ * despachador original; la lista de victimas sigue siendo la del juego. */
+#include "heroes_hit_dispatch.inc"
 
 /* Call a guest function from host code (heroes.c): args pushed right to
  * left, ecx = this; every register and the stack are put back afterwards,
@@ -8110,6 +8130,7 @@ void sub_000BE0D0(void)
         if (k < 9) { static int n; sw = tt_coop_enter_ctx(); if (n++ < 6) tt_dbg("[COOPOBB] player 2's attack box %08X tested in his context: %08X '%s' on the weapon-test list\n", b, MEM32(0x43B0E8u + 4u * k), coop_nm(MEM32(0x43B0E8u + 4u * k))); }
     }
     coop_bt_who = w;
+    { extern void tt_clog_swing(uint32_t attack, int after); tt_clog_swing(b, 0); }   /* (The128ReBits' troll swing log) */
     {   /* (1.9.8) an extra hero's box tested as his swing: the test queries only while the attacker's +0x466 (@FlagAttacking) is
          * set. Player 2 moves as player 1's hero, with his own motions put in that hero's (heroes.c, compose): with player 1
          * Legolas (his motions' layout) the flag was down for most of Sauron's boxes -- 22% of them tested, against 77% on
@@ -8117,10 +8138,15 @@ void sub_000BE0D0(void)
          * the test. TT_COOP_NOP2ATKFLAG: as before */
         extern const char *tt_coop_p2_char_now; static const char *const rh[4] = { "aragorn", "legolas", "gimli", "isildur" }; int k, guest = tt_coop_p2_char_now != 0;
         for (k = 0; k < 4 && guest; k++) if (!_stricmp(tt_coop_p2_char_now, rh[k])) guest = 0;
+        /* (1.9.9) the retail three as well: player 2 Legolas, Aragorn or Isildur beside player 1 as another hero moves in that
+         * hero's machine too -- a playtest on the Deeping Wall: player 2 Legolas or Aragorn hit no enemy and kicked no ladder
+         * down (69 boxes, 17 with the flag up, 6 contacts), Gimli and the extra heroes did. TT_COOP_P2ATKFLAGGUEST: guests only */
+        if (!guest && tt_coop_p2_char_now && !getenv("TT_COOP_P2ATKFLAGGUEST")) guest = 1;
         if (w == 1 && guest && !MEM8(a + 0x466) && !tt_vs_on() && !getenv("TT_COOP_NOP2ATKFLAG")) {
             MEM8(a + 0x466) = 1; sub_000BE0D0_gen(); if (MEM8(a + 0x466) == 1) MEM8(a + 0x466) = 0;
         } else sub_000BE0D0_gen();
     }
+    { extern void tt_clog_swing(uint32_t attack, int after); tt_clog_swing(b, 1); }
     if (sw) tt_coop_leave();
     if (w >= 0 && coop_p2 && MEM32(b + 0x28)) coop_bt[w][5]++;
     if (getenv("TT_COOP_CONTACTLOG") && w >= 0 && MEM32(b + 0x28)) {   /* (research) a box that made contact: who, the box's words, the

@@ -39,11 +39,20 @@ typedef struct {
     int         to_save;    /* 1 = under save_dir, 0 = under game_dir    */
     const char* sub_win;    /* sub-directory, Win32 backslash form       */
     const char* sub_posix;  /* sub-directory, POSIX slash form           */
+    int         whole_name; /* 1 = the prefix is a whole folder name: it
+                             * matches only before a separator or the end */
 } path_rule;
 
 static const path_rule s_rules[] = {
-    { "\\Device\\CdRom0\\",                   0, NULL,         NULL          },
-    { "\\Device\\Harddisk0\\Partition1\\",    0, NULL,         NULL          },
+    { "\\Device\\CdRom0\\",                   0, NULL,         NULL, 0 },
+    /* Partition1 is E:, where a console keeps TDATA (title data) and UDATA
+     * (saved games). Those two folders go under save_dir, so that two
+     * installations pointed at the same game_dir do not share -- and
+     * overwrite -- each other's saves. Anything else under Partition1 stays
+     * in the game dir, as before; listed ahead of the generic rule. */
+    { "\\Device\\Harddisk0\\Partition1\\UDATA", 1, "\\UDATA",    "/UDATA",     1 },
+    { "\\Device\\Harddisk0\\Partition1\\TDATA", 1, "\\TDATA",    "/TDATA",     1 },
+    { "\\Device\\Harddisk0\\Partition1\\",    0, NULL,         NULL, 0 },
     /* The rest of the disk. Partition 0 is the whole raw device, 2 holds
      * system data, and 3-5 are the per-title caches behind X:, Y: and Z:.
      * Without these the path layer reported "Unrecognized Xbox path" and
@@ -58,28 +67,43 @@ static const path_rule s_rules[] = {
      * ordinary asset read and belongs in the game dir -- the same place Y:
      * already goes. Only the bare device keeps the system-data image, which
      * is why this rule carries the trailing separator and is listed first. */
-    { "\\Device\\Harddisk0\\Partition2\\",    0, NULL,         NULL          },
-    { "C:\\",                                 0, NULL,         NULL          },
-    { "\\??\\C:\\",                           0, NULL,         NULL          },
-    { "\\Device\\Harddisk0\\Partition2",     1, "\\SystemData", "/SystemData" },
-    { "\\Device\\Harddisk0\\Partition3",     1, "\\Cache",   "/Cache"      },
-    { "\\Device\\Harddisk0\\Partition4",     1, "\\Cache",   "/Cache"      },
-    { "\\Device\\Harddisk0\\Partition5",     1, "\\Cache",   "/Cache"      },
-    { "D:\\",                                 0, NULL,         NULL          },
-    { "d:\\",                                 0, NULL,         NULL          },
+    { "\\Device\\Harddisk0\\Partition2\\",    0, NULL,         NULL, 0 },
+    { "C:\\",                                 0, NULL,         NULL, 0 },
+    { "\\??\\C:\\",                           0, NULL,         NULL, 0 },
+    { "\\Device\\Harddisk0\\Partition2",     1, "\\SystemData", "/SystemData", 0 },
+    { "\\Device\\Harddisk0\\Partition3",     1, "\\Cache",   "/Cache", 0 },
+    { "\\Device\\Harddisk0\\Partition4",     1, "\\Cache",   "/Cache", 0 },
+    { "\\Device\\Harddisk0\\Partition5",     1, "\\Cache",   "/Cache", 0 },
+    { "D:\\",                                 0, NULL,         NULL, 0 },
+    { "d:\\",                                 0, NULL,         NULL, 0 },
     /* Y: is the Xbox dashboard partition; the dashboard opens its assets
      * (e.g. "Y:\default.xip") from there. Map it to the game dir. */
-    { "Y:\\",                                 0, NULL,         NULL          },
-    { "y:\\",                                 0, NULL,         NULL          },
-    { "T:\\",                                 1, "\\TitleData","/TitleData"  },
-    { "U:\\",                                 1, "\\UserData", "/UserData"   },
-    { "Z:\\",                                 1, "\\Cache",    "/Cache"      },
-    { "\\??\\D:\\",                           0, NULL,         NULL          },
-    { "\\??\\Y:\\",                           0, NULL,         NULL          },
-    { "\\??\\y:\\",                           0, NULL,         NULL          },
-    { "\\??\\T:\\",                           1, "\\TitleData","/TitleData"  },
+    { "Y:\\",                                 0, NULL,         NULL, 0 },
+    { "y:\\",                                 0, NULL,         NULL, 0 },
+    { "T:\\",                                 1, "\\TitleData","/TitleData", 0 },
+    { "U:\\",                                 1, "\\UserData", "/UserData", 0 },
+    { "Z:\\",                                 1, "\\Cache",    "/Cache", 0 },
+    { "\\??\\D:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\Y:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\y:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\T:\\",                           1, "\\TitleData","/TitleData", 0 },
 };
 #define PATH_RULE_COUNT ((int)(sizeof(s_rules) / sizeof(s_rules[0])))
+
+/* Rule i against a path: the characters consumed, or 0. A whole-name rule
+ * ("...\UDATA") does not match "...\UDATAX", and it consumes the separators
+ * after the name too, so the join below does not double them. */
+static int match_rule(const char* path, int i)
+{
+    int n = match_prefix(path, s_rules[i].prefix);
+    if (n && s_rules[i].whole_name) {
+        if (path[n] && path[n] != '\\' && path[n] != '/')
+            return 0;
+        while (path[n] == '\\' || path[n] == '/')
+            n++;
+    }
+    return n;
+}
 
 /*
  * Rewrite a path through a drive letter the title mapped for itself.
@@ -266,6 +290,79 @@ static BOOL xbox_partition_device_path(const char *xbox_path, WCHAR *out, DWORD 
     return TRUE;
 }
 
+/* Copy a folder tree, files and sub-folders; reparse points are skipped, and
+ * a path that does not fit MAX_PATH is left out rather than truncated. */
+static void copy_tree(const WCHAR *from, const WCHAR *to, int depth)
+{
+    WIN32_FIND_DATAW fd;
+    WCHAR pat[MAX_PATH], a[MAX_PATH], b[MAX_PATH];
+    HANDLE h;
+    int n;
+
+    if (depth > 16)
+        return;
+    if (!CreateDirectoryW(to, NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
+        return;
+    n = _snwprintf(pat, MAX_PATH, L"%s\\*", from);
+    if (n < 0 || n >= MAX_PATH)
+        return;
+    h = FindFirstFileW(pat, &fd);
+    if (h == INVALID_HANDLE_VALUE)
+        return;
+    do {
+        if (!wcscmp(fd.cFileName, L".") || !wcscmp(fd.cFileName, L".."))
+            continue;
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)
+            continue;
+        n = _snwprintf(a, MAX_PATH, L"%s\\%s", from, fd.cFileName);
+        if (n < 0 || n >= MAX_PATH)
+            continue;
+        n = _snwprintf(b, MAX_PATH, L"%s\\%s", to, fd.cFileName);
+        if (n < 0 || n >= MAX_PATH)
+            continue;
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            copy_tree(a, b, depth + 1);
+        else
+            CopyFileW(a, b, FALSE);
+    } while (FindNextFileW(h, &fd));
+    FindClose(h);
+}
+
+/* Partition1's UDATA and TDATA used to resolve under game_dir; they now go
+ * under save_dir (see s_rules). An installation that already has saves in
+ * game_dir would otherwise start with none, so bring them along once: only
+ * when save_dir has no such folder yet, by copying (the originals stay where
+ * they are, nothing is moved or overwritten). The copy is made under a
+ * temporary name and renamed when complete, so an interrupted copy is
+ * redone on the next start instead of being taken for the real folder. */
+static void migrate_partition1_saves(void)
+{
+    static const WCHAR *names[] = { L"UDATA", L"TDATA" };
+    WCHAR from[MAX_PATH], to[MAX_PATH], tmp[MAX_PATH];
+    DWORD attr;
+    int i, n1, n2, n3;
+
+    if (!_wcsicmp(s_game_dir, s_save_dir))
+        return;
+    for (i = 0; i < (int)(sizeof(names) / sizeof(names[0])); i++) {
+        n1 = _snwprintf(from, MAX_PATH, L"%s\\%s", s_game_dir, names[i]);
+        n2 = _snwprintf(to, MAX_PATH, L"%s\\%s", s_save_dir, names[i]);
+        n3 = _snwprintf(tmp, MAX_PATH, L"%s\\%s.migrating", s_save_dir, names[i]);
+        if (n1 < 0 || n1 >= MAX_PATH || n2 < 0 || n2 >= MAX_PATH || n3 < 0 || n3 >= MAX_PATH)
+            continue;
+        attr = GetFileAttributesW(from);
+        if (attr == INVALID_FILE_ATTRIBUTES || !(attr & FILE_ATTRIBUTE_DIRECTORY))
+            continue;
+        if (GetFileAttributesW(to) != INVALID_FILE_ATTRIBUTES)
+            continue;
+        copy_tree(from, tmp, 0);
+        if (MoveFileW(tmp, to))
+            xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Saves: copied %S to %S (original kept)", from, to);
+        else
+            xbox_log(XBOX_LOG_WARN, XBOX_LOG_PATH, "Saves: could not finish copying %S to %S", from, to);
+    }
+}
+
 void xbox_path_init(const char* game_dir, const char* save_dir)
 {
     WCHAR save_base[MAX_PATH];
@@ -357,6 +454,7 @@ void xbox_path_init(const char* game_dir, const char* save_dir)
             }
         }
     }
+    migrate_partition1_saves();
 
     s_initialized = TRUE;
     xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Path init: game=%S, save=%S", s_game_dir, s_save_dir);
@@ -424,7 +522,7 @@ BOOL xbox_translate_path(const char* xbox_path, xbox_host_char* host_path_buf, D
     }
 
     for (int i = 0; i < PATH_RULE_COUNT; i++) {
-        skip = match_prefix(xbox_path, s_rules[i].prefix);
+        skip = match_rule(xbox_path, i);
         if (skip) {
             remainder = xbox_path + skip;
             base_dir  = s_rules[i].to_save ? s_save_dir : s_game_dir;
@@ -575,6 +673,53 @@ static BOOL xbox_partition_device_path(const char *xbox_path, char *out, DWORD n
     return TRUE;
 }
 
+/* (1.9.9) The POSIX half of the one-time save copy (see
+ * migrate_partition1_saves in the Win32 backend): game_dir/UDATA and TDATA
+ * are copied to save_dir when save_dir has none yet; originals are kept. */
+#include <dirent.h>
+static void posix_copy_tree(const char *from, const char *to, int depth)
+{
+    DIR *d; struct dirent *e;
+    if (depth > 16) return;
+    if (mkdir(to, 0755) != 0 && errno != EEXIST) return;
+    if (!(d = opendir(from))) return;
+    while ((e = readdir(d))) {
+        char a[MAX_PATH], b[MAX_PATH]; struct stat st;
+        if (!strcmp(e->d_name, ".") || !strcmp(e->d_name, "..")) continue;
+        if (snprintf(a, sizeof a, "%s/%s", from, e->d_name) >= (int)sizeof a) continue;
+        if (snprintf(b, sizeof b, "%s/%s", to, e->d_name) >= (int)sizeof b) continue;
+        if (lstat(a, &st) != 0 || S_ISLNK(st.st_mode)) continue;
+        if (S_ISDIR(st.st_mode)) posix_copy_tree(a, b, depth + 1);
+        else if (S_ISREG(st.st_mode)) {
+            FILE *fi = fopen(a, "rb"), *fo = fi ? fopen(b, "wb") : NULL;
+            char buf[65536]; size_t n;
+            if (fo) while ((n = fread(buf, 1, sizeof buf, fi)) > 0) fwrite(buf, 1, n, fo);
+            if (fo) fclose(fo);
+            if (fi) fclose(fi);
+        }
+    }
+    closedir(d);
+}
+static void posix_migrate_partition1_saves(void)
+{
+    static const char *names[] = { "UDATA", "TDATA" };
+    int i;
+    if (!strcmp(s_game_dir, s_save_dir)) return;
+    for (i = 0; i < 2; i++) {
+        char from[MAX_PATH], to[MAX_PATH], tmp[MAX_PATH + 16]; struct stat st;
+        snprintf(from, sizeof from, "%s/%s", s_game_dir, names[i]);
+        snprintf(to, sizeof to, "%s/%s", s_save_dir, names[i]);
+        snprintf(tmp, sizeof tmp, "%s.migrating", to);
+        if (stat(from, &st) != 0 || !S_ISDIR(st.st_mode)) continue;
+        if (stat(to, &st) == 0) continue;
+        posix_copy_tree(from, tmp, 0);
+        if (rename(tmp, to) == 0)
+            xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Saves: copied %s to %s (original kept)", from, to);
+        else
+            xbox_log(XBOX_LOG_WARN, XBOX_LOG_PATH, "Saves: could not finish copying %s to %s", from, to);
+    }
+}
+
 void xbox_path_init(const char* game_dir, const char* save_dir)
 {
     if (game_dir) {
@@ -626,6 +771,7 @@ void xbox_path_init(const char* game_dir, const char* save_dir)
         }
     }
 
+    posix_migrate_partition1_saves();
     s_initialized = TRUE;
     xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Path init: game=%s, save=%s",
              s_game_dir, s_save_dir);
@@ -723,7 +869,7 @@ BOOL xbox_translate_path(const char* xbox_path, xbox_host_char* host_path_buf, D
     }
 
     for (int i = 0; i < PATH_RULE_COUNT; i++) {
-        skip = match_prefix(xbox_path, s_rules[i].prefix);
+        skip = match_rule(xbox_path, i);
         if (skip) {
             remainder = xbox_path + skip;
             base_dir  = s_rules[i].to_save ? s_save_dir : s_game_dir;

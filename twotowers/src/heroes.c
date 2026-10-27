@@ -13,15 +13,15 @@
  * (150), texture (300) -- and loads the level variant of the chosen hero
  * (.bfa Aragorn, .bfl Legolas, .bfg Gimli, .bfi Isildur).
  *
- * - Character select: the carousel of 3D characters gets eleven places once
+ * - Character select: the carousel of 3D characters gets seventeen places once
  *   Isildur is unlocked (the final and the secret mission done): the four
- *   retail ones and the seven extra heroes. Their models are added to the
+ *   retail ones and the thirteen extra heroes. Their models are added to the
  *   menu's file (ui\mainmenu.bff, rebuilt once into heroes\) and four more
  *   characters are created in the menu's character manager (0x49F440, room
  *   for eight); the carousel is drawn by layout() here for eight places, the
  *   same way the game draws three or four.
  * - An extra hero plays as hero 4 (Isildur's records: upgrades, experience,
- *   levels done -- kept per extra hero in heroes\records.dat and swapped in
+ *   levels done -- kept per extra hero in heroes\records_v3.dat and swapped in
  *   when one is chosen). In a level, hero 4 opens a rebuilt copy of
  *   Aragorn's variant with the hero's mesh, animations and texture copied in
  *   from the level that has them, and every reference to Aragorn's keys in
@@ -37,6 +37,8 @@
 #include <string.h>
 #include <math.h>
 #include <sys/stat.h>
+#include "heroes_records.h"
+#include "heroes_size.h"
 
 extern ptrdiff_t xbox_GetMemoryOffset(void);
 extern void tt_dbg(const char *fmt, ...);
@@ -111,6 +113,9 @@ typedef struct {
 #define EMPTY_PROP_KEY 0x6E0B0E00u
 #define W(x) "\\Device\\CdRom0\\worlds\\" x
 #define MAP(m) m, (int)sizeof m
+static const uint8_t s_map_troll[56] = { 2, 2, 2, 2, 5, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12, 13, 13, 14, 9, 10, 10, 11, 15, 40, 16, 16, 30, 31, 33, 33, 34, 33, 33, 33, 33, 33, 37, 21, 22, 24, 24, 24, 24, 25, 28, 24, 24, 24, 40, 40, 40, 40, 40, 39 };
+static const uint8_t s_map_rohan[49] = { 2, 2, 2, 2, 5, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12, 13, 14, 9, 10, 11, 15, 16, 16, 16, 21, 22, 24, 25, 24, 24, 24, 28, 30, 31, 33, 34, 33, 33, 33, 37, 40, 40, 40, 40, 40, 40, 40, 40 };
+static const uint8_t s_map_urukcap[49] = { 2, 2, 2, 2, 4, 5, 2, 2, 2, 2, 2, 2, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16, 21, 22, 24, 24, 24, 25, 24, 28, 24, 24, 40, 40, 40, 40, 40, 39, 39, 30, 31, 33, 34, 33, 33, 33, 33, 33, 37 };
 static Skin s_skins[] = {
     /* Boromir: his sword, and his shield on his other arm (the bow's hand) */
     { "boromir", "Boromir", W("04BALIN1.bfa"), 0xA6841986u, 0xF9C62B16u, 0xFD8B0956u, MAP(s_map_boromir), NULL, 0, 0, 0,
@@ -137,6 +142,15 @@ static Skin s_skins[] = {
     /* the black Uruk-hai: the Berserker (Fangorn, Helm's Deep), his great sword, his own attacks */
     { "uruk",    "Uruk",    W("14FANG2.bfa"),  0x0FEDC9FAu, 0x97E4B3C4u, 0xDDF43A28u, MAP(s_map_uruk), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },   /* (no bow of his own: nothing in that hand) */
+    /* Elfo de Helm, 44 huesos verificados contra Elrond. */
+    { "elvenwarrior", "Elf", W("17TOP1.bfa"), 0x22C529AAu, 0xB427C34Cu, 0x7064A295u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
+    { "elvenarcher", "Archer", W("17TOP1.BFA"), 0x59B3BA22u, 0x36159E38u, 0x1783AA81u, MAP(s_map_elrond), W("00ISUL1.bfa"), 0xE9C0D2FCu, 0x79C3F38Eu, 1 },
+    /* (132) sin arco: lanza rocas desde la mano vacia, como el Uruk-hai */
+    { "troll", "Troll", W("04BALIN1.BFA"), 0x712933FEu, 0x29BDD2CAu, 0x964E271Eu, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
+      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
+    { "rohan", "Rohan", W("16ROHAN1.BFA"), 0x5654A508u, 0x817EFC59u, 0x4058E474u, MAP(s_map_rohan), W("04BALIN1.bfa"), 0x13F82514u, 0x29636120u, 1 },
+    { "urukcap", "Captain", W("18HOLE1.BFA"), 0x99F5D594u, 0xE6F0C52Bu, 0xF5E0EF8Eu, MAP(s_map_urukcap), W("14FANG2.bfa"), 0x1D32E6CCu, 0x61D9F438u, 1 },
+    { "gandalfwhite", "Gandalf", W("16ROHAN2.BFA"), 0x85FCA5B6u, 0xDDAEA31Cu, 0xEC2C4C93u, MAP(s_map_gandalf), W("16ROHAN2.bfa"), 0x13F82514u, 0x29636120u, 1, NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 1 },
     /* Versus only (1.9.7): not in the character select, the campaign or co-op. The Nazgul: Weathertop's, his sword
      * (weaponObj1-5 there, on the Ringwraiths RW1-5); he throws, as the Uruk-hai */
     { "nazgul",  "Nazgul",  W("01WEAT1.bfa"),  0xAEF3DB04u, 0x066DCD53u, 0xAE89108Eu, MAP(s_map_nazgul), W("01WEAT1.bfa"), 0xC0F2C17Cu, 0xB798D03Au, 1,
@@ -170,8 +184,8 @@ static Skin s_skins[] = {
 #define MENU_ANIM_KEY 1u
 #define UPG_FIG_KEY 9u   /* the upgrade screen's 3D figure (upgbigi.BFF: mesh 1050 / texture 1150 key 9) */
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
-#define N_SEL 7                /* in the carousel (the character select, its menus, voices there, unlocks, records) */
-#define N_EXTRA 10             /* the guests: those and the Versus-only three (Nazgul, the shield orc, Eomer) */
+#define N_SEL 13               /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests and The128ReBits' six (1.9.9) */
+#define N_EXTRA 16             /* the guests: those and the Versus-only three (Nazgul, the shield orc, Eomer) */
 #define N_SKINS ((int)(sizeof s_skins / sizeof s_skins[0]))
 /* a retail hero's skin (co-op's player 2) */
 static int skin_retail(int sk) { return sk >= N_EXTRA && sk < N_SKINS - 1; }
@@ -183,7 +197,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 95u     /* bump when the level rebuild changes */
+#define HEROES_BUILD 138u     /* bump when the level rebuild changes (1.9.9: The128ReBits' R8 heroes on 1.9.8, 137 in his build) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -210,6 +224,7 @@ static uint32_t weapon_tex2(uint32_t mesh) { return mesh == 0x69DAC4B8u ? 0xDB3B
 static char s_ini[600], s_dir[600];
 static int s_on = -1;
 static int s_test_unlock;   /* [Mods] extra_heroes=2 */
+static int s_heroes_mode;
 static int s_guest = -1;       /* the extra hero hero 4 is, or -1 (Isildur) */
 /* (1.9.7, Versus) Mount Doom (the prologue, Isildur's level) with player 1 a retail hero: hero 4 there, his skin built
  * into the level as a guest's is (the model, moves and weapons), without making him the guest anywhere else */
@@ -241,6 +256,7 @@ int tt_heroes_on(void)
         if (e) s_on = atoi(e);
         /* 2: unlocked for testing (only in memory; the save is not changed) */
         if (s_on == 2 || getenv("TT_HEROES_UNLOCK")) s_test_unlock = 1;
+        s_heroes_mode = s_on;
         s_on = s_on != 0;
         tt_dbg("[HEROES] extra heroes %s\n", s_on ? "on" : "off");
     }
@@ -291,7 +307,7 @@ static int active_skin(void)
 static int unlocked(void)
 {
     int h, a = 0, b = 0;
-    if (tt_heroes_on() && s_test_unlock) return 1;
+    if (tt_heroes_on() && (s_test_unlock || s_heroes_mode == 3)) return 1;
     for (h = 1; h <= 3; h++) {
         if (G8(0x4AB68Fu + h * 15 + 0xB) == 1) a = 1;
         if (G8(0x4AB68Fu + h * 15 + 0xD) == 1) b = 1;
@@ -612,14 +628,23 @@ typedef struct { const char *name; const char *pools[AC_N]; float rtscale; const
  * in a slot of the hero's (160, his stance between moves) they walked in place */
 static const AnimPools s_pools[] = {
     /*                idle  move  speed            fierce        parry  ranged  hit   knock death kick */
-    { "boromir", { "34,33", "9", "69,41,20",          "43,41",      "21",  "21",   "20", "27", "",   "69" }, 1.0f, "sfkrp" },
+    { "boromir", { "34,33", "9", "41",                "43",         "21",  "21",   "20", "27", "",   "69" }, 1.0f, "krp" },
     { "gandalf", { "34,33", "9", "41,43,55",          "57,55",      "56",  "35",   "20", "27", "27", "43" }, 0, "" },
-    { "frodo",   { "34,33", "9", "173,175,21",        "43,41",      "176", "20",   "20", "27", "27", "175" }, 1.0f, "sfkrp" },
-    { "lurtz",   { "34,33", "9", "42,45,104,138,41",  "43,69,74,189", "111", "187", "20", "25", "", "188" }, 0, "" },
+    { "frodo",   { "34,33", "9", "41",               "43",         "176", "20",   "20", "27", "27", "175" }, 1.0f, "krp" },
+    /* 25 es la reaccion del jefe atrapado en el arbol, no una caida.
+     * Retargetear solo las caidas/levantadas del jugador; ataques propios. */
+    { "lurtz",   { "34,33", "9", "42,45,41",         "43,69",      "111", "187", "20", "", "", "188" }, 1.0f, "nt" },
     /* (no parry of their own: the kick, or for Sauron a swing) */
-    { "elrond",  { "34,33", "9", "20",                "20",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "sfkrp" },
+    { "elrond",  { "34,33", "9", "66",                "66",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "krp" },
     { "sauron",  { "34,33", "2,0,1", "43,41",            "41,43",      "43",  "43",   "20", "27", "", "43" }, 0, "" },
     { "uruk",    { "34,33", "9", "104,43,69",         "43,69",      "69",  "110",  "20", "27", "24", "69" }, 0, "" },
+    /* Faltan 27/30: n retargetea caidas/levantadas; muerte del heroe. */
+    { "elvenwarrior", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
+    { "elvenarcher", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
+    { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },
+    { "rohan", { "34,33", "9", "41", "43", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
+    { "urukcap", { "34,33", "9", "41", "43,172", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
+    { "gandalfwhite", { "34,33", "9", "41,43,55", "57,55", "56", "35", "20", "27", "27", "43" }, 0, "" },
     /* the Versus-only three: their own swings, flinches, falls and deaths; the hero's kick (their special), parry and
      * throw fitted to them. The Nazgul has no fall of his own: his flight (2, the run he takes from Weathertop's fire) */
     { "nazgul",  { "34,33", "9", "69,41,45",          "43,45",      "37",  "41",   "20,21", "2,2,2,34", "2", "41" }, 1.0f, "kpr" },
@@ -658,13 +683,19 @@ static int s_compose_menu;
 static uint32_t s_compose_hkey = 1u;   /* the hero's set (type 1100) in a menu file: the select's Aragorn, or the upgrade figure's Isildur */
 static int s_fe_native;   /* the character select's guests on their own skeletons */
 static const char *s_menu_moves[N_SEL][3] = {   /* stance, chosen pose, confirm */
-    { "34,33", "27,41", "43,41" },          /* boromir */
+    { "34,33", "41,34", "43,41" },          /* boromir: saludar con el arma, no caer (27) */
     { "34,33", "36,35", "35,57" },          /* gandalf */
     { "34,33", "2,1", "41,43" },            /* frodo: looking about (30 was his fall), his blade raised */
     { "34,33", "187,113", "43,69" },        /* lurtz */
     { "34,33", "66,33", "66,33" },          /* elrond: his sword swing when chosen too (1.9.1; 33 is a stance: nothing moved) */
     { "34", "41,43", "43,41" },             /* sauron */
     { "34,33", "43,41", "41,43" },          /* uruk */
+    { "34,33", "66,33", "66,33" },          /* Elfo: gesto propio 66 */
+    { "34,33", "66,33", "66,33" }, /* elvenarcher: gestos propios */
+    { "34,33", "41,33", "43,41" }, /* troll: gestos propios */
+    { "34,33", "41,33", "43,41" }, /* rohan: gestos propios */
+    { "34,33", "41,33", "43,41" }, /* urukcap: gestos propios */
+    { "34,33", "36,35", "35,57" }, /* gandalfwhite: gestos propios */
 };
 /* the composed set's settings, for the cache name */
 static void hudammo_path(int sk, char *p2, size_t n);
@@ -711,16 +742,20 @@ static uint32_t anims_hash(int g)
     if (getenv("TT_RT_NOVSCALE")) h += 0x5959u;
     if (getenv("TT_STRIKEKEEP")) h += 0x6363u;
     if (getenv("TT_OWNROOT")) h += 0x6565u;
+    if (getenv("TT_NOEASE")) h += 0x7979u;
     if (getenv("TT_NOAIM")) h += 0x3939u;
     { const char *w2 = getenv("TT_W2"); for (; w2 && *w2; w2++) h = h * 41u + (unsigned char)*w2; }
     if (getenv("TT_HITBONE")) h += 113u * (uint32_t)atoi(getenv("TT_HITBONE"));
+    /* 126: la opcion cambia el banco generado; separar ambas caches para
+     * que el retorno a la preparacion completa funcione sin borrar nada. */
+    if (g == 9 && getenv("TT_TROLLFULLWIND")) h ^= 0x126F011Du;
     return h;
 }
 /* ---- retargeting: the hero's motion onto a guest's skeleton ----
  * Quaternions (w,x,y,z). A set's skeleton ("hier" at +0x40): bone count
  * +8, 128-byte matrices at +0xC (the second 4x4, row vectors: the bind
  * pose's world transform), parents (+1) at +0x10. A record's rotation keys
- * {u16 time, 3 x i16 = x,y,z * 32767} turn the bind's local rotation:
+ * {u16 tiempo/signo, 3 x i16 = x,y,z * 32768} turn the bind's local rotation:
  * local = bind_local * key. Each guest bone takes the world turn of the
  * hero bone it maps to (s_map_<name>): world = turn * own bind world. */
 typedef struct { float w, x, y, z; } Quat;
@@ -764,14 +799,32 @@ static int rt_binds(const unsigned char *S, size_t len, int *par, Quat *W, Quat 
     for (i = 0; i < nb; i++) BL[i] = par[i] < 0 || par[i] >= (int)nb ? W[i] : qnormq(qmulq(qconj(W[par[i]]), W[i]));
     return (int)nb;
 }
-/* a key list's value at time t (linear in the stored x, y, z) */
+/* Xbox: el tiempo ocupa 15 bits; el bit alto elige el signo global del
+ * cuaternion. Ver sub_000181E0 / sub_00018270 originales (solo lectura). */
+static unsigned rt_key_time(const unsigned char *k){return rd16(k,0)&0x7fffu;}
+static int16_t rt_qpack(float v){long x=lroundf(v*32768.0f);return (int16_t)(x>32767?32767:x< -32768?-32768:x);}
+static Quat rt_qkey(const unsigned char *k){
+    Quat q;q.x=(int16_t)rd16(k,2)/32768.0f;q.y=(int16_t)rd16(k,4)/32768.0f;q.z=(int16_t)rd16(k,6)/32768.0f;
+    q.w=sqrtf(fmaxf(0,1-q.x*q.x-q.y*q.y-q.z*q.z));
+    if(rd16(k,0)&0x8000u){q.w=-q.w;q.x=-q.x;q.y=-q.y;q.z=-q.z;}return qnormq(q);
+}
+static int rt_qsample(const unsigned char *k,int n,float t,Quat *out){
+    if(n<=0)return 0;if(n==1||t<=rt_key_time(k)){*out=rt_qkey(k);return 1;}
+    for(int i=0;i+1<n;i++){
+        float a=rt_key_time(k+8*i),b=rt_key_time(k+8*(i+1));if(t<a||t>b)continue;
+        float f=b>a?(t-a)/(b-a):0;Quat q=rt_qkey(k+8*i),r=rt_qkey(k+8*(i+1));
+        if(q.w*r.w+q.x*r.x+q.y*r.y+q.z*r.z<0){r.w=-r.w;r.x=-r.x;r.y=-r.y;r.z=-r.z;}
+        Quat z={q.w+(r.w-q.w)*f,q.x+(r.x-q.x)*f,q.y+(r.y-q.y)*f,q.z+(r.z-q.z)*f};*out=qnormq(z);return 1;
+    }*out=rt_qkey(k+8*(n-1));return 1;
+}
+/* a translation key list's value at time t */
 static int rt_sample(const unsigned char *k, int n, float t, float *v)
 {
     int i;
     if (n <= 0) return 0;
-    if (t <= rd16(k, 0)) { for (i = 0; i < 3; i++) v[i] = (float)(int16_t)rd16(k, 2 + 2 * i); return 1; }
+    if (t <= rt_key_time(k)) { for (i = 0; i < 3; i++) v[i] = (float)(int16_t)rd16(k, 2 + 2 * i); return 1; }
     for (i = 0; i + 1 < n; i++) {
-        float t0 = rd16(k, 8 * i), t1 = rd16(k, 8 * (i + 1));
+        float t0 = rt_key_time(k+8*i), t1 = rt_key_time(k+8*(i+1));
         if (t0 <= t && t <= t1) {
             float f = t1 > t0 ? (t - t0) / (t1 - t0) : 0; int c;
             for (c = 0; c < 3; c++) { float a = (float)(int16_t)rd16(k, 8 * i + 2 + 2 * c), b = (float)(int16_t)rd16(k, 8 * (i + 1) + 2 + 2 * c); v[c] = a + (b - a) * f; }
@@ -825,7 +878,7 @@ static uint32_t skel_point_bone(const unsigned char *S, size_t len, int k);
  * either side; Sauron's only square on -- turned, as Aragorn's. Elrond,
  * Gandalf, Lurtz and the Uruk-hai fell it as Aragorn does or wider, and
  * from further off (Elrond 4.5 back, where Aragorn's misses). */
-static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0 };
+static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 /* (a cutscene's clips, cine_clips_build: 255) the most rotation
  * keys a bone gets, and root position keys kept */
 static int s_rt_maxnt = 96, s_rt_maxpos = 64;
@@ -887,11 +940,9 @@ static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t
              * fell only to a kick from the side, and most enemies stood) */
             /* the stance: his fighting stance's (slot 34), as it starts */
             uint32_t st = rd16(A, 6) > 34 ? rd32(A, atab + 4 * 34) : 0, sbt, sbo;
-            Quat lq = hBL[1], d; float v[3], x[3] = { 1, 0, 0 }, r[3];
+            Quat lq = hBL[1], d; float x[3] = { 1, 0, 0 }, r[3];
             if (st && (sbt = st + rd32(A, st + 0x20)) + 8 <= alen && (sbo = rd32(A, sbt + 4)) && st + sbo + 4 <= alen
-                && rt_sample(A + st + sbo + 4, A[st + sbo], 0, v)) {
-                float qx = v[0] / 32767.0f, qy = v[1] / 32767.0f, qz = v[2] / 32767.0f, ww = 1 - qx * qx - qy * qy - qz * qz;
-                d.w = sqrtf(ww > 0 ? ww : 0); d.x = qx; d.y = qy; d.z = qz;
+                && rt_qsample(A + st + sbo + 4, A[st + sbo], 0, &d)) {
                 lq = qmulq(lq, d);
             }
             if (hpar[0] < 0) lq = qmulq(hBL[0], lq);   /* (bone 0 carries no turn of its own) */
@@ -904,10 +955,8 @@ static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t
     for (i = 0; i < nt; i++) {
         float t = (float)dur * i / (nt - 1);
         for (b = 0; b < hn; b++) {   /* the hero's pose: world rotations */
-            Quat lq = hBL[b]; float v[3];
-            if (hb[b] && rt_sample(hb[b] + 4, hnr[b], t, v)) {
-                Quat d; float x = v[0] / 32767.0f, y = v[1] / 32767.0f, z = v[2] / 32767.0f, ww = 1 - x * x - y * y - z * z;
-                d.w = sqrtf(ww > 0 ? ww : 0); d.x = x; d.y = y; d.z = z;
+            Quat lq = hBL[b],d;
+            if (hb[b] && rt_qsample(hb[b] + 4, hnr[b], t, &d)) {
                 lq = qmulq(lq, d);
             }
             Q[b] = hpar[b] < 0 ? lq : qnormq(qmulq(Q[hpar[b]], lq));
@@ -927,7 +976,7 @@ static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t
         for (b = 0; b < gn; b++) {
             Quat L = gpar[b] < 0 ? Wg[b] : qmulq(qconj(Wg[gpar[b]]), Wg[b]), d = qnormq(qmulq(qconj(gBL[b]), L));
             if (d.w < 0) { d.w = -d.w; d.x = -d.x; d.y = -d.y; d.z = -d.z; }
-            keys[b][i][0] = (int16_t)lroundf(d.x * 32767); keys[b][i][1] = (int16_t)lroundf(d.y * 32767); keys[b][i][2] = (int16_t)lroundf(d.z * 32767);
+            keys[b][i][0] = rt_qpack(d.x); keys[b][i][1] = rt_qpack(d.y); keys[b][i][2] = rt_qpack(d.z);
         }
     }
     {   /* the root's ups and downs to his height: the hero's crouch and
@@ -1010,9 +1059,8 @@ static int rt_pose(const unsigned char *S, size_t len, const unsigned char *rec,
         if (bo && bo + 4 <= rlen) {
             int nr = rec[bo], np = rec[bo + 1];
             if (bo + 4 + 8u * (uint32_t)(nr + np) <= rlen) {
-                if (rt_sample(rec + bo + 4, nr, t, v)) {
-                    float x = v[0] / 32767.0f, y = v[1] / 32767.0f, z = v[2] / 32767.0f, ww = 1 - x * x - y * y - z * z;
-                    Quat d = { sqrtf(ww > 0 ? ww : 0), x, y, z };
+                Quat d;
+                if (rt_qsample(rec + bo + 4, nr, t, &d)) {
                     lq = qmulq(lq, d);
                 }
                 if (rt_sample(rec + bo + 4 + 8 * nr, np, t, v)) for (c = 0; c < 3; c++) lt[c] += v[c] / 256.0f;
@@ -1053,6 +1101,9 @@ static int swing_peak(const unsigned char *S, size_t len, const unsigned char *r
     if (speed) *speed = best;
     return bt;
 }
+#include "heroes_native_motion.h"
+#include "heroes_troll_native.h"
+#include "heroes_troll_attack.h"
 /* a foot's travel over a cycle (its longest extent in the ground plane):
  * a walk's or run's stride */
 static float stride_len(const unsigned char *S, size_t len, const unsigned char *rec, size_t rlen, int foot, uint32_t dur)
@@ -1169,12 +1220,29 @@ static int root_net(const unsigned char *r, uint32_t lim, float *dx, float *dy)
     *dy = ((int16_t)rd16(r, p1 + 4) - (int16_t)rd16(r, p0 + 4)) / 256.0f;
     return 1;
 }
+/* Retroceso jugable del troll: usar su paso atras y conservar el recorrido
+ * y el reloj de la accion del jugador. No sustituir saltos/interacciones.
+ * Fallar cerrado si un banco no contiene los dos desplazamientos previstos. */
+static int npc_backstep(int g,unsigned slot,const unsigned char *a,size_t alen,
+ const unsigned char *G,size_t glen){
+    if(g<0||g>=N_EXTRA||strcmp(s_pools[g].name,"troll")||slot!=11||alen<64||glen<0x58)return 0;
+    unsigned n=rd16(G,6),tab=rd32(G,0x10);if(n<2||tab>glen||8>glen-tab)return 0;
+    unsigned off=rd32(G,tab+4);if(!off||off>glen||64>glen-off)return 0;
+    const unsigned char *r=G+off;unsigned rl=rd32(r,0x14),du=rd32(r,8);
+    if(rl<64||rl>glen-off||du<400||du>1500||rd32(a,0x14)>alen||!rd32(a,8))return 0;
+    float hx,hy,gx,gy;
+    if(!root_net(a,(uint32_t)alen,&hx,&hy)||!root_net(r,rl,&gx,&gy))return 0;
+    return fabsf(hx)<.25f&&hy>1&&fabsf(gx)<.25f&&gy>1&&hy/gy<=2.5f;
+}
 /* the hero stays in place for this move where the guest's own goes on */
 static int hero_still(const unsigned char *a, const unsigned char *gr, uint32_t glim)
 {
     float h = root_travel(a, rd32(a, 0x14)), g = root_travel(gr, glim);
     return h >= 0 && g > 0 && h * 4 < g;
 }
+#include "heroes_motion_quality.h"
+#include "heroes_troll_reaction.h"
+#include "heroes_ground_reaction.h"
 /* the shots' own sounds (1.7): which (synth_shot's kinds: 0 Gandalf's bolt,
  * 1 Sauron's, 2 a stone, 3 a burning rock), or -1 (the bow's, as the hero) */
 #define SHOT_SND_ID  0x7E01u   /* his shot (the bow's release) */
@@ -1185,7 +1253,7 @@ static int shot_kind(int g)
     if (!strcmp(s_skins[g].name, "gandalf") && getenv("TT_GANDALF_SHOTSND")) return 0;   /* (1.8: his is the bow's again, as asked) */
     if (!strcmp(s_skins[g].name, "sauron")) return 1;
     if (!strcmp(s_skins[g].name, "frodo")) return 2;
-    if (!strcmp(s_skins[g].name, "uruk")) return 3;
+    if (!strcmp(s_skins[g].name, "uruk") || !strcmp(s_skins[g].name, "troll")) return 3;
     if (!strcmp(s_skins[g].name, "nazgul") || !strcmp(s_skins[g].name, "orc") || !strcmp(s_skins[g].name, "eomer")) return 2;   /* (Versus' three: a stone) */
     return -1;
 }
@@ -1226,6 +1294,10 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             ovr[s] = NULL;
             snprintf(pth, sizeof pth, "%s/heroes/%s/anim_%u.bin", s_dir, s_pools[g].name, s);
             if ((ovr[s] = read_all(pth, &l2)) && (l2 < 0x40 || memcmp(ovr[s], "anim", 4))) { free(ovr[s]); ovr[s] = NULL; }
+            if(!ovr[s]&&!s_compose_menu&&!getenv("TT_TROLL_LEGACY_KNOCK")&&at[s])
+                ovr[s]=npc_troll_reaction(g,s,A+at[s],alen-at[s],G,glen,&l2);
+            if(!ovr[s]&&!s_compose_menu&&!getenv("TT_LEGACY_GROUND")&&at[s])
+                ovr[s]=npc_ground_hold(g,s,A+at[s],alen-at[s],G,glen,&l2);
             /* the kick is the hero's for every guest (1.8): the game's kick
              * lands where his foot goes (knocking enemies back, and the
              * Deeping Wall's ladders off the wall), and his own swings in
@@ -1255,13 +1327,24 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             /* (1.7.3: undone -- these are in the light attacks' chain, and
              * Gandalf's and Sauron's light attacks became Aragorn's; their own
              * again, as in 1.6. TT_HEROSTAB: the hero's, testing) */
-            int stab = (s == 57 || s == 59 || s == 191 || s == 193) && s_skins[g].map && getenv("TT_HEROSTAB");
+            /* (131) 't' en rtcls: la estocada del heroe para ese invitado.
+             * Lurtz es espadachin como Isildur: su remate R2 eran tajos de
+             * pie y la hoja nunca bajaba al enemigo caido. */
+            int stab = (s == 57 || s == 59 || s == 191 || s == 193) && s_skins[g].map
+                && (getenv("TT_HEROSTAB") || (strchr(s_pools[g].rtcls, 't') && !getenv("TT_OWNSTAB")));
             if (stab) kick_all = 1;
-            if (!ovr[s] && (s_pools[g].rtscale > 0 || kick_all) && !s_compose_menu && rd32(A, atab + 4 * s) && !getenv("TT_NORETARGET")
+            /* Acciones ausentes: adaptar el heroe. Las posturas, incluida
+             * 160 entre ataques, mantienen el estilo nativo. Los movimientos
+             * nativos se validan abajo por direccion antes de sustituirlos. */
+            int action_class = anim_class((int)s);
+            int action_needed = s_skins[g].map &&
+                (action_class == AC_IDLE && s != 0 && s != 1 && s != 33 && s != 34 && s != 160 &&
+                 (s >= gns || !gt[s]));
+            if (!ovr[s] && (s_pools[g].rtscale > 0 || kick_all || action_needed) && !s_compose_menu && rd32(A, atab + 4 * s) && !getenv("TT_NORETARGET")
                 && !(s == 48 && !strcmp(s_pools[g].name, "uruk") && !getenv("TT_NORISING"))) {   /* (the Uruk-hai's rising attack: his own getting up, below) */
                 int c = anim_class((int)s);
                 const char *rc = getenv("TT_RTCLASSES") ? getenv("TT_RTCLASSES") : s_pools[g].rtcls;   /* testing: s f k r */
-                if ((c == AC_SPEED && strchr(rc, 's')) || (c == AC_FIERCE && strchr(rc, 'f')) || (c == AC_KICK && (strchr(rc, 'k') || kick_all)) || (c == AC_RANGED && strchr(rc, 'r')) || (c == AC_PARRY && (strchr(rc, 'p') || kick_all)) || (c == AC_DEATH && kick_all) || special || stab) {
+                if (action_needed || (c == AC_SPEED && strchr(rc, 's')) || (c == AC_FIERCE && strchr(rc, 'f')) || (c == AC_KICK && (strchr(rc, 'k') || kick_all)) || (c == AC_RANGED && strchr(rc, 'r')) || (c == AC_PARRY && (strchr(rc, 'p') || kick_all)) || (c == AC_KNOCK && strchr(rc, 'n')) || (c == AC_DEATH && kick_all) || special || stab) {
                     ovr[s] = retarget_rec(A, alen, s, G, glen, s_skins[g].map, s_skins[g].nmap, s_pools[g].rtscale > 0 ? s_pools[g].rtscale : 1.0f, &l2);
                     if (!ovr[s]) tt_dbg("[HEROES]   slot %u: could not retarget\n", s);
                     else if (getenv("TT_RTDUMP")) {   /* testing */
@@ -1422,10 +1505,13 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
         const unsigned char *a, *gr;
         uint32_t src, a5, a7, a8, a10, g2, gev, k, nev, tail, newbt, newtail, n, target;
         float scale;
-        int cls;
+        int cls;unsigned serial=0;size_t grlen;int backstep=0,native_troll=0,troll_exit=0;
+        static unsigned char native_clip[1024*1024];
         if (!at[s]) continue;
         if (s_compose_menu && s_compose_hkey == MENU_ANIM_KEY && s != 0x22 && s != 0x25 && s != 0x28 && !getenv("TT_MENUALL")) { at[s] = 0; continue; }   /* the select plays only these: with seven guests the menu file grew too big to load */
         cls = anim_class((int)s);
+        backstep=!s_compose_menu&&!ovr[s]&&npc_backstep(g,s,A+at[s],alen-at[s],G,glen);
+        serial=used[cls];
         if ((s_compose_menu && s_compose_hkey == UPG_FIG_KEY && !getenv("TT_FIGMOVES")) || (!s_compose_menu && getenv("TT_ALLSTANCE"))) {   /* (TT_ALLSTANCE: testing, every slot of a level's set) */
             /* (1.7.2) the pause screen's figure: his stance in every slot,
              * as the select's -- his own moves in the slots that show the
@@ -1442,6 +1528,13 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             if (pk < 0) return 0;
             src = (uint32_t)pk;
         } else
+        if (!s_compose_menu && s == 160) {
+            int pk=pool_pick(pool_list(g,AC_IDLE),0,gt,gns);
+            if(pk<0)pk=pool_pick("34,33,0",0,gt,gns);
+            if(pk<0)return 0;src=(uint32_t)pk; /* postura de combate estable */
+        } else
+        if(backstep)src=1;
+        else
         if (s == 48 && !strcmp(s_pools[g].name, "uruk") && 30 < gns && gt[30] && !getenv("TT_NORISING")) {
             /* the rising attack (the hero's 48: from lying to his feet,
              * striking): the Uruk-hai's own, his getting up (1.7) -- not a
@@ -1456,7 +1549,24 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             if (pk < 0) return 0;
             src = (uint32_t)pk;
         }
-        a = A + at[s]; gr = G + gt[src];
+        a = A + at[s];
+        if(!ovr[s]&&!s_compose_menu&&g==9){
+            troll_exit=troll_recovery(g,s,a,rd32(a,0x14));
+            unsigned pair[2];
+            int melee=troll_damage_pair(a,rd32(a,0x14),pair);
+            /* (131) El 43 NPC es un barrido largo: su maza no toca nada entre
+             * 1,5 y 3,5 delante. Los ligeros que lo recibian (47/59/86/191,
+             * segundo y siguientes golpes del combo) fallaban de cerca; usan
+             * el 45, que cubre todo alrededor a 1,5-2 y delante hasta 4. */
+            /* (133) En partida el 45 (barrido bajo) no servia: primer golpe
+             * del combo inutil y fuertes 48/58 que fallaban. Los ligeros son
+             * siempre el mazazo al suelo 41 completo (el que mata); los
+             * fuertes, el 41 (ranura 43) o el 43, comprimidos. Nunca el 45. */
+            unsigned pick=troll_exit?34:melee&&cls==AC_SPEED?41:melee&&s==43?41:melee&&(src==113||src==45)?43:src;
+            if(pick>=gns||!gt[pick])return 0;
+            src=pick;if(troll_exit)cls=AC_IDLE;
+        }
+        gr = G + gt[src];
         s_hat[s] = at[s];
         if (log_on() && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_PARRY || cls == AC_DEATH || cls == AC_KICK)) tt_dbg("[HEROES]   slot %u (class %d) <- %s %u\n", s, cls, ovr[s] ? "the hero's, retargeted" : "his", ovr[s] ? s : src);
         if (cls == AC_MOVE && !ovr[s] && !s_compose_menu && s_skins[g].map && !getenv("TT_OWNMOVES")
@@ -1482,9 +1592,25 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
             }
         }
         if (ovr[s]) gr = ovr[s];   /* a motion made for this slot (retargeted) */
+        grlen=ovr[s]?rd32(gr,0x14):glen-gt[src];
+        native_troll=!ovr[s]&&!s_compose_menu&&troll_native_attack(g,cls,a,rd32(a,0x14),gr,grlen);
+        /* (132) los ligeros, el clip NPC completo y a su ritmo: comprimida, la
+         * preparacion parecia un golpe inventado. Los fuertes, comprimidos. */
+        if(native_troll&&cls!=AC_SPEED&&!getenv("TT_TROLLFULLWIND")){
+            /* (126) arma abre 238-630 ms (antes 566-900), segun clip. */
+            unsigned open=0,w=0;size_t cut=troll_attack_wind(G,glen,gr,grlen,native_clip,sizeof native_clip,&open,&w);
+            if(cut){gr=native_clip;grlen=cut;tt_dbg("[TROLL-NPC] slot %u <- %u: arma abre %u -> %u ms\n",s,src,open,w);}
+        }
+        if(!native_troll&&!ovr[s]&&!s_compose_menu&&(cls==AC_SPEED||cls==AC_FIERCE)){
+            /* El ataque 66 de Elrond/guerrero tiene dos golpes: empezar
+             * fuerte por el segundo para diferenciar ambos botones. */
+            unsigned part=serial+((src==66&&cls==AC_FIERCE)?1:0);
+            unsigned begin=0;size_t cut=npc_attack_slice(g,src,part,G,glen,gr,grlen,native_clip,sizeof native_clip,&begin);
+            if(cut){gr=native_clip;grlen=cut;tt_dbg("[NPC] %s slot %u <- nativo %u, fragmento desde %u ms, %u ms\n",s_skins[g].name,s,src,begin,rd32(gr,8));}
+        }
         a5 = rd32(a, 0x14); a7 = rd32(a, 0x1C); a8 = rd32(a, 0x20); a10 = rd32(a, 0x28);
         g2 = rd32(gr, 8); gev = rd32(gr, 0x1C);
-        if (a10 > a5 || a7 > a8 || at[s] + a5 > alen || (!ovr[s] && gt[src] + gev > glen)) return 0;
+        if (a10 > a5 || a7 > a8 || at[s] + a5 > alen || gev > grlen) return 0;
         nev = rd32(a, 0x18);
         tail = a5 - a10;
         n = gev + (a8 - a7) + 4 * nbG + tail;
@@ -1493,10 +1619,13 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
         {   /* a move of his for one of the hero's: played at near the hero's pace
              * (attacks no slower than a little over his: they must answer the
              * button as the hero's do) */
-            uint32_t ad = rd32(a, 8), lo = ad * 9 / 10, hi = ad * 115 / 100 + 50;
+            uint32_t ad = rd32(a, 8), lo = ad * 9 / 10, hi = !ovr[s] && (cls==AC_SPEED ||cls==AC_FIERCE) ? mq_attack_limit(g,ad) : ad * 115 / 100 + 50;
             if ((cls == AC_SPEED || cls == AC_FIERCE || cls == AC_KICK || cls == AC_RANGED || cls == AC_PARRY) && ad && !getenv("TT_NOSTRETCH"))
                 target = g2 < lo ? lo : g2 > hi ? hi : g2;
             else target = g2;
+            if(backstep)target=ad; /* misma respuesta/ventana de la accion jugable */
+            if(native_troll)target=g2; /* preparacion, golpe y recuperacion NPC completos */
+            if(troll_exit)target=ad; /* postura propia durante la salida, reloj del combo intacto */
             if ((cls == AC_HIT || cls == AC_KNOCK) && ad && !s_compose_menu && !getenv("TT_NOTOUGH")) {
                 /* Sauron shrugs blows off: his flinch over in about half
                  * the hero's time, so he is not held in place; Gandalf in a
@@ -1504,13 +1633,22 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                 const char *nm = s_pools[g].name;
                 uint32_t q2 = g2 < ad ? g2 : ad;
                 int pct = !strcmp(nm, "sauron") ? 50 : !strcmp(nm, "gandalf") ? 60 : !strcmp(nm, "lurtz") ? 52 : 0;   /* (1.7.2: Lurtz 72 -> 52) */
+                /* La caida/levantada nueva de Lurtz debe verse completa;
+                 * comprimirla al 52% producia otra sacudida. */
+                if(g==3&&cls==AC_KNOCK)pct=0;
                 if (pct) { q2 = q2 * (uint32_t)pct / 100; target = q2 < 150 ? 150 : q2; }
             }
-            if ((cls == AC_MOVE || ((s == 0 || s == 1) && !strcmp(s_pools[g].name, "sauron"))) && !ovr[s] && ad && g2 && !s_compose_menu && !getenv("TT_NOCADENCE")) {   /* (Sauron's walks, slots 0 and 1, at the heroes' pace too: his are slow) */
+            /* Troll, Frodo y berserker: respetar el reloj de sus pasos
+             * propios. La compensacion de zancada comprimia hasta al 60%
+             * el paseo del troll y lo convertia en una carrera. La raiz
+             * nativa sigue siendo la que desplaza al actor: no se modifica
+             * la velocidad global ni se mueve al jugador tras la colision. */
+            int native_gait = !strcmp(s_pools[g].name,"troll") || !strcmp(s_pools[g].name,"frodo") || !strcmp(s_pools[g].name,"uruk");
+            if (!native_gait && (cls == AC_MOVE || ((s == 0 || s == 1) && !strcmp(s_pools[g].name, "sauron"))) && !ovr[s] && ad && g2 && !s_compose_menu && !getenv("TT_NOCADENCE")) {   /* Sauron conserva su comportamiento de la entrega anterior. */
                 /* walks and runs: his steps' length over the hero's, so his
                  * feet keep pace with the ground (the game moves him at the
                  * hero's speed) */
-                float lh = stride_len(A, alen, a, alen - at[s], (int)hfoot, ad), lg = stride_len(G, glen, gr, glen - gt[src], (int)gfoot, g2);
+                float lh = stride_len(A, alen, a, alen - at[s], (int)hfoot, ad), lg = stride_len(G, glen, gr, grlen, (int)gfoot, g2);
                 if (lh > 0.3f && lg > 0.3f) {
                     float t2 = (float)ad * lg / lh;
                     if (t2 < g2 * 0.6f) t2 = g2 * 0.6f;
@@ -1526,16 +1664,18 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
          * piecewise map that puts the hero's strike (its first strike event,
          * type 5) on his swing's fastest moment */
         sh = -1; sg = -1; sp = -1;
-        if (!ovr[s] && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_KICK) && !s_compose_menu && !getenv("TT_NOALIGN")) {
+        if (!native_troll && !ovr[s] && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_KICK) && !s_compose_menu && !getenv("TT_NOALIGN")) {
             uint32_t k2;
             for (k2 = 0; k2 < nev && 4 * k2 < a8 - a7; k2++) {
                 uint32_t eo2 = a7 + rd32(a, a7 + 4 * k2);
                 if (eo2 + 16 <= a8 && rd32(a, eo2 + 12) == 5) { int t0 = (int)rd32(a, eo2); if (sh < 0 || t0 < sh) sh = t0; }
             }
             if (sh > 0 && (uint32_t)sh < rd32(a, 8)) {
-                float s0, s1;
-                int p0 = swing_peak(G, glen, gr, glen - gt[src], (int)ghand[0], g2, &s0), p1 = swing_peak(G, glen, gr, glen - gt[src], (int)ghand[1], g2, &s1);
-                int pk2 = s1 > s0 ? p1 : p0;
+                float speed;
+                /* Los golpes de melee proceden de la mano del arma (0).
+                 * Antes, la mano libre podia elegir el instante del golpe:
+                 * un gesto de la mano libre podia adelantar el impacto. */
+                int pk2 = npc_weapon_peak(G,glen,gr,grlen,(int)ghand[0],g2,&speed);
                 if (pk2 > 0 && g2) sp = (int)((float)pk2 * (float)target / (float)g2 + 0.5f);   /* his peak, in the new length */
                 if (sp > 0 && sp < (int)target) {
                     /* the strike lands near the hero's moment (a little of his
@@ -1561,14 +1701,16 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                 nk = (uint32_t)gr[bo] + gr[bo + 1] + gr[bo + 2] + gr[bo + 3];
                 for (q = 0; q < nk && bo + 4 + 8 * q + 2 <= gev; q++) {
                     uint32_t ko = bo + 4 + 8 * q;
-                    float kt = rd16(gr, ko) * ks;
+                    unsigned packed=rd16(gr,ko);
+                    float kt = (packed&0x7fffu) * ks;
                     if (sh > 0 && sp > 0) kt = kt <= sp ? kt * (float)sg / (float)sp : (float)sg + (kt - sp) * ((float)target - sg) / ((float)target - sp);
-                    wr16(out + pos, ko, (uint16_t)(kt + 0.5f));
+                    unsigned time=(unsigned)(kt+0.5f);if(time>32767)time=32767;
+                    wr16(out + pos, ko, (uint16_t)((packed&0x8000u)|time));
                 }
             }
         }
-        if (!ovr[s] && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_KICK || cls == AC_RANGED || cls == AC_PARRY || cls == AC_IDLE
-                        || (cls == AC_MOVE && hero_still(a, gr, glen - gt[src])))
+        if (!native_troll && !ovr[s] && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_KICK || cls == AC_RANGED || cls == AC_PARRY || cls == AC_IDLE
+                        || backstep || (cls == AC_MOVE && hero_still(a, gr, (uint32_t)grlen)))
             && !s_compose_menu && rd32(a, 8) && !getenv("TT_OWNROOT")) {
             /* (1.9.1: also his aiming, parrying and standing moves, and a
              * move of his in a slot where the hero stays where he is -- his
@@ -1581,7 +1723,7 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
              * the Uruk-hai's sidelong step) took him off his target. */
             /* (1.9.1: his bones' table is after his events -- the test here
              * had it before, and his own steps were never replaced) */
-            uint32_t bt0 = rd32(gr, 0x20), bo = (size_t)bt0 + 4 <= glen - gt[src] ? rd32(gr, bt0) : 0, abt = rd32(a, 0x20), hbo = rd32(a, abt);
+            uint32_t bt0 = rd32(gr, 0x20), bo = (size_t)bt0 + 4 <= grlen ? rd32(gr, bt0) : 0, abt = rd32(a, 0x20), hbo = rd32(a, abt);
             if (bo && bo + 4 <= gev) {   /* (the hero's root with no keys there: his at the start, where the hero's stays) */
                 uint32_t nr = gr[bo], np = gr[bo + 1], hnr = hbo ? a[hbo] : 0, hnp = hbo ? a[hbo + 1] : 0, q;
                 float hs2 = (float)target / (float)rd32(a, 8);
@@ -1648,6 +1790,10 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
         wr32(out + pos, 0x1C, gev);
         wr32(out + pos, 0x20, newbt);
         wr32(out + pos, 0x28, newtail);
+        if(native_troll){
+            if(!troll_native_damage(out+pos,n,gr,grlen))return 0;
+            tt_dbg("[TROLL-NPC] slot %u <- %u: %u ms completos, mano/ordenes/tiempos originales\n",s,src,target);
+        }else if(!s_compose_menu && !getenv("TT_NOEASE")) mq_ease(out+pos,n,G,glen,cls);
         if (getenv("TT_ROOTLOG") && !s_compose_menu)   /* testing: how far each move's root and its child go, his and the hero's */
             tt_dbg("[ROOT] slot %u class %d src %u%s: his %.0f %.0f %.0f  hero %.0f %.0f %.0f\n", s, cls, src, ovr[s] ? " (retargeted)" : "",
                    bone_travel(out + pos, n, 0), bone_travel(out + pos, n, 1), bone_travel(out + pos, n, 2), bone_travel(a, a5, 0), bone_travel(a, a5, 1), bone_travel(a, a5, 2));
@@ -1803,7 +1949,7 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
     s_comp_size = pos;
     return pos;
 }
-#define MAX_ADDS 48
+#define MAX_ADDS (5 * N_EXTRA + 8) /* modelos, animaciones, texturas y armas del roster completo */
 
 /* target + resources -> out: each Add's data is appended; a directory
  * entry with its {type, key} is repointed at it, else one is added (unless
@@ -1824,8 +1970,9 @@ typedef struct { int skin; uint32_t mesh, tex, anim, prop, ptex; int bone, skinb
  * hand is point 0's bone 54, as Boromir's is), on forearm 38 */
 static const Shield s_shields[] = { { 0, 0xA6841986u, 0xFD8B0956u, 0xF9C62B16u, 0x0D473744u, 0xDEF52D38u, 32, 29 },
                                     { 1, 0x3E74698Au, 0xF2BE2DCCu, 0xDDAEA31Cu, 0x9556E30Cu, 0xE6C4CFA9u, 43, 38 },
+                                    { 12, 0x85FCA5B6u, 0xEC2C4C93u, 0xDDAEA31Cu, 0x825B95D0u, 0xF59B894Du, 43, 38 },
 /* (Versus) the shield orc's: placed by his left hand 33 (attach point 1, where the prologue's script puts it), on forearm 30 */
-                                    { 8, 0x2D965DE8u, 0x3E31996Au, 0xA1D1A7E9u, 0x4B82EA5Cu, 0x484A7EBAu, 33, 30 } };
+                                    { 14, 0x2D965DE8u, 0x3E31996Au, 0xA1D1A7E9u, 0x4B82EA5Cu, 0x484A7EBAu, 33, 30 } };
 static int shield_on(int g) { size_t i; if (getenv("TT_NOSHIELD")) return 0; for (i = 0; i < sizeof s_shields / sizeof s_shields[0]; i++) if (s_shields[i].skin == g) return 1; return 0; }
 
 static void dxt1a_decode(const unsigned char *d, int w, int h, unsigned char *rgba)
@@ -2186,6 +2333,18 @@ static void char_db_patch(unsigned char *o, const unsigned char *t, size_t tl, s
 {
     uint32_t a, e2, ty, n, i, k;
     static const struct { const char *skin; uint32_t field, value; } P[] = {
+        { "troll", 0x056A06A4u, 1750 },
+        { "troll", 0xF3023D1Du, 550 },
+        { "troll", 0x2DD1F42Bu, 0x461C4000u },
+        { "rohan", 0x056A06A4u, 1200 },
+        { "rohan", 0xF3023D1Du, 260 },
+        { "rohan", 0x2DD1F42Bu, 0x43480000u },
+        { "urukcap", 0x056A06A4u, 1450 },
+        { "urukcap", 0xF3023D1Du, 400 },
+        { "urukcap", 0x2DD1F42Bu, 0x447A0000u },
+        { "gandalfwhite", 0x056A06A4u, 1575 },
+        { "gandalfwhite", 0xF3023D1Du, 480 },
+        { "gandalfwhite", 0x2DD1F42Bu, 0x459C4000u },
         { "sauron", 0x056A06A4u, 1600 },      /* health (the heroes' 1000) */
         { "sauron", 0xF3023D1Du, 600 },       /* ENEMY_EXPERIENCE (200; the names: the game's hash, sub_0006BE30) */
         { "sauron", 0x2DD1F42Bu, 0x461C4000u },   /* his weight against knockbacks: 10000.0f (a float; the heroes 100, the troll 10000) */
@@ -2387,7 +2546,9 @@ static uint32_t *bmp_load_argb(const char *p2, int *w, int *h, long *sz)
     fclose(f);
     return out;
 }
-static void hudammo_path(int sk, char *p2, size_t n) { paths(); snprintf(p2, n, "%s/hudammo/%s.bmp", s_dir, s_skins[sk].name); }
+/* (132) el troll lanza las rocas del Uruk-hai: sus dibujos de municion y mejoras */
+static const char *ranged_art(int sk) { return !strcmp(s_skins[sk].name, "troll") ? "uruk" : s_skins[sk].name; }
+static void hudammo_path(int sk, char *p2, size_t n) { paths(); snprintf(p2, n, "%s/hudammo/%s.bmp", s_dir, ranged_art(sk)); }
 static void hud_ammo_patch(unsigned char *o, const unsigned char *t, size_t tl, int sk, const char *target)
 {
     static const uint32_t keys[2] = { 6, 0xD };
@@ -2397,7 +2558,7 @@ static void hud_ammo_patch(unsigned char *o, const unsigned char *t, size_t tl, 
     for (v = 0; v < 2; v++) {
         if (!res_find(t, tl, keys[v], 350, &off[v], &e2, &ty) || e2 - off[v] < 0x80 + 0x8000 || rd32(t, off[v] + 4) != 64 || rd32(t, off[v] + 8) != 128) return;
     }
-    if (!strcmp(s_skins[sk].name, "elrond")) {   /* Legolas's */
+    if (!strcmp(s_skins[sk].name, "elrond") || !strcmp(s_skins[sk].name, "elvenwarrior") || !strcmp(s_skins[sk].name, "elvenarcher")) {   /* Legolas's */
         char p2[700]; size_t l2, n2; unsigned char *b;
         snprintf(p2, sizeof p2, "%s", target);
         l2 = strlen(p2);
@@ -2495,6 +2656,7 @@ int tt_coop_p2_ammo_pixels(uint32_t cur, unsigned char *out)
     memcpy(out, cache[pick], 0x8000);
     return 1;
 }
+#include "heroes_weapon_profile.h"
 static int build_file(const char *target, const Add *adds, int nadds, const char *out)
 {
     size_t tl, cap, pos, sl[MAX_ADDS];
@@ -2527,6 +2689,9 @@ static int build_file(const char *target, const Add *adds, int nadds, const char
     n = rd32(t, 4); cnt = rd32(t, n);
     memcpy(o, t, n);
     char_db_patch(o, t, tl, n, s_build_skin);
+    weapon_db_patch(o, t, tl, n, s_build_skin);
+    if(s_build_skin==9&&!troll_weapon_db_patch(o,t,tl,n))goto done;
+    if(s_build_skin==9&&!troll_weapon_damage_patch(o,t,tl,n))tt_dbg("[TROLL-NPC] dano del arma sin cambiar (DB inesperada)\n");
     if (!s_coop_skin || s_build_skin == s_guest) hud_ammo_patch(o, t, tl, s_build_skin, target);   /* (player 1 a guest: his own icon) */   /* (co-op: the HUD's icon is player 1's; player 2's is his own texture, tt_coop_p2_ammo_pixels) */
     pos = n;
     for (k = 0; k < (uint32_t)nadds; k++) {
@@ -2709,6 +2874,59 @@ static const char *cached(const char *sub, const char *xtarget, const char *outn
     return NULL;
 }
 
+/* Solo recursos privados PLAYER_KEY. El hilo de entrada entrega una peticion;
+ * la validacion y la escritura se hacen en el hilo del juego. */
+static TTSizePlan s_size_plan;
+static uint32_t s_size_base, s_size_tab;
+static size_t s_size_len;
+static int s_size_guest = -1;
+static float s_size_scale = 1.0f;
+static volatile LONG s_size_enabled, s_size_request, s_size_port;
+static void hero_size_reset(void)
+{
+    InterlockedExchange(&s_size_enabled,0);
+    InterlockedExchange(&s_size_request,0);
+    s_size_base=0;s_size_guest=-1;s_size_scale=1.0f;ts_free(&s_size_plan);
+}
+static void hero_size_prepare(const char *path,int g)
+{
+    hero_size_reset();
+    if(!path||g<0||g>=N_EXTRA||!s_skins[g].map||getenv("TT_NOSIZE"))return;
+    size_t len;unsigned char *d=read_all(path,&len);uint32_t b,e,t;
+    if(!d)return;
+    int ok=res_find(d,len,PLAYER_KEY(s_skins[g].mesh),100,&b,&e,&t) && ts_mesh(&s_size_plan,d,len,b,e)
+        &&res_find(d,len,PLAYER_KEY(s_skins[g].anim),150,&b,&e,&t) && ts_aniz(&s_size_plan,d,len,b,e)
+        &&ts_finish(&s_size_plan);
+    if(ok){s_size_len=len;s_size_tab=rd32(d,4);s_size_guest=g;}
+    else {ts_free(&s_size_plan);tt_dbg("[SIZE] plan rechazado para %s\n",s_skins[g].name);}
+    free(d);
+}
+static void hero_size_bind(uint32_t base,int g)
+{
+    if(g!=s_size_guest||!s_size_plan.count||base<0x80000000u||s_size_len>0x84000000u-base)return;
+    if(G32(base)!=9||G32(base+4)!=s_size_tab)return;
+    unsigned char *d=(unsigned char *)(xbox_GetMemoryOffset()+base);
+    if(!ts_apply(&s_size_plan,d,s_size_len,1.0f,1.0f)){
+        tt_dbg("[SIZE] datos residentes distintos: desactivado sin escribir\n");return;
+    }
+    s_size_base=base;
+    tt_dbg("[SIZE] %s: %zu valores privados verificados\n",s_skins[g].name,s_size_plan.count);
+}
+/* XState Xbox: paquete u32, botones u16. Sin acceso a memoria invitada aqui. */
+void tt_hero_size_filter(unsigned long port,void *state)
+{
+    static int last[4];
+    if(port>=4)return;
+    uint16_t buttons;memcpy(&buttons,(unsigned char *)state+4,2);
+    int active=InterlockedCompareExchange(&s_size_enabled,0,0) && port==(unsigned long)InterlockedCompareExchange(&s_size_port,0,0);
+    int dir=ts_size_chord(buttons);
+    if(active&&dir){
+        if(dir!=last[port])InterlockedExchange(&s_size_request,dir);
+        buttons&=(uint16_t)~0x00C3u;memcpy((unsigned char *)state+4,&buttons,2);
+    }
+    last[port]=dir;
+}
+
 static int ends_with(const char *s, const char *e)
 {
     size_t a = strlen(s), b = strlen(e);
@@ -2751,25 +2969,14 @@ static int wins_read(const char *key)
     return best;
 }
 
-static void wins_write(const char *key, int v)
+#include "heroes_unlocks.h"
+static int wins_write(const char *key, int v)
 {
-    char fn[700], tmp[720], line[96], k[32];
-    int d;
-    FILE *f, *o;
-    if (!key[0]) return;
+    char fn[700];
+    if (!key[0]) return 0;
     wins_file(fn, sizeof fn);
-    snprintf(tmp, sizeof tmp, "%s.new", fn);
     mkdirs(fn);
-    if (!(o = fopen(tmp, "w"))) return;
-    if ((f = fopen(fn, "r"))) {
-        while (fgets(line, sizeof line, f))
-            if (sscanf(line, "%31s %d", k, &d) == 2 && strcmp(k, key)) fprintf(o, "%s %d\n", k, d);
-        fclose(f);
-    }
-    fprintf(o, "%s %d\n", key, v);
-    fclose(o);
-    remove(fn);
-    rename(tmp, fn);
+    return tt_unlocks_store(fn, key, v);
 }
 
 static int isildur_wins(void)
@@ -2796,39 +3003,25 @@ static int isildur_wins(void)
 /* the save the game writes: the count of the game in play goes with it */
 static void wins_saved(const char *key)
 {
-    char fn[700], tmp[720], line[96], k[32];
-    int d, n = isildur_wins();
-    FILE *f, *o;
+    int n = isildur_wins();
     if (s_orth_saving) { s_orth_saving = 0; n++; tt_dbg("[HEROES] Isildur has finished the Tower of Orthanc: %d time(s)\n", n); }
     s_isildur_wins = n;
-    wins_write(key, n);
-    /* ... and it is the newest */
-    wins_file(fn, sizeof fn);
-    snprintf(tmp, sizeof tmp, "%s.new", fn);
-    if ((o = fopen(tmp, "w"))) {
-        if ((f = fopen(fn, "r"))) {
-            while (fgets(line, sizeof line, f))
-                if (sscanf(line, "%31s %d", k, &d) == 2 && k[0] != '@') fprintf(o, "%s %d\n", k, d);
-            fclose(f);
-        }
-        fprintf(o, "@newest %s\n", key);
-        fclose(o);
-        remove(fn);
-        rename(tmp, fn);
-    }
+    /* Contador y @newest en la misma sustitucion: no queda un estado a medias. */
+    if (!wins_write(key, n))
+        tt_dbg("[HEROES] WARNING: unlocks for save %s could not be committed; previous file preserved\n", key);
     snprintf(s_save_key, sizeof s_save_key, "%s", key);
     snprintf(s_loaded_key, sizeof s_loaded_key, "%s", key);
-    tt_dbg("[HEROES] save %s: written with Isildur's %d finish(es)\n", key, n);
+    tt_dbg("[HEROES] save %s: Isildur has %d finish(es) in memory\n", key, n);
 }
 
 /* guest g's own unlock: Isildur's finishes of the secret level -- the 2nd
  * Boromir, 3rd Gandalf, 4th Frodo, 5th Lurtz, 6th Elrond, 7th the Uruk-hai,
  * 8th Sauron. TT_WINS=n: as if n finishes (testing, over extra_heroes=2) */
-static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7 };
+static const int s_unlock_at[N_SEL] = { 2, 3, 4, 5, 6, 8, 7, 9, 10, 11, 12, 13, 14 };
 static int guest_unlocked(int g)
 {
     if (getenv("TT_WINS")) return g >= 0 && g < N_SEL && atoi(getenv("TT_WINS")) >= s_unlock_at[g];
-    if (s_test_unlock) return 1;
+    if (s_test_unlock || s_heroes_mode == 3) return 1;
     return g >= 0 && g < N_SEL && isildur_wins() >= s_unlock_at[g];
 }
 
@@ -2842,6 +3035,12 @@ static int guest_unlocked(int g)
  * Frodo, Lurtz) or, for Boromir (no still of him), a cameo made from his
  * model's face texture, faded into the background, and the name. */
 #include "heroes_names.inc"
+#include "heroes_elfo_name.inc"
+#include "heroes_gandalfwhite_name.inc"
+#include "heroes_urukcap_name.inc"
+#include "heroes_rohan_name.inc"
+#include "heroes_troll_name.inc"
+#include "heroes_elvenarcher_name.inc"
 typedef struct { const char *stills; uint32_t key; int x0, y0, x1, y1; } UpgSrc;
 static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 46, 84 },                           /* Boromir: his face texture */
@@ -2851,6 +3050,12 @@ static const UpgSrc s_upg_src[N_SEL] = {
     { NULL, 0, 0, 0, 40, 80 },                           /* Elrond: his face texture */
     { NULL, 0, 0, 0, 70, 100 },                          /* Sauron: his helm */
     { "stills3.BFF", 7, 120, 0, 520, 448 },              /* the Uruk-hai host */
+    { NULL, 0, 0, 0, 40, 80 }, /* Elfo: encuadre de Elrond, pendiente de revision visual */
+    { NULL, 0, 0, 0, 40, 80 }, /* elvenarcher: figura/rostro propios */
+    { NULL, 0, 0, 0, 40, 80 }, /* troll: figura/rostro propios */
+    { NULL, 0, 0, 0, 40, 80 }, /* rohan: figura/rostro propios */
+    { NULL, 0, 0, 0, 40, 80 }, /* urukcap: figura/rostro propios */
+    { NULL, 0, 0, 0, 40, 80 }, /* gandalfwhite: figura/rostro propios */
 };
 static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] = {
     { s_name_boromir_fill, s_name_boromir_edge, NAME_BOROMIR_W, NAME_BOROMIR_H },
@@ -2860,6 +3065,12 @@ static const struct { const uint8_t *fill, *edge; int w, h; } s_name_img[N_SEL] 
     { s_name_elrond_fill, s_name_elrond_edge, NAME_ELROND_W, NAME_ELROND_H },
     { s_name_sauron_fill, s_name_sauron_edge, NAME_SAURON_W, NAME_SAURON_H },
     { s_name_urukhai_fill, s_name_urukhai_edge, NAME_URUKHAI_W, NAME_URUKHAI_H },
+    { s_name_elfo_fill, s_name_elfo_edge, NAME_ELFO_W, NAME_ELFO_H },
+    { s_name_elvenarcher_fill, s_name_elvenarcher_edge, NAME_ELVENARCHER_W, NAME_ELVENARCHER_H },
+    { s_name_troll_fill, s_name_troll_edge, NAME_TROLL_W, NAME_TROLL_H },
+    { s_name_rohan_fill, s_name_rohan_edge, NAME_ROHAN_W, NAME_ROHAN_H },
+    { s_name_urukcap_fill, s_name_urukcap_edge, NAME_URUKCAP_W, NAME_URUKCAP_H },
+    { s_name_gandalfwhite_fill, s_name_gandalfwhite_edge, NAME_GANDALFWHITE_W, NAME_GANDALFWHITE_H },
 };
 
 static void c565(uint16_t c, int *o) { o[0] = ((c >> 11) & 31) * 255 / 31; o[1] = ((c >> 5) & 63) * 255 / 63; o[2] = (c & 31) * 255 / 31; }
@@ -2964,6 +3175,9 @@ static uint32_t *upg_custom_load(int g, int *w, int *h, long *sz)
         for (x = 0; x < *w; x++) out[(size_t)(bu ? *h - 1 - y : y) * *w + x] = (uint32_t)row[x * bpp + 2] << 16 | (uint32_t)row[x * bpp + 1] << 8 | row[x * bpp];
     }
     fclose(f);
+    /* La imagen nueva debe invalidar cache aunque el BMP tenga igual tamano. */
+    if(sz){uint32_t hash=2166136261u;for(size_t i=0;i<(size_t)*w * *h;i++)hash=(hash^out[i])*16777619u;
+        *sz=(long)(hash^(uint32_t)*w*131u^(uint32_t)*h*977u);}
     return out;
 }
 static int upg_picture(int g, const char *ui_dir, uint32_t *pic)
@@ -3491,7 +3705,7 @@ static void upg_items_put(int g, unsigned char *t, size_t tl)
     if (g < 0 || g >= N_SEL || getenv("TT_NOUPGITEMS")) return;
     /* the ranged pictures */
     paths();
-    snprintf(p2, sizeof p2, "%s/upgitems/%s_ranged.bmp", s_dir, s_skins[g].name);
+    snprintf(p2, sizeof p2, "%s/upgitems/%s_ranged.bmp", s_dir, ranged_art(g));
     {
         uint32_t *art = bmp_load_argb(p2, &w, &h, NULL);
         have = 0;
@@ -3601,7 +3815,7 @@ static const char *upg_redirect(const char *xp, const char *base)
         int cw, ch; long csz = 0; uint32_t *cp = upg_custom_load(g, &cw, &ch, &csz);
         free(cp);
         char ip[700]; struct stat fa; long isz = 0;
-        snprintf(ip, sizeof ip, "%s/upgitems/%s_ranged.bmp", s_dir, s_skins[g].name);
+        snprintf(ip, sizeof ip, "%s/upgitems/%s_ranged.bmp", s_dir, ranged_art(g));
         if (!stat(ip, &fa)) isz = (long)fa.st_size + (long)(fa.st_mtime & 0xFFFF);   /* (and his ranged picture's) */
         if (cp) snprintf(out, sizeof out, "%s/heroes/%s/upg%u_p%ld_i%ld/%s", s_dir, s_skins[g].name, HEROES_BUILD, csz, isz, base);
         else snprintf(out, sizeof out, "%s/heroes/%s/upg%u_i%ld/%s", s_dir, s_skins[g].name, HEROES_BUILD, isz, base);
@@ -3701,6 +3915,25 @@ static const Voice s_voice[N_EXTRA] = {
     { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
         VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
       VA("17TOP1", 826, 1.0f, 2.2f), 0.3f },
+    /* Elfo: donante de Elrond, Legolas; no hay voz nueva. */
+    { { VA("17TOP1", 278, 1.0f, 1.5f), VA("17TOP1", 279, 1.0f, 1.5f), VA("17TOP1", 280, 1.0f, 1.5f), VA("17TOP1", 284, 1.0f, 1.5f),
+        VA("17TOP1", 281, 1.0f, 1.5f), VA("17TOP1", 282, 1.0f, 1.5f), VA("17TOP1", 283, 1.0f, 1.5f), VA("17TOP1", 285, 1.0f, 1.5f), VA("17TOP1", 282, 0.92f, 1.5f) },
+      VA("INTRFACE", 2733, 1.0f, 4.0f), 0.0f },
+    { { VA("17TOP1", 278, 1.0f, 1.5f), VA("17TOP1", 279, 1.0f, 1.5f), VA("17TOP1", 280, 1.0f, 1.5f), VA("17TOP1", 284, 1.0f, 1.5f),
+        VA("17TOP1", 281, 1.0f, 1.5f), VA("17TOP1", 282, 1.0f, 1.5f), VA("17TOP1", 283, 1.0f, 1.5f), VA("17TOP1", 285, 1.0f, 1.5f), VA("17TOP1", 282, 0.92f, 1.5f) },
+      VA("INTRFACE", 2733, 1.0f, 4.0f), 0.0f }, /* elvenarcher: audio donado */
+    { { VA("13AMON1", 1606, 0.78f, 1.4f), VA("13AMON1", 1607, 0.78f, 1.4f), VA("13AMON1", 1608, 0.78f, 1.4f), VA("13AMON1", 1609, 0.78f, 1.4f),
+        VA("13AMON1", 1610, 0.78f, 1.3f), VA("13AMON1", 1611, 0.78f, 1.3f), VA("13AMON1", 1612, 0.78f, 1.3f), VA("13AMON1", 1614, 0.75f, 1.8f), VA("13AMON1", 1613, 0.72f, 1.8f) },
+      VA("13AMON1", 1608, 0.72f, 2.2f), 0.3f }, /* troll: audio donado */
+    { { VA(NULL, 1, 0.90f, 1.5f), VA(NULL, 3, 0.90f, 1.5f), VA(NULL, 4, 0.90f, 1.5f), VA(NULL, 6, 0.90f, 1.5f),
+        VA(NULL, 7, 0.90f, 1.5f), VA(NULL, 8, 0.90f, 1.5f), VA(NULL, 10, 0.90f, 1.5f), VA(NULL, 11, 0.90f, 1.5f), VA(NULL, 12, 0.90f, 2.0f) },
+      VA("INTRFACE", 2729, 0.90f, 4.0f), 0.0f }, /* rohan: audio donado */
+    { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
+        VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
+      VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* urukcap: audio donado */
+    { { VA("17TOP1", 265, 0.93f, 1.5f), VA("17TOP1", 266, 0.93f, 1.5f), VA("17TOP1", 267, 0.93f, 1.5f), VA("17TOP1", 271, 0.93f, 1.5f),
+        VA("17TOP1", 268, 0.93f, 1.5f), VA("17TOP1", 269, 0.93f, 1.5f), VA("17TOP1", 273, 0.93f, 1.5f), VA("17TOP1", 272, 0.93f, 1.5f), VA("17TOP1", 269, 0.86f, 1.5f) },
+      VA("INTRFACE", 2731, 0.93f, 4.0f), 0.0f }, /* gandalfwhite: audio donado */
     /* (Versus only) the Nazgul: Weathertop's own -- the efforts his swings play (1736, 1737), short shrieks struck,
      * the long scream (1746) and the cry his flight plays (1701) */
     { { VA("01WEAT1", 1736, 1.0f, 1.3f), VA("01WEAT1", 1737, 1.0f, 1.3f), VA("01WEAT1", 1736, 1.08f, 1.3f), VA("01WEAT1", 1737, 1.08f, 1.3f),
@@ -3918,6 +4151,12 @@ static const Confirm s_confirm[N_SEL] = {
     { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 },      /* Elrond: a sword */
     { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 },     /* Sauron: a heavy swing */
     { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 },      /* the Uruk-hai: his blade */
+    { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* Elfo: Elrond */
+    { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* elvenarcher */
+    { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 }, /* troll */
+    { VC("17TOP1", 183, 0.90f, 1.0f), VC(NULL, 0, 0, 0), 0 }, /* rohan */
+    { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 }, /* urukcap */
+    { VC(NULL, 0, 0, 0), VC(NULL, 0, 0, 0), 0 }, /* gandalfwhite */
 };
 #undef VC
 /* a source at 22050 Hz with its pitch applied (resampled) */
@@ -4350,6 +4589,11 @@ int tt_heroes_unlocked_count(void) { int g, n = 0, w; if (!tt_heroes_on()) retur
 static const char *redirect(const char *xp)
 {
     { extern void tt_ach_file(const char *xp); tt_ach_file(xp); }   /* (1.9.7: achievements see each file the game opens) */
+    /* Reject save writes at the existing file-open hook, before any
+     * truncation. Reads still reach the original saves in test mode. */
+    extern volatile int xbox_file_open_write;
+    if (s_test_unlock && xbox_file_open_write && strstr(xp, "45410010"))
+        return "::TT_TEST_MODE_SAVE_DISABLED::";
     tt_ct_arm(xp);
     char x[600], base[128];
     const char *b;
@@ -4529,6 +4773,7 @@ static const char *redirect(const char *xp)
             r2 = cached(sub, x, base, a, na);
             s_build_skin = -1;
             if (!s_shv_n && ((sk >= 0 && !strcmp(s_skins[sk].name, "orc")) || (p2too && s_playas >= 0 && !strcmp(s_skins[s_playas].name, "orc")))) shield_sig_fill();   /* (a level built before: the shield's vertices made again, to find them) */
+            hero_size_prepare(r2,sk);
             return r2;
         }
     }
@@ -4592,11 +4837,12 @@ static const UpgName s_upn_sauron[] = {
     { "Isildur's Swift Terror", "Sauron's Dance" }, { "Isildur's Deliverance", "The One Ring's Will" }, { "Isildur's Death Charge", "Dark Lord's Charge" }, { "Isildur's Gambit", "Annatar's Gambit" }, { "Isildur's War Rush", "Mordor War Rush" }, { "Isildur's Judgment", "Eye of Sauron" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Cast like the Dark Bolt, the fire of Barad-dur does serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "The flames of Mount Doom do terrible damage.  (Requires Hellfire)" }, { "Fire with the A button", "Cast with the A button" }, { "Isildur's", "Sauron's" }, { "Ranger Fury", "Dark Fury" }, { "Sword Parry", "Mace Parry" }, { "Dunedain Bow", "Dark Bolt" }, { "Rohan Bow", "Hellfire" }, { "Gondor Bow", "Doom Fire" }, { "Strength of the Stewards", "Strength of Barad-dur" }, { "Strength of Isildur", "Strength of Mordor" }, { "Strength of Elendil", "Might of the Ring" }, { "Strength of the Argonath", "Strength of Mount Doom" }, { "Wilderness Rage", "Mordor Rage" }, { "Master Swordsman", "Master of Maces" }, { "Wrath of Numenor", "Wrath of Mordor" }, { "Bane of Saruman", "Bane of Elves" }, { NULL, NULL } };
 static const UpgName s_upn_uruk[] = {
     { "Isildur's Swift Terror", "Berserker Frenzy" }, { "Isildur's Deliverance", "Torch of the Deep" }, { "Isildur's Death Charge", "Deeping Wall Charge" }, { "Isildur's Gambit", "Uruk-hai Gambit" }, { "Isildur's War Rush", "Siege Rush" }, { "Isildur's Judgment", "Wrath of the Pits" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Thrown like Crag Rocks, these rocks from the pits do serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Molten rocks do terrible damage.  (Requires War Rocks)" }, { "Fire with the A button", "Hurl with the A button" }, { "Isildur's", "Uruk's" }, { "Ranger Fury", "Uruk Fury" }, { "Sword Parry", "Blade Parry" }, { "Dunedain Bow", "Crag Rocks" }, { "Rohan Bow", "War Rocks" }, { "Gondor Bow", "Lava Rocks" }, { "Strength of the Stewards", "Strength of Isengard" }, { "Strength of Isildur", "Might of the Pits" }, { "Strength of Elendil", "Strength of Saruman" }, { "Strength of the Argonath", "Strength of the Uruk-hai" }, { "Wilderness Rage", "Berserker Rage" }, { "Master Swordsman", "Master Berserker" }, { "Wrath of Numenor", "Wrath of Orthanc" }, { NULL, NULL } };
+#include "heroes_ampliacion_textos.inc"
 static const UpgName *upn_list(int g)
 {
     static const struct { const char *n; const UpgName *l; } L[] = {
         { "boromir", s_upn_boromir }, { "gandalf", s_upn_gandalf }, { "frodo", s_upn_frodo }, { "lurtz", s_upn_lurtz },
-        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk } };
+        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "gandalfwhite", s_upn_gandalfwhite_nuevo }, { "urukcap", s_upn_urukcap_nuevo }, { "rohan", s_upn_rohan_nuevo }, { "troll", s_upn_troll_nuevo }, { "elvenarcher", s_upn_elvenarcher_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
     int k;
     if (g < 0 || g >= N_SKINS) return NULL;
     for (k = 0; k < (int)(sizeof L / sizeof L[0]); k++) if (!strcmp(L[k].n, s_skins[g].name)) return L[k].l;
@@ -4662,12 +4908,25 @@ extern int tt_lang_key16(uint32_t hash, const uint16_t **out);
 #define HL_ROOM 47
 static struct { uint32_t at, from; int len; uint16_t last[256]; int lastn; } s_hla[UPN_MAX];
 static int s_hla_n = -1;
+static int s_hla_saved;
 static DWORD s_hla_scan;
 static int hl_holds(uint32_t at, const uint16_t *u, int n)
 {
     int k;
     for (k = 0; k < n; k++) if (G16(at + 2 * k) != u[k]) return 0;
     return G16(at + 2 * k) == 0;
+}
+/* Un barrido debe conservar los textos que seguimos poseyendo. Buscar
+ * solo el original perdia el nombre ya cambiado al recargar otro menu. */
+static int hl_retain(void)
+{
+    int n=0;
+    for(int i=0;i<s_hla_saved;i++){
+        const uint16_t *u=NULL;int len=tt_lang_key16(s_hla[i].from,&u);
+        uint32_t at=s_hla[i].at;if(!at||len<=0)continue;
+        if(!hl_holds(at,u,len)&&!(s_hla[i].lastn&&hl_holds(at,s_hla[i].last,s_hla[i].lastn)))continue;
+        if(n!=i)s_hla[n]=s_hla[i];n++;
+    }return n;
 }
 static void hl_find(void)
 {
@@ -4681,7 +4940,7 @@ static void hl_find(void)
         if ((fn[nf] = tt_lang_key16(s_hl[i].from, &fu[nf])) <= 0) continue;
         froms[nf++] = s_hl[i].from;
     }
-    s_hla_n = 0;
+    s_hla_n = hl_retain();
     s_hla_scan = GetTickCount();
     for (va = 0x10002u; va < 0x84000000u - 600 && s_hla_n < UPN_MAX; va += 2) {
         uint16_t c;
@@ -4690,18 +4949,25 @@ static void hl_find(void)
         if (c == 0 || m[va / 2 - 1] != 0) continue;
         for (j = 0; j < nf; j++)
             if (fu[j][0] == c && hl_holds(va, fu[j], fn[j])) {
+                int known=0;for(int k=0;k<s_hla_n;k++)if(s_hla[k].at==va){known=1;break;}
+                if(known)break;
                 s_hla[s_hla_n].at = va; s_hla[s_hla_n].from = froms[j]; s_hla[s_hla_n].len = fn[j]; s_hla[s_hla_n].lastn = 0;
                 s_hla_n++;
                 va += 2 * (uint32_t)fn[j];
                 break;
             }
     }
+    s_hla_saved=s_hla_n;
     tt_dbg("[HEROES] %d strings that name hero 4's things (in the language)\n", s_hla_n);
 }
 static int hl_set(int g)
 {
     const char *who = g >= 0 && g < N_SKINS ? s_skins[g].name : NULL;
     int i, j, ok = 0;
+    extern const char *tt_lang_code(void);
+    int nuevo=g>=7 && g<N_EXTRA;
+    /* Blanco conserva las descripciones de magia; los demas tienen arco. */
+    if(g==12)who="gandalf";
     if (s_hla_n < 0) hl_find();
     for (i = 0; i < s_hla_n; i++) {
         const uint16_t *ou, *tu = NULL;
@@ -4712,6 +4978,13 @@ static int hl_set(int g)
         ok++;
         if (who) for (j = 0; j < HL_N; j++)
             if (s_hl[j].from == s_hla[i].from && !strcmp(s_hl[j].hero, who)) { tn = tt_lang_key16(s_hl[j].to, &tu); break; }
+        uint16_t own[256];
+        if(nuevo)for(unsigned z=0;z<sizeof s_new_es/sizeof s_new_es[0];z++){
+            if(s_new_es[z].guest!=g ||s_new_es[z].hash!=s_hla[i].from)continue;
+            const char *text=NULL;
+            if(s_hla[i].from==0xDEEF44C1u || !strcmp(tt_lang_code(),"es"))text=s_new_es[z].text;
+            if(text){tn=(int)strlen(text);for(k=0;k<tn;k++)own[k]=(uint16_t)(unsigned char)text[k];tu=own;}break;
+        }
         if (tn <= 0 || tn > on + HL_ROOM || tn > 255) { tu = ou; tn = on; }
         for (k = 0; k < tn; k++) G16(at + 2 * k) = tu[k];
         { int end = s_hla[i].lastn > on ? s_hla[i].lastn : on; if (end < tn) end = tn; for (; k <= end; k++) G16(at + 2 * k) = 0; }
@@ -4791,6 +5064,12 @@ static unsigned char s_recs[N_EXTRA + 1][REC_BYTES];   /* [0..N_SEL-1] extra her
 static int rec_slot(int g) { return g < 0 ? REC_ISIL : g < N_SEL ? g : g + 1; }
 static int s_rec_have[N_EXTRA + 1];
 static int s_rec_owner = -1;                           /* whose records hero 4 holds now: -1 Isildur */
+static int s_rec_readonly;
+
+static void rec_names(const char **names)
+{
+    int i; for (i = 0; i < N_EXTRA; i++) names[i] = s_skins[i].name;
+}
 
 static void rec_copy(unsigned char *buf, int to_mem)
 {
@@ -4815,39 +5094,42 @@ void tt_heroes_vs_keep(int keep)
 }
 static void rec_save_file(void)
 {
-    char p[600];
+    char p[700], tmp[710]; const char *names[N_EXTRA];
     FILE *f;
     if (s_vs_rec_kept) return;   /* (Versus: nothing of it kept) */
+    int ok;
+    if (s_rec_readonly || s_test_unlock) return;
     paths();
-    snprintf(p, sizeof p, "%s/heroes/records.dat", s_dir);
+    rec_names(names);
+    snprintf(p, sizeof p, "%s/heroes/records_v3.dat", s_dir);
+    snprintf(tmp, sizeof tmp, "%s.tmp", p);
     mkdirs(p);
-    if ((f = fopen(p, "wb"))) {
-        fwrite("TTH2", 1, 4, f);   /* TTH2: seven guests (TTH1: four) */
-        fwrite(s_rec_have, sizeof(int) * (N_SEL + 1), 1, f);   /* (the Versus-only guests' are not kept) */
-        fwrite(s_recs, (size_t)REC_BYTES * (N_SEL + 1), 1, f);
-        fclose(f);
-    }
+    if (!(f = fopen(tmp, "wb"))) { tt_dbg("[HEROES] no se pudo abrir el temporal de progreso\n"); return; }
+    ok = tth_write(f, names, N_SEL, s_rec_have, &s_recs[0][0], REC_BYTES);
+    if (fflush(f)) ok = 0;
+    if (fclose(f)) ok = 0;
+    if (ok) ok = TT_UNLOCK_REPLACE(tmp, p) != 0;
+    if (!ok) tt_dbg("[HEROES] progreso no guardado; se conserva el sidecar anterior\n");
 }
 static void rec_load_file(void)
 {
-    char p[600], m[4];
+    char p[700]; const char *names[N_EXTRA];
     FILE *f;
     static int done;
     if (done) return;
     done = 1;
     paths();
-    snprintf(p, sizeof p, "%s/heroes/records.dat", s_dir);
+    rec_names(names);
+    snprintf(p, sizeof p, "%s/heroes/records_v3.dat", s_dir);
+    if (GetFileAttributesA(p) == INVALID_FILE_ATTRIBUTES)
+        snprintf(p, sizeof p, "%s/heroes/records.dat", s_dir);
     if ((f = fopen(p, "rb"))) {
-        if (fread(m, 1, 4, f) == 4 && !memcmp(m, "TTH2", 4)) {
-            if (fread(s_rec_have, sizeof(int) * (N_SEL + 1), 1, f) != 1 || fread(s_recs, (size_t)REC_BYTES * (N_SEL + 1), 1, f) != 1)
-                memset(s_rec_have, 0, sizeof s_rec_have);
-        } else if (!memcmp(m, "TTH1", 4)) {   /* 1.6 and before: Boromir, Gandalf, Frodo, Lurtz (and Isildur) */
-            int have4[5];
-            if (fread(have4, sizeof have4, 1, f) == 1 && fread(s_recs, REC_BYTES, 4, f) == 4) { memcpy(s_rec_have, have4, 4 * sizeof(int)); }
-            else memset(s_rec_have, 0, sizeof s_rec_have);
+        if (!tth_read(f, names, N_SEL, s_rec_have, &s_recs[0][0], REC_BYTES)) {
+            s_rec_readonly = 1;
+            tt_dbg("[HEROES] sidecar invalido: se conserva y no se sobrescribe: %s\n", p);
         }
         fclose(f);
-    }
+    } else if (GetFileAttributesA(p) != INVALID_FILE_ATTRIBUTES) s_rec_readonly = 1;
     s_rec_have[REC_ISIL] = 0;    /* Isildur's are the save's */
 }
 /* hero 4 becomes guest g (-1 Isildur): the holder's records out, g's in */
@@ -4868,7 +5150,9 @@ static void rec_switch(int g)
         memset(fresh + 15, 0, 120);                                  /* no scores */
         memset(fresh + 15 + 120 + 4, 0, 0x348);                      /* no experience */
         memset(fresh + 15 + 120 + 4 + 0x348, 0, 0x50);               /* nothing bought */
-        for (lv = 0; lv < 15; lv++) if (fresh[lv] > 1) fresh[lv] = 1;   /* open, not done */
+        /* 1 means completed, not merely available. Availability is queried
+         * through id 14; never inherit another character's completions. */
+        for (lv = 0; lv < 15; lv++) fresh[lv] = 0;
         rec_copy(fresh, 1);
     }
     s_rec_owner = g;
@@ -4904,6 +5188,27 @@ int tt_heroes_record_of(const char *skin, unsigned char *out)
     if (!s_rec_have[rec_slot(g)]) return 0;
     memcpy(out + 0x64, s_recs[rec_slot(g)] + 15 + 120 + 4, 0x348 - 0x64);
     return 1;
+}
+
+/* Thank you Gumpolas and contributors for the port and original extras.
+ * D2B90 calls D2A30 with value 1 on victory. The campaign menus only
+ * consult heroes 1..3, never the extra's temporary hero-4 record.
+ * Share completion flags only; XP, purchases and scores remain private.
+ * Only the successfully completed mission is shared (never old sidecar flags).
+ */
+void tt_heroes_result(uint32_t level, int success)
+{
+    if (!tt_heroes_on() || s_test_unlock || s_guest < 0 || G8(HERO_BYTE) != 4 ||
+        !success || level < 2 || level > 15) return;
+    uint32_t lv = level - 1;
+    if (G8(0x4AB68Fu + 60 + lv) == 1) G8(0x4AB68Fu + 15 + lv) = 1;
+    /* The original result handler marks both Orthanc records at level 14. */
+    if (lv == 13 && G8(0x4AB68Fu + 60 + 12) == 1) G8(0x4AB68Fu + 15 + 12) = 1;
+}
+
+int tt_heroes_save_blocked(void)
+{
+    return tt_heroes_on() && s_test_unlock;
 }
 
 /* ===================================================================== */
@@ -5003,6 +5308,7 @@ static void skin_apply_one(void)
     static uint32_t keyt[4096][2];
     uint32_t nk;
     if (sk < 0 || !find_level_buffer()) return;
+    hero_size_bind(s_buf,sk);
     n = G32(s_buf + 4); cnt = G32(s_buf + n);
     nk = cnt < 4096 ? cnt : 4096;
     for (i = 0; i < nk; i++) { keyt[i][0] = G32(s_buf + n + 4 + 12 * i + 8); keyt[i][1] = G32(s_buf + n + 4 + 12 * i); }
@@ -5180,7 +5486,7 @@ static void hero4_actor(int g)
 /* the number place p's character answers to now */
 /* the carousel's order of the extra heroes (1.8: Sauron last, after the
  * Uruk-hai): place 4 + i holds guest s_place_order[i] */
-static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5 };
+static const int s_place_order[N_SEL] = { 0, 1, 2, 3, 4, 6, 5, 7, 8, 9, 10, 11, 12 };
 static int place_actor(int p) { return p >= 4 && p < 4 + N_SEL ? 4 + s_place_order[p - 4] : p; }
 static int guest_place(int g) { int i; for (i = 0; i < N_SEL; i++) if (s_place_order[i] == g) return 4 + i; return 4 + g; }
 static uint32_t aid(int p) { int q = place_actor(p); return s_actor[q] ? G32(s_actor[q] + 0x1B8) : (uint32_t)q; }
@@ -5346,6 +5652,8 @@ static float target_deg(int p, int c, int n) { return 180.0f + 360.0f / n * (flo
 static float s_lab_alpha[N_PLACES];
 static uint32_t s_lab_l4; static int s_lab_l4_set;   /* hero 4's level, put back after the game's labels */
 static uint32_t s_lab_el;   /* their elements (contiguous memory: the draw may keep pointers to them) */
+/* Dos elementos por plaza; ocho pares ya no cubren el roster ampliado. */
+#define HERO_LABEL_BYTES ((2u * N_PLACES * 0xDCu + 15u) & ~15u)
 static void mat_row(const float *v, uint32_t m, float *o)
 {
     int c;
@@ -5371,13 +5679,13 @@ static void extra_labels(void)
     const uint32_t A0 = 0x42DAB8u, B0 = 0x42DE28u;
     if (lab_log()) { static unsigned f2; if ((f2++ & 255) == 0) tt_dbg("[LAB] places %d view/proj ...\n", n); }
     if (!n || getenv("TT_NOLABELS")) return;
-    if (!s_lab_el) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_lab_el = xbox_ContiguousAlloc(4096u, 16u); if (!s_lab_el) return; }
+    if (!s_lab_el) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_lab_el = xbox_ContiguousAlloc(HERO_LABEL_BYTES, 16u); if (!s_lab_el) return; }
     if (!G32(0x49F444u)) return;
     view = tt_gcall(0x0004EAF0u, G32(0x49F444u), 0, NULL);
     proj = tt_gcall(0x0004EB00u, G32(0x49F444u), 0, NULL);
     { static unsigned f3; if (lab_log() && (f3++ & 255) == 0) { int i; tt_dbg("[LAB] view %08X proj %08X\n", view, proj); for (i = 0; i < n; i++) tt_dbg("[LAB]  p %d aid %u locked %d\n", i, aid(i), place_locked(i)); } }
     if (view < 0x10000u || proj < 0x10000u) return;
-    for (p = 0; p < n && k < 8; p++) {
+    for (p = 0; p < n && k < N_PLACES; p++) {
         uint32_t num = aid(p), pp, po, a8, e, q;
         int g, lv;
         float v[4], t[4], c[4], x, y, al;
@@ -5464,7 +5772,7 @@ static void layout(uint32_t menu)
         {
             /* Lurtz is a head taller than the others: a step further back,
              * so that his name above him stays clear */
-            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f };   /* the tall ones further back */
+            static const float back[N_SEL] = { 0, 0, 0, 1.8f, 0, 2.6f, 1.6f, 0, 0, 5.5f, 0, 0, 0 }, down[N_SEL] = { 0, 0, 0, 0.5f, 0, 0.8f, 0.4f, 0, 0, 1.5f, 0, 0, 0 };   /* the tall ones further back */
             /* eight round a ring made for four: a wider ring (its front
              * where the four's front is, the ring's centre moved back), so
              * they stand further apart */
@@ -5744,6 +6052,71 @@ static uint32_t s_sword_res, s_shooter;   /* the guest's sword-hand model as the
 static int s_in_launch;
 static uint32_t s_lk_key, s_lk_ty, s_bow_res, s_beam_obj[8], s_beam_n, s_launching; static uint32_t s_beam_p2obj[8], s_beam_p2n; static uint32_t s_beam_p2obj_log[8];   /* (co-op) player 2's beam shots */   /* the last resource lookup; the guest's bow-hand model */
 static uint32_t s_wobj[4];   /* the player's bow and sword objects, his actor */
+/* BEC90 -> C7610: arg12 (+0x30) es dano entero; pasa a evento+0x14
+ * y sub_000849F0 lo convierte en el dano pendiente actor+0x3F0.
+ * El ajuste se hace despues del contacto, una vez por evento, nunca en
+ * la DB compartida ni durante las sondas geometricas BA110. */
+/* (132) Sin s_wobj: en 131 no se capturaba para el troll y el doble dano
+ * nunca se aplico (0 lineas TROLL-POWER en partida). Basta con que el
+ * atacante sea el actor del jugador (0x43B15C) y el arma la suya (id 1). */
+/* (133) El tipo de golpe (C7610 +0x34 -> evento +0x18) lo lee 849F0:
+ * los escudos (tipos 0xB/0x5E, 86BE0/86CA0) solo paran tipos que no sean
+ * 3, 4, 0xA o 0xD. El 0xA es el golpe pesado nativo: lanza por el aire a
+ * los ligeros (ficha de tipo +0x164 < 2) y derriba a los pesados. Si el
+ * tipo de la victima no tiene ficha (6CAB0 = 0), 849F0 saldria sin
+ * reaccion con el 0xA: entonces 0xD, derribo sin lanzar. */
+static uint32_t troll_type_record(uint32_t type)
+{
+    uint32_t base=G32(0x424A14u),hdr=G32(0x424A18u);
+    if(type==0xFFFFFFFFu)return 0;
+    if(base<0x80000000u||base>=0x83FFF000u||hdr<0x80000000u||hdr>=0x83FFF000u)return 0;
+    int32_t n=(int32_t)G32(hdr+0xC);
+    if(n<=0||n>2048||base+0x178u*(uint32_t)n>=0x83FFF000u)return 0;
+    for(int32_t i=0;i<n;i++)if(G32(base+0x178u*(uint32_t)i+0x20)==type)return base+0x178u*(uint32_t)i;
+    return 0;
+}
+/* (136) El troll de la tumba de Balin (tipo 71, el de la maza 6) no pierde
+ * vida con el 0xA: en la 135 recibio 24 golpes "aplicados" sin bajar. Con
+ * el tipo nativo del ataque si. A el no se le cambia el tipo. */
+#define TROLL_BOSS_TYPE 71u
+static uint32_t troll_hit_kind(uint32_t victim_type,uint32_t native){
+    if(victim_type==TROLL_BOSS_TYPE)return native;
+    return troll_type_record(victim_type)?0xAu:0xDu;
+}
+static int troll_hit_apply(uint32_t sp)
+{
+    static int seen;
+    if(s_guest!=9||G8(HERO_BYTE)!=4||G8(0x43BABCu))return 0;
+    if(sp<0x10000u||sp>=0x83FFFFC0u)return 0;
+    uint32_t weapon=G32(sp+8),owner=G32(sp+12),victim=G32(sp+4);
+    if(G32(sp)!=0xBECFFu||weapon<0x80000000u||weapon>=0x83FFF000u
+       ||owner<0x80000000u||owner>=0x83FFF000u
+       ||owner!=G32(0x43B15Cu)||victim==owner||victim<0x80000000u
+       ||victim>=0x83FFF000u||G32(weapon+0x2F4)!=1){
+        /* diagnostico: los primeros rechazos de cada partida */
+        if(seen<12&&G32(sp)==0xBECFFu){seen++;tt_dbg("[TROLL-POWER] sin aplicar: arma %08X id %u, atacante %08X, jugador %08X, victima %08X\n",
+            weapon,weapon>=0x80000000u&&weapon<0x83FFF000u?G32(weapon+0x2F4):0u,owner,G32(0x43B15Cu),victim);}
+        return 0;
+    }
+    uint32_t damage=G32(sp+0x30);
+    if(!damage||damage>0x3FFFFFFFu)return 0;
+    G32(sp+0x30)=2*damage;
+    uint32_t kind=G32(sp+0x34);
+    if(!getenv("TT_TROLLKIND0"))G32(sp+0x34)=troll_hit_kind(G32(victim+0x2F0),kind);
+    tt_dbg("[TROLL-POWER] melee %08X -> %08X: %u -> %u (antes de defensa), tipo %u -> %u\n",owner,victim,damage,2*damage,kind,G32(sp+0x34));
+    return 1;
+}
+/* (136) el objeto de ataque de BE0D0/BA110 es una variable local del juego:
+ * vive en la pila (memoria baja), no en el monton como actores y armas */
+#define TT_ATTACK_OK(a) ((a)>=0x10000u&&(a)<0x83FFF000u)
+#include "heroes_troll_log.h"
+int tt_troll_hit(uint32_t sp)
+{
+    int applied=troll_hit_apply(sp);
+    if(sp>=0x10000u&&sp<0x83FFFFC0u&&G32(sp)==0xBECFFu)clog_event(sp,applied);
+    else if(sp>=0x10000u&&sp<0x83FFFFC0u)clog_impact(sp);   /* (137) rocas y demas danos */
+    return applied;
+}
 static void wobj_watch(void)
 {
     static uint32_t snap[4][0x200]; static int have[4];
@@ -5935,7 +6308,22 @@ static uint32_t s_rock_pot;
 static int s_rock_trail;   /* (his burning rocks carry the fire pots' trail: no effects of ours) */
 static int s_rock_has_trail[8];
 static unsigned s_urk_throws;
-static float s_rock_start_save[2];
+static float s_rock_start_save[3];
+/* (137) El troll no tiene clip de lanzamiento: su mano vacia queda donde la
+ * deje el clip que suene, a menudo muy por encima de los orcos (la maza
+ * llega a +21) o a un lado. Sin objetivo fijado, el juego apunta desde la
+ * salida (salida + direccion * alcance), y la roca volaba por encima de
+ * todos. Sale delante de su cuerpo, a lo sumo a TROLL_ROCK_Z sobre sus pies
+ * (los orcos ocupan de +0 a +4). TT_TROLLROCKHAND: la salida de la 132. */
+#define TROLL_ROCK_Z 3.0f
+static void troll_rock_start(uint32_t st, float ux, float uy, float ahead)
+{
+    uint32_t a = G32(0x43B15Cu);
+    float top = getenv("TT_TROLLROCKZ") ? (float)atof(getenv("TT_TROLLROCKZ")) : TROLL_ROCK_Z;
+    if (a < 0x80000000u || a >= 0x83FFF000u) { GF(st) += ux * ahead; GF(st + 4) += uy * ahead; return; }
+    GF(st) = GF(a + 0x90) + ux * ahead; GF(st + 4) = GF(a + 0x94) + uy * ahead;
+    if (!(GF(st + 8) <= GF(a + 0x98) + top)) GF(st + 8) = GF(a + 0x98) + top;
+}
 static int s_rock_age[8], s_rock_pid[8], s_rock_burst[8];
 static int s_memdump_arm;
 static int prec_at(uint32_t va, uint32_t id)
@@ -6083,6 +6471,7 @@ static int bolt_mode(void)
 {
     if (s_guest < 0) return 0;
     if (!strcmp(s_skins[s_guest].name, "sauron")) return getenv("TT_NOREDBOLT") ? 0 : s_bolt_blue ? 0 : 1;
+    if (!strcmp(s_skins[s_guest].name, "gandalfwhite")) return 2;
     if (!strcmp(s_skins[s_guest].name, "gandalf")) return ranged_top() && !getenv("TT_NOWHITEBOLT") ? 2 : 0;
     return -1;
 }
@@ -6399,6 +6788,23 @@ static void yaw_find(void)   /* testing: TT_YAWFIND -- the player's words that f
 void tt_framelog(void)
 {
     static int on = -1;
+    {   /* Se deshabilita en menus, pausa y escenas. La colision sigue siendo la del heroe. */
+        uint32_t p=G32(0x43B15Cu),port=G32(0x1CB8B4u);
+        int enabled=s_size_base && s_size_guest==s_guest && tt_heroes_guest()>=0
+            &&G32(0x4AD050u)==6 &&p>=0x80000000u &&p<0x83FFF000u &&!tt_in_scene();
+        InterlockedExchange(&s_size_port,port<4?(LONG)port:0);
+        InterlockedExchange(&s_size_enabled,enabled);
+        int dir=(int)InterlockedExchange(&s_size_request,0);
+        if(enabled&&dir){
+            float next=s_size_scale+(dir>0?0.25f:-0.25f);
+            if(next<0.5f)next=0.5f;if(next>1.0f)next=1.0f;
+            unsigned char *d=(unsigned char *)(xbox_GetMemoryOffset()+s_size_base);
+            if(G32(s_size_base)==9 &&G32(s_size_base+4)==s_size_tab
+                &&ts_apply(&s_size_plan,d,s_size_len,s_size_scale,next)){
+                s_size_scale=next;tt_dbg("[SIZE] %s: %.0f%% (colision original)\n",s_skins[s_guest].name,100.0f*next);
+            }else {s_size_base=0;InterlockedExchange(&s_size_enabled,0);tt_dbg("[SIZE] cambio cancelado: datos modificados\n");}
+        }
+    }
     yaw_find();
     steer_frame();
     if (getenv("TT_FXTEST") && G32(0x43B15Cu) >= 0x80000000u) {   /* testing: many effects at once round the player */
@@ -6645,14 +7051,63 @@ void tt_sweep(uint32_t a0, double res)
  * by the vector transform sub_000FF13D (out, v, m) -- the guests' swings
  * pass a little off the hero's (their arms are not his), so their blade's
  * samples reach further: {0, y * reach, 0} for the player's weapon (id 1). */
-static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.6f, 1.65f, 1.35f, 1.4f, 2.25f, 1.6f, 1.35f, 1.5f };   /* (1.7.2: Lurtz 1.35 -> 1.65, the Uruk-hai 2.0 -> 2.25) */   /* Frodo's blade is short, the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
+static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.35f, 1.35f, 1.35f, 1.5f, 1.35f, 1.6f, 1.35f, 1.5f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
  * the enemies, who stand further from him, half as often as the hero's -- 9 to 13% of the hit tests at 1.65 and 1.9, Aragorn's 15 to 18%) */
 /* and lower: Gandalf's and Sauron's own swings carry their weapon high
  * (Sauron is half again as tall as the heroes), over the heads of the
  * orcs they strike at -- measured at the hit tests, their weapon's tip
  * about 2 and 2.7 higher than Aragorn's. Their samples taken that much
  * lower, so a blow that looks to land does. */
-static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 0, 0, 0 };
+static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 0, 0, 3.0f, 0, 0, 3.2f, 0, 0, 0 };
+/* 128: primero la consulta nativa; solo si falla, cuatro sondas sobre
+ * cinco cortes de la envolvente convexa de la cabeza 830B7594. Mango, reloj,
+ * matrices, pose y lista de victimas nativos. Sin estirar/bajar el arma.
+ * TT_LEGACYMACE conserva el diagnostico anterior, solo por peticion. */
+#include "heroes_troll_mace.h"
+static _Thread_local int s_sweep_lane=-1;
+void tt_sweep_lane(int lane){s_sweep_lane=lane;}
+/* (132) el arma de la consulta en curso, tomada del propio ataque: en 131
+ * dependia de s_wobj, que no se capturaba para el troll (volumen inactivo) */
+static _Thread_local uint32_t s_sweep_weapon;
+int tt_sweep_lanes(uint32_t attack){
+    if(s_sweep_lane>=0||s_guest!=9||G8(HERO_BYTE)!=4||G8(0x43BABCu)||getenv("TT_NOMACEVOLUME")||getenv("TT_NOWAXIS"))return 1;
+    if(!TT_ATTACK_OK(attack))return 1;
+    uint32_t w=G32(attack+0x14),own=G32(attack+8);
+    if(w<0x80000000u||w>=0x83FFF000u||G32(w+0x2F4)!=1)return 1;
+    if(getenv("TT_LEGACYMACE")){if(w!=s_wobj[1])return 1;}
+    else if(!own||own!=G32(0x43B15Cu))return 1;
+    s_sweep_weapon=w;return 5;
+}
+/* (133) BA110(ataque, victima, pos*, normal*, frac*) devuelve en st0 la
+ * parte golpeada o -1. Con las cinco sondas fallidas, si la cabeza de la
+ * maza pasa junto a la victima: posicion, normal y fraccion como un
+ * acierto nativo (parte 0). El juego sigue decidiendo candidatos, aliados,
+ * lista de victimas (hasta 8 por golpe) y dano. */
+#include "heroes_troll_reach.h"
+int tt_sweep_fallback(const uint32_t args[6]){
+    if(s_guest!=9||G8(HERO_BYTE)!=4||G8(0x43BABCu)||getenv("TT_NOTROLLREACH")||args[0]!=0xBEAB0u)return 0;
+    uint32_t attack=args[1],victim=args[2],pos=args[3],nrm=args[4],fr=args[5];
+    if(!TT_ATTACK_OK(attack)||victim<0x80000000u||victim>=0x83FFF000u)return 0;
+    uint32_t w=G32(attack+0x14),own=G32(attack+8);
+    if(w<0x80000000u||w>=0x83FFF000u||G32(w+0x2F4)!=1||!own||own!=G32(0x43B15Cu)||victim==own)return 0;
+    uint32_t outs[3]={pos,nrm,fr};
+    for(int i=0;i<3;i++)if(outs[i]<0x10000u||outs[i]>=0x83FFFFF0u)return 0;
+    float prev[16],cur[16],v[3],p[3],n[3],t=1.f;
+    for(int c=0;c<16;c++){prev[c]=GF(w+0xA0+4u*c);cur[c]=GF(w+0x60+4u*c);}
+    float b[3];
+    for(int c=0;c<3;c++){v[c]=GF(victim+0x90+4u*c);b[c]=GF(own+0x90+4u*c);}
+    /* (134) pegado al troll: tambien el recorrido de su cuerpo a la cabeza */
+    if(!troll_reach_hit(prev,cur,v,getenv("TT_NOTROLLBODY")?NULL:b,p,n,&t)){
+        static unsigned misses;   /* (134) diagnostico de prueba, acotado */
+        if(misses++<300)tt_dbg("[TROLL-REACH] fallo: victima %08X a %.2f %.2f %.2f, troll %.2f %.2f %.2f, cabeza %.2f %.2f %.2f\n",victim,v[0],v[1],v[2],b[0],b[1],b[2],
+            5.19682591f*cur[4]+cur[12],5.19682591f*cur[5]+cur[13],5.19682591f*cur[6]+cur[14]);
+        return 0;
+    }
+    for(int c=0;c<3;c++){GF(pos+4u*c)=p[c];GF(nrm+4u*c)=n[c];}
+    if(!(GF(fr)<=t))GF(fr)=t;
+    tt_dbg("[TROLL-REACH] victima %08X a %.2f %.2f %.2f, troll %.2f %.2f %.2f, maza %.2f %.2f %.2f\n",victim,v[0],v[1],v[2],b[0],b[1],b[2],p[0],p[1],p[2]);
+    return 1;
+}
 int tt_wvec(uint32_t out, uint32_t v, uint32_t m, uint32_t ret)
 {
     static int off = -1;
@@ -6663,17 +7118,37 @@ int tt_wvec(uint32_t out, uint32_t v, uint32_t m, uint32_t ret)
     if (ret != 0xBA2AEu && ret != 0xBA314u) return 0;   /* the sweep's two samples */
     if (off < 0) { off = getenv("TT_NOWAXIS") ? 1 : 0; reach = getenv("TT_WREACH") ? (float)atof(getenv("TT_WREACH")) : 0.0f; }
     if (off || s_guest < 0 || s_guest >= N_EXTRA || G8(HERO_BYTE) != 4) return 0;
+    if(s_guest==9&&!getenv("TT_LEGACYMACE")){
+        float p[3];uint32_t w=s_sweep_weapon;
+        if(getenv("TT_NOMACEVOLUME")||G8(0x43BABCu)||s_sweep_lane<1||s_sweep_lane>4
+          ||w<0x80000000u||w>=0x83FFF000u||(m!=w+0x60&&m!=w+0xA0)
+          ||G32(w+0x2F4)!=1||G32(v)||G32(v+8)
+          ||!troll_mace_point(GF(v+4),s_sweep_lane,p))return 0;
+        for(c=0;c<16;c++)M[c]=GF(m+4u*c);
+        for(c=0;c<4;c++)o[c]=p[0]*M[c]+p[1]*M[4+c]+p[2]*M[8+c]+M[12+c];
+        if(o[3]!=0&&o[3]!=1)for(c=0;c<3;c++)o[c]/=o[3];
+        for(c=0;c<3;c++)GF(out+4u*c)=o[c];return 1;
+    }
     if ((G32(v) & 0x7FFFFFFFu) || (G32(v + 8) & 0x7FFFFFFFu) || !(G32(v + 4) & 0x7FFFFFFFu)) return 0;
     if (m >= 0x80000100u && m < 0x83FFF000u) {   /* the player's sword (weapon id 1): this frame's matrix or the last */
-        if (G32(m - 0x60u + 0x2F4u) == 1u) obj = m - 0x60u;
+        if(s_wobj[1]&&(m==s_wobj[1]+0x60||m==s_wobj[1]+0xA0)&&G32(s_wobj[1]+0x2F4)==1u)obj=s_wobj[1];
+        else if (G32(m - 0x60u + 0x2F4u) == 1u) obj = m - 0x60u;
         else if (G32(m - 0xA0u + 0x2F4u) == 1u) obj = m - 0xA0u;
     }
     if (!obj) return 0;
     for (c = 0; c < 16; c++) M[c] = GF(m + 4u * (uint32_t)c);
+    if(s_guest==9&&s_sweep_lane>=0&&s_sweep_lane<5&&obj==s_wobj[1]){
+        static const float cross[5][2]={{0,0},{-1.5f,0},{1.5f,0},{0,-1.0f},{0,1.0f}};
+        /* Los 5 puntos originales [-.5,5] cubren ahora [-2,5.5]. */
+        float y=-2.0f+(GF(v+4)+.5f)*(7.5f/5.5f),sx=cross[s_sweep_lane][0],sz=cross[s_sweep_lane][1];
+        for(c=0;c<4;c++)o[c]=sx*M[c]+y*M[4+c]+sz*M[8+c]+M[12+c];
+        if(o[3]!=0&&o[3]!=1)for(c=0;c<3;c++)o[c]/=o[3];
+        for(c=0;c<3;c++)GF(out+4u*(uint32_t)c)=o[c];return 1;
+    }
     x = GF(v + 4) * (reach != 0 ? reach : s_wreach[s_guest]);
     for (c = 0; c < 4; c++) o[c] = x * M[4 + c] + M[12 + c];
     if (o[3] != 0.0f && o[3] != 1.0f) for (c = 0; c < 3; c++) o[c] /= o[3];
-    if (!getenv("TT_NOWDROP")) o[2] -= s_wdrop[s_guest];
+    if (!getenv("TT_NOWDROP")) o[2] -= s_wdrop[s_guest] * (s_size_base && s_size_guest==s_guest?s_size_scale:1.0f);
     for (c = 0; c < 3; c++) GF(out + 4u * (uint32_t)c) = o[c];
     return 1;
 }
@@ -6791,6 +7266,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         s_last_kind = (int)G32(r[3] + 8);
         if (!once) { once = 1; tt_heroes_init(); }
         if (s_last_kind == 0) {   /* a level: is it Isildur's run at the secret level's end? */
+            hero_size_reset();
             char nm[64];
             uint32_t p = G32(g_esp + 4);
             int i;
@@ -6834,7 +7310,10 @@ int tt_hk(int id, int phase, uint32_t *r)
         (void)st; (void)dv;
         if (getenv("TT_SHOTDUMP") && s_shotdump_left <= 0 && s_shotdump_n < 400) s_shotdump_left = 16;
     }
-    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && (!strcmp(s_skins[s_guest].name, "uruk")
+    /* (132) el troll lanza las mismas rocas (sin animacion de lanzamiento
+     * propia: la cadena de Moria no tiene una en sus clips NPC) */
+    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0
+        && (!strcmp(s_skins[s_guest].name, "uruk") || !strcmp(s_skins[s_guest].name, "troll")
             || !strcmp(s_skins[s_guest].name, "nazgul") || !strcmp(s_skins[s_guest].name, "orc") || !strcmp(s_skins[s_guest].name, "eomer"))   /* (and Versus' three: they throw as he does) */
         && shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY)) {
         int pj = getenv("TT_URUKPROJ") ? atoi(getenv("TT_URUKPROJ")) : 10;
@@ -6851,13 +7330,15 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (!getenv("TT_ROCKFROMHAND")) {
             uint32_t st = G32(g_esp + 4), dv = G32(g_esp + 12);
             float fx = GF(dv), fy = GF(dv + 4), l = sqrtf(fx * fx + fy * fy);
-            float ahead = getenv("TT_ROCKAHEAD") ? (float)atof(getenv("TT_ROCKAHEAD")) : 3.5f;
+            float ahead = getenv("TT_ROCKAHEAD") ? (float)atof(getenv("TT_ROCKAHEAD")) : !strcmp(s_skins[s_guest].name, "troll") ? 5.0f : 3.5f;   /* (el troll, mas ancho) */
             if (st >= 0x80000000u && st < 0x84000000u && dv >= 0x10000u && l > 0.01f && l < 1000.0f) {
                 s_rock_start = st;
-                s_rock_start_save[0] = GF(st); s_rock_start_save[1] = GF(st + 4);
-                GF(st) += fx / l * ahead; GF(st + 4) += fy / l * ahead;
+                s_rock_start_save[0] = GF(st); s_rock_start_save[1] = GF(st + 4); s_rock_start_save[2] = GF(st + 8);
+                if (!strcmp(s_skins[s_guest].name, "troll") && !getenv("TT_TROLLROCKHAND")) troll_rock_start(st, fx / l, fy / l, ahead);
+                else { GF(st) += fx / l * ahead; GF(st + 4) += fy / l * ahead; }
             }
         }
+        if (!strcmp(s_skins[s_guest].name, "troll")) clog_rock_arm(G32(g_esp + 4), G32(g_esp + 8), G32(g_esp + 12), s_rock_start ? s_rock_start_save : NULL);
         /* (1.7) a plain stone, as Frodo's, until his ranged weapon's last
          * upgrade (Lava Rocks): then the burning rock, and every third one
          * lands as the Orthanc archers' fire pots do (projectile 4: it
@@ -6895,9 +7376,11 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (getenv("TT_SHOTDUMP") && s_shotdump_left <= 0 && s_shotdump_n < 400) s_shotdump_left = 16;
     }
     if (id == 22 && phase == 1 && s_rock_start) {   /* his hand's place back */
-        GF(s_rock_start) = s_rock_start_save[0]; GF(s_rock_start + 4) = s_rock_start_save[1];
+        GF(s_rock_start) = s_rock_start_save[0]; GF(s_rock_start + 4) = s_rock_start_save[1]; GF(s_rock_start + 8) = s_rock_start_save[2];
         s_rock_start = 0;
     }
+    if (id == 22 && phase == 1) clog_rock_launched(s_launching);   /* (137) registro: la roca del troll ya lanzada */
+    if (id == 23) clog_rock_update(phase, r[1]);
     if (id == 22 && phase == 1 && s_rock_rec) {   /* his rock: on its own entry */
         uint32_t o = s_launching;
         if (o >= 0x80000000u && o < 0x84000000u && G32(o + 0x3DC) == s_rock_rec && G32(o + 0x3D0) == 10u) {
@@ -7264,7 +7747,8 @@ int tt_hk(int id, int phase, uint32_t *r)
         uint32_t p2 = coop_p2_actor();
         if (p2 && G32(g_esp + 0x18) == p2) {
             static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
-                { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 } };
+                { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 },
+                { "troll", 10 }, { "elvenarcher", 19 }, { "elvenwarrior", 19 }, { "gandalfwhite", 15 }, { "urukcap", 10 } };   /* (1.9.9: The128ReBits' heroes) */
             const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
             if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
             if (to != pj) G32(g_esp + 16) = to;

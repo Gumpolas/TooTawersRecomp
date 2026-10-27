@@ -1293,6 +1293,8 @@ static int ptr_overlay(XboxOverlayQuad *q, int max)
         q[n].x = 320.0f - s_rd_w * 0.5f; q[n].y = (float)READY_Y; q[n].dw = (float)s_rd_w; q[n].dh = (float)s_rd_h;
         n++;
     }
+    extern int tt_lang_srt_overlay(void *quads, int max, int n);
+    n = tt_lang_srt_overlay(q, max, n);
     if (s_draw && n < max) {
         float k = s_draw_k;
         q[n].px = s_cur_px; q[n].w = CUR_W; q[n].h = CUR_H; q[n].ver = 1;
@@ -1626,6 +1628,8 @@ static void pad_filter(unsigned long port, XState *st)
         extern void tt_opt_filter(unsigned long port, XState *st);
         tt_opt_filter(port, st);
     }
+    { extern void tt_hero_size_filter(unsigned long port,void *state);
+      tt_hero_size_filter(port,st); }
 }
 
 
@@ -2443,6 +2447,22 @@ done:
 /* once a frame (twotowers_manual.c: the game's wait for the next frame) */
 void tt_menus_tick(void)
 {
+    {
+        extern void tt_dlss5_notify_movie(int movie);
+        tt_dlss5_notify_movie(xbox_MoviePlaying() ? 1 : ((G32(FE_SCREEN) != 6 && G32(FE_SCREEN) != 8) || tt_opt_up()) ? 2 : 0);
+    }
+    {
+        extern int tt_lang_srt_ready(void);
+        extern void tt_lang_srt_tick(uint32_t bink);
+        extern unsigned tt_lang_srt_generation(void);
+        static uint32_t movie;
+        static unsigned generation;
+        if (generation != tt_lang_srt_generation()) { generation = tt_lang_srt_generation(); movie = 0; }
+        if (tt_lang_srt_ready() && xbox_MoviePlaying()) {
+            if (!movie) movie = bink_find();
+            tt_lang_srt_tick(movie);
+        } else { movie = 0; tt_lang_srt_tick(0); }
+    }
     {   /* testing: TT_MMSEL -- the main menu's choice as it changes */
         static int on = -1; static uint32_t last = 0xFFFFFFFFu;
         if (on < 0) on = getenv("TT_MMSEL") != NULL;
