@@ -58,7 +58,7 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 
 ## Tested (1.9.8)
 - Linux (OpenGL): co-op bot runs in the Westfold, Fangorn Forest and Balin's Tomb with extra and retail heroes as player 2.
-- Windows: co-op played by hand on the author's PC.
+- Windows: Played by hand on the author's PC.
 - Windows, Linux and macOS builds compile.
 - Not tested: the macOS build on a Mac.
 
