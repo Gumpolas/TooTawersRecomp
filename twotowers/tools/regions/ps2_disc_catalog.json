@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "title": "The Two Towers PS2 PAL",
+  "languages": {
+    "es": {
+      "header_sha256": "25bb9414db877e862888a095d451715735951954a7c45620f01e4f711943a8c5",
+      "system_cnf_sha256": "cecadfb6def973359169c3028c4780f6dada58eca87b45da931d38ac2b26bb9c",
+      "boot": "BOOT2 = cdrom0:\\SLES_512.56;1\r\nVER = 1.00\r\nVMODE = PAL",
+      "localized_MIB_count": 291,
+      "localized_FMV_count": 38
+    },
+    "it": {
+      "header_sha256": "9c15f9a05ddb85946a7f46c9f8e1b4648cd01535cbe66298bb64a2992f19912e",
+      "system_cnf_sha256": "616f24f353681626a2933f0f0d25e39fce9ac3b0c1effd1dbd0df322f03a917e",
+      "boot": "BOOT2 = cdrom0:\\SLES_512.55;1\r\nVER = 1.00\r\nVMODE = PAL",
+      "localized_MIB_count": 289,
+      "localized_FMV_count": 38
+    },
+    "fr": {
+      "header_sha256": "180c077fbbebb1d23b535727cb38759b2186de506637e48ad797b782b3afc5a7",
+      "system_cnf_sha256": "ecc011751d5c5717c86fcb59f9c6ed5d95a94420e888432ae7db790a7087f4fc",
+      "boot": "BOOT2 = cdrom0:\\SLES_512.53;1\r\nVER = 1.00\r\nVMODE = PAL",
+      "localized_MIB_count": 289,
+      "localized_FMV_count": 38
+    },
+    "de": {
+      "header_sha256": "6a28d0655bf9e669a7c2b16e551010cf03085cbe01562460bfd4552597d34994",
+      "system_cnf_sha256": "c40eb6d50168ffc77e1743750cdad0458519b5a646ef3e7da524d5ec5680fd0a",
+      "boot": "BOOT2 = cdrom0:\\SLES_512.54;1\r\nVER = 1.00\r\nVMODE = PAL",
+      "localized_MIB_count": 287,
+      "localized_FMV_count": 38
+    }
+  }
+}
