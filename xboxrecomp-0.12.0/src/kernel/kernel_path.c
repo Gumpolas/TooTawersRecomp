@@ -290,6 +290,79 @@ static BOOL xbox_partition_device_path(const char *xbox_path, WCHAR *out, DWORD 
     return TRUE;
 }
 
+/* Copy a folder tree, files and sub-folders; reparse points are skipped, and
+ * a path that does not fit MAX_PATH is left out rather than truncated. */
+static void copy_tree(const WCHAR *from, const WCHAR *to, int depth)
+{
+    WIN32_FIND_DATAW fd;
+    WCHAR pat[MAX_PATH], a[MAX_PATH], b[MAX_PATH];
+    HANDLE h;
+    int n;
+
+    if (depth > 16)
+        return;
+    if (!CreateDirectoryW(to, NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
+        return;
+    n = _snwprintf(pat, MAX_PATH, L"%s\\*", from);
+    if (n < 0 || n >= MAX_PATH)
+        return;
+    h = FindFirstFileW(pat, &fd);
+    if (h == INVALID_HANDLE_VALUE)
+        return;
+    do {
+        if (!wcscmp(fd.cFileName, L".") || !wcscmp(fd.cFileName, L".."))
+            continue;
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)
+            continue;
+        n = _snwprintf(a, MAX_PATH, L"%s\\%s", from, fd.cFileName);
+        if (n < 0 || n >= MAX_PATH)
+            continue;
+        n = _snwprintf(b, MAX_PATH, L"%s\\%s", to, fd.cFileName);
+        if (n < 0 || n >= MAX_PATH)
+            continue;
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            copy_tree(a, b, depth + 1);
+        else
+            CopyFileW(a, b, FALSE);
+    } while (FindNextFileW(h, &fd));
+    FindClose(h);
+}
+
+/* Partition1's UDATA and TDATA used to resolve under game_dir; they now go
+ * under save_dir (see s_rules). An installation that already has saves in
+ * game_dir would otherwise start with none, so bring them along once: only
+ * when save_dir has no such folder yet, by copying (the originals stay where
+ * they are, nothing is moved or overwritten). The copy is made under a
+ * temporary name and renamed when complete, so an interrupted copy is
+ * redone on the next start instead of being taken for the real folder. */
+static void migrate_partition1_saves(void)
+{
+    static const WCHAR *names[] = { L"UDATA", L"TDATA" };
+    WCHAR from[MAX_PATH], to[MAX_PATH], tmp[MAX_PATH];
+    DWORD attr;
+    int i, n1, n2, n3;
+
+    if (!_wcsicmp(s_game_dir, s_save_dir))
+        return;
+    for (i = 0; i < (int)(sizeof(names) / sizeof(names[0])); i++) {
+        n1 = _snwprintf(from, MAX_PATH, L"%s\\%s", s_game_dir, names[i]);
+        n2 = _snwprintf(to, MAX_PATH, L"%s\\%s", s_save_dir, names[i]);
+        n3 = _snwprintf(tmp, MAX_PATH, L"%s\\%s.migrating", s_save_dir, names[i]);
+        if (n1 < 0 || n1 >= MAX_PATH || n2 < 0 || n2 >= MAX_PATH || n3 < 0 || n3 >= MAX_PATH)
+            continue;
+        attr = GetFileAttributesW(from);
+        if (attr == INVALID_FILE_ATTRIBUTES || !(attr & FILE_ATTRIBUTE_DIRECTORY))
+            continue;
+        if (GetFileAttributesW(to) != INVALID_FILE_ATTRIBUTES)
+            continue;
+        copy_tree(from, tmp, 0);
+        if (MoveFileW(tmp, to))
+            xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Saves: copied %S to %S (original kept)", from, to);
+        else
+            xbox_log(XBOX_LOG_WARN, XBOX_LOG_PATH, "Saves: could not finish copying %S to %S", from, to);
+    }
+}
+
 void xbox_path_init(const char* game_dir, const char* save_dir)
 {
     WCHAR save_base[MAX_PATH];
@@ -381,6 +454,7 @@ void xbox_path_init(const char* game_dir, const char* save_dir)
             }
         }
     }
+    migrate_partition1_saves();
 
     s_initialized = TRUE;
     xbox_log(XBOX_LOG_INFO, XBOX_LOG_PATH, "Path init: game=%S, save=%S", s_game_dir, s_save_dir);
