@@ -234,7 +234,7 @@ static void draw_orb(uint32_t *p, int w, int h, float cx, float cy, float r)
 
 /* ---- the character's face ---- */
 /* per hero 1-4, and 5-8 for the Extra heroes mod's guests (hero 4 then) */
-#define N_FACE 12   /* 1-4 the four, 5.. the seven Extra heroes */
+#define N_FACE 18   /* originales y 13 extras; cero reservado */
 static uint32_t *volatile s_face[N_FACE];   /* alpha-masked; FACE_PX square unless an icon */
 static int s_face_w[N_FACE], s_face_h[N_FACE];   /* an icon's own size (0: FACE_PX square) */
 static int s_icon_tried[N_FACE];
@@ -531,6 +531,8 @@ static int e3_overlay(XboxOverlayQuad *q, int max)
             uint32_t *ic;
             s_icon_tried[hero] = 1;
             ic = hero <= 4 ? icon_load(hero, &w, &h) : icon_load_named(tt_heroes_guest_name(hero - 5), &w, &h);
+            /* Retrato provisional compartido con Elrond. El propio opcional tiene prioridad. */
+            if (!ic && hero == 12) ic = icon_load_named("elrond", &w, &h);
             if (ic) { s_face[hero] = ic; s_face_w[hero] = w; s_face_h[hero] = h; s_face_ver[hero] = 2000; s_face_tried[hero] = 1; }
         }
         if (!s_face[hero] && !s_face_tried[hero] && hero == 4) { s_face_tried[hero] = 1; s_face[hero] = face_build(hero); }

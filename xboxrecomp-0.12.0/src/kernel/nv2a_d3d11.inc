@@ -2605,7 +2605,7 @@ static void gpu_present(uint32_t base, uint32_t pitch)
     }
     /* this frame's texture set becomes "last frame" */
     g_fhash_cur ^= 1; g_fhash_n[g_fhash_cur] = 0;
-    GetClientRect(hwnd, &rc);
+    if (!GetClientRect(hwnd, &rc)) return; /* La ventana puede cerrarse entre frames. */
     if (rc.right - rc.left < 8 || rc.bottom - rc.top < 8) return;   /* minimised */
     if (!g_sc || g_sc_hwnd != hwnd) {
         IDXGIDevice *dd = NULL; IDXGIAdapter *ad = NULL; IDXGIFactory *fa = NULL;

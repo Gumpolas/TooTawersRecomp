@@ -55,6 +55,10 @@ extern const char *(*xbox_path_redirect)(const char *xbox_path);
 
 static char s_dir[600], s_code[32] = "en", s_pack[700];
 static int s_on = -1, s_rtl;
+static char s_subs[32], s_cache[70];
+static int s_subrtl, s_sub_fallback, s_build_bad;
+static unsigned long s_substamp;
+static uint8_t s_direction[65536]; /* 1 RTL; 2 LTR, por código renumerado */
 static unsigned long s_stamp;      /* the pack's files, as a number: a new pack makes new copies */
 
 /* ===================================================================== */
@@ -63,6 +67,7 @@ static unsigned long s_stamp;      /* the pack's files, as a number: a new pack 
 typedef struct { char *key; uint16_t *v; int n; } Str16;
 typedef struct { char *key; char *v; } Str8;
 static Str16 *s_g; static int s_ng;
+static Str16 *s_subg; static int s_nsubg;
 static Str8 *s_t; static int s_nt;
 
 static unsigned char *read_all(const char *path, size_t *n)
@@ -200,20 +205,19 @@ static void load_glyphs(const char *path)
 typedef struct { uint16_t code; uint8_t kind; int w, nm; const uint8_t *data; } Glyph4;
 typedef struct { int lh, n; Glyph4 *g; } Slot4;
 static Slot4 s_slot4[8];
-static int s_nslot4, s_k4, s_g4_tried;
+static int s_nslot4, s_k4;
 extern int tt_ul_inflate(const unsigned char *in, size_t n, unsigned char **out, size_t *outn);
 extern int tt_ul_read_dds(const char *path, unsigned char **rgba, int *w, int *h);
 extern int tt_ul_write_dds(const char *path, const unsigned char *rgba, int w, int h);
 extern void xbox_UltraAddPair(uint32_t hash, const char *path);
-static void load_glyphs4(void)
+static void load_glyphs4_path(const char *pack)
 {
     char p[800];
     size_t n, un = 0, o = 4;
     unsigned char *b, *u = NULL;
     uint32_t ns, i, k, K;
-    if (s_g4_tried) return;
-    s_g4_tried = 1;
-    snprintf(p, sizeof p, "%s/glyphs4.bin", s_pack);
+
+    snprintf(p, sizeof p, "%s/glyphs4.bin", pack);
     b = read_all(p, &n);
     if (!b || n < 12 || memcmp(b, "TTG4", 4)) { free(b); return; }
     memcpy(&K, b + 4, 4);
@@ -278,13 +282,13 @@ static void ultra_font(const unsigned char *s, size_t a, uint32_t (*rng)[3], int
     int bw = 0, bh = 0, q, lh = s_slot[slot].lh, i, s4 = -1;
     FILE *f;
     if (getenv("TT_LANG_NOULTRA")) return;
-    snprintf(rel, sizeof rel, "lang_cache/%s/ultra/%08X.dds", s_code, nh);
+    snprintf(rel, sizeof rel, "lang_cache/%s/ultra/%08X.dds", s_cache, nh);
     snprintf(full, sizeof full, "%s/%s", s_dir, rel);
     if ((f = fopen(full, "rb"))) { fclose(f); ul_note(nh, rel); return; }
     snprintf(ui, sizeof ui, "%s/textures_ultra/ui/%08X.dds", s_dir, oh);
     if ((f = fopen(ui, "rb")) == NULL) { tt_dbg("[LANG] font %08X (%ux%u, %d high): no upscaled picture\n", oh, w0, h0, lh); return; }
     fclose(f);
-    load_glyphs4();
+    /* Los dos paquetes y sus códigos se fusionan durante la inicialización. */
     for (i = 0; i < s_nslot4; i++) if (s_slot4[i].lh == lh * s_k4) s4 = i;
     if (s4 < 0 || !tt_ul_read_dds(ui, &base, &bw, &bh)) { tt_dbg("[LANG] font %08X (%d high): no upscaled letters (%d)\n", oh, lh, s4); return; }
     q = bw / (int)w0;
@@ -376,32 +380,124 @@ static void paths(void)
     sl = strrchr(s_dir, '\\'); if (!sl) sl = strrchr(s_dir, '/');
     if (sl) *sl = 0;
 }
-/* the language chosen; packs loaded once */
+/* Cada eje conserva su diccionario; solo se comparten las fuentes fusionadas. */
+static void read_axis(const char *ini, const char *key, const char *env, const char *def, char out[32])
+{
+    const char *e = getenv(env);
+    size_t i;
+    GetPrivateProfileStringA("Language", key, "", out, 32, ini);
+    if (e && *e) snprintf(out, 32, "%s", e);
+    if (!out[0]) snprintf(out, 32, "%s", def);
+    for (i = 0; out[i]; i++) if (!((out[i] >= 'a' && out[i] <= 'z') ||
+        (out[i] >= 'A' && out[i] <= 'Z') || (out[i] >= '0' && out[i] <= '9') || out[i] == '-')) {
+        tt_dbg("[LANG] código inválido en %s; se usa %s\n", key, def);
+        snprintf(out, 32, "%s", def); break;
+    }
+}
+static int pack_rtl(const char *pack)
+{
+    char p[800]; size_t n; unsigned char *b; int rtl = 0;
+    snprintf(p, sizeof p, "%s/info.txt", pack);
+    b = read_all(p, &n);
+    if (b) { rtl = strstr((char *)b, "rtl=1") != NULL; free(b); }
+    return rtl;
+}
+static unsigned long load_pack(const char *pack, int port)
+{
+    char p[800]; unsigned long stamp;
+    snprintf(p, sizeof p, "%s/game.txt", pack); load_lines(p, 1); stamp = file_stamp(p);
+    if (port) { snprintf(p, sizeof p, "%s/text.txt", pack); load_lines(p, 0); stamp = stamp * 31u + file_stamp(p); }
+    snprintf(p, sizeof p, "%s/glyphs.bin", pack); load_glyphs(p); stamp = stamp * 31u + file_stamp(p);
+    snprintf(p, sizeof p, "%s/glyphs4.bin", pack); stamp = stamp * 31u + file_stamp(p);
+    load_glyphs4_path(pack);
+    return stamp;
+}
 int tt_lang_on(void)
 {
     if (s_on < 0) {
-        char ini[700], p[800];
-        const char *e = getenv("TT_LANG");
-        paths();
+        char ini[700], subpack[700];
+        int i, j, k, next = 0xE000, good = 1;
+        Slot textslots[8]; Slot4 text4[8];
+        int nt, nt4, textk;
+        uint16_t *map = (uint16_t *)calloc(65536, sizeof *map);
+        paths(); s_on = 0;
         snprintf(ini, sizeof ini, "%s/twotowers_recomp.ini", s_dir);
-        GetPrivateProfileStringA("Language", "language", "en", s_code, sizeof s_code, ini);
-        if (e && *e) snprintf(s_code, sizeof s_code, "%s", e);
-        s_on = 0;
-        if (!s_code[0] || !_stricmp(s_code, "en")) return 0;
+        read_axis(ini, "language", "TT_LANG", "en", s_code);
+        read_axis(ini, "subtitles", "TT_SUBS", s_code, s_subs);
         snprintf(s_pack, sizeof s_pack, "%s/lang/%s", s_dir, s_code);
-        snprintf(p, sizeof p, "%s/info.txt", s_pack);
-        s_rtl = GetPrivateProfileIntA("Language", "rtl", 0, p);
-        {   /* (info.txt is "name=...", "rtl=1": read as lines) */
-            size_t n; unsigned char *b = read_all(p, &n);
-            if (b) { if (strstr((char *)b, "rtl=1")) s_rtl = 1; free(b); }
+        s_rtl = pack_rtl(s_pack);
+        if (_stricmp(s_code, "en")) s_stamp = load_pack(s_pack, 1);
+        if (_stricmp(s_code, "en") && !s_ng) {
+            tt_dbg("[LANG] texto %s no instalado; inglés\n", s_code);
+            snprintf(s_code, sizeof s_code, "en"); s_pack[0] = 0; s_rtl = 0;
         }
-        snprintf(p, sizeof p, "%s/game.txt", s_pack); load_lines(p, 1); s_stamp = file_stamp(p);
-        snprintf(p, sizeof p, "%s/text.txt", s_pack); load_lines(p, 0); s_stamp = s_stamp * 31u + file_stamp(p);
-        snprintf(p, sizeof p, "%s/glyphs.bin", s_pack); load_glyphs(p); s_stamp = s_stamp * 31u + file_stamp(p);
-        snprintf(p, sizeof p, "%s/glyphs4.bin", s_pack); s_stamp = s_stamp * 31u + file_stamp(p);
-        s_on = s_ng > 0;
-        tt_dbg("[LANG] %s: %d game strings, %d texts, %d font sizes%s%s\n", s_code, s_ng, s_nt, s_nslot,
-               s_rtl ? ", right to left" : "", s_on ? "" : " -- no pack, English");
+        if (!_stricmp(s_code, "en")) s_pack[0] = 0; /* en siempre conserva el disco. */
+        nt = s_nslot; nt4 = s_nslot4; textk = s_k4;
+        memcpy(textslots, s_slot, sizeof textslots); memcpy(text4, s_slot4, sizeof text4);
+        for (i = 0; i < nt; i++) for (j = 0; j < textslots[i].n; j++) {
+            int c = textslots[i].g[j].code;
+            if (c >= 0xE000 && c < 0xF900) { if (c >= next) next = c + 1; s_direction[c] = s_rtl ? 1 : 2; }
+        }
+        if (_stricmp(s_subs, s_code)) {
+            Str16 *textg = s_g; int textng = s_ng;
+            s_g = NULL; s_ng = 0; s_nslot = s_nslot4 = 0;
+            memset(s_slot, 0, sizeof s_slot); memset(s_slot4, 0, sizeof s_slot4);
+            snprintf(subpack, sizeof subpack, "%s/lang/%s", s_dir, s_subs);
+            s_subrtl = pack_rtl(subpack);
+            if (_stricmp(s_subs, "en")) s_substamp = load_pack(subpack, 0);
+            s_subg = s_g; s_nsubg = s_ng; s_g = textg; s_ng = textng;
+            if (_stricmp(s_subs, "en") && !s_nsubg) good = 0;
+            /* Mapa único para todos los tamaños, diccionario y Ultra. */
+            for (i = 0; i < s_nslot; i++) for (j = 0; j < s_slot[i].n; j++) {
+                int c = s_slot[i].g[j].code;
+                if (c >= 0xE000 && c < 0xF900 && !map[c]) {
+                    if (next >= 0xF900) good = 0;
+                    else { map[c] = (uint16_t)next++; s_direction[map[c]] = s_subrtl ? 1 : 2; }
+                }
+            }
+            for (i = 0; i < s_nsubg; i++) for (j = 0; j < s_subg[i].n; j++) {
+                int c = s_subg[i].v[j];
+                if (c >= 0xE000 && c < 0xF900) { if (!map[c]) good = 0; else s_subg[i].v[j] = map[c]; }
+            }
+            if (s_nslot4 && nt4 && textk != s_k4) good = 0;
+            for (i = 0; i < s_nslot; i++) {
+                Slot *ss = &s_slot[i]; int at = -1;
+                for (j = 0; j < nt; j++) if (textslots[j].lh == ss->lh) at = j;
+                if (at < 0 && nt < 8) { at = nt++; textslots[at] = (Slot){ss->lh, 0, NULL}; }
+                if (at < 0) { good = 0; continue; }
+                for (j = 0; j < ss->n; j++) {
+                    Glyph g = ss->g[j];
+                    /* Los cambios de avance globales no se pueden aplicar por eje. */
+                    if (g.kind == 2) continue;
+                    if (g.code >= 0xE000 && g.code < 0xF900) g.code = map[g.code];
+                    if (g.base >= 0xE000 && g.base < 0xF900) g.base = map[g.base];
+                    Slot *d = &textslots[at];
+                    d->g = (Glyph *)realloc(d->g, (size_t)(d->n + 1) * sizeof *d->g); d->g[d->n++] = g;
+                }
+                free(ss->g);
+            }
+            for (i = 0; i < s_nslot4; i++) {
+                Slot4 *ss = &s_slot4[i]; int at = -1;
+                for (j = 0; j < nt4; j++) if (text4[j].lh == ss->lh) at = j;
+                if (at < 0 && nt4 < 8) { at = nt4++; text4[at] = (Slot4){ss->lh, 0, NULL}; }
+                if (at < 0) { good = 0; continue; }
+                for (k = 0; k < ss->n; k++) {
+                    Glyph4 g = ss->g[k]; if (g.code >= 0xE000 && g.code < 0xF900) g.code = map[g.code];
+                    Slot4 *d = &text4[at]; d->g = (Glyph4 *)realloc(d->g, (size_t)(d->n + 1) * sizeof *d->g); d->g[d->n++] = g;
+                }
+                free(ss->g);
+            }
+            if (!good) { tt_dbg("[LANG] AVISO: subtítulos %s incompatibles o ausentes; se usa %s\n", s_subs, s_code); s_sub_fallback = 1; }
+        } else { s_subg = s_g; s_nsubg = s_ng; s_subrtl = s_rtl; s_substamp = s_stamp; }
+        memcpy(s_slot, textslots, sizeof textslots); s_nslot = nt;
+        memcpy(s_slot4, text4, sizeof text4); s_nslot4 = nt4;
+        if (textk) s_k4 = textk;
+        free(map);
+        snprintf(s_cache, sizeof s_cache, "%s+%s", s_code, s_subs);
+        /* Revisión del algoritmo en la clave: no reutiliza cachés anteriores. */
+        s_stamp = (s_stamp * 31u + s_substamp) ^ 0x05030002u;
+        s_on = s_ng > 0 || s_nsubg > 0;
+        tt_dbg("[LANG] diccionarios: texto %d, subtítulos %d, tamaños %d\n", s_ng, s_nsubg, s_nslot);
     }
     return s_on;
 }
@@ -441,13 +537,18 @@ static uint32_t fnv16(const uint16_t *s, int n)
     for (i = 0; i < n; i++) { h = (h ^ (s[i] & 0xFF)) * 16777619u; h = (h ^ (s[i] >> 8)) * 16777619u; }
     return h;
 }
-static const Str16 *game_tr(const uint16_t *en, int n)
+static const Str16 *game_tr_axis(const uint16_t *en, int n, int subs)
 {
     char k[16];
     if (n <= 0) return NULL;
     snprintf(k, sizeof k, "G%08X", fnv16(en, n));
+    if (subs && !s_sub_fallback) {
+        Str16 q; q.key = k;
+        return s_nsubg ? (const Str16 *)bsearch(&q, s_subg, (size_t)s_nsubg, sizeof *s_subg, cmp_g) : NULL;
+    }
     return find_g(k);
 }
+static const Str16 *game_tr(const uint16_t *en, int n) { return game_tr_axis(en, n, 0); }
 /* the game's English (UTF-16 in guest memory at va, n units) in the language:
  * used by the code that looks for the game's own words (prompts, heroes) */
 int tt_lang_game16(const uint16_t *en, int n, const uint16_t **out)
@@ -503,10 +604,10 @@ static int u16len(const unsigned char *b, size_t o, size_t lim)
 /* (room after every string: the hints that name the keys are rewritten in
  * place, sometimes longer -- prompts_kb.inc) */
 #define STR_ROOM 48
-static void put_str(Buf *o, const unsigned char *src, size_t so, size_t lim, int *ntr)
+static void put_str(Buf *o, const unsigned char *src, size_t so, size_t lim, int *ntr, int subs)
 {
     int n = u16len(src, so, lim), i;
-    const Str16 *t = game_tr((const uint16_t *)(src + so), n);   /* (aligned: the tables are) */
+    const Str16 *t = game_tr_axis((const uint16_t *)(src + so), n, subs);   /* (aligned: the tables are) */
     uint16_t z = 0;
     if (t) { buf_put(o, t->v, 2 * (size_t)t->n); (*ntr)++; }
     else buf_put(o, src + so, 2 * (size_t)n);
@@ -527,7 +628,7 @@ static int obss(Buf *o, const unsigned char *s, size_t a, size_t e, int *ntr)
         uint32_t so = rd32(s, a + 16 + 8 * i + 4);
         wr32(o->p, base + 16 + 8 * i + 4, (uint32_t)(o->n - base));
         if (so < hdr || a + so >= e) { uint16_t z = 0; buf_put(o, &z, 2); continue; }
-        put_str(o, s, a + so, e, ntr);
+        put_str(o, s, a + so, e, ntr, 0);
     }
     return 1;
 }
@@ -542,7 +643,7 @@ static int obst(Buf *o, const unsigned char *s, size_t a, size_t e, int *ntr)
         uint32_t so = rd32(s, a + 16 + 16 * i + 4);
         wr32(o->p, base + 16 + 16 * i + 4, (uint32_t)(o->n - base));
         if (so < hdr || a + so >= e) { uint16_t z = 0; buf_put(o, &z, 2); continue; }
-        put_str(o, s, a + so, e, ntr);
+        put_str(o, s, a + so, e, ntr, 1);
     }
     return 1;
 }
@@ -567,13 +668,14 @@ static uint8_t s_used[0x2000];
 static void use_all(void)
 {
     int i, k;
-    memset(s_used, 0, sizeof s_used);
+    /* No borrar lo marcado por las tablas OBST. */
     for (i = 0; i < s_ng; i++) for (k = 0; k < s_g[i].n; k++) s_used[s_g[i].v[k] >> 3] |= (uint8_t)(1u << (s_g[i].v[k] & 7));
+    if (!s_sub_fallback) for (i = 0; i < s_nsubg; i++) for (k = 0; k < s_subg[i].n; k++) s_used[s_subg[i].v[k] >> 3] |= (uint8_t)(1u << (s_subg[i].v[k] & 7));
 }
-static void use_str(const unsigned char *src, size_t so, size_t lim)
+static void use_str(const unsigned char *src, size_t so, size_t lim, int subs)
 {
     int n = u16len(src, so, lim), k;
-    const Str16 *t = game_tr((const uint16_t *)(src + so), n);
+    const Str16 *t = game_tr_axis((const uint16_t *)(src + so), n, subs);
     if (t) for (k = 0; k < t->n; k++) s_used[t->v[k] >> 3] |= (uint8_t)(1u << (t->v[k] & 7));
 }
 static int used(int c) { return (s_used[c >> 3] >> (c & 7)) & 1; }
@@ -589,6 +691,17 @@ static int font(Buf *o, const unsigned char *s, size_t a, size_t e, int *nadded)
     int ncode = 0, first = 0xE000, maxc = 0, nplaced = 0;
     uint32_t (*rng)[3];
     for (k = 0; k < s_nslot; k++) if (s_slot[k].lh == lh) slot = k;
+    /* Nunca escribir una traducción que la fuente de este archivo no sabe
+     * dibujar. build() vuelve a intentarlo con subtítulos como el texto. */
+    for (i = 0xE000; i < 0xF900; i++) if (used(i)) {
+        int found = 0;
+        if (slot >= 0) for (k = 0; k < s_slot[slot].n; k++)
+            if (s_slot[slot].g[k].code == i && s_slot[slot].g[k].kind != 2) { found = 1; break; }
+        if (!found) {
+            tt_dbg("[LANG] AVISO: glifo %04X ausente en fuente de %d px (%s)\n", i, lh, s_cache);
+            s_build_bad = 1; return 0;
+        }
+    }
     if (slot < 0 || !s_slot[slot].n || nr <= 0 || nr > 64 || a + to + 0x80 > e) return 0;
     th = a + to;
     if (rd16(s, th) != 0x6278) return 0;   /* "xb" */
@@ -630,7 +743,10 @@ static int font(Buf *o, const unsigned char *s, size_t a, size_t e, int *nadded)
              * 2048 a side -- a 256 x 4096 font drew as a black box) */
             if (H <= 2048 || W >= 2048) break;
         }
-        if (H > 2048) H = 2048;
+        if (H > 2048 || W > 2048) {
+            tt_dbg("[LANG] AVISO: fuente de %d px: no cabe la combinación %s\n", lh, s_cache);
+            s_build_bad = 1; free(pix0); free(rng); return 0;
+        }
     }
     pix = (unsigned char *)calloc((size_t)W * H, 1);
     for (k = 0; k < (int)h0; k++) memcpy(pix + (size_t)k * W, pix0 + (size_t)k * w0, w0);
@@ -658,7 +774,7 @@ static int font(Buf *o, const unsigned char *s, size_t a, size_t e, int *nadded)
                         bx0 = (int)rd32(s, ra); by0 = (int)rd32(s, ra + 4); bx1 = (int)rd32(s, ra + 8);
                     }
                 cw = bx1 - bx0 + 1;
-                if (cw <= 0 || cw > 512) continue;
+                if (cw <= 0 || cw > 512) { s_build_bad = 1; continue; }
                 for (row = 0; row < lh && row < 64; row++)
                     for (col = 0; col < cw; col++) {
                         int sx = bx0 + col, sy = by0 + row;
@@ -694,7 +810,7 @@ static int font(Buf *o, const unsigned char *s, size_t a, size_t e, int *nadded)
                 }
             }
             if (x + cw + 1 > (int)W) { x = 0; y += lh + 1; }
-            if (y + lh > (int)H) break;
+            if (y + lh > (int)H) { s_build_bad = 1; break; }
             for (row = 0; row < lh && row < 64; row++) memcpy(pix + (size_t)(y + row) * W + x, cell + row * 512, (size_t)cw);
             nrec[c - first].x0 = x; nrec[c - first].y0 = y; nrec[c - first].x1 = x + cw - 1; nrec[c - first].y1 = y + lh - 1;
             nrec[c - first].adv = g->kind == 0 ? g->adv : cw; nrec[c - first].h = lh;
@@ -789,7 +905,10 @@ static int build(const char *src, const char *out, int *ntr, int *nglyph)
     Buf o = { 0 };
     int changed = 0, ok = 0;
     FILE *f;
-    char tmp[800];
+    char tmp[1000];
+    int oldfallback = s_sub_fallback;
+retry:
+    s_build_bad = 0;
     if (!s || n < 16 || s[0] != 9) goto done;
     tab = rd32(s, 4);
     if ((size_t)tab + 4 > n) goto done;
@@ -807,10 +926,10 @@ static int build(const char *src, const char *out, int *ntr, int *nglyph)
             if (type == 900 && rd32(s, tab + 4 + 12 * i + 8) == 0 && !memcmp(s + a, "OBSS", 4) && rd32(s, a + 12) > 400) startup = 1;
             if (type >= 900 && type <= 902 && !memcmp(s + a, "OBSS", 4)) {
                 c2 = rd32(s, a + 12);
-                for (q = 0; q < c2 && 16 + 8 * (size_t)q + 8 <= e - a; q++) { uint32_t so = rd32(s, a + 16 + 8 * q + 4); if (a + so < e) use_str(s, a + so, e); }
+                for (q = 0; q < c2 && 16 + 8 * (size_t)q + 8 <= e - a; q++) { uint32_t so = rd32(s, a + 16 + 8 * q + 4); if (a + so < e) use_str(s, a + so, e, 0); }
             } else if (type >= 905 && type <= 907 && !memcmp(s + a, "OBST", 4)) {
                 c2 = rd32(s, a + 8);
-                for (q = 0; q < c2 && 16 + 16 * (size_t)q + 16 <= e - a; q++) { uint32_t so = rd32(s, a + 16 + 16 * q + 4); if (a + so < e) use_str(s, a + so, e); }
+                for (q = 0; q < c2 && 16 + 16 * (size_t)q + 16 <= e - a; q++) { uint32_t so = rd32(s, a + 16 + 16 * q + 4); if (a + so < e) use_str(s, a + so, e, 1); }
             }
         }
         if (startup) use_all();
@@ -832,6 +951,14 @@ static int build(const char *src, const char *out, int *ntr, int *nglyph)
         if (r) { offs[i] = (uint32_t)at; changed = 1; }
         else o.n = at;
     }
+    if (s_build_bad) {
+        if (!s_sub_fallback && _stricmp(s_subs, s_code)) {
+            tt_dbg("[LANG] AVISO: %s: subtítulos %s no caben; se usa el texto %s\n", src, s_subs, s_code);
+            s_sub_fallback = 1; free(offs); offs = NULL; free(o.p); o = (Buf){0};
+            *ntr = *nglyph = 0; changed = 0; goto retry;
+        }
+        goto done;
+    }
     if (!changed) goto done;
     buf_align(&o, 0x1000);
     {
@@ -847,6 +974,7 @@ static int build(const char *src, const char *out, int *ntr, int *nglyph)
     if (ok) { remove(out); ok = rename(tmp, out) == 0; }
     if (!ok) remove(tmp);
 done:
+    s_sub_fallback = oldfallback;
     free(s); free(o.p); free(offs);
     return ok;
 }
@@ -900,7 +1028,7 @@ static const char *lang_copy(const char *xp, const char *src)
     b = b ? b + 1 : src;
     if (!st) return NULL;
     snprintf(name, sizeof name, "%s", b);
-    snprintf(out, sizeof out, "%s/lang_cache/%s/%08lX_%08lX_%s", s_dir, s_code, st, s_stamp & 0xFFFFFFFFul, name);
+    snprintf(out, sizeof out, "%s/lang_cache/%s/%08lX_%08lX_%s", s_dir, s_cache, st, s_stamp & 0xFFFFFFFFul, name);
     snprintf(stp, sizeof stp, "%s.ultra", out);
     if ((f = fopen(out, "rb"))) {
         /* made before: its upscaled fonts paired again (all there, or it is made again) */
@@ -935,10 +1063,119 @@ static const char *lang_copy(const char *xp, const char *src)
 /* language's                                                              */
 /* ===================================================================== */
 const char *(*tt_heroes_redirect)(const char *xp);
+/* (PAL) a pack's own copy of a whole file: lang\<code>\fmv\<name> for a film
+ * ("\Device\CdRom0\FMV\mont.bik": the European disc's films with the
+ * language's voice -- mont, yar1_2, logos) and lang\<code>\ui\credits.BFF
+ * (its credits, longer than the USA ones) -- made by pal_lang_pack.py */
+/* (PAL) the films' and the voices' languages, apart from the text's:
+ * [Language] fmv= and voice= (TT_FMV, TT_VOICE; unset: the text's language,
+ * "pal-" taken off; "en": the disc's own).
+ *   films:  lang\fmv\<fmv>\<name>, else lang\<fmv>\fmv\, else lang\pal-<fmv>\fmv\
+ *   voices: lang\voz\<voice>\S_SB_<level>.xsb -- the level's sound bank with
+ *           every spoken line pointing at its dubbed twin (ES_, IT_, FR_,
+ *           DE_: on both discs, picked by the PAL program only), made by
+ *           voces_pack.py */
+static char s_fmv[32], s_voice[32], s_cine[32];
+static int media_present(const char *dir, const char *pattern)
+{
+    char p[900]; WIN32_FIND_DATAA fd; HANDLE h;
+    snprintf(p,sizeof p,"%s/%s",dir,pattern);
+    h=FindFirstFileA(p,&fd);
+    if(h==INVALID_HANDLE_VALUE)return 0;
+    do {if(!(fd.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY) && (fd.nFileSizeLow||fd.nFileSizeHigh)) {FindClose(h);return 1;}} while(FindNextFileA(h,&fd));
+    FindClose(h);return 0;
+}
+static int voice_present(const char *code,int cine)
+{
+    char p[900],dir[900],name[100],*plus;WIN32_FIND_DATAA fd;HANDLE h;
+    snprintf(p,sizeof p,"%s/lang/voz/*",s_dir);h=FindFirstFileA(p,&fd);
+    if(h==INVALID_HANDLE_VALUE)return 0;
+    do {
+        if(!(fd.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY))continue;
+        snprintf(name,sizeof name,"%s",fd.cFileName);plus=strchr(name,'+');
+        if(plus){*plus++=0;if(_stricmp(cine?plus:name,code))continue;}
+        else if(_stricmp(name,code))continue;
+        snprintf(dir,sizeof dir,"%s/lang/voz/%s",s_dir,fd.cFileName);
+        if(media_present(dir,"S_SB_*.xsb")){FindClose(h);return 1;}
+    } while(FindNextFileA(h,&fd));
+    FindClose(h);return 0;
+}
+static int film_present(const char *code)
+{
+    char p[900];
+    snprintf(p,sizeof p,"%s/lang/pal-%s/fmv",s_dir,code);if(media_present(p,"*.bik"))return 1;
+    snprintf(p,sizeof p,"%s/lang/fmv/%s",s_dir,code);if(media_present(p,"*.bik"))return 1;
+    snprintf(p,sizeof p,"%s/lang/%s/fmv",s_dir,code);return media_present(p,"*.bik");
+}
+static void media_codes(void)
+{
+    static int done;
+    char ini[700], def[32];
+    if (done) return;
+    done = 1;
+    tt_lang_on();
+    snprintf(ini, sizeof ini, "%s/twotowers_recomp.ini", s_dir);
+    snprintf(def, sizeof def, "%s", _strnicmp(s_code, "pal-", 4) ? s_code : s_code + 4);
+    read_axis(ini, "fmv", "TT_FMV", def, s_fmv);
+    read_axis(ini, "voice", "TT_VOICE", def, s_voice);
+    read_axis(ini, "voice_cine", "TT_VOICE_CINE", def, s_cine);
+    if(_stricmp(s_voice,"en") && !voice_present(s_voice,0)) {tt_dbg("[LANG] AVISO: voces de juego %s no instaladas; se usa en\n",s_voice);snprintf(s_voice,sizeof s_voice,"en");}
+    if(_stricmp(s_cine,"en") && !voice_present(s_cine,1)) {tt_dbg("[LANG] AVISO: voces de cinemáticas %s no instaladas; se usa en\n",s_cine);snprintf(s_cine,sizeof s_cine,"en");}
+    if(_stricmp(s_fmv,"en") && !film_present(s_fmv)) {tt_dbg("[LANG] AVISO: audio de películas %s no instalado; se usa en\n",s_fmv);snprintf(s_fmv,sizeof s_fmv,"en");}
+    tt_dbg("[LANG] text %s, subs %s, voices %s, cine %s, films %s\n", s_code, s_subs, s_voice, s_cine, s_fmv);
+}
+static int have(const char *p)
+{
+    struct stat st;
+    return !stat(p, &st) && st.st_size > 0;
+}
+static void lang_fmv_open(const char *xp, const char *name);
+static const char *pack_file(const char *xp)
+{
+    static char out[900];
+    char low[300];
+    const char *b = strrchr(xp, '\\');
+    size_t i;
+    b = b ? b + 1 : xp;
+    if (strlen(xp) >= sizeof low || strlen(b) > 64) return NULL;
+    media_codes();
+    for (i = 0; xp[i]; i++) low[i] = (char)((xp[i] >= 'A' && xp[i] <= 'Z') ? xp[i] + 32 : xp[i]);
+    low[i] = 0;
+    if (strstr(low, "\\fmv\\")) {
+        lang_fmv_open(xp, b);
+        if (!s_fmv[0] || !_stricmp(s_fmv, "en")) return NULL;
+        /* El PAL de Xbox tiene prioridad sobre cualquier conversión PS2. */
+        snprintf(out, sizeof out, "%s/lang/pal-%s/fmv/%s", s_dir, s_fmv, b);
+        if (have(out)) return out;
+        snprintf(out, sizeof out, "%s/lang/fmv/%s/%s", s_dir, s_fmv, b);
+        if (have(out)) return out;
+        snprintf(out, sizeof out, "%s/lang/%s/fmv/%s", s_dir, s_fmv, b);
+        if (have(out)) return out;
+        snprintf(out, sizeof out, "%s/lang/pal-%s/fmv/%s", s_dir, s_fmv, b);
+        return have(out) ? out : NULL;
+    }
+    if (strstr(low, "\\sound\\") && (!_strnicmp(b, "s_sb_", 5) || !_strnicmp(b, "s_wb_", 5))) {
+        if (!_stricmp(s_voice, "en") && !_stricmp(s_cine, "en")) return NULL;
+        snprintf(out, sizeof out, "%s/lang/voz/%s+%s/%s", s_dir, s_voice, s_cine, b);
+        if (have(out)) return out;
+        if (_stricmp(s_voice, s_cine)) return NULL;
+        snprintf(out, sizeof out, "%s/lang/voz/%s/%s", s_dir, s_voice, b);
+        return have(out) ? out : NULL;
+    }
+    if (!_stricmp(b, "credits.BFF") && s_pack[0]) {
+        snprintf(out, sizeof out, "%s/ui/credits.BFF", s_pack);
+        return have(out) ? out : NULL;
+    }
+    return NULL;
+}
 static const char *redirect_all(const char *xp)
 {
     const char *r = tt_heroes_redirect ? tt_heroes_redirect(xp) : NULL;
     char src[900];
+    if (!r) {
+        const char *p = pack_file(xp);
+        if (p) { tt_dbg("[LANG] %s: the pack's %s\n", xp, p); r = p; }
+    }
     if (!tt_lang_on() || !texty(xp)) return r;
     if (r) snprintf(src, sizeof src, "%s", r);
     else if (!host_path(xp, src, sizeof src)) return r;
@@ -971,7 +1208,7 @@ uint32_t tt_lang_startup_size(void)
 extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
 static int rtl_class(uint16_t c)
 {
-    if (c >= 0xE000 && c < 0xF900) return 1;
+    if (c >= 0xE000 && c < 0xF900) return s_direction[c] ? s_direction[c] : 2;
     if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= 0xC0 && c <= 0xFF && c != 0xD7 && c != 0xF7)) return 2;
     return 0;
 }
@@ -983,10 +1220,13 @@ int tt_lang_line(uint32_t first, uint32_t end, uint32_t *nfirst, uint32_t *nend)
     uint16_t u[2048], v[2048];
     uint8_t cl[2048];
     int n, i, j;
-    if (!tt_lang_rtl() || end <= first) return 0;
+    tt_lang_on();
+    if (end <= first) return 0;
     n = (int)((end - first) / 2);
     if (n <= 0 || n > 2048) return 0;
     for (i = 0; i < n; i++) { u[i] = G16(first + 2 * (uint32_t)i); cl[i] = (uint8_t)rtl_class(u[i]); }
+    for (i = 0; i < n && cl[i] != 1; i++) { /* Buscar una letra RTL. */ }
+    if (i == n) return 0; /* La dirección pertenece al eje de esta línea. */
     for (i = 0; i < n; i++) if (!cl[i]) {   /* (between two Latin: Latin; else right to left) */
         int a = i - 1, b = i + 1;
         while (a >= 0 && !cl[a]) a--;
@@ -1005,7 +1245,7 @@ int tt_lang_line(uint32_t first, uint32_t end, uint32_t *nfirst, uint32_t *nend)
             else if (c == '<') v[i] = '>'; else if (c == '>') v[i] = '<'; else if (c == 0xAB) v[i] = 0xBB; else if (c == 0xBB) v[i] = 0xAB;
             i++; continue;
         }
-        for (j = i; j < n && cl[j] == 2; j++) ;
+        for (j = i; j < n && cl[j] == 2; j++) { /* Tramo latino. */ }
         { int a = i, b = j - 1; while (a < b) { uint16_t t = v[a]; v[a] = v[b]; v[b] = t; a++; b--; } }
         i = j;
     }
@@ -1048,6 +1288,8 @@ const char *tt_lang_face(void)
     for (i = 0; i < sizeof F / sizeof F[0]; i++) if (!strcmp(F[i].code, s_code)) return F[i].face;
     return NULL;
 }
+
+#include "lang_fmv.inc"
 
 void tt_lang_init(void)
 {

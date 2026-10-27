@@ -1316,6 +1316,17 @@ void sub_000D2130(void)
     tt_hk(12, 1, r);
     eax = r[0];
 }
+/* Preserve the original result handler and its ABI, including failures.
+ * The extra shares only flags changed by this particular result. */
+extern void sub_000D2B90_gen(void);
+extern void tt_heroes_result(uint32_t level, int success);
+void sub_000D2B90(void)
+{
+    uint32_t level = MEM32(0x1BB2A4);
+    int success = MEM8(esp + 8) != 0;
+    sub_000D2B90_gen();
+    tt_heroes_result(level, success);
+}
 /* developer switches (HERO=, LEVEL=) */
 extern void sub_0007F000_gen(void);
 void sub_0007F000(void)
@@ -1558,14 +1569,32 @@ void sub_000B4220(void)
 /* the melee sweep (testing: heroes.c counts its hits) */
 extern void sub_000BA110_gen(void);
 extern void tt_sweep(uint32_t a0, double res);
+#include "heroes_sweep_query.h"
 void sub_000BA110(void)
 {
     uint32_t a0 = MEM32(esp + 4), a1 = MEM32(esp + 8);
     extern void tt_sweep2(uint32_t, uint32_t, double);
-    sub_000BA110_gen();
+    tt_sweep_query(a0);
     tt_sweep(a0, g_fp_stack[g_fp_top]);
     tt_sweep2(a0, a1, g_fp_stack[g_fp_top]);
 }
+
+/* (135) the melee hit routine: heroes.c logs the troll's swings (reads only) */
+extern void sub_000BE0D0_gen(void);
+extern void tt_clog_swing(uint32_t attack, int after);
+void sub_000BE0D0(void)
+{
+    uint32_t a0 = MEM32(esp + 4);
+    tt_clog_swing(a0, 0);
+    sub_000BE0D0_gen();
+    tt_clog_swing(a0, 1);
+}
+
+/* El simbolo original de C7610 se renombra solo al compilar su unidad.
+ * No se modifica src/recomp/gen. Conservar tambien SSE/FPU/SEH al llamar
+ * al codigo host, como en la consulta geometrica. Una sola llamada al
+ * despachador original; la lista de victimas sigue siendo la del juego. */
+#include "heroes_hit_dispatch.h"
 
 /* Call a guest function from host code (heroes.c): args pushed right to
  * left, ecx = this; every register and the stack are put back afterwards,

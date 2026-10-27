@@ -1747,3 +1747,6 @@ L:The GLOS69 texture pack is not in the game's folder.	Le pack de textures GLOS6
 L:Could not write textures_ultra/index.bin.	Impossible d'écrire textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Oui (maintenir W : il court là où pousse la souris ; Marcher le fait marcher)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Maintenir W : il court là où pousse la souris (Marcher le fait marcher)
+L:Films:	Films :
+L:Voices:	Voix :
+L:(as the text)	(comme le texte)

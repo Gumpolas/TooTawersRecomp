@@ -39,11 +39,20 @@ typedef struct {
     int         to_save;    /* 1 = under save_dir, 0 = under game_dir    */
     const char* sub_win;    /* sub-directory, Win32 backslash form       */
     const char* sub_posix;  /* sub-directory, POSIX slash form           */
+    int         whole_name; /* 1 = the prefix is a whole folder name: it
+                             * matches only before a separator or the end */
 } path_rule;
 
 static const path_rule s_rules[] = {
-    { "\\Device\\CdRom0\\",                   0, NULL,         NULL          },
-    { "\\Device\\Harddisk0\\Partition1\\",    0, NULL,         NULL          },
+    { "\\Device\\CdRom0\\",                   0, NULL,         NULL, 0 },
+    /* Partition1 is E:, where a console keeps TDATA (title data) and UDATA
+     * (saved games). Those two folders go under save_dir, so that two
+     * installations pointed at the same game_dir do not share -- and
+     * overwrite -- each other's saves. Anything else under Partition1 stays
+     * in the game dir, as before; listed ahead of the generic rule. */
+    { "\\Device\\Harddisk0\\Partition1\\UDATA", 1, "\\UDATA",    "/UDATA",     1 },
+    { "\\Device\\Harddisk0\\Partition1\\TDATA", 1, "\\TDATA",    "/TDATA",     1 },
+    { "\\Device\\Harddisk0\\Partition1\\",    0, NULL,         NULL, 0 },
     /* The rest of the disk. Partition 0 is the whole raw device, 2 holds
      * system data, and 3-5 are the per-title caches behind X:, Y: and Z:.
      * Without these the path layer reported "Unrecognized Xbox path" and
@@ -58,28 +67,43 @@ static const path_rule s_rules[] = {
      * ordinary asset read and belongs in the game dir -- the same place Y:
      * already goes. Only the bare device keeps the system-data image, which
      * is why this rule carries the trailing separator and is listed first. */
-    { "\\Device\\Harddisk0\\Partition2\\",    0, NULL,         NULL          },
-    { "C:\\",                                 0, NULL,         NULL          },
-    { "\\??\\C:\\",                           0, NULL,         NULL          },
-    { "\\Device\\Harddisk0\\Partition2",     1, "\\SystemData", "/SystemData" },
-    { "\\Device\\Harddisk0\\Partition3",     1, "\\Cache",   "/Cache"      },
-    { "\\Device\\Harddisk0\\Partition4",     1, "\\Cache",   "/Cache"      },
-    { "\\Device\\Harddisk0\\Partition5",     1, "\\Cache",   "/Cache"      },
-    { "D:\\",                                 0, NULL,         NULL          },
-    { "d:\\",                                 0, NULL,         NULL          },
+    { "\\Device\\Harddisk0\\Partition2\\",    0, NULL,         NULL, 0 },
+    { "C:\\",                                 0, NULL,         NULL, 0 },
+    { "\\??\\C:\\",                           0, NULL,         NULL, 0 },
+    { "\\Device\\Harddisk0\\Partition2",     1, "\\SystemData", "/SystemData", 0 },
+    { "\\Device\\Harddisk0\\Partition3",     1, "\\Cache",   "/Cache", 0 },
+    { "\\Device\\Harddisk0\\Partition4",     1, "\\Cache",   "/Cache", 0 },
+    { "\\Device\\Harddisk0\\Partition5",     1, "\\Cache",   "/Cache", 0 },
+    { "D:\\",                                 0, NULL,         NULL, 0 },
+    { "d:\\",                                 0, NULL,         NULL, 0 },
     /* Y: is the Xbox dashboard partition; the dashboard opens its assets
      * (e.g. "Y:\default.xip") from there. Map it to the game dir. */
-    { "Y:\\",                                 0, NULL,         NULL          },
-    { "y:\\",                                 0, NULL,         NULL          },
-    { "T:\\",                                 1, "\\TitleData","/TitleData"  },
-    { "U:\\",                                 1, "\\UserData", "/UserData"   },
-    { "Z:\\",                                 1, "\\Cache",    "/Cache"      },
-    { "\\??\\D:\\",                           0, NULL,         NULL          },
-    { "\\??\\Y:\\",                           0, NULL,         NULL          },
-    { "\\??\\y:\\",                           0, NULL,         NULL          },
-    { "\\??\\T:\\",                           1, "\\TitleData","/TitleData"  },
+    { "Y:\\",                                 0, NULL,         NULL, 0 },
+    { "y:\\",                                 0, NULL,         NULL, 0 },
+    { "T:\\",                                 1, "\\TitleData","/TitleData", 0 },
+    { "U:\\",                                 1, "\\UserData", "/UserData", 0 },
+    { "Z:\\",                                 1, "\\Cache",    "/Cache", 0 },
+    { "\\??\\D:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\Y:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\y:\\",                           0, NULL,         NULL, 0 },
+    { "\\??\\T:\\",                           1, "\\TitleData","/TitleData", 0 },
 };
 #define PATH_RULE_COUNT ((int)(sizeof(s_rules) / sizeof(s_rules[0])))
+
+/* Rule i against a path: the characters consumed, or 0. A whole-name rule
+ * ("...\UDATA") does not match "...\UDATAX", and it consumes the separators
+ * after the name too, so the join below does not double them. */
+static int match_rule(const char* path, int i)
+{
+    int n = match_prefix(path, s_rules[i].prefix);
+    if (n && s_rules[i].whole_name) {
+        if (path[n] && path[n] != '\\' && path[n] != '/')
+            return 0;
+        while (path[n] == '\\' || path[n] == '/')
+            n++;
+    }
+    return n;
+}
 
 /*
  * Rewrite a path through a drive letter the title mapped for itself.
@@ -424,7 +448,7 @@ BOOL xbox_translate_path(const char* xbox_path, xbox_host_char* host_path_buf, D
     }
 
     for (int i = 0; i < PATH_RULE_COUNT; i++) {
-        skip = match_prefix(xbox_path, s_rules[i].prefix);
+        skip = match_rule(xbox_path, i);
         if (skip) {
             remainder = xbox_path + skip;
             base_dir  = s_rules[i].to_save ? s_save_dir : s_game_dir;
@@ -723,7 +747,7 @@ BOOL xbox_translate_path(const char* xbox_path, xbox_host_char* host_path_buf, D
     }
 
     for (int i = 0; i < PATH_RULE_COUNT; i++) {
-        skip = match_prefix(xbox_path, s_rules[i].prefix);
+        skip = match_rule(xbox_path, i);
         if (skip) {
             remainder = xbox_path + skip;
             base_dir  = s_rules[i].to_save ? s_save_dir : s_game_dir;

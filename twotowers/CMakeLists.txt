@@ -84,6 +84,10 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/launcher.rc" "${TT_LAUNCHER_RC}")
 # is silently left out of the build and shows up as unresolved externals.
 file(GLOB RECOMP_GEN_SOURCES CONFIGURE_DEPENDS "src/recomp/gen/*.c")
 
+# Envolver el despacho de impacto sin editar los fuentes generados.
+# La llamada local C6E79 de esta unidad tambien se renombra: es un efecto
+# radial, fuera del unico llamador melee BECFF que acepta el adaptador.
+
 # Core game sources
 set(GAME_SOURCES
     src/main.c
@@ -138,6 +142,7 @@ if(WIN32)
         # Lets the fault handler resolve the host RIP back to the generated
         # function's symbol, i.e. to the guest function that faulted.
         dbghelp
+        bcrypt
     )
 else()
     # Linux: SDL2 (window, OpenGL context, sound, controllers); OpenGL itself
@@ -241,3 +246,13 @@ if(NOT APPLE)
     target_link_options(twotowers-setup PRIVATE -static-libstdc++ -static-libgcc)
 endif()
 endif()
+
+# Despues de los alias POSIX para no sustituirlos ni perder este alias
+# al configurar Linux. Los archivos generados permanecen sin editar.
+set_property(SOURCE src/recomp/gen/recomp_0014.c APPEND PROPERTY
+    COMPILE_DEFINITIONS "sub_000C7610=sub_000C7610_gen")
+# (135) registro de combate del troll: antes y despues de la rutina de golpe
+set_property(SOURCE src/recomp/gen/recomp_0013.c APPEND PROPERTY
+    COMPILE_DEFINITIONS "sub_000BE0D0=sub_000BE0D0_gen")
+set_property(SOURCE src/recomp/gen/recomp_0015.c APPEND PROPERTY
+    COMPILE_DEFINITIONS "sub_000D2B90=sub_000D2B90_gen")

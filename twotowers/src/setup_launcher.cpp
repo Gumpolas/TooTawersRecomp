@@ -178,9 +178,11 @@ static std::wstring unesc(const std::wstring &v)
 static std::wstring langCode() { return iniGet(L"Language", L"language", L"en"); }
 static void langLoad()
 {
-    std::wstring code = langCode();
+    std::wstring code = iniGet(L"Setup", L"language", langCode().c_str());
+    if (code.rfind(L"pal-", 0) == 0) code = code.substr(4);
     if (code.empty() || code == L"en") return;
-    fs::path d = exeDir() / L"lang" / code;
+    fs::path d = exeDir() / L"launcher-languages" / code;
+    if (!fs::exists(d / L"text.txt")) d = exeDir() / L"lang" / code;
     std::ifstream in(d / L"text.txt", std::ios::binary);
     std::string ln;
     while (std::getline(in, ln)) {
@@ -192,6 +194,13 @@ static void langLoad()
     }
     std::ifstream inf(d / L"info.txt", std::ios::binary);
     while (std::getline(inf, ln)) if (ln.compare(0, 5, "rtl=1") == 0) g_rtl = true;
+    std::ifstream overlay(exeDir() / L"launcher_ui.tsv", std::ios::binary);
+    while (std::getline(overlay, ln)) {
+        if (!ln.empty() && ln.back() == '\r') ln.pop_back();
+        auto a = ln.find('\t'), b = a == std::string::npos ? a : ln.find('\t', a + 1);
+        if (b != std::string::npos && W(ln.substr(0,a)) == code)
+            g_tr[unesc(W(ln.substr(a+1,b-a-1)))] = unesc(W(ln.substr(b+1)));
+    }
 }
 static const wchar_t *T(const wchar_t *en)
 {
@@ -213,21 +222,71 @@ static std::string T8(const std::string &en)
 struct LangItem { std::wstring code, name; };
 static std::vector<LangItem> langList()
 {
-    std::vector<LangItem> v{{L"en", L"English"}};
+    std::vector<LangItem> v{{L"", T(L"(as the text)")}, {L"en", L"English (USA)"}};
     std::error_code ec;
     std::vector<LangItem> more;
     for (auto &e : fs::directory_iterator(exeDir() / L"lang", ec)) {
-        if (!e.is_directory()) continue;
+        if (!e.is_directory() || !fs::is_regular_file(e.path() / L"game.txt")) continue;
         std::ifstream inf(e.path() / L"info.txt", std::ios::binary);
         std::string ln, name;
         while (std::getline(inf, ln)) {
             if (!ln.empty() && ln.back() == '\r') ln.pop_back();
             if (ln.compare(0, 5, "name=") == 0) name = ln.substr(5);
         }
-        if (!name.empty()) more.push_back({e.path().filename().wstring(), W(name)});
+        if (!name.empty()) {
+            auto code = e.path().filename().wstring();
+            more.push_back({code, W(name) + L" (" + T(code.rfind(L"pal-", 0) == 0 ? L"Official game text (PAL)" : L"Port translation (community)") + L")"});
+        }
     }
     std::sort(more.begin(), more.end(), [](auto &a, auto &b) { return a.code < b.code; });
     v.insert(v.end(), more.begin(), more.end());
+    return v;
+}
+// [Language] fmv= / voice=: the films' and the voices' languages, apart from
+// the text's (lang.c). "" = the text's; "en" = the disc's own. Films:
+// lang/fmv/<code>/ (made by pal_lang_pack.py, ps2_idioma.py); voices: lang/voz/<code>/.
+static std::wstring mediaName(const std::wstring &c)
+{
+    static const struct { const wchar_t *code, *name; } N[] = {
+        {L"es", L"Español"}, {L"it", L"Italiano"}, {L"fr", L"Français"}, {L"de", L"Deutsch"},
+        {L"uk", L"English (UK)"}, {L"nl", L"Nederlands"}, {L"sv", L"Svenska"}, {L"pl", L"Polski"},
+        {L"pt", L"Português"}, {L"ru", L"Русский"}, {L"ja", L"日本語"}};
+    for (auto &n : N) if (!_wcsicmp(c.c_str(), n.code)) return n.name;
+    return c;
+}
+static bool mediaFiles(const fs::path &dir, bool films)
+{
+    std::error_code ec;
+    for (auto &e : fs::directory_iterator(dir, ec)) {
+        if (!e.is_regular_file(ec)) continue;
+        std::string n = lower(e.path().filename().string());
+        if (films ? e.path().extension() != L".bik" : n.rfind("s_sb_", 0) != 0 || e.path().extension() != L".xsb") continue;
+        std::ifstream f(e.path(), std::ios::binary); char h[6]{}; f.read(h, 6);
+        if (f && (films ? !memcmp(h, "BIKi", 4) : !memcmp(h, "SDBK\5\0", 6))) return true;
+    }
+    return false;
+}
+static std::vector<LangItem> mediaList(bool films, bool cine = false)
+{
+    std::vector<LangItem> v{{L"", T(L"(as the text)")}, {L"en", L"English (USA)"}};
+    std::set<std::wstring> codes;
+    std::error_code ec;
+    for (auto &e : fs::directory_iterator(exeDir() / L"lang" / (films ? L"fmv" : L"voz"), ec)) {
+        if (!e.is_directory() || !mediaFiles(e.path(), films)) continue;
+        std::wstring c = e.path().filename().wstring();
+        if (!films) {
+            size_t plus = c.find(L'+');
+            if (plus != std::wstring::npos) c = cine ? c.substr(plus + 1) : c.substr(0, plus);
+        }
+        if (!c.empty() && c != L"en" && c != L"sv" && c != L"nl") codes.insert(c);
+    }
+    if (films) for (auto &e : fs::directory_iterator(exeDir() / L"lang", ec)) {
+        std::wstring c = e.path().filename().wstring();
+        if (c.rfind(L"pal-",0)==0 && mediaFiles(e.path()/L"fmv",true)) {
+            c=c.substr(4); if (c!=L"sv" && c!=L"nl" && c!=L"en") codes.insert(c);
+        }
+    }
+    for (auto &c : codes) v.push_back({c, mediaName(c)});
     return v;
 }
 
@@ -255,7 +314,7 @@ static fs::path currentGameDir()
 
 // ───────────────────────────── UI ─────────────────────────────
 
-enum { ID_ISO = 100, ID_DIR, ID_RES, ID_MODE, ID_INTERNAL, ID_VSYNC, ID_WIDE, ID_LOG, ID_PLAY, ID_OPEN, ID_PROGRESS, ID_STATUS, ID_GFX, ID_CTL, ID_LANG };
+enum { ID_ISO = 100, ID_DIR, ID_RES, ID_MODE, ID_INTERNAL, ID_VSYNC, ID_WIDE, ID_LOG, ID_PLAY, ID_OPEN, ID_PROGRESS, ID_STATUS, ID_GFX, ID_CTL, ID_LANG, ID_FMV, ID_VOICE, ID_SUBS, ID_CINE, ID_DLSS5, ID_CREDITS };
 static const UINT WM_STATUS = WM_APP + 1, WM_PROGRESS = WM_APP + 2, WM_DONE = WM_APP + 3;
 
 static HWND g_hwnd, g_status, g_progress, g_res, g_mode, g_internal, g_vsync, g_wide, g_log, g_play;
@@ -542,9 +601,10 @@ static void gfxBuildOptions()
     g_gfx.push_back({L"Mod: Orange health pickups (shown in pre-release & making-of videos)", L"e3_pickups", L"0",
         {{L"Off (green, as retail)", L"0"}, {L"On (orange health pickups)", L"1"}}});
     g_gfx.back().sec = L"Mods";
-    g_gfx.push_back({L"Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)", L"extra_heroes", L"0",
-        {{L"Off (four heroes, as retail)", L"0"}, {L"On (eleven heroes)", L"1"},
-         {L"On, unlocked for testing (save not changed)", L"2"}}});
+    g_gfx.push_back({L"Mod: 13 extra heroes", L"extra_heroes", L"3",
+        {{L"Off (four heroes, as retail)", L"0"}, {L"Unlock through Isildur and Orthanc victories (progress counts)", L"1"},
+         {L"On, unlocked for testing (save not changed)", L"2"},
+         {L"Extras unlocked from the start (progress counts)", L"3"}}});
     g_gfx.back().sec = L"Mods";
     for (auto &o : g_gfx) {
         o.label = T(o.label);
@@ -1026,9 +1086,12 @@ static int textW(HWND c)
 }
 
 static HWND g_cover;
+static HWND g_btnCredits;
+static HWND g_uiLabel, g_uiCombo;
+static constexpr int ID_UI_LANG = ID_CREDITS + 1;
 static bool g_hasCover;   // box art: built in (resources/local/cover.bmp) or cover.bmp beside the exe
-static HWND g_lblTitle, g_lblRes, g_lblMode, g_lblInt, g_btnIso, g_btnDir, g_btnOpen, g_btnGfx, g_btnCtl, g_lblLang, g_lang;
-static std::vector<LangItem> g_langs;
+static HWND g_lblTitle, g_lblRes, g_lblMode, g_lblInt, g_btnIso, g_btnDir, g_btnOpen, g_btnGfx, g_btnCtl, g_btnDlss5, g_lblLang, g_lang, g_lblFmv, g_fmv, g_lblVoice, g_voice, g_lblSubs, g_subs, g_lblCine, g_cine;
+static std::vector<LangItem> g_langs, g_fmvs, g_voices, g_subtitles, g_cines;
 
 static int layout(bool apply)
 {
@@ -1049,10 +1112,28 @@ static int layout(bool apply)
     mv(g_btnIso, M, y, bw1, ch); mv(g_btnDir, M + bw1 + gap, y, bw2, ch); y += ch + gap * 2;
     for (HWND c : {g_wide, g_log}) { mv(c, M, y, textW(c) + 3 * fh, lh); y += lh + gap / 2; }
     y += gap;
-    { int lw = textW(g_lblLang) + fh; mv(g_lblLang, M, y + (ch - fh) / 2, lw, fh + 4); mv(g_lang, M + lw + gap, y, fh * 14, ch + fh * 16); }
+    { int lw = textW(g_lblLang) + fh; mv(g_lblLang, M, y + (ch - fh) / 2, lw, fh + 4); mv(g_lang, M + lw + gap, y, W_ - 2*M - lw - gap, ch + fh * 16); }
     y += ch + gap;
+    {   // Un eje por fila; etiquetas medidas en el idioma del lanzador.
+        HWND labels[] = {g_lblSubs, g_lblVoice, g_lblCine, g_lblFmv};
+        HWND combos[] = {g_subs, g_voice, g_cine, g_fmv};
+        int lw = 0;
+        for (auto label : labels) lw = std::max(lw, textW(label) + fh);
+        for (int k=0; k<4; k++) {
+            mv(labels[k], M, y+(ch-fh)/2, lw, fh+4);
+            mv(combos[k], M+lw+gap, y, std::max(fh*9, W_-2*M-lw-gap), ch+fh*16);
+            y += ch+gap;
+        }
+    }
     { int w1 = textW(g_btnGfx) + 2 * fh; mv(g_btnGfx, M, y, w1, ch); mv(g_btnCtl, M + w1 + gap, y, textW(g_btnCtl) + 2 * fh, ch); }
     y += ch + gap * 2;
+    mv(g_btnDlss5, M, y, textW(g_btnDlss5) + 2 * fh, ch);
+    y += ch + gap;
+    mv(g_btnCredits, M, y, textW(g_btnCredits) + 2 * fh, ch);
+    y += ch + gap;
+    mv(g_uiLabel, M, y, textW(g_uiLabel) + fh, ch);
+    mv(g_uiCombo, M + textW(g_uiLabel) + 2 * fh, y, fh * 10, ch + fh * 8);
+    y += ch + gap;
     int pw = textW(g_play) + 4 * fh, ow = textW(g_btnOpen) + 2 * fh;
     mv(g_play, M, y, pw, ch + 4); mv(g_btnOpen, M + pw + gap, y, ow, ch + 4);
     y += ch + 4 + M;
@@ -1069,23 +1150,48 @@ static LRESULT CALLBACK proc(HWND h, UINT m, WPARAM wp, LPARAM lp)
         case ID_PLAY: play(); return 0;
         case ID_GFX: graphicsSettings(); return 0;
         case ID_CTL: controlsSettings(); return 0;
-        case ID_LANG:
+        case ID_UI_LANG:
             if (HIWORD(wp) == CBN_SELCHANGE) {
-                int i = (int)SendMessageW(g_lang, CB_GETCURSEL, 0, 0);
-                if (i >= 0 && i < (int)g_langs.size() && g_langs[i].code != langCode()) {
-                    iniSet(L"Language", L"language", g_langs[i].code);
-                    saveSettings();
-                    // start again in the new language
-                    wchar_t self[MAX_PATH];
-                    GetModuleFileNameW(nullptr, self, MAX_PATH);
-                    std::wstring cmd = L"\"" + std::wstring(self) + L"\"";
-                    STARTUPINFOW si{sizeof(si)};
-                    PROCESS_INFORMATION pi{};
-                    if (CreateProcessW(nullptr, &cmd[0], nullptr, nullptr, FALSE, 0, nullptr, exeDir().c_str(), &si, &pi)) {
-                        CloseHandle(pi.hThread); CloseHandle(pi.hProcess);
-                        DestroyWindow(h);
-                    }
+                const wchar_t *codes[] = {L"en",L"es",L"fr",L"de",L"it"};
+                int i = (int)SendMessageW(g_uiCombo, CB_GETCURSEL, 0, 0);
+                if (i >= 0 && i < 5) {
+                    iniSet(L"Setup", L"language", codes[i]);
+                    MessageBoxW(h, T(L"Reopen the configurator to apply its interface language. Game language settings are preserved."), T(L"Interface language"), MB_ICONINFORMATION);
                 }
+            }
+            return 0;
+        case ID_CREDITS: {
+            auto credits = exeDir() / (L"creditos." + iniGet(L"Setup",L"language",L"en") + L".html");
+            if (!fs::exists(credits)) credits = exeDir() / L"creditos.html";
+            if (fs::exists(credits)) ShellExecuteW(h, L"open", credits.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+            else MessageBoxW(h, L"The128ReBits: Definitive Mod. Gumpolas and contributors: original port (MIT).\nCredits file missing: creditos.html\nhttps://github.com/Gumpolas/TooTawersRecomp", L"Credits / Creditos", MB_ICONINFORMATION);
+            return 0;
+        }
+        case ID_DLSS5: {
+            auto panel = exeDir() / L"dlss5" / L"Configurar_DLSS5.ps1";
+            if (!fs::exists(panel)) {
+                MessageBoxW(h, L"Falta el panel local dlss5\\Configurar_DLSS5.ps1.", L"DLSS 5", MB_ICONINFORMATION);
+                return 0;
+            }
+            wchar_t system[MAX_PATH];
+            GetSystemDirectoryW(system, MAX_PATH);
+            auto powershell = fs::path(system) / L"WindowsPowerShell" / L"v1.0" / L"powershell.exe";
+            auto args = L"-NoProfile -STA -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + panel.wstring() + L"\"";
+            ShellExecuteW(h, L"open", powershell.c_str(), args.c_str(), exeDir().c_str(), SW_HIDE);
+            return 0;
+        }
+        case ID_LANG:
+        case ID_SUBS:
+        case ID_VOICE:
+        case ID_CINE:
+        case ID_FMV:
+            if (HIWORD(wp) == CBN_SELCHANGE) {
+                int id = LOWORD(wp);
+                auto &v = id == ID_LANG ? g_langs : id == ID_SUBS ? g_subtitles : id == ID_VOICE ? g_voices : id == ID_CINE ? g_cines : g_fmvs;
+                HWND cb = id == ID_LANG ? g_lang : id == ID_SUBS ? g_subs : id == ID_VOICE ? g_voice : id == ID_CINE ? g_cine : g_fmv;
+                const wchar_t *key = id == ID_LANG ? L"language" : id == ID_SUBS ? L"subtitles" : id == ID_VOICE ? L"voice" : id == ID_CINE ? L"voice_cine" : L"fmv";
+                int i = (int)SendMessageW(cb, CB_GETCURSEL, 0, 0);
+                if (i >= 0 && i < (int)v.size()) iniSet(L"Language", key, v[i].code);
             }
             return 0;
         case ID_OPEN: ShellExecuteW(nullptr, L"open", exeDir().c_str(), nullptr, nullptr, SW_SHOWNORMAL); return 0;
@@ -1165,7 +1271,19 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, PWSTR cmdLine, int show)
     g_log = mk(L"BUTTON", L"Write a log file (for bug reports)", BS_AUTOCHECKBOX | WS_TABSTOP, ID_LOG);
     g_btnGfx = mk(L"BUTTON", L"Graphics settings…", WS_TABSTOP, ID_GFX);
     g_btnCtl = mk(L"BUTTON", L"Controls…", WS_TABSTOP, ID_CTL);
-    g_lblLang = mk(L"STATIC", L"Language (game and launcher):", 0, -1);
+    g_btnDlss5 = mk(L"BUTTON", L"DLSS 5 - Personalizar...", WS_TABSTOP, ID_DLSS5);
+    g_btnCredits = mk(L"BUTTON", L"Credits / Creditos", WS_TABSTOP, ID_CREDITS);
+    g_uiLabel = mk(L"STATIC", L"Interface language", 0, -1);
+    g_uiCombo = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_UI_LANG);
+    {
+        const wchar_t *codes[] = {L"en",L"es",L"fr",L"de",L"it"};
+        const wchar_t *labels[] = {L"English",L"Español",L"Français",L"Deutsch",L"Italiano"};
+        std::wstring current = iniGet(L"Setup",L"language",L"en");
+        int selected = 0;
+        for (int i=0;i<5;i++) { SendMessageW(g_uiCombo, CB_ADDSTRING, 0, (LPARAM)labels[i]); if(current==codes[i]) selected=i; }
+        SendMessageW(g_uiCombo, CB_SETCURSEL, selected, 0);
+    }
+    g_lblLang = mk(L"STATIC", L"Text:", 0, -1);
     g_lang = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_LANG);
     g_langs = langList();
     {
@@ -1176,6 +1294,26 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, PWSTR cmdLine, int show)
             if (!_wcsicmp(g_langs[i].code.c_str(), cur.c_str())) sel = (int)i;
         }
         SendMessageW(g_lang, CB_SETCURSEL, sel, 0);
+    }
+    g_lblFmv = mk(L"STATIC", L"Film audio:", 0, -1);
+    g_fmv = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_FMV);
+    g_lblVoice = mk(L"STATIC", L"Gameplay voices:", 0, -1);
+    g_voice = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_VOICE);
+    g_lblSubs = mk(L"STATIC", L"Subtitles:", 0, -1);
+    g_subs = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_SUBS);
+    g_lblCine = mk(L"STATIC", L"Cinematic voices:", 0, -1);
+    g_cine = mk(L"COMBOBOX", L"", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, ID_CINE);
+    g_fmvs = mediaList(true); g_voices = mediaList(false); g_cines = mediaList(false, true); g_subtitles = langList();
+    for (int k = 0; k < 4; k++) {
+        HWND cb = k == 0 ? g_subs : k == 1 ? g_voice : k == 2 ? g_cine : g_fmv;
+        auto &v = k == 0 ? g_subtitles : k == 1 ? g_voices : k == 2 ? g_cines : g_fmvs;
+        const wchar_t *key = k == 0 ? L"subtitles" : k == 1 ? L"voice" : k == 2 ? L"voice_cine" : L"fmv";
+        std::wstring cur = iniGet(L"Language", key, L""); int sel = 0;
+        for (size_t i = 0; i < v.size(); i++) {
+            SendMessageW(cb, CB_ADDSTRING, 0, (LPARAM)v[i].name.c_str());
+            if (!_wcsicmp(v[i].code.c_str(), cur.c_str())) sel = (int)i;
+        }
+        SendMessageW(cb, CB_SETCURSEL, sel, 0);
     }
     g_play = mk(L"BUTTON", L"Play", BS_DEFPUSHBUTTON | WS_TABSTOP, ID_PLAY);
     g_btnOpen = mk(L"BUTTON", L"Open folder", WS_TABSTOP, ID_OPEN);

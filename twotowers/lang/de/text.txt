@@ -1747,3 +1747,6 @@ L:The GLOS69 texture pack is not in the game's folder.	Das GLOS69-Texturpaket is
 L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin konnte nicht geschrieben werden.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	An (W halten: er läuft, wohin die Maus schiebt; Gehen geht)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	W halten: er läuft, wohin die Maus schiebt (Gehen geht)
+L:Films:	Filme:
+L:Voices:	Stimmen:
+L:(as the text)	(wie der Text)
