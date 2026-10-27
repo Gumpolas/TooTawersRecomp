@@ -53,7 +53,6 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 - **Ultra textures** no longer drop off the menus' text at times.
 
 ### Known issues (1.9.8)
-- Player 2 as Aragorn, Legolas or Gimli keeps player 1's hero's pace of attacks in a level with no companion of his hero (Fangorn Forest, the Westfold).
 - Player 2's controller doesn't rumble yet.
 
 ## Tested (1.9.8)
