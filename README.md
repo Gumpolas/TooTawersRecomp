@@ -38,26 +38,20 @@ Updating from 1.9.7 or earlier: unpack over your old folder, or into a new one a
 
 ## What's new in 1.9.8
 
-### Co-op, the second round
-With [Volverine-Dude](https://github.com/Volverine-Dude)'s co-op work (PR #7). Thank you!
+### Co-op fixes
 
-- **Player 2's own hero:** his own moves, weapons in each hand, combos and attack grade, kill rewards and arrow kills.
 - **Player 2's own buttons:** Options > Co-op Options > **P2 Controls**.
 - **Aiming:** while a player holds LT, a dot over the enemy his lock is on (player 1 blue, player 2 amber). Arrows and thrown axes fly through allies and every hit counts.
 - **A better P2 Bot:** it follows the levels' paths, keeps with the group and takes enemies in order.
 - **Story levels:** level triggers are player 1's, player 2 is hidden in cutscenes, and the co-op difficulty is kept apart from the solo game's.
 - **Menus:** every controller works in the front-end menus; the Co-op and Versus menus are in every language.
-- **Extra heroes as player 2** are built and drawn in every level (before, he was missing in Fangorn Forest, the Westfold and with player 1 Legolas), and his melee blows land.
-- **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts.
-- **No more unkillable enemies:** an enemy felled by a ranged hit always dies. Before, one could stand up again and again and hold up a wave (likely what kept the Hornburg courtyard's rescue of Legolas from ending).
-- **A downed player 1** gets up again from either death pose.
+- **Extra heroes as player 2** are built and drawn in every level (before, certain extra heros would be missing in Fangorn Forest, and certain things would be unbreakable. Extra hero's (Sauron) would also sometimes be missing in the Westfold and with player 1 as Legolas), and their ranged blows wouldn't land. 
+- **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts properly.
 
 ### Fixes
-- **Sound after a long session:** music, cutscene voices and some effects no longer go silent some forty minutes in.
-- **Languages with many letters** (Hindi, Japanese, Chinese, Korean) no longer crash a level at its start.
-- **Ultra textures** no longer drop off the menus' text.
-- **Title screen:** Start / Enter work on a PC that has been up for more than 24.9 days, and the controller that pressed Start is taken as player 1's.
-- **Options:** Back works on the first page and our own pages have a Back leaf; full screen is set again after Alt+Tab.
+- **Sound after a long session:** music, cut scene voices and some effects no longer go silent some forty minutes in.
+- **Languages support for co op and Versus menus
+- **Ultra textures** no longer drop off the menus' text at times.
 
 ### Known issues (1.9.8)
 - Player 2 as Aragorn, Legolas or Gimli keeps player 1's hero's pace of attacks in a level with no companion of his hero (Fangorn Forest, the Westfold).
@@ -69,9 +63,9 @@ With [Volverine-Dude](https://github.com/Volverine-Dude)'s co-op work (PR #7). T
 - Windows, Linux and macOS builds compile.
 - Not tested: the macOS build on a Mac.
 
-## What's new in 1.9.7
+## What 1.9.7 added
 
-### Versus
+### Versus mode
 Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
 
 - **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
@@ -128,98 +122,6 @@ See `COOP.md` for the details.
 - Linux (OpenGL): co-op in Weathertop and Balin's Tomb with the P2 Bot and with scripted input for player 2 -- both heroes, the P1/P2 markers and the two-player HUD; player 2 on the keyboard (port 2) while player 1 stays still; Double pickups (player 2 refilled twice from one pickup); the Co-op Options page with the new rows.
 - Windows, Linux and macOS builds compile.
 - Not tested by hand: a second physical controller, Windows play, the macOS build on a Mac.
-
-## What's new in 1.9.5
-
-### Performance: more of the game runs as native code
-- **The game's own code runs faster.** The translated game code kept the Xbox processor's registers in memory and wrote every change back. Its floating-point and integer registers now stay in the PC processor's registers inside each function. Every changed function was run against its old version from the same starting state, and gave the same results.
-- **The busiest Direct3D library functions are written in C.** The game's draw calls, the vertex setup before each draw and its shader constants are now hand-written code instead of translated Xbox code. They send the graphics chip exactly the same commands, checked call by call over millions of draws, at about half the cost.
-- **The controller is read directly.** The game no longer goes through an imitation of the Xbox's USB chip to read the controller; it asks the PC's own input (controller, keyboard, mouse and your bindings).
-- **The render thread does less per draw.** Draws with nothing changed between them are sent to the graphics card as one. Vertex data and commands are copied with faster copy routines, and graphics state lookups are quicker.
-- **Lighter frames.** Busy gameplay ran at about 450 fps on average on a fast PC in testing (Windows, Direct3D 11), with the game's code down to about 1.7 ms a frame. Earlier test logs showed over 3.5 ms in busy scenes.
-- **Fewer draw calls.** Draws that differ only in their vertex constants are sent to the graphics card as one draw; the constants travel with the vertices.
-- **Linux gets the render thread** too (OpenGL), and the game no longer spins a core while it waits for the graphics card.
-
-### High frame rates
-- **Animations keep their speed.** Each frame an animated character moved on by whole milliseconds of (frame time x animation speed), the rest dropped. At 500 fps animations playing below full speed kept about half their time or less: slow attacks, cutscene animations that stopped short, and heads that did not turn toward what a character looks at. The fractions are now kept and added up.
-- **Falling keeps its speed.** A falling character's speed grew once per frame, so at high frame rates anything that jumped or stepped off a ledge fell many times too fast and landed deep in the ground. It now grows with time, exactly as at 30 fps.
-- **Small moves are kept.** Movement under 0.01 units a frame was dropped, which above about 300 fps was most of it (characters stood still or caught on the ground). The threshold now shrinks with the frame time.
-- **Unlocked: frames at least a millisecond apart.** After a late frame the next few could come through back to back, under a millisecond apart, which the game's clock could not keep straight (the Westfold intro's run played slowly). Unlocked now means up to 1000 frames a second, each given its proper time.
-
-### Sound
-- **No more cut-outs or crackle.** Whenever the game updated its sounds, the emulated sound chip skipped that slice of audio: 3-10% of all sound came out as silence in short slices, and sounds seemed to stop part way, more the higher the frame rate. The sound now plays on, and the game's sound commands are applied between slices.
-- Volume changes glide across each slice instead of stepping.
-
-## Tested (1.9.5)
-- On Windows by the author: gameplay in busy scenes at unlocked frame rates (Westfold and others), with profiles of each change; the F10 menu fix; animation speed, the prologue and sound at up to 1000 fps.
-- On Linux at fixed frame times (33, 8, 2, 1 and 0.7 ms): animation time, falls and landings, and the world clock measured against 30 fps; sound lengths and gaps measured at 30 fps and unlocked.
-- Under Wine (Direct3D 11): levels load and play, fights render correctly.
-- On Linux: gameplay renders correctly; the native Direct3D functions checked against the translated ones call by call (14.7 million calls); every function changed by the register work compared old against new (8,348 identical, none different).
-- Windows, Linux and macOS builds compile.
-- Not tested by hand: the macOS build on a Mac.
-
-## What 1.9.4 added
-
-### Performance
-- **Higher frame rates/performance improvements.** The game's graphics commands now run on a thread of their own, beside the game, with far less processor work per draw (Direct3D 11 and Vulkan). On a fast PC this gives several times the frame rate of 1.9.3 and keeps the graphics card busier and usage scales better. 
-- **Game time improvements for higher frame rate.** Above the monitor's refresh rate (usually above 240 hz/fps) some animations in the game world would move slowly and feel delayed. They now run at the right speed at high frame rates.
-- **A drop to 20 fps** with Gandalf or Sauron at a certain spot in the Gates of Moria is fixed. 
-
-### Frame-limiter and display
-- **Frame rate limiter options** - 30, 60, 75, 90, 100, 120, 144, 165, 200, 240, 300 and Unlocked (Options → Display, F10, the launcher, or `[Display] fps=165`). The limit holds in the menus too.
-- **Vulkan** is no longer held to the monitor's refresh rate with VSync off.
-- The exclusive **Full-screen resolution** list goes from small to large, so the right arrow goes to a higher resolution, as Window size does.
-
-## What 1.9.3 added
-
-### Character shadow improvements
-The stripes and thin lines that crossed character shadows in every level, at any resolution, are not fixed completely, but some of the shadows are now filled in more (Direct3D 11 and Vulkan).
-
-### Exclusive full screen
-- **Display mode** now has **Windowed**, **Borderless** and **Exclusive** full screen (Options → Display, F10, the launcher, or `[Display] fullscreen=2`).
-- **Full-screen resolution** chooses the display's resolution for exclusive full screen: the desktop's, or another the display offers, at its highest refresh rate (`[Display] fs_resolution=1920x1080`). Changing it keeps you on the Display page.
-- The window and mouse follow every resolution change, so the pointer no longer drifts and W A S D keep working in the menus.
-
-### Controller fixes
-- In the main menus, a part push of the **left stick** moves the choice as the d-pad does. The main menu used to need a full push, and a push slightly to the side often did nothing. A held stick steps at the d-pad's pace.
-- A held stick or d-pad no longer runs down the **Options pages** at high frame rates.
-- **Mouse steering** and **mouse aiming** now take over the left stick only for the keys and mouse. Before, pushing a controller's stick up with steering on, or holding its LT with mouse aiming on, gave the stick to the mouse.
-
-### macOS updates (Apple silicon)
-The 1.9.2 Mac build stopped at start-up on Apple silicon. Three fixes, from a player's report and tested patch (M2 Pro, macOS 27.2, Rosetta 2):
-- **The game window opens.** macOS only lets the main thread make windows; the game drew no window ("NSWindow should only be instantiated on the main thread"). The window now runs on the main thread, the game on its own.
-- **No crash once the renderer is up.** The OpenGL picture could be drawn from a second thread that had no OpenGL context (a crash in `glBindFramebuffer`).
-- **No crash at the first sound.** Rosetta 2 reports the step the audio-register handling takes as a breakpoint (`unhandled exception 0x80000003`); it is now recognised as the step it is.
-- A crash log line now also names the function it stopped in.
-
-### Other fixes
-- **Vulkan without a separate download.** DXVK 3.0.2 now comes in the Windows download's `dxvk` folder: choose **Vulkan** as the Renderer in the launcher. Direct3D 11 stays the default.
-- The **Secret Codes** page shows your controls: its L trigger follows the button prompts you chose (as R did), and its text names your keys with keyboard prompts.
-  
-## Tested
-- Under Wine (Direct3D 11): levels load and play with the shadow repair on, at 1x and 4x internal resolution; exclusive full screen starts; the main menu with scripted left-stick pushes at 30 %, 40 %, 60 % and full (both ways), and a held stick against a held d-pad; the orange pickups and the ECTS HUD.
-- Linux (OpenGL): a level from boot. Windows, Linux and macOS builds compile.
-- macOS: the reporter's version of these fixes, in their own build, reached the renderer, sound and the intro screens at 30 frames a second on an M2 Pro (Rosetta 2). This release's Mac build (with the window fix reworked) has not been run on a Mac; full play, controllers and Intel Macs are untested.
-
-
-
-## What 1.9.2 added. 
-
-### Languages
-- Choose one in the launcher's **Language** list (on Linux and macOS: `./twotowers-setup`, then **l**). English, French, German, Spanish (Spain and Latin America), Italian, Portuguese (Brazil and Portugal), Dutch, Swedish, Danish, Norwegian, Finnish, Polish, Czech, Slovak, Hungarian, Romanian, Croatian, Turkish, Greek, Bulgarian, Russian, Ukrainian, Vietnamese, Indonesian, Japanese, Korean, Chinese (Simplified and Traditional), Thai, Hindi, Hebrew and Arabic.
-- Everything the game writes is translated: menus, hints, upgrades, the results and pause screens, credits, and the subtitles of the scenes and the bonus interviews. So are the port's own words: Options pages, key names, button hints, the extra heroes' names and upgrades, the launcher and the F10 panel.
-- Letters the game's fonts lack are added to them at each font's size and weight, and to the Ultra textures' upscaled fonts too, so text stays sharp in every language. Hebrew and Arabic read right to left; Chinese, Japanese and Thai lines break between words.
-- The `lang` folder holds only the translations. The game's files are copied with the language's text into `lang_cache` on first use (a few seconds); your game files are not changed. Spoken dialogue stays English.
-
-### Fixes
-- **Legolas's mission results picture** showed Aragorn with Ultra textures and the GameCube pack (the pack has no picture of him, and its second picture of Aragorn had been paired with it). It is his own now.
-- **Mouse steering**: hold Walk with W and the hero walks while steering. 
-
-## Tested
-- Under Wine (Direct3D 11 and software): the title screen and menus in French, Japanese and Arabic; the largest level loads in Japanese and Chinese; the upscaled fonts of Japanese, Polish and Russian (Ultra textures); the results screen as Legolas with Ultra textures; the launcher in Japanese (Wine has no Japanese font, so its words showed as boxes there; Windows has the fonts).
-- Linux (OpenGL): the title in Russian with the upscaled font. Windows, Linux and macOS builds compile.
-
-
 
 
 Known issues
