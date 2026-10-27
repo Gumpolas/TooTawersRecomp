@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 140u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 142u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -657,10 +657,10 @@ static const AnimPools s_pools[] = {
     { "elrond",  { "34,33", "9", "66",                "66",         "20",  "20",   "20", "27", "27", "20" }, 1.0f, "krp" },
     { "sauron",  { "34,33", "2,0,1", "43,41",            "41,43",      "43",  "43",   "20", "27", "", "43" }, 0, "" },
     { "uruk",    { "34,33", "9", "104,43,69",         "43,69",      "69",  "110",  "20", "27", "24", "69" }, 0, "" },
-    { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
-    { "urukcap", { "34,33", "9", "41", "43,172", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
     /* Saruman: no walk of his own (he stands on Orthanc): the hero's moves fitted to him ('m'); his casts */
     { "saruman", { "34,33", "", "64,62", "65,66", "20", "49", "22", "", "", "20" }, 1.0f, "kpn" },
+    { "urukcap", { "34,33", "9", "41", "43,172", "20", "20", "20,21", "27", "24", "20" }, 1.0f, "krpn" },
+    { "troll", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
     /* (Versus only) the elven warrior: his own swing, the hero's falls */
     { "elvenwarrior", { "34,33", "9", "66", "66", "20", "20", "20", "", "", "20" }, 1.0f, "krpn" },
     /* the Versus-only three (with the elven warrior above): their own swings, flinches, falls and deaths; the hero's kick (their special), parry and
@@ -668,6 +668,8 @@ static const AnimPools s_pools[] = {
     { "nazgul",  { "34,33", "9", "69,41,45",          "43,45",      "37",  "41",   "20,21", "2,2,2,34", "2", "41" }, 1.0f, "kpr" },
     { "orc",     { "34,33", "9", "41,104,69",         "43,45",      "40",  "41",   "20,21", "27", "24", "69" }, 1.0f, "kpr" },
     { "eomer",   { "34,33", "9", "41,69",             "43,41",      "41",  "41",   "20,21", "27", "24", "69" }, 1.0f, "kpr" },
+    /* (1.9.9) the other troll (player 2 beside a cave troll): the cave troll's, on his set */
+    { "troll2", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
 };
 static int pool_pick(const char *list, int n, const uint32_t *gtab, uint32_t gns)
 {
@@ -708,7 +710,7 @@ static const char *s_menu_moves[N_SEL][3] = {   /* stance, chosen pose, confirm 
     { "34,33", "66,33", "66,33" },          /* elrond: his sword swing when chosen too (1.9.1; 33 is a stance: nothing moved) */
     { "34", "41,43", "43,41" },             /* sauron */
     { "34,33", "43,41", "41,43" },          /* uruk */
-    { "34,33", "36,35", "35,57" },          /* saruman: as Gandalf (his moves the staff's) */
+    { "34,33", "106,34", "49,34" },         /* saruman: his own from Orthanc -- chosen, his long gesture (106, as he laughs); confirmed, his rising cast (49) */
 };
 /* the composed set's settings, for the cache name */
 static void hudammo_path(int sk, char *p2, size_t n);
@@ -1584,7 +1586,7 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
         }
         gr = G + gt[src];
         s_hat[s] = at[s];
-        if (log_on() && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_PARRY || cls == AC_DEATH || cls == AC_KICK)) tt_dbg("[HEROES]   slot %u (class %d) <- %s %u\n", s, cls, ovr[s] ? "the hero's, retargeted" : "his", ovr[s] ? s : src);
+        if (log_on() && (cls == AC_SPEED || cls == AC_FIERCE || cls == AC_PARRY || cls == AC_DEATH || cls == AC_KICK || cls == AC_RANGED || cls == AC_MOVE || cls == AC_IDLE)) tt_dbg("[HEROES]   slot %u (class %d) <- %s %u\n", s, cls, ovr[s] ? "the hero's, retargeted" : "his", ovr[s] ? s : src);
         if (cls == AC_MOVE && !ovr[s] && !s_compose_menu && s_skins[g].map && !getenv("TT_OWNMOVES")
             && strcmp(s_pools[g].name, "sauron")) {   /* (1.7.4: not Sauron's -- the hero's root heights on his lowered root, and he fell through the ground at the Gates of Moria) */
             /* (1.7.2) a move that takes him another way than the hero's: the
@@ -2560,7 +2562,7 @@ static uint32_t *bmp_load_argb(const char *p2, int *w, int *h, long *sz)
     return out;
 }
 /* (132) el troll lanza las rocas del Uruk-hai: sus dibujos de municion y mejoras */
-static const char *ranged_art(int sk) { return !strcmp(s_skins[sk].name, "troll") ? "uruk" : s_skins[sk].name; }
+static const char *ranged_art(int sk) { return !strcmp(s_skins[sk].name, "troll") || !strcmp(s_skins[sk].name, "troll2") ? (getenv("TT_TROLLURUKICON") ? "uruk" : "troll") : s_skins[sk].name; }   /* (1.9.9: the troll's own, hudammo\\troll.bmp -- was the Uruk-hai's burning rock) */
 static void hudammo_path(int sk, char *p2, size_t n) { paths(); snprintf(p2, n, "%s/hudammo/%s.bmp", s_dir, ranged_art(sk)); }
 static void hud_ammo_patch(unsigned char *o, const unsigned char *t, size_t tl, int sk, const char *target)
 {
@@ -3937,7 +3939,7 @@ static const Voice s_voice[N_EXTRA] = {
     /* Saruman: Gandalf's (Gimli's, deeper), far deeper still */
     { { VA("17TOP1", 265, 0.84f, 1.5f), VA("17TOP1", 266, 0.84f, 1.5f), VA("17TOP1", 267, 0.84f, 1.5f), VA("17TOP1", 271, 0.84f, 1.5f),
         VA("17TOP1", 268, 0.84f, 1.5f), VA("17TOP1", 269, 0.84f, 1.5f), VA("17TOP1", 273, 0.84f, 1.5f), VA("17TOP1", 272, 0.84f, 1.5f), VA("17TOP1", 269, 0.78f, 1.5f) },
-      VA("INTRFACE", 2731, 0.84f, 4.0f), 0.0f },
+      VA("21ORTH2", 2621, 1.0f, 2.5f), 0.0f },   /* (1.9.9) on the select: his laugh, Orthanc's own (2621, the one voice only his levels have) */
     { { VA("17TOP1", 826, 1.0f, 1.3f), VA("17TOP1", 827, 1.0f, 1.3f), VA("17TOP1", 826, 1.08f, 1.3f), VA("17TOP1", 827, 1.08f, 1.3f),
         VA("17TOP1", 811, 1.0f, 1.0f), VA("17TOP1", 812, 1.0f, 1.0f), VA("17TOP1", 834, 1.0f, 1.0f), VA("17TOP1", 814, 1.0f, 1.6f), VA("17TOP1", 817, 1.0f, 1.8f) },
       VA("17TOP1", 826, 1.0f, 2.2f), 0.3f }, /* the Uruk captain: the Uruk-hai's */
@@ -4172,7 +4174,7 @@ static const Confirm s_confirm[N_SEL] = {
     { VC("17TOP1", 183, 1.0f, 1.0f), VC(NULL, 0, 0, 0), 0 },      /* Elrond: a sword */
     { VC("17TOP1", 859, 0.80f, 1.2f), VC(NULL, 0, 0, 0), 0 },     /* Sauron: a heavy swing */
     { VC("17TOP1", 859, 1.0f, 1.2f), VC(NULL, 0, 0, 0), 0 },      /* the Uruk-hai: his blade */
-    { VC(NULL, 0, 0, 0), VC(NULL, 0, 0, 0), 0 },                  /* Saruman: the game's own, as Gandalf */
+    { VC("21ORTH2", 552, 1.0f, 1.0f), VC("21ORTH2", 2621, 1.0f, 2.5f), 0.4f },   /* Saruman: his staff's cast (552), then his laugh */
 };
 #undef VC
 /* a source at 22050 Hz with its pitch applied (resampled) */
@@ -5016,6 +5018,32 @@ static int hl_set(int g)
 }
 
 /* hero 4's upgrade names: guest g's (-1 Isildur's, the originals) */
+/* (1.9.9) the special move's name the HUD's popup word shows (list 1, element 14: the hero-4 strings, upn_set's) as player
+ * 2's own: his guest's names, or a retail hero's name in Isildur's place. A buffer of ours in guest memory, or 0 (not one
+ * of those strings, or player 2's names are player 1's) */
+uint32_t tt_heroes_p2_popup_text(uint32_t tp)
+{
+    extern const char *tt_coop_p2_char_now; static uint32_t buf; char t[512], o[512]; const UpgName *L = NULL; int i, k, j, l;
+    const char *c = tt_coop_p2_char_now; int p2 = c ? skin_by_name(c) : -1;
+    static const UpgName ret_ar[] = { { "Isildur's", "Aragorn's" }, { NULL, NULL } }, ret_le[] = { { "Isildur's", "Legolas'" }, { NULL, NULL } }, ret_gi[] = { { "Isildur's", "Gimli's" }, { NULL, NULL } };
+    if (getenv("TT_NOP2UPN") || !c || s_upn_n <= 0) return 0;
+    for (i = 0; i < s_upn_n && s_upn_at[i] != tp; i++) ;
+    if (i == s_upn_n) return 0;
+    if (s_coop_skin && s_playas == SK_TROLL2) p2 = SK_TROLL;
+    if (!strcmp(c, "aragorn")) L = ret_ar; else if (!strcmp(c, "legolas")) L = ret_le; else if (!strcmp(c, "gimli")) L = ret_gi;
+    else if (!strcmp(c, "isildur")) L = NULL; else if (p2 >= 0) L = upn_list(p2); else return 0;
+    if (p2 >= 0 && p2 == LVG && !skin_retail(p2)) return 0;   /* (his names are player 1's) */
+    l = s_upn_len[i];
+    for (k = 0; k < l && k < 500; k++) t[k] = (char)s_upn_orig[i][k];
+    t[k] = 0;
+    if (L) for (j = 0; L[j].from; j++) { char *p = t; while ((p = strstr(p, L[j].from)) != NULL) { size_t fl = strlen(L[j].from), nl = strlen(L[j].to);
+        if (strlen(t) - fl + nl >= 250) break; snprintf(o, sizeof o, "%.*s%s%s", (int)(p - t), t, L[j].to, p + fl); p = t + (p - t) + nl; strcpy(t, o); } }
+    if (!buf) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); buf = xbox_ContiguousAlloc(1024u, 16u); }
+    if (!buf) return 0;
+    for (k = 0; t[k] && k < 250; k++) G16(buf + 2 * k) = (uint16_t)(unsigned char)t[k];
+    G16(buf + 2 * k) = 0;
+    return buf;
+}
 static void upn_set(int g)
 {
     const UpgName *L = upn_list(g);
@@ -5913,6 +5941,7 @@ static DWORD WINAPI aw_thread(LPVOID u);
 void tt_heroes_init(void)
 {
     { int q; for (q = 0; q < 256; q++) s_idmap[q] = (uint8_t)q; }
+    { int q; for (q = 0; q < N_EXTRA; q++) if (q >= (int)(sizeof s_pools / sizeof s_pools[0]) || strcmp(s_pools[q].name, s_skins[q].name)) tt_dbg("[HEROES] *** s_pools[%d] is not %s's: the tables are out of order ***\n", q, s_skins[q].name); }   /* (1.9.9: per-skin tables by index -- a reorder gave Saruman the troll's moves) */
     {   /* (1.9.2) the files' copies are made in two steps: ours, then the
          * language's (lang.c), which owns xbox_path_redirect */
         extern const char *(*tt_heroes_redirect)(const char *xp);
@@ -7225,6 +7254,7 @@ static void coop_beam_flush(void)
     if (getenv("TT_COOP_BEAMLOG")) tt_dbg("[COOPBEAM] %d beam(s) of player 2 spawned out of his context\n", s_p2beam_n);
     s_p2beam_n = 0;
 }
+static int s_launch_p2;
 int tt_hk(int id, int phase, uint32_t *r)
 {
     if (s_p2beam_n) coop_beam_flush();
@@ -7304,7 +7334,8 @@ int tt_hk(int id, int phase, uint32_t *r)
     /* his shots: the shooter (the bow-hand weapon's object, its model at
      * +0x494) carries his bow-hand model -- the player's shot. Gandalf's
      * are all the magic bolt (projectile 15, whatever arrows he has) */
-    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam && !getenv("TT_NOBEAM")
+    if (id == 22 && phase == 0) { extern uint32_t coop_p2_actor(void); uint32_t p2a = coop_p2_actor(); s_launch_p2 = p2a && G32(g_esp + 0x18) == p2a; }   /* (1.9.9) player 2's shot: none of player 1's guest's ways (player 2 Legolas shot player 1 Saruman's beams) */
+    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam && !getenv("TT_NOBEAM") && !s_launch_p2
         && (shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY))) {
         s_beam_obj[s_beam_n++ & 7] = r[1];
         s_shooter = G32(g_esp + 4);
@@ -7324,7 +7355,7 @@ int tt_hk(int id, int phase, uint32_t *r)
     /* (1.8.1) not at the Gates of Moria: the Watcher takes no harm from the
      * thrown stone (projectile 10) -- Frodo's and the Uruk-hai's shots stay
      * the game's own there */
-    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && !strcmp(s_skins[s_guest].name, "frodo")
+    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && !s_launch_p2 && !strcmp(s_skins[s_guest].name, "frodo")
         && (G32(g_esp + 16) == 15u || shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY)) && !getenv("TT_FRODOAXE")) {   /* (1.9.1: the bow's arrows too, the variant he plays now) */
         uint32_t st = G32(g_esp + 4), dv = G32(g_esp + 12);
         if (getenv("TT_SHOTLOG")) { tt_dbg("[SHOT] frodo: a stone for projectile %u (watcher level %d)\n", G32(g_esp + 16), s_at_watcher); (void)proj_record(10u); }
@@ -7335,7 +7366,7 @@ int tt_hk(int id, int phase, uint32_t *r)
     }
     /* (132) el troll lanza las mismas rocas (sin animacion de lanzamiento
      * propia: la cadena de Moria no tiene una en sus clips NPC) */
-    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0
+    if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && !s_launch_p2
         && (!strcmp(s_skins[s_guest].name, "uruk") || !strcmp(s_skins[s_guest].name, "troll")
             || !strcmp(s_skins[s_guest].name, "nazgul") || !strcmp(s_skins[s_guest].name, "orc") || !strcmp(s_skins[s_guest].name, "eomer"))   /* (and Versus' three: they throw as he does) */
         && shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY)) {
@@ -7468,7 +7499,7 @@ int tt_hk(int id, int phase, uint32_t *r)
     {   /* (co-op: player 2's own launches too, when his character shoots a beam -- Gandalf, Sauron: his shots are marked
          * at the launch, the beam from the shot's own start, the shooter being player 1's bow) */
         int p2b = 0, q2; for (q2 = 0; q2 < 8; q2++) if (s_launching && s_beam_p2obj[q2] == s_launching) p2b = 1;
-    if (id == 22 && phase == 1 && !getenv("TT_NOBEAM") && (p2b || (tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam))) {
+    if (id == 22 && phase == 1 && !getenv("TT_NOBEAM") && (p2b || (!s_launch_p2 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam))) {
         int bg = p2b ? s_playas : s_guest;
         if (p2b && getenv("TT_COOP_BEAMLOG")) { extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), pb = G32(0x43B15Cu), ob = s_launching; static int n; if (n++ < 12 && pa && ob >= 0x80000000u && ob < 0x84000000u) tt_dbg("[COOPBEAM] start %.2f %.2f %.2f aim %.2f %.2f %.2f | P2 %.2f %.2f %.2f | player %08X %.2f %.2f %.2f\n", GF(ob + 0x3E8), GF(ob + 0x3EC), GF(ob + 0x3F0), GF(ob + 0x3F8), GF(ob + 0x3FC), GF(ob + 0x400), GF(pa + 0xF0), GF(pa + 0xF4), GF(pa + 0xF8), pb, GF(pb + 0xF0), GF(pb + 0xF4), GF(pb + 0xF8)); }
         if (p2b && getenv("TT_COOP_P2GAMESTART") && !getenv("TT_COOP_BEAMGAMESTART")) {   /* (1.9.8: his shot leaves his hand now, coop_launch_pre; this only with TT_COOP_P2GAMESTART) */   /* player 2's shot starts where player 1's bow is held (5 units over his head, beside him: observed), and the staff's

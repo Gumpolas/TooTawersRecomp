@@ -150,8 +150,6 @@ static void tt_thread_start_pin(void)
 
 #include <signal.h>
 #include "twotowers_host.h"
-#include "dlss5.inc"
-#include "xbe_version.inc"
 
 /* (1.9.3) getenv, looked up once per name (tt_env.h). The cache is keyed by
  * the name's address (the names are string literals); the value is copied.
@@ -1077,13 +1075,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         return 1;
     }
     printf("XBE loaded: %zu bytes\n", xbe_size);
-    if (!tt_xbe_supported(xbe_data, xbe_size)) {
-        free(xbe_data);
-        if (!getenv("TT_VALIDAR_XBE"))
-            MessageBoxA(NULL, "Este port requiere el XBE USA original.\n\nEl disco PAL aporta idiomas, pero no sustituye al XBE USA.\nConsulta LEEME_IDIOMAS.txt.", "Version de disco incompatible", MB_ICONERROR);
-        return 2;
-    }
-    if (getenv("TT_VALIDAR_XBE")) { free(xbe_data); printf("[XBE] USA verificado; no se inicia el juego.\n"); return 0; }
 
     /* Step 2: Initialize Xbox memory layout */
     printf("Initializing Xbox memory layout...\n");
@@ -1097,7 +1088,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     g_xbox_mem_offset = xbox_GetMemoryOffset();
     printf("Xbox memory mapped. Offset: 0x%llX\n", (unsigned long long)g_xbox_mem_offset);
-    tt_dlss5_init();
     if (getenv("RECOMP_REPLAY")) {
         extern int nv2a_replay(const char *path);
         prof_start();

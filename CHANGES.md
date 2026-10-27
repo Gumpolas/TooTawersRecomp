@@ -2838,3 +2838,32 @@ twotowers/src/heroes.c
     patches name it there).
 twotowers/src/menus.c
   - (test) TT_P1SCRIPT steps "LY=<value>": a part push of the stick.
+
+-- 1.9.9: player 2's moves, Saruman's own moves, input, languages as in 1.9.8 ------
+twotowers/src/heroes.c
+  - s_pools back in s_skins' order (Saruman, Uruk captain, troll at 7, 8,
+    9): Saruman had the troll's moves (his casts stood still, his ranged
+    was a bow pull) and the troll Saruman's. Saruman's own moves again,
+    his float for the ranged; a check at start names a pool out of place.
+  - Saruman's select: Orthanc's laugh (21ORTH2 2621) and cast.
+  - The troll's and Saruman's ranged pictures (hudammo, upgitems): the
+    tree and the staff, with alpha.
+  - Player 2's launches are his: player 1's guest beam no longer replaces
+    Legolas' arrows as player 2.
+  - Player 2's special move names on his side, with his own names.
+twotowers/src/twotowers_manual.c
+  - The special move name (HUD element 1.15, text 0x4A4A98) raised in
+    player 2's turn is shown mirrored on his side; player 1's left alone.
+  - The troll's slam armed before Versus' sound routing (it never played
+    there).
+xboxrecomp-0.12.0/src/input/xinput_device.c
+  - On Windows itself the keyboard is read from the start: the Enter that
+    launched the game stayed held as Start, so the controller's Start
+    never paused and the main menu kept choosing (only a left Alt let it
+    go). A key the keyboard reports up is let go after 250 ms.
+twotowers/src/lang.c, setup_launcher.cpp, main.c, menus.c
+  - Languages as in 1.9.8: one language for the game and the launcher.
+    The R8 subtitle/voice/film language choices, the SRT subtitles, the
+    launcher's interface-language and DLSS 5 buttons, the DLSS 5 hooks and
+    the USA-XBE-only check taken out (dlss5.inc, lang_fmv.inc,
+    xbe_version.inc removed).

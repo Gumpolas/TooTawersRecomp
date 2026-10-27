@@ -908,8 +908,16 @@ static BOOL key_down(int vk)
 {
     HWND fg;
     int ours;
-    static volatile int async_works;          /* GetAsyncKeyState has reported a key */
+    static volatile int async_works = -1;     /* GetAsyncKeyState has reported a key (or this is Windows itself) */
     static DWORD stale_since[256];
+    if (async_works < 0) {   /* (1.9.9) on Windows itself the keyboard can always be read: a key held by the window's
+                              * messages alone is a lost release from the start -- the Enter that launched the game stayed
+                              * "held" as Start, so the controller's Start never paused and the menus kept choosing (a
+                              * playtest; only an Alt press, which proved the keyboard readable, let it go). Under Wine,
+                              * GetAsyncKeyState reads nothing: there only after it has shown a key, as before */
+        HMODULE nt = GetModuleHandleA("ntdll.dll");
+        async_works = (nt && GetProcAddress(nt, "wine_get_version")) ? 0 : 1;
+    }
     /* Alt+Enter toggles full screen; it is not Start. */
     if (vk == VK_RETURN && (GetAsyncKeyState(VK_MENU) & 0x8000)) return FALSE;
     fg = GetForegroundWindow();

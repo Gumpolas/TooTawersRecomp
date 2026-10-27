@@ -6556,13 +6556,13 @@ static void coop_hud_frame(void)   /* once a frame, on the game's side: what the
  * fill from player 2's health; and a font-0 text "RESPAWN n" at the top middle while he is down.
  * TT_COOP_NOSWORD turns it off (the debug panel, TT_COOP_NOHUD, is then the fallback). */
 #define COOP_EL      0x4BA600u   /* after the E3 HUD's two (0x4BA000-0x4BA1B7) and menus.c's Exit (0x4BA400, its text 0x4BA500): at 0x4BA1C0 the main menu's Exit, drawn first, made the area look used and player 2's HUD stood down */
-#define COOP_EL_N    15   /* 0-3 sword, 4 counter, 5-10 gauge, 11-12 rating popup, 13-14 arrows; ends at 0x4BB2E4 (player 2's record copy is at 0x4BB300) */
+#define COOP_EL_N    16   /* 0-3 sword, 4 counter, 5-10 gauge, 11-12 rating popup, 13-14 arrows, 15 his special move's name (1.9.9); ends at 0x4BB3C0 */
 #define COOP_HUD_LIST 0x1BAAE4u
 #define COOP_HUD_ON   0x4A559Cu
 #define COOP_P1SWORD  0x4A0398u
 static uint32_t coop_arrow_saved[3]; static int coop_arrow_n;
 static uint32_t coop_teeth_el, coop_teeth_saved[2]; static int coop_teeth_slot = -1;
-static int coop_sw_slot = -1; static uint32_t coop_sw_saved[2]; static uint8_t coop_pop_saved[2]; static int coop_pop_hid; static uint32_t coop_ally[96][2]; static int coop_ally_n; static uint32_t coop_allyhid[96]; static int coop_allyhid_n;
+static int coop_sw_slot = -1; static uint32_t coop_sw_saved[2]; static uint8_t coop_pop_saved[2]; static int coop_pop_hid; static uint8_t coop_nm_saved; static int coop_nm_hid; extern uint32_t coop_p2name_txt; extern int coop_p2name_on; static uint32_t coop_ally[96][2]; static int coop_ally_n; static uint32_t coop_allyhid[96]; static int coop_allyhid_n;
 static int coop_ammo_dirty = 1, coop_ammo_ok;   /* (player 2's ammo icon: built again for a new level) */
 extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
 static void coop_el_copy(uint32_t dst, uint32_t src) { int i; for (i = 0; i < 0xDC; i += 4) MEM32(dst + i) = MEM32(src + i); }
@@ -7108,10 +7108,24 @@ void tt_coop_hud_pre(void)
         if (getenv("TT_COOP_GAUGEPROBE")) { static int32_t lh = -1; static uint32_t lt; if (h != lh && coop_now() - lt > 200) { lh = h; lt = coop_now(); tt_dbg("[COOPGAUGE] P2 t %u: exp %d of %d into his level (+90 %.1f +6C %d +78 %d, rating +4 %.2f) -> fill %d of %.0f\n", coop_now() - coop_p2_t0, cur, mxe, MEMF(COOP_P2REC + 0x90), (int32_t)MEM32(COOP_P2REC + 0x6C), (int32_t)MEM32(COOP_P2REC + 0x78), MEMF(COOP_P2REC + 4), h, MEMF(0x173C3Cu)); } }
         MEM8(COOP_EL + 7 * 0xDC + 0x24) = 0;   /* player 1's gain flash: not his */
     }
-    {   /* the rating popup (list 1: 10 medallion, 14 the word): after a kill by player 2, mirrored to his side and hidden on player 1's */
+    {   /* (1.9.9) the special move's name (list 1, element 15: its text +0x34, shown +0x24) when player 2's move raised it: on his
+         * side, mirrored, in his own names (heroes.c), and not on player 1's. Player 1's own name again (another text) ends it */
+        uint32_t p15 = 0x4A3D80u + 15 * 0xDC, e15 = COOP_EL + 15 * 0xDC;
+        coop_el_copy(e15, p15); MEM8(e15 + 0x24) = 0; coop_nm_hid = 0;
+        if (coop_p2name_on && (!MEM8(p15 + 0x24) || MEM32(p15 + 0x34) != coop_p2name_txt)) coop_p2name_on = 0;
+        if (coop_p2name_on) {
+            extern uint32_t tt_heroes_p2_popup_text(uint32_t tp); uint32_t b = tt_heroes_p2_popup_text(coop_p2name_txt), tp; int n = 0, cw = getenv("TT_COOP_POPCW") ? atoi(getenv("TT_COOP_POPCW")) : 15;
+            if (b) MEM32(e15 + 0x34) = b;
+            tp = MEM32(e15 + 0x34); while (n < 40 && MEM16(tp + 2 * n)) n++;
+            MEM32(e15 + 8) = (uint32_t)(640 - (int32_t)MEM32(p15 + 8) - n * cw);
+            MEM8(e15 + 0x24) = 1; coop_nm_saved = MEM8(p15 + 0x24); MEM8(p15 + 0x24) = 0; coop_nm_hid = 1;
+        }
+    }
+    {   extern uint32_t coop_p2pop_txt;   /* the rating popup (list 1: 10 medallion, 14 the word): after a kill by player 2, mirrored to his side and hidden on player 1's */
         extern uint32_t coop_p2pop_until; uint32_t g = 0x4A3D80u, p10 = g + 10 * 0xDC, p14 = g + 14 * 0xDC; int mine = coop_now() < coop_p2pop_until;
         uint32_t e11 = COOP_EL + 11 * 0xDC, e12 = COOP_EL + 12 * 0xDC;
         coop_el_copy(e11, p10); coop_el_copy(e12, p14);
+        if (mine && MEM32(e12 + 0x34) == coop_p2pop_txt && coop_p2pop_txt) { extern uint32_t tt_heroes_p2_popup_text(uint32_t tp); uint32_t b = tt_heroes_p2_popup_text(coop_p2pop_txt); if (b) MEM32(e12 + 0x34) = b; }   /* (his move's name in his own names) */
         MEM32(e11 + 8) = (uint32_t)(640 - (int32_t)MEM32(e11 + 8) - (int32_t)MEM32(e11 + 0x10));
         {   /* the word is drawn from its box's left edge: mirrored, it ends where player 1's starts from his gauge (about 15 units a letter) */
             uint32_t tp = MEM32(e12 + 0x34) >= 0x10000u ? MEM32(e12 + 0x34) : e12 + 0x38; int n = 0, x1 = 640 - (int32_t)MEM32(e12 + 8), cw = getenv("TT_COOP_POPCW") ? atoi(getenv("TT_COOP_POPCW")) : 15;
@@ -7273,6 +7287,7 @@ static void coop_gauge_probe(void)   /* (research) player 1's gauge (list 1) and
 void tt_coop_hud_post(void)
 {
     coop_gauge_probe();
+    if (coop_nm_hid) { MEM8(0x4A3D80u + 15 * 0xDC + 0x24) = coop_nm_saved; coop_nm_hid = 0; }
     if (coop_pop_hid) { MEM8(0x4A3D80u + 10 * 0xDC + 0x24) = coop_pop_saved[0]; MEM8(0x4A3D80u + 14 * 0xDC + 0x24) = coop_pop_saved[1]; coop_pop_hid = 0; }
     while (coop_ally_n > 0) { coop_ally_n--; MEM32(COOP_HUD_LIST + coop_ally[coop_ally_n][0] * 12) = coop_ally[coop_ally_n][1]; }   /* the allies' own tables back */
     while (coop_allyhid_n > 0) { coop_allyhid_n--; MEM8(coop_allyhid[coop_allyhid_n] + 0x24) = 1; }   /* (the sliding ones shown again for the game) */
@@ -7821,6 +7836,24 @@ void sub_000F3430(void)
 /* coop_dbrec: the character-database record slot 43 (0x86B30) gave player 1 */
 static uint32_t coop_s1_player(void) { uint32_t i, o = 0, v; for (i = 0; i < COOP_NBLK && coop_blk[i].a != 0x43B15Cu; i++) o += coop_blk[i].n; memcpy(&v, coop_s1 + o, 4); return v; }
 /* a method on one of player 2's weapon copies: his globals in place, as for his own methods */
+/* (1.9.9) the popup word (list 1, element 14: its text 0x4A49BC, its time 0x4A5598) set while player 2's context ran: his --
+ * his special move's name (the game's own popup, raised from his move) goes to his side, in his names (heroes.c) */
+static uint32_t coop_pop_t0, coop_pop_f0, coop_nm_t0, coop_nm_on0; uint32_t coop_p2pop_txt, coop_p2name_txt; int coop_p2name_on;
+static void coop_pop_snap(void) { coop_pop_t0 = MEM32(0x4A49BCu); coop_pop_f0 = MEM32(0x4A5598u); coop_nm_t0 = MEM32(0x4A4A98u); coop_nm_on0 = MEM8(0x4A4A88u); }
+static void coop_pop_check(void)
+{
+    extern uint32_t coop_p2pop_until;
+    if (getenv("TT_COOP_NOP2POPMOVE")) return;
+    if (MEM8(0x4A4A88u) && (MEM32(0x4A4A98u) != coop_nm_t0 || !coop_nm_on0)) {   /* list 1's element 15: the special move's name, raised in his context */
+        coop_p2name_txt = MEM32(0x4A4A98u); coop_p2name_on = 1;
+        { static int n; if (n++ < 20) tt_dbg("[COOPHUD] player 2's special move's name (%08X): on his side\n", coop_p2name_txt); }
+    }
+    if (MEM32(0x4A49BCu) != coop_pop_t0 || (MEMF(0x4A5598u) > *(float *)&coop_pop_f0 + 0.01f)) {
+        coop_p2pop_until = coop_now() + 2600; coop_p2pop_txt = MEM32(0x4A49BCu);
+        { static int n; if (n++ < 20) { uint32_t tp = MEM32(0x4A49BCu); char b[40]; int q = 0; if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 38 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q); b[q] = 0;
+            tt_dbg("[COOPHUD] player 2's popup word '%s' (%08X): on his side\n", b, tp); } }
+    }
+}
 int tt_coop_enter_weapon(uint32_t self)
 {
     int i;
@@ -7828,6 +7861,7 @@ int tt_coop_enter_weapon(uint32_t self)
     for (i = 0; i < coop_nwpn; i++) if (coop_wpn_copy[i] == self) break;
     if (i == coop_nwpn) return 0;
     { uint32_t c1 = MEM8(0x43B1C0u); coop_save(coop_s1); coop_load(coop_s2); MEM8(0x43B1C0u) = (uint8_t)c1; }
+    coop_pop_snap();
     coop_depth = 1; coop_cur_fn = 0;
     return 1;
 }
@@ -7836,6 +7870,7 @@ int tt_coop_enter_ctx(void)
 {
     if (!coop_p2 || coop_depth || MEM32(0x43B15Cu) == coop_p2) return 0;
     { uint32_t c1 = MEM8(0x43B1C0u); coop_save(coop_s1); coop_load(coop_s2); MEM8(0x43B1C0u) = (uint8_t)c1; }
+    coop_pop_snap();
     coop_depth = 1; coop_cur_fn = 0;
     return 1;
 }
@@ -7886,6 +7921,7 @@ void tt_coop_weapon_methods_dump(void)
     if (coop_p2 && self != coop_p2) return tt_coop_enter_weapon(self);   /* methods shared with the weapon class: his weapon copies too */
     if (!coop_p2 || self != coop_p2 || coop_depth || MEM32(0x43B15Cu) == coop_p2) return 0;
     { uint32_t c1 = MEM8(0x43B1C0u); coop_save(coop_s1); coop_load(coop_s2); MEM8(0x43B1C0u) = (uint8_t)c1; }
+    coop_pop_snap();
     coop_depth = 1; coop_n_enter++;
     coop_cur_fn = fn; coop_pre[0] = MEMF(self + 0xF0); coop_pre[1] = MEMF(self + 0xF4); coop_pre[2] = MEMF(self + 0xF8);
     return 1;
@@ -7906,6 +7942,7 @@ void tt_coop_leave(void)
     {   float dx = MEMF(coop_p2 + 0xF0) - coop_pre[0], dy = MEMF(coop_p2 + 0xF4) - coop_pre[1], dz = MEMF(coop_p2 + 0xF8) - coop_pre[2], d = dx * dx + dy * dy + dz * dz; int i;
         if (d > 1e-8f) { for (i = 0; i < coop_mvn && coop_mv[i].fn != coop_cur_fn; i++) ; if (i == coop_mvn && coop_mvn < 32) { coop_mv[i].fn = coop_cur_fn; coop_mv[i].n = 0; coop_mv[i].d = 0; coop_mvn++; } if (i < 32) { coop_mv[i].n++; coop_mv[i].d += d; } } }
     coop_save(coop_s2); coop_load(coop_s1);
+    coop_pop_check();
     coop_depth = 0; coop_n_leave++;
 }/* research: the message queue (0x43C628) delivers node->target->vtable[+0x54](type, node). A message to
  * a target that cannot take it is logged with the code addresses on the stack (who sent it). */
@@ -10229,6 +10266,48 @@ uint32_t tt_vs_level_index(void) { return MEM32(0x1BB2A4u); }
  * put back without a second raise of his health. TT_HPPCT=100: as before */
 void tt_hero_hp_tick(void)
 {
+    if (getenv("TT_POPSCAN")) {   /* (research) where a pointer to a text starting with TT_POPSCAN's letters is kept */
+        static uint32_t seen[64]; static int ns; const char *w = getenv("TT_POPSCAN"); uint32_t a;
+        for (a = 0x400000u; a < 0x4C0000u; a += 4) { uint32_t p = MEM32(a); int k, ok = 1, j;
+            if (p < 0x10000u || p >= 0x84000000u || (p >= 0x4000000u && p < 0x80000000u)) continue;
+            for (k = 0; w[k] && ok; k++) if (MEM16(p + 2 * k) != (uint8_t)w[k]) ok = 0;
+            if (!ok) continue;
+            for (j = 0; j < ns && seen[j] != a; j++) ;
+            if (j == ns && ns < 64) { seen[ns++] = a; tt_dbg("[POPSCAN] t %u at %08X -> %08X\n", tt_game_ms, a, p); } }
+        for (a = 0x400000u; a < 0x4C0000u; a += 2) { int k, ok = 1, j;   /* and the text itself, inline */
+            for (k = 0; w[k] && ok; k++) if (MEM16(a + 2 * k) != (uint8_t)w[k]) ok = 0;
+            if (!ok) continue;
+            for (j = 0; j < ns && seen[j] != (a | 1u); j++) ;
+            if (j == ns && ns < 64) { seen[ns++] = a | 1u; tt_dbg("[POPSCAN] t %u text inline at %08X\n", tt_game_ms, a); } }
+    }
+    if (getenv("TT_NMLOG")) {   /* (research) the special move's name element (list 1, 15): its text and switch */
+        static uint32_t lp, lo = 9; if (MEM32(0x4A4A98u) != lp || MEM8(0x4A4A88u) != lo) { lp = MEM32(0x4A4A98u); lo = MEM8(0x4A4A88u); tt_dbg("[NMLOG] t %u name %08X on %u\n", tt_game_ms, lp, lo); }
+    }
+    if (getenv("TT_MEMSNAPMS")) {   /* (research) TT_MEMSNAPMS=ms,ms,...: the game's data area (0x400000-0x4D0000) at those game times, to diff */
+        static int done[16]; const char *q = getenv("TT_MEMSNAPMS"); int i = 0;
+        while (*q && i < 16) { uint32_t at = (uint32_t)atoi(q);
+            if (!done[i] && tt_game_ms >= at) { char pth[300]; void *mf; uint32_t a; extern void *fopen(const char *, const char *); extern size_t fwrite(const void *, size_t, size_t, void *); extern int fclose(void *); done[i] = 1; snprintf(pth, sizeof pth, "%s/snap_%u.mem", getenv("TT_DUMP_DIR") ? getenv("TT_DUMP_DIR") : ".", at);
+                if ((mf = fopen(pth, "wb"))) { for (a = 0x400000u; a < 0x4D0000u; a += 4) { uint32_t v = MEM32(a); fwrite(&v, 4, 1, mf); } fclose(mf); } { extern void xbox_PresentDumpRequest(const char *path); static char fp[16][300]; snprintf(fp[i], 300, "%s/snap_%u.bmp", getenv("TT_DUMP_DIR") ? getenv("TT_DUMP_DIR") : ".", at); xbox_PresentDumpRequest(fp[i]); } }
+            q = strchr(q, ','); if (!q) break; q++; i++; }
+    }
+    if (getenv("TT_POPSCAN2")) {   /* (research) TT_POPSCAN2=word: its UTF-16 copies in memory, then every 300 ms what points at them */
+        static uint32_t str[16]; static int nstr = -1; static uint32_t lt, seen[64]; static int ns; const char *w = getenv("TT_POPSCAN2"); uint32_t a;
+        if (nstr < 0 && tt_game_ms > 20000u) { nstr = 0; for (a = 0x80000000u; a < 0x84000000u - 64 && nstr < 16; a += 2) { int k, ok = 1; for (k = 0; w[k] && ok; k++) if (MEM16(a + 2 * k) != (uint8_t)w[k]) ok = 0; if (ok) { str[nstr++] = a; tt_dbg("[POPSCAN2] '%s' at %08X\n", w, a); } } }
+        if (nstr > 0 && tt_game_ms - lt > 300u) { lt = tt_game_ms;
+            for (a = 0x400000u; a < 0x84000000u; a += 4) { uint32_t v; int k, j; if (a == 0x4000000u) a = 0x80000000u; v = MEM32(a);
+                for (k = 0; k < nstr; k++) if (v >= str[k] && v < str[k] + 8) break;
+                if (k == nstr) continue;
+                for (j = 0; j < ns && seen[j] != a; j++) ;
+                if (j == ns && ns < 64) { seen[ns++] = a; tt_dbg("[POPSCAN2] t %u at %08X -> %08X\n", tt_game_ms, a, v); } } }
+    }
+    if (getenv("TT_POPLOG")) {   /* (research) the HUD texts that change: every element of the 21 lists, its text */
+        static uint32_t last[40][32]; int li, e;
+        for (li = 0; li < 40; li++) { uint32_t tb = MEM32(0x1BAAE4u + li * 12), n = MEM32(0x1BAAE4u + li * 12 + 4); if (tb < 0x10000u || n > 32) continue;
+            for (e = 0; e < (int)n; e++) { uint32_t el = tb + e * 0xDC, tp = MEM32(el + 0x34) ? MEM32(el + 0x34) : el + 0x38, key = tp ^ MEM32(tp) ^ (MEM8(el + 0x24) << 31); char b[48]; int q = 0;
+                if (key == last[li][e]) continue; last[li][e] = key;
+                if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 40 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q);
+                b[q] = 0; if (q) tt_dbg("[POPLOG] t %u list %d.%d '%s' on %u at %d,%d\n", tt_game_ms, li, e, b, MEM8(el + 0x24), (int)MEM32(el + 8), (int)MEM32(el + 0xC)); } }
+    }
     extern int tt_vs_on(void); static uint32_t who[2], base[2], ours[2]; int w;
     int pct = getenv("TT_HPPCT") ? atoi(getenv("TT_HPPCT")) : 125;
     if (pct == 100 || tt_vs_on()) return;
@@ -10276,6 +10355,14 @@ void sub_000C3B90(void)
     if (on) { float x = MEMF(esp + 16), y = MEMF(esp + 20); int who = -1; float b = 9.0f, d; int w;
         for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char; if (h < 0x10000u) continue; d = (MEMF(h + 0xF0) - x) * (MEMF(h + 0xF0) - x) + (MEMF(h + 0xF4) - y) * (MEMF(h + 0xF4) - y); if (d < b) { b = d; who = w; } }
         tt_dbg("[SNDWHO] id %u by %s t %u from %08X\n", MEM32(esp + 4), who < 0 ? "other" : who ? "P2" : "P1", tt_game_ms, MEM32(esp)); }
+    {   /* (1.9.9) the cave troll's club: as the NPC's, each swing ends in the slam of it striking the ground (Balin's Tomb's
+         * 930; 926 is not in its bank), a moment after the swing's whoosh -- every mode, player 1 or 2 (TT_TROLLSLAM_MS the delay, TT_NOTROLLSLAM off) */
+        extern const char *tt_coop_p2_char_now; uint32_t id = MEM32(esp + 4);
+        if (MEM32(esp) == 0x00085B90u && esi >= 0x10000u && id >= 183u && id <= 190u && !getenv("TT_NOTROLLSLAM")) {
+            int w = coop_p2 >= 0x10000u && esi == coop_p2 ? 1 : (esi == coop_first_char || esi == MEM32(0x43B15Cu)) ? 0 : -1;
+            if (w >= 0 && !strcmp(vs_skin_name(w), "troll")) tt_troll_slam_arm(w, esi);
+        }
+    }
     {   /* (1.9.7, Versus) its camera stands 9-15 units off to keep both heroes in view: the characters' sounds (voices,
          * blows, steps), placed at them, came out faint from there (the listener is the camera). Brought towards the
          * camera's eye to TT_VS_SNDNEAR of the way (0.35), as loud as the campaign's close camera has them */
@@ -10292,14 +10379,6 @@ void sub_000C3B90(void)
         if (MEM32(esp) == 0x00085B90u && tt_vs_on() && (esi == coop_first_char || esi == coop_p2) && esi >= 0x10000u) {
             int w = esi == coop_p2; float vol = MEMF(esp + 8);
             if (tt_vs_hero_sound(vs_skin_name(w), MEM32(esp + 4), vol)) { if (on) tt_dbg("[SNDRET] id %u: ours (P%d)\n", MEM32(esp + 4), w + 1); eax = 0; esp += 4; return; }
-        }
-    }
-    {   /* (1.9.9) the cave troll's club: as the NPC's, each swing ends in the slam of it striking the ground (Balin's Tomb's
-         * 930; 926 is not in its bank), a moment after the swing's whoosh -- every mode, player 1 or 2 (TT_TROLLSLAM_MS the delay, TT_NOTROLLSLAM off) */
-        extern const char *tt_coop_p2_char_now; uint32_t id = MEM32(esp + 4);
-        if (MEM32(esp) == 0x00085B90u && esi >= 0x10000u && id >= 183u && id <= 190u && !getenv("TT_NOTROLLSLAM")) {
-            int w = coop_p2 >= 0x10000u && esi == coop_p2 ? 1 : (esi == coop_first_char || esi == MEM32(0x43B15Cu)) ? 0 : -1;
-            if (w >= 0 && !strcmp(vs_skin_name(w), "troll")) tt_troll_slam_arm(w, esi);
         }
     }
     if (MEM32(esp) == 0x00085B90u) { tt_snd3d_hit_id = MEM32(esp + 4); tt_snd3d_hit_vol = MEM32(esp + 8); tt_snd3d_hit_pitch = MEM32(esp + 12); }
@@ -10458,4 +10537,17 @@ void sub_0001F8A0(void)
         PUSH32(esp, dt); PUSH32(esp, 0x0001F8A0u); sub_0001F8A0_gen();
         esp = sp; MEM32(0x1CB8B4u) = pp;
     }
+}
+/* (research) 0x0003FA60 (thiscall string table, the id): the game's texts by number. TT_STRLOG: those asked in play, with
+ * the caller, once per (id, caller) */
+extern void sub_0003FA60_gen(void);
+void sub_0003FA60(void)
+{
+    static int on = -1; uint32_t id = MEM32(esp + 4), ra = MEM32(esp);
+    if (on < 0) on = getenv("TT_STRLOG") != NULL;
+    sub_0003FA60_gen();
+    if (on && tt_game_ms > 5000u) { static uint32_t seen[256]; static int ns; uint32_t key = id ^ (ra << 12); int j; char b[48]; int q = 0;
+        for (j = 0; j < ns && seen[j] != key; j++) ;
+        if (j == ns && ns < 256) { seen[ns++] = key; if (eax >= 0x10000u && eax < 0x84000000u) for (; q < 44 && MEM16(eax + 2 * q) >= 32 && MEM16(eax + 2 * q) < 127; q++) b[q] = (char)MEM16(eax + 2 * q); b[q] = 0;
+            tt_dbg("[STRLOG] t %u id %u (0x%X) from %06X -> %08X '%s' | player %08X depth %d\n", tt_game_ms, id, id, ra, eax, b, MEM32(0x43B15Cu), coop_depth); } }
 }

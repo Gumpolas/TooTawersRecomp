@@ -347,13 +347,14 @@ int tt_e3hud_predraw(void)
     }
     if (getenv("TT_E3HUD_LISTDUMP")) {   /* testing: every element of the lists that are on */
         static DWORD last2;
-        if (GetTickCount() - last2 > 2000) {
+        if (GetTickCount() - last2 > (DWORD)(getenv("TT_E3HUD_LISTMS") ? atoi(getenv("TT_E3HUD_LISTMS")) : 2000)) {
             int e, li;
             last2 = GetTickCount();
             for (li = 0; li < HUD_LIST_N; li++) {
                 uint32_t tb = G32(HUD_LIST + li * 12), n = G32(HUD_LIST + li * 12 + 4);
                 if ((!G8(HUD_LIST_ON + li) && li != 11 && strcmp(getenv("TT_E3HUD_LISTDUMP"), "all")) || !tb || n > 64) continue;
                 for (e = 0; e < (int)n; e++)
+                    { uint32_t tp = G32(HUD_EL(tb, e) + 0x34); char tx[48]; int q = 0; if (!tp) tp = HUD_EL(tb, e) + 0x38; if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 40 && G16(tp + 2 * q) >= 32 && G16(tp + 2 * q) < 127; q++) tx[q] = (char)G16(tp + 2 * q); tx[q] = 0; if (q) tt_dbg("[LISTTXT] %2d.%2d '%s' on %u\n", li, e, tx, G8(HUD_EL(tb, e) + 0x24)); }
                     tt_dbg("[LIST] %2d.%2d xy %4d,%4d wh %4d,%4d col %08X on %u tex %08X %08X\n", li, e,
                            (int)G32(HUD_EL(tb, e) + 8), (int)G32(HUD_EL(tb, e) + 0xC),
                            (int)G32(HUD_EL(tb, e) + 0x10), (int)G32(HUD_EL(tb, e) + 0x14),
