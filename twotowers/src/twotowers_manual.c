@@ -3421,7 +3421,7 @@ static void coop_bot_aimtest(CoopPad *o, uint32_t now, uint32_t p1, uint32_t p2)
             if (dd < 625.0f && dd > bdd) { bdd = dd; wt = e; } }
     }
     coop_p2aim_on = wt && (now / 3000u) % 2u == 1u;
-    if (coop_p2aim_on) coop_bot_shoot(o, p2, wt, 0);
+    if (coop_p2aim_on) coop_bot_shoot(o, p2, wt, !strcmp(getenv("TT_COOP_P2AIMTEST"), "fire"));
 }
 
 /* 2. what he sees. Far behind for 3 s, whatever the cause: put beside player 1 (a playtest's Gates of Moria lake:
@@ -4776,6 +4776,19 @@ static void coop_place(void)
             } else far_t = 0;
         } else far_t = 0;
     }
+    {   /* (1.9.9) stuck: player 2 held where he stands (the Gates of Moria's lake: wading, an unseen wall round the water held
+         * him, a playtest) -- the stick pushed over half way, under 0.4 units moved in 2 s, over 6 units from player 1, neither
+         * hero down: put beside player 1, whatever the P2 Teleport setting. TT_COOP_NOSTUCKPUT: off */
+        static uint32_t st_t; static float st_x, st_y; extern int coop_hero_down(int);
+        uint32_t r = COOP_PADREC(1u); float lx = MEMF(r + 0x14), ly = MEMF(r + 0x18);
+        if (a >= 0x10000u && p1 >= 0x10000u && coop_place_frames <= 0 && !tt_vs_on() && !coop_hero_down(0) && !coop_hero_down(1) && !getenv("TT_COOP_NOSTUCKPUT")
+            && lx * lx + ly * ly > 0.25f) {
+            float x = MEMF(a + 0xF0), y = MEMF(a + 0xF4), dx = MEMF(p1 + 0xF0) - x, dy = MEMF(p1 + 0xF4) - y;
+            if (!st_t || (x - st_x) * (x - st_x) + (y - st_y) * (y - st_y) > 0.16f) { st_t = coop_now() | 1; st_x = x; st_y = y; }
+            else if (coop_now() - st_t > 2000u && dx * dx + dy * dy > 36.0f) { st_t = 0; coop_place_frames = 3;
+                tt_dbg("[COOP2] stuck: player 2 held at %.1f %.1f %.1f for 2 s, %.1f from player 1: put beside him\n", x, y, MEMF(a + 0xF8), sqrtf(dx * dx + dy * dy)); }
+        } else st_t = 0;
+    }
     if (coop_place_frames <= 0 || a < 0x10000u || p1 < 0x10000u) return;
     if (!place_have) { place_have = 1; coop_place_target(p1, &place_x, &place_y); place_ox = place_x - MEMF(p1 + 0xF0); place_oy = place_y - MEMF(p1 + 0xF4); place_off_ok = 1; }   /* (worked out once per placement; the offset kept in cutscenes) */
     coop_place_frames--; after = 2;
@@ -6121,6 +6134,12 @@ static void vs_open_seams(void)
     static unsigned lv = ~0u; uint32_t i, j, lst[256]; int n = 0, opened = 0;
     if (lv == coop_level_n || getenv("TT_VS_KEEPSEAMS")) return;
     lv = coop_level_n;
+    if (getenv("TT_VS_PMDUMP")) for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); int W, H, r, c; char fn[300]; void *f; extern void *fopen(const char *, const char *); extern size_t fwrite(const void *, size_t, size_t, void *); extern int fclose(void *);   /* (test) each pathmap's cells, a PGM */
+        if (!vs_pm_ok(q)) continue; W = (int)MEM32(q + 0x70); H = (int)MEM32(q + 0x74);
+        snprintf(fn, sizeof fn, "%s/pm%03u_%d_%d_%d.pgm", getenv("TT_VS_PMDUMP"), i, (int)MEMF(q + 0x48), (int)MEMF(q + 0x4C), (int32_t)MEM32(q + 0x68));
+        if (!(f = fopen(fn, "wb"))) continue; { char hd[40]; int hn = snprintf(hd, sizeof hd, "P5 %d %d 255\n", W, H); fwrite(hd, 1, (size_t)hn, f); }
+        for (r = 0; r < H; r++) for (c = 0; c < W; c++) { int v = (MEM8(MEM32(q + 0x6Cu) + (uint32_t)(W * r + c)) >> 2) & 3; unsigned char b = (unsigned char)(v == 0 ? 255 : v == 2 ? 170 : v == 1 ? 90 : 0); fwrite(&b, 1, 1, f); }
+        fclose(f); }
     for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); int W, H; uint32_t base;
         if (q < 0x10000u || q >= 0x84000000u) continue;
         base = MEM32(q + 0x6Cu); W = (int)MEM32(q + 0x70); H = (int)MEM32(q + 0x74);
@@ -8259,6 +8278,7 @@ void sub_0009C380(void)
             s = MEM32(e + 0x408); if (s == st[k]) continue; st[k] = s;
             ce = MEM32(e + 0x494); tg = ce >= 0x10000u ? MEM32(ce + 0x98) : 0;
             if (tg >= 0x10000u && tg < 0x84000000u) { dx = MEMF(tg + 0xF0) - MEMF(e + 0xF0); dy = MEMF(tg + 0xF4) - MEMF(e + 0xF4); }
+            tt_dbg("[BOSS] %s at %.1f %.1f %.1f\n", coop_nm(e), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8));
             tt_dbg("[BOSS] t %u %s state %u | hp %d | after %s %.1f away | +110 %08X +49C %08X\n", coop_now() - coop_p2_t0, coop_nm(e), s, (int32_t)MEM32(e + 0x2FC),
                    coop_nm(tg), sqrtf(dx * dx + dy * dy), MEM32(e + 0x110), MEM32(e + 0x49C)); }
     }
@@ -10147,7 +10167,26 @@ int coop_proj_pass(void)
 unsigned coop_proj_mark; uint32_t coop_proj_cur;
 extern void sub_000DB150_gen(void); void sub_000DB150(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 0; if (0 == 0) coop_proj_cur = ecx; sub_000DB150_gen(); coop_proj_mark = m; coop_proj_cur = c; }
 extern void sub_000DE630_gen(void); void sub_000DE630(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 1; if (1 == 0) coop_proj_cur = ecx; sub_000DE630_gen(); coop_proj_mark = m; coop_proj_cur = c; }
-extern void sub_000DAD20_gen(void); void sub_000DAD20(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 2; if (2 == 0) coop_proj_cur = ecx; sub_000DAD20_gen(); coop_proj_mark = m; coop_proj_cur = c; }
+/* (1.9.9) 0x000DAD20, a projectile's step: after its ordinary test it is tested against the objects the level script
+ * put up for the player's weapons (0x43B0E8, @ForcePlayerWeaponObbTestOn: the Watcher's body and its stretched
+ * tentacles), but only when its owner (+0x11C) is [0x43B15C] -- player 2's arrows and throws flew through the Watcher
+ * and did it no harm (a playtest). His projectiles' steps run in his context while that list holds anything.
+ * TT_COOP_NOP2PROJLIST: as before */
+extern void sub_000DAD20_gen(void);
+void sub_000DAD20(void)
+{
+    unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur, pj = ecx, ow; int sw = 0;
+    coop_proj_mark |= 1u << 2;
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_depth && pj >= 0x10000u && pj < 0x84000000u && !getenv("TT_COOP_NOP2PROJLIST")) {
+        ow = MEM32(pj + 0x11C);
+        if (ow && (ow == coop_p2 || ow == coop_twin)) { int k; for (k = 0; k < 9 && !MEM32(0x43B0E8u + 4u * k); k++) ;
+            if (k < 9) { extern int tt_coop_enter_ctx(void); sw = tt_coop_enter_ctx();
+                { static int n; if (n++ < 8) tt_dbg("[COOPPROJ] player 2's projectile %08X stepped in his context: %08X '%s' on the weapon-test list\n", pj, MEM32(0x43B0E8u + 4u * k), coop_nm(MEM32(0x43B0E8u + 4u * k))); } } }
+    }
+    sub_000DAD20_gen();
+    if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
+    coop_proj_mark = m; coop_proj_cur = c;
+}
 extern void sub_000D6B40_gen(void); void sub_000D6B40(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 3; if (3 == 0) coop_proj_cur = ecx; sub_000D6B40_gen(); coop_proj_mark = m; coop_proj_cur = c; }
 extern void sub_000D6530_gen(void); void sub_000D6530(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 4; if (4 == 0) coop_proj_cur = ecx; sub_000D6530_gen(); coop_proj_mark = m; coop_proj_cur = c; }
 extern void sub_000D62F0_gen(void); void sub_000D62F0(void) { unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur; coop_proj_mark |= 1u << 5; if (5 == 0) coop_proj_cur = ecx; sub_000D62F0_gen(); coop_proj_mark = m; coop_proj_cur = c; }
@@ -10493,6 +10532,7 @@ static int vs_spot_ok(float x, float y, float z)
         if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT]   pathmap %u cell %d,%d state %d z %.1f..%.1f\n", i, c, r, v, MEMF(q + 0x50), MEMF(q + 0x60));
         if ((v == 0 || v == 2) && z >= MEMF(q + 0x50) - 6.0f && z <= MEMF(q + 0x50) + (getenv("TT_VS_SPOTUP") ? (float)atof(getenv("TT_VS_SPOTUP")) : 16.0f)) pm = 1; }   /* (the ground near its lowest: Fangorn's spawners up in the trees, 40 over it, were taken -- the heroes fell into a cleft) */
     if (!pm) return 0;
+    if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMANY") && y > -195.0f) return 0;   /* (1.9.9, Mount Doom: the near side of the lava only -- its points from y -190 on lie across it, a hero put there could not walk back, a playtest) */
     if (MEM32(0x1BB2A4u) == 3u && !getenv("TT_VS_BALINANY") && (z > 4.0f || y < -30.0f)) return 0;   /* (Balin's Tomb: the hall's floor only -- its spawner at the south end stands by the ledges, a playtest: "no one can spawn on the ledge/catwalk") */
     if (w < 0x10000u || w >= 0x84000000u || (n = MEM32(w + 0x10)) == 0 || n > 64) return 1;
     for (i = 0; i < n && !sec; i++) { uint32_t sc = MEM32(w + 0x100 + 4 * i) - 0x20; const char *nm;

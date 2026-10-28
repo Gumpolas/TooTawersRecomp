@@ -3158,3 +3158,17 @@ twotowers/src/twotowers_manual.c
     the heroes' match wins, round times and hits reported to the
     achievements.
   - (test) TT_ACH_TEST, TT_TOASTDUMP, TT_VS_CAMDUMP, TT_GLOWPROBE.
+twotowers/src/twotowers_manual.c
+  - Co-op: player 2's arrows and throws hit the Watcher. The projectile step
+    (0xDAD20) tests the fight's list of targets (0x43B0E8,
+    @ForcePlayerWeaponObbTestOn) only for projectiles owned by [0x43B15C],
+    player 1; one of player 2's is stepped in his context, so the test runs
+    for it too (TT_COOP_NOP2PROJLIST: as before).
+  - Co-op: player 2 held where he stands (the Gates of Moria's lake: wading,
+    held by the water's unseen wall) -- the stick pushed, under 0.4 units
+    moved in 2 s and over 6 units from player 1 -- is put beside player 1,
+    whatever the P2 Teleport setting (TT_COOP_NOSTUCKPUT: off).
+  - Versus, Mount Doom: the heroes start and come back only on the near side
+    of the lava (y under -195); its points past the lava's edge left a hero
+    who could not walk back (TT_VS_DOOMANY: all points).
+  - (test) TT_VS_PMDUMP: each pathmap's cells as a PGM.
