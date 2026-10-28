@@ -159,10 +159,14 @@ static int music_i(const char *level)
     int i, n = (int)(sizeof s_music / sizeof s_music[0]), own = -1; if (!level) return -1;
     for (i = 0; i < n; i++) if (!strncasecmp_vs(level, s_music[i].arena)) own = i;
     if (own < 0 || getenv("TT_VS_FIXEDMUSIC")) return own;
+    if (own >= 0 && getenv("TT_VS_MUSIDX")) return atoi(getenv("TT_VS_MUSIDX")) % n;   /* (test) */
     if (s_mpick < 0 || strncasecmp_vs(level, s_mpick_arena)) {
         static unsigned seed; int k;
         seed = seed * 1103515245u + 12345u + (unsigned)vs_ticks();
-        for (k = 0; k < 8; k++) { i = (int)((seed >> 8) % (unsigned)n); if (strncasecmp_vs(s_music[i].donor, level)) break; seed = seed * 1103515245u + 12345u; }
+        for (k = 0; k < 16; k++) { i = (int)((seed >> 8) % (unsigned)n);
+            if (strncasecmp_vs(s_music[i].donor, level) && strcmp(s_music[i].donor, "14FANG2") && strcmp(s_music[i].donor, "01WEAT1")) break;   /* (1.9.9: not Fangorn's and Weathertop's tracks -- quiet for long stretches,
+                                                                                                                                    * Fangorn's 20 s at a time: "make sure music plays on the map", a playtest on Mount Doom) */
+            seed = seed * 1103515245u + 12345u; }
         s_mpick = i; snprintf(s_mpick_arena, sizeof s_mpick_arena, "%s", s_music[own].arena);
         { extern void tt_dbg(const char *, ...); tt_dbg("[VS] music for %s this match: %s's \"%s\"\n", level, s_music[i].donor, s_music[i].track); }
     }

@@ -2172,7 +2172,13 @@ static void pointer_frame(void)
             if (clk) { go_clear(); press(INJ_A); tt_dbg("[MENU] difficulty: Impossible clicked\n"); }
             return;
         }
-        if (imp && s_gx >= 0.0f && s_gx < 460.0f && moved) { tt_coop_setting_set(6, 0); tt_dbg("[MENU] difficulty: pointer off Impossible\n"); }
+        if (s_gx >= 0.0f && s_gx < 460.0f) {   /* (1.9.9) Easy, Normal, Expert by the pointer too (words centred at 85, 228, 375 -- diff_layout moved them,
+            * and the game's own items no longer took the clicks there: only Impossible answered the mouse, a playtest) */
+            uint32_t k = s_gx < 156.0f ? 0u : s_gx < 301.0f ? 1u : 2u;
+            if (moved && (imp || G32(MM_OBJ + 0x18) != k)) { if (imp) tt_coop_setting_set(6, 0); G32(MM_OBJ + 0x18) = k; tt_opt_move_sound(); if (mouse_log()) tt_dbg("[MOUSE] difficulty: %u (pointer)\n", k); }
+            if (clk) { if (imp) tt_coop_setting_set(6, 0); G32(MM_OBJ + 0x18) = k; go_clear(); press(INJ_A); tt_dbg("[MENU] difficulty %u clicked\n", k); }
+            return;
+        }
     }
     {   /* our options pages: their own pointer handling (options.c) */
         extern int tt_opt_mouse(float x, float y, int moved, int clk, int down);

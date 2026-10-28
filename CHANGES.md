@@ -3178,3 +3178,20 @@ twotowers/src/twotowers_manual.c
     on the far side are used; those right at the lava's edge are not
     (TT_VS_DOOMANY: all points).
   - (test) TT_VS_PMDUMP: each pathmap's cells as a PGM.
+twotowers/src/twotowers_manual.c, versus.c, menus.c
+  - Versus, Mount Doom: player 2 is carried over the lava too. He never goes
+    through sub_000B9530: his own step (0x843F0) and the game's SetPosition
+    on him (from 0xBD609) are undone in tt_coop_leave while he is carried,
+    and he is set where the carry put him; vs_unstick is off there (it put
+    him back where he began pushing); the open ground ahead is read from
+    the pathmap's own cells (the overlay at 0x418C00 marks the cells round a
+    character, a troll's included).
+  - Versus music: Fangorn's and Weathertop's tracks are no longer drawn for
+    other arenas -- long quiet stretches (Fangorn's 14F2ALT1 about 20 s at a
+    time) left Mount Doom without music. (test) TT_VS_MUSIDX, TT_VS_MUSDUMP.
+  - Versus: player 1's controller port is held for the match (taken at the
+    first FIGHT, put back if it changes in his context): in a Troll Battle
+    from round 2 on player 1 could not steer, moving with player 2's stick
+    (TT_VS_NOPORTHOLD: off). (test) TT_VS_P1MOVELOG.
+  - New Game's difficulty screen: Easy, Normal and Expert answer the mouse
+    (pointed at: the cursor; clicked: chosen), not only Impossible.

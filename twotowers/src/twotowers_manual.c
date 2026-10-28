@@ -2519,7 +2519,8 @@ void sub_000B9530(void)
         float dt = 0.0f;
         if (!off && wd) { w = MEM32(wd + 0x32004u); memcpy(&dt, &w, 4); }
         if (!off && dt > 0.0f && dt < 1.0f / 30.0f) { float eps = 0.01f * dt * 30.0f; memcpy(&w, &eps, 4); MEM32(0x1702FCu) = w; }
-        { extern uint32_t tt_vs_doom_free[2]; if (!a || (a != tt_vs_doom_free[0] && a != tt_vs_doom_free[1]) || getenv("TT_VS_DOOMCOLL")) sub_000B9530_gen(); else esp += 8; }   /* (skipped: its ret 4 done here) */   /* (Mount Doom's carried heroes: no collision step, vs_doom_walk) */
+        { extern uint32_t tt_vs_doom_free[2]; if (getenv("TT_VS_DOOMDBG") && a && (a == tt_vs_doom_free[1] || (tt_vs_doom_free[1] && MEM32(a + 0x114) != 3u))) { static int n; if (n++ < 40) tt_dbg("[DOOMB9] a %08X (free P2 %08X) +114 %u at %.2f %.2f last %.2f %.2f\n", a, tt_vs_doom_free[1], MEM32(a + 0x114), MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0x140), MEMF(a + 0x144)); }
+          if (!a || (a != tt_vs_doom_free[0] && a != tt_vs_doom_free[1]) || getenv("TT_VS_DOOMCOLL")) sub_000B9530_gen(); else esp += 8; }   /* (skipped: its ret 4 done here) */   /* (Mount Doom's carried heroes: no collision step, vs_doom_walk) */
         MEM32(0x1702FCu) = keep;
     }
     if (on && a) {
@@ -6085,7 +6086,14 @@ static int vs_pm_walk_at(float x, float y, uint32_t *pmi)
  *  - a hero dropping more than 3 units below where he last stood (off the pit's edge, or knocked in) over open ground: held
  *    at that height -- he walks over the lava level with the bank he left, and hovers there with the stick let go;
  * either until the ground holds him again (he stops sinking) and he walks on his own or stands. TT_VS_DOOMKEEP: off */
+int tt_vs_doom_placing;   /* (vs_doom_walk's own SetPosition under way) */
+float tt_vs_doom_want[2][3];   /* (where the carry put him: player 2 set there again after his own step, tt_coop_leave) */
 uint32_t tt_vs_doom_free[2];   /* (the heroes being carried: sub_000B9530 skips their collision step) */
+static int vs_doom_in(float x, float y) { (void)x; return y < -138.0f; }   /* (the arena: its far side ends at a drop about y -136; past it the pathmap goes on over nothing) */
+static int static_dbg_tick(uint32_t now) { static uint32_t t; if (now - t > 400u) { t = now; return 1; } return 0; }
+/* (open ground on the pathmap's own cells: not vs_pm_walk_at's -- its overlay (0x418C00) marks the cells round a character, and round a
+ * troll player 2 found none open ahead of him, so was never carried, a playtest: "Player 2 doesn't seem to be able to walk over") */
+static int vs_doom_open(float x, float y, uint32_t *unused) { (void)unused; return vs_union_walk(x, y) == 1; }
 static float vs_doom_spd(void) { return getenv("TT_VS_DOOMSPD") ? (float)atof(getenv("TT_VS_DOOMSPD")) : 7.0f; }
 static void vs_doom_walk(void)
 {
@@ -6110,11 +6118,13 @@ static void vs_doom_walk(void)
         if (!on[w]) {
             if (MEMF(h + 0x2B4) >= -0.1001f && fabsf(z - lz[w]) < 0.012f) { if (++gst[w] >= 4) { gz[w] = z; gok[w] = 1; } } else gst[w] = 0;   /* (on the ground, steady 4 frames: his height) */
             lz[w] = z;
-            if (gok[w] && z < gz[w] - 3.0f && vs_pm_walk_at(x, y, NULL)) { on[w] = 1; zh[w] = gz[w]; tst[w] = 0; tpr[w] = now;
+            if (gok[w] && z < gz[w] - 3.0f && vs_doom_open(x, y, NULL) && vs_doom_in(x, y)) { on[w] = 1; zh[w] = gz[w]; tst[w] = 0; tpr[w] = now;
                 if (lg) tt_dbg("[DOOM] P%d dropping at %.1f %.1f %.1f (stood at %.1f): held up\n", w + 1, x, y, z, gz[w]); }
+            else if (getenv("TT_VS_DOOMDBG") && w == 1 && push && y > -196.0f && y < -168.0f && (static_dbg_tick(now))) tt_dbg("[DOOMWAIT] P2 at %.2f %.2f along %.3f step %.3f tst %u pm1.5 %d\n", x, y, along, step, tst[w], vs_doom_open(x + dx * 1.5f, y + dy * 1.5f, NULL));
+            if (on[w]) ;
             else if (!push || along > 0.3f * step + 0.005f) tst[w] = 0;
             else if (!tst[w]) tst[w] = now | 1;
-            else if (now - tst[w] > 200u && y > -196.0f && y < -168.0f && vs_pm_walk_at(x + dx * 1.5f, y + dy * 1.5f, NULL)) {   /* (at the lava's river only: elsewhere the level's rocks stay solid) */ on[w] = 1; zh[w] = z; tst[w] = 0; tpr[w] = now;
+            else if (now - tst[w] > 200u && y > -196.0f && y < -168.0f && vs_doom_open(x + dx * 1.5f, y + dy * 1.5f, NULL)) {   /* (at the lava's river only: elsewhere the level's rocks stay solid) */ on[w] = 1; zh[w] = z; tst[w] = 0; tpr[w] = now;
                 if (lg) tt_dbg("[DOOM] P%d held at %.1f %.1f %.1f: carried on\n", w + 1, x, y, z); }
         }
         if (on[w]) {   /* (carried: no collision step -- sub_000B9530 skips him -- but one frame in 0.3 s with it, a probe: the ground
@@ -6125,12 +6135,14 @@ static void vs_doom_walk(void)
                     if (lg) tt_dbg("[DOOM] P%d on the ground again at %.1f %.1f %.1f\n", w + 1, x, y, z); }
                 else { x = px[w]; y = py[w]; } }
             if (on[w]) {
-                if (!vs_pm_walk_at(x, y, NULL)) { x = lx0[w]; y = ly0[w]; }   /* (the game's own move off the open ground: back) */
+                { float mx = x - lx0[w], my = y - ly0[w], mm = sqrtf(mx * mx + my * my), cap = 1.5f * step + 0.01f;   /* (his own move, no faster than a walk: player 2's ran away with the collision step skipped) */
+                  if (mm > cap) { x = lx0[w] + mx * cap / mm; y = ly0[w] + my * cap / mm; } }
+                if (!vs_doom_open(x, y, NULL) || !vs_doom_in(x, y)) { x = lx0[w]; y = ly0[w]; }   /* (the game's own move off the open ground: back) */
                 p[0] = x; p[1] = y; p[2] = zh[w];
-                if (push && along < 0.6f * step && step > 0.0f && vs_pm_walk_at(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL)) { p[0] = x + dx * step; p[1] = y + dy * step; }
-                vs_place(h, p); MEMF(h + 0x2B4) = 0.0f; MEMF(h + 0x2B0) = 0.0f;
-                { int k; for (k = 0; k < 3; k++) { MEMF(h + 0x90 + 4 * k) = p[k]; MEMF(h + 0x140 + 4 * k) = p[k]; } }
-                if (getenv("TT_VS_DOOMDBG")) { static int n; if (n++ < 80) tt_dbg("[DOOMDBG] P%d at %.2f %.2f (last %.2f %.2f) along %.3f step %.3f dir %.2f %.2f -> %.2f %.2f%s | walk here %d, ahead %d\n", w + 1, MEMF(h + 0xF0), MEMF(h + 0xF4), lx0[w], ly0[w], along, step, dx, dy, p[0], p[1], probe[w] ? " probe" : "", vs_pm_walk_at(x, y, NULL), vs_pm_walk_at(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL)); }
+                if (push && along < 0.6f * step && step > 0.0f && vs_doom_open(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL) && vs_doom_in(x + dx * step, y + dy * step)) { p[0] = x + dx * step; p[1] = y + dy * step; }
+                tt_vs_doom_placing = 1; vs_place(h, p); tt_vs_doom_placing = 0; MEMF(h + 0x2B4) = 0.0f; MEMF(h + 0x2B0) = 0.0f;
+                { int k; for (k = 0; k < 3; k++) { MEMF(h + 0x90 + 4 * k) = p[k]; MEMF(h + 0x140 + 4 * k) = p[k]; tt_vs_doom_want[w][k] = p[k]; } }
+                if (getenv("TT_VS_DOOMDBG")) { static int n; if (n++ < 3000) tt_dbg("[DOOMDBG] P%d at %.2f %.2f (last %.2f %.2f) along %.3f step %.3f dir %.2f %.2f -> %.2f %.2f%s | walk here %d, ahead %d\n", w + 1, MEMF(h + 0xF0), MEMF(h + 0xF4), lx0[w], ly0[w], along, step, dx, dy, p[0], p[1], probe[w] ? " probe" : "", vs_doom_open(x, y, NULL), vs_doom_open(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL)); }
                 x = p[0]; y = p[1];
                 if (now - tpr[w] > 300u) { tpr[w] = now; probe[w] = 4; px[w] = x; py[w] = y; }
                 if (lg) { static uint32_t t; if (now - t > 700u) { t = now; tt_dbg("[DOOM] P%d carried: %.1f %.1f %.1f\n", w + 1, x, y, p[2]); } } }
@@ -6143,7 +6155,8 @@ static void vs_unstick(void)
 {
     static float px[2], py[2], sx[2], sy[2], sz2[2]; static uint32_t tmv[2], tstep[2], hold[2]; static int steps[2]; static unsigned lv = ~0u;
     uint32_t now = coop_now(), cm = MEM32(0x43B164u); int w;
-    if (getenv("TT_VS_NOUNSTICK") || cm < 0x10000u || !vs_have) return;   /* (1.9.9: on for player 2 -- he could be stuck where player 1 walked out, a playtest; player 1's with TT_VS_UNSTICK) */   /* (off: past those walls lay the voids between the level's pieces -- vs_gates joins them) */
+    if (getenv("TT_VS_NOUNSTICK") || cm < 0x10000u || !vs_have) return;
+    if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMKEEP")) return;   /* (Mount Doom: vs_doom_walk carries them instead -- this one put player 2 back where he began pushing, every time) */   /* (1.9.9: on for player 2 -- he could be stuck where player 1 walked out, a playtest; player 1's with TT_VS_UNSTICK) */   /* (off: past those walls lay the voids between the level's pieces -- vs_gates joins them) */
     if (lv != coop_level_n) { lv = coop_level_n; memset(steps, 0, sizeof steps); memset(tmv, 0, sizeof tmv); }
     for (w = 0; w < 2; w++) {
         if (w == 0 && !getenv("TT_VS_UNSTICK")) continue;
@@ -6335,10 +6348,19 @@ static void vs_round_start(void)
 /* (Versus) the arena's music: the donor level's track (versus.c; its bank in place of the arena's, lang.c), started as
  * the front end starts its own (0x000C31C0: name, 1 = play, 1, 0 -- the stream player [0x43BCF8]) once a level, at
  * the first FIGHT. The arena's scripts, which would start it, are not run in Versus */
+static uint32_t vs_music_g;   /* (the track's name, in the game's memory) */
+static void vs_music_play(void)
+{
+    uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx;
+    if (!vs_music_g || MEM32(0x43BCF8u) < 0x10000u) return;
+    PUSH32(esp, 0); PUSH32(esp, 1); PUSH32(esp, 1); PUSH32(esp, vs_music_g);
+    PUSH32(esp, 0x000C31C0u); sub_000C31C0();
+    esp = sp; eax = r0; ecx = r1; edx = r2;
+}
 static void vs_music_start(void)
 {
     extern const char *tt_vs_music_track_for_stream(const char *stream); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
-    static uint32_t lvl_done = ~0u, g; uint32_t li = MEM32(0x1BB2A4u), sp, r0, r1, r2; const char *t; int i;
+    static uint32_t lvl_done = ~0u, g; uint32_t li = MEM32(0x1BB2A4u); const char *t; int i;
     /* (1.9.9) once a level load (coop_level_n), not once a level index: the second match on an arena (Amon Hen twice
      * running, a playtest) had no music at all */
     if (lvl_done == coop_level_n || getenv("TT_VS_NOMUSIC")) return;
@@ -6347,10 +6369,8 @@ static void vs_music_start(void)
     if (!t || MEM32(0x43BCF8u) < 0x10000u) { tt_dbg("[VS] music: none for level %u\n", li); return; }
     if (!g && !(g = xbox_ContiguousAlloc(64u, 16u))) return;
     for (i = 0; i < 63 && t[i]; i++) MEM8(g + i) = (uint8_t)t[i]; MEM8(g + i) = 0;
-    sp = esp; r0 = eax; r1 = ecx; r2 = edx;
-    PUSH32(esp, 0); PUSH32(esp, 1); PUSH32(esp, 1); PUSH32(esp, g);
-    PUSH32(esp, 0x000C31C0u); sub_000C31C0();
-    esp = sp; eax = r0; ecx = r1; edx = r2;
+    vs_music_g = g;
+    vs_music_play();
     tt_dbg("[VS] music: \"%s\" started (level %u)\n", t, li);
 }
 /* the countdown: the round's banner 1 s, then 3, 2, 1 a second each (the Options' tick), then FIGHT (versus/fight.wav) */
@@ -6793,6 +6813,20 @@ static void vs_frame(void)
     vs_edge_guard();
     vs_unstick();
     vs_doom_walk();
+    {   /* (1.9.9) player 1's controller port held for the match: a playtest's Troll Battle had player 1 from round 2 on unable
+         * to steer -- he went one way whatever he pressed, his attacks still his (the port no longer his own pad's: the game
+         * reads every pad for player 1 at 0xFFFFFFFF, player 2's stick with them). Taken at the first FIGHT, put back if it
+         * changes in player 1's context. TT_VS_NOPORTHOLD: off */
+        static unsigned lv = ~0u; static uint32_t port = 0xFFFFFFFFu; extern int coop_in_p2_ctx(void);
+        if (lv != coop_level_n) { if (vs_state == 0 && MEM32(0x1CB8B4u) < 4u) { lv = coop_level_n; port = MEM32(0x1CB8B4u); tt_dbg("[VS] player 1's controller: port %u\n", port); } }
+        else if (port < 4u && MEM32(0x1CB8B4u) != port && !coop_in_p2_ctx() && !getenv("TT_VS_NOPORTHOLD")) {
+            tt_dbg("[VS] player 1's controller port changed to %u (round %d): back to %u\n", MEM32(0x1CB8B4u), vs_round, port); MEM32(0x1CB8B4u) = port; }
+    }
+    if (getenv("TT_VS_P1MOVELOG")) { static uint32_t tl; static float lx, ly; uint32_t h = coop_first_char, r = COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u), cm = MEM32(0x43B164u);   /* (research) */
+        if (h >= 0x10000u && cm >= 0x10000u && coop_now() - tl > 300u) { extern volatile int tt_p1_autostick_on; tl = coop_now();
+            tt_dbg("[P1MOVE] st %d port %u stick %.2f %.2f moved %.2f %.2f cam %.2f %.2f %.2f | +408 %u +3E0 %08X +2D0 %08X +494 %08X\n", vs_state, MEM32(0x1CB8B4u), MEMF(r + 0x14), MEMF(r + 0x18), MEMF(h + 0xF0) - lx, MEMF(h + 0xF4) - ly,
+                MEMF(cm + 0x40) - MEMF(cm + 0x50), MEMF(cm + 0x44) - MEMF(cm + 0x54), MEMF(cm + 0x48) - MEMF(cm + 0x58), MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(h + 0x2D0), MEM32(h + 0x494));
+            lx = MEMF(h + 0xF0); ly = MEMF(h + 0xF4); } }
     if (vs_have) vs_open_seams();
     vs_gates();
     vs_camera();
@@ -6943,6 +6977,7 @@ static void vs_frame(void)
             { uint32_t a = MEM32(w + 0x34); for (q = 0; q < 0x600; q += 16) tt_dbg("[PORTAL] +%03X %08X %08X %08X %08X\n", q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); }
             for (k = 0x18; k <= 0x40; k += 4) { uint32_t a = MEM32(w + k); if (a >= 0x80000000u && a < 0x84000000u) for (q = 0; q < 0x100; q += 16) tt_dbg("[WORLD] [+%02X]=%08X +%03X %08X %08X %08X %08X\n", k, a, q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); } } }
     if (getenv("TT_VS_NOPATHROOM")) { static int dn; if (!dn++) tt_dbg("[VS] heroes +110 %08X %08X +124 %08X %08X +2A4 %08X\n", MEM32(coop_first_char + 0x110), MEM32(coop_p2 + 0x110), MEM32(coop_first_char + 0x124), MEM32(coop_p2 + 0x124), MEM32(coop_first_char + 0x2A4)); if (coop_first_char >= 0x10000u) MEM32(coop_first_char + 0x110) &= ~0x800u; if (coop_p2 >= 0x10000u) MEM32(coop_p2 + 0x110) &= ~0x800u; }   /* (test) */
+    if (getenv("TT_VS_MUSDUMP") && vs_state == 0 && now - vs_round_t0 > 6000u) { static int dn; uint32_t o = MEM32(0x43BCF8u), q; if (!dn++ && o >= 0x10000u) for (q = 0; q < 0x200; q += 16) tt_dbg("[MUS] +%03X %08X %08X %08X %08X\n", q, MEM32(o + q), MEM32(o + q + 4), MEM32(o + q + 8), MEM32(o + q + 12)); }   /* (research) */
     if (getenv("TT_RECDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; extern void tt_recdump(const char *sub); if (!dn++) tt_recdump(getenv("TT_RECDUMP")); }   /* (research) */
     if (getenv("TT_OBJDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; extern void tt_objs_near(float x, float y, float r); if (!dn++) tt_objs_near(0, 0, 0); }   /* (research) */
     if (getenv("TT_VS_WALKTO") && vs_state == 0 && now - vs_round_t0 > 1500u) { extern void tt_walkto_tick(uint32_t hero, uint32_t now); tt_walkto_tick(coop_first_char, now); }
@@ -8833,12 +8868,24 @@ void tt_coop_weapon_methods_dump(void)
     coop_pop_snap();
     coop_depth = 1; coop_n_enter++;
     coop_cur_fn = fn; coop_pre[0] = MEMF(self + 0xF0); coop_pre[1] = MEMF(self + 0xF4); coop_pre[2] = MEMF(self + 0xF8);
+    if (fn == 0x000865D0u && getenv("TT_VS_DOOMDBG")) { extern uint32_t tt_vs_doom_free[2]; static int n; if (tt_vs_doom_free[1]) if (n++ < 30) tt_dbg("[DOOMSP] SetPosition on P2 from %08X %08X %08X to %.2f %.2f\n", MEM32(esp), MEM32(esp + 4), MEM32(esp + 8), MEMF(esp + 4), MEMF(esp + 8)); }
     return 1;
 }
 static int coop_ctx_out;   /* player 2's context left early (coop_scene_cmd): the leave that ends it only clears the depth */
 void tt_coop_leave(void)
 {
     if (coop_ctx_out) { coop_ctx_out = 0; coop_depth = 0; coop_n_leave++; return; }
+    if (getenv("TT_VS_DOOMDBG")) { extern uint32_t tt_vs_doom_free[2]; extern float tt_vs_doom_want[2][3]; static int n;
+        if (tt_vs_doom_free[1] && coop_p2 >= 0x10000u && n < 200 && (fabsf(MEMF(coop_p2 + 0xF0) - coop_pre[0]) > 0.001f || fabsf(MEMF(coop_p2 + 0xF4) - coop_pre[1]) > 0.001f)) { n++;
+            tt_dbg("[DOOMLV] fn %08X moved P2 %.2f %.2f -> %.2f %.2f (want %.2f %.2f)\n", coop_cur_fn, coop_pre[0], coop_pre[1], MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), tt_vs_doom_want[1][0], tt_vs_doom_want[1][1]); } }
+    { extern uint32_t tt_vs_doom_free[2];   /* (1.9.9, Mount Doom: player 2 carried by vs_doom_walk -- his own step, 0x843F0, its collision with the lava's edge
+                                             * in it (he never goes through sub_000B9530), undone: the carry moves him) */
+      extern int tt_vs_doom_placing;
+      if (coop_cur_fn == 0x000865D0u && coop_p2 >= 0x10000u && tt_vs_doom_free[1] == coop_p2 && !tt_vs_doom_placing && !getenv("TT_VS_DOOMCOLL")) { int k;   /* (the game's own SetPosition on him -- 0xBD609's, which held him at the lava's edge -- undone) */
+          for (k = 0; k < 3; k++) { MEMF(coop_p2 + 0xF0 + 4 * k) = coop_pre[k]; MEMF(coop_p2 + 0x90 + 4 * k) = coop_pre[k]; MEMF(coop_p2 + 0x140 + 4 * k) = coop_pre[k]; } }
+      if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && tt_vs_doom_free[1] == coop_p2 && !getenv("TT_VS_DOOMCOLL")) { int k;
+          extern float tt_vs_doom_want[2][3];
+          for (k = 0; k < 3; k++) { float v = tt_vs_doom_want[1][k]; MEMF(coop_p2 + 0xF0 + 4 * k) = v; MEMF(coop_p2 + 0x90 + 4 * k) = v; MEMF(coop_p2 + 0x140 + 4 * k) = v; } } }
     if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOLEASH") && !tt_vs_on() && coop_now() - coop_bot_drove_t > 500u) {   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
         extern float coop_leash_radius(void); extern unsigned coop_leash_stops;
         uint32_t q = coop_s1_player(), a = coop_p2; float R = coop_leash_radius();
