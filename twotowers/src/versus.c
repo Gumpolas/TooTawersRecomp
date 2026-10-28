@@ -334,11 +334,55 @@ play:
     { static int n; if (n++ < 30) tt_dbg("[VS] %s's sound %u from %s (%.2f s)\n", skin, id, lvl[li], (double)x->n / x->rate); }
     return 1;
 }
+/* (1.9.9) a wave of a streaming bank by its name (sound\S_WB_<level>.xwb, XWB v2: the bank's segment at +0x08, entries at
+ * +0x10 of 24 bytes -- flags, format (2 bits tag, 1 Xbox ADPCM; 3 bits channels; 26 bits rate), offset, length --, names at
+ * +0x18, 64 bytes each, the waves at +0x20), mono Xbox ADPCM only; decoded once */
+static VsVox *vox_get_named(const char *xwb, const char *name)
+{
+    char p[900], xp[128], key[16]; FILE *f; uint8_t hd[0x30], *nm = 0, *en = 0, *w = 0; uint32_t cnt, esz, nsz, i, idx = ~0u; VsVox *v; int j;
+    snprintf(key, sizeof key, "%.15s", name);
+    for (j = 0; j < s_nvox; j++) if (s_vox[j].id == 0xFFFFFFFEu && !strcmp(s_vox[j].bank, key)) return s_vox[j].pcm ? &s_vox[j] : 0;
+    if (s_nvox >= 160) return 0;
+    v = &s_vox[s_nvox++]; memset(v, 0, sizeof *v); snprintf(v->bank, sizeof v->bank, "%s", key); v->id = 0xFFFFFFFEu;
+    snprintf(xp, sizeof xp, "\\Device\\CdRom0\\sound\\%s.xwb", xwb);
+    if (!tt_host_path(xp, p, sizeof p) || !(f = fopen(p, "rb"))) return 0;
+    if (fread(hd, 1, sizeof hd, f) != sizeof hd || memcmp(hd, "WBND", 4) || rd32(hd + 4) != 2u) { fclose(f); return 0; }
+    {   uint8_t bd[0x24]; fseek(f, (long)rd32(hd + 8), SEEK_SET); if (fread(bd, 1, sizeof bd, f) != sizeof bd) { fclose(f); return 0; }
+        cnt = rd32(bd + 4); esz = rd32(bd + 0x18); nsz = rd32(bd + 0x1C); }
+    if (!cnt || cnt > 4096 || esz < 16 || nsz < 8 || nsz > 256) { fclose(f); return 0; }
+    nm = (uint8_t *)malloc(cnt * nsz); en = (uint8_t *)malloc(cnt * esz);
+    fseek(f, (long)rd32(hd + 0x18), SEEK_SET); if (!nm || fread(nm, 1, cnt * nsz, f) != cnt * nsz) goto fail;
+    fseek(f, (long)rd32(hd + 0x10), SEEK_SET); if (!en || fread(en, 1, cnt * esz, f) != cnt * esz) goto fail;
+    for (i = 0; i < cnt; i++) if (!strncmp((const char *)nm + i * nsz, name, nsz)) { idx = i; break; }
+    if (idx == ~0u) goto fail;
+    {   uint32_t fm = rd32(en + idx * esz + 4), off = rd32(en + idx * esz + 8), len = rd32(en + idx * esz + 12);
+        if ((fm & 3) != 1 || ((fm >> 2) & 7) != 1 || len > 8u * 1024 * 1024) goto fail;   /* (Xbox ADPCM, mono) */
+        w = (uint8_t *)malloc(len); fseek(f, (long)(rd32(hd + 0x20) + off), SEEK_SET); if (!w || fread(w, 1, len, f) != len) goto fail;
+        v->pcm = (int16_t *)malloc((len / 36 + 1) * 65 * 2);
+        v->n = xadpcm(w, len, v->pcm, (len / 36 + 1) * 65); v->rate = (fm >> 5) & 0x3FFFFFFu;
+        {   /* at most 4.5 s of it (the groans run 7 to 14 s), its last 0.8 s faded out */
+            uint32_t mx = v->rate * 9u / 2u, fd = v->rate * 4u / 5u, q;
+            if (v->n > mx && fd < mx) { v->n = mx; for (q = 0; q < fd; q++) v->pcm[mx - fd + q] = (int16_t)((int32_t)v->pcm[mx - fd + q] * (int32_t)(fd - q) / (int32_t)fd); } }
+        tt_dbg("[VS] voice %s's %s decoded: %u samples at %u Hz\n", xwb, name, v->n, v->rate); }
+    free(nm); free(en); free(w); fclose(f); return v;
+fail:
+    free(nm); free(en); free(w); fclose(f); tt_dbg("[VS] voice %s's %s: not found or not mono Xbox ADPCM\n", xwb, name); return 0;
+}
 /* who: a skin name ("aragorn", "nazgul", ...); slot as tt_heroes_voice_src; 1 if it played */
 int tt_vs_voice(const char *who, int slot, float vol)
 {
     static int slots[4] = { -1, -1, -1, -1 }, next; char bank[16]; uint32_t id; float pitch; VsVox *x; APUMixerVoice *v; int s;
-    if (getenv("TT_VS_NOVOICES") || !tt_heroes_voice_src(who, slot, bank, sizeof bank, &id, &pitch) || !(x = vox_get(bank, id))) return 0;
+    if (getenv("TT_VS_NOVOICES")) return 0;
+    if (who && !strcmp(who, "ent")) {   /* (1.9.9) the Ent: Fangorn Forest's own Ent groans (its streaming bank's Ent_01-03), hurt (slots 4-6) and
+        * falling (7); long, so one at a time */
+        static uint32_t until; uint32_t now = (uint32_t)vs_ticks(); static const char *nm[3] = { "Ent_01", "Ent_02", "Ent_03" };
+        if (slot < 4 || now < until) return 0;
+        if (!(x = vox_get_named("S_WB_14FANG2", nm[slot == 7 ? 2 : (slot - 4) % 2]))) return 0;
+        until = now + (uint32_t)(1000.0 * x->n / (x->rate ? x->rate : 44100)) - 600u; pitch = 1.0f; snprintf(bank, sizeof bank, "%s", nm[slot == 7 ? 2 : (slot - 4) % 2]); id = 0;
+        goto have;
+    }
+    if (!tt_heroes_voice_src(who, slot, bank, sizeof bank, &id, &pitch) || !(x = vox_get(bank, id))) return 0;
+have:
     s = next++ & 3;
     if (slots[s] < 0) slots[s] = apu_mixer_alloc_voice();
     if (slots[s] < 0 || !(v = apu_mixer_get_voice(slots[s]))) return 0;

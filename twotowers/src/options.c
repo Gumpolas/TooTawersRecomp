@@ -349,10 +349,10 @@ static int vs_hero_ok(int pl, int h)
 {
     if (h < 0 || h >= VS_NHERO) return 0;
     if (h >= 4 && !tt_heroes_on()) return 0;
-    if (s_vs_mode == 1) return h == VS_TROLL_HERO || (h == VS_ENT_HERO && s_vs_hero[pl ^ 1] != VS_ENT_HERO);   /* (1.9.9) Troll Battle: the troll against the troll -- or the Ent */
+    if (s_vs_mode == 1) return h == VS_TROLL_HERO;   /* (1.9.9) Troll Battle: the troll against the troll only (the Ent is a Deathmatch hero) */
     if (h == VS_TROLL_HERO) return 0;                /* (and in no other mode) */
     if (pl == 0 && s_vs_arenas[s_vs_arena].level == 1 && h >= 1 && h <= 3 && getenv("TT_VS_HEROBYARENA")) return 0;
-    return h != s_vs_hero[pl ^ 1];
+    return 1;   /* (1.9.9: the same hero for both if they like -- player 2 the other's copy) */
 }
 /* (1.9.8) Weathertop has no Legolas, Gimli or Isildur of its own for player 1: those heroes for him take the arena off
  * the list, rather than the arena (the first, so it seemed always) taking them off his (a playtest: "Gimli can be picked

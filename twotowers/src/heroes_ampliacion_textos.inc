@@ -21,6 +21,16 @@ static const UpgName s_upn_troll_nuevo[] = {
     { "Dunedain Bow", "Moria Stones" }, { "Rohan Bow", "Pit Rocks" }, { "Gondor Bow", "Fire Rocks" },
     { "Sword Parry", "Mace Parry" }, { "Master Swordsman", "Master of Maces" },
     { "Isildur's", "Troll's" }, { NULL,NULL } };
+/* (1.9.9) the Ent's combo names (Versus only) */
+static const UpgName s_upn_ent_nuevo[] = {
+    { "Isildur's Swift Terror", "Rootbreaker" },
+    { "Isildur's Deliverance", "Bark Shield" },
+    { "Isildur's Death Charge", "March of the Ents" },
+    { "Isildur's Gambit", "Hasty Stomp" },
+    { "Isildur's War Rush", "Wrath of Fangorn" },
+    { "Isildur's Judgment", "Onodrim's Fury" },
+    { "Sword Parry", "Bark Parry" }, { "Master Swordsman", "Master of the Forest" },
+    { "Isildur's", "Ent's" }, { NULL,NULL } };
 /* (1.9.9) the shield orc's combo names (Versus only: he has no campaign; names only, his moves are not upgraded) */
 static const UpgName s_upn_orc_nuevo[] = {
     { "Isildur's Swift Terror", "Shield Bash" },

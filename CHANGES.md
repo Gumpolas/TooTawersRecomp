@@ -3056,3 +3056,57 @@ twotowers/src/heroes.c
     hands (no props drawn); as player 2 his throw is the troll's log. N_EXTRA 16.
 twotowers/src/options.c
   - The Ent in the Versus list, and beside the cave troll in Troll Battle.
+
+-- 1.9.9: enemies in Versus, Troll Battle's own end, Perfect glow for player 2 --------
+twotowers/src/twotowers_manual.c
+  - Versus with enemies: on Amon Hen, Fangorn, the Plains of Rohan and the
+    Breached Wall (Deathmatch, not Troll Battle) a few of the level's own
+    orcs and Uruk-hai are made (vs_keep_enemy: by chance, at most
+    TT_VS_NENEMY 8; no archers, no named leaders), then spread over the map
+    in pairs at the level's points, away from the heroes. They fight both
+    heroes with their own sounds and die as in the campaign. Their blows
+    are told from the other hero's (an enemy's attack box within 3 s and 12
+    units, the other not swinging close by) and do a player's damage
+    (TT_VS_FOEDMG, 60); they count for neither player's numbers, and an
+    enemy's knock back off a ledge gives the other no round. The heroes
+    lock onto an enemy nearer than the other hero while they fight.
+    TT_VS_NOENEMIES: off.
+  - Fix: the placement record table was never emptied. After a few matches
+    it was full: a new level's records were not noted -- player 2 had none
+    of his own weapons and the random starts found no points (the Plains of
+    Rohan playtest) -- and old levels' records gave starts in the void.
+    Each level's records are now apart (coop_reckey_lv0); a full table
+    drops the earlier levels'.
+  - Random starts: only points on a pathmap's ground (not Fangorn's
+    spawners up in the trees) and inside the level's sectors. Every sector
+    is drawn on Fangorn and the Gates of Moria as on Amon Hen: a start past
+    the first sectors showed only the sky.
+  - The round's loser, if he was down, goes on at one of the level's own
+    points about 42 units from the winner (tt_vs_spot_from); set apart along
+    a line he could land on a ledge with no way back (Balin's Tomb).
+    Player 2 steps through a wall he is held against (vs_unstick, now on for
+    him; player 1's with TT_VS_UNSTICK), back if there is no ground there.
+  - Co-op: player 2's Perfect glow -- the gauge's glow (list 1, 7-9),
+    mirrored onto his gauge and pulsing while his Perfect time runs; the
+    game showed it only on player 1's. TT_COOP_NOP2GLOW: off.
+  - Co-op: player 2's weapons drawn again after he respawns (the +0x110 draw
+    bits recorded when he falls, put back for 4 s).
+  - The Ent's blows end in the troll's ground slam; a blow's reach counts
+    the other's bulk (2.5 for the trolls and the Ent): blows at his side or
+    back land.
+  - Troll Battle's results: its own table -- club blows of swings, smashes
+    (300 or more), damage dealt and taken, throws, fastest knockout.
+  - (test) TT_VS_FOENEAR, TT_VS_FOELOG, TT_VS_SPOTLOG, TT_VS_SPOTPICK,
+    TT_VS_HITSCAN, TT_COOP_P2KILLMS, TT_PERFDIFF, TT_GLOWPROBE.
+twotowers/src/heroes.c
+  - The Ent throws rocks (projectile 10), as player 1 and as player 2; his
+    own special move names.
+twotowers/src/options.c
+  - Troll Battle is the cave troll's only; the Ent is a Deathmatch hero.
+    Both players may pick the same hero.
+twotowers/src/versus.c
+  - The Ent's voice: Fangorn's Ent moans (S_WB_14FANG2.xwb, Ent_01-03) for
+    his blows taken and his fall.
+versus\ (the player's own files)
+  - troll_results_bg.bmp, troll_fight.wav, troll_match_win.wav for Troll
+    Battle; round_win.wav, the horn, at each round's end.

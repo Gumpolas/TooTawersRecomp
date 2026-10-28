@@ -4993,7 +4993,7 @@ static const UpgName *upn_list(int g)
 {
     static const struct { const char *n; const UpgName *l; } L[] = {
         { "boromir", s_upn_boromir }, { "gandalf", s_upn_gandalf }, { "frodo", s_upn_frodo }, { "lurtz", s_upn_lurtz },
-        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "troll2", s_upn_troll_nuevo }, { "orc", s_upn_orc_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
+        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "troll2", s_upn_troll_nuevo }, { "ent", s_upn_ent_nuevo }, { "orc", s_upn_orc_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
     int k;
     if (g < 0 || g >= N_SKINS) return NULL;
     for (k = 0; k < (int)(sizeof L / sizeof L[0]); k++) if (!strcmp(L[k].n, s_skins[g].name)) return L[k].l;
@@ -7496,7 +7496,7 @@ int tt_hk(int id, int phase, uint32_t *r)
      * propia: la cadena de Moria no tiene una en sus clips NPC) */
     if (id == 22 && phase == 0 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && !s_launch_p2
         && (!strcmp(s_skins[s_guest].name, "uruk") || !strcmp(s_skins[s_guest].name, "troll")
-            || !strcmp(s_skins[s_guest].name, "nazgul") || !strcmp(s_skins[s_guest].name, "orc") || !strcmp(s_skins[s_guest].name, "eomer"))   /* (and Versus' three: they throw as he does) */
+            || !strcmp(s_skins[s_guest].name, "nazgul") || !strcmp(s_skins[s_guest].name, "orc") || !strcmp(s_skins[s_guest].name, "eomer") || !strcmp(s_skins[s_guest].name, "ent"))   /* (and Versus' three: they throw as he does; 1.9.9 the Ent a log, as the troll) */
         && shot_res_is(G32(g_esp + 4), s_bow_res, EMPTY_PROP_KEY)) {
         int pj = getenv("TT_URUKPROJ") ? atoi(getenv("TT_URUKPROJ")) : !strcmp(s_skins[s_guest].name, "troll") && !getenv("TT_TROLLROCK") ? TROLL_LOG_PROJ : 10;   /* (1.9.9) the troll: Fangorn's trolls' log */
         /* (1.9.1) at the Gates of Moria too: his rock (and its upgrades), struck
@@ -7938,7 +7938,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (p2 && G32(g_esp + 0x18) == p2) {
             static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
                 { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 },
-                { "troll", TROLL_LOG_PROJ }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 }, { "ent", TROLL_LOG_PROJ }, { "troll2", TROLL_LOG_PROJ } };   /* (1.9.9) */
+                { "troll", TROLL_LOG_PROJ }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 }, { "ent", 10 }, { "troll2", TROLL_LOG_PROJ } };   /* (1.9.9) */
             const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
             if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
             if (to != pj) G32(g_esp + 16) = to;
