@@ -169,13 +169,25 @@ static int music_i(const char *level)
     return s_mpick;
 }
 static int s_music_off(void) { return getenv("TT_VS_NOMUSIC") != NULL; }
+/* (1.9.9) an arena with the level's enemies (twotowers_manual.c, vs_keep_enemy) keeps its own sound banks: the orcs'
+ * and Uruk-hai's cries are in them, and with another level's music in their place the enemies were silent (a
+ * playtest, Amon Hen). Its own music, then */
+static const char *vs_own_music(const char *level)
+{
+    static const struct { const char *lv, *track; } own[] = { { "13AMON1", "13AMALT1_L" }, { "14FANG2", "14F2ALT1_L" }, { "16ROHAN2", "16R2ALT2_L" }, { "18HOLE1", "18H1ALT2_L" }, { "20YARD1", "20Y1ALT1_L" } };
+    extern int tt_vs_troll_mode(void); size_t i;
+    if (!level || getenv("TT_VS_NOENEMIES") || getenv("TT_VS_SWAPMUSIC") || tt_vs_troll_mode()) return NULL;
+    for (i = 0; i < sizeof own / sizeof own[0]; i++) if (!strncasecmp_vs(level, own[i].lv)) return own[i].track;
+    return NULL;
+}
 const char *tt_vs_music_donor(const char *level)
 {   /* (called as the arena's banks open at its load: a new pick for each load, WB and SB a moment apart) */
     static unsigned long last; int i; if (!tt_vs_on() || s_music_off()) return NULL;
     if (vs_ticks() - last > 10000u) s_mpick = -1;
-    last = vs_ticks(); i = music_i(level); return i >= 0 ? s_music[i].donor : NULL;
+    last = vs_ticks(); if (vs_own_music(level)) { extern void tt_dbg(const char *, ...); tt_dbg("[VS] music for %s: its own (its enemies' sounds are in its banks)\n", level); return NULL; }
+    i = music_i(level); return i >= 0 ? s_music[i].donor : NULL;
 }
-const char *tt_vs_music_track(const char *level) { int i = music_i(level); if (getenv("TT_VS_TRACK")) return getenv("TT_VS_TRACK"); return i >= 0 ? s_music[i].track : NULL; }
+const char *tt_vs_music_track(const char *level) { int i; if (vs_own_music(level) && !getenv("TT_VS_TRACK")) return vs_own_music(level); i = music_i(level); if (getenv("TT_VS_TRACK")) return getenv("TT_VS_TRACK"); return i >= 0 ? s_music[i].track : NULL; }
 
 /* the Options' ring (the interface wave bank's entries 11 and 12, the cues 0xA9D / 0xA9E the Options play left and
  * right), read from the player's own game (sound\WB_INTRFACE.xwb: a version 1 XACT wave bank, entries of 20 bytes at
@@ -252,6 +264,10 @@ const char *tt_vs_music_track_for_stream(const char *stream)
     {   static const char *kinds[] = { "ALT", "BASE", "PAL", "GAL", "GEX", "PEX", "EXP", "CAV", "HOLE", "TAG", "PST", "END" }; size_t k; int m = 0;
         for (k = 0; k < sizeof kinds / sizeof kinds[0] && !m; k++) if (strstr(stream, kinds[k])) m = 1;
         if (!m) return NULL; }   /* (music only: the ambience, "AMB", is not the track) */
+    if (vs_own_music(lvl[li])) {   /* (its own banks: its own streams; the match's start, which asks with "0ALT", its own track) */
+        if (strcmp(stream, "0ALT")) return NULL;
+        t = vs_own_music(lvl[li]); n = strlen(t); if (n > 2 && !strcmp(t + n - 2, "_L")) n -= 2; if (n >= sizeof out) n = sizeof out - 1;
+        memcpy(out, t, n); out[n] = 0; return out; }
     i = music_i(lvl[li]); if (i < 0) return NULL;
     t = s_music[i].track; n = strlen(t); if (n > 2 && !strcmp(t + n - 2, "_L")) n -= 2;
     if (n >= sizeof out) n = sizeof out - 1;

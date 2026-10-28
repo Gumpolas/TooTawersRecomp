@@ -3110,3 +3110,23 @@ twotowers/src/versus.c
 versus\ (the player's own files)
   - troll_results_bg.bmp, troll_fight.wav, troll_match_win.wav for Troll
     Battle; round_win.wav, the horn, at each round's end.
+
+-- 1.9.9: the Ent's blows land, Hornburg's starts and enemies, Balin's Tomb kept to its floor --
+twotowers/src/twotowers_manual.c
+  - The Ent's blows: his hands hold props of no triangles that the game
+    never places -- they stayed at the level's origin, and his attack
+    boxes' tests ran there: no orc hit, nothing broken. They are placed at
+    his reach each frame, swept side to side across the front of him and
+    turned as he is (tt_vs_ent_hands; the box's own weapon noted at 0xBA020).
+    Player 1 or 2, he now hits and fells the enemies. TT_VS_NOENTHANDS: off.
+  - A hero's attack box keeps its own 0x01000000 bit beside the Versus mask.
+  - Random starts on the Hornburg Courtyard: it has no waypoints or
+    spawners -- its BattlePoints and Enemy_Waypoints are taken (it always
+    began at the level's start). A sector test that finds no sector with a
+    box lets every point through; "Default" counts (Balin's Tomb's hall).
+  - Enemies on the Hornburg Courtyard too.
+  - An arena with enemies keeps its own sound banks and plays its own music:
+    with another level's banks in their place the orcs were silent.
+  - Balin's Tomb: starts on the hall's floor only (no ledge or catwalk), the
+    heroes 16 units apart (vs_spacing); player 2 at the match's start, and
+    a downed hero after a round, at one of the level's own points.
