@@ -5839,6 +5839,19 @@ static void vs_free_spot(uint32_t hero, float ox, float oy, float dx, float dy, 
 static float vs_safe[2][3]; static int vs_safe_ok[2];
 static int vs_fell[2];   /* (1.9.9) off the map this round: the round lost (a kick off a ledge wins it) */
 static float vs_wz[2][8]; static uint32_t vs_wt[2][8], vs_back_t[2]; static int vs_wi[2];   /* (his height over the last 0.4 s; when he was last put back) */
+/* (1.9.9) the lowest ground the level has under x, y: the lowest of the pathmaps over it (their +0x50), 12 units under; over none,
+ * the lowest of all. Below it a hero is off the map (falling through the world); above it he may be on lower ground */
+static float vs_floor(float x, float y)
+{
+    uint32_t i; float lo = 1e9f, lo_all = 1e9f;
+    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); float z0;
+        if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
+        z0 = MEMF(q + 0x50); if (z0 < lo_all) lo_all = z0;
+        if (x >= MEMF(q + 0x48) - 4.0f && x <= MEMF(q + 0x58) + 4.0f && y >= MEMF(q + 0x4C) - 4.0f && y <= MEMF(q + 0x5C) + 4.0f && z0 < lo) lo = z0; }
+    if (lo > 1e8f) lo = lo_all;
+    if (lo > 1e8f) lo = -1000.0f;
+    return lo - 12.0f;
+}
 static void vs_edge_guard(void)
 {
     int w;
@@ -5857,10 +5870,15 @@ static void vs_edge_guard(void)
             if (now - wt[w][(wi[w] + 7) & 7] >= 50u || now < wt[w][(wi[w] + 7) & 7]) { wz[w][wi[w]] = z; wt[w][wi[w]] = now; wi[w] = (wi[w] + 1) & 7; }
             for (q = 0; q < 8; q++) { if (now - wt[w][q] > 450u) { ok = 0; break; } if (wz[w][q] > zmax) zmax = wz[w][q]; }
             if (ok && zmax - z < 2.5f && !(st >= 44 && st <= 46) && st != 49 && st != 52) {   /* (not by the pathmap: its cells miss walkable ground -- a run down Amon Hen's slope was taken for a fall) */ vs_safe[w][0] = x; vs_safe[w][1] = y; vs_safe[w][2] = z; continue; }
-            if (zmax - z < 2.5f && z > vs_safe[w][2] - 40.0f) continue;   /* (landed lower, not falling still: his new ground becomes safe once he stands) */
+            if (zmax - z < 2.5f && (z > vs_safe[w][2] - 40.0f || (!getenv("TT_VS_OLDFALL") && z > vs_floor(x, y)))) {   /* (landed lower, not falling still: his new ground becomes
+                * safe once he stands -- 1.9.9: any drop, so long as he is above the level's lowest ground there: Amon Hen's way on goes down
+                * into the ravine past the ruins, 60 units below, and that landing put him back every time) */
+                if (z < vs_safe[w][2] - 25.0f && vs_state == 0 && !getenv("TT_VS_NOFALLLOSS") && vs_kicked_t[w] && coop_now() - vs_kicked_t[w] < 4000u && !vs_fell[w]) {
+                    vs_fell[w] = 1; tt_dbg("[VS] P%d kicked down off a ledge: the round is P%d's\n", w + 1, 2 - w); }
+                continue; }
         }
         if (0) ;
-        else if (z < vs_safe[w][2] - (getenv("TT_VS_FALLDROP") ? (float)atof(getenv("TT_VS_FALLDROP")) : 25.0f) && !getenv("TT_VS_NOEDGEGUARD")) {
+        else if ((getenv("TT_VS_OLDFALL") ? z < vs_safe[w][2] - (getenv("TT_VS_FALLDROP") ? (float)atof(getenv("TT_VS_FALLDROP")) : 60.0f) : (z < vs_floor(x, y) || z < vs_safe[w][2] - 150.0f)) && !getenv("TT_VS_NOEDGEGUARD")) {
             float p[3]; uint32_t o = w ? coop_first_char : coop_p2, now = coop_now();
             p[0] = vs_safe[w][0]; p[1] = vs_safe[w][1]; p[2] = vs_safe[w][2] + 0.5f;
             if (vs_back_t[w] && now - vs_back_t[w] < 3000u && o >= 0x10000u) {
@@ -5876,6 +5894,7 @@ static void vs_edge_guard(void)
             memset(vs_wt[w], 0, sizeof vs_wt[w]);   /* (his height history starts again: the put-back spot is not "safe" until he stands there 0.4 s -- it
                                                      * was taken as safe the first frame, every time, and each fall put him back lower) */
             tt_dbg("[VS] P%d fell off the map at %.1f %.1f %.1f: back at %.1f %.1f %.1f\n", w + 1, x, y, z, p[0], p[1], p[2]);
+            if (w == 0) { extern float tt_walk_fall[3]; tt_walk_fall[0] = x; tt_walk_fall[1] = y; tt_walk_fall[2] = 1.0f; }
             /* (1.9.9) only a kick off a ledge ends the round: a hero who walks or falls off on his own is just put back
              * (a playtest: "it should only register a round as won if someone is kicked off a ledge") */
             if (vs_state == 0 && !getenv("TT_VS_NOFALLLOSS") && vs_kicked_t[w] && coop_now() - vs_kicked_t[w] < (getenv("TT_VS_KICKFALLMS") ? (uint32_t)atoi(getenv("TT_VS_KICKFALLMS")) : 4000u)) {
@@ -5887,6 +5906,126 @@ static void vs_edge_guard(void)
 /* (1.9.9) a hero set on a new spot: so far above the height he came from (TT_VS_LIFT, 8 units) that he drops onto the ground
  * there -- the ground's height is not known, and set under a rise he sank through it */
 static float vs_lift(void) { return getenv("TT_VS_LIFT") ? (float)atof(getenv("TT_VS_LIFT")) : 8.0f; }
+/* (1.9.9, Versus) a hero held against an invisible wall gets through it. The campaign walls its heroes in with collision
+ * of its own (Amon Hen past the start: a wall nothing draws, across a path the pathmaps go on along; the campaign's story
+ * takes them on another way); in Versus the whole map is the arena. Pushing on (the stick over half way) and not moving for
+ * 0.35 s, with walkable ground 1 and 2.5 units ahead on a pathmap: a step of 0.6 units on (dropped onto the ground from a
+ * little above), at most 7 in a row -- a thin wall is passed, a thick one (a building, a cliff) is not: then back where
+ * the push began. TT_VS_NOUNSTICK: off */
+static int vs_pm_walk_at(float x, float y, uint32_t *pmi)
+{
+    uint32_t i; int ok = 0;
+    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); float ox, oy, sz; int v;
+        if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
+        if (x < MEMF(q + 0x48) || x > MEMF(q + 0x58) || y < MEMF(q + 0x4C) || y > MEMF(q + 0x5C)) continue;
+        ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68); if (sz <= 0) continue;
+        v = coop_pm_cell(q, (int)floorf((x - ox) / sz), (int)floorf((y - oy) / sz));
+        if (v < 0) continue;
+        if (!COOP_PM_WALK(v)) return 0;
+        if (!ok && pmi) *pmi = i;
+        ok = 1; }
+    return ok;
+}
+static void vs_unstick(void)
+{
+    static float px[2], py[2], sx[2], sy[2], sz2[2]; static uint32_t tmv[2], tstep[2], hold[2]; static int steps[2]; static unsigned lv = ~0u;
+    uint32_t now = coop_now(), cm = MEM32(0x43B164u); int w;
+    if (!getenv("TT_VS_UNSTICK") || getenv("TT_VS_NOUNSTICK") || cm < 0x10000u || !vs_have) return;   /* (off: past those walls lay the voids between the level's pieces -- vs_gates joins them) */
+    if (lv != coop_level_n) { lv = coop_level_n; memset(steps, 0, sizeof steps); memset(tmv, 0, sizeof tmv); }
+    for (w = 0; w < 2; w++) {
+        uint32_t h = w ? coop_p2 : coop_first_char, r = COOP_PADREC(w ? 1u : (MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u)); float x, y, z, lx, ly, fx, fy, fn, dx, dy, dn, moved; uint32_t pmi = 0;
+        if (h < 0x10000u) continue;
+        x = MEMF(h + 0xF0); y = MEMF(h + 0xF4); z = MEMF(h + 0xF8);
+        lx = MEMF(r + 0x14); ly = MEMF(r + 0x18);
+        if (w == 0) { extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2]; if (tt_p1_autostick_on) { lx = tt_p1_autostick[0] / 32767.0f; ly = tt_p1_autostick[1] / 32767.0f; } }   /* (the walk test's stick) */
+        if (tstep[w] && now - tstep[w] < 1500u && z < sz2[w] - 8.0f) {   /* through, and falling: no ground there (a chasm the wall kept him from) -- back */
+            float p[3]; p[0] = sx[w]; p[1] = sy[w]; p[2] = sz2[w] + 0.5f; vs_place(h, p); MEMF(h + 0x90) = p[0]; MEMF(h + 0x94) = p[1]; MEMF(h + 0x98) = p[2];
+            tstep[w] = 0; steps[w] = 0; hold[w] = now + 2000u; tmv[w] = now; px[w] = p[0]; py[w] = p[1]; memset(vs_wt[w], 0, sizeof vs_wt[w]);
+            if (w == 0) { extern float tt_walk_fall[3]; tt_walk_fall[0] = x; tt_walk_fall[1] = y; tt_walk_fall[2] = 1.0f; }
+            if (getenv("TT_VS_UNSTICKLOG")) tt_dbg("[VS] P%d fell past the wall at %.1f %.1f: back at %.1f %.1f\n", w + 1, x, y, p[0], p[1]); continue; }
+        moved = (x - px[w]) * (x - px[w]) + (y - py[w]) * (y - py[w]);
+        if (moved > 0.15f * 0.15f || vs_state != 0 || coop_down[w] || !(lx * lx + ly * ly > 0.25f)) {
+            if (moved > 0.3f * 0.3f || !(lx * lx + ly * ly > 0.25f)) steps[w] = 0;
+            px[w] = x; py[w] = y; tmv[w] = now; continue; }
+        if (now - tmv[w] < 350u || now - tstep[w] < 120u || (int32_t)(hold[w] - now) > 0) continue;
+        fx = MEMF(cm + 0x40) - MEMF(cm + 0x50); fy = MEMF(cm + 0x44) - MEMF(cm + 0x54); fn = sqrtf(fx * fx + fy * fy); if (fn < 1e-3f) continue; fx /= fn; fy /= fn;
+        dx = ly * fx + lx * fy; dy = ly * fy - lx * fx; dn = sqrtf(dx * dx + dy * dy); if (dn < 1e-3f) continue; dx /= dn; dy /= dn;   /* (the stick on the ground: forward the camera's, right its right) */
+        if (!steps[w]) { if (!vs_pm_walk_at(x + dx * 1.0f, y + dy * 1.0f, NULL) || !vs_pm_walk_at(x + dx * 2.5f, y + dy * 2.5f, NULL)) continue; sx[w] = x; sy[w] = y; sz2[w] = z; }
+        tstep[w] = now;
+        if (steps[w] >= 7) { float p[3]; p[0] = sx[w]; p[1] = sy[w]; p[2] = sz2[w] + 0.5f; vs_place(h, p); steps[w] = 0; hold[w] = now + 1500u; tmv[w] = now; px[w] = p[0]; py[w] = p[1];
+            if (getenv("TT_VS_UNSTICKLOG")) tt_dbg("[VS] P%d: a thick wall, back at %.1f %.1f\n", w + 1, p[0], p[1]); continue; }
+        {   float p[3]; p[0] = x + dx * 0.6f; p[1] = y + dy * 0.6f; p[2] = z + 2.0f;
+            if (vs_pm_walk_at(p[0], p[1], &pmi)) { uint32_t cur = MEM32(h + 0x2ECu), q = cur < 256u ? MEM32(0x41F428u + 0x1088u + 4u * cur) : 0;
+                if (!(q >= 0x10000u && p[0] >= MEMF(q + 0x48) && p[0] <= MEMF(q + 0x58) && p[1] >= MEMF(q + 0x4C) && p[1] <= MEMF(q + 0x5C))) MEM32(h + 0x2ECu) = pmi; }
+            vs_place(h, p); steps[w]++; px[w] = p[0]; py[w] = p[1];
+            if (getenv("TT_VS_UNSTICKLOG")) tt_dbg("[VS] P%d held against a wall at %.1f %.1f: a step on (%d)\n", w + 1, x, y, steps[w]); }
+    }
+}
+/* (1.9.9, Versus) the level's pieces joined. Lurtz's ruins in Amon Hen (pathmap 14) are walled in all round: the campaign's
+ * story takes its heroes there with the level's own teleport (playerTeleportObj: its record's +0x28, 246 -404). A gate where
+ * the river path ends (the campaign's end of the level, 564 -377) takes both heroes into the ruins, and one at the ruins'
+ * east wall takes them back (a gate only works when walked into, so the one they arrive in waits until they leave it).
+ * TT_VS_NOGATES: off */
+typedef struct { unsigned level; float x, y, r, tx, ty, tz, th; } VsGate;
+static float vs_cam_dx, vs_cam_dy;   /* (vs_camera's heading, below) */
+static const VsGate vs_gate_tab[] = {
+    { 4u, 564.5f, -376.8f, 5.0f, 246.1f, -404.3f,  -3.0f,  3.13f },   /* the river path's end -> Lurtz's ruins (playerTeleportObj) */
+    { 4u, 282.0f, -398.0f, 3.5f, 560.0f, -366.0f, -56.0f,  1.57f },   /*   the ruins' east wall -> back */
+};
+/* (1.9.9, Versus) the seams between pathmaps opened. A hero walks only on his pathmap's open cells (state 3: a wall), and each
+ * pathmap is walled at its own edge -- where the next one takes over, the campaign's heroes are taken on by its story (the
+ * pathmap they stand in changes at its triggers). Without them a hero stood at an invisible wall where two pathmaps meet
+ * (Amon Hen, from the start on). A cell walled in one pathmap and open in another over the same ground is opened, once a
+ * level. TT_VS_KEEPSEAMS: as the level has them */
+static void vs_open_seams(void)
+{
+    static unsigned lv = ~0u; uint32_t i, j, lst[256]; int n = 0, opened = 0;
+    if (lv == coop_level_n || getenv("TT_VS_KEEPSEAMS")) return;
+    lv = coop_level_n;
+    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); if (q >= 0x10000u && q < 0x84000000u && MEM32(q + 0x6Cu) >= 0x10000u && MEM32(q + 0x68) > 0) lst[n++] = q; }
+    for (i = 0; i < (uint32_t)n; i++) {
+        uint32_t a = lst[i], base = MEM32(a + 0x6Cu); int W = (int)MEM32(a + 0x70), H = (int)MEM32(a + 0x74), r, c; float ox = MEMF(a + 0x48), oy = MEMF(a + 0x4C), sz = (float)(int32_t)MEM32(a + 0x68);
+        for (r = 0; r < H; r++) for (c = 0; c < W; c++) {
+            uint32_t k = (uint32_t)(W * r + c); float x, y; int open = 0;
+            if (((MEM8(base + k) >> 2) & 3) != 3) continue;
+            x = ox + ((float)c + 0.5f) * sz; y = oy + ((float)r + 0.5f) * sz;
+            for (j = 0; j < (uint32_t)n && !open; j++) { uint32_t b = lst[j]; float bx = MEMF(b + 0x48), by = MEMF(b + 0x4C), bs = (float)(int32_t)MEM32(b + 0x68); int v;
+                if (b == a || x < bx || x > MEMF(b + 0x58) || y < by || y > MEMF(b + 0x5C)) continue;
+                v = (MEM8(MEM32(b + 0x6Cu) + (uint32_t)((int)MEM32(b + 0x70) * (int)floorf((y - by) / bs) + (int)floorf((x - bx) / bs))) >> 2) & 3;
+                if ((int)floorf((x - bx) / bs) < (int)MEM32(b + 0x70) && (int)floorf((y - by) / bs) < (int)MEM32(b + 0x74) && (v == 0 || v == 2)) open = 1; }
+            if (open) { MEM8(base + k) &= (uint8_t)~0x0Cu; opened++; }
+        }
+    }
+    tt_dbg("[VS] pathmap seams: %d walled cells opened where another pathmap goes on (%d pathmaps)\n", opened, n);
+}
+static void vs_gates(void)
+{
+    static int in[2][8]; static unsigned lv = ~0u; uint32_t lvl = MEM32(0x1BB2A4u); int w, g, ng = (int)(sizeof vs_gate_tab / sizeof vs_gate_tab[0]);
+    if (getenv("TT_VS_NOGATES") || !vs_have || vs_state != 0 || coop_first_char < 0x10000u || coop_p2 < 0x10000u) return;
+    if (lv != coop_level_n) { lv = coop_level_n; memset(in, 0, sizeof in); }
+    for (w = 0; w < 2; w++) {
+        uint32_t h = w ? coop_p2 : coop_first_char; float x = MEMF(h + 0xF0), y = MEMF(h + 0xF4);
+        for (g = 0; g < ng && g < 8; g++) {
+            const VsGate *G = &vs_gate_tab[g]; int now_in;
+            if (G->level != lvl) continue;
+            now_in = (x - G->x) * (x - G->x) + (y - G->y) * (y - G->y) < G->r * G->r && !coop_down[w];
+            if (now_in && !in[w][g]) {
+                int k, d; uint32_t pmi = 0;
+                for (k = 0; k < 2; k++) { uint32_t a = k ? coop_p2 : coop_first_char; float p[3];
+                    p[0] = G->tx + (k ? 2.0f * cosf(G->th + 1.5707963f) : 0.0f); p[1] = G->ty + (k ? 2.0f * sinf(G->th + 1.5707963f) : 0.0f); p[2] = G->tz + vs_lift();
+                    vs_place(a, p); MEMF(a + 0x90) = p[0]; MEMF(a + 0x94) = p[1]; MEMF(a + 0x98) = p[2];
+                    if (vs_pm_walk_at(p[0], p[1], &pmi)) MEM32(a + 0x2ECu) = pmi;
+                    vs_safe[k][0] = p[0]; vs_safe[k][1] = p[1]; vs_safe[k][2] = G->tz; memset(vs_wt[k], 0, sizeof vs_wt[k]); vs_back_t[k] = 0; }
+                for (k = 0; k < 2; k++) for (d = 0; d < ng && d < 8; d++) { const VsGate *D = &vs_gate_tab[d];   /* (inside the gate they arrive in: it waits) */
+                    in[k][d] = D->level == lvl && (G->tx - D->x) * (G->tx - D->x) + (G->ty - D->y) * (G->ty - D->y) < (D->r + 3.0f) * (D->r + 3.0f); }
+                vs_cam_dx = cosf(G->th); vs_cam_dy = sinf(G->th);   /* (the camera behind them, facing on) */
+                tt_dbg("[VS] P%d walked into the gate at %.0f %.0f: both heroes to %.0f %.0f %.0f\n", w + 1, G->x, G->y, G->tx, G->ty, G->tz);
+                return;
+            }
+            in[w][g] = now_in;
+        }
+    }
+}
 static void vs_round_start(void)
 {
     char t[48]; int w, keep = vs_round > 0 && (vs_shield_mode() || vs_big_arena());
@@ -6058,6 +6197,15 @@ static void vs_camera(void)
         }
     }
     MEMF(cm + 0x50) = mx - vs_cam_dx * back; MEMF(cm + 0x54) = my - vs_cam_dy * back; MEMF(cm + 0x58) = mz + 1.5f + up;
+    if (getenv("TT_VS_TOPCAM")) {   /* (research) "x0,y0,x1,y1,step,h": the eye straight above each tile of the map in turn, 2.5 s each, a frame of each */
+        static float a[6]; static int got, k, shot; static uint32_t t0; uint32_t now = coop_now(); int nx, ny, idx; float tx, ty;
+        if (!got) { got = sscanf(getenv("TT_VS_TOPCAM"), "%f,%f,%f,%f,%f,%f", &a[0], &a[1], &a[2], &a[3], &a[4], &a[5]) == 6; t0 = now; }
+        if (got && a[4] > 0) { nx = (int)((a[2] - a[0]) / a[4]) + 1; ny = (int)((a[3] - a[1]) / a[4]) + 1; idx = (int)((now - t0) / 2500u);
+            if (idx < nx * ny) { tx = a[0] + (float)(idx % nx) * a[4]; ty = a[3] - (float)(idx / nx) * a[4];
+                MEMF(cm + 0x40) = tx; MEMF(cm + 0x44) = ty; MEMF(cm + 0x48) = 0.0f; MEMF(cm + 0x50) = tx; MEMF(cm + 0x54) = ty - 0.5f; MEMF(cm + 0x58) = a[5];
+                if ((now - t0) % 2500u > 2000u && shot != idx + 1) { extern void xbox_PresentDumpRequest(const char *path); char pth[300]; shot = idx + 1; snprintf(pth, sizeof pth, "%s/top_%03d_%d_%d.bmp", getenv("TT_VS_TOPDIR") ? getenv("TT_VS_TOPDIR") : ".", idx, (int)tx, (int)ty); xbox_PresentDumpRequest(pth); } } }
+        (void)k;
+    }
     if (getenv("TT_VS_CAMLOG")) { static uint32_t tl; if (coop_now() - tl > 500u) { tl = coop_now(); tt_dbg("[VSCAM] t %u heroes %.1f %.1f, eye back %.1f up %.1f, heading %.2f %.2f, inside %d\n", coop_now(), mx, my, back, up, vs_cam_dx, vs_cam_dy, vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)); } }
     if (!getenv("TT_VS_KEEPCAMANGLE")) { float th = atan2f(vs_cam_dy, vs_cam_dx) - 1.5707963f + (getenv("TT_VS_CAMANGOFS") ? (float)atof(getenv("TT_VS_CAMANGOFS")) : 0.0f); if (getenv("TT_VS_CAMANGNEG")) th = -th; MEMF(cm + 0x60) = th; MEMF(cm + 0x84) = th; }   /* (1.9.7) the level camera's turn (+0x60, last +0x84; about 0 elsewhere): on the Road to Helm's Deep it swung all about without the level's camera records, and the stick goes by it -- every hero ran in circles there */
 }
@@ -6210,6 +6358,73 @@ void tt_vs_exp_restore(void)
     MEM32(vs_xrec + 0x6C) = (uint32_t)vs_x6c; MEM32(vs_xrec + 0x78) = (uint32_t)vs_x78; MEM32(vs_xrec + 0x90) = vs_x90;
     tt_dbg("[VS] player 1's record %08X put back (experience %d, level %d)\n", vs_xrec, vs_x6c, vs_x78); vs_xrec = 0;
 }
+/* (test) TT_VS_WALKTO, in Versus (vs_frame) or the campaign (menus.c, TT_WALKCAMPAIGN) */
+void tt_walkto_tick(uint32_t hero, uint32_t now)
+{   /* (test) "x,y;x,y;...": player 1 walks (his stick, menus.c) to each point in turn,
+        * along a route over the walkable cells of all the level's pathmaps (a 2-unit grid, BFS), steered by the camera's heading;
+        * stuck 4 s: routed again from where he is; 4 times: the next point */
+        extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2]; if (!getenv("TT_VS_WALKTO") || hero < 0x10000u) return;
+        enum { GW = 420, GH = 340 }; static unsigned char walk[GH][GW]; static int prev[GH * GW], qq[GH * GW], route[GH * GW]; static float gx0, gy0; static int built, nr, ri, tries;
+        static float wp[64][2]; static int nwp = -1, cur; static uint32_t tcur; static float bestd;
+        uint32_t cm = MEM32(0x43B164u); float x = MEMF(hero + 0xF0), y = MEMF(hero + 0xF4), dx, dy, d;
+        if (nwp < 0) { const char *q = getenv("TT_VS_WALKTO"); nwp = 0; while (q && *q && nwp < 64) { if (sscanf(q, "%f,%f", &wp[nwp][0], &wp[nwp][1]) == 2) nwp++; q = strchr(q, ';'); if (q) q++; } tcur = now; bestd = 1e9f; nr = 0; ri = 0; }
+        if (!built) {   /* the grid: a cell walkable if any pathmap over it says so */
+            uint32_t i2; float minx = 1e9f, miny = 1e9f; int r, c;
+            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; if (MEMF(q + 0x48) < minx) minx = MEMF(q + 0x48); if (MEMF(q + 0x4C) < miny) miny = MEMF(q + 0x4C); }
+            gx0 = minx; gy0 = miny; built = 1;
+            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); int W2, H2; float ox, oy, sz;
+                if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
+                W2 = (int)MEM32(q + 0x70); H2 = (int)MEM32(q + 0x74); ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68); if (sz <= 0) continue;
+                for (r = 0; r < H2; r++) for (c = 0; c < W2; c++) { int v = coop_pm_cell(q, c, r), gc = (int)((ox + ((float)c + 0.5f) * sz - gx0) / 2.0f), gr = (int)((oy + ((float)r + 0.5f) * sz - gy0) / 2.0f);
+                    if (gc >= 0 && gr >= 0 && gc < GW && gr < GH && v >= 0) { if (COOP_PM_WALK(v)) { if (walk[gr][gc] != 2) walk[gr][gc] = 1; } else walk[gr][gc] = 2; } } }
+            for (r = 0; r < GH; r++) for (c = 0; c < GW; c++) if (walk[r][c] == 2) walk[r][c] = 0;   /* (blocked in any pathmap over it: blocked) */
+            tt_dbg("[WALKTO] grid from %.0f %.0f\n", gx0, gy0);
+        }
+        { extern float tt_walk_fall[3]; if (tt_walk_fall[2] != 0.0f && built) { int c0 = (int)((tt_walk_fall[0] - gx0) / 2.0f), r0 = (int)((tt_walk_fall[1] - gy0) / 2.0f), a2, b2; tt_walk_fall[2] = 0.0f;
+            for (a2 = -2; a2 <= 2; a2++) for (b2 = -2; b2 <= 2; b2++) if (c0 + a2 >= 0 && c0 + a2 < GW && r0 + b2 >= 0 && r0 + b2 < GH) walk[r0 + b2][c0 + a2] = 0;
+            nr = ri = 0; tries = 0; tt_dbg("[WALKTO] a fall at %.0f %.0f: the cells there marked, routed again\n", tt_walk_fall[0], tt_walk_fall[1]); } }
+        if (cur < nwp) {
+            dx = wp[cur][0] - x; dy = wp[cur][1] - y; d = sqrtf(dx * dx + dy * dy);
+            if (ri < nr) { float rx = gx0 + ((float)(route[ri] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri] / GW) + 0.5f) * 2.0f, rd = sqrtf((rx - x) * (rx - x) + (ry - y) * (ry - y));
+                if (rd < 1.5f && ri < nr) ri++;
+                if (rd < bestd - 0.3f) { bestd = rd; tcur = now; } }
+            if (d < 2.5f || tries >= 6) { tt_dbg("[WALKTO] point %d (%.0f %.0f) %s at %.1f %.1f %.1f, pathmap %d\n", cur, wp[cur][0], wp[cur][1], d < 2.5f ? "reached" : "given up", x, y, MEMF(hero + 0xF8), (int)MEM32(hero + 0x2EC)); if (d >= 2.5f && getenv("TT_WALKGRID")) { static int dn; if (dn++ < 1) { int rr3, cc3, c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f); uint32_t i3;
+                for (rr3 = r0 + 8; rr3 >= r0 - 8; rr3--) { char ln[40]; for (cc3 = c0 - 8; cc3 <= c0 + 8; cc3++) ln[cc3 - c0 + 8] = (cc3 == c0 && rr3 == r0) ? '@' : (cc3 >= 0 && rr3 >= 0 && cc3 < GW && rr3 < GH && walk[rr3][cc3]) ? '.' : '#'; ln[17] = 0; tt_dbg("[WALKGRID] %s  y %.0f\n", ln, gy0 + rr3 * 2.0f + 1.0f); }
+                for (i3 = 0; i3 < 256; i3++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i3); float ox, oy, sz; if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68);
+                    if (x < MEMF(q + 0x48) - 16 || x > MEMF(q + 0x58) + 16 || y < MEMF(q + 0x4C) - 16 || y > MEMF(q + 0x5C) + 16) continue;
+                    for (rr3 = 8; rr3 >= -8; rr3--) { char ln[40]; for (cc3 = -8; cc3 <= 8; cc3++) { int v = coop_pm_cell(q, (int)floorf((x + cc3 * sz - ox) / sz), (int)floorf((y + rr3 * sz - oy) / sz)); ln[cc3 + 8] = (cc3 == 0 && rr3 == 0) ? '@' : v < 0 ? ' ' : (char)('0' + v); } ln[17] = 0; tt_dbg("[WALKGRID] pm %u %s\n", i3, ln); } } } }
+           if (d >= 2.5f && getenv("TT_OBJNEAR")) { extern void tt_objs_near(float x, float y, float r); static int dn; if (dn++ < 1) tt_objs_near(x, y, (float)atof(getenv("TT_OBJNEAR"))); } cur++; tries = 0; nr = ri = 0; tcur = now; bestd = 1e9f; }
+            else if (!nr || ri >= nr || now - tcur > 8000u) {   /* route (again) */
+                int c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f), c1 = (int)((wp[cur][0] - gx0) / 2.0f), r1 = (int)((wp[cur][1] - gy0) / 2.0f), qh = 0, qt = 0, k, found = 0, best = -1; float bd = 1e18f;
+                if (nr) tries++;
+                nr = ri = 0; tcur = now; bestd = 1e9f;
+                if (c0 >= 0 && r0 >= 0 && c0 < GW && r0 < GH && c1 >= 0 && r1 >= 0 && c1 < GW && r1 < GH) {
+                    for (k = 0; k < GW * GH; k++) prev[k] = -2;
+                    prev[r0 * GW + c0] = -1; qq[qt++] = r0 * GW + c0;
+                    while (qh < qt) { int cell = qq[qh++], c = cell % GW, r = cell / GW, dd2; float e = (float)((c - c1) * (c - c1) + (r - r1) * (r - r1));
+                        if (e < bd) { bd = e; best = cell; }
+                        if (c == c1 && r == r1) { found = 1; break; }
+                        for (dd2 = 0; dd2 < 8; dd2++) { static const int DX[8] = { 1, -1, 0, 0, 1, 1, -1, -1 }, DY[8] = { 0, 0, 1, -1, 1, -1, 1, -1 }; int nc = c + DX[dd2], nr2 = r + DY[dd2];
+                            if (nc < 0 || nr2 < 0 || nc >= GW || nr2 >= GH || prev[nr2 * GW + nc] != -2 || !walk[nr2][nc]) continue;
+                            prev[nr2 * GW + nc] = cell; qq[qt++] = nr2 * GW + nc; } }
+                    { int cell = found ? r1 * GW + c1 : best, n3 = 0; while (cell >= 0 && n3 < GH * GW) { qq[n3++] = cell; cell = prev[cell]; }
+                      for (k = n3 - 1; k >= 0; k--) route[nr++] = qq[k]; }
+                    tt_dbg("[WALKTO] point %d: %s, %d cells (try %d)\n", cur, found ? "routed" : "nearest reachable", nr, tries); }
+            }
+            if (cm >= 0x10000u && ri < nr) {
+                float rx = gx0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] / GW) + 0.5f) * 2.0f;
+                float fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy), ux = rx - x, uy = ry - y, un = sqrtf(ux * ux + uy * uy);
+                {   /* (no headway for 1.2 s: a sidestep, 0.9 s, to one side then the other -- trees and rocks the pathmaps don't have) */
+                    static float lx2, ly2; static uint32_t tmv, side_until; static int side;
+                    if ((x - lx2) * (x - lx2) + (y - ly2) * (y - ly2) > 0.6f * 0.6f) { lx2 = x; ly2 = y; tmv = now; }
+                    if (now - tmv > 1200u && now >= side_until) { side_until = now + 900u; side ^= 1; tmv = now; }
+                    if (now < side_until && un > 1e-3f) { float t2 = ux; if (side) { ux = -uy; uy = t2; } else { ux = uy; uy = -t2; } }
+                }
+                if (fn > 1e-3f && un > 1e-3f) { fx /= fn; fy /= fn; ux /= un; uy /= un; tt_p1_autostick[1] = (int16_t)((ux * fx + uy * fy) * 30000.0f); tt_p1_autostick[0] = (int16_t)((ux * fy - uy * fx) * 30000.0f); tt_p1_autostick_on = 1; }
+            }
+        } else tt_p1_autostick_on = 0;
+    }
+
 static void vs_frame(void)
 {
     { extern int (*volatile xbox_movie_skip_cb)(void); xbox_movie_skip_cb = vs_skip_movies; }
@@ -6244,6 +6459,9 @@ static void vs_frame(void)
     if (getenv("TT_VS_P2FOLLOW") && vs_state == 0) { MEMF(coop_p2 + 0xF0) = MEMF(coop_first_char + 0xF0) + 2.0f; MEMF(coop_p2 + 0xF4) = MEMF(coop_first_char + 0xF4); MEMF(coop_p2 + 0xF8) = MEMF(coop_first_char + 0xF8); }   /* (test) */
     vs_leash();
     vs_edge_guard();
+    vs_unstick();
+    if (vs_have) vs_open_seams();
+    vs_gates();
     vs_camera();
     if (!vs_have) {   /* the first frame of play: the spots, then round 1 */
         if (tt_in_scene()) return;
@@ -6324,77 +6542,28 @@ static void vs_frame(void)
          * once a level. TT_VS_KEEPPROPS */
         static unsigned lv = ~0u; extern uint32_t tt_allobj[4096], tt_allobj_t[4096]; extern int tt_nallobj;
         if (lv != coop_level_n && vs_have && !getenv("TT_VS_KEEPPROPS")) { int i, n = 0; lv = coop_level_n;
-            for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i]; if (tt_allobj_t[i] != 7u || o < 0x10000u || o >= 0x84000000u || MEM32(o) != 0x174980u) continue;
+            for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i]; if (o < 0x10000u || o >= 0x84000000u) continue;
+                if (getenv("TT_VS_ALLOBJCOLL") && MEM32(o) != 0x1741C0u && tt_allobj_t[i] != 7u) { uint32_t a1[1]; a1[0] = o; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); MEM32(o + 0x110) &= ~0x100u; continue; }   /* (test) */
+                if (tt_allobj_t[i] != 7u || MEM32(o) != 0x174980u) continue;
                 { uint32_t a1[1]; a1[0] = o; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); }   /* (@ObjectCollisionOff: out of the collision world, 0x43C5E8) */
+                if (getenv("TT_VS_PROPLOG")) { uint32_t h = MEM32(o + 0x18); tt_dbg("[VSPROP] %08X '%s' at %.1f %.1f %.1f +110 %08X +2A4 %08X +114 %08X\n", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEMF(o + 0xF0), MEMF(o + 0xF4), MEMF(o + 0xF8), MEM32(o + 0x110), MEM32(o + 0x2A4), MEM32(o + 0x114)); }
                 if (MEM32(o + 0x110) & 0x100u) MEM32(o + 0x110) &= ~0x100u;
+                if (getenv("TT_VS_PROPDEACT")) { uint32_t a1[1]; a1[0] = 0; tt_gcall(MEM32(MEM32(o) + 0x30u), o, 1, a1); }   /* (test: @Deactivate, vtable +0x30 with 0) */
                 if (getenv("TT_VS_PROPSINK")) { uint32_t h = MEM32(o + 0x18); if (h >= 0x10000u && h < 0x84000000u && (!strcmp(getenv("TT_VS_PROPSINK"), "all") || !strcmp((const char *)XBOX_PTR(h), getenv("TT_VS_PROPSINK")))) {
                     float p3[3]; p3[0] = MEMF(o + 0xF0); p3[1] = MEMF(o + 0xF4); p3[2] = MEMF(o + 0xF8) - 300.0f; { uint32_t a3[3]; memcpy(&a3[0], &p3[0], 4); memcpy(&a3[1], &p3[1], 4); memcpy(&a3[2], &p3[2], 4); tt_gcall(0x000865D0u, o, 3, a3); }
                     tt_dbg("[VS] prop %s sunk: now at %.1f\n", (const char *)XBOX_PTR(h), MEMF(o + 0xF8)); } }   /* (test) */
                 n++; }
             tt_dbg("[VS] props: %d of the level's walked through now\n", n); }
     }
+    if (getenv("TT_WORLDDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; uint32_t w = MEM32(0x3C35A0u), q, k;   /* (research) the world, its sectors and portals */
+        if (!dn++ && w >= 0x10000u) { for (q = 0; q < 0x120; q += 16) tt_dbg("[WORLD] +%03X %08X %08X %08X %08X\n", q, MEM32(w + q), MEM32(w + q + 4), MEM32(w + q + 8), MEM32(w + q + 12));
+            for (k = 0; k < MEM32(w + 0x10) && k < 16; k++) { uint32_t sc = MEM32(MEM32(w + 0x30) + 4 * k); sc = MEM32(w + 0x100 + 4 * k) - 0x20; tt_dbg("[SECTOR] %u %08X '%.12s' %.1f %.1f %.1f .. %.1f %.1f %.1f | +50 %X +54 %X +58 %X +5C %X +60 %08X +64 %08X +68 %X +6C %X\n", k, sc, (const char *)XBOX_PTR(sc + 0x20), MEMF(sc + 0x30), MEMF(sc + 0x34), MEMF(sc + 0x38), MEMF(sc + 0x40), MEMF(sc + 0x44), MEMF(sc + 0x48), MEM32(sc + 0x50), MEM32(sc + 0x54), MEM32(sc + 0x58), MEM32(sc + 0x5C), MEM32(sc + 0x60), MEM32(sc + 0x64), MEM32(sc + 0x68), MEM32(sc + 0x6C)); }
+            { uint32_t a = MEM32(w + 0x34); for (q = 0; q < 0x600; q += 16) tt_dbg("[PORTAL] +%03X %08X %08X %08X %08X\n", q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); }
+            for (k = 0x18; k <= 0x40; k += 4) { uint32_t a = MEM32(w + k); if (a >= 0x80000000u && a < 0x84000000u) for (q = 0; q < 0x100; q += 16) tt_dbg("[WORLD] [+%02X]=%08X +%03X %08X %08X %08X %08X\n", k, a, q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); } } }
+    if (getenv("TT_VS_NOPATHROOM")) { static int dn; if (!dn++) tt_dbg("[VS] heroes +110 %08X %08X +124 %08X %08X +2A4 %08X\n", MEM32(coop_first_char + 0x110), MEM32(coop_p2 + 0x110), MEM32(coop_first_char + 0x124), MEM32(coop_p2 + 0x124), MEM32(coop_first_char + 0x2A4)); if (coop_first_char >= 0x10000u) MEM32(coop_first_char + 0x110) &= ~0x800u; if (coop_p2 >= 0x10000u) MEM32(coop_p2 + 0x110) &= ~0x800u; }   /* (test) */
+    if (getenv("TT_RECDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; extern void tt_recdump(const char *sub); if (!dn++) tt_recdump(getenv("TT_RECDUMP")); }   /* (research) */
     if (getenv("TT_OBJDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; extern void tt_objs_near(float x, float y, float r); if (!dn++) tt_objs_near(0, 0, 0); }   /* (research) */
-    if (getenv("TT_VS_WALKTO") && vs_state == 0 && now - vs_round_t0 > 1500u) {   /* (test) "x,y;x,y;...": player 1 walks (his stick, menus.c) to each point in turn,
-        * along a route over the walkable cells of all the level's pathmaps (a 2-unit grid, BFS), steered by the camera's heading;
-        * stuck 4 s: routed again from where he is; 4 times: the next point */
-        extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2];
-        enum { GW = 420, GH = 340 }; static unsigned char walk[GH][GW]; static int prev[GH * GW], qq[GH * GW], route[GH * GW]; static float gx0, gy0; static int built, nr, ri, tries;
-        static float wp[64][2]; static int nwp = -1, cur; static uint32_t tcur; static float bestd;
-        uint32_t cm = MEM32(0x43B164u); float x = MEMF(coop_first_char + 0xF0), y = MEMF(coop_first_char + 0xF4), dx, dy, d;
-        if (nwp < 0) { const char *q = getenv("TT_VS_WALKTO"); nwp = 0; while (q && *q && nwp < 64) { if (sscanf(q, "%f,%f", &wp[nwp][0], &wp[nwp][1]) == 2) nwp++; q = strchr(q, ';'); if (q) q++; } tcur = now; bestd = 1e9f; nr = 0; ri = 0; }
-        if (!built) {   /* the grid: a cell walkable if any pathmap over it says so */
-            uint32_t i2; float minx = 1e9f, miny = 1e9f; int r, c;
-            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; if (MEMF(q + 0x48) < minx) minx = MEMF(q + 0x48); if (MEMF(q + 0x4C) < miny) miny = MEMF(q + 0x4C); }
-            gx0 = minx; gy0 = miny; built = 1;
-            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); int W2, H2; float ox, oy, sz;
-                if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
-                W2 = (int)MEM32(q + 0x70); H2 = (int)MEM32(q + 0x74); ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68); if (sz <= 0) continue;
-                for (r = 0; r < H2; r++) for (c = 0; c < W2; c++) { int v = coop_pm_cell(q, c, r), gc = (int)((ox + ((float)c + 0.5f) * sz - gx0) / 2.0f), gr = (int)((oy + ((float)r + 0.5f) * sz - gy0) / 2.0f);
-                    if (gc >= 0 && gr >= 0 && gc < GW && gr < GH && v >= 0) { if (COOP_PM_WALK(v)) { if (walk[gr][gc] != 2) walk[gr][gc] = 1; } else walk[gr][gc] = 2; } } }
-            for (r = 0; r < GH; r++) for (c = 0; c < GW; c++) if (walk[r][c] == 2) walk[r][c] = 0;   /* (blocked in any pathmap over it: blocked) */
-            tt_dbg("[WALKTO] grid from %.0f %.0f\n", gx0, gy0);
-        }
-        if (cur < nwp) {
-            dx = wp[cur][0] - x; dy = wp[cur][1] - y; d = sqrtf(dx * dx + dy * dy);
-            if (ri < nr) { float rx = gx0 + ((float)(route[ri] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri] / GW) + 0.5f) * 2.0f, rd = sqrtf((rx - x) * (rx - x) + (ry - y) * (ry - y));
-                if (rd < 1.5f && ri < nr) ri++;
-                if (rd < bestd - 0.3f) { bestd = rd; tcur = now; } }
-            if (d < 2.5f || tries >= 3) { tt_dbg("[WALKTO] point %d (%.0f %.0f) %s at %.1f %.1f %.1f, pathmap %d\n", cur, wp[cur][0], wp[cur][1], d < 2.5f ? "reached" : "given up", x, y, MEMF(coop_first_char + 0xF8), (int)MEM32(coop_first_char + 0x2EC)); if (d >= 2.5f && getenv("TT_WALKGRID")) { static int dn; if (dn++ < 1) { int rr3, cc3, c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f); uint32_t i3;
-                for (rr3 = r0 + 8; rr3 >= r0 - 8; rr3--) { char ln[40]; for (cc3 = c0 - 8; cc3 <= c0 + 8; cc3++) ln[cc3 - c0 + 8] = (cc3 == c0 && rr3 == r0) ? '@' : (cc3 >= 0 && rr3 >= 0 && cc3 < GW && rr3 < GH && walk[rr3][cc3]) ? '.' : '#'; ln[17] = 0; tt_dbg("[WALKGRID] %s  y %.0f\n", ln, gy0 + rr3 * 2.0f + 1.0f); }
-                for (i3 = 0; i3 < 256; i3++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i3); float ox, oy, sz; if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68);
-                    if (x < MEMF(q + 0x48) - 16 || x > MEMF(q + 0x58) + 16 || y < MEMF(q + 0x4C) - 16 || y > MEMF(q + 0x5C) + 16) continue;
-                    for (rr3 = 8; rr3 >= -8; rr3--) { char ln[40]; for (cc3 = -8; cc3 <= 8; cc3++) { int v = coop_pm_cell(q, (int)floorf((x + cc3 * sz - ox) / sz), (int)floorf((y + rr3 * sz - oy) / sz)); ln[cc3 + 8] = (cc3 == 0 && rr3 == 0) ? '@' : v < 0 ? ' ' : (char)('0' + v); } ln[17] = 0; tt_dbg("[WALKGRID] pm %u %s\n", i3, ln); } } } }
-           if (d >= 2.5f && getenv("TT_OBJNEAR")) { extern void tt_objs_near(float x, float y, float r); static int dn; if (dn++ < 1) tt_objs_near(x, y, (float)atof(getenv("TT_OBJNEAR"))); } cur++; tries = 0; nr = ri = 0; tcur = now; bestd = 1e9f; }
-            else if (!nr || ri >= nr || now - tcur > 8000u) {   /* route (again) */
-                int c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f), c1 = (int)((wp[cur][0] - gx0) / 2.0f), r1 = (int)((wp[cur][1] - gy0) / 2.0f), qh = 0, qt = 0, k, found = 0, best = -1; float bd = 1e18f;
-                if (nr) tries++;
-                nr = ri = 0; tcur = now; bestd = 1e9f;
-                if (c0 >= 0 && r0 >= 0 && c0 < GW && r0 < GH && c1 >= 0 && r1 >= 0 && c1 < GW && r1 < GH) {
-                    for (k = 0; k < GW * GH; k++) prev[k] = -2;
-                    prev[r0 * GW + c0] = -1; qq[qt++] = r0 * GW + c0;
-                    while (qh < qt) { int cell = qq[qh++], c = cell % GW, r = cell / GW, dd2; float e = (float)((c - c1) * (c - c1) + (r - r1) * (r - r1));
-                        if (e < bd) { bd = e; best = cell; }
-                        if (c == c1 && r == r1) { found = 1; break; }
-                        for (dd2 = 0; dd2 < 8; dd2++) { static const int DX[8] = { 1, -1, 0, 0, 1, 1, -1, -1 }, DY[8] = { 0, 0, 1, -1, 1, -1, 1, -1 }; int nc = c + DX[dd2], nr2 = r + DY[dd2];
-                            if (nc < 0 || nr2 < 0 || nc >= GW || nr2 >= GH || prev[nr2 * GW + nc] != -2 || !walk[nr2][nc]) continue;
-                            prev[nr2 * GW + nc] = cell; qq[qt++] = nr2 * GW + nc; } }
-                    { int cell = found ? r1 * GW + c1 : best, n3 = 0; while (cell >= 0 && n3 < GH * GW) { qq[n3++] = cell; cell = prev[cell]; }
-                      for (k = n3 - 1; k >= 0; k--) route[nr++] = qq[k]; }
-                    tt_dbg("[WALKTO] point %d: %s, %d cells (try %d)\n", cur, found ? "routed" : "nearest reachable", nr, tries); }
-            }
-            if (cm >= 0x10000u && ri < nr) {
-                float rx = gx0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] / GW) + 0.5f) * 2.0f;
-                float fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy), ux = rx - x, uy = ry - y, un = sqrtf(ux * ux + uy * uy);
-                {   /* (no headway for 1.2 s: a sidestep, 0.9 s, to one side then the other -- trees and rocks the pathmaps don't have) */
-                    static float lx2, ly2; static uint32_t tmv, side_until; static int side;
-                    if ((x - lx2) * (x - lx2) + (y - ly2) * (y - ly2) > 0.6f * 0.6f) { lx2 = x; ly2 = y; tmv = now; }
-                    if (now - tmv > 1200u && now >= side_until) { side_until = now + 900u; side ^= 1; tmv = now; }
-                    if (now < side_until && un > 1e-3f) { float t2 = ux; if (side) { ux = -uy; uy = t2; } else { ux = uy; uy = -t2; } }
-                }
-                if (fn > 1e-3f && un > 1e-3f) { fx /= fn; fy /= fn; ux /= un; uy /= un; tt_p1_autostick[1] = (int16_t)((ux * fx + uy * fy) * 30000.0f); tt_p1_autostick[0] = (int16_t)((ux * fy - uy * fx) * 30000.0f); tt_p1_autostick_on = 1; }
-            }
-        } else tt_p1_autostick_on = 0;
-    }
+    if (getenv("TT_VS_WALKTO") && vs_state == 0 && now - vs_round_t0 > 1500u) { extern void tt_walkto_tick(uint32_t hero, uint32_t now); tt_walkto_tick(coop_first_char, now); }
     if (getenv("TT_VS_GLIDE") && vs_state == 0 && now - vs_round_t0 > 1500u) {   /* (test) "x,y;x,y;...": both heroes carried along these points, 8 units a second,
                                                                                   * each leg routed over walkable cells of the pathmap holding both ends (BFS) */
         static float wp[32][2], rp[4096][2]; static int nwp = -1, cur, nr, ri; static uint32_t tl;
@@ -8824,6 +8993,7 @@ extern void sub_000C7220_gen(void); void sub_000C7220(void) { coop_mev_note(1); 
  * 133b) was attached in his hand and not drawn (a playtest, +0x110 00017D40 in a bot run). So his own melee weapons for
  * slots 0 and 1 (the hands) are drawn once he has his own moves, and at each take of one. TT_COOP_NOP2SHOW: off */
 volatile int tt_p1_autostick_on; volatile int16_t tt_p1_autostick[2];   /* (test: TT_VS_WALKTO) */
+float tt_walk_fall[3];   /* (test: where player 1 last fell, x y and a flag, for TT_VS_WALKTO) */
 static int coop_rng_key(uint32_t m);
 #define EMPTY_PROP_KEY_M 0x6E0B0E00u   /* (heroes.c EMPTY_PROP_KEY: a prop with no triangles, the nobow guests' bow hand) */
 void coop_p2_show_hands(uint32_t only)
@@ -9946,6 +10116,16 @@ static uint32_t coop_build_weapon_as(uint32_t child, int bone, int extra)
     else { static int full; if (!full++) tt_dbg("[COOPWEAPON] the record key table is full (%d)\n", COOP_NRECKEY); }
 }
 uint32_t coop_build_weapon_ext(uint32_t child) { return coop_build_weapon(child); }
+/* (research, TT_RECDUMP) the level's placement records whose name holds sub */
+void tt_recdump(const char *sub)
+{
+    int i; uint32_t q;
+    for (i = 0; i < coop_nreckey; i++) { uint32_t r = coop_reckey[i].rec; char nm[40]; int k;
+        if (r < 0x10000u || r >= 0x84000000u) continue; for (k = 0; k < 39 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
+        if (!strstr(nm, sub)) continue;
+        for (q = 0; q < 0x100; q += 16) tt_dbg("[REC] %s +%02X %08X %08X %08X %08X | %.2f %.2f %.2f %.2f\n", nm, q, MEM32(r + q), MEM32(r + q + 4), MEM32(r + q + 8), MEM32(r + q + 12), MEMF(r + q), MEMF(r + q + 4), MEMF(r + q + 8), MEMF(r + q + 12)); }
+    tt_dbg("[REC] %d records seen\n", coop_nreckey);
+}
 void coop_p2_extra_weapons_ext(uint32_t tmpl) { coop_p2_extra_weapons(tmpl); }
 /* @IsPlayerWeapon (0xABD00): true for a weapon (+0x114 0x16 or 0x11) whose owner (+0x11C) is [0x43B15C].
  * The enemies' hit triggers ask it with player 1's globals, so player 2's weapons never counted: when the
@@ -10197,11 +10377,11 @@ extern void sub_00084220_gen(void); void sub_00084220(void)
     if (sw) tt_coop_leave();
 }
 extern void sub_000843F0_gen(void); void sub_000843F0(void) { int sw = tt_coop_enter(ecx, 0x000843F0u); tt_coop_p1_pre(ecx, 0x000843F0u); if (coop_probe_on()) coop_count(26); sub_000843F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_00085340_gen(void); void sub_00085340(void) { int sw = tt_coop_enter(ecx, 0x00085340u); tt_coop_p1_pre(ecx, 0x00085340u); if (coop_probe_on()) coop_count(27); sub_00085340_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+extern void sub_00085340_gen(void); void sub_00085340(void) { if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { uint32_t m = MEM16(esp + 4), d = MEM32(esp + 8); if (1) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp) ^ (m << 24); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[POSMSG] msg %X data %08X pos %.1f %.1f %.1f; senders:", m, d, MEMF(d + 0x18), MEMF(d + 0x1C), MEMF(d + 0x20)); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg(" | stack %08X %08X %08X %08X %08X %08X\n", MEM32(esp + 12), MEM32(esp + 16), MEM32(esp + 20), MEM32(esp + 24), MEM32(esp + 28), MEM32(esp + 32)); } } } int sw = tt_coop_enter(ecx, 0x00085340u); tt_coop_p1_pre(ecx, 0x00085340u); if (coop_probe_on()) coop_count(27); sub_00085340_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086120_gen(void); void sub_00086120(void) { int sw = tt_coop_enter(ecx, 0x00086120u); tt_coop_p1_pre(ecx, 0x00086120u); if (coop_probe_on()) coop_count(28); sub_00086120_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086140_gen(void); void sub_00086140(void) { int sw = tt_coop_enter(ecx, 0x00086140u); tt_coop_p1_pre(ecx, 0x00086140u); if (coop_probe_on()) coop_count(29); sub_00086140_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086490_gen(void); void sub_00086490(void) { int sw = tt_coop_enter(ecx, 0x00086490u); tt_coop_p1_pre(ecx, 0x00086490u); if (coop_probe_on()) coop_count(30); sub_00086490_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_000865D0_gen(void); void sub_000865D0(void) { int sw = tt_coop_enter(ecx, 0x000865D0u); tt_coop_p1_pre(ecx, 0x000865D0u); if (coop_probe_on()) coop_count(31); sub_000865D0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+extern void sub_000865D0_gen(void); void sub_000865D0(void) { if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[SETPOS] P1 at %.1f %.1f %.1f <- %.1f %.1f %.1f from %06X; callers:", MEMF(ecx + 0xF0), MEMF(ecx + 0xF4), MEMF(ecx + 0xF8), MEMF(esp + 4), MEMF(esp + 8), MEMF(esp + 12), ra); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg("\n"); } } int sw = tt_coop_enter(ecx, 0x000865D0u); tt_coop_p1_pre(ecx, 0x000865D0u); if (coop_probe_on()) coop_count(31); sub_000865D0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086900_gen(void); void sub_00086900(void) { int sw = tt_coop_enter(ecx, 0x00086900u); tt_coop_p1_pre(ecx, 0x00086900u); if (coop_probe_on()) coop_count(32); sub_00086900_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086980_gen(void); void sub_00086980(void) { int sw = tt_coop_enter(ecx, 0x00086980u); tt_coop_p1_pre(ecx, 0x00086980u); if (coop_probe_on()) coop_count(33); sub_00086980_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000869A0_gen(void); void sub_000869A0(void) { int sw = tt_coop_enter(ecx, 0x000869A0u); tt_coop_p1_pre(ecx, 0x000869A0u); if (coop_probe_on()) coop_count(34); sub_000869A0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
@@ -10936,4 +11116,12 @@ void sub_0003FA60(void)
         for (j = 0; j < ns && seen[j] != key; j++) ;
         if (j == ns && ns < 256) { seen[ns++] = key; if (eax >= 0x10000u && eax < 0x84000000u) for (; q < 44 && MEM16(eax + 2 * q) >= 32 && MEM16(eax + 2 * q) < 127; q++) b[q] = (char)MEM16(eax + 2 * q); b[q] = 0;
             tt_dbg("[STRLOG] t %u id %u (0x%X) from %06X -> %08X '%s' | player %08X depth %d\n", tt_game_ms, id, id, ra, eax, b, MEM32(0x43B15Cu), coop_depth); } }
+}
+/* (research, TT_SETPOSLOG) who sets player 1's position through 0x181C0 */
+extern void sub_000181C0_gen(void);
+void sub_000181C0(void)
+{
+    if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; }
+        if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[SETPOS2] callers:"); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg("\n"); } }
+    sub_000181C0_gen();
 }

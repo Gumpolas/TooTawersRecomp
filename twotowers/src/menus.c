@@ -2449,6 +2449,7 @@ done:
 /* once a frame (twotowers_manual.c: the game's wait for the next frame) */
 void tt_menus_tick(void)
 {
+    if (getenv("TT_WALKCAMPAIGN") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { extern void tt_walkto_tick(uint32_t hero, uint32_t now); static DWORD t0; if (!t0) t0 = GetTickCount(); if (GetTickCount() - t0 > (DWORD)atoi(getenv("TT_WALKCAMPAIGN"))) tt_walkto_tick(G32(0x43B15Cu), GetTickCount()); }   /* (test) */
     if (getenv("TT_P1POSLOG")) { static DWORD tl; uint32_t p1 = G32(0x43B15Cu); if (p1 >= 0x10000u && p1 < 0x84000000u && GetTickCount() - tl > 2000u) { float x, y, z; uint32_t v; tl = GetTickCount(); v = G32(p1 + 0xF0); memcpy(&x, &v, 4); v = G32(p1 + 0xF4); memcpy(&y, &v, 4); v = G32(p1 + 0xF8); memcpy(&z, &v, 4); tt_dbg("[P1POS] %.1f %.1f %.1f pm %d\n", x, y, z, (int)G32(p1 + 0x2ECu)); } }   /* (test) */
     if (getenv("TT_TPANY")) {   /* (testing) "x,y,z,ms[,dir]": player 1 put there ms after play starts, then a frame a second into dir */
         static DWORD t0, tl; static int done, k; float x = 0, y = 0, z = 0; int ms = 0; char dir[200] = "";

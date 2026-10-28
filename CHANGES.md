@@ -2995,3 +2995,30 @@ twotowers/src/twotowers_manual.c
     TT_VS_CAMP1, TT_OBJNEAR / TT_OBJDUMP, TT_WALKGRID, TT_COOP_TAKELOGN.
 twotowers/src/menus.c
   - (test) TT_TPANY, TT_P1POSLOG, player 1's stick for TT_VS_WALKTO.
+
+-- 1.9.9: Amon Hen walkable from start to finish in Versus -----------------------
+twotowers/src/twotowers_manual.c
+  - Versus: the seams between pathmaps opened. A hero walks only on his
+    pathmap's open cells (state 3 is a wall) and every pathmap is walled at
+    its own edge; the campaign moves its heroes on from one to the next with
+    its story. Where two pathmaps meet a hero stood at an invisible wall
+    (Amon Hen past the start's forest, by the river). A cell walled in one
+    pathmap and open in another over the same ground is opened, once a level
+    (874 cells in Amon Hen). TT_VS_KEEPSEAMS. A walk test now goes from the
+    start through the forest, the ravine's far side and the river path to
+    the level's end.
+  - Versus gates: Lurtz's ruins (Amon Hen's pathmap 14) are walled in all
+    round and the campaign takes its heroes there with the level's own
+    teleport (playerTeleportObj, its record's +0x28). Walking into the end of
+    the river path (564 -377) takes both heroes into the ruins; the ruins'
+    east wall (282 -398) takes them back. TT_VS_NOGATES.
+  - Versus falls: a hero is off the map only below the level's lowest ground
+    there (the lowest of the pathmaps over him, 12 under; vs_floor) -- a long
+    drop onto lower ground no longer puts him back. A kick down off a ledge
+    still wins the round.
+  - The step through walls held against (vs_unstick) is off by default
+    (TT_VS_UNSTICK): past them lay the voids between the level's pieces.
+  - (test) TT_VS_TOPCAM (frames from straight above, tile by tile),
+    TT_RECDUMP (placement records by name), TT_WALKCAMPAIGN, TT_SETPOSLOG,
+    TT_WORLDDUMP; the walk test (TT_VS_WALKTO) steps round obstacles and
+    reroutes after a fall.
