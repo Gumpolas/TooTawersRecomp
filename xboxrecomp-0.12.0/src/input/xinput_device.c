@@ -1224,6 +1224,30 @@ static void keyboard_state(XBOX_INPUT_STATE *pState)
     }
     pState->Gamepad.sThumbLX = (SHORT)lx;
     pState->Gamepad.sThumbLY = (SHORT)ly;
+#if defined(_WIN32)
+    {   /* (1.9.9) the movement keys held a long while, logged once every 5 s with where each held key is seen: the keyboard
+         * itself (GetAsyncKeyState) or only the window's record -- a playtest's player 1 moved one way whatever was pressed,
+         * after an Alt+Tab; this tells a key stuck held from another program pressing it (a controller mapper's WASD) */
+        static DWORD since, logged; static int lx0, ly0; DWORD now = GetTickCount();
+        if ((lx || ly) && lx == lx0 && ly == ly0) {
+            if (!since) since = now | 1;
+            else if (now - since > 4000u && now - logged > 5000u) { static int n; int a2, k;
+                logged = now;
+                if (n++ < 40) {
+                    char b[300]; int q = 0; static const int mv[4] = { BIND_MOVE_LEFT, BIND_MOVE_RIGHT, BIND_MOVE_UP, BIND_MOVE_DOWN };
+                    for (a2 = 0; a2 < 4; a2++) for (k = 0; k < BIND_KEYS; k++) { int vk = xbox_BindKey(mv[a2], k);
+                        if (vk && key_down(vk) && q < 280) q += snprintf(b + q, sizeof b - q, " %02X(%s%s)", vk, (GetAsyncKeyState(vk) & 0x8000) ? "keyboard" : "", xbox_FramebufferKeyDown(vk) ? " window" : ""); }
+                    b[q] = 0;
+                    { HWND fg = GetForegroundWindow(); DWORD pid = 0; if (fg) GetWindowThreadProcessId(fg, &pid);
+                      fprintf(stderr, "  [INPUT] movement keys held %lu s, the stick %d,%d:%s | in front: %s\n", (unsigned long)((now - since) / 1000u), lx, ly, b,
+                              fg == (HWND)xbox_FramebufferHwnd() ? "the game window" : pid == GetCurrentProcessId() ? "a window of ours" : "another program"); }
+                    fflush(stderr);
+                }
+            }
+        } else since = 0;
+        lx0 = lx; ly0 = ly;
+    }
+#endif
     pState->Gamepad.sThumbRX = act_axis(BIND_LOOK_LEFT, BIND_LOOK_RIGHT);
     pState->Gamepad.sThumbRY = act_axis(BIND_LOOK_DOWN, BIND_LOOK_UP);
 

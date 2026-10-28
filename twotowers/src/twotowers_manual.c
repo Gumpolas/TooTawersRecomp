@@ -6824,8 +6824,8 @@ static void vs_frame(void)
     }
     if (getenv("TT_VS_P1MOVELOG")) { static uint32_t tl; static float lx, ly; uint32_t h = coop_first_char, r = COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u), cm = MEM32(0x43B164u);   /* (research) */
         if (h >= 0x10000u && cm >= 0x10000u && coop_now() - tl > 300u) { extern volatile int tt_p1_autostick_on; tl = coop_now();
-            tt_dbg("[P1MOVE] st %d port %u stick %.2f %.2f moved %.2f %.2f cam %.2f %.2f %.2f | +408 %u +3E0 %08X +2D0 %08X +494 %08X\n", vs_state, MEM32(0x1CB8B4u), MEMF(r + 0x14), MEMF(r + 0x18), MEMF(h + 0xF0) - lx, MEMF(h + 0xF4) - ly,
-                MEMF(cm + 0x40) - MEMF(cm + 0x50), MEMF(cm + 0x44) - MEMF(cm + 0x54), MEMF(cm + 0x48) - MEMF(cm + 0x58), MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(h + 0x2D0), MEM32(h + 0x494));
+            tt_dbg("[P1MOVE] st %d port %u stick %.2f %.2f moved %.2f %.2f cam %.2f %.2f %.2f | +408 %u +3E0 %08X c30 %08X c34 %08X +494 %08X\n", vs_state, MEM32(0x1CB8B4u), MEMF(r + 0x14), MEMF(r + 0x18), MEMF(h + 0xF0) - lx, MEMF(h + 0xF4) - ly,
+                MEMF(cm + 0x40) - MEMF(cm + 0x50), MEMF(cm + 0x44) - MEMF(cm + 0x54), MEMF(cm + 0x48) - MEMF(cm + 0x58), MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(MEM32(h + 0x494) + 0x30), MEM32(MEM32(h + 0x494) + 0x34), MEM32(h + 0x494));
             lx = MEMF(h + 0xF0); ly = MEMF(h + 0xF4); } }
     if (vs_have) vs_open_seams();
     vs_gates();

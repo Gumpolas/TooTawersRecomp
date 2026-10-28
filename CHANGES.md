@@ -3195,3 +3195,8 @@ twotowers/src/twotowers_manual.c, versus.c, menus.c
     (TT_VS_NOPORTHOLD: off). (test) TT_VS_P1MOVELOG.
   - New Game's difficulty screen: Easy, Normal and Expert answer the mouse
     (pointed at: the cursor; clicked: chosen), not only Impossible.
+xboxrecomp-0.12.0/src/input/xinput_device.c
+  - The movement keys held unchanged for over 4 s are logged every 5 s
+    ([INPUT] movement keys held ...), each with where it is seen held (the
+    keyboard itself, or only the window's record) and which window is in
+    front -- for a playtest's player 1 who moved one way whatever he pressed.
