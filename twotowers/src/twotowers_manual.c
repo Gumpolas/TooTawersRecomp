@@ -15,6 +15,7 @@ typedef uint32_t tt_dword;
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+extern int sscanf(const char *s, const char *fmt, ...);   /* (the test hooks; stdio.h clashes with this file's own fopen) */
 #include "tt_env.h"   /* (1.9.3) getenv looked up once per name */
 #if !defined(_WIN32)
 /* The few host calls below are declared by hand (windows.h would clash with
@@ -5509,6 +5510,15 @@ static void vs_push_frame(void)
         if (f >= 1.0f) vs_push[v].t0 = 0;
     }
 }
+/* (1.9.9) how far a judged blow reaches: 3.6 units, the trolls 5.5 (their clubs), the Uruk-hai's and the captain's 4.2 */
+static float vs_reach(int who)
+{
+    const char *k = vs_skin_name(who);
+    if (getenv("TT_VS_REACH")) return (float)atof(getenv("TT_VS_REACH"));
+    if (k && (!strcmp(k, "troll") || !strcmp(k, "troll2"))) return 5.5f;
+    if (k && (!strcmp(k, "uruk") || !strcmp(k, "urukcap") || !strcmp(k, "lurtz") || !strcmp(k, "sauron"))) return 4.2f;
+    return 3.6f;
+}
 void tt_vs_swing(int who, int dmg)
 {
     uint32_t a = who ? coop_p2 : coop_first_char, o = who ? coop_first_char : coop_p2, now = coop_now(); float dx, dy;
@@ -5517,7 +5527,11 @@ void tt_vs_swing(int who, int dmg)
         extern int tt_vs_voice(const char *who, int slot, float vol); static uint32_t last[2];
         if (who >= 0 && who < 2 && vs_state == 0 && !coop_down[who] && now - last[who] > 1200u && (now / 11u) & 1u) { last[who] = now; tt_vs_voice(vs_skin_name(who), (int)((now / 17u) % 4u), 0.7f); }
     }
-    if (vs_real_ok[who] && vs_box_k4[who & 1] != 3 && !(vs_box_k4[who & 1] == 2 && vs_box_k2[who & 1] == 0)) return;
+    /* (1.9.9) judged on every arena, not only where the game's own contact never lands: that contact needs the blade to
+     * sweep through the other, so a blow from the side or behind -- or on Frodo, small and close -- often missed (a playtest:
+     * "only if their opponent is standing right in front of them"). The game's own hit, when it comes, still counts
+     * instead of ours (vs_swings_due). TT_VS_OLDJUDGE: as before */
+    if (getenv("TT_VS_OLDJUDGE") && vs_real_ok[who] && vs_box_k4[who & 1] != 3 && !(vs_box_k4[who & 1] == 2 && vs_box_k2[who & 1] == 0)) return;
     if (getenv("TT_VS_NOSWINGJUDGE") || a < 0x10000u || o < 0x10000u || vs_state != 0 || coop_down[who] || coop_down[who ^ 1]) return;
     if (vs_sw[who].t0 && now - vs_sw[who].t0 < 450u) return;   /* (one swing makes several boxes) */
     vs_sw[who].t0 = now;
@@ -5527,7 +5541,8 @@ void tt_vs_swing(int who, int dmg)
         if (dx * dx + dy * dy <= 4.4f * 4.4f) { vs_sw[who].t = now + 200u; vs_sw[who].dmg = -1; }
         return;
     }
-    if (dx * dx + dy * dy > 3.4f * 3.4f || dmg <= 0 || dmg > 1000) return;
+    {   float rr = vs_reach(who);
+        if (dx * dx + dy * dy > rr * rr || dmg <= 0 || dmg > 1000) return; }
     vs_sw[who].t = now + 450u; vs_sw[who].dmg = dmg;
 }
 /* (1.9.7) a blow judged here (or an arrow of ours) lands with the game's own sound of a hit at the victim: the last
@@ -5987,7 +6002,8 @@ static int vs_eye_inside(float x, float y)
         for (i = 0; i < 256; i++) { pm = MEM32(0x41F428u + 0x1088u + 4u * i);
             if (pm < 0x10000u || pm >= 0x84000000u || MEM32(pm + 0x6Cu) < 0x10000u || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u) continue;
             list[n++] = pm; }
-        { static int ln = -1; if (n != ln) { ln = n; tt_dbg("[VS] camera: %d pathmaps in the level\n", n); } } }
+        { static int ln = -1; if (n != ln) { int q; ln = n; tt_dbg("[VS] camera: %d pathmaps in the level\n", n);
+            if (getenv("TT_VS_PMLIST")) for (q = 0; q < n; q++) tt_dbg("[VSPM] %d: x %.1f..%.1f y %.1f..%.1f z %.1f..%.1f cell %d, %dx%d\n", q, MEMF(list[q] + 0x48), MEMF(list[q] + 0x58), MEMF(list[q] + 0x4C), MEMF(list[q] + 0x5C), MEMF(list[q] + 0x50), MEMF(list[q] + 0x60), (int32_t)MEM32(list[q] + 0x68), (int32_t)MEM32(list[q] + 0x70), (int32_t)MEM32(list[q] + 0x74)); } } }
     if (!n) return 1;
     for (i = 0; i < (uint32_t)n; i++) { float ox = MEMF(list[i] + 0x48), oy = MEMF(list[i] + 0x4C), sz = (float)(int32_t)MEM32(list[i] + 0x68);
         if (coop_pm_cell(list[i], (int)floorf((x - ox) / sz), (int)floorf((y - oy) / sz)) >= 0) return 1; }
@@ -6004,6 +6020,7 @@ static void vs_camera(void)
     mx = 0.5f * (MEMF(a + 0xF0) + MEMF(b + 0xF0)); my = 0.5f * (MEMF(a + 0xF4) + MEMF(b + 0xF4)); mz = 0.5f * (MEMF(a + 0xF8) + MEMF(b + 0xF8));
     if (coop_down[0] && !coop_down[1]) { mx = MEMF(b + 0xF0); my = MEMF(b + 0xF4); mz = MEMF(b + 0xF8); }
     if (coop_down[1] && !coop_down[0]) { mx = MEMF(a + 0xF0); my = MEMF(a + 0xF4); mz = MEMF(a + 0xF8); }
+    if (getenv("TT_VS_CAMP1")) { mx = MEMF(a + 0xF0); my = MEMF(a + 0xF4); mz = MEMF(a + 0xF8); }   /* (test: on player 1 alone) */
     lx = MEMF(cm + 0x40); ly = MEMF(cm + 0x44); ex = MEMF(cm + 0x50); ey = MEMF(cm + 0x54);
     d = sqrtf((lx - mx) * (lx - mx) + (ly - my) * (ly - my));
     if (!vs_cam_ours && vs_have && sqrtf((ex - mx) * (ex - mx) + (ey - my) * (ey - my)) > 26.0f) d = 99.0f;   /* (the eye far off: as stuck) */
@@ -6037,7 +6054,7 @@ static void vs_camera(void)
                 float st = best > 0.035f ? 0.035f : best < -0.035f ? -0.035f : best, ca = cosf(st), sa = sinf(st), dx2 = vs_cam_dx * ca - vs_cam_dy * sa, dy2 = vs_cam_dx * sa + vs_cam_dy * ca;
                 vs_cam_dx = dx2; vs_cam_dy = dy2;
             }
-            for (k = 0; k < 2 && !vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back); k++) { back *= 0.84f; up *= 0.93f; }
+            if (getenv("TT_VS_CAMSHRINK")) for (k = 0; k < 2 && !vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back); k++) { back *= 0.84f; up *= 0.93f; }   /* (1.9.9: never drawn in now -- the Plains of Rohan still came in, a playtest: "zoomed out permanently") */
         }
     }
     MEMF(cm + 0x50) = mx - vs_cam_dx * back; MEMF(cm + 0x54) = my - vs_cam_dy * back; MEMF(cm + 0x58) = mz + 1.5f + up;
@@ -6048,7 +6065,7 @@ static void vs_camera(void)
  * written later in the frame, and the level's culling still went by the level's own camera -- on Amon Hen the ground
  * past a point was not drawn (the level's camera elsewhere) */
 int tt_vs_camera_after(void) { if (!tt_vs_on() || !vs_cam_ours || !vs_have) return 0; vs_camera(); return 1; }
-static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(getenv("TT_VS_ARENAR")); return MEM32(0x1BB2A4u) == 4u ? 50.0f : 0.0f; }   /* (Amon Hen: its edge, the rest of the map not yet playable in Versus) */
+static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(getenv("TT_VS_ARENAR")); return 0.0f; }   /* (1.9.9: none -- Amon Hen had 50 units, the rest of its map drawn now, every sector and its props out of the way) */
 /* (Versus) the heroes stay within TT_VS_LEASH (24) units of each other, so one camera keeps both: a step that takes
  * them further apart is undone for whoever made it (both, if both did) */
 static void vs_leash(void)
@@ -6277,8 +6294,149 @@ static void vs_frame(void)
     }
     coop_down_pose(now);   /* a downed hero plays his death and lies until the next round */
     vs_flee(now);   /* (the Nazgul: his fall is his flight, as from Weathertop's fire) */
+    {   /* (1.9.9) Versus: every sector of the level drawn. A level with portals draws the sectors seen through them from the
+         * camera's (0x454F6: the flag [0x3C35C8] off, no array at [0x3C35CC]); one without draws each sector its byte at
+         * [0x3C35CC] shows (set all at its load, 0x44952; @ShowSector, 0x43F70, one). Past the start's sectors Amon Hen's
+         * ground ended in a brown void (a playtest: "make the entire map explorable"). Here the second way, all shown.
+         * TT_VS_KEEPSECTORS: the level's own */
+        static unsigned lv = ~0u; static uint32_t buf; uint32_t w = MEM32(0x3C35A0u), n, i;
+        if (!getenv("TT_VS_KEEPSECTORS") && w >= 0x10000u && w < 0x84000000u) {
+            n = MEM32(w + 0x10);
+            if (n > 0 && n <= 4096u) {
+                extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
+                if (!buf) { buf = xbox_ContiguousAlloc(4096u, 16u); if (buf == 0x80000000u) buf = xbox_ContiguousAlloc(4096u, 16u); }   /* (not physical 0) */
+                if (buf) {
+                    if (MEM32(0x3C35CCu) != buf || lv != coop_level_n) {
+                        uint32_t old = MEM32(0x3C35CCu); unsigned hid = 0;
+                        for (i = 0; i < n; i++) { if (old >= 0x10000u && old < 0x84000000u && !MEM8(old + i)) hid++; MEM8(buf + i) = 1; }
+                        if (lv != coop_level_n) tt_dbg("[VS] sectors: %u in the level (portals %08X, flag %u, array %08X with %u hidden): all drawn\n", n, MEM32(w + 0x14), MEM8(0x3C35C8u), old, hid);
+                        lv = coop_level_n;
+                    }
+                    MEM32(0x3C35CCu) = buf; MEM8(0x3C35C8u) = 1;
+                }
+            }
+        }
+    }
+    if (getenv("TT_VS_POSLOG")) { static uint32_t tp; if (now - tp > 2000u) { tp = now; tt_dbg("[POS] P1 %.1f %.1f %.1f pm %d head %.2f | P2 %.1f %.1f %.1f pm %d\n", MEMF(coop_first_char + 0xF0), MEMF(coop_first_char + 0xF4), MEMF(coop_first_char + 0xF8), (int)MEM32(coop_first_char + 0x2EC), MEMF(coop_first_char + 0x100), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8), (int)MEM32(coop_p2 + 0x2EC)); } }   /* (test) */
+    {   /* (1.9.9) Versus: the level's props walked through -- the campaign's barriers (a fallen trunk across Amon Hen's path past the
+         * start, propObj23) its story clears or its heroes break; without them the rest of the map could not be reached. Their
+         * collision off as @ObjectCollisionOff does (0xC67B0 on the collision world 0x43C5E8; and +0x110 bit 0x100, @ObjectMovementCollisionOn's),
+         * once a level. TT_VS_KEEPPROPS */
+        static unsigned lv = ~0u; extern uint32_t tt_allobj[4096], tt_allobj_t[4096]; extern int tt_nallobj;
+        if (lv != coop_level_n && vs_have && !getenv("TT_VS_KEEPPROPS")) { int i, n = 0; lv = coop_level_n;
+            for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i]; if (tt_allobj_t[i] != 7u || o < 0x10000u || o >= 0x84000000u || MEM32(o) != 0x174980u) continue;
+                { uint32_t a1[1]; a1[0] = o; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); }   /* (@ObjectCollisionOff: out of the collision world, 0x43C5E8) */
+                if (MEM32(o + 0x110) & 0x100u) MEM32(o + 0x110) &= ~0x100u;
+                if (getenv("TT_VS_PROPSINK")) { uint32_t h = MEM32(o + 0x18); if (h >= 0x10000u && h < 0x84000000u && (!strcmp(getenv("TT_VS_PROPSINK"), "all") || !strcmp((const char *)XBOX_PTR(h), getenv("TT_VS_PROPSINK")))) {
+                    float p3[3]; p3[0] = MEMF(o + 0xF0); p3[1] = MEMF(o + 0xF4); p3[2] = MEMF(o + 0xF8) - 300.0f; { uint32_t a3[3]; memcpy(&a3[0], &p3[0], 4); memcpy(&a3[1], &p3[1], 4); memcpy(&a3[2], &p3[2], 4); tt_gcall(0x000865D0u, o, 3, a3); }
+                    tt_dbg("[VS] prop %s sunk: now at %.1f\n", (const char *)XBOX_PTR(h), MEMF(o + 0xF8)); } }   /* (test) */
+                n++; }
+            tt_dbg("[VS] props: %d of the level's walked through now\n", n); }
+    }
+    if (getenv("TT_OBJDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { static int dn; extern void tt_objs_near(float x, float y, float r); if (!dn++) tt_objs_near(0, 0, 0); }   /* (research) */
+    if (getenv("TT_VS_WALKTO") && vs_state == 0 && now - vs_round_t0 > 1500u) {   /* (test) "x,y;x,y;...": player 1 walks (his stick, menus.c) to each point in turn,
+        * along a route over the walkable cells of all the level's pathmaps (a 2-unit grid, BFS), steered by the camera's heading;
+        * stuck 4 s: routed again from where he is; 4 times: the next point */
+        extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2];
+        enum { GW = 420, GH = 340 }; static unsigned char walk[GH][GW]; static int prev[GH * GW], qq[GH * GW], route[GH * GW]; static float gx0, gy0; static int built, nr, ri, tries;
+        static float wp[64][2]; static int nwp = -1, cur; static uint32_t tcur; static float bestd;
+        uint32_t cm = MEM32(0x43B164u); float x = MEMF(coop_first_char + 0xF0), y = MEMF(coop_first_char + 0xF4), dx, dy, d;
+        if (nwp < 0) { const char *q = getenv("TT_VS_WALKTO"); nwp = 0; while (q && *q && nwp < 64) { if (sscanf(q, "%f,%f", &wp[nwp][0], &wp[nwp][1]) == 2) nwp++; q = strchr(q, ';'); if (q) q++; } tcur = now; bestd = 1e9f; nr = 0; ri = 0; }
+        if (!built) {   /* the grid: a cell walkable if any pathmap over it says so */
+            uint32_t i2; float minx = 1e9f, miny = 1e9f; int r, c;
+            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; if (MEMF(q + 0x48) < minx) minx = MEMF(q + 0x48); if (MEMF(q + 0x4C) < miny) miny = MEMF(q + 0x4C); }
+            gx0 = minx; gy0 = miny; built = 1;
+            for (i2 = 0; i2 < 256; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2); int W2, H2; float ox, oy, sz;
+                if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
+                W2 = (int)MEM32(q + 0x70); H2 = (int)MEM32(q + 0x74); ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68); if (sz <= 0) continue;
+                for (r = 0; r < H2; r++) for (c = 0; c < W2; c++) { int v = coop_pm_cell(q, c, r), gc = (int)((ox + ((float)c + 0.5f) * sz - gx0) / 2.0f), gr = (int)((oy + ((float)r + 0.5f) * sz - gy0) / 2.0f);
+                    if (gc >= 0 && gr >= 0 && gc < GW && gr < GH && v >= 0) { if (COOP_PM_WALK(v)) { if (walk[gr][gc] != 2) walk[gr][gc] = 1; } else walk[gr][gc] = 2; } } }
+            for (r = 0; r < GH; r++) for (c = 0; c < GW; c++) if (walk[r][c] == 2) walk[r][c] = 0;   /* (blocked in any pathmap over it: blocked) */
+            tt_dbg("[WALKTO] grid from %.0f %.0f\n", gx0, gy0);
+        }
+        if (cur < nwp) {
+            dx = wp[cur][0] - x; dy = wp[cur][1] - y; d = sqrtf(dx * dx + dy * dy);
+            if (ri < nr) { float rx = gx0 + ((float)(route[ri] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri] / GW) + 0.5f) * 2.0f, rd = sqrtf((rx - x) * (rx - x) + (ry - y) * (ry - y));
+                if (rd < 1.5f && ri < nr) ri++;
+                if (rd < bestd - 0.3f) { bestd = rd; tcur = now; } }
+            if (d < 2.5f || tries >= 3) { tt_dbg("[WALKTO] point %d (%.0f %.0f) %s at %.1f %.1f %.1f, pathmap %d\n", cur, wp[cur][0], wp[cur][1], d < 2.5f ? "reached" : "given up", x, y, MEMF(coop_first_char + 0xF8), (int)MEM32(coop_first_char + 0x2EC)); if (d >= 2.5f && getenv("TT_WALKGRID")) { static int dn; if (dn++ < 1) { int rr3, cc3, c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f); uint32_t i3;
+                for (rr3 = r0 + 8; rr3 >= r0 - 8; rr3--) { char ln[40]; for (cc3 = c0 - 8; cc3 <= c0 + 8; cc3++) ln[cc3 - c0 + 8] = (cc3 == c0 && rr3 == r0) ? '@' : (cc3 >= 0 && rr3 >= 0 && cc3 < GW && rr3 < GH && walk[rr3][cc3]) ? '.' : '#'; ln[17] = 0; tt_dbg("[WALKGRID] %s  y %.0f\n", ln, gy0 + rr3 * 2.0f + 1.0f); }
+                for (i3 = 0; i3 < 256; i3++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i3); float ox, oy, sz; if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue; ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68);
+                    if (x < MEMF(q + 0x48) - 16 || x > MEMF(q + 0x58) + 16 || y < MEMF(q + 0x4C) - 16 || y > MEMF(q + 0x5C) + 16) continue;
+                    for (rr3 = 8; rr3 >= -8; rr3--) { char ln[40]; for (cc3 = -8; cc3 <= 8; cc3++) { int v = coop_pm_cell(q, (int)floorf((x + cc3 * sz - ox) / sz), (int)floorf((y + rr3 * sz - oy) / sz)); ln[cc3 + 8] = (cc3 == 0 && rr3 == 0) ? '@' : v < 0 ? ' ' : (char)('0' + v); } ln[17] = 0; tt_dbg("[WALKGRID] pm %u %s\n", i3, ln); } } } }
+           if (d >= 2.5f && getenv("TT_OBJNEAR")) { extern void tt_objs_near(float x, float y, float r); static int dn; if (dn++ < 1) tt_objs_near(x, y, (float)atof(getenv("TT_OBJNEAR"))); } cur++; tries = 0; nr = ri = 0; tcur = now; bestd = 1e9f; }
+            else if (!nr || ri >= nr || now - tcur > 8000u) {   /* route (again) */
+                int c0 = (int)((x - gx0) / 2.0f), r0 = (int)((y - gy0) / 2.0f), c1 = (int)((wp[cur][0] - gx0) / 2.0f), r1 = (int)((wp[cur][1] - gy0) / 2.0f), qh = 0, qt = 0, k, found = 0, best = -1; float bd = 1e18f;
+                if (nr) tries++;
+                nr = ri = 0; tcur = now; bestd = 1e9f;
+                if (c0 >= 0 && r0 >= 0 && c0 < GW && r0 < GH && c1 >= 0 && r1 >= 0 && c1 < GW && r1 < GH) {
+                    for (k = 0; k < GW * GH; k++) prev[k] = -2;
+                    prev[r0 * GW + c0] = -1; qq[qt++] = r0 * GW + c0;
+                    while (qh < qt) { int cell = qq[qh++], c = cell % GW, r = cell / GW, dd2; float e = (float)((c - c1) * (c - c1) + (r - r1) * (r - r1));
+                        if (e < bd) { bd = e; best = cell; }
+                        if (c == c1 && r == r1) { found = 1; break; }
+                        for (dd2 = 0; dd2 < 8; dd2++) { static const int DX[8] = { 1, -1, 0, 0, 1, 1, -1, -1 }, DY[8] = { 0, 0, 1, -1, 1, -1, 1, -1 }; int nc = c + DX[dd2], nr2 = r + DY[dd2];
+                            if (nc < 0 || nr2 < 0 || nc >= GW || nr2 >= GH || prev[nr2 * GW + nc] != -2 || !walk[nr2][nc]) continue;
+                            prev[nr2 * GW + nc] = cell; qq[qt++] = nr2 * GW + nc; } }
+                    { int cell = found ? r1 * GW + c1 : best, n3 = 0; while (cell >= 0 && n3 < GH * GW) { qq[n3++] = cell; cell = prev[cell]; }
+                      for (k = n3 - 1; k >= 0; k--) route[nr++] = qq[k]; }
+                    tt_dbg("[WALKTO] point %d: %s, %d cells (try %d)\n", cur, found ? "routed" : "nearest reachable", nr, tries); }
+            }
+            if (cm >= 0x10000u && ri < nr) {
+                float rx = gx0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] % GW) + 0.5f) * 2.0f, ry = gy0 + ((float)(route[ri < nr - 2 ? ri + 2 : nr - 1] / GW) + 0.5f) * 2.0f;
+                float fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy), ux = rx - x, uy = ry - y, un = sqrtf(ux * ux + uy * uy);
+                {   /* (no headway for 1.2 s: a sidestep, 0.9 s, to one side then the other -- trees and rocks the pathmaps don't have) */
+                    static float lx2, ly2; static uint32_t tmv, side_until; static int side;
+                    if ((x - lx2) * (x - lx2) + (y - ly2) * (y - ly2) > 0.6f * 0.6f) { lx2 = x; ly2 = y; tmv = now; }
+                    if (now - tmv > 1200u && now >= side_until) { side_until = now + 900u; side ^= 1; tmv = now; }
+                    if (now < side_until && un > 1e-3f) { float t2 = ux; if (side) { ux = -uy; uy = t2; } else { ux = uy; uy = -t2; } }
+                }
+                if (fn > 1e-3f && un > 1e-3f) { fx /= fn; fy /= fn; ux /= un; uy /= un; tt_p1_autostick[1] = (int16_t)((ux * fx + uy * fy) * 30000.0f); tt_p1_autostick[0] = (int16_t)((ux * fy - uy * fx) * 30000.0f); tt_p1_autostick_on = 1; }
+            }
+        } else tt_p1_autostick_on = 0;
+    }
+    if (getenv("TT_VS_GLIDE") && vs_state == 0 && now - vs_round_t0 > 1500u) {   /* (test) "x,y;x,y;...": both heroes carried along these points, 8 units a second,
+                                                                                  * each leg routed over walkable cells of the pathmap holding both ends (BFS) */
+        static float wp[32][2], rp[4096][2]; static int nwp = -1, cur, nr, ri; static uint32_t tl;
+        if (nwp < 0) { const char *q = getenv("TT_VS_GLIDE"); nwp = 0; while (q && *q && nwp < 32) { if (sscanf(q, "%f,%f", &wp[nwp][0], &wp[nwp][1]) == 2) nwp++; q = strchr(q, ';'); if (q) q++; } tl = now; }
+        if (ri >= nr && cur < nwp) {   /* route the next leg */
+            float x0 = MEMF(coop_first_char + 0xF0), y0 = MEMF(coop_first_char + 0xF4), x1 = wp[cur][0], y1 = wp[cur][1]; uint32_t i2, pm = 0;
+            nr = 0; ri = 0;
+            for (i2 = 0; i2 < 256 && !pm; i2++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i2);
+                if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x6Cu) < 0x10000u) continue;
+                if (x0 >= MEMF(q + 0x48) && x0 <= MEMF(q + 0x58) && y0 >= MEMF(q + 0x4C) && y0 <= MEMF(q + 0x5C) && x1 >= MEMF(q + 0x48) && x1 <= MEMF(q + 0x58) && y1 >= MEMF(q + 0x4C) && y1 <= MEMF(q + 0x5C)) pm = q; }
+            if (pm) { static int prev[65536]; static int qq[65536]; int W2 = (int)MEM32(pm + 0x70), H2 = (int)MEM32(pm + 0x74), qh = 0, qt = 0, c0, r0, c1, r1, k, found = 0; float ox = MEMF(pm + 0x48), oy = MEMF(pm + 0x4C), sz = (float)(int32_t)MEM32(pm + 0x68);
+                c0 = (int)((x0 - ox) / sz); r0 = (int)((y0 - oy) / sz); c1 = (int)((x1 - ox) / sz); r1 = (int)((y1 - oy) / sz);
+                if (W2 * H2 <= 65536) { for (k = 0; k < W2 * H2; k++) prev[k] = -2;
+                    prev[r0 * W2 + c0] = -1; qq[qt++] = r0 * W2 + c0;
+                    while (qh < qt) { int cell = qq[qh++], c = cell % W2, r = cell / W2, d;
+                        if (c == c1 && r == r1) { found = 1; break; }
+                        for (d = 0; d < 8; d++) { static const int DX[8] = { 1, -1, 0, 0, 1, 1, -1, -1 }, DY[8] = { 0, 0, 1, -1, 1, -1, 1, -1 }; int nc = c + DX[d], nr2 = r + DY[d];
+                            if (nc < 0 || nr2 < 0 || nc >= W2 || nr2 >= H2 || prev[nr2 * W2 + nc] != -2) continue;
+                            if (!COOP_PM_WALK(coop_pm_cell(pm, nc, nr2)) && !(nc == c1 && nr2 == r1)) continue;
+                            prev[nr2 * W2 + nc] = cell; qq[qt++] = nr2 * W2 + nc; } }
+                    if (found) { int cell = r1 * W2 + c1, n3 = 0; static int tmp[4096]; while (cell >= 0 && n3 < 4096) { tmp[n3++] = cell; cell = prev[cell]; }
+                        for (k = n3 - 1; k >= 0 && nr < 4096; k--) { rp[nr][0] = ox + ((float)(tmp[k] % W2) + 0.5f) * sz; rp[nr][1] = oy + ((float)(tmp[k] / W2) + 0.5f) * sz; nr++; } } }
+                tt_dbg("[GLIDE] leg %d to %.0f %.0f: %s (%d cells)\n", cur, x1, y1, found ? "routed" : "straight", nr); }
+            else tt_dbg("[GLIDE] leg %d to %.0f %.0f: no pathmap holds both ends, straight\n", cur, x1, y1);
+            if (!nr) { rp[0][0] = x1; rp[0][1] = y1; nr = 1; }
+            cur++;
+        }
+        if (ri < nr) { float dt = (float)(now - tl) / 1000.0f, x = MEMF(coop_first_char + 0xF0), y = MEMF(coop_first_char + 0xF4), dx = rp[ri][0] - x, dy = rp[ri][1] - y, d = sqrtf(dx * dx + dy * dy), st = 8.0f * dt;
+            if (dt > 0.2f) st = 1.6f;
+            if (d <= st) { x = rp[ri][0]; y = rp[ri][1]; ri++; } else { x += dx / d * st; y += dy / d * st; }
+            MEMF(coop_first_char + 0xF0) = x; MEMF(coop_first_char + 0xF4) = y; MEMF(coop_first_char + 0x90) = x; MEMF(coop_first_char + 0x94) = y;
+            MEMF(coop_p2 + 0xF0) = x + 2.0f; MEMF(coop_p2 + 0xF4) = y; MEMF(coop_p2 + 0x90) = x + 2.0f; MEMF(coop_p2 + 0x94) = y;
+            { static uint32_t tg; if (now - tg > 2000u) { tg = now; tt_dbg("[GLIDE] at %.1f %.1f %.1f (leg %d), pathmap %d\n", x, y, MEMF(coop_first_char + 0xF8), cur, (int)MEM32(coop_first_char + 0x2EC)); } } }
+        tl = now;
+    }
+    if (getenv("TT_VS_SHOTS") && vs_state == 0) { static uint32_t nx; static int k; extern void xbox_PresentDumpRequest(const char *path); char pth[300]; uint32_t el = now - vs_round_t0;   /* (test) a frame each second of play */
+        uint32_t iv = getenv("TT_VS_SHOTSMS") ? (uint32_t)atoi(getenv("TT_VS_SHOTSMS")) : 1000u; if (el < 50u) nx = iv; if (el >= nx && k < (getenv("TT_VS_SHOTSN") ? atoi(getenv("TT_VS_SHOTSN")) : 40)) { snprintf(pth, sizeof pth, "%s/play_%02d_%05u.bmp", getenv("TT_VS_SHOTS"), k++, el); xbox_PresentDumpRequest(pth); nx += iv; } }
     if (getenv("TT_VS_TPTO") && vs_state == 0 && now - vs_round_t0 > 2000u && now - vs_round_t0 < 2600u) {   /* (testing) both heroes to x,y,z */
-        float p[3] = { 0, 0, 0 }; { const char *q = getenv("TT_VS_TPTO"); p[0] = (float)atof(q); q = strchr(q, 0x2C); if (q) { p[1] = (float)atof(++q); q = strchr(q, 0x2C); if (q) p[2] = (float)atof(++q); } } vs_place(coop_first_char, p); p[0] += 3.0f; vs_place(coop_p2, p); }
+        float p[3] = { 0, 0, 0 }; { const char *q = getenv("TT_VS_TPTO"); p[0] = (float)atof(q); q = strchr(q, 0x2C); if (q) { p[1] = (float)atof(++q); q = strchr(q, 0x2C); if (q) p[2] = (float)atof(++q); } } vs_place(coop_first_char, p); p[0] += 3.0f; vs_place(coop_p2, p);
+        if (!getenv("TT_VS_TPNOPM")) { uint32_t i2; for (i2 = 0; i2 < 256; i2++) { uint32_t pm = MEM32(0x41F428u + 0x1088u + 4u * i2);
+            if (pm < 0x10000u || pm >= 0x84000000u || MEM32(pm + 0x6Cu) < 0x10000u) continue;
+            if (p[0] >= MEMF(pm + 0x48) && p[0] <= MEMF(pm + 0x58) && p[1] >= MEMF(pm + 0x4C) && p[1] <= MEMF(pm + 0x5C)) { MEM32(coop_first_char + 0x2EC) = i2; MEM32(coop_p2 + 0x2EC) = i2; tt_dbg("[VS] tp: pathmap %u\n", i2); break; } } } }
     if (getenv("TT_VS_SHSHOT") && vs_sh_broke_t && now - vs_sh_broke_t < 4000u) { static uint32_t nx; extern void xbox_PresentDumpRequest(const char *path); char pth[300];   /* (testing) after the break */
         if (now - vs_sh_broke_t < 100u) nx = 400u; if (now - vs_sh_broke_t >= nx) { snprintf(pth, sizeof pth, "%s/after_%04u.bmp", getenv("TT_VS_SHSHOT"), nx); xbox_PresentDumpRequest(pth); nx += 600u; } }
     for (w = 0; w < 2; w++) {   /* the same most health for both, whoever they are (Sauron's 1600, upgrades: no) */
@@ -7031,7 +7189,7 @@ static uint32_t vs_res_texture(uint32_t tel)
     tt_dbg("[VS] results picture: template texture %08X data %08X: +4 %u +8 %u +30 %08X +38 %08X +3C %08X\n", so, sd, MEM32(sd + 4), MEM32(sd + 8), MEM32(sd + 0x30), MEM32(sd + 0x38), MEM32(sd + 0x3C));
     { char b[900]; int q = 0; for (k = 0; k < 0xDC && q < 860; k += 4) q += snprintf(b + q, sizeof b - q, " %X:%08X", k, MEM32(tel + k)); tt_dbg("[VS] template element:%s\n", b); }
     if (!(md && tt_vs_image_pixels("troll_results_bg.bmp", px, 1.0f)) && !tt_vs_image_pixels("results_bg.bmp", px, 1.0f)) return 0;   /* (Troll Battle: versus\troll_results_bg.bmp first) */
-    blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u); obj = xbox_ContiguousAlloc(0x40u, 16u); objs[md] = obj;
+    blk = xbox_ContiguousAlloc(0x80u + sizeof px + 0x100u, 4096u); obj = blk ? blk + 0x80u + (uint32_t)sizeof px : 0; objs[md] = obj;   /* (its object in the block: not alone at physical 0) */
     if (!blk || !obj) return 0;
     for (k = 0; k < 0x80u; k += 4) MEM32(blk + k) = MEM32(sd + k);
     MEM32(blk + 4) = 512; MEM32(blk + 8) = 256;
@@ -7304,7 +7462,7 @@ void tt_coop_hud_pre(void)
             static uint32_t blk, obj, src_obj; extern int tt_coop_p2_ammo_pixels(uint32_t cur, unsigned char *out);
             uint32_t so = MEM32(a + 24 * 0xDC + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? MEM32(so + 0x10) : 0;
             if (sd >= 0x80000000u && sd < 0x84000000u && MEM32(sd + 4) == 64u && MEM32(sd + 8) == 128u) {
-                if (!blk) { blk = xbox_ContiguousAlloc(0x80u + 0x8000u, 4096u); obj = xbox_ContiguousAlloc(0x40u, 16u); }
+                if (!blk) { blk = xbox_ContiguousAlloc(0x80u + 0x8000u + 0x100u, 4096u); obj = blk ? blk + 0x8100u : 0; }   /* (1.9.9: its object in the same block -- alone it could come back at 0x80000000, physical 0, and the icon was drawn black: player 1 Isildur, Amon Hen) */
                 if (blk && obj && (so != src_obj || coop_ammo_dirty)) {
                     static unsigned char px[0x8000]; uint32_t k;
                     src_obj = so; coop_ammo_dirty = 0; coop_ammo_ok = 0;
@@ -8665,6 +8823,9 @@ extern void sub_000C7220_gen(void); void sub_000C7220(void) { coop_mev_note(1); 
  * and showed it; with his own hero's moves nothing names it: player 2 Aragorn's sword (a copy of player 1 Legolas' knife,
  * 133b) was attached in his hand and not drawn (a playtest, +0x110 00017D40 in a bot run). So his own melee weapons for
  * slots 0 and 1 (the hands) are drawn once he has his own moves, and at each take of one. TT_COOP_NOP2SHOW: off */
+volatile int tt_p1_autostick_on; volatile int16_t tt_p1_autostick[2];   /* (test: TT_VS_WALKTO) */
+static int coop_rng_key(uint32_t m);
+#define EMPTY_PROP_KEY_M 0x6E0B0E00u   /* (heroes.c EMPTY_PROP_KEY: a prop with no triangles, the nobow guests' bow hand) */
 void coop_p2_show_hands(uint32_t only)
 {
     int k;
@@ -8674,7 +8835,7 @@ void coop_p2_show_hands(uint32_t only)
         if (!only && coop_p2w_slot[k] == 2 && qm == 0x69DAC4B8u && tt_coop_p2_char_now && !strcmp(tt_coop_p2_char_now, "legolas") && MEM32(q) == 0x174980u) {   /* (Legolas'
             * dagger: player 1's, weaponObj135, is never drawn (+0x110 00017D40); player 2's was, by his leg while he drew: a playtest) */
             MEM32(q + 0x110) &= ~0x20000u; continue; }
-        if ((only && q != only) || MEM32(q) != 0x174980u || coop_p2w_slot[k] < 0 || coop_p2w_slot[k] > 1 || qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) continue;
+        if ((only && q != only) || MEM32(q) != 0x174980u || coop_p2w_slot[k] < 0 || coop_p2w_slot[k] > 1 || coop_rng_key(qm)) continue;
         if (!(MEM32(q + 0x110) & 0x20000u)) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's %08X (slot %d) drawn\n", q, coop_p2w_slot[k]); MEM32(q + 0x110) |= 0x20000u; } }
 }
 static void coop_own_machines(void);
@@ -9541,9 +9702,22 @@ static uint32_t coop_last_obj, coop_attach_child, coop_new_weapon;
 extern void sub_00019880_gen(void);
 void sub_00019880(void)   /* world link (thiscall world; obj, type; ret 8) */
 {
-    uint32_t o = MEM32(esp + 4);
+    uint32_t o = MEM32(esp + 4), ty = MEM32(esp + 8);
     sub_00019880_gen();
     coop_last_obj = o;
+    if (tt_vs_on() || getenv("TT_OBJNEAR")) { extern uint32_t tt_allobj[4096], tt_allobj_t[4096]; extern int tt_nallobj; int i; for (i = 0; i < tt_nallobj && tt_allobj[i] != o; i++) ; if (i == tt_nallobj && i < 4096) { tt_allobj[i] = o; tt_allobj_t[i] = ty; tt_nallobj++; } }   /* (research) */
+}
+uint32_t tt_allobj[4096], tt_allobj_t[4096]; int tt_nallobj;
+/* (research, TT_OBJNEAR) every linked object within r of (x, y): vtable, name, its +F0 position and flags */
+void tt_objs_near(float x, float y, float r)
+{
+    int i; tt_dbg("[OBJNEAR] objects within %.0f of %.1f %.1f (of %d linked):\n", r, x, y, tt_nallobj);
+    for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i], h; float ox, oy;
+        if (o < 0x10000u || o >= 0x84000000u) continue;
+        ox = MEMF(o + 0xF0); oy = MEMF(o + 0xF4); if (r > 0 && (!(ox == ox) || (ox - x) * (ox - x) + (oy - y) * (oy - y) > r * r)) continue;
+        h = MEM32(o + 0x18);
+        tt_dbg("[OBJNEAR] %08X type %u vt %08X '%s' at %.1f %.1f %.1f | +10 %08X +14 %08X +1C %08X +20 %08X +24 %08X +110 %08X +114 %08X +2F0 %08X\n", o, tt_allobj_t[i], MEM32(o), h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", ox, oy, MEMF(o + 0xF8),
+            MEM32(o + 0x10), MEM32(o + 0x14), MEM32(o + 0x1C), MEM32(o + 0x20), MEM32(o + 0x24), MEM32(o + 0x110), MEM32(o + 0x114), MEM32(o + 0x2F0)); }
 }
 /* player 2's weapons are his own hero's, whatever player 1 plays: each hero's weapons by the slot the level script
  * attaches them to (@AttachToBone's second argument; the same for the four heroes and their fellowship NPCs,
@@ -9583,17 +9757,22 @@ static int coop_ranged_model(uint32_t w, uint32_t *km)
     return *km == 0x0834F2D4u || *km == 0xE7EEC090u || *km == 0x36AC3F58u;
 }
 /* built while the level loads (the heap is closed in play: "no memory for a weapon copy now"), from coop_p2_extra_weapons */
+static uint32_t coop_p2_rng_pm;   /* (1.9.9) player 2's ranged model this level (heroes.c's skin_p2_ranged): Lurtz' own bow too */
+static int coop_rng_key(uint32_t m) { return m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u || (coop_p2_rng_pm && m == coop_p2_rng_pm); }
+static int coop_is_rng_copy(uint32_t w) { int q; for (q = 0; q < coop_rng_n; q++) if (coop_rng_copy[q] == w) return 1; return 0; }
 static void coop_p2_ranged_build(void)
 {
     extern const char *tt_coop_p2_char_now; extern uint32_t coop_wobjs[512]; extern int coop_nwobjs;
+    extern int tt_heroes_p2_ranged(const char *who, uint32_t *m, uint32_t *t);
     const char *who = tt_coop_p2_char_now; uint32_t pm = 0, pt = 0; int i;
-    if (coop_rng_lv != coop_level_n) { coop_rng_lv = coop_level_n; coop_rng_n = 0; }
+    if (coop_rng_lv != coop_level_n) { coop_rng_lv = coop_level_n; coop_rng_n = 0; coop_p2_rng_pm = 0; }
     if (getenv("TT_COOP_NOP2RANGED") || !who) return;
-    if (!strcmp(who, "legolas")) { pm = 0x0834F2D4u; pt = 0x4167DADCu; } else if (!strcmp(who, "gimli")) { pm = 0xE7EEC090u; pt = 0xAB926BE7u; }
-    else if (!strcmp(who, "aragorn") || !strcmp(who, "isildur")) { pm = 0x36AC3F58u; pt = 0xD82C5CABu; } else return;   /* (Isildur: Aragorn's bow, heroes.c) */
+    /* (1.9.9) every character's: the retail heroes' as before, a guest's (Boromir: Aragorn's bow, as in the campaign) from heroes.c */
+    if (!tt_heroes_p2_ranged(who, &pm, &pt)) return;
+    coop_p2_rng_pm = pm;
     for (i = 0; i < coop_nwobjs && coop_rng_n < 8; i++) {
         uint32_t w = coop_wobjs[i], km, c; int q, dup = 0;
-        if (w < 0x10000u || MEM32(w) != 0x174980u || !coop_ranged_model(w, &km)) continue;
+        if (w < 0x10000u || MEM32(w) != 0x174980u || coop_is_rng_copy(w) || !coop_ranged_model(w, &km)) continue;   /* (not his own copies: "no loader key") */
         for (q = 0; q < coop_rng_n; q++) if (coop_rng_orig[q] == w) dup = 1;
         if (dup) continue;
         coop_force_model = pm; coop_force_tex = pt;
@@ -9603,6 +9782,19 @@ static void coop_p2_ranged_build(void)
         if (getenv("TT_COOP_RECDUMP")) { uint32_t r = MEM32(w + 0x18) - 8, q; for (q = 0; q < 0x100; q += 16) tt_dbg("[RECDUMP] %s +%02X %08X %08X %08X %08X\n", (const char *)XBOX_PTR(MEM32(w + 0x18)), q, MEM32(r + q), MEM32(r + q + 4), MEM32(r + q + 8), MEM32(r + q + 12));
             if (c) for (q = 0; q < 0x500; q += 16) tt_dbg("[OBJDUMP] %s +%03X %08X %08X %08X %08X | copy %08X %08X %08X %08X\n", (const char *)XBOX_PTR(MEM32(w + 0x18)), q, MEM32(w + q), MEM32(w + q + 4), MEM32(w + q + 8), MEM32(w + q + 12), MEM32(c + q), MEM32(c + q + 4), MEM32(c + q + 8), MEM32(c + q + 12)); }   /* (research: the bow string) */
         if (c) { coop_rng_orig[coop_rng_n] = w; coop_rng_copy[coop_rng_n] = c; coop_rng_n++; }
+    }
+    if (!coop_rng_n && !getenv("TT_COOP_NOP2RNGFALLBACK")) {   /* (1.9.9) no ranged weapon in the level to copy (player 1 a guest who throws, Frodo, Gandalf;
+        * Versus): a copy of one of player 1's own weapons dressed in player 2's ranged model */
+        uint32_t tm = 0, c;
+        for (i = 0; i < coop_nwobjs && !tm; i++) { uint32_t w = coop_wobjs[i]; if (w >= 0x10000u && MEM32(w) == 0x174980u && MEM32(w + 0x11C) == coop_first_char && coop_first_char >= 0x10000u) tm = w; }
+        for (i = 0; i < coop_nwobjs && !tm; i++) { uint32_t w = coop_wobjs[i]; if (w >= 0x10000u && MEM32(w) == 0x174980u) tm = w; }
+        if (tm) {
+            coop_force_model = pm; coop_force_tex = pt;
+            c = coop_build_weapon_as(tm, 7, 1);
+            coop_force_model = coop_force_tex = 0;
+            tt_dbg("[COOPWEAPON] player 2's ranged weapon: none in the level; a copy of %08X '%s' with %s's %08X: %08X\n", tm, (const char *)XBOX_PTR(MEM32(tm + 0x18)), who, pm, c);
+            if (c) { coop_rng_orig[coop_rng_n] = tm; coop_rng_copy[coop_rng_n] = c; coop_rng_n++; }
+        }
     }
 }
 /* player 2 Legolas' arrow. Player 1 Legolas' draw (TT_COOP_TAKELOG, TT_COOP_WPNCMDLOG at the Gates of Moria): his knives into
@@ -9622,10 +9814,18 @@ static void coop_p2_arrow_build(void)
     extern const char *tt_coop_p2_char_now; extern uint32_t coop_wobjs[512]; extern int coop_nwobjs; int i;
     if (coop_p2_arrow_lv == coop_level_n) return;
     coop_p2_arrow_lv = coop_level_n; coop_p2_arrow_c = 0;
-    if (!tt_coop_p2_char_now || (strcmp(tt_coop_p2_char_now, "legolas") && strcmp(tt_coop_p2_char_now, "aragorn") && strcmp(tt_coop_p2_char_now, "isildur")) || getenv("TT_COOP_NOP2ARROW")) return;   /* (the bowmen; Gimli throws) */
+    {   extern int tt_heroes_p2_ranged(const char *who, uint32_t *m, uint32_t *t); uint32_t rm = 0, rt = 0;   /* (the bowmen -- 1.9.9: any with a bow, Boromir too; Gimli throws) */
+        if (!tt_coop_p2_char_now || !tt_heroes_p2_ranged(tt_coop_p2_char_now, &rm, &rt) || (rm != 0x0834F2D4u && rm != 0x36AC3F58u) || getenv("TT_COOP_NOP2ARROW")) return; }
     for (i = 0; i < coop_nwobjs && !coop_p2_arrow_c; i++) if (coop_is_arrow(coop_wobjs[i])) {
         coop_p2_arrow_c = coop_build_weapon_as(coop_wobjs[i], 10, 1);   /* (slot 10: none of his melee slots; the copy is named ...m) */
         tt_dbg("[COOPWEAPON] player 2's arrow: a copy of %08X '%s': %08X\n", coop_wobjs[i], (const char *)XBOX_PTR(MEM32(coop_wobjs[i] + 0x18)), coop_p2_arrow_c); }
+    if (!coop_p2_arrow_c && !getenv("TT_COOP_NOP2RNGFALLBACK")) {   /* (1.9.9) no arrow in the level (player 1 a guest who throws: his "arrow" his blade): a copy
+        * of one of player 1's weapons dressed as Aragorn's arrow */
+        uint32_t tm = 0;
+        for (i = 0; i < coop_nwobjs && !tm; i++) { uint32_t w = coop_wobjs[i]; if (w >= 0x10000u && MEM32(w) == 0x174980u && MEM32(w + 0x11C) == coop_first_char && coop_first_char >= 0x10000u) tm = w; }
+        if (tm) { coop_force_model = 0x4586A62Cu; coop_force_tex = 0x3B6EEB8Eu; coop_p2_arrow_c = coop_build_weapon_as(tm, 10, 1); coop_force_model = coop_force_tex = 0;
+            tt_dbg("[COOPWEAPON] player 2's arrow: none in the level; a copy of %08X '%s' as an arrow: %08X\n", tm, (const char *)XBOX_PTR(MEM32(tm + 0x18)), coop_p2_arrow_c); }
+    }
 }
 uint32_t coop_p2_ranged_copy(uint32_t w)
 {
@@ -9665,6 +9865,8 @@ uint32_t coop_p2_bow(void)
         for (i = 0; i < coop_rng_n && !best; i++) { uint32_t o = coop_rng_orig[i], h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, c = coop_rng_copy[i];
             if (!c || (pass < 2 && c == sink)) continue;
             if (pass == 0 ? (want && m == want) : (m == 0x0834F2D4u || m == 0x36AC3F58u)) best = c; }
+    for (i = 0; i < coop_rng_n && !best; i++) if (coop_rng_copy[i] && coop_rng_copy[i] != sink) best = coop_rng_copy[i];   /* (1.9.9: a copy of a melee weapon, coop_p2_ranged_build's fallback) */
+    for (i = 0; i < coop_rng_n && !best; i++) if (coop_rng_copy[i]) best = coop_rng_copy[i];
     return best;
 }
 static uint32_t coop_build_weapon(uint32_t child) { return coop_build_weapon_as(child, coop_attach_bone_seen, 0); }
@@ -10125,15 +10327,41 @@ void sub_00085FB0(void)
     uint32_t w = MEM32(esp + 4); int nested = coop_take_nested, after_bow_back = 0;
     if (getenv("TT_COOP_TAKELOG") && w >= 0x10000u && MEM32(w) == 0x174980u && (ecx == coop_p2 || ecx == coop_first_char)) {   /* (research) every take: who, what, its model and id */
         static int n; uint32_t h = MEM32(w + 0x18), m = MEM32(w + 0x494), rec = h >= 0x10008u ? h - 8 : 0;
-        if (n++ < 60) tt_dbg("[TAKE] %s takes %08X '%s' arg2 %08X | model res %08X key %08X | record model %08X texture %08X | id +2F4 %X\n",
+        if (n++ < (getenv("TT_COOP_TAKELOGN") ? atoi(getenv("TT_COOP_TAKELOGN")) : 60)) tt_dbg("[TAKE] %s takes %08X '%s' arg2 %08X | model res %08X key %08X | record model %08X texture %08X | id +2F4 %X\n",
             ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
             m, m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
+    }
+    {   /* (1.9.9) player 2's bow and arrow where player 1 has none: player 1 a guest who shoots from an empty hand or a staff
+         * (Frodo, Gandalf: his bow-hand weapon the empty prop 6E0B0E00, his "arrow" -- id 9 -- his blade), whose moves player 2
+         * plays (the same machine): his aim took those, and player 2 Legolas or Boromir aimed with nothing in his hand (a
+         * playtest). His bow copy in their place (coop_p2_bow) and his arrow (coop_p2_arrow); his first melee take after it
+         * (the aim over) puts the bow back (0xA) and his own slot-1 weapon into his hand. TT_COOP_NOP2BOWSUB: as before */
+        static int bow_out; static unsigned bo_lv;
+        if (bo_lv != coop_level_n) { bo_lv = coop_level_n; bow_out = 0; }
+        if (coop_p2 >= 0x10000u && ecx == coop_p2 && !nested && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2BOWSUB")) {
+            extern uint32_t coop_p2_bow(void); extern uint32_t coop_p2_arrow(void);
+            uint32_t hh = MEM32(w + 0x18), mm = hh >= 0x10008u && hh < 0x84000000u ? MEM32(hh - 8 + 0x40) : 0, sl = MEM32(esp + 8), b = coop_p2_bow(), a = coop_p2_arrow(); int own = 0, k;
+            for (k = 0; k < coop_np2w; k++) if (coop_p2w[k] == w) own = 1;
+            if (!own && mm == EMPTY_PROP_KEY_M && b) { static int n; if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 takes his bow %08X for player 1's empty one %08X (slot %X)\n", b, w, sl); MEM32(esp + 4) = b; w = b; bow_out = 1; }
+            else if (!own && MEM32(w + 0x2F4) == 9u && a && w != a && b) { static int n; if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 takes his arrow %08X for player 1's %08X (slot %X)\n", a, w, sl); MEM32(esp + 4) = a; w = a; }
+            else if (own && bow_out && sl < 8u && b && w != b && w != a) {   /* the aim over: his melee back in his hand, the bow onto his back */
+                uint32_t s1 = 0, args[2]; int k2;
+                bow_out = 0;
+                for (k2 = 0; k2 < coop_np2w && !s1; k2++) { uint32_t q = coop_p2w[k2], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    if (coop_p2w_slot[k2] == 1 && q != w && !coop_rng_key(qm) && qm != 0x4586A62Cu) s1 = q; }
+                coop_take_nested = 1;
+                args[0] = b; args[1] = 0xAu; tt_gcall(0x00085FB0u, coop_p2, 2, args);
+                if (s1 && sl != 1u) { args[0] = s1; args[1] = 1u; tt_gcall(0x00085FB0u, coop_p2, 2, args); }
+                coop_take_nested = 0;
+                { static int n; if (n++ < 20) tt_dbg("[COOPWEAPON] player 2's aim over: his bow %08X onto his back, %08X into his other hand\n", b, s1); }
+            }
+        }
     }
     {   /* the bow copy the twin's set-up attaches (@AttachToBone replayed: coop_in_attach) is his bow: only a weapon attached
          * that way is drawn right in his hand (frames at the Gates of Moria: that copy upright in player 2 Legolas' bow hand
          * as player 1 Legolas', the other copies sideways or not at all -- a playtest: he shot with his blade) */
         uint32_t hh = w >= 0x10000u ? MEM32(w + 0x18) : 0, mm = hh >= 0x10008u && hh < 0x84000000u ? MEM32(hh - 8 + 0x40) : 0;
-        if (coop_in_attach && coop_twin >= 0x10000u && ecx == coop_twin && MEM32(w) == 0x174980u && (mm == 0x0834F2D4u || mm == 0x36AC3F58u || mm == 0xE7EEC090u)) {
+        if (coop_in_attach && coop_twin >= 0x10000u && ecx == coop_twin && MEM32(w) == 0x174980u && coop_rng_key(mm)) {
             extern void coop_p2_bow_attached(uint32_t w); coop_p2_bow_attached(w); }
     }
     {   extern int coop_rng_n_x(void); extern uint32_t coop_rng_copy_x(int i);
@@ -10149,7 +10377,7 @@ void sub_00085FB0(void)
             && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2SLOTPICK") && !nested) {
             extern const char *tt_coop_p2_char_now; extern uint32_t coop_p2_bow(void); extern uint32_t coop_p2_arrow(void); extern uint32_t coop_p2_arrow_for(uint32_t w);
             int k; uint32_t pick = 0, wh = MEM32(w + 0x18), wm = wh >= 0x10008u && wh < 0x84000000u ? MEM32(wh - 8 + 0x40) : 0;
-            int wr = wm == 0x0834F2D4u || wm == 0x36AC3F58u || wm == 0xE7EEC090u;
+            int wr = coop_rng_key(wm);
             if (tt_coop_p2_char_now && !strcmp(tt_coop_p2_char_now, "legolas") && !getenv("TT_COOP_NOP2DRAW")) {
                 /* player 2 Legolas, as player 1 Legolas (his takes at the Gates of Moria): the draw puts the knives into 0xA, the bow
                  * into slot 1 and the arrow into slot 0; putting the bow away, the bow into 0xA and the knives into 0 and 1. His moves
@@ -10161,7 +10389,7 @@ void sub_00085FB0(void)
                 uint32_t bow = coop_p2_bow();
                 if (sl == 0xAu) { int want = stow_n++ & 1;
                     for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                        if (!(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && coop_p2w_slot[k] == want) pick = q; } }
+                        if (!coop_rng_key(qm) && coop_p2w_slot[k] == want) pick = q; } }
                 else { stow_n = 0;
                     if (sl == 0u && (coop_p2_arrow_for(w) || w == coop_p2_arrow())) {
                         pick = coop_p2_arrow() ? coop_p2_arrow() : w;
@@ -10174,7 +10402,7 @@ void sub_00085FB0(void)
                 * Aragorn's draw had his sword in place of it, no arrow in his hand: a playtest) */
             if (sl < 8u && !pick)   /* slots 0-3: his own melee weapon for that slot (putting the bow away fills 0, 1 and 2) */
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                    int ranged = qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u;
+                    int ranged = coop_rng_key(qm);
                     if (!ranged && (uint32_t)coop_p2w_slot[k] == sl) pick = q; }
             if (!pick && (sl >= 8u || wr)) {   /* (never the sink, coop_p2_weapon_sink: a copy nobody draws; the P2 Bot's moves had made
                                                  * him its owner, and he aimed with it, his blade showing: a playtest) */
@@ -10185,10 +10413,10 @@ void sub_00085FB0(void)
                                                  * from the level's start: one stayed on his back while another copy went to his hand,
                                                  * and he shot with his blade); none held: the one asked for if it is his, else his first */
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && MEM32(q + 0x11C) == coop_p2 && (q != sink || q == coop_p2_bow())) pick = q; }
+                    if (coop_rng_key(qm) && MEM32(q + 0x11C) == coop_p2 && (q != sink || q == coop_p2_bow())) pick = q; }
                 for (k = 0; k < coop_np2w && !pick && wr && w != sink; k++) if (coop_p2w[k] == w) pick = w;
                 for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
-                    if ((qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u) && q != sink) pick = q; }
+                    if (coop_rng_key(qm) && q != sink) pick = q; }
             }
             if (pick && pick != w) {
                 { extern uint32_t coop_p2_weapon_sink(void); static int n; if (n++ < 40) tt_dbg("[COOPWEAPON] player 2 (own moves): slot %X takes his %08X for %08X (the sink %08X)\n", sl, pick, w, coop_p2_weapon_sink()); }
@@ -10205,7 +10433,7 @@ void sub_00085FB0(void)
         if (lv != coop_level_n) { lv = coop_level_n; first = 0; }
         if (((coop_p2 >= 0x10000u && ecx == coop_p2) || (coop_twin >= 0x10000u && ecx == coop_twin && coop_mode() == 3)) && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {   /* (the twin too: his set-up, before the take-over, puts one on his back) */
             uint32_t m = MEM32(h - 8 + 0x40);
-            if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
+            if (coop_rng_key(m)) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
                 if (!first) { extern uint32_t coop_p2_bow(void); first = coop_p2_bow(); if (!first) first = w; }   /* (coop_p2_bow: the copy drawn right; the same one on his back and in his hand) */
                 if (w != first) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's ranged %08X stands in for %08X (one bow)\n", first, w); MEM32(esp + 4) = first; w = first; }
             }
@@ -10281,6 +10509,7 @@ extern void sub_0003D9B0_gen(void); void sub_0003D9B0(void) { if (coop_phase) co
  * ran one level per launch, so nothing reset this. */
 void coop_level_reset(void)
 {
+    { extern int tt_nallobj; tt_nallobj = 0; }   /* (the linked objects: the new level's from now) */
     tt_dbg("[COOP] new level: co-op state reset (player 2 was %08X, mode now %d)\n", coop_p2, coop_mode());
     if (coop_p2 && coop_rec_addr && !coop_depth) {   /* (a retry: kept for coop_take) */
         memcpy(&coop_kept_p2_90, coop_s2 + 0x400 + 0x90, 4); coop_kept_p1_90 = MEMF(coop_rec_addr + 0x90); coop_kept_level = MEM32(0x1BB2A4u); coop_kept = 1;

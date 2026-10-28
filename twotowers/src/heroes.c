@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 149u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 150u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -285,6 +285,19 @@ static int skin_by_name(const char *e)
         if (!_stricmp(e, s_skins[i].name)) return i;
     return -1;
 }
+/* (1.9.9) the ranged weapon a character shows as player 2 (co-op and Versus), as he does as player 1: the retail heroes their
+ * own (Legolas' bow, Gimli's throwing axe, Aragorn's bow; Isildur Aragorn's), a guest with a bow of his own in the bow's hand
+ * (Lurtz) none more, a guest who shoots from an empty hand or a staff (nobow) none, any other guest (Boromir, Elrond, the
+ * captain) Aragorn's bow -- what he draws in the campaign, as Aragorn's level variant. 0: none */
+static int skin_p2_ranged(int sk, const char **src, uint32_t *m, uint32_t *t)
+{
+    if (sk < 0 || sk >= N_SKINS || getenv("TT_COOP_NOP2RANGED")) return 0;
+    if (skin_retail(sk)) { if (!s_skins[sk].xmesh) return 0; *src = s_skins[sk].xsrc; *m = s_skins[sk].xmesh; *t = s_skins[sk].xtex; return 1; }
+    if (s_skins[sk].nobow || sk == SK_TROLL || sk == SK_TROLL2) return 0;
+    if (s_skins[sk].wmesh && s_skins[sk].wslot == 0) return 0;   /* (his own bow in that hand at all times already) */
+    *src = W("04BALIN1.bfa"); *m = 0x36AC3F58u; *t = 0xD82C5CABu; return 1;
+}
+int tt_heroes_p2_ranged(const char *who, uint32_t *m, uint32_t *t) { const char *s; return skin_p2_ranged(skin_by_name(who), &s, m, t); }
 /* co-op (player 2's character, tt_coop_p2_char, set per level in redirect): the level is built with the skin's model, texture and weapons as for TT_PLAYAS,
  * but the hero's record keeps player 1's; the (hero key -> skin key) pairs are handed to the co-op code
  * (twotowers_manual.c), which builds player 2 and his weapons from records using them */
@@ -4865,6 +4878,15 @@ static const char *redirect(const char *xp)
                 if (!dupt) { a[na].src = ws; a[na].src_key = a[na].key = wt; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++; }
             }
             tt_dbg("[HEROES] co-op: player 2's %s added to %s's level (%d resources)\n", s_skins[q2].name, s_skins[sk].name, na);
+        }
+        if ((p2only || p2too) && na < 22) {   /* (1.9.9) player 2's ranged weapon's model and texture (skin_p2_ranged), when not in already */
+            const char *ws; uint32_t wm, wt; int q, dupm = 0, dupt = 0;
+            if (skin_p2_ranged(s_playas, &ws, &wm, &wt)) {
+                for (q = 3; q < na; q++) { if (a[q].type == 200 && a[q].key == wm) dupm = 1; if (a[q].type == 300 && a[q].key == wt) dupt = 1; }
+                if (!dupm) { a[na].src = ws; a[na].src_key = a[na].key = wm; a[na].type = 200; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++; }
+                if (!dupt) { a[na].src = ws; a[na].src_key = a[na].key = wt; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++; }
+                if (!dupm || !dupt) tt_dbg("[HEROES] co-op: player 2's ranged weapon %08X (texture %08X) added\n", wm, wt);
+            }
         }
         if ((sk == SK_TROLL || (s_coop_skin && (s_playas == SK_TROLL || s_playas == SK_TROLL2))) && na < 24 && !getenv("TT_TROLLROCK")) {   /* (1.9.9) his log's bark (troll_log_patch) */
             a[na].src = W("14FANG2.bfa"); a[na].src_key = a[na].key = TROLL_LOG_TEX; a[na].type = 300; a[na].map = NULL; a[na].nmap = 0; a[na].compose = 0; a[na].empty = 0; a[na].tint = 0; na++;

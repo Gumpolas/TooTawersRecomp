@@ -2952,3 +2952,46 @@ twotowers/src/heroes.c
     found in memory and folded away when it breaks.
   - The shield orc's combo names, and the trolls' (both trolls): names
     only, his moves are not upgraded.
+
+-- 1.9.9: player 2's bow, the whole map in Versus, hits from any side, the camera ------
+twotowers/src/heroes.c
+  - skin_p2_ranged / tt_heroes_p2_ranged: the ranged weapon a character
+    shows as player 2, as he does as player 1 -- the retail heroes their
+    own, Boromir and the other guests with a bow Aragorn's (what they draw
+    in the campaign), none for those who shoot from an empty hand or a
+    staff (Frodo, Gandalf, Sauron, Saruman, the trolls...) or hold their
+    own bow already (Lurtz). Its model and texture are brought into the
+    level with player 2's other resources.
+twotowers/src/twotowers_manual.c
+  - Player 2's ranged weapon for every character (it was Legolas, Gimli,
+    Aragorn and Isildur only): copies of the level's ranged weapons in his
+    model, or, with none in the level (player 1 Frodo or Gandalf, Versus),
+    a copy of one of player 1's weapons in it. His own copies are no longer
+    copied again ("no loader key").
+  - Player 1 a guest who shoots from an empty hand: his moves, which player
+    2 plays, took player 1's empty bow and his blade for an arrow, and
+    player 2 Legolas or Boromir aimed with nothing in his hand. His bow
+    and arrow are taken in their place; when the aim is over the bow goes
+    onto his back and his other weapon into his hand. TT_COOP_NOP2BOWSUB.
+  - Versus: every sector of the level drawn (the flag at 0x3C35C8 and an
+    all-shown array at 0x3C35CC, as a level without portals): the parts the
+    campaign's scripts open were never drawn, the ground ended in a brown
+    void (Amon Hen). TT_VS_KEEPSECTORS.
+  - Versus: the level's props (type 7: the campaign's barriers, a trunk
+    across Amon Hen's path) out of the collision world as
+    @ObjectCollisionOff does (0xC67B0 on 0x43C5E8). TT_VS_KEEPPROPS.
+    Amon Hen's 50-unit arena edge is gone.
+  - Player 2's ammo icon and the Versus results picture: their texture
+    object in the same block as the pixels -- alone it could come back at
+    0x80000000 (physical 0) and the icon was drawn black (player 1 Isildur).
+  - Versus hits: a swing lands on a hero within its reach on any side --
+    the game's own facing test (a hit only in front) is no longer the
+    judge (TT_VS_OLDJUDGE). Reach by size: 3.6, the Berserker, the captain,
+    Lurtz and Sauron 4.2, the trolls 5.5 (TT_VS_REACH).
+  - Versus camera: no longer drawn in at the map's edges, it stays out
+    (the Plains of Rohan; TT_VS_CAMSHRINK: as before).
+  - (test) TT_VS_POSLOG, TT_VS_GLIDE, TT_VS_SHOTS (TT_VS_SHOTSMS, _SHOTSN),
+    TT_VS_WALKTO (player 1 walked along a route over the pathmaps),
+    TT_VS_CAMP1, TT_OBJNEAR / TT_OBJDUMP, TT_WALKGRID, TT_COOP_TAKELOGN.
+twotowers/src/menus.c
+  - (test) TT_TPANY, TT_P1POSLOG, player 1's stick for TT_VS_WALKTO.

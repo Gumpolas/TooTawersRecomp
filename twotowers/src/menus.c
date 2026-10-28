@@ -1437,6 +1437,10 @@ static void pad_filter(unsigned long port, XState *st)
     uint32_t prim = G32(0x1CB8B4u), inj = s_inj;
     if (getenv("TT_P1SCRIPT_INPLAY") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { static int n; if (n++ < 6) tt_dbg("[P1SCRIPT] in play: pad port %lu, primary %u\n", port, prim); }
     if (getenv("TT_P1SCRIPT") && port < 4 && (!(G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8) || (getenv("TT_P1SCRIPT_INPLAY") && (port == 0 || port == G32(0x1CB8B4u))))) p1_script(st);   /* (the menus listen to any pad; in play, co-op's own pads -- TT_P1SCRIPT_INPLAY: player 1's port too) */
+    {   /* (test) player 1's stick from twotowers_manual.c's walk-to (TT_VS_WALKTO) */
+        extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2];
+        if (tt_p1_autostick_on && port < 4 && (port == 0 || port == G32(0x1CB8B4u)) && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { st->Gamepad.sThumbLX = tt_p1_autostick[0]; st->Gamepad.sThumbLY = tt_p1_autostick[1]; st->dwPacketNumber += 0x10000u; }
+    }
     if (port < 4 && (port == 0 || port == G32(0x1CB8B4u))) imp_screen(st);
     if (port == 0 || port == G32(0x1CB8B4u)) s_polls++;
     if (prim > 3) prim = 0;
@@ -2445,6 +2449,22 @@ done:
 /* once a frame (twotowers_manual.c: the game's wait for the next frame) */
 void tt_menus_tick(void)
 {
+    if (getenv("TT_P1POSLOG")) { static DWORD tl; uint32_t p1 = G32(0x43B15Cu); if (p1 >= 0x10000u && p1 < 0x84000000u && GetTickCount() - tl > 2000u) { float x, y, z; uint32_t v; tl = GetTickCount(); v = G32(p1 + 0xF0); memcpy(&x, &v, 4); v = G32(p1 + 0xF4); memcpy(&y, &v, 4); v = G32(p1 + 0xF8); memcpy(&z, &v, 4); tt_dbg("[P1POS] %.1f %.1f %.1f pm %d\n", x, y, z, (int)G32(p1 + 0x2ECu)); } }   /* (test) */
+    if (getenv("TT_TPANY")) {   /* (testing) "x,y,z,ms[,dir]": player 1 put there ms after play starts, then a frame a second into dir */
+        static DWORD t0, tl; static int done, k; float x = 0, y = 0, z = 0; int ms = 0; char dir[200] = "";
+        uint32_t p1 = G32(0x43B15Cu);
+        if (p1 >= 0x10000u && sscanf(getenv("TT_TPANY"), "%f,%f,%f,%d,%199s", &x, &y, &z, &ms, dir) >= 4) {
+            if (!t0) t0 = GetTickCount();
+            if (!done && GetTickCount() - t0 > (DWORD)ms) { extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t a3[3], i2;
+                memcpy(&a3[0], &x, 4); memcpy(&a3[1], &y, 4); memcpy(&a3[2], &z, 4); tt_gcall(0x000865D0u, p1, 3, a3);
+                if (!getenv("TT_TPNOPM")) for (i2 = 0; i2 < 256; i2++) { uint32_t pm = G32(0x41F428u + 0x1088u + 4u * i2);
+                    if (pm < 0x10000u || pm >= 0x84000000u) continue;
+                    { float x0, x1, y0, y1; uint32_t v; v = G32(pm + 0x48); memcpy(&x0, &v, 4); v = G32(pm + 0x58); memcpy(&x1, &v, 4); v = G32(pm + 0x4C); memcpy(&y0, &v, 4); v = G32(pm + 0x5C); memcpy(&y1, &v, 4);
+                      if (x >= x0 && x <= x1 && y >= y0 && y <= y1) { G32(p1 + 0x2EC) = i2; break; } } }
+                done = 1; tl = GetTickCount(); tt_dbg("[TPANY] player 1 put at %.1f %.1f %.1f\n", x, y, z); }
+            if (done && dir[0] && k < 12 && GetTickCount() - tl > 1000) { extern void xbox_PresentDumpRequest(const char *path); char pth[300]; tl = GetTickCount(); snprintf(pth, sizeof pth, "%s/tp_%02d.bmp", dir, k++); xbox_PresentDumpRequest(pth); }
+        }
+    }
     {   /* testing: TT_MMSEL -- the main menu's choice as it changes */
         static int on = -1; static uint32_t last = 0xFFFFFFFFu;
         if (on < 0) on = getenv("TT_MMSEL") != NULL;
