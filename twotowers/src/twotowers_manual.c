@@ -5951,9 +5951,20 @@ static void coop_down_pose(uint32_t now)
         if (!coop_down[w] || h < 0x10000u) { stage[w] = 0; tries[w] = 0; continue; }
         st = MEM32(h + 0x408);
         if (!getenv("TT_COOP_NOHITFLAGS")) { MEM32(h + 0x49C) |= 0x40u; MEM32(h + 0x110) &= ~0x20u; }   /* no hits reach him while down (the flags the game's own death sets; the respawn restores them): a hit stood him up (observed) */
+        if (getenv("TT_VS_DOWNSHOT") && w == 0) {   /* (test) frames while he is down: every 400 ms to 4 s */
+            static uint32_t nx; extern void xbox_PresentDumpRequest(const char *path); char pth[300]; uint32_t el = now - coop_down_t[w];
+            if (el < 100u) nx = 200u;
+            if (el >= nx && nx <= 4200u) { snprintf(pth, sizeof pth, "%s/down_%04u_st%u.bmp", getenv("TT_VS_DOWNSHOT"), nx, st); xbox_PresentDumpRequest(pth); nx += getenv("TT_VS_DOWNSHOTMS") ? (uint32_t)atoi(getenv("TT_VS_DOWNSHOTMS")) : 400u; } }
+        if (getenv("TT_COOP_DOWNDUMP") && w == 0) {   /* (research) his words while down, every 60 ms */
+            static uint32_t tl; if (now - tl >= 60u) { char b2[6000]; int q = 0; uint32_t o2; tl = now;
+                for (o2 = 0x380; o2 < 0x600 && q < 5900; o2 += 4) q += snprintf(b2 + q, sizeof b2 - q, " %X:%08X", o2, MEM32(h + o2));
+                tt_dbg("[DOWNDUMP] t %u st %u%s\n", now - coop_down_t[w], st, b2); } }
         if (st != lst[w]) { if (getenv("TT_COOP_DOWNLOG")) tt_dbg("[COOPDOWN] P%d down %u ms: state %u -> %u (stage %d, time %.2f)\n", w + 1, now - coop_down_t[w], lst[w], st, stage[w], MEMF(h + 0x420)); lst[w] = st; }
         if (getenv("TT_COOP_NODOWNPOSE")) continue;
         if (st == 50) { stage[w] = 3; continue; }   /* dead, lying (the full death's end) */
+        /* (1.9.9: holding him in 48 -- its time, the inputs' mask, put back from 52 -- left him standing in a lying state into
+         * the next round, and then he could not be knocked down again: the game's own cycle kept, 47 -> 48 -> 52 -> 47) */
+
         if (st == 44 || st == 45 || st == 46) {   /* dying (the death's first states; 44/45 are also the hit reactions) */
             if (getenv("TT_COOP_DOWNHOLD")) { float hold = (float)atof(getenv("TT_COOP_DOWNHOLD")); if (MEMF(h + 0x420) > hold) MEMF(h + 0x420) = hold; }
             stage[w] = 2; continue; }

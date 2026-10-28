@@ -2922,3 +2922,17 @@ twotowers/src/heroes.c
   - The ground fix at 0.3 of the hero's height (Lurtz lay 1.3 up).
 xboxrecomp-0.12.0/src/apu/apu_vp.c
   - (test) RECOMP_APU_STREAMTEST (the streams' share), RECOMP_APU_STREAMLOG.
+
+-- 1.9.9: Lurtz on the ground --------------------------------------------------------
+twotowers/src/heroes.c
+  - rt_ground_fix measures as the game draws: the root bone's (0) moves
+    left out (the game moves the actor by them; their height is never
+    drawn), the height put on the root's child (bone 1). The hero's lowest
+    point kept over the floor in proportion (TT_RT_GROUNDK, 1): knocked
+    down, Lurtz lay 3.8 up, now 2.3 as Aragorn's 1.8 (the poses' lowest
+    bones; in game both on the ground).
+  - Lurtz's hit 21 (a stagger 3.8 back and a unit up) is his flinch 20.
+  - (test) TT_ZSCAN's noroot lines.
+twotowers/src/twotowers_manual.c
+  - (test) TT_VS_DOWNSHOT / TT_VS_DOWNSHOTMS: frames while a hero is down;
+    TT_COOP_DOWNDUMP.

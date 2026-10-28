@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 147u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 148u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -1057,6 +1057,7 @@ static unsigned char *retarget_rec(const unsigned char *A, size_t alen, uint32_t
  * local rotation = bind local * key; local offset = bind offset + position
  * key / 256 (as the game plays them) */
 static Quat s_pose_Q[128];   /* the last pose's world rotations */
+static int s_pose_noroot;    /* (1.9.9) rt_pose: 1 the root bone's (0) x/y moves left out (the game moves the actor by them), 2 all of them */
 static int rt_pose(const unsigned char *S, size_t len, const unsigned char *rec, size_t rlen, float t, float (*P)[3])
 {
     static int par[128]; static Quat W[128], BL[128], Q[128];
@@ -1090,7 +1091,7 @@ static int rt_pose(const unsigned char *S, size_t len, const unsigned char *rec,
                 if (rt_qsample(rec + bo + 4, nr, t, &d)) {
                     lq = qmulq(lq, d);
                 }
-                if (rt_sample(rec + bo + 4 + 8 * nr, np, t, v)) for (c = 0; c < 3; c++) lt[c] += v[c] / 256.0f;
+                if (rt_sample(rec + bo + 4 + 8 * nr, np, t, v)) for (c = 0; c < 3; c++) if (!(b == 0 && s_pose_noroot && (s_pose_noroot == 2 || c < 2))) lt[c] += v[c] / 256.0f;
             }
         }
         if (par[b] < 0 || par[b] >= nb) { Q[b] = lq; for (c = 0; c < 3; c++) P[b][c] = lt[c]; }
@@ -1122,38 +1123,48 @@ static float rt_stand_low(const unsigned char *S, size_t len)
 static unsigned char *rt_ground_fix(const unsigned char *A, size_t alen, uint32_t rec, const unsigned char *G, size_t glen,
                                     const unsigned char *o, size_t *plen, uint32_t dur, float vscale)
 {
-    size_t olen = *plen, q; uint32_t gbt = rd32(o, 0x20), gn = rd32(G, 0x40 + 8), b, off0, nr0, np0, K, k;
-    float hl0 = rt_stand_low(A, alen), gl0 = rt_stand_low(G, glen), dz[64], most = 0;
-    /* (the hero's own falls keep him well off the floor -- lying, his lowest bone 1.8 over his standing feet; the guests' own
-     * lie about 0.9 over theirs (the Uruk-hai's, measured): half the hero's height, so he lies on the ground) */
-    float kf = getenv("TT_RT_GROUNDK") ? (float)atof(getenv("TT_RT_GROUNDK")) : 0.3f;   /* (0.5 left Lurtz lying 1.3 over the floor) */
+    /* (1.9.9) measured as the game draws him: his root bone's (0) moves are left out -- the game moves the actor by them,
+     * and their height is never drawn (Lurtz, lying, was still 3.8 up after his root was lowered). The height is put on his
+     * root's child (bone 1) instead, the hero's lowest point kept over the floor in proportion (TT_RT_GROUNDK, 1) */
+    size_t olen = *plen, q; uint32_t gbt = rd32(o, 0x20), gn = rd32(G, 0x40 + 8), b, off1, nr1, np1, K, k;
+    float hl0, gl0, dz[64], most = 0;
+    float kf = getenv("TT_RT_GROUNDK") ? (float)atof(getenv("TT_RT_GROUNDK")) : 1.0f;
     unsigned char *o2; int16_t px[64][3];
-    if (gn == 0 || gn > 128 || gbt + 4 * gn > olen || hl0 > 1e8f || gl0 > 1e8f || dur == 0) return NULL;
-    off0 = rd32(o, gbt); if (off0 + 4 > olen) return NULL;
-    nr0 = o[off0]; np0 = o[off0 + 1];
+    static int gpar[128]; static Quat gW[128], gBL[128];
+    if (gn < 2 || gn > 128 || gbt + 4 * gn > olen || dur == 0 || rt_binds(G, glen, gpar, gW, gBL) < 2 || gpar[1] != 0) return NULL;
+    s_pose_noroot = 2;
+    hl0 = rt_stand_low(A, alen); gl0 = rt_stand_low(G, glen);
+    if (hl0 > 1e8f || gl0 > 1e8f) { s_pose_noroot = 0; return NULL; }
+    off1 = rd32(o, gbt + 4); if (!off1 || off1 + 4 > olen) { s_pose_noroot = 0; return NULL; }
+    nr1 = o[off1]; np1 = o[off1 + 1];
     K = (uint32_t)s_rt_maxpos < 64u ? (uint32_t)s_rt_maxpos : 64u; { uint32_t want = dur / 33u + 2u; if (want < K) K = want; } if (K < 2) K = 2;
     for (k = 0; k < K; k++) {
-        float t = (float)dur * (float)k / (float)(K - 1), hl = rt_lowest(A, alen, A + rec, alen - rec, t), gl = rt_lowest(G, glen, o, olen, t), v[3] = { 0, 0, 0 }, want;
-        if (hl > 1e8f || gl > 1e8f) return NULL;
+        float t = (float)dur * (float)k / (float)(K - 1), hl = rt_lowest(A, alen, A + rec, alen - rec, t), gl, v[3] = { 0, 0, 0 }, want, w[3], l[3];
+        Quat q0;
+        gl = rt_lowest(G, glen, o, olen, t); q0 = s_pose_Q[0];
+        if (hl > 1e8f || gl > 1e8f) { s_pose_noroot = 0; return NULL; }
         want = gl0 + (hl - hl0) * vscale * kf;
-        dz[k] = want - gl; if (dz[k] > 3.0f) dz[k] = 3.0f; if (dz[k] < -3.0f) dz[k] = -3.0f;
+        dz[k] = want - gl; if (dz[k] > 4.0f) dz[k] = 4.0f; if (dz[k] < -4.0f) dz[k] = -4.0f;
         if (fabsf(dz[k]) > fabsf(most)) most = dz[k];
-        if (np0) rt_sample(o + off0 + 4 + 8 * nr0, (int)np0, t, v);
-        px[k][0] = (int16_t)lroundf(v[0]); px[k][1] = (int16_t)lroundf(v[1]); px[k][2] = (int16_t)lroundf(v[2] + dz[k] * 256.0f);
+        if (np1) rt_sample(o + off1 + 4 + 8 * nr1, (int)np1, t, v);
+        w[0] = 0; w[1] = 0; w[2] = dz[k]; qrotv(qconj(q0), w, l);   /* (the world's up in his root's frame) */
+        px[k][0] = (int16_t)lroundf(v[0] + l[0] * 256.0f); px[k][1] = (int16_t)lroundf(v[1] + l[1] * 256.0f); px[k][2] = (int16_t)lroundf(v[2] + l[2] * 256.0f);
     }
+    s_pose_noroot = 0;
     if (fabsf(most) < 0.15f) return NULL;   /* (close enough already) */
     o2 = (unsigned char *)calloc(1, olen + 8 * K + 16);
     if (!o2) return NULL;
     memcpy(o2, o, 0x40); q = 0x40;
     {   uint32_t offs[128];
         for (b = 0; b < gn; b++) {
-            uint32_t ob = rd32(o, gbt + 4 * b), nr = o[ob], np = o[ob + 1];
+            uint32_t ob = rd32(o, gbt + 4 * b), nr = ob ? o[ob] : 0, np = ob ? o[ob + 1] : 0;
             offs[b] = (uint32_t)q;
-            if (b == 0) {
+            if (b == 1) {
                 o2[q] = (unsigned char)nr; o2[q + 1] = (unsigned char)K; q += 4;
                 memcpy(o2 + q, o + ob + 4, 8 * nr); q += 8 * nr;
                 for (k = 0; k < K; k++) { wr16(o2, q, (uint16_t)lroundf((float)dur * (float)k / (float)(K - 1))); wr16(o2, q + 2, (uint16_t)px[k][0]); wr16(o2, q + 4, (uint16_t)px[k][1]); wr16(o2, q + 6, (uint16_t)px[k][2]); q += 8; }
-            } else { memcpy(o2 + q, o + ob, 4 + 8 * (nr + np)); q += 4 + 8 * (nr + np); }
+            } else if (!ob) { offs[b] = 0; }
+            else { memcpy(o2 + q, o + ob, 4 + 8 * (nr + np)); q += 4 + 8 * (nr + np); }
         }
         q = (q + 3) & ~(size_t)3;
         {   size_t evo = q;
@@ -1161,7 +1172,7 @@ static unsigned char *rt_ground_fix(const unsigned char *A, size_t alen, uint32_
             wr32(o2, 0x14, (uint32_t)q); wr32(o2, 0x1C, (uint32_t)evo); wr32(o2, 0x20, (uint32_t)evo); wr32(o2, 0x28, (uint32_t)q);
         }
     }
-    if (log_on()) tt_dbg("[HEROES]   ground: his lowest point kept to the hero's (moved up to %.2f)\n", most);
+    if (log_on()) tt_dbg("[HEROES]   ground: his lowest point kept to the hero's (his root's child moved up to %.2f)\n", most);
     *plen = q;
     return o2;
 }
@@ -1632,6 +1643,8 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
              * swing from standing, which had him spring up from the ground */
             src = 30;
         } else
+        if (s == 21 && !strcmp(s_pools[g].name, "lurtz") && 20 < gns && gt[20] && !getenv("TT_LURTZOWN21")) src = 20;   /* (1.9.9) his 21 is a stagger 3.8 units back and a unit up: hit, he left the ground (a playtest) -- his short flinch for both */
+        else
         if (s < gns && gt[s] && cls != AC_SPEED && cls != AC_FIERCE && cls != AC_RANGED && cls != AC_KICK && cls != AC_DEATH
             && !((s == 9 || s == 10) && !strcmp(s_pools[g].name, "sauron"))) src = s;   /* (Sauron's 9 and 10 stand still: the heroes' move) */
         else {
@@ -1895,6 +1908,11 @@ static size_t compose_anims(const unsigned char *A, size_t alen, const unsigned 
                 nb4 = rt_pose(out, cap, out + pos, n, t3, PZ);
                 if (nb4 > 0) { float lo4 = 1e9f; for (b4 = 0; b4 < nb4; b4++) if (PZ[b4][2] < lo4) lo4 = PZ[b4][2]; if (PZ[0][2] < mr) mr = PZ[0][2]; if (PZ[0][2] - lo4 < mg) mg = PZ[0][2] - lo4; if (lo4 < lmin) lmin = lo4; if (lo4 > lmax) lmax = lo4; }
             }
+            {   int m; for (m = 1; m <= 2; m++) { float l0 = 1e9f, l1 = -1e9f, h0 = 1e9f, h1 = -1e9f, t5; s_pose_noroot = m;
+                    for (t5 = 0; t5 <= (float)target; t5 += 33.0f) { float v5 = rt_lowest(out, cap, out + pos, n, t5); if (v5 < l0) l0 = v5; if (v5 > l1) l1 = v5; }
+                    for (t5 = 0; t5 <= (float)rd32(a, 8); t5 += 33.0f) { float v5 = rt_lowest(A, alen, a, a5, t5); if (v5 < h0) h0 = v5; if (v5 > h1) h1 = v5; }
+                    s_pose_noroot = 0;
+                    tt_dbg("[ZSCAN] slot %u noroot%d: his lowest %.2f..%.2f, the hero's %.2f..%.2f\n", s, m, l0, l1, h0, h1); } }
             tt_dbg("[ZSCAN] slot %u: his lowest point from %.2f to %.2f (off the ground %.2f), at the end %.2f (the hero's: standing %.2f, at the end %.2f)\n", s, lmin, lmax, lmax - lmin, rt_lowest(out, cap, out + pos, n, (float)target), rt_stand_low(A, alen), rt_lowest(A, alen, a, a5, (float)rd32(a, 8)));
             for (t3 = 0; t3 <= (float)rd32(a, 8); t3 += 33.0f) {
                 nb4 = rt_pose(A, alen, a, a5, t3, PZ);
