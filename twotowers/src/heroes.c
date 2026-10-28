@@ -212,7 +212,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 148u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 149u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -2085,9 +2085,10 @@ typedef struct { int skin; uint32_t mesh, tex, anim, prop, ptex; int bone, skinb
  * hand is point 0's bone 54, as Boromir's is), on forearm 38 */
 static const Shield s_shields[] = { { 0, 0xA6841986u, 0xFD8B0956u, 0xF9C62B16u, 0x0D473744u, 0xDEF52D38u, 32, 29 },
                                     { 1, 0x3E74698Au, 0xF2BE2DCCu, 0xDDAEA31Cu, 0x9556E30Cu, 0xE6C4CFA9u, 43, 38 },
-                                    { 12, 0x85FCA5B6u, 0xEC2C4C93u, 0xDDAEA31Cu, 0x825B95D0u, 0xF59B894Du, 43, 38 },
-/* (Versus) the shield orc's: placed by his left hand 33 (attach point 1, where the prologue's script puts it), on forearm 30 */
-                                    { 14, 0x2D965DE8u, 0x3E31996Au, 0xA1D1A7E9u, 0x4B82EA5Cu, 0x484A7EBAu, 33, 30 } };
+/* (Versus) the shield orc's: placed by his left hand 33 (attach point 1, where the prologue's script puts it), on forearm 30
+ * (1.9.9: skin 12 -- it still said 14, his place before the roster changed: the shield was never his to break, and
+ * Gandalf the White's staff entry, gone with him, sat on 12) */
+                                    { 12, 0x2D965DE8u, 0x3E31996Au, 0xA1D1A7E9u, 0x4B82EA5Cu, 0x484A7EBAu, 33, 30 } };
 static int shield_on(int g) { size_t i; if (getenv("TT_NOSHIELD")) return 0; for (i = 0; i < sizeof s_shields / sizeof s_shields[0]; i++) if (s_shields[i].skin == g) return 1; return 0; }
 
 static void dxt1a_decode(const unsigned char *d, int w, int h, unsigned char *rgba)
@@ -4959,7 +4960,7 @@ static const UpgName *upn_list(int g)
 {
     static const struct { const char *n; const UpgName *l; } L[] = {
         { "boromir", s_upn_boromir }, { "gandalf", s_upn_gandalf }, { "frodo", s_upn_frodo }, { "lurtz", s_upn_lurtz },
-        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
+        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "troll2", s_upn_troll_nuevo }, { "orc", s_upn_orc_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
     int k;
     if (g < 0 || g >= N_SKINS) return NULL;
     for (k = 0; k < (int)(sizeof L / sizeof L[0]); k++) if (!strcmp(L[k].n, s_skins[g].name)) return L[k].l;

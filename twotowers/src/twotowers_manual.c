@@ -5979,12 +5979,26 @@ static void coop_down_pose(uint32_t now)
  * (+0x50) 11 units back and 6 up along the camera's own heading (TT_VS_CAMDIST / TT_VS_CAMUP), more as the heroes part.
  * TT_VS_NOCAM: never; TT_VS_CAM: always */
 static int vs_cam_ours; static unsigned vs_cam_level = ~0u; static float vs_cam_dx = 0.0f, vs_cam_dy = -1.0f;
+/* (1.9.9) a spot over one of the level's pathmaps' grids (any of them: 0x41F428 + 0x1088, as coop_pathmap's) */
+static int vs_eye_inside(float x, float y)
+{
+    uint32_t i, pm; static uint32_t list[256]; static int n = -1; static unsigned lvl = ~0u;
+    if (lvl != coop_level_n || n <= 0) { lvl = coop_level_n; n = 0;
+        for (i = 0; i < 256; i++) { pm = MEM32(0x41F428u + 0x1088u + 4u * i);
+            if (pm < 0x10000u || pm >= 0x84000000u || MEM32(pm + 0x6Cu) < 0x10000u || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u) continue;
+            list[n++] = pm; }
+        { static int ln = -1; if (n != ln) { ln = n; tt_dbg("[VS] camera: %d pathmaps in the level\n", n); } } }
+    if (!n) return 1;
+    for (i = 0; i < (uint32_t)n; i++) { float ox = MEMF(list[i] + 0x48), oy = MEMF(list[i] + 0x4C), sz = (float)(int32_t)MEM32(list[i] + 0x68);
+        if (coop_pm_cell(list[i], (int)floorf((x - ox) / sz), (int)floorf((y - oy) / sz)) >= 0) return 1; }
+    return 0;
+}
 static void vs_camera(void)
 {
     uint32_t cm = MEM32(0x43B164u), a = coop_first_char, b = coop_p2; float mx, my, mz, lx, ly, ex, ey, hx, hy, hn, d, sep, back, up;
     if (cm < 0x10000u || a < 0x10000u || b < 0x10000u || getenv("TT_VS_NOCAM")) return;
     if (vs_cam_level != coop_level_n) { uint32_t lv = MEM32(0x1BB2A4u); vs_cam_level = coop_level_n;
-        vs_cam_ours = getenv("TT_VS_CAM") != NULL || lv == 6u || lv == 8u || lv == 9u || lv == 4u || lv == 5u;   /* (the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, Amon Hen, Fangorn: ours from the start) */
+        vs_cam_ours = getenv("TT_VS_CAM") != NULL || lv == 6u || lv == 8u || lv == 9u || lv == 4u || lv == 5u || lv == 11u;   /* (1.9.9: the Hornburg Courtyard too -- the level's own drew in close by its walls, a playtest) */   /* (the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, Amon Hen, Fangorn: ours from the start) */
         vs_cam_dx = 0.0f; vs_cam_dy = -1.0f;
         if (vs_cam_ours) { float hx = MEMF(cm + 0x40) - MEMF(cm + 0x50), hy = MEMF(cm + 0x44) - MEMF(cm + 0x54), hn = sqrtf(hx * hx + hy * hy); if (hn > 0.01f) { vs_cam_dx = hx / hn; vs_cam_dy = hy / hn; } } }
     mx = 0.5f * (MEMF(a + 0xF0) + MEMF(b + 0xF0)); my = 0.5f * (MEMF(a + 0xF4) + MEMF(b + 0xF4)); mz = 0.5f * (MEMF(a + 0xF8) + MEMF(b + 0xF8));
@@ -6006,18 +6020,28 @@ static void vs_camera(void)
     back = (getenv("TT_VS_CAMDIST") ? (float)atof(getenv("TT_VS_CAMDIST")) : MEM32(0x1BB2A4u) == 12u ? 20.0f : 17.0f) + 0.5f * (sep > 6.0f ? sep - 6.0f : 0.0f);
     up = (getenv("TT_VS_CAMUP") ? (float)atof(getenv("TT_VS_CAMUP")) : MEM32(0x1BB2A4u) == 12u ? 8.5f : 9.5f) + 0.25f * (sep > 6.0f ? sep - 6.0f : 0.0f);
     MEMF(cm + 0x40) = mx; MEMF(cm + 0x44) = my; MEMF(cm + 0x48) = mz + 1.5f;
-    {   /* (1.9.7) the eye kept inside the level: past its edge (the pathmap's grid ends) stands the brown wall the level
-         * is walled in by, and an eye behind it saw only that wall -- the map "cut off", the heroes in it unseen (Amon Hen,
-         * near the start's stairs). Brought in along the line to the heroes until over the level's ground */
-        uint32_t pm = getenv("TT_VS_CAMFREE") ? 0 : coop_pathmap(a); int k;
-        if (pm) { float ox = MEMF(pm + 0x48), oy = MEMF(pm + 0x4C), sz = (float)(int32_t)MEM32(pm + 0x68);
-            for (k = 0; k < 12 && sz > 0 && back > 3.0f; k++) {
-                float ex2 = mx - vs_cam_dx * back, ey2 = my - vs_cam_dy * back;
-                if (coop_pm_cell(pm, (int)floorf((ex2 - ox) / sz), (int)floorf((ey2 - oy) / sz)) >= 0) break;
-                back *= 0.82f; up *= 0.92f;
-            } }
+    {   /* (1.9.7) the eye kept inside the level: past its edge (the pathmaps' grids end) stands the brown wall the level
+         * is walled in by, and an eye behind it saw only that wall -- the map "cut off", the heroes in it unseen (Amon Hen).
+         * (1.9.9) Any of the level's pathmaps counts (only the hero's own did: on the Hornburg Courtyard and the Plains of
+         * Rohan, beside the edge of his, the eye was drawn in to 2 units and stayed there, a playtest). Outside them all:
+         * the camera turns round the heroes, a little each frame, to the nearest heading whose eye is inside; brought in
+         * only while it turns, and never nearer than 70% */
+        int k;
+        if (!getenv("TT_VS_CAMFREE") && !vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)) {
+            float best = 0; int found = 0;
+            for (k = 1; k <= 12 && !found; k++) {   /* 15, -15, 30, -30, ... 180 degrees */
+                int sgn; for (sgn = 1; sgn >= -1 && !found; sgn -= 2) {
+                    float an = (float)(sgn * k) * 0.2617994f, ca = cosf(an), sa = sinf(an), dx2 = vs_cam_dx * ca - vs_cam_dy * sa, dy2 = vs_cam_dx * sa + vs_cam_dy * ca;
+                    if (vs_eye_inside(mx - dx2 * back, my - dy2 * back)) { best = an; found = 1; } } }
+            if (found) {   /* turned toward it, at most 2 degrees a frame */
+                float st = best > 0.035f ? 0.035f : best < -0.035f ? -0.035f : best, ca = cosf(st), sa = sinf(st), dx2 = vs_cam_dx * ca - vs_cam_dy * sa, dy2 = vs_cam_dx * sa + vs_cam_dy * ca;
+                vs_cam_dx = dx2; vs_cam_dy = dy2;
+            }
+            for (k = 0; k < 2 && !vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back); k++) { back *= 0.84f; up *= 0.93f; }
+        }
     }
     MEMF(cm + 0x50) = mx - vs_cam_dx * back; MEMF(cm + 0x54) = my - vs_cam_dy * back; MEMF(cm + 0x58) = mz + 1.5f + up;
+    if (getenv("TT_VS_CAMLOG")) { static uint32_t tl; if (coop_now() - tl > 500u) { tl = coop_now(); tt_dbg("[VSCAM] t %u heroes %.1f %.1f, eye back %.1f up %.1f, heading %.2f %.2f, inside %d\n", coop_now(), mx, my, back, up, vs_cam_dx, vs_cam_dy, vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)); } }
     if (!getenv("TT_VS_KEEPCAMANGLE")) { float th = atan2f(vs_cam_dy, vs_cam_dx) - 1.5707963f + (getenv("TT_VS_CAMANGOFS") ? (float)atof(getenv("TT_VS_CAMANGOFS")) : 0.0f); if (getenv("TT_VS_CAMANGNEG")) th = -th; MEMF(cm + 0x60) = th; MEMF(cm + 0x84) = th; }   /* (1.9.7) the level camera's turn (+0x60, last +0x84; about 0 elsewhere): on the Road to Helm's Deep it swung all about without the level's camera records, and the stick goes by it -- every hero ran in circles there */
 }
 /* (Versus) our camera again right after the game's camera update (0x68DC0), so the view it makes is ours: it was
@@ -6310,6 +6334,7 @@ static void vs_frame(void)
             if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 46 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) t[q] = (char)MEM16(tp + 2 * q); t[q] = 0;
             tt_dbg("[P2NAMETEST] P1's element shown %u at x %d | P2's shown %u at x %d '%s'\n", MEM8(p15 + 0x24), (int32_t)MEM32(p15 + 8), MEM8(e15 + 0x24), (int32_t)MEM32(e15 + 8), t); }
     }
+    if (getenv("TT_VS_SHIELDBREAKTEST") && vs_state == 0) { static uint32_t tb; int ww; if (now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_SHIELDBREAKTEST")) && now - tb > 400u) { tb = now; for (ww = 0; ww < 2; ww++) if (vs_shp[ww] > 0) tt_vs_shield_take(ww, 150); } }   /* (test) blows on the shield */
     if (getenv("TT_VS_TESTROUND") && vs_state == 0) { int tw = getenv("TT_VS_TESTROUNDP") ? atoi(getenv("TT_VS_TESTROUNDP")) & 1 : 1;   /* (test) player 2 (or TT_VS_TESTROUNDP's) down now */
         if (!coop_down[tw] && now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_TESTROUND"))) { coop_down[tw] = 1; coop_down_t[tw] = now; MEM32((tw ? coop_p2 : coop_first_char) + 0x2FC) = 1; } }
     if (vs_state == 0) {

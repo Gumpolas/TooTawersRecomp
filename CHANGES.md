@@ -2936,3 +2936,19 @@ twotowers/src/heroes.c
 twotowers/src/twotowers_manual.c
   - (test) TT_VS_DOWNSHOT / TT_VS_DOWNSHOTMS: frames while a hero is down;
     TT_COOP_DOWNDUMP.
+
+-- 1.9.9: Versus camera by the edges, the shield orc's shield breaks, names -----------
+twotowers/src/twotowers_manual.c
+  - Versus camera: the eye counts as inside the level over any of its
+    pathmaps (only the hero's own did); outside them all it turns round
+    the heroes (2 degrees a frame) toward a heading whose eye is inside,
+    and is drawn in to 70% at most (was down to 2 units, and it stayed:
+    the Hornburg Courtyard, the Plains of Rohan). The Courtyard on ours
+    from the start. (test) TT_VS_CAMLOG.
+  - (test) TT_VS_SHIELDBREAKTEST.
+twotowers/src/heroes.c
+  - The shield orc's shield on his own skin (12; the table still said 14,
+    from before the roster changed): it is built into his model again,
+    found in memory and folded away when it breaks.
+  - The shield orc's combo names, and the trolls' (both trolls): names
+    only, his moves are not upgraded.

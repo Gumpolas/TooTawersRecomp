@@ -11,9 +11,9 @@ static const UpgName s_upn_troll_nuevo[] = {
     { "Isildur's Swift Terror", "Crushing Blow" },
     { "Isildur's Deliverance", "Stone Guard" },
     { "Isildur's Death Charge", "Cave Troll Charge" },
-    { "Isildur's Gambit", "Troll Gambit" },
-    { "Isildur's War Rush", "Moria War Rush" },
-    { "Isildur's Judgment", "Troll Judgment" },
+    { "Isildur's Gambit", "Ground Pound" },
+    { "Isildur's War Rush", "Moria Rampage" },
+    { "Isildur's Judgment", "Troll's Fury" },
     /* (132) rocas en lugar del arco */
     { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Hurled like Moria Stones, these broken pillars do serious damage." },
     { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Burning rocks do terrible damage.  (Requires Pit Rocks)" },
@@ -21,6 +21,16 @@ static const UpgName s_upn_troll_nuevo[] = {
     { "Dunedain Bow", "Moria Stones" }, { "Rohan Bow", "Pit Rocks" }, { "Gondor Bow", "Fire Rocks" },
     { "Sword Parry", "Mace Parry" }, { "Master Swordsman", "Master of Maces" },
     { "Isildur's", "Troll's" }, { NULL,NULL } };
+/* (1.9.9) the shield orc's combo names (Versus only: he has no campaign; names only, his moves are not upgraded) */
+static const UpgName s_upn_orc_nuevo[] = {
+    { "Isildur's Swift Terror", "Shield Bash" },
+    { "Isildur's Deliverance", "Shield Wall" },
+    { "Isildur's Death Charge", "Black Gate Charge" },
+    { "Isildur's Gambit", "Grunt's Gambit" },
+    { "Isildur's War Rush", "Mordor War Rush" },
+    { "Isildur's Judgment", "Orc Butchery" },
+    { "Sword Parry", "Shield Parry" }, { "Master Swordsman", "Master of Shields" },
+    { "Isildur's", "Orc's" }, { NULL,NULL } };
 static const UpgName s_upn_urukcap_nuevo[] = {
     { "Isildur's Swift Terror", "Captain Swift Strike" },
     { "Isildur's Deliverance", "Isengard Guard" },
