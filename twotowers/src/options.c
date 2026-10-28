@@ -308,14 +308,16 @@ static const char *const s_cm_top[2] = { "New Game", "Load Game" };
  * sub_000D1C10: the arena's level, player 1's hero, player 2's). B: back to the main menu */
 volatile int tt_vs_menu_on, tt_vs_screen_req, tt_vs_start_pending;
 static int s_vsmenu;   /* the Co-op menu page shows Versus' */
-#define VS_NHERO 18
+#define VS_NHERO 19
 static const char *const s_vs_heroes[VS_NHERO][2] = {   /* (name for heroes.c and the co-op, title) */
     { "aragorn", "Aragorn" }, { "legolas", "Legolas" }, { "gimli", "Gimli" }, { "isildur", "Isildur" },
     { "boromir", "Boromir" }, { "gandalf", "Gandalf" }, { "frodo", "Frodo" }, { "lurtz", "Lurtz" },
     { "elrond", "Elrond" }, { "sauron", "Sauron" }, { "uruk", "Berserker" },
     { "troll", "Cave Troll" }, { "urukcap", "Uruk Captain" }, { "saruman", "Saruman" },   /* (1.9.9) */
     { "elvenwarrior", "Elven Warrior" },
-    { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" } };   /* (the elven warrior and the last three: Versus only) */
+    { "nazgul", "Nazgul" }, { "orc", "Shield Orc" }, { "eomer", "Eomer" },   /* (the elven warrior and the last three: Versus only) */
+    { "ent", "Ent" } };   /* (1.9.9: Fangorn's Treebeard -- Versus only, and in Troll Battle beside the cave troll) */
+#define VS_ENT_HERO 18
 static int s_vs_goal_i = 1;   /* (1.9.7) rounds to win: 3, 5, 7 */
 static const char *const s_vs_goals[3] = { "First to 3", "First to 5", "First to 7" };
 int tt_vs_goal_pick(void) { return 3 + 2 * s_vs_goal_i; }
@@ -347,7 +349,7 @@ static int vs_hero_ok(int pl, int h)
 {
     if (h < 0 || h >= VS_NHERO) return 0;
     if (h >= 4 && !tt_heroes_on()) return 0;
-    if (s_vs_mode == 1) return h == VS_TROLL_HERO;   /* (1.9.9) Troll Battle: the troll against the troll */
+    if (s_vs_mode == 1) return h == VS_TROLL_HERO || (h == VS_ENT_HERO && s_vs_hero[pl ^ 1] != VS_ENT_HERO);   /* (1.9.9) Troll Battle: the troll against the troll -- or the Ent */
     if (h == VS_TROLL_HERO) return 0;                /* (and in no other mode) */
     if (pl == 0 && s_vs_arenas[s_vs_arena].level == 1 && h >= 1 && h <= 3 && getenv("TT_VS_HEROBYARENA")) return 0;
     return h != s_vs_hero[pl ^ 1];

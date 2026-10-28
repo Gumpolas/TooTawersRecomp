@@ -116,6 +116,9 @@ typedef struct {
 static const uint8_t s_map_troll[56] = { 2, 2, 2, 2, 5, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12, 13, 13, 14, 9, 10, 10, 11, 15, 40, 16, 16, 30, 31, 33, 33, 34, 33, 33, 33, 33, 33, 37, 21, 22, 24, 24, 24, 24, 25, 28, 24, 24, 24, 40, 40, 40, 40, 40, 39 };
 static const uint8_t s_map_saruman[90] = { 2,2,2,2,4,5,2,2,2,2,9,10,9,9,9,9,9,11,12,13,12,12,12,12,12,14,15,16,16,16,21,22,21,21,21,21,24,22,22,22,22,22,22,24,24,24,25,24,24,24,24,28,24,24,30,31,30,30,30,30,33,31,31,31,31,31,31,34,33,33,33,37,39,39,39,40,40,39,39,39,39,40,40,39,39,39,39,39,39,39 };   /* (1.9.9, tools/rig/chain.py on 21ORTH2) */
 static const uint8_t s_map_urukcap[49] = { 2, 2, 2, 2, 4, 5, 2, 2, 2, 2, 2, 2, 9, 10, 11, 12, 13, 14, 15, 16, 16, 16, 21, 22, 24, 24, 24, 25, 24, 28, 24, 24, 40, 40, 40, 40, 40, 39, 39, 30, 31, 33, 34, 33, 33, 33, 33, 33, 37 };
+/* (1.9.9) the Ent: Fangorn Forest's Treebeard (TreebeardObj there: mesh 4B2413DE, set F0B6229A, texture 7DED492E -- the
+ * placement record's +0x44..+0x4C), 41 bones (tools/rig/chain.py's build against Aragorn's) */
+static const uint8_t s_map_ent[41] = { 2, 2, 2, 2, 4, 5, 9, 5, 11, 12, 14, 16, 15, 15, 40, 30, 21, 40, 40, 21, 22, 24, 28, 24, 24, 30, 31, 33, 33, 37, 33, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40 };
 static Skin s_skins[] = {
     /* Boromir: his sword, and his shield on his other arm (the bow's hand) */
     { "boromir", "Boromir", W("04BALIN1.bfa"), 0xA6841986u, 0xF9C62B16u, 0xFD8B0956u, MAP(s_map_boromir), NULL, 0, 0, 0,
@@ -169,6 +172,10 @@ static Skin s_skins[] = {
      * own set (the same key: player 1's) and fights as he does. TT_NOTROLL2: a copy, as before */
     { "troll2", "Troll", W("14FANG2.bfa"), 0xAC0EA11Au, 0x29BDD2CAu, 0xF6036F71u, MAP(s_map_troll), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
       NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
+    /* (1.9.9) Versus only: the Ent (Treebeard), bare-handed -- his "weapons" (the cave troll's club) props with nothing
+     * drawn (skin_weapon); his own stance and walk, the hero's swings and falls fitted to him; he throws, as the Uruk-hai */
+    { "ent", "Ent", W("14FANG2.bfa"), 0x4B2413DEu, 0xF0B6229Au, 0x7DED492Eu, MAP(s_map_ent), W("04BALIN1.bfa"), 0x830B7594u, 0xC941444Eu, 1,
+      NULL, NULL, 0, NULL, 0, 0, NULL, 0, 0, 0, 1, 0 },
     /* co-op only (player 2, the character select): the retail heroes from their own level variants -- the hero
      * record's mesh / animation set / texture (the same keys in every level, local/re/hero_keys.py) and the weapon
      * the level script attaches to them for the sword's hand (@AttachToBone, observed in Balin's Tomb). Their
@@ -192,7 +199,7 @@ static Skin s_skins[] = {
 #define UPG_FIG_KEY 9u   /* the upgrade screen's 3D figure (upgbigi.BFF: mesh 1050 / texture 1150 key 9) */
 #define MENU_SWORD_KEY 2u      /* Aragorn's sword in the character select (types 1200/1250) */       /* the character select's Aragorn: the guests' moves there */
 #define N_SEL 7                /* in the carousel (the character select, its menus, voices there, unlocks, records): the seven guests (1.9.9: Saruman is Versus-only again, a playtest) */
-#define N_EXTRA 15             /* (1.9.9: 15 with the other troll, player 2's in Troll Battle) */ /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
+#define N_EXTRA 16             /* (1.9.9: 15 with the other troll, player 2's in Troll Battle; 16 with the Ent) */ /* the guests: those and Versus' own seven (1.9.9: the cave troll, the Uruk captain, Saruman, the elven warrior; the Nazgul, the shield orc, Eomer) */
 #define SK_TROLL 9             /* the cave troll's skin (heroes_weapon_profile.h and the build's troll patches name 9 too) */
 /* (1.9.9) the cave troll's shots: Fangorn's trolls' log -- projectile 8, drawn (the level's dynamicProjectileObj, entry 8)
  * with prop 899C9984, the same log in every level, which only Fangorn Forest textures as bark (545EE9C8); elsewhere it
@@ -212,12 +219,13 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 150u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 151u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
 {
     if (sk < 0 || getenv("TT_NOWEAPON")) return 0;
+    if ((slot == 0 || slot == 1) && !strcmp(s_skins[sk].name, "ent") && !getenv("TT_ENTCLUB")) { *src = s_skins[sk].wsrc; *mesh = EMPTY_PROP_KEY; *tex = s_skins[sk].wtex; return 1; }   /* (1.9.9) bare-handed */
     if (slot == 0 && s_skins[sk].nobow && s_skins[sk].wmesh && !getenv("TT_BOW")) { *src = s_skins[sk].wsrc; *mesh = EMPTY_PROP_KEY; *tex = s_skins[sk].wtex; return 1; }
     if (s_skins[sk].wmesh && (getenv("TT_WSLOT") ? atoi(getenv("TT_WSLOT")) : s_skins[sk].wslot) == slot) { *src = s_skins[sk].wsrc; *mesh = s_skins[sk].wmesh; *tex = s_skins[sk].wtex; return 1; }
     if (slot == 1 && getenv("TT_W2")) {   /* testing: LEVEL,MESH,TEX */
@@ -685,6 +693,9 @@ static const AnimPools s_pools[] = {
     { "eomer",   { "34,33", "9", "41,69",             "43,41",      "41",  "41",   "20,21", "27", "24", "69" }, 1.0f, "kpr" },
     /* (1.9.9) the other troll (player 2 beside a cave troll): the cave troll's, on his set */
     { "troll2", { "34,33", "9", "41,43", "45,43,113", "20", "20", "20,21", "", "24", "20" }, 1.0f, "krpn" },   /* (ranged: his throw, heroes_troll_throw.h) */
+    /* (1.9.9) the Ent: his set has four motions -- 0 his walk, 33 and 34 his stance, 171 (a scene's) -- so his own stance and walk,
+     * and the hero's swings, parry, kick, throw and falls fitted to his skeleton; a blow taken: his stance (no flinch of his own) */
+    { "ent", { "34,33", "0", "", "", "", "", "33", "", "", "" }, 1.0f, "sfkrpn" },
 };
 static int pool_pick(const char *list, int n, const uint32_t *gtab, uint32_t gns)
 {
@@ -907,7 +918,7 @@ static uint32_t skel_point_bone(const unsigned char *S, size_t len, int k);
  * either side; Sauron's only square on -- turned, as Aragorn's. Elrond,
  * Gandalf, Lurtz and the Uruk-hai fell it as Aragorn does or wider, and
  * from further off (Elrond 4.5 back, where Aragorn's misses). */
-static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+static const float s_kickyaw[N_EXTRA] = { -30.0f, 0, 0, 0, 0, -30.0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 /* (a cutscene's clips, cine_clips_build: 255) the most rotation
  * keys a bone gets, and root position keys kept */
 static int s_rt_maxnt = 96, s_rt_maxpos = 64;
@@ -7220,14 +7231,14 @@ void tt_sweep(uint32_t a0, double res)
  * by the vector transform sub_000FF13D (out, v, m) -- the guests' swings
  * pass a little off the hero's (their arms are not his), so their blade's
  * samples reach further: {0, y * reach, 0} for the player's weapon (id 1). */
-static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.5f, 1.35f, 1.35f, 1.6f, 1.35f, 1.5f, 1.35f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
+static const float s_wreach[N_EXTRA] = { 1.35f, 1.35f, 1.0f, 1.65f, 1.35f, 1.4f, 2.25f, 1.35f, 1.5f, 1.35f, 1.35f, 1.6f, 1.35f, 1.5f, 1.35f, 2.0f };   /* Frodo: DB privada ajustada a la geometria de Dardo. */   /* the Uruk's great sword long (sampled 8 along, the hero's 4: his heavy blows found
  * the enemies, who stand further from him, half as often as the hero's -- 9 to 13% of the hit tests at 1.65 and 1.9, Aragorn's 15 to 18%) */
 /* and lower: Gandalf's and Sauron's own swings carry their weapon high
  * (Sauron is half again as tall as the heroes), over the heads of the
  * orcs they strike at -- measured at the hit tests, their weapon's tip
  * about 2 and 2.7 higher than Aragorn's. Their samples taken that much
  * lower, so a blow that looks to land does. */
-static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 3.2f, 0, 3.0f, 0, 0, 0, 0, 3.0f };
+static const float s_wdrop[N_EXTRA] = { 0, 3.2f, 0, 0, 0, 3.6f, 0, 3.2f, 0, 3.0f, 0, 0, 0, 0, 3.0f, 3.0f };
 /* 128: primero la consulta nativa; solo si falla, cuatro sondas sobre
  * cinco cortes de la envolvente convexa de la cabeza 830B7594. Mango, reloj,
  * matrices, pose y lista de victimas nativos. Sin estirar/bajar el arma.
@@ -7927,7 +7938,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         if (p2 && G32(g_esp + 0x18) == p2) {
             static const struct { const char *who; uint32_t pj; } own[] = { { "aragorn", 13 }, { "legolas", 19 }, { "gimli", 16 }, { "isildur", 15 },
                 { "frodo", 10 }, { "uruk", 10 }, { "gandalf", 15 }, { "sauron", 15 }, { "nazgul", 10 }, { "orc", 10 }, { "eomer", 10 },
-                { "troll", TROLL_LOG_PROJ }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 } };   /* (1.9.9) */
+                { "troll", TROLL_LOG_PROJ }, { "elvenwarrior", 19 }, { "saruman", 15 }, { "urukcap", 10 }, { "ent", TROLL_LOG_PROJ }, { "troll2", TROLL_LOG_PROJ } };   /* (1.9.9) */
             const char *c = tt_coop_p2_char_now; uint32_t pj = G32(g_esp + 16), to = pj; int q;
             if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
             if (to != pj) G32(g_esp + 16) = to;

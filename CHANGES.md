@@ -3028,3 +3028,31 @@ twotowers/src/twotowers_manual.c
     of memory (Linux reads that memory without a fault). vs_pm_ok checks a
     pathmap as the camera's list does, for the seams, vs_floor and the walk
     tests; the neighbour's cell is bounds-checked before it is read.
+
+-- 1.9.9: random starts, the Ent, breakables back, walls by every pathmap ------------
+twotowers/src/twotowers_manual.c
+  - The level's props keep their collision again (they are its breakables:
+    with it off no blow broke the logs and barrels). TT_VS_PROPSOFF: off.
+  - Every sector drawn at once only on Amon Hen (TT_VS_ALLSECTORS: all):
+    on Westfold it lost the ground and player 1 (the Plains of Rohan
+    playtest's missing player 1).
+  - Pathmap walls: no longer all opened. Opened where another pathmap goes
+    on (the seams, as before) and in thin walls -- 1 to 3 cells with open
+    ground on both sides (TT_VS_KEEPTHIN). The map's edge stays, now for
+    both heroes: a step onto ground no pathmap has open is undone
+    (vs_union_walk; player 2 was held by none and walked off the map),
+    except for a hero just knocked flying (a kick off a ledge still wins).
+  - Random starts: each match begins at one of the level's own points on
+    open ground (its waypoints' and spawners' placement records), player 2
+    beside player 1; every later round goes on where they stand, on every
+    arena (TT_VS_FIXEDSTART, TT_VS_RESETSPOTS: as before). A hero set
+    somewhere takes that spot's pathmap (tt_vs_set_pm).
+  - The Ent hits as far as the trolls (5.5).
+twotowers/src/heroes.c
+  - The Ent (Treebeard, Fangorn Forest's TreebeardObj: mesh 4B2413DE, set
+    F0B6229A, texture 7DED492E, 41 bones mapped onto Aragorn's by
+    tools/rig/chain.py): his own stance and walk (his set has four motions),
+    the hero's swings, parry, kick, throw and falls fitted to him, bare
+    hands (no props drawn); as player 2 his throw is the troll's log. N_EXTRA 16.
+twotowers/src/options.c
+  - The Ent in the Versus list, and beside the cave troll in Troll Battle.
