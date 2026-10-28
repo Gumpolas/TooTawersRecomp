@@ -3168,7 +3168,13 @@ twotowers/src/twotowers_manual.c
     held by the water's unseen wall) -- the stick pushed, under 0.4 units
     moved in 2 s and over 6 units from player 1 -- is put beside player 1,
     whatever the P2 Teleport setting (TT_COOP_NOSTUCKPUT: off).
-  - Versus, Mount Doom: the heroes start and come back only on the near side
-    of the lava (y under -195); its points past the lava's edge left a hero
-    who could not walk back (TT_VS_DOOMANY: all points).
+  - Versus, Mount Doom: the whole arena is playable, over the lava and on its
+    far side. The pathmap's walls inside the map are opened; a hero held at
+    the lava's edge while pushing on is carried over it at a walk, level
+    with the bank (his collision step skipped meanwhile, sub_000B9530); a
+    hero dropping into a pit is held at the height he stood at and can walk
+    on or out; the game takes him back once the ground holds him
+    (TT_VS_DOOMKEEP: as before; TT_VS_DOOMSPD, TT_VS_DOOMLOG). Spawn points
+    on the far side are used; those right at the lava's edge are not
+    (TT_VS_DOOMANY: all points).
   - (test) TT_VS_PMDUMP: each pathmap's cells as a PGM.

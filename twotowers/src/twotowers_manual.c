@@ -2519,7 +2519,7 @@ void sub_000B9530(void)
         float dt = 0.0f;
         if (!off && wd) { w = MEM32(wd + 0x32004u); memcpy(&dt, &w, 4); }
         if (!off && dt > 0.0f && dt < 1.0f / 30.0f) { float eps = 0.01f * dt * 30.0f; memcpy(&w, &eps, 4); MEM32(0x1702FCu) = w; }
-        sub_000B9530_gen();
+        { extern uint32_t tt_vs_doom_free[2]; if (!a || (a != tt_vs_doom_free[0] && a != tt_vs_doom_free[1]) || getenv("TT_VS_DOOMCOLL")) sub_000B9530_gen(); else esp += 8; }   /* (skipped: its ret 4 done here) */   /* (Mount Doom's carried heroes: no collision step, vs_doom_walk) */
         MEM32(0x1702FCu) = keep;
     }
     if (on && a) {
@@ -6077,6 +6077,68 @@ static int vs_pm_walk_at(float x, float y, uint32_t *pmi)
         ok = 1; }
     return ok;
 }
+/* (1.9.9, Versus, Mount Doom) the whole arena walkable, over the lava and on its far side (a playtest: "make it so that both
+ * players can walk over/through the lava ... and battle there as well"). The lava runs in a pit some 20 units deep, and the
+ * heroes' movement stops at its edges. Mount Doom's pathmap all opened (vs_open_seams), and here:
+ *  - a hero pushing on and held still 0.2 s at the lava's river (y -196..-168), with open ground 1.5 units ahead: carried on at
+ *    a walk (TT_VS_DOOMSPD, 7 a second), the collision step skipped (sub_000B9530);
+ *  - a hero dropping more than 3 units below where he last stood (off the pit's edge, or knocked in) over open ground: held
+ *    at that height -- he walks over the lava level with the bank he left, and hovers there with the stick let go;
+ * either until the ground holds him again (he stops sinking) and he walks on his own or stands. TT_VS_DOOMKEEP: off */
+uint32_t tt_vs_doom_free[2];   /* (the heroes being carried: sub_000B9530 skips their collision step) */
+static float vs_doom_spd(void) { return getenv("TT_VS_DOOMSPD") ? (float)atof(getenv("TT_VS_DOOMSPD")) : 7.0f; }
+static void vs_doom_walk(void)
+{
+    static float lx0[2], ly0[2], gz[2], zh[2], px[2], py[2]; static uint32_t tst[2], tlast[2], tpr[2]; static int on[2], gok[2], probe[2], gst[2]; static float lz[2]; static unsigned lv = ~0u;
+    uint32_t now = coop_now(), cm = MEM32(0x43B164u); int w;
+    if (getenv("TT_VS_DOOMKEEP") || !vs_have || MEM32(0x1BB2A4u) != 0u || cm < 0x10000u) { tt_vs_doom_free[0] = tt_vs_doom_free[1] = 0; return; }
+    if (lv != coop_level_n) { lv = coop_level_n; memset(on, 0, sizeof on); memset(probe, 0, sizeof probe); memset(tst, 0, sizeof tst); memset(tlast, 0, sizeof tlast); memset(gok, 0, sizeof gok); }
+    for (w = 0; w < 2; w++) {
+        uint32_t h = w ? coop_p2 : coop_first_char, r = COOP_PADREC(w ? 1u : (MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u));
+        float x, y, z, sx, sy, fx, fy, fn, dx = 0, dy = 0, dn, dt, step, along, p[3]; int push, lg = getenv("TT_VS_DOOMLOG") != NULL;
+        if (h < 0x10000u) { tt_vs_doom_free[w] = 0; continue; }
+        x = MEMF(h + 0xF0); y = MEMF(h + 0xF4); z = MEMF(h + 0xF8);
+        dt = tlast[w] ? (float)(now - tlast[w]) / 1000.0f : 0.0f; tlast[w] = now; if (dt > 0.1f) dt = 0.1f;
+        if (vs_state != 0 || coop_down[w]) { on[w] = 0; probe[w] = 0; tst[w] = 0; gok[w] = 0; lx0[w] = x; ly0[w] = y; tt_vs_doom_free[w] = 0; continue; }   /* (between rounds: placed anew) */
+        sx = MEMF(r + 0x14); sy = MEMF(r + 0x18);
+        if (w == 0) { extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2]; if (tt_p1_autostick_on) { sx = tt_p1_autostick[0] / 32767.0f; sy = tt_p1_autostick[1] / 32767.0f; } }
+        push = sx * sx + sy * sy > 0.25f;
+        if (push) { fx = MEMF(cm + 0x40) - MEMF(cm + 0x50); fy = MEMF(cm + 0x44) - MEMF(cm + 0x54); fn = sqrtf(fx * fx + fy * fy);
+            if (fn > 1e-3f) { fx /= fn; fy /= fn; dx = sy * fx + sx * fy; dy = sy * fy - sx * fx; dn = sqrtf(dx * dx + dy * dy); if (dn > 1e-3f) { dx /= dn; dy /= dn; } else push = 0; } else push = 0; }
+        step = vs_doom_spd() * dt;
+        along = push ? (x - lx0[w]) * dx + (y - ly0[w]) * dy : 0.0f;   /* (the game's own move since the last frame, along the stick) */
+        if (!on[w]) {
+            if (MEMF(h + 0x2B4) >= -0.1001f && fabsf(z - lz[w]) < 0.012f) { if (++gst[w] >= 4) { gz[w] = z; gok[w] = 1; } } else gst[w] = 0;   /* (on the ground, steady 4 frames: his height) */
+            lz[w] = z;
+            if (gok[w] && z < gz[w] - 3.0f && vs_pm_walk_at(x, y, NULL)) { on[w] = 1; zh[w] = gz[w]; tst[w] = 0; tpr[w] = now;
+                if (lg) tt_dbg("[DOOM] P%d dropping at %.1f %.1f %.1f (stood at %.1f): held up\n", w + 1, x, y, z, gz[w]); }
+            else if (!push || along > 0.3f * step + 0.005f) tst[w] = 0;
+            else if (!tst[w]) tst[w] = now | 1;
+            else if (now - tst[w] > 200u && y > -196.0f && y < -168.0f && vs_pm_walk_at(x + dx * 1.5f, y + dy * 1.5f, NULL)) {   /* (at the lava's river only: elsewhere the level's rocks stay solid) */ on[w] = 1; zh[w] = z; tst[w] = 0; tpr[w] = now;
+                if (lg) tt_dbg("[DOOM] P%d held at %.1f %.1f %.1f: carried on\n", w + 1, x, y, z); }
+        }
+        if (on[w]) {   /* (carried: no collision step -- sub_000B9530 skips him -- but one frame in 0.3 s with it, a probe: the ground
+                        * holding him there, not sinking, and he not pushing on against it, he walks on his own again) */
+            if (probe[w] > 1) { probe[w]--; lx0[w] = x; ly0[w] = y; continue; }   /* (the probe: 4 frames with the collision on) */
+            if (probe[w]) { probe[w] = 0;
+                if (z >= zh[w] - 0.06f && MEMF(h + 0x2B4) >= -0.1001f && (!push || along > 0.3f * step)) {   /* (the game has him on the ground: its fall speed at rest) */ on[w] = 0; gz[w] = z; gok[w] = 1;
+                    if (lg) tt_dbg("[DOOM] P%d on the ground again at %.1f %.1f %.1f\n", w + 1, x, y, z); }
+                else { x = px[w]; y = py[w]; } }
+            if (on[w]) {
+                if (!vs_pm_walk_at(x, y, NULL)) { x = lx0[w]; y = ly0[w]; }   /* (the game's own move off the open ground: back) */
+                p[0] = x; p[1] = y; p[2] = zh[w];
+                if (push && along < 0.6f * step && step > 0.0f && vs_pm_walk_at(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL)) { p[0] = x + dx * step; p[1] = y + dy * step; }
+                vs_place(h, p); MEMF(h + 0x2B4) = 0.0f; MEMF(h + 0x2B0) = 0.0f;
+                { int k; for (k = 0; k < 3; k++) { MEMF(h + 0x90 + 4 * k) = p[k]; MEMF(h + 0x140 + 4 * k) = p[k]; } }
+                if (getenv("TT_VS_DOOMDBG")) { static int n; if (n++ < 80) tt_dbg("[DOOMDBG] P%d at %.2f %.2f (last %.2f %.2f) along %.3f step %.3f dir %.2f %.2f -> %.2f %.2f%s | walk here %d, ahead %d\n", w + 1, MEMF(h + 0xF0), MEMF(h + 0xF4), lx0[w], ly0[w], along, step, dx, dy, p[0], p[1], probe[w] ? " probe" : "", vs_pm_walk_at(x, y, NULL), vs_pm_walk_at(x + dx * (step + 1.0f), y + dy * (step + 1.0f), NULL)); }
+                x = p[0]; y = p[1];
+                if (now - tpr[w] > 300u) { tpr[w] = now; probe[w] = 4; px[w] = x; py[w] = y; }
+                if (lg) { static uint32_t t; if (now - t > 700u) { t = now; tt_dbg("[DOOM] P%d carried: %.1f %.1f %.1f\n", w + 1, x, y, p[2]); } } }
+        }
+        tt_vs_doom_free[w] = on[w] && !probe[w] ? h : 0;
+        lx0[w] = x; ly0[w] = y;
+    }
+}
 static void vs_unstick(void)
 {
     static float px[2], py[2], sx[2], sy[2], sz2[2]; static uint32_t tmv[2], tstep[2], hold[2]; static int steps[2]; static unsigned lv = ~0u;
@@ -6183,6 +6245,23 @@ static void vs_open_seams(void)
             #undef PMV
         }
         tt_dbg("[VS] pathmap walls: %d walled cells opened where another pathmap goes on, %d in thin walls (%d pathmaps)\n", opened, thin, n);
+    }    if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMKEEP")) {   /* (1.9.9) Mount Doom: the whole arena open, across the lava (a playtest:
+         * "expand the playable area ... if players do spawn over there they won't get stuck"). Every walled cell with open ground
+         * somewhere on both sides of it along its row or column (not the map's outer rim) opened. TT_VS_DOOMKEEP: as before */
+        int dn = 0;
+        for (i = 0; i < (uint32_t)n; i++) { uint32_t a = lst[i], base = MEM32(a + 0x6Cu); int W = (int)MEM32(a + 0x70), H = (int)MEM32(a + 0x74), r, c, k;
+            for (r = 1; r < H - 1; r++) for (c = 1; c < W - 1; c++) { int lf = 0, rt = 0, up = 0, dw = 0;
+                if (((MEM8(base + (uint32_t)(W * r + c)) >> 2) & 3) != 3) continue;
+                for (k = c - 1; k >= 0 && !lf; k--) lf = ((MEM8(base + (uint32_t)(W * r + k)) >> 2) & 3) != 3;
+                for (k = c + 1; k < W && !rt; k++) rt = ((MEM8(base + (uint32_t)(W * r + k)) >> 2) & 3) != 3;
+                for (k = r - 1; k >= 0 && !up; k--) up = ((MEM8(base + (uint32_t)(W * k + c)) >> 2) & 3) != 3;
+                for (k = r + 1; k < H && !dw; k++) dw = ((MEM8(base + (uint32_t)(W * k + c)) >> 2) & 3) != 3;
+                if ((lf && rt) || (up && dw)) { MEM8(base + (uint32_t)(W * r + c)) &= (uint8_t)~0x0Cu; dn++; } } }
+        tt_dbg("[VS] Mount Doom: %d walled cells opened, the lava's far side in reach\n", dn);
+        if (getenv("TT_VS_PMDUMP") && n) { uint32_t q = lst[0]; int W = (int)MEM32(q + 0x70), H = (int)MEM32(q + 0x74), r, c; char fn[300]; void *f; extern void *fopen(const char *, const char *); extern size_t fwrite(const void *, size_t, size_t, void *); extern int fclose(void *);
+            snprintf(fn, sizeof fn, "%s/doom_after.txt", getenv("TT_VS_PMDUMP"));
+            if ((f = fopen(fn, "wb"))) { for (r = 0; r < H; r++) { char ln[600]; int L = 0; for (c = 0; c < W && L < 590; c++) { int v = (MEM8(MEM32(q + 0x6Cu) + (uint32_t)(W * r + c)) >> 2) & 3, o = (MEM8(0x418C00u + (uint32_t)(uint16_t)(W * r + c)) >> 2) & 3;
+                    ln[L++] = o ? (char)('A' + o) : (char)('0' + v); } ln[L++] = '\n'; fwrite(ln, 1, (size_t)L, f); } fclose(f); } }
     }
 }
 static void vs_gates(void)
@@ -6713,6 +6792,7 @@ static void vs_frame(void)
     vs_leash();
     vs_edge_guard();
     vs_unstick();
+    vs_doom_walk();
     if (vs_have) vs_open_seams();
     vs_gates();
     vs_camera();
@@ -10532,7 +10612,7 @@ static int vs_spot_ok(float x, float y, float z)
         if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT]   pathmap %u cell %d,%d state %d z %.1f..%.1f\n", i, c, r, v, MEMF(q + 0x50), MEMF(q + 0x60));
         if ((v == 0 || v == 2) && z >= MEMF(q + 0x50) - 6.0f && z <= MEMF(q + 0x50) + (getenv("TT_VS_SPOTUP") ? (float)atof(getenv("TT_VS_SPOTUP")) : 16.0f)) pm = 1; }   /* (the ground near its lowest: Fangorn's spawners up in the trees, 40 over it, were taken -- the heroes fell into a cleft) */
     if (!pm) return 0;
-    if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMANY") && y > -195.0f) return 0;   /* (1.9.9, Mount Doom: the near side of the lava only -- its points from y -190 on lie across it, a hero put there could not walk back, a playtest) */
+    if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMANY") && y > -193.0f && y < -180.0f) return 0;   /* (1.9.9, Mount Doom: not the points at the lava's edge -- one put a hero into it, a playtest; the far side is in reach now, vs_doom_walk) */
     if (MEM32(0x1BB2A4u) == 3u && !getenv("TT_VS_BALINANY") && (z > 4.0f || y < -30.0f)) return 0;   /* (Balin's Tomb: the hall's floor only -- its spawner at the south end stands by the ledges, a playtest: "no one can spawn on the ledge/catwalk") */
     if (w < 0x10000u || w >= 0x84000000u || (n = MEM32(w + 0x10)) == 0 || n > 64) return 1;
     for (i = 0; i < n && !sec; i++) { uint32_t sc = MEM32(w + 0x100 + 4 * i) - 0x20; const char *nm;
