@@ -85,6 +85,33 @@ static const Ach s_ach[] = {
     { "vs_rounds100", "Veteran of the Arena", "Win 100 Versus rounds in all." },
     { "vs_arenas", "Wanderer", "Win a Versus match on 8 different arenas." },
     { "vs_heroes", "Many Faces", "Win a Versus match as 10 different heroes." },
+    /* (1.9.9) Troll Battle */
+    { "troll_win1", "Troll Brawler", "Win a Troll Battle match." },
+    { "troll_win3", "Terror of Moria", "Win 3 Troll Battle matches." },
+    { "troll_win10", "Lord of the Deep", "Win 10 Troll Battle matches." },
+    { "troll_flawless", "Thick Hide", "Win a Troll Battle match without losing a round." },
+    { "troll_smash", "Bone Crusher", "Land a single smash of 400 damage or more in Troll Battle." },
+    { "troll_damage", "Troll Rampage", "Deal 25,000 damage in Troll Battle, across all your matches." },
+    { "troll_fast", "Swift Bludgeon", "Win a Troll Battle round in under 20 seconds." },
+    { "troll_logs", "Rock and Log", "Land 25 thrown rocks or logs on the other troll in Troll Battle." },
+    /* (1.9.9) Versus with the levels' enemies */
+    { "vs_foes25", "Orc-Slayer", "Slay 25 orcs and Uruk-hai during Versus matches." },
+    { "vs_foes150", "Scourge of Isengard", "Slay 150 orcs and Uruk-hai during Versus matches." },
+    { "vs_foe_arenas", "War on Two Fronts", "Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg)." },
+    /* (1.9.9) the heroes, 3 matches each */
+    { "vs3_saruman", "The White Hand", "Win 3 Versus matches as Saruman." },
+    { "vs3_ent", "Shepherd of the Trees", "Win 3 Versus matches as the Ent." },
+    { "vs3_urukcap", "Captain of Isengard", "Win 3 Versus matches as the Uruk Captain." },
+    { "vs3_elvenwarrior", "The Last Alliance Returns", "Win 3 Versus matches as the Elven Warrior." },
+    { "vs3_lurtz", "Hunt Them Down", "Win 3 Versus matches as Lurtz." },
+    { "vs3_sauron", "The Dark Lord", "Win 3 Versus matches as Sauron." },
+    { "vs3_gandalf", "Servant of the Secret Fire", "Win 3 Versus matches as Gandalf." },
+    { "vs3_elrond", "Lord of Rivendell", "Win 3 Versus matches as Elrond." },
+    { "vs3_boromir", "Captain of Gondor", "Win 3 Versus matches as Boromir." },
+    { "vs3_frodo", "Ring-bearer", "Win 3 Versus matches as Frodo." },
+    { "vs3_uruk", "Blood Frenzy", "Win 3 Versus matches as the Berserker." },
+    { "vs_ent_rocks", "Hurl the Stones", "As the Ent, land 20 thrown rocks on your opponent in Versus." },
+    { "vs_mirror", "Mirror Image", "Win a match of first to 5 or more where both players are the same hero." },
     /* Impossible */
     { "imp_level", "Defiance", "Win a level on Impossible." },
     { "imp_five", "Hardened", "Win 5 different levels on Impossible." },
@@ -94,7 +121,7 @@ static const Ach s_ach[] = {
 static unsigned char s_got[N_ACH];
 static int s_loaded;
 /* (1.9.7) running counts kept with them ("count <key> <n>" lines) and sets ("set <key> <item>") */
-#define N_CNT 32
+#define N_CNT 64
 static struct { char k[24]; long v; } s_cnt[N_CNT]; static int s_ncnt;
 #define N_SET 96
 static struct { char k[16], it[24]; } s_set[N_SET]; static int s_nset;
@@ -160,7 +187,7 @@ void tt_ach_unlock(const char *id)
     s_got[i] = 1;
     save();
     tt_dbg("[ACH] earned: %s (%s)\n", s_ach[i].name, id);
-    if (!s_quiet && !getenv("TT_ACH_NONOTE")) xbox_ToastShow(!strncmp(s_ach[i].name, "DIAMOND", 7) ? "DIAMOND ACHIEVEMENT EARNED" : "Achievement earned", s_ach[i].name);
+    if (!s_quiet && !getenv("TT_ACH_NONOTE")) xbox_ToastShow3(!strncmp(s_ach[i].name, "DIAMOND", 7) ? "DIAMOND ACHIEVEMENT EARNED" : "Achievement earned", s_ach[i].name, s_ach[i].desc);   /* (1.9.9: what it was for, under its name) */
 }
 int tt_ach_has(const char *id) { int i; load(); i = find(id); return i >= 0 && s_got[i]; }
 
@@ -319,5 +346,36 @@ void tt_ach_vs_event(int kind, int who, int a, int b, const char *skin)
         break; }
     }
 }
+/* (1.9.9) Versus' newer events (twotowers_manual.c): a match won with more about it, a round won with its time, a hit
+ * landed, an enemy slain */
+static const char *const s_vs3[] = { "saruman", "ent", "urukcap", "elvenwarrior", "lurtz", "sauron", "gandalf", "elrond", "boromir", "frodo", "uruk" };
+void tt_ach_vs_match_ex(int who, const char *skin, const char *other, int goal, int lost, int troll, int arena)
+{
+    size_t i; char k[24];
+    if (!ach_on() || who < 0 || who > 1 || !skin) return;
+    if (troll) {
+        long n = cnt_add("troll_wins", 1);
+        tt_ach_unlock("troll_win1"); if (n >= 3) tt_ach_unlock("troll_win3"); if (n >= 10) tt_ach_unlock("troll_win10");
+        if (lost == 0) tt_ach_unlock("troll_flawless");
+        return;
+    }
+    for (i = 0; i < sizeof s_vs3 / sizeof s_vs3[0]; i++) if (!strcmp(skin, s_vs3[i])) {
+        snprintf(k, sizeof k, "vsw_%s", skin);
+        if (cnt_add(k, 1) >= 3) { snprintf(k, sizeof k, "vs3_%s", skin); tt_ach_unlock(k); } }
+    if (other && !strcmp(skin, other) && goal >= 5) tt_ach_unlock("vs_mirror");
+    if (arena == 4 || arena == 5 || arena == 6 || arena == 10 || arena == 11) { char ar[8]; snprintf(ar, sizeof ar, "%d", arena); if (set_add("vsfoear", ar) >= 5) tt_ach_unlock("vs_foe_arenas"); }
+}
+void tt_ach_vs_round_ex(int who, unsigned ms, int troll) { if (ach_on() && who >= 0 && troll && ms > 0 && ms < 20000u) tt_ach_unlock("troll_fast"); }
+void tt_ach_vs_hit(int who, int dmg, int ranged, const char *skin, int troll)
+{
+    if (!ach_on() || who < 0 || who > 1 || dmg <= 0) return;
+    if (troll) {
+        if (dmg >= 400) tt_ach_unlock("troll_smash");
+        if (cnt_add("troll_dmg", dmg) >= 25000) tt_ach_unlock("troll_damage");
+        if (ranged && cnt_add("troll_logs", 1) >= 25) tt_ach_unlock("troll_logs");
+    }
+    if (ranged && skin && !strcmp(skin, "ent") && cnt_add("ent_rocks", 1) >= 20) tt_ach_unlock("vs_ent_rocks");
+}
+void tt_ach_vs_foe_kill(int who) { long n; if (!ach_on() || who < 0 || who > 1) return; n = cnt_add("vs_foes", 1); if (n >= 25) tt_ach_unlock("vs_foes25"); if (n >= 150) tt_ach_unlock("vs_foes150"); }
 /* (1.9.7) the deficit before a round: the trailing player's (called with the scores before each round) */
 void tt_ach_vs_scores(int s1, int s2) { if (s2 - s1 > s_vs_deficit[0]) s_vs_deficit[0] = s2 - s1; if (s1 - s2 > s_vs_deficit[1]) s_vs_deficit[1] = s1 - s2; }

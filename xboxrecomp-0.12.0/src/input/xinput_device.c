@@ -480,7 +480,16 @@ static DWORD WINAPI sp_thread(LPVOID arg)
      * or DualSense on Bluetooth needs the extended reports for that). */
     p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS4_RUMBLE", "1");
     p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS5_RUMBLE", "1");
+#if defined(_WIN32) || defined(__APPLE__)
     p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS3", "1");
+#else
+    /* Linux: a DualShock 3 through the kernel's own driver (hid-sony, evdev),
+     * as SDL does by default there. Forced onto SDL's HIDAPI driver it was
+     * found and named, but on a system whose hidraw node is readable (a udev
+     * rule) no report ever came: the kernel driver holds the pad (GitHub
+     * issue 14). TT_PS3_HIDAPI=1: SDL's HIDAPI driver all the same */
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS3", getenv("TT_PS3_HIDAPI") ? getenv("TT_PS3_HIDAPI") : "0");
+#endif
     p_SDL_SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1");
 #if defined(_WIN32)
     /* Xbox pads are XInput's; SDL must not report them a second time */

@@ -1001,20 +1001,38 @@ static void panel_body(int pw, int ph, int fp, int lh)
 
 /* (1.9.7) toasts: a short note in the bottom right corner (an achievement earned), 5 s each, one after another.
  * xbox_ToastShow from any thread; xbox_ToastRender from the renderer, as the panel's */
-static struct { char t[96], l[160]; } s_toastq[8];
+static struct { char t[96], l[160], d[320]; } s_toastq[8];
 static int s_tq_n, s_tq_head;
 static DWORD s_toast_t0;
 static unsigned s_toast_ver = 1, s_toast_drawn;
-void xbox_ToastShow(const char *title, const char *line)
+void xbox_ToastShow(const char *title, const char *line) { xbox_ToastShow3(title, line, NULL); }
+/* (1.9.9) with a third line, smaller: what it is and why it came (an achievement's description), wrapped */
+void xbox_ToastShow3(const char *title, const char *line, const char *desc)
 {
     int k;
     gfx_init();
     EnterCriticalSection(&s_lock);
-    if (s_tq_n < 8) { k = (s_tq_head + s_tq_n) % 8; snprintf(s_toastq[k].t, sizeof s_toastq[k].t, "%s", title ? title : ""); snprintf(s_toastq[k].l, sizeof s_toastq[k].l, "%s", line ? line : ""); s_tq_n++; if (s_tq_n == 1) { s_toast_t0 = 0; s_toast_ver++; } }
+    if (s_tq_n < 8) { k = (s_tq_head + s_tq_n) % 8; snprintf(s_toastq[k].t, sizeof s_toastq[k].t, "%s", title ? title : ""); snprintf(s_toastq[k].l, sizeof s_toastq[k].l, "%s", line ? line : ""); snprintf(s_toastq[k].d, sizeof s_toastq[k].d, "%s", desc ? desc : ""); s_tq_n++; if (s_tq_n == 1) { s_toast_t0 = 0; s_toast_ver++; } }
     LeaveCriticalSection(&s_lock);
 }
 /* a note's picture into surface k: a gold frame, its title and its line */
-static int note_draw(int k, int tw, int th, int fp, const char *t, const char *l)
+static int note_draw3(int k, int tw, int th, int fp, const char *t, const char *l, const char *d);
+static int note_draw(int k, int tw, int th, int fp, const char *t, const char *l) { return note_draw3(k, tw, th, fp, t, l, NULL); }
+/* the description's lines: words to a line by an even guess of the letters' width (the face's are about half its
+ * height), at most 3 lines */
+static int wrap3(const char *d, int perline, char out[3][128])
+{
+    int n = 0; const char *p = d;
+    while (*p && n < 3) { int len = (int)strlen(p), cut;
+        while (*p == ' ') { p++; len--; }
+        if (len <= perline) { snprintf(out[n++], 128, "%s", p); break; }
+        for (cut = perline; cut > 0 && p[cut] != ' '; cut--) ;
+        if (cut <= 0) cut = perline;
+        if (cut > 127) cut = 127;
+        memcpy(out[n], p, (size_t)cut); out[n][cut] = 0; n++; p += cut; }
+    return n;
+}
+static int note_draw3(int k, int tw, int th, int fp, const char *t, const char *l, const char *d)
 {
     HFONT f, fb; int i, border = fp / 6 < 2 ? 2 : fp / 6;
     if (!toast_begin(k, tw, th, fp, &f, &fb)) return 0;
@@ -1022,6 +1040,8 @@ static int note_draw(int k, int tw, int th, int fp, const char *t, const char *l
     box(border, border, tw - 2 * border, th - 2 * border, RGB(16, 13, 9));
     txt(t, fp, fp / 3, tw - 2 * fp, fp * 2, DT_LEFT | DT_END_ELLIPSIS, RGB(214, 182, 96), fb);
     txt(l, fp, fp * 2, tw - 2 * fp, fp * 3 / 2, DT_LEFT | DT_END_ELLIPSIS, RGB(226, 214, 186), f);
+    if (d && *d) { char ln[3][128]; int n = wrap3(d, (tw - 2 * fp) * 2 / fp - 2, ln), j;
+        for (j = 0; j < n; j++) txt(ln[j], fp, fp * 7 / 2 + j * fp * 5 / 4, tw - 2 * fp, fp * 5 / 4, DT_LEFT | DT_END_ELLIPSIS, RGB(170, 160, 138), f); }
     for (i = 0; i < tw * th; i++) s_tpxa[k][i] = (s_tpxa[k][i] & 0x00FFFFFFu) | 0xF0000000u;
     toast_end();
     return 1;
@@ -1034,7 +1054,7 @@ int xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsi
     EnterCriticalSection(&s_lock);
     if (!s_tq_n) { LeaveCriticalSection(&s_lock); return 0; }
     if (!s_toast_t0) s_toast_t0 = now ? now : 1;
-    if (now - s_toast_t0 > 5000u) {   /* the next one */
+    if (now - s_toast_t0 > (s_toastq[s_tq_head].d[0] ? 7000u : 5000u)) {   /* the next one (1.9.9: 7 s with a description to read) */
         s_tq_head = (s_tq_head + 1) % 8; s_tq_n--; s_toast_t0 = s_tq_n ? now : 0; s_toast_ver++;
         if (!s_tq_n) { LeaveCriticalSection(&s_lock); return 0; }
     }
@@ -1042,7 +1062,8 @@ int xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsi
     fp = sch / 40; if (fp < 12) fp = 12;
     tw = fp * 24; th = fp * 4;
     if (tw > scw - 16) tw = scw - 16;
-    if (s_toast_drawn != s_toast_ver && note_draw(0, tw, th, fp, s_toastq[k].t, s_toastq[k].l)) s_toast_drawn = s_toast_ver;
+    if (s_toastq[k].d[0]) { char ln[3][128]; int nl = wrap3(s_toastq[k].d, (tw - 2 * fp) * 2 / fp - 2, ln); th = fp * 4 + nl * fp * 5 / 4; }
+    if (s_toast_drawn != s_toast_ver && note_draw3(0, tw, th, fp, s_toastq[k].t, s_toastq[k].l, s_toastq[k].d)) s_toast_drawn = s_toast_ver;
     *px = s_tpxa[0]; *w = s_twa[0]; *h = s_tha[0]; *ver = s_toast_drawn;
     *x = scw - s_twa[0] - fp; *y = sch - s_tha[0] - fp * 3;
     LeaveCriticalSection(&s_lock);

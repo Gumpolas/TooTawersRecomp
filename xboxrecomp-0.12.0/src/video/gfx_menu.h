@@ -25,6 +25,7 @@ extern volatile long xbox_gfx_rev;
 void  xbox_GfxSetAchievements(int (*count)(void), const char *(*name)(int), const char *(*desc)(int), int (*earned)(int));
 /* (1.9.7) a note in the bottom right corner for 5 s (queued) */
 void  xbox_ToastShow(const char *title, const char *line);
+void  xbox_ToastShow3(const char *title, const char *line, const char *desc);
 int   xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y);
 /* (1.9.7) a banner at the top of the screen while set (NULL / "" clears) */
 void  xbox_BannerSet(const char *title, const char *line);
@@ -47,6 +48,7 @@ int   xbox_GfxMenuRender(int scw, int sch, const uint32_t **px, int *w, int *h, 
 void  xbox_GfxSetAchievements(int (*count)(void), const char *(*name)(int), const char *(*desc)(int), int (*earned)(int));
 /* (1.9.7) a note in the bottom right corner for 5 s (queued) */
 void  xbox_ToastShow(const char *title, const char *line);
+void  xbox_ToastShow3(const char *title, const char *line, const char *desc);
 int   xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y);
 /* (1.9.7) a banner at the top of the screen while set (NULL / "" clears) */
 void  xbox_BannerSet(const char *title, const char *line);

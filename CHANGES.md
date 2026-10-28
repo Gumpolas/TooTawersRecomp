@@ -3130,3 +3130,31 @@ twotowers/src/twotowers_manual.c
   - Balin's Tomb: starts on the hall's floor only (no ledge or catwalk), the
     heroes 16 units apart (vs_spacing); player 2 at the match's start, and
     a downed hero after a round, at one of the level's own points.
+
+-- 1.9.9: Versus achievements, notes that say why, the PS3 pad on Linux, the camera round big heroes --
+twotowers/src/achieve.c
+  - 25 more achievements for Versus: Troll Battle (1, 3 and 10 matches won,
+    a match without a round lost, a 400 smash, 25,000 damage in all, a round
+    in under 20 s, 25 rocks or logs landed), the levels' enemies (25 and 150
+    slain, a Deathmatch won on all five enemy arenas), 3 matches won as each
+    of Saruman, the Ent, the Uruk Captain, the Elven Warrior, Lurtz, Sauron,
+    Gandalf, Elrond, Boromir, Frodo and the Berserker, the Ent's 20 rocks,
+    and a mirror match of first to 5. Counted across sessions in
+    achievements.txt (count lines; N_CNT 64).
+  - An earned achievement's note shows its description under its name.
+xboxrecomp-0.12.0/src/video/gfx_menu.c
+  - xbox_ToastShow3: a note with a third, wrapped line (up to 3 lines), 7 s.
+xboxrecomp-0.12.0/src/input/xinput_device.c
+  - Linux: a DualShock 3 is read through the kernel's driver (hid-sony,
+    evdev), SDL's default there; forced onto SDL's HIDAPI driver it was found
+    and named but sent nothing when its hidraw node was readable (GitHub
+    issue 14). TT_PS3_HIDAPI=1: the HIDAPI driver all the same.
+twotowers/src/twotowers_manual.c
+  - Versus camera: with the Ent or a troll in the match, the eye 9 units
+    further back and 6 higher -- the Ent's trunk filled the screen between
+    it and the other hero (TT_VS_BIGCAM=0: off). The camera's own distance
+    (+0/+4) held at its most this level (TT_VS_CAMKEEPDIST).
+  - Enemies slain in Versus counted for the nearer hero; Troll Battle's and
+    the heroes' match wins, round times and hits reported to the
+    achievements.
+  - (test) TT_ACH_TEST, TT_TOASTDUMP, TT_VS_CAMDUMP, TT_GLOWPROBE.
