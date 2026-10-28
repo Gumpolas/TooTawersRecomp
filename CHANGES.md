@@ -3022,3 +3022,9 @@ twotowers/src/twotowers_manual.c
     TT_RECDUMP (placement records by name), TT_WALKCAMPAIGN, TT_SETPOSLOG,
     TT_WORLDDUMP; the walk test (TT_VS_WALKTO) steps round obstacles and
     reroutes after a fall.
+  - Fix: entering Amon Hen in Versus crashed on Windows. The seams' walk took
+    every pointer in the level's pathmap list, and past the level's own the
+    list can hold leftovers -- one with a size of millions sent the walk out
+    of memory (Linux reads that memory without a fault). vs_pm_ok checks a
+    pathmap as the camera's list does, for the seams, vs_floor and the walk
+    tests; the neighbour's cell is bounds-checked before it is read.
