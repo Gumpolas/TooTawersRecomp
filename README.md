@@ -44,7 +44,7 @@ Made posisble by [The128ReBits](https://github.com/The128ReBits).
 - **Animation improvements** for all the extra heroes. 
 
 ### Versus: new heroes and a new mode
-- **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and the forest's Ent moans), the **Elven Warrior**, the **Uruk Captain**.
+- **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and sounds), the **Elven Warrior**, the **Uruk Captain**.
 - **Troll Battle** (Mode: on the Versus menu): cave troll against cave troll in Balin's Tomb or Amon Hen, with twice the health, thrown logs, its own end picture, its own sounds for FIGHT and the match's end, its own results table and kept records.
 - **Both players may pick the same hero** in Deathmatch.
 - **Enemies in the arenas:** a few of the level's own orcs and Uruk-hai on **Amon Hen**, **Fangorn Forest**, the **Plains of Rohan**, the **Breached Wall** and the **Hornburg Courtyard**, spread over the map. They attack both players with their own sounds and hit as hard as a player does. Their blows count for neither player.
