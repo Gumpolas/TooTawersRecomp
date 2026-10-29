@@ -955,6 +955,10 @@ static LONG CALLBACK veh_handler(PEXCEPTION_POINTERS ep)
             (unsigned long long)ep->ContextRecord->Rip,
             (unsigned long long)fault_addr,
             ep->ExceptionRecord->ExceptionInformation[0] ? "write" : "read");
+        {   /* (1.9.9) where in the program, as an offset from its start (the address changes each run) */
+            uintptr_t mb = (uintptr_t)GetModuleHandleA(NULL);
+            fprintf(stderr, "  program at 0x%llX: RIP is +0x%llX in it\n", (unsigned long long)mb, (unsigned long long)(ep->ContextRecord->Rip - mb));
+        }
         fprintf(stderr, "  Xbox regs: eax=0x%08X ecx=0x%08X edx=0x%08X esp=0x%08X\n",
             g_eax, g_ecx, g_edx, g_esp);
         fprintf(stderr, "  Xbox regs: ebx=0x%08X esi=0x%08X edi=0x%08X\n",
@@ -980,8 +984,9 @@ static LONG CALLBACK veh_handler(PEXCEPTION_POINTERS ep)
             uintptr_t *sp = (uintptr_t *)ep->ContextRecord->Rsp;
             fprintf(stderr, "  Native stack (first 8 return addrs):\n");
             for (int i = 0; i < 64 && sp[i]; i++) {
-                if (sp[i] >= 0x140000000ULL && sp[i] < 0x150000000ULL) {
-                    fprintf(stderr, "    [%d] 0x%llX\n", i, (unsigned long long)sp[i]);
+                uintptr_t mb = (uintptr_t)GetModuleHandleA(NULL);
+                if (sp[i] >= mb + 0x1000u && sp[i] < mb + 0x2000000u) {   /* (1.9.9: by the program's own start -- it moves each run) */
+                    fprintf(stderr, "    [%d] +0x%llX\n", i, (unsigned long long)(sp[i] - mb));
                 }
             }
         }

@@ -3215,3 +3215,7 @@ twotowers/src/twotowers_manual.c, xboxrecomp-0.12.0/src/input/xinput_device.c
 twotowers/src/twotowers_manual.c
   - Co-op: player 2 held where he stands is put beside player 1 only with
     the Co-op menu's P2 Teleport on (with it off, no teleport at all).
+twotowers/src/main.c
+  - A crash report gives the program's start and the crash's offset from it,
+    and the native return addresses as offsets (the program loads somewhere
+    else each run; the old check looked for the fixed 0x140000000 only).
