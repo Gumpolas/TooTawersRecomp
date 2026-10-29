@@ -4991,11 +4991,16 @@ static const UpgName s_upn_sauron[] = {
 static const UpgName s_upn_uruk[] = {
     { "Isildur's Swift Terror", "Berserker Frenzy" }, { "Isildur's Deliverance", "Torch of the Deep" }, { "Isildur's Death Charge", "Deeping Wall Charge" }, { "Isildur's Gambit", "Berserker Gambit" }, { "Isildur's War Rush", "Siege Rush" }, { "Isildur's Judgment", "Wrath of the Pits" }, { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Thrown like Crag Rocks, these rocks from the pits do serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Molten rocks do terrible damage.  (Requires War Rocks)" }, { "Fire with the A button", "Hurl with the A button" }, { "Isildur's", "Berserker's" }, { "Ranger Fury", "Berserker Fury" }, { "Sword Parry", "Blade Parry" }, { "Dunedain Bow", "Crag Rocks" }, { "Rohan Bow", "War Rocks" }, { "Gondor Bow", "Lava Rocks" }, { "Strength of the Stewards", "Strength of Isengard" }, { "Strength of Isildur", "Might of the Pits" }, { "Strength of Elendil", "Strength of Saruman" }, { "Strength of the Argonath", "Strength of the Berserker" }, { "Wilderness Rage", "Berserker Rage" }, { "Master Swordsman", "Master Berserker" }, { "Wrath of Numenor", "Wrath of Orthanc" }, { NULL, NULL } };
 #include "heroes_ampliacion_textos.inc"
+/* (1.9.9) the Nazgul (Versus): his own move names, his thrown darts in place of the bow (each no longer than the original) */
+static const UpgName s_upn_nazgul[] = {
+    { "Isildur's Swift Terror", "Morgul Blade Fury" }, { "Isildur's Deliverance", "Witch-king's Will" }, { "Isildur's Death Charge", "Black Rider Charge" }, { "Isildur's Gambit", "Wraith's Gambit" }, { "Isildur's War Rush", "Minas Morgul Rush" }, { "Isildur's Judgment", "Cry of the Nazgul" },
+    { "Fired like the Dunedain Bow, the barbed arrows of the Rohirrim do serious damage.", "Thrown like Morgul Darts, the blades of Minas Morgul do serious damage." }, { "The iron arrows of Gondor do terrible damage.  (Requires Rohan Bow)", "Poisoned darts of Mordor do terrible damage.  (Requires Doom Dart)" }, { "Fire with the A button", "Hurl with the A button" },
+    { "Isildur's", "Nazgul's" }, { "Ranger Fury", "Wraith Fury" }, { "Sword Parry", "Blade Parry" }, { "Dunedain Bow", "Morgul Darts" }, { "Rohan Bow", "Doom Dart" }, { "Gondor Bow", "Grave Dart" }, { "Strength of the Stewards", "Strength of the Nine" }, { "Strength of Isildur", "Strength of Angmar" }, { "Strength of Elendil", "Might of the Nine" }, { "Strength of the Argonath", "Strength of Minas Morgul" }, { "Wilderness Rage", "Ringwraith Rage" }, { "Master Swordsman", "Morgul Swordsman" }, { "Wrath of Numenor", "Wrath of Angmar" }, { "Bane of Saruman", "Bane of Men" }, { NULL, NULL } };
 static const UpgName *upn_list(int g)
 {
     static const struct { const char *n; const UpgName *l; } L[] = {
         { "boromir", s_upn_boromir }, { "gandalf", s_upn_gandalf }, { "frodo", s_upn_frodo }, { "lurtz", s_upn_lurtz },
-        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "troll2", s_upn_troll_nuevo }, { "ent", s_upn_ent_nuevo }, { "orc", s_upn_orc_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo } };
+        { "elrond", s_upn_elrond }, { "sauron", s_upn_sauron }, { "uruk", s_upn_uruk }, { "saruman", s_upn_saruman }, { "urukcap", s_upn_urukcap_nuevo }, { "troll", s_upn_troll_nuevo }, { "troll2", s_upn_troll_nuevo }, { "ent", s_upn_ent_nuevo }, { "orc", s_upn_orc_nuevo }, { "elvenwarrior", s_upn_elvenwarrior_nuevo }, { "nazgul", s_upn_nazgul } };
     int k;
     if (g < 0 || g >= N_SKINS) return NULL;
     for (k = 0; k < (int)(sizeof L / sizeof L[0]); k++) if (!strcmp(L[k].n, s_skins[g].name)) return L[k].l;
@@ -7070,6 +7075,15 @@ void tt_framelog(void)
         static unsigned fr;
         if (tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && (++fr & 63) == 1 && bolt_mode() >= 0) effect_colour(0x135u, bolt_mode());
     }
+    if (getenv("TT_UPNDUMP")) {   /* testing: hero 4's upgrade strings now against the game's own (how many differ, the first few) */
+        static DWORD lt; if (GetTickCount() - lt > 4000u) { int i, k, d = 0; lt = GetTickCount();
+            if (s_upn_n <= 0 && !tt_lang_on()) upn_find();
+            for (i = 0; i < s_upn_n; i++) { int diff = 0; char t[160];
+                for (k = 0; k <= s_upn_len[i]; k++) if (G16(s_upn_at[i] + 2 * k) != s_upn_orig[i][k]) diff = 1;
+                if (!diff) continue; d++;
+                for (k = 0; k < 150 && G16(s_upn_at[i] + 2 * k); k++) t[k] = (char)G16(s_upn_at[i] + 2 * k); t[k] = 0;
+                if (d <= 6) tt_dbg("[UPNDUMP]   now '%s'\n", t); }
+            tt_dbg("[UPNDUMP] lang %d, hero byte %u, guest %d, cur %d: %d of %d strings changed\n", tt_lang_on(), G8(HERO_BYTE), s_guest, s_upn_cur, d, s_upn_n); } }
     {   /* the upgrade names: the guest's while he plays (startup.BFF's
          * strings, found once they are in memory) */
         static unsigned fr;
@@ -8313,6 +8327,8 @@ int tt_heroes_p1_pick(const char *name)
     int k, g;
     s_vsp1 = -1;
     for (k = 0; k < 4; k++) if (name && !_stricmp(name, retail[k])) {
+        if (s_upn_n > 0 || tt_lang_on()) upn_set(-1);   /* (1.9.9) a retail hero: the game's own upgrade names (Aragorn's are the strings hero 4's guests write over -- a guest
+                                                         * picked before left his on them) */
         if (k == 3 || G32(0x1BB2A4u) == 0) { s_guest = -1; rec_switch(-1); name_set("Isildur"); upn_set(-1); }
         if (k < 3 && G32(0x1BB2A4u) == 0 && !getenv("TT_VS_NOP1SKIN")) {   /* Mount Doom: Isildur's level -- hero 4 there, wearing the pick */
             s_vsp1 = skin_by_name(name);

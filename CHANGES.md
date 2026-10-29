@@ -3322,3 +3322,8 @@ twotowers/src/twotowers_manual.c
     hidden, the match begins anyway after 10 s instead of leaving both
     players unable to move (TT_VS_WAITSCENE: wait for it).
     TT_VS_ORTHNOWALL: none of this.
+  - Versus: the Nazgul has his own move and upgrade names (Morgul Blade
+    Fury, Witch-king's Will, Black Rider Charge, ...; his throws are
+    Morgul Darts) -- he showed Isildur's. Picking Aragorn, Legolas, Gimli
+    or Isildur in Versus puts the game's own upgrade names back (a hero
+    picked before could leave his on Aragorn's).
