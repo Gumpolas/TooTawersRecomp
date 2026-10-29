@@ -6432,7 +6432,7 @@ static void vs_round_start(void)
     vs_orc_shield_round();   /* (the shield orc's shield whole again) */
     vs_taken0[0] = tt_vs_st[0].taken; vs_taken0[1] = tt_vs_st[1].taken;   /* (the round's blows taken, for the achievements) */
     { int k; for (k = 0; k < 2; k++) { uint32_t a = k ? coop_p2 : coop_first_char; if (a >= 0x10000u) { vs_rs_pos[k][0] = MEMF(a + 0xF0); vs_rs_pos[k][1] = MEMF(a + 0xF4); vs_rs_pos[k][2] = MEMF(a + 0xF8); } } vs_rs_ok = 1; }   /* (where the round began: Restart Round) */
-    vs_foes_note();
+    if (getenv("TT_VS_FOERESET")) vs_foes_note();   /* (1.9.9: off -- a playtest saw no enemies on the map with it; TT_VS_FOERESET: on, testing) */
     vs_round++; vs_state = 3; vs_t = coop_now();   /* the countdown first: both frozen (tt_vs_frozen) */
     if (vs_shield_mode()) snprintf(t, sizeof t, vs_carrier < 0 ? "FIND THE SHIELD   P1 %d - %d P2" : "P1 %d - %d P2", vs_score[0], vs_score[1]);
     else snprintf(t, sizeof t, "ROUND %d   P1 %d - %d P2", vs_round, vs_score[0], vs_score[1]);
@@ -6954,7 +6954,7 @@ static void vs_frame(void)
                     tt_dbg("[VS] restart: player 1 at %.1f %.1f, player 2 at %.1f %.1f\n", vs_spot[0][0], vs_spot[0][1], vs_spot[1][0], vs_spot[1][1]); }
             }
             vs_round_start();
-            vs_foes_reset();
+            if (getenv("TT_VS_FOERESET")) vs_foes_reset();
             if (rnd) tt_dbg("[VS] the round restarted (the pause menu's Restart Round): round %d, P1 %d - %d P2, a new start\n", vs_round, vs_score[0], vs_score[1]);
             else tt_dbg("[VS] the match restarted (the pause menu's Restart Match)\n"); }
     }
