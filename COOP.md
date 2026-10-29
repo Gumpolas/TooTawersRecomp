@@ -41,7 +41,7 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 | P1 Device, P2 Device | Automatic, Keyboard & Mouse, a controller | Each player's device (above). Options page only *(1.9.6)* |
 
 - **Camera:** playing the levels with Camera Zoom on **Normal** or **Wide** is recommended; with Off the shared camera
-  stays close and a hero can end up off screen.
+  stays close and a hero can end up off screen. Some areas may work better with the camera set to off, so it's up to players to experiment with those settings. 
 - **A hero who goes down** comes back near the other one after the wait, on ground player 1 has stood on (not in a
   wall or over a drop). Both down is a game over.
 - **Story levels in co-op** *(1.9.8)*: player 2 is Isildur on the prologue and Legolas on Weathertop (with copies of
@@ -62,6 +62,8 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 - **Explosives** *(1.9.8)*: player 2's shots set off the Westfold's bomb stacks and carts, as player 1's do.
 - **After a level:** player 1's stats, player 2's stats, player 1's shop, player 2's shop, then the save. Player 2's
   experience and purchases are saved in their hero's record and come back when the save is loaded.
+- Player 2 and breaking enemy shields: You may have noticed that player 2 has trouble breaking enemy shields. This is intentional for now until more balancing can be applied. Player 2 can still kill enemies with shields, but it requires a few more heavy attacks.
+- More enemies in co op/disappearing enemies: You also may notice in co-op that there are more enemies in most maps than in single player. This is also for balancing reasons, and makes it so that player 1 and 2 can't just steam roll through the levels. With these extra enemies spawning into the levels, they can sometimes disappear or vanish once killed due to them not originally belonging in the level.
 
 ## Versus (1.9.7)
 
@@ -109,7 +111,6 @@ Player 1 against player 2, one on one, on the co-op's two heroes.
 - **Sounds and pictures:** the `versus` folder beside the game: `fight.wav` (the horn with FIGHT), `match_win.wav`
   (a match won), `menu_bg.bmp` (the Versus menu's background) and `results_bg.bmp` (the results'); add
   `round_win.wav` for a round won. Replace any of them with your own; any that are missing are left out.
-- Not yet: enemies in the arenas, a power-up, team modes; parts of the bigger maps can't be reached yet.
 
 ## What the co-op changes
 
