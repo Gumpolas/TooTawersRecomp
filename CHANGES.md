@@ -3294,3 +3294,10 @@ twotowers/src/twotowers_manual.c
   - Versus: the round's pickups are put out at "FIGHT!", where the players
     stand -- put out as the round began they hung over the ground (the
     players are dropped in from above), out of everyone's reach.
+  - Co-op: no leash -- player 2 roams as he does while player 1 is down
+    (TT_COOP_LEASH=units: one again). Far apart (past 30 units) the camera
+    goes over to player 1; P2 Teleport (on) still brings player 2 back
+    past 42 units.
+  - Co-op pause menu: a note at the top turns P2 Teleport on or off -- Y
+    (the I key) or a click on it -- without going to the settings
+    (TT_COOP_NOTELEKEY: none).

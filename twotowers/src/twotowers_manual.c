@@ -9093,7 +9093,7 @@ void tt_coop_leave(void)
       if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && tt_vs_doom_free[1] == coop_p2 && !getenv("TT_VS_DOOMCOLL")) { int k;
           extern float tt_vs_doom_want[2][3];
           for (k = 0; k < 3; k++) { float v = tt_vs_doom_want[1][k]; MEMF(coop_p2 + 0xF0 + 4 * k) = v; MEMF(coop_p2 + 0x90 + 4 * k) = v; MEMF(coop_p2 + 0x140 + 4 * k) = v; } } }
-    if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOLEASH") && !tt_vs_on() && coop_now() - coop_bot_drove_t > 500u && (!coop_down[0] || getenv("TT_COOP_LEASHDOWN"))) {   /* (1.9.9: none while player 1 is down -- player 2 goes where he likes until he is back, a playtest) */   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
+    if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && getenv("TT_COOP_LEASH") && !getenv("TT_COOP_NOLEASH") && !tt_vs_on() && coop_now() - coop_bot_drove_t > 500u && (!coop_down[0] || getenv("TT_COOP_LEASHDOWN"))) {   /* (1.9.9: no leash unless TT_COOP_LEASH sets one -- player 2 roams as he does while player 1 is down, a playtest; P2 Teleport still brings him back past 1.5 x 28 units) */   /* (1.9.9: none while player 1 is down -- player 2 goes where he likes until he is back, a playtest) */   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
         extern float coop_leash_radius(void); extern unsigned coop_leash_stops;
         uint32_t q = coop_s1_player(), a = coop_p2; float R = coop_leash_radius();
         if (q >= 0x10000u && q != a) {
@@ -10362,6 +10362,10 @@ int tt_coop_camera_pre(uint32_t *saved)
     if (p1 < 0x10000u || getenv("TT_COOP_NOSHAREDCAM") || coop_gameover) return 0;   /* game over: the game's own death cam, untouched */
     {   /* the point the camera frames: the heroes' midpoint; while one is down, the one still standing */
         float wa = coop_down[0] && !coop_down[1] ? 0.0f : coop_down[1] && !coop_down[0] ? 1.0f : 0.5f;
+        if (wa == 0.5f && coop_p2 >= 0x10000u && !getenv("TT_COOP_CAMMIDFAR")) {   /* (1.9.9) no leash now: heroes far apart -- past 30 units the camera goes over
+             * to player 1 (wholly at 45), as their midpoint left both out of view */
+            float ddx = MEMF(p1 + 0xF0) - MEMF(coop_p2 + 0xF0), ddy = MEMF(p1 + 0xF4) - MEMF(coop_p2 + 0xF4), sd = sqrtf(ddx * ddx + ddy * ddy);
+            if (sd > 30.0f) wa = sd >= 45.0f ? 1.0f : 0.5f + 0.5f * (sd - 30.0f) / 15.0f; }
         if (getenv("TT_COOP_CAMMIDALWAYS")) wa = 0.5f;
         for (k = 0; k < 3; k++) { saved[k] = MEM32(p1 + 0xF0 + 4 * k); MEMF(p1 + 0xF0 + 4 * k) = wa * MEMF(p1 + 0xF0 + 4 * k) + (1.0f - wa) * MEMF(coop_p2 + 0xF0 + 4 * k); } }
     saved[3] = p1;
