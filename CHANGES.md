@@ -3244,3 +3244,9 @@ twotowers/src/twotowers_manual.c, menus.c
     BACK (Backspace / Tab) or a click on it starts the match again from
     round 1 (scores 0, both whole at the match's starting spots) and closes
     the pause. TT_VS_NORESTART: off.
+twotowers/src/twotowers_manual.c
+  - Versus camera: the camera's second look-at and eye (+0x64..+0x6C,
+    +0x74..+0x7C, the game's own after its wall test) set to ours each frame
+    -- on the Hornburg Courtyard the game drew its eye in to a wall and the
+    view stayed close while ours was far (TT_VS_CAMNOCOPY: as before).
+  - Restart Match: a new random start, as a new match's.

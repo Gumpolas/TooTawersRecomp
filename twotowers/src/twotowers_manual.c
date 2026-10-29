@@ -6547,10 +6547,17 @@ static void vs_camera(void)
                 if ((now - t0) % 2500u > 2000u && shot != idx + 1) { extern void xbox_PresentDumpRequest(const char *path); char pth[300]; shot = idx + 1; snprintf(pth, sizeof pth, "%s/top_%03d_%d_%d.bmp", getenv("TT_VS_TOPDIR") ? getenv("TT_VS_TOPDIR") : ".", idx, (int)tx, (int)ty); xbox_PresentDumpRequest(pth); } } }
         (void)k;
     }
+    if (getenv("TT_VS_CAMW")) { static uint32_t tl; if (coop_now() - tl > 1500u) { uint32_t k; char b[900]; int q = 0; tl = coop_now(); for (k = 0; k < 0x80u; k += 4) q += snprintf(b + q, sizeof b - q, " %X:%.2f", k, MEMF(cm + k)); tt_dbg("[CAMW] P1 %.1f %.1f |%s\n", MEMF(a + 0xF0), MEMF(a + 0xF4), b); } }
     if (getenv("TT_VS_CAMDUMP")) { static uint32_t tl, last[64], lcm; uint32_t k; if (coop_now() - tl > 700u) { char b[1200]; int q = 0; tl = coop_now();
         for (k = 0; k < 0x100u; k += 4) { uint32_t v = MEM32(cm + k); if (cm == lcm && v != last[k / 4] && q < 1100 && k != 0x40 && k != 0x44 && k != 0x48 && k != 0x50 && k != 0x54 && k != 0x58) q += snprintf(b + q, sizeof b - q, " +%X %08X(%.2f)", k, v, *(float *)&v); last[k / 4] = v; }
         b[q] = 0; tt_dbg("[CAMD] t %u cm %08X P1 %.1f %.1f |%s\n", coop_now(), cm, MEMF(a + 0xF0), MEMF(a + 0xF4), b); lcm = cm; } }
     if (getenv("TT_VS_CAMLOG")) { static uint32_t tl; if (coop_now() - tl > 500u) { tl = coop_now(); tt_dbg("[VSCAM] t %u heroes %.1f %.1f, eye back %.1f up %.1f, heading %.2f %.2f, inside %d\n", coop_now(), mx, my, back, up, vs_cam_dx, vs_cam_dy, vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)); } }
+    if (!getenv("TT_VS_CAMNOCOPY")) {   /* (1.9.9) the camera's second look-at and eye (+0x64..+0x6C, +0x74..+0x7C: the game's, from its own update and its
+         * wall test) set to ours too -- on the Hornburg Courtyard the view came in close and stayed, ours still far (a playtest, again) */
+        float ddx = MEMF(cm + 0x74) - MEMF(cm + 0x50), ddy = MEMF(cm + 0x78) - MEMF(cm + 0x54), ddz = MEMF(cm + 0x7C) - MEMF(cm + 0x58), dd = ddx * ddx + ddy * ddy + ddz * ddz; int k;
+        if (dd > 9.0f && getenv("TT_VS_CAMLOG")) { static uint32_t tl2; if (coop_now() - tl2 > 1000u) { tl2 = coop_now(); tt_dbg("[VSCAM] the game's eye %.1f from ours: set to ours\n", sqrtf(dd)); } }
+        for (k = 0; k < 3; k++) { MEMF(cm + 0x64 + 4 * k) = MEMF(cm + 0x40 + 4 * k); MEMF(cm + 0x74 + 4 * k) = MEMF(cm + 0x50 + 4 * k); }
+    }
     if (!getenv("TT_VS_KEEPCAMANGLE")) { float th = atan2f(vs_cam_dy, vs_cam_dx) - 1.5707963f + (getenv("TT_VS_CAMANGOFS") ? (float)atof(getenv("TT_VS_CAMANGOFS")) : 0.0f); if (getenv("TT_VS_CAMANGNEG")) th = -th; MEMF(cm + 0x60) = th; MEMF(cm + 0x84) = th; }   /* (1.9.7) the level camera's turn (+0x60, last +0x84; about 0 elsewhere): on the Road to Helm's Deep it swung all about without the level's camera records, and the stick goes by it -- every hero ran in circles there */
 }
 /* (Versus) our camera again right after the game's camera update (0x68DC0), so the view it makes is ours: it was
@@ -6827,6 +6834,14 @@ static void vs_frame(void)
             vs_score[0] = vs_score[1] = 0; vs_round = 0; vs_last_win = -1; vs_text[0] = 0;
             memset(tt_vs_st, 0, sizeof tt_vs_st);
             for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);
+            if (!getenv("TT_VS_FIXEDSTART") && MEM32(0x1BB2A4u) != 12u) {   /* (a new random start, as a new match's -- a playtest: "the same as if you started another game") */
+                extern int tt_vs_random_spot(float *p, uint32_t seed); extern int tt_vs_spot_from(float x0, float y0, float lo, float want, float hi, float *p); float p[3], q[3];
+                if (tt_vs_random_spot(p, (uint32_t)GetTickCount() * 2654435761u ^ (coop_level_n + 77u))) {
+                    vs_spot[0][0] = p[0]; vs_spot[0][1] = p[1]; vs_spot[0][2] = p[2] + vs_lift();
+                    if (!getenv("TT_VS_NOSPREAD") && tt_vs_spot_from(p[0], p[1], vs_spacing() * 0.6f, vs_spacing(), vs_spacing() * 1.7f, q)) { vs_spot[1][0] = q[0]; vs_spot[1][1] = q[1]; vs_spot[1][2] = q[2] + vs_lift() * 0.5f; }
+                    else { vs_free_spot(coop_first_char, p[0], p[1], -MEMF(coop_first_char + 0x70), -MEMF(coop_first_char + 0x74), vs_spacing(), &vs_spot[1][0], &vs_spot[1][1]); vs_spot[1][2] = p[2] + vs_lift(); }
+                    tt_dbg("[VS] restart: player 1 at %.1f %.1f, player 2 at %.1f %.1f\n", vs_spot[0][0], vs_spot[0][1], vs_spot[1][0], vs_spot[1][1]); }
+            }
             vs_round_start();
             tt_dbg("[VS] the match restarted (the pause menu's Restart Match)\n"); }
     }
