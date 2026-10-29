@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co op and Versus are still in alpha. See known issues at the bottom.
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co op and Versus are still in alpha (see co-op.md for how these modes work). See known issues at the bottom.
 
 ## Downloads
 
@@ -41,7 +41,7 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 ### The128ReBits' improvements
 Made posisble by [The128ReBits](https://github.com/The128ReBits), thank you!
 - **Heroes built from the disc's own characters:** the **Elven Warrior**, the **Uruk Captain** and the **Cave Troll** are Versus heroes now (with Saruman and also the Ent), each with his own moves and weapons.
-- **Better animations** for the extra heroes
+- **Animation improveements** for all the extra heroes. 
 
 ### Versus: new heroes and a new mode
 - **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and the forest's Ent moans), the **Elven Warrior**, the **Uruk Captain**.
@@ -102,10 +102,11 @@ Made posisble by [The128ReBits](https://github.com/The128ReBits), thank you!
 - Not tested: the macOS build on a Mac; the PlayStation 3 controller fix on the reporter's Linux system; the trolls breaking props.
 
 ## Known issues (1.9.9)
-- Co-op is not fully playable with the extra heroes. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's.
-- Singleplayer/Co-op: Singleplayer is entirely unaffected by co op or versus mode except the co op setting for double the pickups. If the setting is enabled in the co op setting, it also applies in singleplayer. It is recommended to disable the setting while playing the base game, unless you prefer to have more health pickups. 
+- Co-op is not fully playable with the extra heroes. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's. Some HUD elements might not show correctly with the extra heros as well (Sauron as player 2 shows his ammo hud for both players)
+- Singleplayer/Co-op: Singleplayer is entirely unaffected by co op or versus mode except for the co op setting for double pickups. If the setting is enabled in the co op setting, it also applies in singleplayer. It is recommended to disable the setting while playing the base game, unless you prefer to have more health pickups. 
 - macOS (OpenGL) is still experimental
-- Versus spawns are not 
+- Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
+- Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again. 
 
 ## What's new in 1.9.8
 
