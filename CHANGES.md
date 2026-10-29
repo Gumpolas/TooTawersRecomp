@@ -3258,3 +3258,14 @@ twotowers/src/heroes.c
     on the character select and the level map. The string table's entry is
     pointed at a longer slot (the room of a string the table holds twice,
     whose twin then reads the first copy). TT_NAMESHORT: as before.
+twotowers/src/twotowers_manual.c
+  - Versus, falling off the map: a hero put back and falling again is put
+    beside the other only while the other stands on ground; otherwise (or a
+    third fall in a row) where he began the round. On the Hornburg
+    Courtyard's south-east edge both heroes went off, each was put beside
+    the other below the floor, and the two sank through the world with the
+    camera following -- the view "zoomed in" to the flagstones and stayed
+    (TT_VS_OLDBACK: as before).
+  - Versus camera: a falling hero counts at the height of his last ground,
+    so the view no longer sinks under the floor with him (TT_VS_CAMFALL: as
+    before).

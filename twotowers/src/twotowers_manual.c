@@ -2673,7 +2673,10 @@ void sub_00068DC0(void)
         { extern int tt_vs_camera_after(void); if (tt_vs_camera_after() && !getenv("TT_VS_NOCAMREDO")) {   /* (Versus: ours, before the frame's view is made of it) */
             uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, cm = MEM32(0x43B164u);
             if (cm >= 0x10000u) { ecx = cm; PUSH32(esp, 0x000684C0u); sub_000684C0(); esp = sp;
-                if (MEM32(cm + 0x18) >= 0x10000u) { ecx = MEM32(cm + 0x18); PUSH32(esp, 0x00060960u); sub_00060960(); esp = sp; } }
+                if (MEM32(cm + 0x18) >= 0x10000u) { ecx = MEM32(cm + 0x18); PUSH32(esp, 0x00060960u); sub_00060960(); esp = sp; }
+                if (getenv("TT_VS_VIEWLOG") && MEM32(cm + 0x18) >= 0x10000u) { static uint32_t tl; uint32_t v = MEM32(cm + 0x18); if (GetTickCount() - tl > 700u) { tl = GetTickCount();
+                    tt_dbg("[VSVIEW] view %08X eye %.1f %.1f %.1f look %.1f %.1f %.1f | ours eye %.1f %.1f %.1f look %.1f %.1f %.1f | +0 %.1f +178 %d\n", v, MEMF(v + 0xA00), MEMF(v + 0xA04), MEMF(v + 0xA08), MEMF(v + 0xA10), MEMF(v + 0xA14), MEMF(v + 0xA18),
+                        MEMF(cm + 0x50), MEMF(cm + 0x54), MEMF(cm + 0x58), MEMF(cm + 0x40), MEMF(cm + 0x44), MEMF(cm + 0x48), MEMF(cm), MEM8(cm + 0x178)); } } }
             eax = r0; ecx = r1; edx = r2; } }
     }
     if (coop_probe_on() && dx != 0 && p >= 0x10000u) MEMF(p + 0xF0) = x0;
@@ -5974,6 +5977,7 @@ static void vs_free_spot(uint32_t hero, float ox, float oy, float dx, float dy, 
  * left out in Versus: he fell through the sky forever, his tag over a grey nothing -- Gates of Moria, Fangorn, Amon
  * Hen): put back where he last stood on walkable ground once he is 10 units below it */
 static float vs_safe[2][3]; static int vs_safe_ok[2];
+static float vs_rs_pos[2][3]; static int vs_rs_ok;   /* (where each hero began the round) */
 static int vs_fell[2];   /* (1.9.9) off the map this round: the round lost (a kick off a ledge wins it) */
 static float vs_wz[2][8]; static uint32_t vs_wt[2][8], vs_back_t[2]; static int vs_wi[2];   /* (his height over the last 0.4 s; when he was last put back) */
 /* (1.9.9) a pathmap pointer from the level's list (0x41F428 + 0x1088) that is one: past the level's own the list may hold
@@ -6053,6 +6057,23 @@ static void vs_edge_guard(void)
         else if ((getenv("TT_VS_OLDFALL") ? z < vs_safe[w][2] - (getenv("TT_VS_FALLDROP") ? (float)atof(getenv("TT_VS_FALLDROP")) : 60.0f) : (z < vs_floor(x, y) || z < vs_safe[w][2] - 150.0f)) && !getenv("TT_VS_NOEDGEGUARD")) {
             float p[3]; uint32_t o = w ? coop_first_char : coop_p2, now = coop_now();
             p[0] = vs_safe[w][0]; p[1] = vs_safe[w][1]; p[2] = vs_safe[w][2] + 0.5f;
+            {   /* (1.9.9) the other hero is somewhere to be put only while he stands: not falling himself (both had gone off the
+                 * Hornburg Courtyard's south-east edge, each put beside the other below the floor, again and again -- the two sank
+                 * through the world and the camera with them, "zoomed in and stayed", a playtest). Fallen twice in a row with the
+                 * other no better: where he began the round */
+                static uint32_t again_t[2]; static int again_n[2];
+                float oz = o >= 0x10000u ? MEMF(o + 0xF8) : -1e9f, ox = o >= 0x10000u ? MEMF(o + 0xF0) : 0.0f, oy = o >= 0x10000u ? MEMF(o + 0xF4) : 0.0f;
+                int o_ok = o >= 0x10000u && oz > vs_floor(ox, oy) && oz > vs_safe[w ^ 1][2] - 4.0f && vs_union_walk(ox, oy) == 1;
+                if (vs_back_t[w] && now - vs_back_t[w] < 3000u) again_n[w] = (again_t[w] && now - again_t[w] < 8000u) ? again_n[w] + 1 : 1; else again_n[w] = 0;
+                if (again_n[w]) again_t[w] = now | 1u;
+                if (again_n[w] && (!o_ok || again_n[w] >= 3) && !getenv("TT_VS_OLDBACK")) {
+                    float *st = vs_rs_ok ? vs_rs_pos[w] : vs_spot[w];
+                    p[0] = st[0]; p[1] = st[1]; p[2] = st[2] + 1.0f;
+                    vs_safe[w][0] = st[0]; vs_safe[w][1] = st[1]; vs_safe[w][2] = st[2];
+                    tt_dbg("[VS] P%d fell again (%d), P%d no ground to stand by: back where the round began, %.1f %.1f %.1f\n", w + 1, again_n[w], 2 - w, p[0], p[1], p[2]);
+                    o = 0;   /* (not beside him) */
+                }
+            }
             if (vs_back_t[w] && now - vs_back_t[w] < 3000u && o >= 0x10000u) {
                 /* (1.9.9) put back and fallen again at once: that spot was no ground (Fangorn: a hero set on the far side of
                  * a rise sank through it, and each time he was put back a little lower -- through the map, the screen black,
@@ -6326,7 +6347,6 @@ static void vs_gates(void)
     }
 }
 static int vs_lost_down;   /* (a hero was down as the round ended) */
-static float vs_rs_pos[2][3]; static int vs_rs_ok;   /* (where each hero began the round) */
 static void vs_round_start(void)
 {
     char t[48]; int w, keep = vs_round > 0 && (vs_shield_mode() || vs_big_arena() || !getenv("TT_VS_RESETSPOTS"));   /* (1.9.9: every arena -- the next round from where they are, a playtest) */
@@ -6485,6 +6505,13 @@ static void vs_camera(void)
         vs_cam_dx = 0.0f; vs_cam_dy = -1.0f;
         if (vs_cam_ours) { float hx = MEMF(cm + 0x40) - MEMF(cm + 0x50), hy = MEMF(cm + 0x44) - MEMF(cm + 0x54), hn = sqrtf(hx * hx + hy * hy); if (hn > 0.01f) { vs_cam_dx = hx / hn; vs_cam_dy = hy / hn; } } }
     mx = 0.5f * (MEMF(a + 0xF0) + MEMF(b + 0xF0)); my = 0.5f * (MEMF(a + 0xF4) + MEMF(b + 0xF4)); mz = 0.5f * (MEMF(a + 0xF8) + MEMF(b + 0xF8));
+    if (vs_safe_ok[0] && vs_safe_ok[1] && !getenv("TT_VS_CAMFALL")) {   /* (1.9.9) a hero falling through the world: the camera at the height of his last
+         * ground, not following him down under the floor (the view sank to the flagstones and stayed, a playtest) */
+        float za = MEMF(a + 0xF8), zb = MEMF(b + 0xF8);
+        if (za < vs_safe[0][2] - 6.0f) za = vs_safe[0][2]; if (zb < vs_safe[1][2] - 6.0f) zb = vs_safe[1][2];
+        mz = 0.5f * (za + zb);
+        if (coop_down[0] && !coop_down[1]) mz = zb; if (coop_down[1] && !coop_down[0]) mz = za;
+    }
     if (coop_down[0] && !coop_down[1]) { mx = MEMF(b + 0xF0); my = MEMF(b + 0xF4); mz = MEMF(b + 0xF8); }
     if (coop_down[1] && !coop_down[0]) { mx = MEMF(a + 0xF0); my = MEMF(a + 0xF4); mz = MEMF(a + 0xF8); }
     if (getenv("TT_VS_CAMP1")) { mx = MEMF(a + 0xF0); my = MEMF(a + 0xF4); mz = MEMF(a + 0xF8); }   /* (test: on player 1 alone) */
@@ -6553,6 +6580,7 @@ static void vs_camera(void)
     if (getenv("TT_VS_CAMDUMP")) { static uint32_t tl, last[64], lcm; uint32_t k; if (coop_now() - tl > 700u) { char b[1200]; int q = 0; tl = coop_now();
         for (k = 0; k < 0x100u; k += 4) { uint32_t v = MEM32(cm + k); if (cm == lcm && v != last[k / 4] && q < 1100 && k != 0x40 && k != 0x44 && k != 0x48 && k != 0x50 && k != 0x54 && k != 0x58) q += snprintf(b + q, sizeof b - q, " +%X %08X(%.2f)", k, v, *(float *)&v); last[k / 4] = v; }
         b[q] = 0; tt_dbg("[CAMD] t %u cm %08X P1 %.1f %.1f |%s\n", coop_now(), cm, MEMF(a + 0xF0), MEMF(a + 0xF4), b); lcm = cm; } }
+    if (getenv("TT_VS_CAMLOG")) { static int l178 = -1; static uint32_t l18; int f = MEM8(cm + 0x178); if (f != l178 || MEM32(cm + 0x18) != l18) { tt_dbg("[VSCAM] +178 %d -> %d, +18 %08X, heroes %.1f %.1f, +130 %.1f %.1f %.1f +140 %.1f %.1f %.1f\n", l178, f, MEM32(cm + 0x18), mx, my, MEMF(cm + 0x130), MEMF(cm + 0x134), MEMF(cm + 0x138), MEMF(cm + 0x140), MEMF(cm + 0x144), MEMF(cm + 0x148)); l178 = f; l18 = MEM32(cm + 0x18); } }
     if (getenv("TT_VS_CAMLOG")) { static uint32_t tl; if (coop_now() - tl > 500u) { tl = coop_now(); tt_dbg("[VSCAM] t %u heroes %.1f %.1f, eye back %.1f up %.1f, heading %.2f %.2f, inside %d\n", coop_now(), mx, my, back, up, vs_cam_dx, vs_cam_dy, vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)); } }
     if (!getenv("TT_VS_CAMNOCOPY")) {   /* (1.9.9) the camera's second look-at and eye (+0x64..+0x6C, +0x74..+0x7C: the game's, from its own update and its
          * wall test) set to ours too -- on the Hornburg Courtyard the view came in close and stayed, ours still far (a playtest, again) */
