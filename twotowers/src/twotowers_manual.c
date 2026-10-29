@@ -4278,6 +4278,7 @@ void sub_000F5BC0(void)
 {
     uint32_t w = ecx, rec = MEM32(esp + 4), key = MEM32(esp + 8), sel = MEM32(0x1BB354u);
     { extern void coop_note_reckey(uint32_t, uint32_t); coop_note_reckey(rec, key); }
+    if (getenv("TT_RECLOG") && rec >= 0x10000u) { static int n; if (n++ < 2000) tt_dbg("[REC] type %u \"%.32s\" key %08X\n", MEM32(rec), (const char *)XBOX_PTR(rec + 8), key); }   /* (research) */
     if (tt_vs_on() && rec >= 0x10000u && vs_left_out(MEM32(rec)) && !vs_keep_enemy(rec) && !getenv("TT_VS_KEEPCAST") && !vs_keep_type(MEM32(rec), (const char *)XBOX_PTR(rec + 8))
         && !(MEM32(rec) == 16u && !_strnicmp((const char *)XBOX_PTR(rec + 8), "missionStart", 12) && getenv("TT_VS_KEEPSTART"))
         && !(MEM32(rec) == 11u && !_strnicmp((const char *)XBOX_PTR(rec + 8), "battleManager", 13) && !getenv("TT_VS_NOBATTLEMGR"))
@@ -4835,7 +4836,7 @@ static void coop_place(void)
  * that takes him further out is undone where he moves (slot 1, tt_coop_leave). No teleport.
  * TT_COOP_NOLEASH turns it off. */
 unsigned coop_leash_stops;
-float coop_leash_radius(void) { static float R = -1; if (R < 0) { const char *v = getenv("TT_COOP_LEASH"); R = v ? (float)atof(v) : 20.0f; if (R < 2) R = 2; } return R; }/* player 2's hits: a hero raises its hit events on its own event source (+0x3D0; slots 17/18 = 0x86120/0x86140
+float coop_leash_radius(void) { static float R = -1; if (R < 0) { const char *v = getenv("TT_COOP_LEASH"); R = v ? (float)atof(v) : 28.0f; if (R < 2) R = 2; } return R; }   /* (1.9.9: 28, was 20 -- a little more room for player 2, a playtest) *//* player 2's hits: a hero raises its hit events on its own event source (+0x3D0; slots 17/18 = 0x86120/0x86140
  * -> 0x26580/0x265D0), and the level script's hit handlers listen on player 1's source only (listeners at +0x74,
  * count at +0x174). Player 2's source gets the same listeners, kept in sync. TT_COOP_NOHITLISTENERS turns it off. */
 static void coop_sync_listeners(void)
@@ -5828,7 +5829,7 @@ static void vs_pk_touch(void)
             uint32_t a = w ? coop_p2 : coop_first_char; float dx, dy, dz; int k = vs_pk_kind[i];
             if (a < 0x10000u || coop_down[w]) continue;
             dx = MEMF(a + 0xF0) - MEMF(o + 0xF0); dy = MEMF(a + 0xF4) - MEMF(o + 0xF4); dz = MEMF(a + 0xF8) - MEMF(o + 0xF8);
-            if (dx * dx + dy * dy > 1.4f * 1.4f || dz > 3.0f || dz < -3.0f) continue;
+            if (dx * dx + dy * dy > 1.4f * 1.4f || dz > 3.0f || dz < -4.0f) continue;
             if (k <= 3) { int32_t mx = (int32_t)MEM32(a + 0x300), h = (int32_t)MEM32(a + 0x2FC); if (h >= mx) continue; h += mx / 3; MEM32(a + 0x2FC) = (uint32_t)(h > mx ? mx : h); }
             else { int am = (int)(MEM32(a + 0x304) & 0xFFFF), cap = getenv("TT_VS_AMMO") ? atoi(getenv("TT_VS_AMMO")) : 10; if (am >= cap) continue; am += 5; if (am > cap) am = cap; MEM32(a + 0x304) = (MEM32(a + 0x304) & 0xFFFF0000u) | (uint32_t)am; }
             {   uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, sa[6]; float one = 1.0f, zero = 0.0f; int c;
@@ -5866,6 +5867,7 @@ static void vs_round_pickups(void)
             vs_pk_spawn(vs_spot[0][0] + (vs_spot[1][0] - vs_spot[0][0]) * f, vs_spot[0][1] + (vs_spot[1][1] - vs_spot[0][1]) * f, vs_spot[0][2] + 0.3f, k0 + k); }
         MEM32(coop_first_char + 0x2FC) = 300; MEM32(coop_first_char + 0x304) = (MEM32(coop_first_char + 0x304) & 0xFFFF0000u) | 3u; return; }
     mx = (vs_spot[0][0] + vs_spot[1][0]) * 0.5f; my = (vs_spot[0][1] + vs_spot[1][1]) * 0.5f; mz = (vs_spot[0][2] + vs_spot[1][2]) * 0.5f;
+    if (coop_first_char >= 0x10000u && coop_p2 >= 0x10000u && !getenv("TT_VS_PKATSTART")) mz = 0.5f * (MEMF(coop_first_char + 0xF8) + MEMF(coop_p2 + 0xF8));   /* (where they stand now) */
     dx = vs_spot[1][0] - vs_spot[0][0]; dy = vs_spot[1][1] - vs_spot[0][1]; d = sqrtf(dx * dx + dy * dy); if (d < 0.1f) { dx = 1; dy = 0; d = 1; }
     px = -dy / d; py = dx / d;
     vs_pk_spawn_bright(mx, my, mz + 0.5f, kh);
@@ -6383,7 +6385,7 @@ static void vs_round_start(void)
             vs_place(L, p); tt_dbg("[VS] P%d set %.0f units from P%d to go on\n", l + 1, sp, 2 - l);
         }
     }
-    if (!vs_shield_mode()) vs_round_pickups();
+    if (!vs_shield_mode()) { if (getenv("TT_VS_PKATSTART")) vs_round_pickups(); }   /* (1.9.9: put out at "FIGHT!" now, below) */
     else if (vs_round == 0 || vs_carrier < 0) vs_shield_place();
     vs_orc_shield_round();   /* (the shield orc's shield whole again) */
     vs_taken0[0] = tt_vs_st[0].taken; vs_taken0[1] = tt_vs_st[1].taken;   /* (the round's blows taken, for the achievements) */
@@ -6430,7 +6432,10 @@ static void vs_countdown(uint32_t now)
     if (t_of != vs_t) { t_of = vs_t; shown = 0; }
     if (k > shown && k >= 1 && k <= 3) { char t[8]; shown = k; snprintf(t, sizeof t, "%d", 4 - k); vs_say(t, 1000u);
         { extern int tt_vs_play_ring(void); if (!tt_vs_play_ring()) { uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; tt_opt_move_sound(); esp = sp; eax = r0; ecx = r1; edx = r2; } } }
-    if (k >= 4) { extern void tt_vs_play_mode_wav(const char *name, float vol); vs_state = 0; vs_round_t0 = now; vs_say("FIGHT!", 1200u); tt_vs_play_mode_wav("fight.wav", 1.0f); vs_music_start(); }
+    if (k >= 4) { extern void tt_vs_play_mode_wav(const char *name, float vol); vs_state = 0;
+        if (!vs_shield_mode() && !getenv("TT_VS_PKATSTART")) vs_round_pickups();   /* (1.9.9) the round's pickups once the heroes have landed: put out as the round began,
+         * they hung 6 units over the ground (the heroes are dropped in from above) -- out of everyone's reach, a playtest: "player 2 should
+         * be able to pick them up" */ vs_round_t0 = now; vs_say("FIGHT!", 1200u); tt_vs_play_mode_wav("fight.wav", 1.0f); vs_music_start(); }
 }
 static void coop_down_pose(uint32_t now)
 {
@@ -7213,6 +7218,8 @@ static void vs_frame(void)
     vs_shots_due(now);
     vs_swings_due(now);
     if (getenv("TT_VS_PKAGE0")) { int i; for (i = 0; i < vs_npk_out; i++) if (vs_pk_out[i] >= 0x10000u && MEM32(vs_pk_out[i]) == 0x1748B0u && (MEM32(vs_pk_out[i] + 0x3F8) & 2u)) MEM32(vs_pk_out[i] + 0x400) = 0; }   /* (the pickups out, the shield too: their age kept new -- a drop's item goes at 6 s) */
+    if (getenv("TT_VS_P2AT") && vs_state == 0 && coop_p2 >= 0x10000u) { static int done; if (!done && now - vs_round_t0 > 2000u) { float q[3]; done = 1;   /* (test: player 2 put on a spot, his ammo 3) */
+            if (sscanf(getenv("TT_VS_P2AT"), "%f,%f", &q[0], &q[1]) == 2) { q[2] = MEMF(coop_p2 + 0xF8) + 0.5f; vs_place(coop_p2, q); MEM32(coop_p2 + 0x304) = (MEM32(coop_p2 + 0x304) & 0xFFFF0000u) | 3u; tt_dbg("[VS] test: P2 put at %.1f %.1f, ammo 3\n", q[0], q[1]); } } }
     if (vs_state == 0) { if (vs_shield_mode()) vs_shield_frame(now); else vs_pk_touch(); }
     if (getenv("TT_VS_PKTEST3") && vs_state == 0 && vs_npk_out >= 2) {   /* (test) player 1 hurt and short, put on the health then an ammo pickup */
         static int st; uint32_t e = now - vs_round_t0, p1 = coop_first_char;
@@ -8795,11 +8802,53 @@ void tt_coop_note_actor(uint32_t a)
 
 static int coop_pick_kept(uint32_t pk);   /* (Pickups: Double, below) */
 /* once a second: where both are, and what port 1's record holds */
+/* (1.9.9) the level's own placed pickups (not the enemies' drops, "dynamicPickupObj"): their touch comes only for player 1
+ * (the player's triggers), so player 2 walked over them -- the arrows on the ledge by Balin's Tomb's cave troll (a playtest).
+ * Player 2 within 1.4 units of one that is out (+0x3F8 bit 2) and short of what it gives: it refills him (0x0008F960, in his
+ * context: it fills "the player") and is taken, as a touch would. Once a level the placed ones are found. TT_COOP_NOP2PLACED */
+int tt_coop_enter_ctx(void); void tt_coop_leave(void);
+static void coop_p2_placed_pickups(void)
+{
+    static uint32_t pks[160]; static int npk; static unsigned lv = ~0u; static uint32_t scan_t; int k; uint32_t a = coop_p2;
+    if (a < 0x10000u || coop_hero_down(1) || tt_vs_on() || getenv("TT_COOP_NOP2PLACED")) return;
+    if (getenv("TT_COOP_SPAWNAMMO") && npk >= 0 && lv == coop_level_n) { static int done; if (!done && coop_now() - scan_t > 15000u) { done = 1;   /* (test: an arrows pickup put out at player 2's feet, his quiver short) */
+        uint32_t o = vs_pk_spawn(MEMF(a + 0xF0) + 0.3f, MEMF(a + 0xF4), MEMF(a + 0xF8) + 0.3f, atoi(getenv("TT_COOP_SPAWNAMMO"))); MEM32(a + 0x304) = (MEM32(a + 0x304) & 0xFFFF0000u) | 3u;
+        tt_dbg("[COOPPICK] test: pickup %08X of kind %s put out at player 2's feet, his ammo 3\n", o, getenv("TT_COOP_SPAWNAMMO")); } }
+    if (lv != coop_level_n) { lv = coop_level_n; npk = -1; scan_t = coop_now(); }
+    if (npk < 0) {   /* (after the level has settled: 3 s in) */
+        static const uint32_t rgs[2][2] = { { 0x80000000u, 0x84000000u }, { 0x18B000u, 0x4000000u } }; int rg; uint32_t va;
+        if (coop_now() - scan_t < 3000u) return;
+        npk = 0;
+        for (rg = 0; rg < 2; rg++) for (va = rgs[rg][0]; va < rgs[rg][1] && npk < 160; va += 4) if (MEM32(va) == 0x1748B0u) pks[npk++] = va;
+        tt_dbg("[COOPPICK] %d pickups in the level (player 2 takes them himself)\n", npk);
+    }
+    for (k = 0; k < npk; k++) {
+        uint32_t o = pks[k], kind; float dx, dy, dz; int sw;
+        if (MEM32(o) != 0x1748B0u || !(MEM32(o + 0x3F8) & 2u)) continue;
+        dx = MEMF(a + 0xF0) - MEMF(o + 0xF0); dy = MEMF(a + 0xF4) - MEMF(o + 0xF4); dz = MEMF(a + 0xF8) - MEMF(o + 0xF8);
+        if (dx * dx + dy * dy > 1.4f * 1.4f || dz > 3.0f || dz < -3.0f) continue;
+        kind = MEM32(o + 0x3D0);
+        if (kind <= 3) { if ((int32_t)MEM32(a + 0x2FC) >= (int32_t)MEM32(a + 0x300)) continue; }
+        else { uint32_t am = MEM32(a + 0x304); if ((am & 0xFFFFu) >= (am >> 16) && (am >> 16)) continue; }
+        (void)sw;
+        if (kind <= 3) { int32_t mx = (int32_t)MEM32(a + 0x300), h = (int32_t)MEM32(a + 0x2FC) + mx / 3; MEM32(a + 0x2FC) = (uint32_t)(h > mx ? mx : h); }
+        else { uint32_t am = MEM32(a + 0x304), mx = am >> 16, n = (am & 0xFFFFu) + (getenv("TT_COOP_P2QUIVER") ? (uint32_t)atoi(getenv("TT_COOP_P2QUIVER")) : 40u); if (mx && n > mx) n = mx; MEM32(a + 0x304) = (am & 0xFFFF0000u) | n; }   /* (a quiver: 40, as the game's gave him 1 -> 41) */
+        {   /* the pickup goes (0x8F700), with the game's pickup sound */
+            uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, sa[6]; float one = 1.0f, zero = 0.0f;
+            ecx = o; PUSH32(esp, 0x0008F700u); sub_0008F700(); esp = sp;
+            sa[0] = kind <= 3 ? 0x9C5u : 0x9D1u; memcpy(&sa[1], &one, 4); memcpy(&sa[2], &zero, 4); memcpy(&sa[3], &zero, 4); memcpy(&sa[4], &one, 4); sa[5] = 0;
+            tt_gcall(0x000C3640u, 0, 6, sa);
+            esp = sp; eax = r0; ecx = r1; edx = r2; }
+        tt_dbg("[COOPPICK] player 2 takes the pickup %08X (kind %u): health %d, ammo %u\n", o, kind, (int32_t)MEM32(a + 0x2FC), MEM32(a + 0x304) & 0xFFFFu);
+    }
+}
 void tt_coop_frame(void)
 {
     static uint32_t last; uint32_t now = coop_now(), p1 = MEM32(0x43B15Cu), r = COOP_PADREC(1);
+    if (coop_mode() && coop_p2 >= 0x10000u) coop_p2_placed_pickups();
     if (!coop_mode() || now - last < 1000) return;
     last = now;
+    if (getenv("TT_COOP_P1DOWNAT") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > (uint32_t)atoi(getenv("TT_COOP_P1DOWNAT"))) { extern void coop_p1_down_now(void); static int done; if (!done) { done = 1; coop_p1_down_now(); tt_dbg("[COOPPICK] test: player 1 put down\n"); } }   /* (testing) */
     if (getenv("TT_COOP_PICKTEST") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > 12000u && (now / 1000u) % 2u == 0) {
         /* (testing, Pickups: Double) every 2 s player 2 is put on a health or ammo pickup (vtable 0x1748B0, +0x3F8 bit 2
          * set: not yet gone), hurt and short of ammo, so his touches come */
@@ -8810,21 +8859,25 @@ void tt_coop_frame(void)
             npk = 0;
             for (rg = 0; rg < 2; rg++) for (va = rgs[rg][0]; va < rgs[rg][1] && npk < 256; va += 4) if (MEM32(va) == 0x1748B0u) pks[npk++] = va;
             tt_dbg("[COOPPICK] test: %d pickup objects\n", npk);
+            { int q; for (q = 0; q < npk; q++) { uint32_t hn = MEM32(pks[q] + 0x18); tt_dbg("[COOPPICK]   %08X kind %u flags %08X at %.1f %.1f %.1f '%s'\n", pks[q], MEM32(pks[q] + 0x3D0), MEM32(pks[q] + 0x3F8), MEMF(pks[q] + 0xF0), MEMF(pks[q] + 0xF4), MEMF(pks[q] + 0xF8), hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : ""); } }
         }
         for (k = 0; k < npk; k++) {
             va = pks[k];
-            if (MEM32(va) == 0x1748B0u && ((MEM32(va + 0x3F8) & 2) || coop_pick_kept(va)) && MEMF(va + 0xF0) != 0.0f && va != lastpk) {
+            if (MEM32(va) == 0x1748B0u && ((MEM32(va + 0x3F8) & 2) || coop_pick_kept(va) || getenv("TT_COOP_PICKANY")) && MEMF(va + 0xF0) != 0.0f && (va != lastpk || getenv("TT_COOP_PICKANY")) && (!getenv("TT_COOP_PICKKIND") || MEM32(va + 0x3D0) == (uint32_t)atoi(getenv("TT_COOP_PICKKIND")))) {
                 uint32_t a3[3]; float x = MEMF(va + 0xF0) + 0.2f, y = MEMF(va + 0xF4), z = MEMF(va + 0xF8);
                 memcpy(&a3[0], &x, 4); memcpy(&a3[1], &y, 4); memcpy(&a3[2], &z, 4);
                 if ((int32_t)MEM32(coop_p2 + 0x2FC) > 300) MEM32(coop_p2 + 0x2FC) = 300;
                 MEM16(coop_p2 + 0x304) = 3;
                 tt_dbg("[COOPPICK] test: player 2 put on pickup %08X (kind %u)\n", va, MEM32(va + 0x3D0));
+                if (getenv("TT_COOP_PICKOUT")) MEM32(va + 0x3F8) = 2u;   /* (test: as if out) */
+                if (getenv("TT_COOP_PICKP1")) { MEM16(coop_first_char + 0x304) = 3; tt_gcall(0x000865D0u, coop_first_char, 3, a3); } else
                 tt_gcall(0x000865D0u, coop_p2, 3, a3);   /* (the character's SetPosition) */
                 lastpk = va;
                 break;
             }
         }
     }
+    if (getenv("TT_COOP_AMMOLOG") && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u) tt_dbg("[COOPAMMO] P1 %u (+304 %08X) P2 %u (+304 %08X)\n", MEM32(coop_first_char + 0x304) & 0xFFFF, MEM32(coop_first_char + 0x304), MEM32(coop_p2 + 0x304) & 0xFFFF, MEM32(coop_p2 + 0x304));   /* (testing) */
     if (coop_p2 && p1 >= 0x10000u)
         tt_dbg("[COOP2] t %6u  P1 %.2f %.2f %.2f hp %d | P2 %.2f %.2f %.2f hp %d +49C %08X | port1 h %08X stick %.2f %.2f held %08X\n",
                now - coop_p2_t0, MEMF(p1 + 0xF0), MEMF(p1 + 0xF4), MEMF(p1 + 0xF8), (int32_t)MEM32(p1 + 0x2FC),

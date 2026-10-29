@@ -3287,3 +3287,10 @@ twotowers/src/twotowers_manual.c
     he is back (TT_COOP_LEASHDOWN: as before).
   - Versus pause menu: Restart Round picks a new random start too, as
     Restart Match does (the score kept).
+  - Co-op: player 2 takes any pickup he walks over when he needs it --
+    the level's own (the arrows by Balin's Tomb's cave troll) came only
+    for player 1 (TT_COOP_NOP2PLACED: as before).
+  - Co-op: the leash 28 units (was 20): a little more room for player 2.
+  - Versus: the round's pickups are put out at "FIGHT!", where the players
+    stand -- put out as the round began they hung over the ground (the
+    players are dropped in from above), out of everyone's reach.
