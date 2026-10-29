@@ -3301,3 +3301,14 @@ twotowers/src/twotowers_manual.c
   - Co-op pause menu: a note at the top turns P2 Teleport on or off -- Y
     (the I key) or a click on it -- without going to the settings
     (TT_COOP_NOTELEKEY: none).
+  - Co-op: player 2's hits damage every object player 1's do -- boxes,
+    Fangorn's log, the Breached Wall's catapult, the enemies' shields (0x91920
+    takes his role's hit wherever it takes the player's, not only on the
+    props) (TT_COOP_P2PROPONLY: the props only, as in 1.9.8).
+  - Co-op HUD: a boss bar of another shape (the Breached Wall's catapult)
+    is moved under player 2's bar whole -- half of it stayed on his bar. A
+    top-right list's top pieces move together (TT_COOP_ALLYRIGHTONLY: as
+    before).
+  - Versus with enemies: Restart Match and Restart Round put the arena's
+    enemies back where the match found them, whole, the fallen up again
+    (TT_VS_NOFOERESET: as before).
