@@ -47,7 +47,7 @@ Made posisble by [The128ReBits](https://github.com/The128ReBits).
 - **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and sounds), the **Elven Warrior**, the **Uruk Captain**.
 - **Troll Battle** (Mode: on the Versus menu): cave troll against cave troll in Balin's Tomb or Amon Hen, with twice the health, thrown logs, its own end picture, its own sounds for FIGHT and the match's end, its own results table and kept records.
 - **Both players may pick the same hero** in Deathmatch.
-- **Enemies in the arenas:** a few of the level's own orcs and Uruk-hai on **Amon Hen**, **Fangorn Forest**, the **Plains of Rohan**, the **Breached Wall** and the **Hornburg Courtyard**, spread over the map. They attack both players with their own sounds and hit as hard as a player does. Their blows count for neither player.
+- **Enemies in the arenas:** a few of the level's own orcs and Uruk-hai on **Amon Hen**, **Fangorn Forest**, the **Plains of Rohan**, the **Breached Wall** and the **Hornburg Courtyard**, spread over the map. They attack both players with their own sounds and hit as hard as a player does. 
 - **Random starts:** each match begins somewhere else on the map, and later rounds go on where the players stand. Starts are always on the map's ground (Balin's Tomb: its hall floor, no ledges).
 - **Explore the whole map:** the levels' parts are joined (Amon Hen from the start to Lurtz's ruins), every part is drawn, and the map's edges hold both players. The props keep their collision and still break.
 - **The camera** keeps both players in view by the map's walls, and stands further back when the Ent or a troll is fighting.
