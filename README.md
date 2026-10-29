@@ -39,8 +39,8 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 1.9.9
 
 ### The128ReBits' improvements
-Made posisble by [The128ReBits](https://github.com/The128ReBits).
-- **More versus exclusive hero's:** the **Elven Warrior**, the **Uruk Captain** the **Cave Troll**, the **Ent** and **Sarumon**, each with his own moves and weapons.
+Made possible by [The128ReBits](https://github.com/The128ReBits).
+- **More versus exclusive hero's:** the **Elven Warrior**, the **Uruk Captain** the **Cave Troll**, the **Ent** and **Saruman**, each with his own moves and weapons.
 - **Animation improvements** for all the extra heroes. 
 
 ### Versus: new heroes and a new mode
