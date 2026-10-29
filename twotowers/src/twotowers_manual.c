@@ -6891,17 +6891,11 @@ static void vs_frame(void)
     {   /* (1.9.9) Restart Match (the pause menu's, menus.c): the match from its first round -- the scores and the round back to 0,
          * both heroes whole at the match's starting spots, the countdown again */
         extern volatile int tt_vs_restart_req;
-        if (tt_vs_restart_req == 2 && vs_have) { int k; tt_vs_restart_req = 0;   /* (Restart Round: the round again from where it began -- the score kept) */
-            for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);
+        if ((tt_vs_restart_req == 1 || tt_vs_restart_req == 2) && vs_have) { int k, rnd = tt_vs_restart_req == 2; tt_vs_restart_req = 0;   /* (1.9.9: Restart Round too -- a new random start as well, the score kept, a playtest) */
             int mid = vs_state == 0 || vs_state == 3;   /* (in a round, or its countdown: that round again; between rounds, the next one now) */
-            float keep[2][3]; int had = vs_rs_ok; memcpy(keep, vs_rs_pos, sizeof keep);
-            if (mid && vs_round > 0) vs_round--;
-            vs_round_start();
-            for (k = 0; k < 2; k++) { uint32_t a = k ? coop_p2 : coop_first_char; if (a >= 0x10000u && had && mid) { float q[3]; q[0] = keep[k][0]; q[1] = keep[k][1]; q[2] = keep[k][2] + 0.5f; vs_place(a, q); vs_rs_pos[k][0] = keep[k][0]; vs_rs_pos[k][1] = keep[k][1]; vs_rs_pos[k][2] = keep[k][2]; } }
-            tt_dbg("[VS] the round restarted (the pause menu's Restart Round): round %d, P1 %d - %d P2\n", vs_round, vs_score[0], vs_score[1]); }
-        if (tt_vs_restart_req == 1 && vs_have) { int k; tt_vs_restart_req = 0;
-            vs_score[0] = vs_score[1] = 0; vs_round = 0; vs_last_win = -1; vs_text[0] = 0;
-            memset(tt_vs_st, 0, sizeof tt_vs_st);
+            if (!rnd) { vs_score[0] = vs_score[1] = 0; vs_round = 0; vs_last_win = -1; vs_text[0] = 0;
+            memset(tt_vs_st, 0, sizeof tt_vs_st); }
+            else if (mid && vs_round > 0) vs_round--;
             for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);
             if (!getenv("TT_VS_FIXEDSTART") && MEM32(0x1BB2A4u) != 12u) {   /* (a new random start, as a new match's -- a playtest: "the same as if you started another game") */
                 extern int tt_vs_random_spot(float *p, uint32_t seed); extern int tt_vs_spot_from(float x0, float y0, float lo, float want, float hi, float *p); float p[3], q[3];
@@ -6912,7 +6906,8 @@ static void vs_frame(void)
                     tt_dbg("[VS] restart: player 1 at %.1f %.1f, player 2 at %.1f %.1f\n", vs_spot[0][0], vs_spot[0][1], vs_spot[1][0], vs_spot[1][1]); }
             }
             vs_round_start();
-            tt_dbg("[VS] the match restarted (the pause menu's Restart Match)\n"); }
+            if (rnd) tt_dbg("[VS] the round restarted (the pause menu's Restart Round): round %d, P1 %d - %d P2, a new start\n", vs_round, vs_score[0], vs_score[1]);
+            else tt_dbg("[VS] the match restarted (the pause menu's Restart Match)\n"); }
     }
     vs_targets();
     vs_exp_max();

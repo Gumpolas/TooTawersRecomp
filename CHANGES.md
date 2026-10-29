@@ -3285,3 +3285,5 @@ twotowers/src/twotowers_manual.c
     countdown, between rounds) hits no one (TT_VS_FOEPREROUND: as before).
   - Co-op: no leash while player 1 is down -- player 2 goes anywhere until
     he is back (TT_COOP_LEASHDOWN: as before).
+  - Versus pause menu: Restart Round picks a new random start too, as
+    Restart Match does (the score kept).
