@@ -2,7 +2,7 @@
 
 ** Co-op is not fully playable with the extra heroes mod. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's. Some HUD elements might not show correctly with the extra heros as well (Sauron as player 2 shows his ammo hud for both players)
 
-** Cave troll battles and Versus only/exclusive modes and hero's require the extra hero's mod to be enabled. 
+** Cave troll battles and Versus only/exclusive modes and hero's require the extra hero's mod to be enabled. Some crashes may occur during a versus match after playing multiple versus matches in a row. 
 
 Two players on one PC play the story levels together. They share one camera, and each player has their own
 hero, controller, weapons, health, ammo, experience and upgrades. There is no networking: one game runs, with a
