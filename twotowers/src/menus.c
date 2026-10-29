@@ -2465,7 +2465,7 @@ void tt_menus_tick(void)
             if (!done && GetTickCount() - t0 > (DWORD)ms) { extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t a3[3], i2;
                 memcpy(&a3[0], &x, 4); memcpy(&a3[1], &y, 4); memcpy(&a3[2], &z, 4); tt_gcall(0x000865D0u, p1, 3, a3);
                 if (!getenv("TT_TPNOPM")) for (i2 = 0; i2 < 256; i2++) { uint32_t pm = G32(0x41F428u + 0x1088u + 4u * i2);
-                    if (pm < 0x10000u || pm >= 0x84000000u) continue;
+                    if (!((pm >= 0x10000u && pm < 0x03FFFF00u) || (pm >= 0x80000000u && pm < 0x83FFFF00u))) continue;
                     { float x0, x1, y0, y1; uint32_t v; v = G32(pm + 0x48); memcpy(&x0, &v, 4); v = G32(pm + 0x58); memcpy(&x1, &v, 4); v = G32(pm + 0x4C); memcpy(&y0, &v, 4); v = G32(pm + 0x5C); memcpy(&y1, &v, 4);
                       if (x >= x0 && x <= x1 && y >= y0 && y <= y1) { G32(p1 + 0x2EC) = i2; break; } } }
                 done = 1; tl = GetTickCount(); tt_dbg("[TPANY] player 1 put at %.1f %.1f %.1f\n", x, y, z); }

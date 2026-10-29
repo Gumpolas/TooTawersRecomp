@@ -3097,6 +3097,10 @@ static uint32_t coop_bot_drove_t;   /* the P2 Bot last wrote pad 2 (the leash is
  * cell) within a 64 x 64 box round player 2's cell, then the furthest cell up to 4 steps on that is in a straight
  * walkable line from him. Without a pathmap, a blocked goal or start, or no way within the box: straight at it.
  * TT_COOP_BOTNOPATH: always straight. Player 2's bot: straight unless TT_COOP_BOTPATH (2026-10-25). */
+/* (1.9.9) an address the game's memory has: its 64 MB (0x10000 up to 0x04000000) or the contiguous window (0x80000000, 64 MB).
+ * The level's pathmap list holds leftovers past its own entries -- one pointed at 0x76EA0xxx, and reading it brought the game down
+ * in a Troll Battle (a playtest's crash log: vs_floor) */
+static int coop_va_ok(uint32_t a, uint32_t n) { return (a >= 0x10000u && a < 0x04000000u && a + n <= 0x04000000u) || (a >= 0x80000000u && a < 0x84000000u && a + n <= 0x84000000u); }
 static uint32_t coop_pathmap(uint32_t actor); static int coop_pm_cell(uint32_t pm, int c, int r);
 #define COOP_PM_WALK(v) ((v) == 0 || (v) == 2)   /* walkable pathmap states (2: player 1 stands on them) */
 static int coop_pm_line(uint32_t pm, int c0, int r0, int c1, int r1)   /* the cells on the line from (c0,r0) to (c1,r1) all walkable */
@@ -4423,7 +4427,7 @@ static uint32_t coop_pathmap(uint32_t actor)
     i = MEM32(actor + 0x2ECu);
     if (i > 255u) return 0;
     pm = MEM32(0x41F428u + 0x1088u + 4u * i);
-    if (pm < 0x10000u || MEM32(pm + 0x6Cu) < 0x10000u || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u) return 0;
+    if (!coop_va_ok(pm, 0x80u) || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u || !coop_va_ok(MEM32(pm + 0x6Cu), MEM32(pm + 0x70u) * MEM32(pm + 0x74u))) return 0;
     return pm;
 }
 static int coop_pm_cell(uint32_t pm, int c, int r)   /* -1 outside */
@@ -4484,7 +4488,7 @@ static void coop_pm_log(uint32_t p1)
     i1 = MEM32(p1 + 0x2ECu); i2 = MEM32(a + 0x2ECu);
     for (j = 0; j < 64; j++) {
         uint32_t pm = MEM32(0x41F428u + 0x1088u + 4u * j); int sz, w, h; float ox, oy;
-        if (pm < 0x10000u || pm >= 0x84000000u || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u) continue;
+        if (!coop_va_ok(pm, 0x80u) || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u || !coop_va_ok(MEM32(pm + 0x6Cu), MEM32(pm + 0x70u) * MEM32(pm + 0x74u))) continue;
         ox = MEMF(pm + 0x48u); oy = MEMF(pm + 0x4Cu); sz = (int)MEM32(pm + 0x68u); w = (int)MEM32(pm + 0x70u); h = (int)MEM32(pm + 0x74u);
         tt_dbg("[PMLOG]   pathmap %u: x %.1f .. %.1f, y %.1f .. %.1f (%dx%d of %d)\n", j, ox, ox + (float)(w * sz), oy, oy + (float)(h * sz), w, h, sz);
     }
@@ -5961,9 +5965,9 @@ static float vs_wz[2][8]; static uint32_t vs_wt[2][8], vs_back_t[2]; static int 
 static int vs_pm_ok(uint32_t q)
 {
     uint32_t base, W, H;
-    if (q < 0x10000u || q >= 0x84000000u) return 0;
+    if (!coop_va_ok(q, 0x80u)) return 0;
     base = MEM32(q + 0x6Cu); W = MEM32(q + 0x70u); H = MEM32(q + 0x74u);
-    return base >= 0x10000u && base < 0x84000000u && (int32_t)MEM32(q + 0x68u) > 0 && W - 1u <= 4095u && H - 1u <= 4095u && base + W * H < 0x84000000u;
+    return (int32_t)MEM32(q + 0x68u) > 0 && W - 1u <= 4095u && H - 1u <= 4095u && coop_va_ok(base, W * H);
 }
 /* (1.9.9) the ground at x, y by every pathmap over it: 1 an open cell in one of them, 0 walled in all, -1 none over it */
 static int vs_union_walk(float x, float y)
@@ -6216,9 +6220,9 @@ static void vs_open_seams(void)
         for (r = 0; r < H; r++) for (c = 0; c < W; c++) { int v = (MEM8(MEM32(q + 0x6Cu) + (uint32_t)(W * r + c)) >> 2) & 3; unsigned char b = (unsigned char)(v == 0 ? 255 : v == 2 ? 170 : v == 1 ? 90 : 0); fwrite(&b, 1, 1, f); }
         fclose(f); }
     for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); int W, H; uint32_t base;
-        if (q < 0x10000u || q >= 0x84000000u) continue;
+        if (!coop_va_ok(q, 0x80u)) continue;
         base = MEM32(q + 0x6Cu); W = (int)MEM32(q + 0x70); H = (int)MEM32(q + 0x74);
-        if (base < 0x10000u || base >= 0x84000000u || (int32_t)MEM32(q + 0x68) <= 0 || W <= 0 || H <= 0 || W > 4096 || H > 4096 || base + (uint32_t)(W * H) >= 0x84000000u) {
+        if ((int32_t)MEM32(q + 0x68) <= 0 || W <= 0 || H <= 0 || W > 4096 || H > 4096 || !coop_va_ok(base, (uint32_t)(W * H))) {
             if (base) tt_dbg("[VS] pathmap %u left alone: cells at %08X, %dx%d, cell size %d\n", i, base, W, H, (int32_t)MEM32(q + 0x68)); continue; }
         lst[n++] = q; }
     for (i = 0; i < (uint32_t)n; i++) {
@@ -6432,7 +6436,7 @@ static int vs_eye_inside(float x, float y)
     uint32_t i, pm; static uint32_t list[256]; static int n = -1; static unsigned lvl = ~0u;
     if (lvl != coop_level_n || n <= 0) { lvl = coop_level_n; n = 0;
         for (i = 0; i < 256; i++) { pm = MEM32(0x41F428u + 0x1088u + 4u * i);
-            if (pm < 0x10000u || pm >= 0x84000000u || MEM32(pm + 0x6Cu) < 0x10000u || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u) continue;
+            if (!coop_va_ok(pm, 0x80u) || (int32_t)MEM32(pm + 0x68u) <= 0 || MEM32(pm + 0x70u) - 1u > 4095u || MEM32(pm + 0x74u) - 1u > 4095u || !coop_va_ok(MEM32(pm + 0x6Cu), MEM32(pm + 0x70u) * MEM32(pm + 0x74u))) continue;
             list[n++] = pm; }
         { static int ln = -1; if (n != ln) { int q; ln = n; tt_dbg("[VS] camera: %d pathmaps in the level\n", n);
             if (getenv("TT_VS_PMLIST")) for (q = 0; q < n; q++) tt_dbg("[VSPM] %d: x %.1f..%.1f y %.1f..%.1f z %.1f..%.1f cell %d, %dx%d\n", q, MEMF(list[q] + 0x48), MEMF(list[q] + 0x58), MEMF(list[q] + 0x4C), MEMF(list[q] + 0x5C), MEMF(list[q] + 0x50), MEMF(list[q] + 0x60), (int32_t)MEM32(list[q] + 0x68), (int32_t)MEM32(list[q] + 0x70), (int32_t)MEM32(list[q] + 0x74)); } } }

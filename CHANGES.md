@@ -3219,3 +3219,9 @@ twotowers/src/main.c
   - A crash report gives the program's start and the crash's offset from it,
     and the native return addresses as offsets (the program loads somewhere
     else each run; the old check looked for the fixed 0x140000000 only).
+twotowers/src/twotowers_manual.c, menus.c
+  - The level's pathmap list read only through addresses the game's memory
+    has (coop_va_ok: its 64 MB, or the contiguous window at 0x80000000):
+    past its own entries the list holds leftovers, and one at 0x76EA0xxx --
+    let through by the old "under 0x84000000" check -- crashed the game in
+    a Troll Battle on Balin's Tomb (vs_floor, a playtest's crash log).
