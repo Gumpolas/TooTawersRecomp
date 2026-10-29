@@ -3310,5 +3310,6 @@ twotowers/src/twotowers_manual.c
     top-right list's top pieces move together (TT_COOP_ALLYRIGHTONLY: as
     before).
   - Versus with enemies: Restart Match and Restart Round put the arena's
-    enemies back where the match found them, whole, the fallen up again
-    (TT_VS_NOFOERESET: as before).
+    enemies back where the match found them, whole, the killed ones alive
+    again (their death flags undone, out of their death states 12-14 / 19:
+    observed walking and fighting again) (TT_VS_NOFOERESET: as before).

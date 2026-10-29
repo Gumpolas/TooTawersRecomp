@@ -5432,6 +5432,18 @@ VsStats tt_vs_st[2]; static uint32_t vs_round_t0; static int vs_was_down[2];
 /* (1.9.9) Versus with enemies: each restart (the pause menu's Restart Match or Round) puts the arena's enemies back as the match
  * found them -- where they stood, whole, the fallen up again (as a downed hero gets up: state 47, INP_RESSURECT 28) -- a playtest:
  * "they seem to stay as they were even with a restart". Taken at the first round's start. TT_VS_NOFOERESET */
+/* an enemy up again: whole, its death flags undone (+0x49C bit 0x40 off, +0x110 bit 0x20 on, as a hero's respawn), and out of its
+ * death states (the enemies' 12-14 and 19, observed) into TT_FOEUPSTATE (1) with its state machine's blocks cleared */
+void tt_foe_revive(uint32_t e, int32_t hp)
+{
+    uint32_t sm = e + 0x3D8, st = MEM32(e + 0x408), to = getenv("TT_FOEUPSTATE") ? (uint32_t)atoi(getenv("TT_FOEUPSTATE")) : 1u;
+    int dead = (int32_t)MEM32(e + 0x2FC) <= 0 || (MEM32(e + 0x49C) & 0x40u);
+    MEM32(e + 0x2FC) = (uint32_t)(hp > 0 ? hp : (int32_t)MEM32(e + 0x300));
+    MEM32(e + 0x49C) &= ~0x40u; MEM32(e + 0x110) |= 0x20u;
+    if (dead) { MEM32(sm + 0x50) = 0; MEM32(sm + 0x54) = 0; MEM32(sm + 0xC) = 0; MEM32(sm + 8) = 0; MEM32(e + 0x408) = to; MEMF(e + 0x420) = 0.0f;
+        if (getenv("TT_FOEUPEV")) coop_hero_state(e, (uint32_t)atoi(getenv("TT_FOEUPEV"))); }
+    if (getenv("TT_FOEDEATHLOG")) tt_dbg("[FOEDEATH] %08X revived: state %u -> %u, hp %d\n", e, st, MEM32(e + 0x408), (int32_t)MEM32(e + 0x2FC));
+}
 static struct { uint32_t a, vt; float p[3]; int32_t hp; } vs_foe0[48]; static int vs_nfoe0 = -1; static unsigned vs_foe0_level = ~0u;
 static void vs_foes_note(void)
 {
@@ -5453,13 +5465,11 @@ static void vs_foes_reset(void)
         if (e < 0x10000u || MEM32(e) != vs_foe0[i].vt || MEM32(e + 0x114) != 3u) continue;
         st = MEM32(e + 0x408);
         q[0] = vs_foe0[i].p[0]; q[1] = vs_foe0[i].p[1]; q[2] = vs_foe0[i].p[2] + 0.3f; vs_place(e, q);
-        MEM32(e + 0x2FC) = (uint32_t)(vs_foe0[i].hp > 0 ? vs_foe0[i].hp : (int32_t)MEM32(e + 0x300));
-        MEM32(e + 0x49C) &= ~0x40u; MEM32(e + 0x110) |= 0x20u;
-        if (st >= 44 && st <= 54) {   /* (fallen: up again) */
-            uint32_t sm = e + 0x3D8; MEM32(sm + 0x50) = 0; MEM32(sm + 0x54) = 0; MEM32(e + 0x408) = 47u; MEMF(e + 0x420) = 0.0f;
-            coop_hero_state(e, 28u); up++; }
+        if ((int32_t)MEM32(e + 0x2FC) <= 0 || (MEM32(e + 0x49C) & 0x40u)) up++;
+        (void)st; tt_foe_revive(e, vs_foe0[i].hp);
     }
     tt_dbg("[VS] restart: %d enemies put back (%d of them up again)\n", vs_nfoe0, up);
+    if (getenv("TT_VS_FOELOG2")) for (i = 0; i < vs_nfoe0; i++) { uint32_t e = vs_foe0[i].a; tt_dbg("[VSFOE2] %08X vt %08X state %u hp %d +49C %08X +110 %08X at %.1f %.1f %.1f\n", e, MEM32(e), MEM32(e + 0x408), (int32_t)MEM32(e + 0x2FC), MEM32(e + 0x49C), MEM32(e + 0x110), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8)); }
 }
 int tt_vs_round_live(void) { return tt_vs_on() && vs_have && vs_state == 0; }   /* (1.9.9) a round being fought: the enemies' blows count only then */
 int tt_vs_frozen(void) { return tt_vs_on() && (vs_state == 3 || !vs_have); }   /* (and before the first round: nobody moves until the countdown ends) */
@@ -7254,7 +7264,8 @@ static void vs_frame(void)
     if (getenv("TT_VS_PKAGE0")) { int i; for (i = 0; i < vs_npk_out; i++) if (vs_pk_out[i] >= 0x10000u && MEM32(vs_pk_out[i]) == 0x1748B0u && (MEM32(vs_pk_out[i] + 0x3F8) & 2u)) MEM32(vs_pk_out[i] + 0x400) = 0; }   /* (the pickups out, the shield too: their age kept new -- a drop's item goes at 6 s) */
     if (getenv("TT_VS_FOEKILL") && vs_state == 0 && now - vs_round_t0 > 2000u) { static int done; int i; if (!done) { done = 1;   /* (test: the enemies felled) */
             for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e == coop_first_char || e == coop_p2 || MEM32(e + 0x114) != 3u || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
-                MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); }
+                if (getenv("TT_VS_FOEKILL")[0] == '2') { MEM32(e + 0x2FC) = 0; tt_gcall(0x000838E0u, e, 0, NULL); }   /* (the die method) */
+                else { MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); } }
             tt_dbg("[VS] test: the enemies felled\n"); } }
     if (getenv("TT_VS_P2AT") && vs_state == 0 && coop_p2 >= 0x10000u) { static int done; if (!done && now - vs_round_t0 > 2000u) { float q[3]; done = 1;   /* (test: player 2 put on a spot, his ammo 3) */
             if (sscanf(getenv("TT_VS_P2AT"), "%f,%f", &q[0], &q[1]) == 2) { q[2] = MEMF(coop_p2 + 0xF8) + 0.5f; vs_place(coop_p2, q); MEM32(coop_p2 + 0x304) = (MEM32(coop_p2 + 0x304) & 0xFFFF0000u) | 3u; tt_dbg("[VS] test: P2 put at %.1f %.1f, ammo 3\n", q[0], q[1]); } } }
@@ -8911,6 +8922,11 @@ void tt_coop_frame(void)
             tt_dbg("[HUDLIST] t %u list %d (%u):%s%s\n", now - coop_p2_t0, li, n, b, coop_is_bossbar(li) ? " BOSS" : ""); } }
     if (getenv("TT_COOP_P2AT") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > 10000u) { static int done; float q[3]; if (!done && sscanf(getenv("TT_COOP_P2AT"), "%f,%f,%f", &q[0], &q[1], &q[2]) == 3) { uint32_t a3[3]; done = 1;   /* (test) */
         memcpy(a3, q, 12); tt_gcall(0x000865D0u, coop_p2, 3, a3); tt_dbg("[COOP2] test: player 2 put at %.1f %.1f %.1f\n", q[0], q[1], q[2]); } }
+    if (getenv("TT_FOEREVIVE")) { static uint32_t dt[64]; int i; extern void tt_foe_revive(uint32_t e, int32_t hp);   /* (test) a fallen enemy revived 6 s after it fell */
+        for (i = 0; i < coop_nchars && i < 64; i++) { uint32_t e = coop_chars[i]; if (e == coop_first_char || e == coop_p2 || MEM32(e + 0x114) != 3u) continue;
+            if ((int32_t)MEM32(e + 0x2FC) <= 0) { if (!dt[i]) dt[i] = now | 1; else if (now - dt[i] > 6000u) { dt[i] = 0; tt_foe_revive(e, 0); } } else dt[i] = 0; } }
+    if (getenv("TT_FOEDEATHLOG")) { int i; for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e == coop_first_char || e == coop_p2 || MEM32(e + 0x114) != 3u) continue;   /* (research) the fallen enemies' states */
+            if ((int32_t)MEM32(e + 0x2FC) <= 0 || MEM32(e + 0x408) >= 44u) tt_dbg("[FOEDEATH] t %u %08X vt %08X state %u hp %d +49C %08X +110 %08X +114 %X at %.1f %.1f %.1f\n", now, e, MEM32(e), MEM32(e + 0x408), (int32_t)MEM32(e + 0x2FC), MEM32(e + 0x49C), MEM32(e + 0x110), MEM32(e + 0x114), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8)); } }
     if (getenv("TT_COOP_P1DOWNAT") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > (uint32_t)atoi(getenv("TT_COOP_P1DOWNAT"))) { extern void coop_p1_down_now(void); static int done; if (!done) { done = 1; coop_p1_down_now(); tt_dbg("[COOPPICK] test: player 1 put down\n"); } }   /* (testing) */
     if (getenv("TT_COOP_PICKTEST") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > 12000u && (now / 1000u) % 2u == 0) {
         /* (testing, Pickups: Double) every 2 s player 2 is put on a health or ammo pickup (vtable 0x1748B0, +0x3F8 bit 2
