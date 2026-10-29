@@ -3212,3 +3212,6 @@ twotowers/src/twotowers_manual.c, xboxrecomp-0.12.0/src/input/xinput_device.c
     1 held on one spot. (test) TT_VS_PMNEAR.
   - The held-movement-keys log only after 4 s (its start time had made it
     log at once).
+twotowers/src/twotowers_manual.c
+  - Co-op: player 2 held where he stands is put beside player 1 only with
+    the Co-op menu's P2 Teleport on (with it off, no teleport at all).

@@ -4779,10 +4779,10 @@ static void coop_place(void)
     }
     {   /* (1.9.9) stuck: player 2 held where he stands (the Gates of Moria's lake: wading, an unseen wall round the water held
          * him, a playtest) -- the stick pushed over half way, under 0.4 units moved in 2 s, over 6 units from player 1, neither
-         * hero down: put beside player 1, whatever the P2 Teleport setting. TT_COOP_NOSTUCKPUT: off */
+         * hero down: put beside player 1 -- only with the Co-op menu's P2 Teleport on (a playtest: off, no teleport at all). TT_COOP_NOSTUCKPUT: off */
         static uint32_t st_t; static float st_x, st_y; extern int coop_hero_down(int);
         uint32_t r = COOP_PADREC(1u); float lx = MEMF(r + 0x14), ly = MEMF(r + 0x18);
-        if (a >= 0x10000u && p1 >= 0x10000u && coop_place_frames <= 0 && !tt_vs_on() && !coop_hero_down(0) && !coop_hero_down(1) && !getenv("TT_COOP_NOSTUCKPUT")
+        if (a >= 0x10000u && p1 >= 0x10000u && coop_place_frames <= 0 && !tt_vs_on() && !coop_hero_down(0) && !coop_hero_down(1) && !getenv("TT_COOP_NOSTUCKPUT") && tt_coop_setting(3)
             && lx * lx + ly * ly > 0.25f) {
             float x = MEMF(a + 0xF0), y = MEMF(a + 0xF4), dx = MEMF(p1 + 0xF0) - x, dy = MEMF(p1 + 0xF4) - y;
             if (!st_t || (x - st_x) * (x - st_x) + (y - st_y) * (y - st_y) > 0.16f) { st_t = coop_now() | 1; st_x = x; st_y = y; }
