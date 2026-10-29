@@ -39,7 +39,7 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 1.9.9
 
 ### The128ReBits' improvements
-Made posisble by [The128ReBits](https://github.com/The128ReBits), thank you!
+Made posisble by [The128ReBits](https://github.com/The128ReBits).
 - **Heroes built from the disc's own characters:** the **Elven Warrior**, the **Uruk Captain** and the **Cave Troll** are Versus heroes now (with Saruman and also the Ent), each with his own moves and weapons.
 - **Animation improveements** for all the extra heroes. 
 
