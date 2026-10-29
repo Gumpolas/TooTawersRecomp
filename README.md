@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. If the game crashes or freezes, restart it: the same spot usually works on the next try.
+> ⚠ **Work in progress.** The game is playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co op and Versus are still in alpha. See known issues at the bottom.
 
 ## Downloads
 
@@ -38,16 +38,14 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 
 ## What's new in 1.9.9
 
-### The128ReBits' Definitive Mod R8
-With [The128ReBits](https://github.com/The128ReBits)' work (PR #11). Thank you!
-- **Heroes built from the disc's own characters:** the **Elven Warrior**, the **Uruk Captain** and the **Cave Troll** are Versus heroes now (with Saruman and the Ent, below), each with his own moves and weapons.
-- **Better animations** for the extra heroes: decoded as the Xbox does.
-- **Languages:** text, subtitles, in-game voices, cutscene voices and films can be chosen apart; community film subtitles; the Spanish, Italian, French and German voices on the USA disc.
-- **Saves** are kept in a `saves` folder beside the game. The ones you had are copied there the first time (the originals stay where they were).
+### The128ReBits' improvements
+Made posisble by [The128ReBits](https://github.com/The128ReBits), thank you!
+- **Heroes built from the disc's own characters:** the **Elven Warrior**, the **Uruk Captain** and the **Cave Troll** are Versus heroes now (with Saruman and also the Ent), each with his own moves and weapons.
+- **Better animations** for the extra heroes
 
 ### Versus: new heroes and a new mode
-- **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and the forest's Ent moans), the **Elven Warrior**, the **Uruk Captain** and the **Berserker** (the Uruk-hai, renamed).
-- **Troll Battle** (Mode: on the Versus menu): cave troll against cave troll in Balin's Tomb or Amon Hen, with twice the health, the club's ground slam, thrown logs, its own end picture, its own sounds for FIGHT and the match's end, its own results table and kept records.
+- **New Versus heroes:** **Saruman** (his own staff casts), the **Ent** (Treebeard from Fangorn Forest: his walk, his blows, thrown rocks and the forest's Ent moans), the **Elven Warrior**, the **Uruk Captain**.
+- **Troll Battle** (Mode: on the Versus menu): cave troll against cave troll in Balin's Tomb or Amon Hen, with twice the health, thrown logs, its own end picture, its own sounds for FIGHT and the match's end, its own results table and kept records.
 - **Both players may pick the same hero** in Deathmatch.
 - **Enemies in the arenas:** a few of the level's own orcs and Uruk-hai on **Amon Hen**, **Fangorn Forest**, the **Plains of Rohan**, the **Breached Wall** and the **Hornburg Courtyard**, spread over the map. They attack both players with their own sounds and hit as hard as a player does. Their blows count for neither player.
 - **Random starts:** each match begins somewhere else on the map, and later rounds go on where the players stand. Starts are always on the map's ground (Balin's Tomb: its hall floor, no ledges).
@@ -62,19 +60,19 @@ With [The128ReBits](https://github.com/The128ReBits)' work (PR #11). Thank you!
 - **Plains of Rohan:** starts on the open field, and both players are always shown.
 - **Hornburg Courtyard:** the camera no longer zooms in by the west wall and stays zoomed (the level's own close view took over), and the players can't walk out through the yard's wall.
 - The Versus bot rests after landing a hit (it could keep player 1 down in Troll Battle).
-- The **Berserker**'s full name on the character select and the level map.
+
 
 ### Achievements
 - **25 new achievements for Versus:** Troll Battle (win 3 or 10 matches, a flawless match, a 400 smash, 25,000 damage, a round under 20 seconds, 25 logs or rocks landed), the arenas' enemies (slay 25 and 150, win on all five enemy arenas), win 3 matches as each of the newer heroes (Saruman, the Ent, the Uruk Captain, the Elven Warrior, Lurtz, Sauron, Gandalf, Elrond, Boromir, Frodo, the Berserker), the Ent's rocks and a mirror match.
 - **The note says why:** an achievement's note now shows what it was for, so there is no need to open F10 each time.
 
-### Co-op
+### Co-op Fixes
 - **Player 2's bow** (or his own ranged weapon) shows for every hero.
 - **Player 2's Perfect glow** shows on his gauge, as player 1's does.
 - Player 2's weapons are drawn again after he respawns.
-- Player 2 as Legolas, Aragorn or Isildur hits enemies and kicks the ladders down again beside a different player 1 hero.
+- Player 2 can kick the ladders down again beside a different player 1 hero.
 - Player 2's special move names on his side, his own rumble on the second controller.
-- The heroes take more hits in the campaign and co-op (125% health).
+- The heroes take more hits in co-op (125% health).
 - Player 2's arrows and blows hit the **Watcher in the Water**.
 - Player 2 picks up the level's own arrows and health (the arrows by Balin's Tomb's cave troll), not only the enemies' drops.
 - **No leash:** player 2 can roam the level on his own; when the two are far apart the camera goes over to player 1.
@@ -83,19 +81,15 @@ With [The128ReBits](https://github.com/The128ReBits)' work (PR #11). Thank you!
 - **Player 2 breaks what player 1 can:** boxes, Fangorn Forest's log, the Breached Wall's catapult, and the enemies' shields with heavy attacks.
 - The Breached Wall's catapult bar is drawn whole under player 2's health bar (half of it was on top of his bar).
 
-### Fixes
+### Other Fixes
 - **Linux, PlayStation 3 controller:** a DualShock 3 is read through the system's own driver. It was found and named but sent no input on some systems (issue #14).
-- Entering Amon Hen in Versus no longer crashes on Windows.
-- Player 2 has his own weapons and the random starts work after many Versus matches in one session (Plains of Rohan).
 - Versus starts no longer leave the screen black (Fangorn Forest, the Gates of Moria).
 - A player stuck by a wall after a round can step back out.
-- A Troll Battle crash on Windows (a level's leftover map data read).
-- Keys no longer stay held down after Alt+Tab.
 - New Game: Easy, Normal and Expert can be clicked with the mouse.
-- A crash report gives the program's offsets, to find the cause.
 - The Walk key works for both players in co-op and Versus.
 - Windows: the Enter that starts the game from the launcher no longer stays held as Start (the controller pauses again, the main menu scrolls).
 - Lurtz and the Uruk Captain fall onto the ground (their falls no longer float), and Lurtz's hit no longer lifts him.
+- The Uruk extra hero is renamed to "Berserker"
 
 ### Linux AppImage
 - `TwoTowers-Recompiled-v1.9.9-x86_64.AppImage`: one file with SDL2 inside (used when your system has none). Make it executable (`chmod +x`, or Properties > Permissions) and run it; the first time it asks for your disc image.
@@ -108,10 +102,10 @@ With [The128ReBits](https://github.com/The128ReBits)' work (PR #11). Thank you!
 - Not tested: the macOS build on a Mac; the PlayStation 3 controller fix on the reporter's Linux system; the trolls breaking props.
 
 ## Known issues (1.9.9)
-- Co-op is still an **alpha**.
-- In Versus, an enemy that fells a player gives the round to the other player.
-- macOS (OpenGL) runs the GPU commands as before, without the render thread (`RECOMP_GPU_ASYNC=1` to try it).
-- Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
+- Co-op is not fully playable with the extra heroes. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's.
+- Singleplayer/Co-op: Singleplayer is entirely unaffected by co op or versus mode except the co op setting for double the pickups. If the setting is enabled in the co op setting, it also applies in singleplayer. It is recommended to disable the setting while playing the base game, unless you prefer to have more health pickups. 
+- macOS (OpenGL) is still experimental
+- Versus spawns are not 
 
 ## What's new in 1.9.8
 
