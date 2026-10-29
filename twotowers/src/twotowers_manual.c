@@ -6813,6 +6813,28 @@ static void vs_frame(void)
     vs_edge_guard();
     vs_unstick();
     vs_doom_walk();
+    {   /* (1.9.9) player 1 pushing on and not moving, in a fight: logged (a playtest's Troll Battle -- player 1 held on one spot
+         * for 10 s whatever he pressed, his own step moving him every frame). Every 3 s while it lasts: his state, his stick as the
+         * game reads it, and the last code that set his place (SetPosition's caller) */
+        static float lx, ly; static uint32_t t0, tl; extern uint32_t tt_p1_setpos_from;
+        uint32_t h = coop_first_char, r = COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u), now2 = coop_now(); float sx, sy;
+        if (h >= 0x10000u && vs_state == 0 && !coop_down[0]) {
+            sx = MEMF(r + 0x14); sy = MEMF(r + 0x18);
+            if (sx * sx + sy * sy > 0.25f && (MEMF(h + 0xF0) - lx) * (MEMF(h + 0xF0) - lx) + (MEMF(h + 0xF4) - ly) * (MEMF(h + 0xF4) - ly) < 0.3f * 0.3f) {
+                if (!t0) t0 = now2 | 1;
+                else if (now2 - t0 > 2000u && now2 - tl > 3000u) { static int n; tl = now2;
+                    if (n++ < 30) tt_dbg("[VS] player 1 held at %.2f %.2f %.2f for %.1f s, his stick %.2f %.2f (port %u): state %u +3E0 %08X +110 %08X +49C %08X, place last set from %08X | P2 %.1f away\n",
+                        MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8), (now2 - t0) / 1000.0f, sx, sy, MEM32(0x1CB8B4u), MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(h + 0x110), MEM32(h + 0x49C), tt_p1_setpos_from,
+                        coop_p2 >= 0x10000u ? sqrtf((MEMF(h + 0xF0) - MEMF(coop_p2 + 0xF0)) * (MEMF(h + 0xF0) - MEMF(coop_p2 + 0xF0)) + (MEMF(h + 0xF4) - MEMF(coop_p2 + 0xF4)) * (MEMF(h + 0xF4) - MEMF(coop_p2 + 0xF4))) : 0.0f); }
+            } else { t0 = 0; lx = MEMF(h + 0xF0); ly = MEMF(h + 0xF4); }
+        } else { t0 = 0; if (h >= 0x10000u) { lx = MEMF(h + 0xF0); ly = MEMF(h + 0xF4); } }
+    }
+    if (getenv("TT_VS_PMNEAR")) { static uint32_t tl; if (coop_now() - tl > 2000u) { int w; tl = coop_now();   /* (research) the pathmap's own cells round each hero */
+        for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char, q = MEM32(0x41F428u + 0x1088u); char b[200]; int n = 0, r, c, c0, r0, W;
+            if (h < 0x10000u || !vs_pm_ok(q)) continue; W = (int)MEM32(q + 0x70);
+            c0 = (int)floorf((MEMF(h + 0xF0) - MEMF(q + 0x48)) / (float)(int32_t)MEM32(q + 0x68)); r0 = (int)floorf((MEMF(h + 0xF4) - MEMF(q + 0x4C)) / (float)(int32_t)MEM32(q + 0x68));
+            for (r = r0 + 3; r >= r0 - 3; r--) { for (c = c0 - 3; c <= c0 + 3; c++) { int v = (c < 0 || r < 0 || c >= W || r >= (int)MEM32(q + 0x74)) ? 9 : (MEM8(MEM32(q + 0x6Cu) + (uint32_t)(W * r + c)) >> 2) & 3; b[n++] = (char)('0' + v); } b[n++] = '/'; }
+            b[n] = 0; tt_dbg("[PMNEAR] P%d %.1f %.1f walk %d: %s\n", w + 1, MEMF(h + 0xF0), MEMF(h + 0xF4), vs_union_walk(MEMF(h + 0xF0), MEMF(h + 0xF4)), b); } } }
     {   /* (1.9.9) player 1's controller port held for the match: a playtest's Troll Battle had player 1 from round 2 on unable
          * to steer -- he went one way whatever he pressed, his attacks still his (the port no longer his own pad's: the game
          * reads every pad for player 1 at 0xFFFFFFFF, player 2's stick with them). Taken at the first FIGHT, put back if it
@@ -10974,7 +10996,8 @@ extern void sub_00085340_gen(void); void sub_00085340(void) { if (getenv("TT_SET
 extern void sub_00086120_gen(void); void sub_00086120(void) { int sw = tt_coop_enter(ecx, 0x00086120u); tt_coop_p1_pre(ecx, 0x00086120u); if (coop_probe_on()) coop_count(28); sub_00086120_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086140_gen(void); void sub_00086140(void) { int sw = tt_coop_enter(ecx, 0x00086140u); tt_coop_p1_pre(ecx, 0x00086140u); if (coop_probe_on()) coop_count(29); sub_00086140_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086490_gen(void); void sub_00086490(void) { int sw = tt_coop_enter(ecx, 0x00086490u); tt_coop_p1_pre(ecx, 0x00086490u); if (coop_probe_on()) coop_count(30); sub_00086490_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_000865D0_gen(void); void sub_000865D0(void) { if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[SETPOS] P1 at %.1f %.1f %.1f <- %.1f %.1f %.1f from %06X; callers:", MEMF(ecx + 0xF0), MEMF(ecx + 0xF4), MEMF(ecx + 0xF8), MEMF(esp + 4), MEMF(esp + 8), MEMF(esp + 12), ra); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg("\n"); } } int sw = tt_coop_enter(ecx, 0x000865D0u); tt_coop_p1_pre(ecx, 0x000865D0u); if (coop_probe_on()) coop_count(31); sub_000865D0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+uint32_t tt_p1_setpos_from;   /* (the last SetPosition on player 1: its caller) */
+extern void sub_000865D0_gen(void); void sub_000865D0(void) { if (ecx == coop_first_char && coop_first_char >= 0x10000u) tt_p1_setpos_from = MEM32(esp); if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[SETPOS] P1 at %.1f %.1f %.1f <- %.1f %.1f %.1f from %06X; callers:", MEMF(ecx + 0xF0), MEMF(ecx + 0xF4), MEMF(ecx + 0xF8), MEMF(esp + 4), MEMF(esp + 8), MEMF(esp + 12), ra); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg("\n"); } } int sw = tt_coop_enter(ecx, 0x000865D0u); tt_coop_p1_pre(ecx, 0x000865D0u); if (coop_probe_on()) coop_count(31); sub_000865D0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086900_gen(void); void sub_00086900(void) { int sw = tt_coop_enter(ecx, 0x00086900u); tt_coop_p1_pre(ecx, 0x00086900u); if (coop_probe_on()) coop_count(32); sub_00086900_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086980_gen(void); void sub_00086980(void) { int sw = tt_coop_enter(ecx, 0x00086980u); tt_coop_p1_pre(ecx, 0x00086980u); if (coop_probe_on()) coop_count(33); sub_00086980_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000869A0_gen(void); void sub_000869A0(void) { int sw = tt_coop_enter(ecx, 0x000869A0u); tt_coop_p1_pre(ecx, 0x000869A0u); if (coop_probe_on()) coop_count(34); sub_000869A0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }

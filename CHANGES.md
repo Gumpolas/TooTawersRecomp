@@ -3205,3 +3205,10 @@ xboxrecomp-0.12.0/src/video/fb_present.c
     deactivated or gets the keyboard back, besides losing it (WM_KILLFOCUS).
 twotowers/src/options.c
   - Troll Battle's arenas: Balin's Tomb and Amon Hen (Mount Doom taken out).
+twotowers/src/twotowers_manual.c, xboxrecomp-0.12.0/src/input/xinput_device.c
+  - Versus: player 1 pushing the stick and not moving for 2 s is logged
+    ([VS] player 1 held at ...: his state, his stick as the game reads it,
+    the last caller of SetPosition on him) -- for the Troll Battle's player
+    1 held on one spot. (test) TT_VS_PMNEAR.
+  - The held-movement-keys log only after 4 s (its start time had made it
+    log at once).

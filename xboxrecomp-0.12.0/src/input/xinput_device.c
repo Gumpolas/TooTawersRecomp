@@ -1230,8 +1230,8 @@ static void keyboard_state(XBOX_INPUT_STATE *pState)
          * after an Alt+Tab; this tells a key stuck held from another program pressing it (a controller mapper's WASD) */
         static DWORD since, logged; static int lx0, ly0; DWORD now = GetTickCount();
         if ((lx || ly) && lx == lx0 && ly == ly0) {
-            if (!since) since = now | 1;
-            else if (now - since > 4000u && now - logged > 5000u) { static int n; int a2, k;
+            if (!since) since = now ? now : 1;
+            else if ((int)(now - since) > 4000 && (int)(now - logged) > 5000) { static int n; int a2, k;
                 logged = now;
                 if (n++ < 40) {
                     char b[300]; int q = 0; static const int mv[4] = { BIND_MOVE_LEFT, BIND_MOVE_RIGHT, BIND_MOVE_UP, BIND_MOVE_DOWN };
