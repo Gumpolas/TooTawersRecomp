@@ -85,7 +85,7 @@ Made posisble by [The128ReBits](https://github.com/The128ReBits).
 - **Linux, PlayStation 3 controller:** a DualShock 3 is read through the system's own driver. It was found and named but sent no input on some systems (issue #14).
 - Versus starts no longer leave the screen black (Fangorn Forest, the Gates of Moria).
 - A player stuck by a wall after a round can step back out.
-- New Game: Easy, Normal and Expert can be clicked with the mouse.
+- New Game: Easy, Normal, Expert and Impossible can be clicked with the mouse.
 - The Walk key works for both players in co-op and Versus.
 - Windows: the Enter that starts the game from the launcher no longer stays held as Start (the controller pauses again, the main menu scrolls).
 - Lurtz and the Uruk Captain fall onto the ground (their falls no longer float), and Lurtz's hit no longer lifts him.
