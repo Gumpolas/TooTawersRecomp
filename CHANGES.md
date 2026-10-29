@@ -2822,8 +2822,9 @@ twotowers/src/twotowers_manual.c
     the last 1.5 s, TT_VS_TGTMS) and within 7 units (TT_VS_TGTR): held from
     anywhere it kept him in the engage stance's loop at rest and steered
     his moves round the other (TT_VS_OLDTGT: as before).
-  - The heroes take more hits: full health 125% in the campaign and co-op
-    (TT_HPPCT), Versus 2000 (was 1500).
+  - The heroes take more hits: full health 125% in co-op (TT_HPPCT),
+    Versus 2000 (was 1500). The single-player campaign keeps the game's own
+    health on every difficulty (TT_HPSOLO: 125% there too).
   - The cave troll's club ends each swing with Balin's Tomb's slam (930)
     in every mode (TT_TROLLSLAM_MS, TT_NOTROLLSLAM).
 twotowers/src/heroes.c

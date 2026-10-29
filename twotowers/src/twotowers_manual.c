@@ -11810,7 +11810,7 @@ void sub_000EBF10(void)
 uint32_t tt_vs_level_index(void) { return MEM32(0x1BB2A4u); }
 /* 0x000C3640: a sound played by its id (the level's bank; [esp+4] the id). TT_SNDLOG: each, with its caller */
 /* (1.9.9) the heroes take more hits: the players' full health (+0x300) TT_HPPCT (125) per cent of the game's, in the
- * campaign and co-op (Versus has its own, VS_HP), their health raised with it. Kept per hero: when the game sets his
+ * co-op only (1.9.9 final: not the single-player campaign; Versus has its own, VS_HP), their health raised with it. Kept per hero: when the game sets his
  * full health again (an upgrade, a new level) it is raised again from that; set back to the game's own value, ours is
  * put back without a second raise of his health. TT_HPPCT=100: as before */
 void tt_hero_hp_tick(void)
@@ -11859,7 +11859,7 @@ void tt_hero_hp_tick(void)
     }
     extern int tt_vs_on(void); static uint32_t who[2], base[2], ours[2]; int w;
     int pct = getenv("TT_HPPCT") ? atoi(getenv("TT_HPPCT")) : 125;
-    if (pct == 100 || tt_vs_on()) return;
+    if (pct == 100 || tt_vs_on() || (coop_mode() != 3 && !getenv("TT_HPSOLO"))) return;   /* (co-op only: the single-player campaign as the game has it, every difficulty -- a playtest) */
     for (w = 0; w < 2; w++) {
         uint32_t a = w ? (coop_mode() == 3 ? coop_p2 : 0) : (coop_mode() == 3 && coop_first_char >= 0x10000u ? coop_first_char : MEM32(0x43B15Cu));
         int32_t mx, hp, nm;
