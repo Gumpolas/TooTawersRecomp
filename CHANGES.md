@@ -3203,3 +3203,5 @@ xboxrecomp-0.12.0/src/input/xinput_device.c
 xboxrecomp-0.12.0/src/video/fb_present.c
   - Every key (not the mouse buttons) let go as the window is activated,
     deactivated or gets the keyboard back, besides losing it (WM_KILLFOCUS).
+twotowers/src/options.c
+  - Troll Battle's arenas: Balin's Tomb and Amon Hen (Mount Doom taken out).

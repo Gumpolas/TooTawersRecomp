@@ -331,8 +331,8 @@ static const struct { int level; const char *name; } s_vs_arenas[] = {
     { 11, "Hornburg Courtyard" }, { 12, "Orthanc" }, { 13, "Orthanc Summit" }, { 0, "Mount Doom" } };
 /* which mode each arena is for: the smaller ones Deathmatch, the bigger (room to run, the shield to find) Find the Shield */
 /* (1.9.7) Find the Shield dropped for now: every arena is a Deathmatch arena */
-/* (1.9.9) Troll Battle: Balin's Tomb (his own), Amon Hen and Mount Doom; Deathmatch: every arena */
-static int vs_arena_troll(int i) { return s_vs_arenas[i].level == 3 || s_vs_arenas[i].level == 4 || s_vs_arenas[i].level == 0; }
+/* (1.9.9) Troll Battle: Balin's Tomb (his own) and Amon Hen (Mount Doom taken out, a playtest); Deathmatch: every arena */
+static int vs_arena_troll(int i) { return s_vs_arenas[i].level == 3 || s_vs_arenas[i].level == 4; }
 static int vs_arena_mode(int i) { return s_vs_mode == 1 && vs_arena_troll(i) ? 1 : s_vs_mode == 1 ? -1 : 0; }
 #define VS_NARENA ((int)(sizeof s_vs_arenas / sizeof s_vs_arenas[0]))
 static const Row s_vsrows[] = {
