@@ -3883,6 +3883,22 @@ static int coop_bot_versus(CoopPad *o, uint32_t now, uint32_t p1, uint32_t p2)
             }
         }
         if (bt != beat) { beat = bt; seed = seed * 1103515245u + 12345u; act = (int)((seed >> 16) % 15); late = (int)((seed >> 8) % 300); }
+        {   /* (1.9.9) a breather after each blow that lands: player 1 hit gets 1.8 s (2.6 s in a Troll Battle) to come out of it before
+             * the bot swings again -- the troll's hit and its stagger are long, and a bot swinging in its beats kept him stunned on one
+             * spot, his stick doing nothing, a playtest ("it seemed to only happen after I enabled the bot"). TT_VS_BOTNOREST: as before */
+            static int32_t hp_was; static uint32_t hit_t; int32_t hp = (int32_t)MEM32(p1 + 0x2FC); extern int tt_vs_troll_mode(void);
+            if (hp < hp_was) hit_t = now | 1;
+            hp_was = hp;
+            if (hit_t && now - hit_t < (tt_vs_troll_mode() ? 2600u : 1800u) && !getenv("TT_VS_BOTNOREST")) {
+                bs = 0;
+                if (df < 6.0f) {   /* (and a step back from him) */
+                    uint32_t cm = MEM32(0x43B164u);
+                    float wx = MEMF(p2 + 0xF0) - MEMF(p1 + 0xF0), wy = MEMF(p2 + 0xF4) - MEMF(p1 + 0xF4), wn = sqrtf(wx * wx + wy * wy);
+                    if (cm >= 0x10000u && wn > 1e-3f) { float fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy);
+                        if (fn > 1e-3f) { wx /= wn; wy /= wn; fx /= fn; fy /= fn; o->ly = (int16_t)((wx * fx + wy * fy) * 26000.0f); o->lx = (int16_t)((wx * fy - wy * fx) * 26000.0f); } }
+                }
+            }
+        }
         if (bs) {
             if (act < 3) { if (ph >= (uint32_t)late && ph < (uint32_t)late + 500u) o->analog[5] = 255; }
             else if (act < 12) coop_bot_attack(o, now);
@@ -6330,7 +6346,7 @@ static void vs_round_start(void)
         int l = vs_last_win == 0 ? 1 : vs_last_win == 1 ? 0 : 1; uint32_t L = l ? coop_p2 : coop_first_char, W = l ? coop_first_char : coop_p2;
         float dx = MEMF(L + 0xF0) - MEMF(W + 0xF0), dy = MEMF(L + 0xF4) - MEMF(W + 0xF4), sp = vs_spacing(), p[3];
         {   extern int tt_vs_spot_from(float x0, float y0, float lo, float want, float hi, float *p);
-            if (vs_lost_down && !getenv("TT_VS_OLDRESPAWN") && MEM32(0x1BB2A4u) != 12u && tt_vs_spot_from(MEMF(W + 0xF0), MEMF(W + 0xF4), 12.0f, sp, 90.0f, p)) {   /* (1.9.9) he was down: back at one of the level's own points, on its main ground */
+            if (vs_lost_down && !getenv("TT_VS_OLDRESPAWN") && MEM32(0x1BB2A4u) != 12u && MEM32(0x1BB2A4u) != 6u && tt_vs_spot_from(MEMF(W + 0xF0), MEMF(W + 0xF4), 12.0f, sp, 90.0f, p)) {   /* (1.9.9) he was down: back at one of the level's own points, on its main ground */
                 p[2] += vs_lift() * 0.5f; vs_place(L, p); tt_dbg("[VS] P%d back at the level's point %.1f %.1f %.1f, %.0f units from P%d\n", l + 1, p[0], p[1], p[2], sqrtf((p[0] - MEMF(W + 0xF0)) * (p[0] - MEMF(W + 0xF0)) + (p[1] - MEMF(W + 0xF4)) * (p[1] - MEMF(W + 0xF4))), 2 - l);
                 dx = dy = 1e4f; }
         }
@@ -6445,6 +6461,19 @@ static int vs_eye_inside(float x, float y)
         if (coop_pm_cell(list[i], (int)floorf((x - ox) / sz), (int)floorf((y - oy) / sz)) >= 0) return 1; }
     return 0;
 }
+/* (1.9.9) the eye seeing the heroes: over a pathmap, and no wall between it and them (a cell walled in every pathmap over it, sampled
+ * each unit along the way). The Hornburg Courtyard's pathmaps reach past its walls, so an eye behind the south wall counted as inside;
+ * the game's own camera then drew in to the wall and the view stayed close (a playtest: "walking to the southeast portion ... causes
+ * the camera to zoom in and stay zoomed in"). There only (TT_VS_CAMLOS=1: every arena; =0: off) */
+static int vs_eye_sees(float mx, float my, float ex, float ey)
+{
+    static int on = -2; float dx = ex - mx, dy = ey - my, d = sqrtf(dx * dx + dy * dy), t;
+    if (on == -2) on = getenv("TT_VS_CAMLOS") ? atoi(getenv("TT_VS_CAMLOS")) : -1;
+    if (!vs_eye_inside(ex, ey)) return 0;
+    if (on == 0 || (on < 0 && MEM32(0x1BB2A4u) != 11u)) return 1;
+    for (t = 2.0f; t < d; t += 1.0f) if (vs_union_walk(mx + dx * t / d, my + dy * t / d) == 0) return 0;
+    return 1;
+}
 static void vs_camera(void)
 {
     uint32_t cm = MEM32(0x43B164u), a = coop_first_char, b = coop_p2; float mx, my, mz, lx, ly, ex, ey, hx, hy, hn, d, sep, back, up;
@@ -6487,12 +6516,12 @@ static void vs_camera(void)
          * the camera turns round the heroes, a little each frame, to the nearest heading whose eye is inside; brought in
          * only while it turns, and never nearer than 70% */
         int k;
-        if (!getenv("TT_VS_CAMFREE") && !vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)) {
+        if (!getenv("TT_VS_CAMFREE") && !vs_eye_sees(mx, my, mx - vs_cam_dx * back, my - vs_cam_dy * back)) {
             float best = 0; int found = 0;
             for (k = 1; k <= 12 && !found; k++) {   /* 15, -15, 30, -30, ... 180 degrees */
                 int sgn; for (sgn = 1; sgn >= -1 && !found; sgn -= 2) {
                     float an = (float)(sgn * k) * 0.2617994f, ca = cosf(an), sa = sinf(an), dx2 = vs_cam_dx * ca - vs_cam_dy * sa, dy2 = vs_cam_dx * sa + vs_cam_dy * ca;
-                    if (vs_eye_inside(mx - dx2 * back, my - dy2 * back)) { best = an; found = 1; } } }
+                    if (vs_eye_sees(mx, my, mx - dx2 * back, my - dy2 * back)) { best = an; found = 1; } } }
             if (found) {   /* turned toward it, at most 2 degrees a frame */
                 float st = best > 0.035f ? 0.035f : best < -0.035f ? -0.035f : best, ca = cosf(st), sa = sinf(st), dx2 = vs_cam_dx * ca - vs_cam_dy * sa, dy2 = vs_cam_dx * sa + vs_cam_dy * ca;
                 vs_cam_dx = dx2; vs_cam_dy = dy2;
@@ -6791,6 +6820,16 @@ static void vs_frame(void)
         static int n; if (n++ < 3) tt_dbg("[VS] t %u controls unlocked (43B1B4 was %u, state %d)\n", coop_now(), MEM8(0x43B1B4u), vs_state); MEM8(0x43B1B4u) = 0; }
     if (coop_first_char < 0x10000u || coop_p2 < 0x10000u || !coop_p2_t0) return;
     { extern volatile int tt_vs_played; tt_vs_played = 1; }
+    {   /* (1.9.9) Restart Match (the pause menu's, menus.c): the match from its first round -- the scores and the round back to 0,
+         * both heroes whole at the match's starting spots, the countdown again */
+        extern volatile int tt_vs_restart_req;
+        if (tt_vs_restart_req && vs_have) { int k; tt_vs_restart_req = 0;
+            vs_score[0] = vs_score[1] = 0; vs_round = 0; vs_last_win = -1; vs_text[0] = 0;
+            memset(tt_vs_st, 0, sizeof tt_vs_st);
+            for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);
+            vs_round_start();
+            tt_dbg("[VS] the match restarted (the pause menu's Restart Match)\n"); }
+    }
     vs_targets();
     vs_exp_max();
     vs_push_frame();
@@ -6825,8 +6864,8 @@ static void vs_frame(void)
         if (h >= 0x10000u && vs_state == 0 && !coop_down[0]) {
             sx = MEMF(r + 0x14); sy = MEMF(r + 0x18);
             if (sx * sx + sy * sy > 0.25f && (MEMF(h + 0xF0) - lx) * (MEMF(h + 0xF0) - lx) + (MEMF(h + 0xF4) - ly) * (MEMF(h + 0xF4) - ly) < 0.3f * 0.3f) {
-                if (!t0) t0 = now2 | 1;
-                else if (now2 - t0 > 2000u && now2 - tl > 3000u) { static int n; tl = now2;
+                if (!t0) t0 = now2 ? now2 : 1;
+                else if ((int32_t)(now2 - t0) > 2000 && (int32_t)(now2 - tl) > 3000) { static int n; tl = now2;
                     if (n++ < 30) tt_dbg("[VS] player 1 held at %.2f %.2f %.2f for %.1f s, his stick %.2f %.2f (port %u): state %u +3E0 %08X +110 %08X +49C %08X, place last set from %08X | P2 %.1f away\n",
                         MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8), (now2 - t0) / 1000.0f, sx, sy, MEM32(0x1CB8B4u), MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(h + 0x110), MEM32(h + 0x49C), tt_p1_setpos_from,
                         coop_p2 >= 0x10000u ? sqrtf((MEMF(h + 0xF0) - MEMF(coop_p2 + 0xF0)) * (MEMF(h + 0xF0) - MEMF(coop_p2 + 0xF0)) + (MEMF(h + 0xF4) - MEMF(coop_p2 + 0xF4)) * (MEMF(h + 0xF4) - MEMF(coop_p2 + 0xF4))) : 0.0f); }
@@ -6943,6 +6982,16 @@ static void vs_frame(void)
         { uint32_t n1 = MEM32(coop_first_char + 0x168), n2 = MEM32(coop_p2 + 0x168); k = 0;
           if (n1 >= 0x10000u && n2 >= 0x10000u) for (o = 0; o < 0x200 && k < 7800; o += 4) if (MEM32(n1 + o) != MEM32(n2 + o)) k += snprintf(b2 + k, sizeof b2 - k, " %X:%08X/%08X", o, MEM32(n1 + o), MEM32(n2 + o));
           tt_dbg("[VSNDIFF] %08X %08X%s\n", n1, n2, k ? b2 : ""); } } }
+    if (getenv("TT_VS_SECBOX")) { static int dn; uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u ? MEM32(wd + 0x10) : 0, i; if (!dn && n) { dn = 1; for (i = 0; i < n && i < 64; i++) { uint32_t sc = MEM32(wd + 0x100 + 4 * i) - 0x20;
+        tt_dbg("[SECBOX] %u '%s' %.0f..%.0f %.0f..%.0f %.0f..%.0f\n", i, (const char *)XBOX_PTR(sc + 0x20), MEMF(sc + 0x30), MEMF(sc + 0x40), MEMF(sc + 0x34), MEMF(sc + 0x44), MEMF(sc + 0x38), MEMF(sc + 0x48)); } } }
+    if (getenv("TT_VS_HWORDS") ) { static uint32_t tl, prev[0x180]; static int have; if (now - tl > 1000u) { uint32_t h = coop_first_char, o; char b2[4000]; int k = 0; tl = now;   /* (research) P1's words that changed (small integers only) */
+        for (o = 0; o < 0x600; o += 4) { uint32_t v = MEM32(h + o); if (have && v != prev[o / 4] && v < 64u && prev[o / 4] < 64u && k < 3900) k += snprintf(b2 + k, sizeof b2 - k, " +%X:%u->%u", o, prev[o / 4], v); prev[o / 4] = v; }
+        have = 1; if (k) tt_dbg("[HWORDS] P1 at %.1f %.1f:%s\n", MEMF(h + 0xF0), MEMF(h + 0xF4), b2); } }
+    if (getenv("TT_VS_SECLOG")) { static uint32_t tl; if (now - tl > 3000u) { uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u ? MEM32(wd + 0x10) : 0, i, o, h; int ww; tl = now;   /* (research) which sector each hero is in */
+        for (ww = 0; ww < 2; ww++) { h = ww ? coop_p2 : coop_first_char; if (h < 0x10000u) continue;
+            for (o = 0; o < 0x600; o += 4) { uint32_t v = MEM32(h + o); for (i = 0; i < n && i < 64; i++) { uint32_t sc = MEM32(wd + 0x100 + 4 * i); if (v && (v == sc || v == sc - 0x20)) tt_dbg("[SECLOG] P%d +%X = sector %u (%08X)\n", ww + 1, o, i, v); } }
+            for (i = 0; i < n && i < 64; i++) { uint32_t sc = MEM32(wd + 0x100 + 4 * i) - 0x20; float x = MEMF(h + 0xF0), y = MEMF(h + 0xF4), z = MEMF(h + 0xF8);
+                if (x >= MEMF(sc + 0x30) && x <= MEMF(sc + 0x40) && y >= MEMF(sc + 0x34) && y <= MEMF(sc + 0x44) && z >= MEMF(sc + 0x38) - 4 && z <= MEMF(sc + 0x48) + 4) tt_dbg("[SECLOG] P%d inside sector %u '%s'\n", ww + 1, i, (const char *)XBOX_PTR(sc + 0x20)); } } } }
     if (getenv("TT_VS_MATLOG")) { static uint32_t tl; if (now - tl > 700u) { uint32_t a = coop_first_char, o; char b2[5200]; int k = 0; tl = now;
         for (o = 0x0; o < 0x480 && k < 5000; o += 4) k += snprintf(b2 + k, sizeof b2 - k, " %X:%.3g", o, MEMF(a + o));
         tt_dbg("[VSMAT] P1 +80..FC:%s\n", b2); } }
@@ -10673,6 +10722,17 @@ static int vs_point_name(const char *nm)
  * level's points hang over another floor, or in the sky: spawners for flying or dropped enemies), and inside one of
  * the level's named sectors (the drawn parts; past them the screen stayed black with the heroes not drawn -- a playtest
  * on the Gates of Moria and Fangorn) */
+/* (1.9.9) the open ground round x, y: the radius (2-unit steps, up to 12) out to which every sample on the rings is walkable on the
+ * pathmaps -- the Plains of Rohan's village: points between its houses put the heroes under a roof or behind a wall, out of sight
+ * (a playtest: "you spawn in areas where you are stuck or can't see anything") */
+static float vs_clearance(float x, float y)
+{
+    float r; int k;
+    for (r = 2.0f; r <= 12.0f; r += 2.0f)
+        for (k = 0; k < 12; k++) { float an = (float)k * 0.5235988f; if (vs_union_walk(x + r * cosf(an), y + r * sinf(an)) != 1) return r - 2.0f; }
+    return 12.0f;
+}
+static float vs_need_clear(void) { if (getenv("TT_VS_CLEAR")) return (float)atof(getenv("TT_VS_CLEAR")); return MEM32(0x1BB2A4u) == 6u ? 8.0f : 0.0f; }   /* (the Plains of Rohan: 8 units of open ground round a start) */
 static int vs_spot_ok(float x, float y, float z)
 {
     uint32_t i, w = MEM32(0x3C35A0u), n; int pm = 0, sec = 0, named = 0;
@@ -10685,6 +10745,10 @@ static int vs_spot_ok(float x, float y, float z)
         if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT]   pathmap %u cell %d,%d state %d z %.1f..%.1f\n", i, c, r, v, MEMF(q + 0x50), MEMF(q + 0x60));
         if ((v == 0 || v == 2) && z >= MEMF(q + 0x50) - 6.0f && z <= MEMF(q + 0x50) + (getenv("TT_VS_SPOTUP") ? (float)atof(getenv("TT_VS_SPOTUP")) : 16.0f)) pm = 1; }   /* (the ground near its lowest: Fangorn's spawners up in the trees, 40 over it, were taken -- the heroes fell into a cleft) */
     if (!pm) return 0;
+    if (MEM32(0x1BB2A4u) == 6u && !getenv("TT_VS_ROHANANY") && (x < -156.0f || x > -7.0f || y < -317.0f || y > -212.0f)) return 0;   /* (1.9.9, the Plains of Rohan: the
+        * start's field only (its Sector_01, south of the village's Sector_02 that overlaps it) -- a hero put into the village's sectors was not drawn: the level's characters are drawn by the
+        * sector they came into, and a hero set down past a portal stayed the start's, out of sight, a playtest) */
+    { float need = vs_need_clear(); if (need > 0.0f && vs_clearance(x, y) < need) { if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT]   %.1f %.1f: open ground %.0f, under %.0f\n", x, y, vs_clearance(x, y), need); return 0; } }
     if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMANY") && y > -193.0f && y < -180.0f) return 0;   /* (1.9.9, Mount Doom: not the points at the lava's edge -- one put a hero into it, a playtest; the far side is in reach now, vs_doom_walk) */
     if (MEM32(0x1BB2A4u) == 3u && !getenv("TT_VS_BALINANY") && (z > 4.0f || y < -30.0f)) return 0;   /* (Balin's Tomb: the hall's floor only -- its spawner at the south end stands by the ledges, a playtest: "no one can spawn on the ledge/catwalk") */
     if (w < 0x10000u || w >= 0x84000000u || (n = MEM32(w + 0x10)) == 0 || n > 64) return 1;
@@ -10694,6 +10758,21 @@ static int vs_spot_ok(float x, float y, float z)
         named++;
         if (x >= MEMF(sc + 0x30) - 2 && x <= MEMF(sc + 0x40) + 2 && y >= MEMF(sc + 0x34) - 2 && y <= MEMF(sc + 0x44) + 2 && z >= MEMF(sc + 0x38) - 4 && z <= MEMF(sc + 0x48) + 4) sec = 1; }
     return sec || !named;   /* (a level of one sector, "Default" -- the Hornburg Courtyard: no sector test) */
+}
+/* (1.9.9) on the Plains of Rohan the level's own points in its start's field are few, most of them by a house: points of our own
+ * too, every 8 units over the field where the ground is open (vs_spot_ok), at the height of the pathmap there */
+static int vs_grid_spots(float (*c)[3], int max)
+{
+    float x, y; int n = 0;
+    if (MEM32(0x1BB2A4u) != 6u || getenv("TT_VS_ROHANANY") || getenv("TT_VS_NOGRIDSPOTS")) return 0;
+    for (x = -152.0f; x <= -12.0f && n < max; x += 8.0f) for (y = -312.0f; y <= -216.0f && n < max; y += 8.0f) { uint32_t i; float z = 1e9f;
+        if (vs_union_walk(x, y) != 1) continue;
+        for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); if (!vs_pm_ok(q)) continue;
+            if (x >= MEMF(q + 0x48) && x <= MEMF(q + 0x58) && y >= MEMF(q + 0x4C) && y <= MEMF(q + 0x5C)) { z = MEMF(q + 0x50) + 1.0f; break; } }
+        if (z > 1e8f || !vs_spot_ok(x, y, z)) continue;
+        c[n][0] = x; c[n][1] = y; c[n][2] = z; n++; }
+    if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT] %d points of ours on the start's field\n", n);
+    return n;
 }
 int tt_vs_random_spot(float *p, uint32_t seed)
 {
@@ -10707,6 +10786,7 @@ int tt_vs_random_spot(float *p, uint32_t seed)
         if (vs_union_walk(x, y) != 1) continue;
         { int ok = vs_spot_ok(x, y, z); if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT] %s %.1f %.1f %.1f %s\n", nm, x, y, z, ok ? "ok" : "left out"); if (!ok && !getenv("TT_VS_ANYSPOT")) continue; }
         cand[n][0] = x; cand[n][1] = y; cand[n][2] = z; n++; }
+    n += vs_grid_spots(cand + n, 1024 - n);
     if (!n) return 0;
     seed = seed * 1103515245u + 12345u; seed ^= seed >> 13; i = (int)(seed % (uint32_t)n);
     if (getenv("TT_VS_SPOTPICK")) { float px = 0, py = 0, bd = 1e30f; int k; sscanf(getenv("TT_VS_SPOTPICK"), "%f,%f", &px, &py);   /* (test) the point nearest x,y */

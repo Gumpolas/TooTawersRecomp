@@ -3225,3 +3225,22 @@ twotowers/src/twotowers_manual.c, menus.c
     past its own entries the list holds leftovers, and one at 0x76EA0xxx --
     let through by the old "under 0x84000000" check -- crashed the game in
     a Troll Battle on Balin's Tomb (vs_floor, a playtest's crash log).
+twotowers/src/twotowers_manual.c, menus.c
+  - Versus, the Plains of Rohan: starts only on the start's open field (its
+    Sector_01, south of the village's overlapping Sector_02), with 8 units
+    of open ground round them (vs_clearance), and points of our own every 8
+    units there besides the level's few; the round's loser set by the winner
+    as before. A hero set down in the village's sectors was not drawn (the
+    level draws its characters by the sector they came into), or stood
+    under a roof or behind a wall. TT_VS_ROHANANY, TT_VS_CLEAR.
+  - Versus bot: after each blow that lands, 1.8 s (2.6 s in a Troll Battle)
+    before it swings again, stepping back meanwhile -- swinging in its beats
+    it kept player 1 stunned on one spot (TT_VS_BOTNOREST: as before).
+  - Versus camera on the Hornburg Courtyard: the eye must see the heroes --
+    no walled cell between it on the pathmaps (vs_eye_sees); its pathmaps
+    reach past the walls, and an eye behind the south wall was drawn in by
+    the game and stayed close (TT_VS_CAMLOS: 1 every arena, 0 off).
+  - Versus pause menu: Restart Match -- a note at the top while paused;
+    BACK (Backspace / Tab) or a click on it starts the match again from
+    round 1 (scores 0, both whole at the match's starting spots) and closes
+    the pause. TT_VS_NORESTART: off.
