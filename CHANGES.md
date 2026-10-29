@@ -3309,3 +3309,13 @@ twotowers/src/twotowers_manual.c
     is moved under player 2's bar whole -- half of it stayed on his bar. A
     top-right list's top pieces move together (TT_COOP_ALLYRIGHTONLY: as
     before).
+  - Versus, Orthanc's summit: a hero can no longer walk or be knocked past
+    the parapet (33 units from the tower's middle; TT_VS_ORTHMAX) -- he
+    slides along it. One that still ends up off the top (below the floor or
+    past the parapet) is put back on the summit at once, so a new round
+    never starts with a player falling forever (a kick off still wins the
+    round). The pathmap a hero is placed on is picked by his height too
+    (Orthanc's five lie one over another). If the level's own scene keeps
+    the HUD hidden, the match begins anyway after 10 s instead of leaving
+    both players unable to move (TT_VS_WAITSCENE: wait for it).
+    TT_VS_ORTHNOWALL: none of this.

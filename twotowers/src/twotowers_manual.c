@@ -6052,16 +6052,22 @@ static int vs_union_walk(float x, float y)
 }
 void tt_vs_set_pm(uint32_t a, float x, float y)
 {
-    uint32_t i, cur = a >= 0x10000u ? MEM32(a + 0x2ECu) : ~0u;
+    uint32_t i, cur = a >= 0x10000u ? MEM32(a + 0x2ECu) : ~0u; int best = -1; float bd = 1e9f, z;
     if (a < 0x10000u || getenv("TT_VS_KEEPPM")) return;
-    if (cur < 256u) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * cur); if (vs_pm_ok(q) && x >= MEMF(q + 0x48) && x <= MEMF(q + 0x58) && y >= MEMF(q + 0x4C) && y <= MEMF(q + 0x5C)) return; }
-    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); float ox, oy, sz; int c, r, v;
+    z = MEMF(a + 0xF8);
+#define VS_PM_ZD(q) (z < MEMF((q) + 0x50) ? MEMF((q) + 0x50) - z : z > MEMF((q) + 0x60) ? z - MEMF((q) + 0x60) : 0.0f)
+    /* (1.9.9: by his height too -- Orthanc's five pathmaps lie one over another, the same x and y; the one at his feet) */
+    if (cur < 256u) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * cur); if (vs_pm_ok(q) && x >= MEMF(q + 0x48) && x <= MEMF(q + 0x58) && y >= MEMF(q + 0x4C) && y <= MEMF(q + 0x5C) && VS_PM_ZD(q) < 4.0f) return; }
+    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); float ox, oy, sz, d; int c, r, v;
         if (!vs_pm_ok(q)) continue;
         ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68);
         c = (int)floorf((x - ox) / sz); r = (int)floorf((y - oy) / sz);
         if (c < 0 || r < 0 || c >= (int)MEM32(q + 0x70) || r >= (int)MEM32(q + 0x74)) continue;
         v = (MEM8(MEM32(q + 0x6Cu) + (uint32_t)((int)MEM32(q + 0x70) * r + c)) >> 2) & 3;
-        if (v == 0 || v == 2) { MEM32(a + 0x2ECu) = i; return; } }
+        if (v != 0 && v != 2) continue;
+        d = VS_PM_ZD(q); if (d < bd) { bd = d; best = (int)i; } }
+#undef VS_PM_ZD
+    if (best >= 0) MEM32(a + 0x2ECu) = (uint32_t)best;
 }
 /* (1.9.9) the lowest ground the level has under x, y: the lowest of the pathmaps over it (their +0x50), 12 units under; over none,
  * the lowest of all. Below it a hero is off the map (falling through the world); above it he may be on lower ground */
@@ -6084,6 +6090,17 @@ static void vs_edge_guard(void)
         if (h < 0x10000u) continue;
         x = MEMF(h + 0xF0); y = MEMF(h + 0xF4); z = MEMF(h + 0xF8);
         { static unsigned lv = ~0u; if (lv != coop_level_n) { lv = coop_level_n; vs_safe_ok[0] = vs_safe_ok[1] = 0; } }
+        if (MEM32(0x1BB2A4u) == 12u && vs_have && !getenv("TT_VS_ORTHNOWALL") && (z < (getenv("TT_VS_ORTHFLOOR") ? (float)atof(getenv("TT_VS_ORTHFLOOR")) : -6.0f) || x * x + y * y > 38.0f * 38.0f)) {
+            /* (1.9.9) Orthanc: off the summit (below its floor, or past its parapet) -- back on its floor, 20 units out at his own
+             * heading from the middle; a kick off the edge still wins the round (as a fall does elsewhere) */
+            float r = sqrtf(x * x + y * y), p[3]; uint32_t now = coop_now();
+            p[0] = r > 1.0f ? x / r * 20.0f : 20.0f; p[1] = r > 1.0f ? y / r * 20.0f : 0.0f; p[2] = 1.0f;
+            vs_place(h, p); MEMF(h + 0x90) = p[0]; MEMF(h + 0x94) = p[1]; MEMF(h + 0x98) = p[2];
+            vs_safe[w][0] = p[0]; vs_safe[w][1] = p[1]; vs_safe[w][2] = 0.0f; memset(vs_wt[w], 0, sizeof vs_wt[w]);
+            tt_dbg("[VS] Orthanc: P%d off the summit at %.1f %.1f %.1f -- back at %.1f %.1f\n", w + 1, x, y, z, p[0], p[1]);
+            if (vs_state == 0 && !getenv("TT_VS_NOFALLLOSS") && vs_kicked_t[w] && now - vs_kicked_t[w] < 4000u && !vs_fell[w]) { vs_fell[w] = 1; tt_dbg("[VS] P%d kicked off the edge: the round is P%d's\n", w + 1, 2 - w); }
+            continue;
+        }
         if (!vs_have || !vs_safe_ok[w]) { vs_safe[w][0] = x; vs_safe[w][1] = y; vs_safe[w][2] = z; vs_safe_ok[w] = 1; continue; }
         pm = coop_pathmap(h);
         if (pm) { float px = MEMF(pm + 0x48), py = MEMF(pm + 0x4C), sz = (float)(int32_t)MEM32(pm + 0x68);
@@ -6702,6 +6719,17 @@ static void vs_leash(void)
             else was_walk[w] = walk;
         }
     }
+    if (MEM32(0x1BB2A4u) == 12u && vs_have && !getenv("TT_VS_ORTHNOWALL")) {   /* (1.9.9) Orthanc's summit: no further than TT_VS_ORTHMAX (33) units
+         * from the tower's middle. Its pathmap has no edge there (open all round, the parapet's ring half walkable), so a hero
+         * walked or was kicked off the top and fell to ledges below, out of sight, and never came back (a playtest) */
+        float Rm = getenv("TT_VS_ORTHMAX") ? (float)atof(getenv("TT_VS_ORTHMAX")) : 33.0f;
+        for (w = 0; w < 2; w++) { float x = MEMF(h[w] + 0xF0), y = MEMF(h[w] + 0xF4), r = sqrtf(x * x + y * y), r0 = sqrtf(px[w] * px[w] + py[w] * py[w]);
+            if (getenv("TT_VS_ORTHLOG")) { static uint32_t tp[2]; if (coop_now() - tp[w] > 700u) { tp[w] = coop_now(); { uint32_t pi = MEM32(h[w] + 0x2EC), q = pi < 256u ? MEM32(0x41F428u + 0x1088u + 4u * pi) : 0; tt_dbg("[ORTHPOS] P%d %.1f %.1f %.1f pm %u z %.1f..%.1f\n", w + 1, x, y, MEMF(h[w] + 0xF8), pi, q > 0x10000u ? MEMF(q + 0x50) : 0.f, q > 0x10000u ? MEMF(q + 0x60) : 0.f); } } }
+            if (getenv("TT_VS_ORTHLOG") && r > Rm - 0.5f) { static int nl; if (nl++ < 60) tt_dbg("[ORTH] t %u P%d r %.2f (was %.2f) z %.1f 90 %.1f %.1f\n", coop_now(), w + 1, r, r0, MEMF(h[w] + 0xF8), MEMF(h[w] + 0x90), MEMF(h[w] + 0x94)); }
+            if (r > Rm) { float k = (Rm - 0.02f) / r, q[3]; q[0] = x * k; q[1] = y * k; q[2] = MEMF(h[w] + 0xF8);   /* (by the character's SetPosition:
+                * the fields alone came back next frame -- the mover keeps its own copy) */
+                if (!coop_down[w]) vs_place(h[w], q); } }
+    }
     {   /* the arena's edge: on Amon Hen no further than 50 units from where the match began (past it the level is
          * unfinished -- the campaign's gates keep you out: a brown wall where the ground stops). TT_VS_ARENAR */
         float A = vs_arena_r();
@@ -7024,7 +7052,11 @@ static void vs_frame(void)
     vs_gates();
     vs_camera();
     if (!vs_have) {   /* the first frame of play: the spots, then round 1 */
-        if (tt_in_scene()) return;
+        static uint32_t wait_t; static unsigned wait_lv = ~0u;
+        if (wait_lv != coop_level_n) { wait_lv = coop_level_n; wait_t = coop_now(); }
+        if (tt_in_scene() && (coop_now() - wait_t < 10000u || getenv("TT_VS_WAITSCENE"))) return;   /* (1.9.9: at most 10 s -- an arena whose HUD stayed off
+            * (the level's letterbox, Orthanc) never began its match, and nobody could move: frozen till it did, a playtest) */
+        if (tt_in_scene()) tt_dbg("[VS] the level's scene still on after 10 s: the match begins anyway\n");
         for (w = 0; w < 2; w++) { uint32_t a = w ? coop_p2 : coop_first_char; vs_spot[w][0] = MEMF(a + 0xF0); vs_spot[w][1] = MEMF(a + 0xF4); vs_spot[w][2] = MEMF(a + 0xF8); }
         if (!getenv("TT_VS_FIXEDSTART") && MEM32(0x1BB2A4u) != 12u) {   /* (1.9.9) a random start each match, anywhere on the map (a playtest: "not just the one intro
             * location"): player 1 at one of the level's points, player 2 beside him (below); later rounds go on where they are */
