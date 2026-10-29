@@ -6326,6 +6326,7 @@ static void vs_gates(void)
     }
 }
 static int vs_lost_down;   /* (a hero was down as the round ended) */
+static float vs_rs_pos[2][3]; static int vs_rs_ok;   /* (where each hero began the round) */
 static void vs_round_start(void)
 {
     char t[48]; int w, keep = vs_round > 0 && (vs_shield_mode() || vs_big_arena() || !getenv("TT_VS_RESETSPOTS"));   /* (1.9.9: every arena -- the next round from where they are, a playtest) */
@@ -6359,6 +6360,7 @@ static void vs_round_start(void)
     else if (vs_round == 0 || vs_carrier < 0) vs_shield_place();
     vs_orc_shield_round();   /* (the shield orc's shield whole again) */
     vs_taken0[0] = tt_vs_st[0].taken; vs_taken0[1] = tt_vs_st[1].taken;   /* (the round's blows taken, for the achievements) */
+    { int k; for (k = 0; k < 2; k++) { uint32_t a = k ? coop_p2 : coop_first_char; if (a >= 0x10000u) { vs_rs_pos[k][0] = MEMF(a + 0xF0); vs_rs_pos[k][1] = MEMF(a + 0xF4); vs_rs_pos[k][2] = MEMF(a + 0xF8); } } vs_rs_ok = 1; }   /* (where the round began: Restart Round) */
     vs_round++; vs_state = 3; vs_t = coop_now();   /* the countdown first: both frozen (tt_vs_frozen) */
     if (vs_shield_mode()) snprintf(t, sizeof t, vs_carrier < 0 ? "FIND THE SHIELD   P1 %d - %d P2" : "P1 %d - %d P2", vs_score[0], vs_score[1]);
     else snprintf(t, sizeof t, "ROUND %d   P1 %d - %d P2", vs_round, vs_score[0], vs_score[1]);
@@ -6830,7 +6832,15 @@ static void vs_frame(void)
     {   /* (1.9.9) Restart Match (the pause menu's, menus.c): the match from its first round -- the scores and the round back to 0,
          * both heroes whole at the match's starting spots, the countdown again */
         extern volatile int tt_vs_restart_req;
-        if (tt_vs_restart_req && vs_have) { int k; tt_vs_restart_req = 0;
+        if (tt_vs_restart_req == 2 && vs_have) { int k; tt_vs_restart_req = 0;   /* (Restart Round: the round again from where it began -- the score kept) */
+            for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);
+            int mid = vs_state == 0 || vs_state == 3;   /* (in a round, or its countdown: that round again; between rounds, the next one now) */
+            float keep[2][3]; int had = vs_rs_ok; memcpy(keep, vs_rs_pos, sizeof keep);
+            if (mid && vs_round > 0) vs_round--;
+            vs_round_start();
+            for (k = 0; k < 2; k++) { uint32_t a = k ? coop_p2 : coop_first_char; if (a >= 0x10000u && had && mid) { float q[3]; q[0] = keep[k][0]; q[1] = keep[k][1]; q[2] = keep[k][2] + 0.5f; vs_place(a, q); vs_rs_pos[k][0] = keep[k][0]; vs_rs_pos[k][1] = keep[k][1]; vs_rs_pos[k][2] = keep[k][2]; } }
+            tt_dbg("[VS] the round restarted (the pause menu's Restart Round): round %d, P1 %d - %d P2\n", vs_round, vs_score[0], vs_score[1]); }
+        if (tt_vs_restart_req == 1 && vs_have) { int k; tt_vs_restart_req = 0;
             vs_score[0] = vs_score[1] = 0; vs_round = 0; vs_last_win = -1; vs_text[0] = 0;
             memset(tt_vs_st, 0, sizeof tt_vs_st);
             for (k = 0; k < 2; k++) if (coop_down[k]) coop_respawn(k);

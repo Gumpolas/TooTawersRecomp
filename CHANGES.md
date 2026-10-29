@@ -3250,3 +3250,11 @@ twotowers/src/twotowers_manual.c
     -- on the Hornburg Courtyard the game drew its eye in to a wall and the
     view stayed close while ours was far (TT_VS_CAMNOCOPY: as before).
   - Restart Match: a new random start, as a new match's.
+  - Versus pause menu: Restart Round -- a second line under Restart Match;
+    Y (the I key) or a click on it plays the round again (the score kept; a
+    round already won stays won, the next one starts).
+twotowers/src/heroes.c
+  - Hero names longer than "Isildur" in full: the Berserker read "Berserk"
+    on the character select and the level map. The string table's entry is
+    pointed at a longer slot (the room of a string the table holds twice,
+    whose twin then reads the first copy). TT_NAMESHORT: as before.

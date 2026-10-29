@@ -1434,17 +1434,17 @@ static int vs_paused_now(void)
     extern int tt_vs_on(void); uint32_t pl = G32(0x4AD054u);
     return tt_vs_on() && G32(0x4AD050u) == 6 && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0;
 }
-static void vs_restart_ask(const char *how)
+static void vs_restart_ask(int round, const char *how)   /* (tt_vs_restart_req: 1 the match, 2 the round) */
 {
     if (tt_vs_restart_req) return;
-    tt_vs_restart_req = 1; s_vs_unpause = 6;
-    tt_dbg("[VSMENU] Restart Match (%s)\n", how);
+    tt_vs_restart_req = round ? 2 : 1; s_vs_unpause = 6;
+    tt_dbg("[VSMENU] Restart %s (%s)\n", round ? "Round" : "Match", how);
 }
 static void vs_pause_restart_tick(void)
 {
     extern void xbox_BannerSet(const char *title, const char *line); static int shown;
     int p = vs_paused_now() && !getenv("TT_VS_NORESTART");
-    if (p && !shown) { xbox_BannerSet("Restart Match", "Press BACK (Backspace / Tab) or click here to restart the match"); shown = 1; }
+    if (p && !shown) { xbox_BannerSet("Restart Match: BACK (Backspace / Tab) or click", "Restart Round: Y (the I key) or click this line"); shown = 1; }
     else if (!p && shown) { xbox_BannerSet("", ""); shown = 0; }
 }
 static void vs_pause_restart_pad(unsigned long port, XState *st)
@@ -1457,9 +1457,10 @@ static void vs_pause_restart_pad(unsigned long port, XState *st)
     }
     if (vs_paused_now() && !getenv("TT_VS_NORESTART")) {
         WORD b = st->Gamepad.wButtons;
-        if ((b & 0x0020u) && !(prevb[port] & 0x0020u)) vs_restart_ask("BACK");
-        prevb[port] = b;
-        st->Gamepad.wButtons &= (WORD)~0x0020u;
+        if ((b & 0x0020u) && !(prevb[port] & 0x0020u)) vs_restart_ask(0, "BACK");
+        if (st->Gamepad.bAnalogButtons[3] > 30 && !(prevb[port] & 0x8000u)) vs_restart_ask(1, "Y");
+        prevb[port] = (WORD)(b | (st->Gamepad.bAnalogButtons[3] > 30 ? 0x8000u : 0u));
+        st->Gamepad.wButtons &= (WORD)~0x0020u; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevb[port] = st->Gamepad.wButtons;
 }
 static void pad_filter(unsigned long port, XState *st)
@@ -2203,8 +2204,8 @@ static void pointer_frame(void)
             return;
         }
     }
-    if (clk && s_shown && inside && vs_paused_now() && !getenv("TT_VS_NORESTART") && s_gy >= 16.0f && s_gy < 100.0f && s_gx >= 120.0f && s_gx < 520.0f) {   /* (1.9.9) the Restart Match note at the top */
-        go_clear(); vs_restart_ask("click"); return; }
+    if (clk && s_shown && inside && vs_paused_now() && !getenv("TT_VS_NORESTART") && s_gy >= 16.0f && s_gy < 100.0f && s_gx >= 120.0f && s_gx < 520.0f) {   /* (1.9.9) the restart note at the top: its title the match, its line the round */
+        go_clear(); vs_restart_ask(s_gy >= 58.0f, "click"); return; }
     if (diff_here() && s_shown && inside && s_gy >= 396.0f && s_gy < 440.0f) {   /* (1.9.7) the difficulty row: Impossible ours */
         extern int tt_coop_setting(int i); extern void tt_coop_setting_set(int i, int v); extern void tt_opt_move_sound(void);
         int imp = tt_coop_setting(6) == 1, over = s_gx >= 460.0f && s_gx < 640.0f;

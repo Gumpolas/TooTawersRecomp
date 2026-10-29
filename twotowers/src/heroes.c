@@ -91,7 +91,7 @@ static const uint8_t s_map_lurtz[78] = { 2, 2, 2, 2, 4, 5, 2, 2, 2, 2, 2, 2, 2, 
  * character select's poses. */
 typedef struct {
     const char *name;          /* lower case, file names */
-    const char *title;         /* as the game shows it (7 letters at most) */
+    const char *title;         /* as the game shows it (longer than 7 letters: name_long_set) */
     const char *src;           /* level file that has the resources */
     uint32_t mesh, anim, tex;  /* anim: the guest's own (its skeleton) */
     const uint8_t *map; int nmap;   /* guest bone -> hero bone */
@@ -4946,6 +4946,7 @@ static int u16_is(uint32_t va, const char *t, int term)
     for (i = 0; t[i]; i++) if (G16(va + 2 * i) != (uint16_t)t[i]) return 0;
     return !term || G16(va + 2 * i) == 0;
 }
+static void name_long_prep(int k, uint32_t q);
 static void name_find(void)
 {
     uint32_t va;
@@ -4960,6 +4961,7 @@ static void name_find(void)
         else if (u16_is(va + 12, "Play as ", 0) && (u16_is(va + 28, "Isildur", 1) || u16_is(va + 28, s_name_cur, 1))) s_name_at[s_nname++] = va + 28;
     }
     tt_dbg("[HEROES] %d name tables\n", s_nname);
+    { int k; for (k = 0; k < s_nname; k++) name_long_prep(k, s_name_at[k]); }
 }
 /* ===================================================================== */
 /* the upgrades' names, per guest                                         */
@@ -5206,6 +5208,57 @@ static void upn_set(int g)
     }
 }
 
+/* (1.9.9) Names longer than "Isildur" ("Berserker"): the slot holds 7
+ * letters, so the string table's entry (OBSS: "OBSS", 1, ?, count, then
+ * {id, byte offset from the header}) is pointed at a longer slot -- the room
+ * of a string the table holds twice ("Unable to save game. ..."), whose
+ * second entry is pointed at the first copy. The 7 letters stay in place. */
+static struct { uint32_t base, ent, orig, slot, slotlen, dent, dto; } s_nl[8];
+static uint32_t u16_len(uint32_t va) { uint32_t n = 0; while (n < 400 && G16(va + 2 * n)) n++; return n; }
+static int u16_same(uint32_t a, uint32_t b) { uint32_t i; for (i = 0; i < 400; i++) { if (G16(a + 2 * i) != G16(b + 2 * i)) return 0; if (!G16(a + 2 * i)) return 1; } return 0; }
+static void name_long_prep(int k, uint32_t q)
+{
+    uint32_t B, n, j, i, e = 0, eo = 0, pre, used;
+    memset(&s_nl[k], 0, sizeof s_nl[k]);
+    if (getenv("TT_NAMESHORT")) return;
+    for (B = q & ~3u; B > q - 0x20000u && B >= 0x10000u; B -= 4) if (G32(B) == 0x5353424Fu) break;
+    if (G32(B) != 0x5353424Fu || (n = G32(B + 12)) == 0 || n > 4000) return;
+    for (j = 0; j < n; j++) { uint32_t o = G32(B + 20 + 8 * j); if (o <= q - B && o >= eo) { eo = o; e = B + 20 + 8 * j; } }
+    if (!e) return;
+    pre = (q - B - eo) / 2;
+    for (j = 0; j < n; j++) {
+        uint32_t oj = G32(B + 20 + 8 * j), L = u16_len(B + oj), m, shared = 0;
+        if (L < pre + 12) continue;
+        for (m = 0; m < 8; m++) if (s_nl[m].base == B && s_nl[m].slot == B + oj) shared = 1;
+        for (m = 0; m < n && !shared; m++) if (m != j && G32(B + 20 + 8 * m) == oj) shared = 1;   /* (another entry reads it) */
+        if (shared) continue;
+        for (i = 0, used = 0; i < n; i++) {
+            uint32_t oi = G32(B + 20 + 8 * i);
+            if (i == j || oi == oj || !u16_same(B + oi, B + oj)) continue;
+            for (m = 0; m < 8; m++) if (s_nl[m].base == B && (s_nl[m].slot == B + oi || s_nl[m].dto == oj || s_nl[m].dto == oi)) break;
+            if (m < 8) continue;   /* (a pair another name took) */
+            s_nl[k].base = B; s_nl[k].ent = e; s_nl[k].orig = eo; s_nl[k].slot = B + oj; s_nl[k].slotlen = L;
+            s_nl[k].dent = B + 20 + 8 * j; s_nl[k].dto = oi; used = 1; break;
+        }
+        if (used) break;
+    }
+    tt_dbg("[HEROES] name %08X: table %08X, entry %08X, prefix %u, long slot %08X (%u)\n", q, B, e, pre, s_nl[k].slot, s_nl[k].slotlen);
+}
+static void name_long_set(int k, uint32_t q, const char *title)
+{
+    uint32_t B = s_nl[k].base, pre, i, L = (uint32_t)strlen(title);
+    if (!B || G32(B) != 0x5353424Fu) return;
+    if (G32(s_nl[k].ent) != s_nl[k].orig && G32(s_nl[k].ent) != s_nl[k].slot - B) return;   /* (not the table it was) */
+    if (L <= 7) { G32(s_nl[k].ent) = s_nl[k].orig; return; }
+    pre = (q - B - s_nl[k].orig) / 2;
+    if (pre + L >= s_nl[k].slotlen) return;
+    G32(s_nl[k].dent) = s_nl[k].dto;   /* the twin reads the first copy */
+    for (i = 0; i < pre; i++) G16(s_nl[k].slot + 2 * i) = G16(B + s_nl[k].orig + 2 * i);
+    for (i = 0; i <= L; i++) G16(s_nl[k].slot + 2 * (pre + i)) = i < L ? (uint16_t)(unsigned char)title[i] : 0;
+    G32(s_nl[k].ent) = s_nl[k].slot - B;
+    if (getenv("TT_NAMELOG")) { char t[64]; uint32_t a = B + G32(s_nl[k].ent); for (i = 0; i < 63 && G16(a + 2 * i); i++) t[i] = (char)G16(a + 2 * i); t[i] = 0; tt_dbg("[HEROES] name entry %08X now reads \"%s\"\n", s_nl[k].ent, t); }
+}
+
 static void name_set(const char *title)
 {
     int k, i, end;
@@ -5219,6 +5272,7 @@ static void name_set(const char *title)
             if (i == 7 || !title[i]) end = 1;
             G16(q + 2 * i) = end ? 0 : (uint16_t)title[i];
         }
+        name_long_set(k, q, title);
     }
     snprintf(s_name_cur, sizeof s_name_cur, "%s", title);
 }
