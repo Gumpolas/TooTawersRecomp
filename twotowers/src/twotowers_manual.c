@@ -2668,7 +2668,9 @@ void sub_00068DC0(void)
     {   extern int tt_coop_camera_pre(uint32_t *saved); extern void tt_coop_camera_post(const uint32_t *saved);
         uint32_t sv[4]; int r = tt_coop_camera_pre(sv);
         if (r < 0) { eax = 0; esp += 8; return; }   /* inside player 2's swapped context: no camera update (ret 4) */
+        { uint32_t cmq = MEM32(0x43B164u), b150 = cmq >= 0x10000u ? MEM32(cmq + 0x150) : 0, b18 = cmq >= 0x10000u ? MEM32(cmq + 0x18) : 0;
         sub_00068DC0_gen();
+        if (getenv("TT_VS_V150LOG") && cmq >= 0x10000u && (MEM32(cmq + 0x150) != b150 || MEM32(cmq + 0x18) != b18)) { static int n; if (n++ < 40) tt_dbg("[V150] in 68DC0: +150 %08X -> %08X, +18 %08X -> %08X\n", b150, MEM32(cmq + 0x150), b18, MEM32(cmq + 0x18)); } }
         if (r > 0) tt_coop_camera_post(sv);
         { extern int tt_vs_camera_after(void); if (tt_vs_camera_after() && !getenv("TT_VS_NOCAMREDO")) {   /* (Versus: ours, before the frame's view is made of it) */
             uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, cm = MEM32(0x43B164u);
@@ -2900,6 +2902,7 @@ void tt_coop_p1_post(void)
             { static int n; if (d0 != dmg && n++ < 6) tt_dbg("[COOPLEVEL] enemy damage %d -> %d (x%.2f)\n", d0, dmg, coop_dmg_scale()); } } }
         int w = a == coop_p2, foe = 0;
         { extern int tt_vs_hit_by_foe(int victim, int *dmg); foe = tt_vs_hit_by_foe(w, &dmg); }   /* (1.9.9) an enemy's blow: a player's damage, not the other's hit */
+        { extern int tt_vs_round_live(void); extern int tt_vs_on(void); if (tt_vs_on() && !tt_vs_round_live() && !getenv("TT_VS_FOEPREROUND")) dmg = 0; }   /* (1.9.9: no blow counts before the round begins) */
         if (!foe) { extern void tt_vs_real_hit(int victim); if (dmg > 0) tt_vs_real_hit(w); }   /* (a hit of 0: the arena's hero takes none -- judged instead) */
         { extern int tt_vs_no_blows(void); extern int tt_vs_dmg_scale_pct(int victim); extern int tt_vs_shield_take(int victim, int dmg); if (tt_vs_no_blows()) dmg = 0; else dmg = tt_vs_shield_take(w, dmg * tt_vs_dmg_scale_pct(w) / 100); }
         {   /* (1.9.7) a kick (the knock back, B) all but harmless: it throws him back, the blows do the harm -- at most
@@ -5425,6 +5428,7 @@ static int vs_score[2], vs_round, vs_state, vs_have, vs_last_win = -1;   /* stat
 /* the match's numbers per player, for the results (tt_vs_stats) */
 typedef struct { int hits, dmg, taken, shots, shots_hit, rounds, downs, best_hit, parried; uint32_t fastest_ms; int swings, smashes; } VsStats;   /* (swings, smashes: Troll Battle's own -- club swings, blows of 300 or more) */
 VsStats tt_vs_st[2]; static uint32_t vs_round_t0; static int vs_was_down[2];
+int tt_vs_round_live(void) { return tt_vs_on() && vs_have && vs_state == 0; }   /* (1.9.9) a round being fought: the enemies' blows count only then */
 int tt_vs_frozen(void) { return tt_vs_on() && (vs_state == 3 || !vs_have); }   /* (and before the first round: nobody moves until the countdown ends) */
 static int vs_skip_movies(void) { extern volatile int tt_vs_menu_on; int r = tt_vs_menu_on && !getenv("TT_VS_MOVIES"); { static int n; if (n++ < 20) tt_dbg("[VS] a movie opened: %s\n", r ? "skipped (Versus)" : "played"); } return r; }
 void tt_vs_install(void) { extern int (*volatile xbox_movie_skip_cb)(void); if (!xbox_movie_skip_cb) xbox_movie_skip_cb = vs_skip_movies; }
@@ -6282,7 +6286,10 @@ static void vs_open_seams(void)
          * -- player 2 walks past them (only player 1 is held to his pathmap), and player 1 stood at a bridge in Amon Hen's forest
          * that player 2 walked under (a playtest). The map's own edge (nothing open past it) and thick walls stay. TT_VS_KEEPTHIN */
         int thin = 0; static unsigned char mark[4096 * 64];
-        if (!getenv("TT_VS_KEEPTHIN")) for (i = 0; i < (uint32_t)n; i++) {
+        /* (1.9.9) not on the Hornburg Courtyard: its pathmap's walls round the yard are one cell thick with (unwalkable) open cells
+         * past them, so they were taken for thin walls and opened -- the heroes walked out through the west wall into the stone and
+         * fell, and the camera saw through it (a playtest). TT_VS_THIN11: opened there too */
+        if (!getenv("TT_VS_KEEPTHIN") && !(MEM32(0x1BB2A4u) == 11u && !getenv("TT_VS_THIN11"))) for (i = 0; i < (uint32_t)n; i++) {
             uint32_t a = lst[i], base = MEM32(a + 0x6Cu); int W = (int)MEM32(a + 0x70), H = (int)MEM32(a + 0x74), r, c, d;
             if (W * H > (int)sizeof mark) continue;
             memset(mark, 0, (size_t)(W * H));
@@ -6487,12 +6494,32 @@ static int vs_eye_inside(float x, float y)
  * each unit along the way). The Hornburg Courtyard's pathmaps reach past its walls, so an eye behind the south wall counted as inside;
  * the game's own camera then drew in to the wall and the view stayed close (a playtest: "walking to the southeast portion ... causes
  * the camera to zoom in and stay zoomed in"). There only (TT_VS_CAMLOS=1: every arena; =0: off) */
+/* (1.9.9) as vs_union_walk, but only the pathmaps at a height of z (their height range, 3 units either way): the ground at the
+ * heroes' level. On the Hornburg Courtyard the ramparts' pathmaps lie over the yard's edge, 12 or more units up */
+static int vs_union_walk_z(float x, float y, float z)
+{
+    uint32_t i; int any = 0;
+    for (i = 0; i < 256; i++) { uint32_t q = MEM32(0x41F428u + 0x1088u + 4u * i); float ox, oy, sz; int c, r, v;
+        if (!vs_pm_ok(q)) continue;
+        if (z < MEMF(q + 0x50) - 3.0f || z > MEMF(q + 0x60) + 3.0f) continue;
+        ox = MEMF(q + 0x48); oy = MEMF(q + 0x4C); sz = (float)(int32_t)MEM32(q + 0x68);
+        c = (int)floorf((x - ox) / sz); r = (int)floorf((y - oy) / sz);
+        if (c < 0 || r < 0 || c >= (int)MEM32(q + 0x70) || r >= (int)MEM32(q + 0x74)) continue;
+        any = 1; v = (MEM8(MEM32(q + 0x6Cu) + (uint32_t)((int)MEM32(q + 0x70) * r + c)) >> 2) & 3;
+        if (v == 0 || v == 2) return 1; }
+    return any ? 0 : -1;
+}
+static float vs_eye_gz = -1e9f;   /* (the heroes' ground height for vs_eye_sees, set by vs_camera) */
 static int vs_eye_sees(float mx, float my, float ex, float ey)
 {
     static int on = -2; float dx = ex - mx, dy = ey - my, d = sqrtf(dx * dx + dy * dy), t;
     if (on == -2) on = getenv("TT_VS_CAMLOS") ? atoi(getenv("TT_VS_CAMLOS")) : -1;
     if (!vs_eye_inside(ex, ey)) return 0;
     if (on == 0 || (on < 0 && MEM32(0x1BB2A4u) != 11u)) return 1;
+    if (vs_eye_gz > -1e8f && MEM32(0x1BB2A4u) == 11u && !getenv("TT_VS_CAMLOSFLAT")) {   /* (1.9.9) at the heroes' height: an eye over the ramparts looked
+         * out from inside them, the heroes hidden (a playtest) */
+        for (t = 2.0f; t <= d; t += 1.0f) if (vs_union_walk_z(mx + dx * t / d, my + dy * t / d, vs_eye_gz) != 1) return 0;
+        return 1; }
     for (t = 2.0f; t < d; t += 1.0f) if (vs_union_walk(mx + dx * t / d, my + dy * t / d) == 0) return 0;
     return 1;
 }
@@ -6537,7 +6564,7 @@ static void vs_camera(void)
         for (w2 = 0; w2 < 2; w2++) { const char *sk = vs_skin_name(w2); if (sk && (!strcmp(sk, "ent") || !strcmp(sk, "troll") || !strcmp(sk, "troll2"))) big = 1; }
         if (big && !(getenv("TT_VS_BIGCAM") && !atoi(getenv("TT_VS_BIGCAM")))) { back += 9.0f; up += 6.0f; }
     }
-    MEMF(cm + 0x40) = mx; MEMF(cm + 0x44) = my; MEMF(cm + 0x48) = mz + 1.5f;
+    MEMF(cm + 0x40) = mx; MEMF(cm + 0x44) = my; MEMF(cm + 0x48) = mz + 1.5f; vs_eye_gz = mz;
     {   /* (1.9.7) the eye kept inside the level: past its edge (the pathmaps' grids end) stands the brown wall the level
          * is walled in by, and an eye behind it saw only that wall -- the map "cut off", the heroes in it unseen (Amon Hen).
          * (1.9.9) Any of the level's pathmaps counts (only the hero's own did: on the Hornburg Courtyard and the Plains of
@@ -6580,6 +6607,10 @@ static void vs_camera(void)
     if (getenv("TT_VS_CAMDUMP")) { static uint32_t tl, last[64], lcm; uint32_t k; if (coop_now() - tl > 700u) { char b[1200]; int q = 0; tl = coop_now();
         for (k = 0; k < 0x100u; k += 4) { uint32_t v = MEM32(cm + k); if (cm == lcm && v != last[k / 4] && q < 1100 && k != 0x40 && k != 0x44 && k != 0x48 && k != 0x50 && k != 0x54 && k != 0x58) q += snprintf(b + q, sizeof b - q, " +%X %08X(%.2f)", k, v, *(float *)&v); last[k / 4] = v; }
         b[q] = 0; tt_dbg("[CAMD] t %u cm %08X P1 %.1f %.1f |%s\n", coop_now(), cm, MEMF(a + 0xF0), MEMF(a + 0xF4), b); lcm = cm; } }
+    if (getenv("TT_VS_CAMLOG")) { static float lf[4]; float f4[4]; uint32_t v18 = MEM32(cm + 0x18); int k;
+        f4[0] = MEMF(cm); f4[1] = MEMF(cm + 4); f4[2] = MEMF(cm + 0x174); f4[3] = v18 >= 0x10000u ? MEMF(v18 + 0x14) : -1.0f;
+        for (k = 0; k < 4; k++) if (fabsf(f4[k] - lf[k]) > 0.2f) break;
+        if (k < 4) { tt_dbg("[VSFOV] +0 %.2f +4 %.2f +174 %.2f view+14 %.2f (view %08X) heroes %.1f %.1f %.1f\n", f4[0], f4[1], f4[2], f4[3], v18, mx, my, mz); memcpy(lf, f4, sizeof lf); } }
     if (getenv("TT_VS_CAMLOG")) { static int l178 = -1; static uint32_t l18; int f = MEM8(cm + 0x178); if (f != l178 || MEM32(cm + 0x18) != l18) { tt_dbg("[VSCAM] +178 %d -> %d, +18 %08X, heroes %.1f %.1f, +130 %.1f %.1f %.1f +140 %.1f %.1f %.1f\n", l178, f, MEM32(cm + 0x18), mx, my, MEMF(cm + 0x130), MEMF(cm + 0x134), MEMF(cm + 0x138), MEMF(cm + 0x140), MEMF(cm + 0x144), MEMF(cm + 0x148)); l178 = f; l18 = MEM32(cm + 0x18); } }
     if (getenv("TT_VS_CAMLOG")) { static uint32_t tl; if (coop_now() - tl > 500u) { tl = coop_now(); tt_dbg("[VSCAM] t %u heroes %.1f %.1f, eye back %.1f up %.1f, heading %.2f %.2f, inside %d\n", coop_now(), mx, my, back, up, vs_cam_dx, vs_cam_dy, vs_eye_inside(mx - vs_cam_dx * back, my - vs_cam_dy * back)); } }
     if (!getenv("TT_VS_CAMNOCOPY")) {   /* (1.9.9) the camera's second look-at and eye (+0x64..+0x6C, +0x74..+0x7C: the game's, from its own update and its
@@ -9014,7 +9045,7 @@ void tt_coop_leave(void)
       if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && tt_vs_doom_free[1] == coop_p2 && !getenv("TT_VS_DOOMCOLL")) { int k;
           extern float tt_vs_doom_want[2][3];
           for (k = 0; k < 3; k++) { float v = tt_vs_doom_want[1][k]; MEMF(coop_p2 + 0xF0 + 4 * k) = v; MEMF(coop_p2 + 0x90 + 4 * k) = v; MEMF(coop_p2 + 0x140 + 4 * k) = v; } } }
-    if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOLEASH") && !tt_vs_on() && coop_now() - coop_bot_drove_t > 500u) {   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
+    if (coop_cur_fn == 0x000843F0u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOLEASH") && !tt_vs_on() && coop_now() - coop_bot_drove_t > 500u && (!coop_down[0] || getenv("TT_COOP_LEASHDOWN"))) {   /* (1.9.9: none while player 1 is down -- player 2 goes where he likes until he is back, a playtest) */   /* (not while the P2 Bot drives him: its way round a rock can lead away first; it has its own catch-up) */   /* leash: undo a step of player 2's that takes him out past the radius */
         extern float coop_leash_radius(void); extern unsigned coop_leash_stops;
         uint32_t q = coop_s1_player(), a = coop_p2; float R = coop_leash_radius();
         if (q >= 0x10000u && q != a) {
@@ -9308,7 +9339,12 @@ void sub_000BA020(void)
     }
     if (tt_vs_on() && a[1] >= 0x10000u && a[1] < 0x84000000u && (a[0] == coop_first_char || (a[0] == coop_twin && a[0]))) { extern void tt_vs_ent_box_weapon(int w, uint32_t wo); tt_vs_ent_box_weapon(a[0] == coop_first_char ? 0 : 1, a[1]); }
     sub_000BA020_gen();
-    if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && a[0] < 0x84000000u && MEM32(a[0] + 0x114) == 3u) { extern void tt_vs_foe_box(uint32_t e); tt_vs_foe_box(a[0]); }   /* (1.9.9) an enemy's blow (Versus with enemies) */
+    if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && a[0] < 0x84000000u && MEM32(a[0] + 0x114) == 3u) { extern void tt_vs_foe_box(uint32_t e); extern int tt_vs_round_live(void);
+        if (!tt_vs_round_live() && !getenv("TT_VS_FOEPREROUND")) {   /* (1.9.9) before a round begins (the countdown, between rounds): an enemy's blow hits no one -- they
+             * cut the heroes down while they stood frozen for the countdown (a playtest). TT_VS_FOEPREROUND: as before */
+            static int n; if (n++ < 6) tt_dbg("[VS] an enemy's blow before the round began: harmless\n");
+            MEM32(eax + 0x4C) &= 0x01000000u; }
+        else tt_vs_foe_box(a[0]); }   /* (1.9.9) an enemy's blow (Versus with enemies) */
     if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && (a[0] == coop_first_char || a[0] == coop_twin) && !getenv("TT_VS_NOPVP")) {
         /* (Versus) a hero's attack box gets the mask of a character on neither side (0x80008E: the enemies' bit 8 and the
          * heroes' bits 2 and 4), as the box maker gives one: it hits the other hero (its own maker is never hit) */
@@ -10484,6 +10520,13 @@ void sub_000C7030(void)
             static int n; if (n++ < 12) tt_dbg("[COOPTRIG] test: event %u on '%s' by %08X dropped%s\n", ty, nm, ac, getenv("TT_COOP_TESTDROPOLD") ? " (the old 4-byte pop)" : "");
             if (getenv("TT_COOP_TESTDROPOLD")) { esp += 4; return; }
             eax = 0; esp += 20; return;
+        }
+        if (h && tt_vs_on() && MEM32(0x1BB2A4u) == 11u && !getenv("TT_VS_CAMPLANES")) {   /* (1.9.9) Versus on the Hornburg Courtyard: the level's camera planes
+             * dropped for both heroes -- the camera is ours there, and crossing trigPlane_camera_Courtyard1 by the west side handed it the
+             * level's close view (a 13 degree lens): the picture zoomed in and stayed so, through restarts, until the game was left (a
+             * playtest). TT_VS_CAMPLANES: as before */
+            const char *q; int cam = 0; for (q = nm; *q && !cam; q++) if (!_strnicmp(q, "camera", 6)) cam = 1;
+            if (cam) { static int n; if (n++ < 6) tt_dbg("[VS] camera plane '%s' (event %u) left alone: the camera is ours here\n", nm, ty); eax = 0; esp += 20; return; }
         }
         if (ac == coop_p2 && h && _strnicmp(nm, "camera", 6) && _strnicmp(nm, "dynamicPickup", 13) && !getenv("TT_COOP_P2TRIGGERS")) {   /* (pickups are his to take) */
             static int n; if (n++ < 12) tt_dbg("[COOPTRIG] player 2's event %u on '%s' dropped: triggers are player 1's\n", ty, nm);

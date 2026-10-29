@@ -3269,3 +3269,19 @@ twotowers/src/twotowers_manual.c
   - Versus camera: a falling hero counts at the height of his last ground,
     so the view no longer sinks under the floor with him (TT_VS_CAMFALL: as
     before).
+  - Versus, Hornburg Courtyard zoom (the real cause): crossing the level's
+    camera plane trigPlane_camera_Courtyard1 on the west side handed the
+    camera the level's own close view (a 13-degree lens), and nothing handed
+    it back -- the picture stayed zoomed in through restarts until the game
+    was left. The level's camera planes are left alone there now (the camera
+    is ours) (TT_VS_CAMPLANES: as before).
+  - Versus, Hornburg Courtyard: the yard's one-cell outer walls are no
+    longer opened as "thin walls" -- the heroes walked out through the west
+    wall into the stone and fell (TT_VS_THIN11: as before).
+  - Versus camera on the Hornburg Courtyard: its line-of-sight test counts
+    only the ground at the heroes' height, so the eye no longer sits inside
+    the ramparts that overhang the yard (TT_VS_CAMLOSFLAT: as before).
+  - Versus with enemies: an enemy's blow before the round begins (the
+    countdown, between rounds) hits no one (TT_VS_FOEPREROUND: as before).
+  - Co-op: no leash while player 1 is down -- player 2 goes anywhere until
+    he is back (TT_COOP_LEASHDOWN: as before).
