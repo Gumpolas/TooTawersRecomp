@@ -1582,6 +1582,80 @@ BOOL  SetWindowTextA(HWND h, LPCSTR t)    { (void)h; (void)t; return TRUE; }
 int   GetWindowTextA(HWND h, LPSTR t, int n) { (void)h; (void)t; (void)n; return 0; }
 BOOL  EnumWindows(WNDENUMPROC p, LPARAM l) { (void)p; (void)l; return FALSE; }
 
+#if defined(__linux__) && defined(__has_include)
+#if __has_include(<X11/Xlib.h>)
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#define HAVE_X11_BOX 1
+#endif
+#endif
+#if defined(HAVE_X11_BOX)
+/* (1.9.9) a message in a window of our own, straight on X11 (libX11 looked up when needed): SDL's message box was not
+ * available in the SDL2 the AppImage carries ("No message system available"), and a bare desktop has no zenity -- the
+ * AppImage catalog's test saw the game quit without a window. The text wrapped to the screen, an OK button; Enter, Esc,
+ * a click on OK or the window's close button end it. 0 when there is no X display */
+static int x11_box(const char *title, const char *text)
+{
+    void *x = dlopen("libX11.so.6", RTLD_NOW | RTLD_LOCAL);
+#define XF(ret, name, args) ret (*p##name) args = x ? (ret (*) args)dlsym(x, #name) : NULL;
+    XF(Display *, XOpenDisplay, (const char *)) XF(int, XDefaultScreen, (Display *)) XF(Window, XRootWindow, (Display *, int))
+    XF(unsigned long, XBlackPixel, (Display *, int)) XF(unsigned long, XWhitePixel, (Display *, int))
+    XF(Window, XCreateSimpleWindow, (Display *, Window, int, int, unsigned, unsigned, unsigned, unsigned long, unsigned long))
+    XF(int, XStoreName, (Display *, Window, const char *)) XF(int, XSelectInput, (Display *, Window, long)) XF(int, XMapRaised, (Display *, Window))
+    XF(int, XNextEvent, (Display *, XEvent *)) XF(int, XDrawString, (Display *, Drawable, GC, int, int, const char *, int))
+    XF(GC, XDefaultGC, (Display *, int)) XF(XFontStruct *, XLoadQueryFont, (Display *, const char *)) XF(int, XSetFont, (Display *, GC, Font))
+    XF(int, XTextWidth, (XFontStruct *, const char *, int)) XF(int, XCloseDisplay, (Display *)) XF(Atom, XInternAtom, (Display *, const char *, Bool))
+    XF(Status, XSetWMProtocols, (Display *, Window, Atom *, int)) XF(int, XDrawRectangle, (Display *, Drawable, GC, int, int, unsigned, unsigned))
+    XF(int, XDisplayWidth, (Display *, int)) XF(int, XDisplayHeight, (Display *, int)) XF(KeySym, XLookupKeysym, (XKeyEvent *, int))
+    XF(int, XDestroyWindow, (Display *, Window)) XF(int, XSetForeground, (Display *, GC, unsigned long))
+#undef XF
+    Display *d; int scr, sw, sh, fw = 8, fh = 14, asc = 11, maxc, n = 0, i, w, hgt, bw = 70, bh = 26, bx, by;
+    char lines[40][200]; Window win; GC gc; XFontStruct *fs; Atom del; const char *q = text ? text : "";
+    if (!x || !pXOpenDisplay || !pXNextEvent || !pXDrawString || !pXCreateSimpleWindow || !pXTextWidth || !pXLookupKeysym) return 0;
+    if (!(d = pXOpenDisplay(NULL))) return 0;
+    scr = pXDefaultScreen(d); sw = pXDisplayWidth(d, scr); sh = pXDisplayHeight(d, scr);
+    gc = pXDefaultGC(d, scr);
+    fs = pXLoadQueryFont(d, "-*-dejavu sans-medium-r-normal--14-*-*-*-*-*-iso8859-1");
+    if (!fs) fs = pXLoadQueryFont(d, "9x15");
+    if (!fs) fs = pXLoadQueryFont(d, "fixed");
+    if (fs) { pXSetFont(d, gc, fs->fid); fw = pXTextWidth(fs, "n", 1); if (fw < 4) fw = 7; fh = fs->ascent + fs->descent + 3; asc = fs->ascent; }
+    maxc = (sw - 80) / fw; if (maxc > 90) maxc = 90; if (maxc < 30) maxc = 30;
+    while (*q && n < 40) {   /* lines: the text's own, wrapped at a space before maxc letters */
+        int l = 0, sp = -1;
+        while (q[l] && q[l] != '\n' && l < maxc) { if (q[l] == ' ') sp = l; l++; }
+        if (q[l] && q[l] != '\n' && sp > 0) l = sp;
+        if (l > 199) l = 199;
+        memcpy(lines[n], q, (size_t)l); lines[n][l] = 0; n++;
+        q += l; if (*q == '\n' || *q == ' ') q++;
+    }
+    for (w = 300, i = 0; i < n; i++) { int tw = fs ? pXTextWidth(fs, lines[i], (int)strlen(lines[i])) : (int)strlen(lines[i]) * fw; if (tw + 48 > w) w = tw + 48; }
+    if (w > sw - 20) w = sw - 20;
+    hgt = 28 + n * fh + 24 + bh + 18; if (hgt > sh - 20) hgt = sh - 20;
+    bx = (w - bw) / 2; by = hgt - bh - 16;
+    win = pXCreateSimpleWindow(d, pXRootWindow(d, scr), (sw - w) / 2, (sh - hgt) / 2, (unsigned)w, (unsigned)hgt, 1, pXBlackPixel(d, scr), pXWhitePixel(d, scr));
+    pXStoreName(d, win, title ? title : "Message");
+    pXSelectInput(d, win, ExposureMask | KeyPressMask | ButtonPressMask);
+    del = pXInternAtom(d, "WM_DELETE_WINDOW", False); pXSetWMProtocols(d, win, &del, 1);
+    pXMapRaised(d, win);
+    for (;;) {
+        XEvent e; pXNextEvent(d, &e);
+        if (e.type == Expose) {
+            pXSetForeground(d, gc, pXBlackPixel(d, scr));
+            for (i = 0; i < n; i++) pXDrawString(d, win, gc, 24, 24 + asc + i * fh, lines[i], (int)strlen(lines[i]));
+            pXDrawRectangle(d, win, gc, bx, by, (unsigned)bw, (unsigned)bh);
+            pXDrawString(d, win, gc, bx + (bw - (fs ? pXTextWidth(fs, "OK", 2) : 2 * fw)) / 2, by + (bh + asc) / 2 - 1, "OK", 2);
+        } else if (e.type == ButtonPress) {
+            if (e.xbutton.x >= bx && e.xbutton.x <= bx + bw && e.xbutton.y >= by && e.xbutton.y <= by + bh) break;
+        } else if (e.type == KeyPress) {
+            KeySym k = pXLookupKeysym(&e.xkey, 0);
+            if (k == 0xFF0D || k == 0xFF1B || k == 0xFF8D || k == 0x20) break;   /* (Return, Escape, keypad Enter, space) */
+        } else if (e.type == ClientMessage && (Atom)e.xclient.data.l[0] == del) break;
+    }
+    pXDestroyWindow(d, win); pXCloseDisplay(d);
+    return 1;
+}
+#endif
+
 int MessageBoxA(HWND h, LPCSTR text, LPCSTR caption, UINT type)
 {
     (void)h;
@@ -1595,6 +1669,9 @@ int MessageBoxA(HWND h, LPCSTR text, LPCSTR caption, UINT type)
         smb_fn f = (smb_fn)dlsym(RTLD_DEFAULT, "SDL_ShowSimpleMessageBox");
 #if !defined(__APPLE__)
         if (!getenv("DISPLAY") && !getenv("WAYLAND_DISPLAY")) f = NULL;
+#endif
+#if defined(HAVE_X11_BOX)
+        if (getenv("DISPLAY") && !getenv("TT_SDLBOX") && x11_box(caption ? caption : "The Two Towers Recompiled", text)) f = NULL;   /* (ours first: SDL's may have no message system) */
 #endif
         if (f) f(0x10u /* SDL_MESSAGEBOX_ERROR */, caption ? caption : "The Two Towers Recompiled", text ? text : "", NULL);
     }

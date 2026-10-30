@@ -3343,3 +3343,6 @@ twotowers/src/twotowers_manual.c
     in a window too (SDL's message box), and TwoTowers.sh without zenity
     says how to install the game files in one (kdialog, or the game's own
     box) instead of only in a terminal no one sees.
+  - Linux: the error window also drawn straight on X11 (libX11, looked up
+    when needed) before SDL's message box is tried (TT_SDLBOX=1: SDL's
+    first) -- a second way to show it where SDL's box can't open.
