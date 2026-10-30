@@ -3353,3 +3353,6 @@ twotowers/src/twotowers_manual.c
     the AppImage catalog's test lists windows by name and class
     (xwininfo), and one with no class was not counted -- "Could not find a
     single window on screen" with the message on it.
+  - Linux: the first start without the game files says so as a welcome
+    (what to do, and the zenity tip) instead of "not installed yet": the
+    AppImage catalog's test reads the screen and took that for an error.

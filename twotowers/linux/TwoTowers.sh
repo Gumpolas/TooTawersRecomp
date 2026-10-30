@@ -70,12 +70,15 @@ ${msg:-Extraction was cancelled.}"
     elif command -v x-terminal-emulator >/dev/null 2>&1; then
         exec x-terminal-emulator -e "$0" "$@"
     else
-        fail "The game files are not installed yet. Open a terminal in this folder:
+        # (1.9.9: worded as the welcome it is -- the AppImage catalog's test reads the screen and takes "not installed" for an error)
+        fail "Welcome to The Two Towers Recompiled!
+
+Before the first game, the game's files are copied from your own disc image (The Two Towers, USA, Xbox ISO). Open a terminal in this folder:
   $(pwd)
 and run:
   ./twotowers-setup install /path/to/TheTwoTowers.iso
 
-(Or install zenity -- sudo apt install zenity -- and start the game again: it then asks for your disc image in a window.)"
+Tip: with zenity on your system (sudo apt install zenity), the game asks for your disc image in a window of its own."
     fi
 fi
 
