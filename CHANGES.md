@@ -3327,3 +3327,10 @@ twotowers/src/twotowers_manual.c
     Morgul Darts) -- he showed Isildur's. Picking Aragorn, Legolas, Gimli
     or Isildur in Versus puts the game's own upgrade names back (a hero
     picked before could leave his on Aragorn's).
+  - Linux: a DualShock 3 is also read straight from the kernel's joystick
+    device (/dev/input/jsN, the one jstest reads), put together with what
+    SDL gives: a playtest's pad (Linux Mint 22.1, kernel 6.8, USB and
+    Bluetooth) was found and opened through SDL but no button or stick ever
+    reached the game (GitHub issue 14, again). A pad SDL does not list at
+    all gets a slot of its own. RECOMP_NO_JSDEV=1: SDL alone;
+    RECOMP_PADLOG=1 logs each pad's state as it changes.

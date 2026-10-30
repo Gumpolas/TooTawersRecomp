@@ -339,6 +339,7 @@ static struct {
     DWORD sent_at;
     int is_ps;
     char name[64];
+    int js_only;              /* (Linux) a DualShock 3 SDL did not list: read from /dev/input/js* alone */
 } s_sp[SP_MAX];
 static CRITICAL_SECTION s_sp_lock;
 static volatile LONG s_sp_state;   /* 0 not started, 1 running, -1 unavailable */
@@ -417,6 +418,9 @@ static void sp_scan(void)
     }
 }
 
+#if defined(__linux__)
+static void js_merge(int k, HostPad *p);
+#endif
 static void sp_read(int k)
 {
     SDL_GameController *c = s_sp[k].gc;
@@ -451,6 +455,13 @@ static void sp_read(int k)
     p.ly = (SHORT)(-1 - p_SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_LEFTY));
     p.rx = p_SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);
     p.ry = (SHORT)(-1 - p_SDL_GameControllerGetAxis(c, SDL_CONTROLLER_AXIS_RIGHTY));
+#if defined(__linux__)
+    if (s_sp[k].is_ps == 3) js_merge(k, &p);
+#endif
+    if (getenv("RECOMP_PADLOG")) {   /* testing: what each pad gives, as it changes */
+        static HostPad last[SP_MAX]; static int n;
+        if (memcmp(&p, &last[k], sizeof p - sizeof p.packet) && n++ < 200) { last[k] = p;
+            fprintf(stderr, "  [PADLOG] %s: buttons %04X lt %u rt %u left %d,%d right %d,%d\n", s_sp[k].name, p.buttons, p.lt, p.rt, p.lx, p.ly, p.rx, p.ry); fflush(stderr); } }
     EnterCriticalSection(&s_sp_lock);
     if (memcmp(&p, &s_sp[k].st, sizeof p - sizeof p.packet)) p.packet = s_sp[k].st.packet + 1;
     else p.packet = s_sp[k].st.packet;
@@ -468,6 +479,192 @@ static void sp_rumble(int k)
     p_SDL_GameControllerRumble(s_sp[k].gc, l, r, (l | r) ? 2000 : 0);
     s_sp[k].sent_l = l; s_sp[k].sent_r = r; s_sp[k].sent_at = now;
 }
+
+#if defined(__linux__)
+/* (1.9.9) Linux: a DualShock 3 read from the kernel's joystick device (/dev/input/jsN, hid-sony) as well as through SDL.
+ * A playtest's pad (Linux Mint 22.1, kernel 6.8, USB and Bluetooth) was found and opened by SDL, yet no button or stick
+ * ever reached the game, while jstest on /dev/input/js1 showed all 17 buttons and 6 axes (GitHub issue 14). Both are
+ * read and put together (a button held in either is held; the stick pushed further wins), so the pad works whichever of
+ * the two delivers. Paired in order with SDL's PlayStation 3 pads; one SDL did not list gets a slot of its own.
+ * RECOMP_NO_JSDEV=1: SDL alone */
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/ioctl.h>
+#include <linux/joystick.h>
+#define TT_JS_MAX 4
+static struct {
+    int fd, n, seen;          /* fd -1: none; seen: an event of the player's (not the opening ones) */
+    char name[128], path[32];
+    uint16_t btn[KEY_MAX - BTN_MISC + 1];
+    uint8_t ax[ABS_CNT];
+    uint8_t nb, na;
+    short bv[KEY_MAX - BTN_MISC + 1];
+    short av[ABS_CNT];
+    int slot;                 /* the s_sp slot it feeds, -1 none yet */
+} s_js[TT_JS_MAX];
+static int js_is_ps3(const char *nm)
+{
+    return strstr(nm, "PLAYSTATION(R)3") || strstr(nm, "PLAYSTATION 3") || strstr(nm, "PS3") || strstr(nm, "Sixaxis") || strstr(nm, "SIXAXIS");
+}
+static void js_scan(void)
+{
+    int i, j;
+    static int init;
+    if (!init) { init = 1; for (j = 0; j < TT_JS_MAX; j++) { s_js[j].fd = -1; s_js[j].slot = -1; } }
+    if (getenv("RECOMP_NO_JSDEV")) return;
+    for (i = 0; i < 32; i++) {
+        char path[32], nm[128] = "";
+        int fd, free_j = -1;
+        unsigned char nb = 0, na = 0;
+        snprintf(path, sizeof path, "/dev/input/js%d", i);
+        for (j = 0; j < TT_JS_MAX; j++) { if (s_js[j].fd >= 0 && !strcmp(s_js[j].path, path)) break; if (s_js[j].fd < 0 && free_j < 0) free_j = j; }
+        if (j < TT_JS_MAX || free_j < 0) continue;
+        fd = open(path, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
+        if (fd < 0) continue;
+        if (ioctl(fd, JSIOCGNAME(sizeof nm - 1), nm) < 0 || !js_is_ps3(nm)) { close(fd); continue; }
+        ioctl(fd, JSIOCGBUTTONS, &nb); ioctl(fd, JSIOCGAXES, &na);
+        memset(&s_js[free_j], 0, sizeof s_js[free_j]);
+        s_js[free_j].slot = -1;
+        if (ioctl(fd, JSIOCGBTNMAP, s_js[free_j].btn) < 0 || ioctl(fd, JSIOCGAXMAP, s_js[free_j].ax) < 0) { close(fd); s_js[free_j].fd = -1; continue; }
+        s_js[free_j].fd = fd; s_js[free_j].nb = nb; s_js[free_j].na = na;
+        snprintf(s_js[free_j].name, sizeof s_js[free_j].name, "%s", nm);
+        snprintf(s_js[free_j].path, sizeof s_js[free_j].path, "%s", path);
+        /* triggers at rest until they report (hid-sony's L2/R2 axes run -32767 .. 32767) */
+        for (j = 0; j < ABS_CNT; j++) s_js[free_j].av[j] = (s_js[free_j].ax[j] == ABS_Z || s_js[free_j].ax[j] == ABS_RZ) ? -32767 : 0;
+        fprintf(stderr, "  [INPUT] %s: %s, %u buttons, %u axes -- read directly as well (the kernel's joystick device)\n", path, nm, nb, na);
+        fflush(stderr);
+    }
+}
+/* the device's events since the last read; 0 when it is gone */
+static int js_pump(int j)
+{
+    struct js_event e;
+    for (;;) {
+        ssize_t r = read(s_js[j].fd, &e, sizeof e);
+        if (r != (ssize_t)sizeof e) {
+            if (r < 0 && (errno == EAGAIN || errno == EINTR)) return 1;
+            if (r < 0 && errno == ENODEV) {
+                fprintf(stderr, "  [INPUT] %s: unplugged\n", s_js[j].path); fflush(stderr);
+                close(s_js[j].fd); s_js[j].fd = -1; return 0; }
+            return 1;
+        }
+        if (!(e.type & JS_EVENT_INIT) && e.value) {
+            if (!s_js[j].seen) { fprintf(stderr, "  [INPUT] %s: input (%s %u = %d)\n", s_js[j].path, (e.type & 0x7F) == JS_EVENT_BUTTON ? "button" : "axis", e.number, e.value); fflush(stderr); }
+            s_js[j].seen = 1; }
+        if ((e.type & 0x7F) == JS_EVENT_BUTTON && e.number < sizeof s_js[j].bv / sizeof s_js[j].bv[0]) s_js[j].bv[e.number] = e.value;
+        else if ((e.type & 0x7F) == JS_EVENT_AXIS && e.number < ABS_CNT) s_js[j].av[e.number] = e.value;
+    }
+}
+/* the pad's state in XInput's terms, by the codes the kernel gives each button and axis (the layout of kernels since
+ * 4.12 -- BTN_SOUTH ... BTN_DPAD_* -- and the older one, BTN_TRIGGER ... ) */
+static void js_state(int j, HostPad *p)
+{
+    int i, lt = 0, rt = 0;
+    memset(p, 0, sizeof *p);
+    for (i = 0; i < s_js[j].nb && i < (int)(sizeof s_js[j].bv / sizeof s_js[j].bv[0]); i++) {
+        if (!s_js[j].bv[i]) continue;
+        switch (s_js[j].btn[i]) {
+        case BTN_SOUTH: case 0x12E: p->buttons |= XINPUT_GAMEPAD_A; break;
+        case BTN_EAST: case 0x12D: p->buttons |= XINPUT_GAMEPAD_B; break;
+        case BTN_WEST: case 0x12F: p->buttons |= XINPUT_GAMEPAD_X; break;
+        case BTN_NORTH: case 0x12C: p->buttons |= XINPUT_GAMEPAD_Y; break;
+        case BTN_TL: case 0x12A: p->buttons |= XINPUT_GAMEPAD_LEFT_SHOULDER; break;
+        case BTN_TR: case 0x12B: p->buttons |= XINPUT_GAMEPAD_RIGHT_SHOULDER; break;
+        case BTN_TL2: case 0x128: lt = 255; break;
+        case BTN_TR2: case 0x129: rt = 255; break;
+        case BTN_SELECT: case 0x120: p->buttons |= XINPUT_GAMEPAD_BACK; break;
+        case BTN_START: case 0x123: p->buttons |= XINPUT_GAMEPAD_START; break;
+        case BTN_THUMBL: case 0x121: p->buttons |= XINPUT_GAMEPAD_LEFT_THUMB; break;
+        case BTN_THUMBR: case 0x122: p->buttons |= XINPUT_GAMEPAD_RIGHT_THUMB; break;
+        case BTN_DPAD_UP: case 0x124: p->buttons |= XINPUT_GAMEPAD_DPAD_UP; break;
+        case BTN_DPAD_DOWN: case 0x126: p->buttons |= XINPUT_GAMEPAD_DPAD_DOWN; break;
+        case BTN_DPAD_LEFT: case 0x127: p->buttons |= XINPUT_GAMEPAD_DPAD_LEFT; break;
+        case BTN_DPAD_RIGHT: case 0x125: p->buttons |= XINPUT_GAMEPAD_DPAD_RIGHT; break;
+        default: break;
+        }
+    }
+    for (i = 0; i < s_js[j].na && i < ABS_CNT; i++) {
+        int v = s_js[j].av[i];
+        switch (s_js[j].ax[i]) {
+        case ABS_X: p->lx = (SHORT)v; break;
+        case ABS_Y: p->ly = (SHORT)(-1 - v); break;
+        case ABS_RX: p->rx = (SHORT)v; break;
+        case ABS_RY: p->ry = (SHORT)(-1 - v); break;
+        case ABS_Z: { int t = (v + 32767) / 257; if (t > lt) lt = t; } break;
+        case ABS_RZ: { int t = (v + 32767) / 257; if (t > rt) rt = t; } break;
+        case ABS_HAT0X: if (v < 0) p->buttons |= XINPUT_GAMEPAD_DPAD_LEFT; else if (v > 0) p->buttons |= XINPUT_GAMEPAD_DPAD_RIGHT; break;
+        case ABS_HAT0Y: if (v < 0) p->buttons |= XINPUT_GAMEPAD_DPAD_UP; else if (v > 0) p->buttons |= XINPUT_GAMEPAD_DPAD_DOWN; break;
+        default: break;
+        }
+    }
+    p->lt = (BYTE)(lt < 0 ? 0 : lt > 255 ? 255 : lt);
+    p->rt = (BYTE)(rt < 0 ? 0 : rt > 255 ? 255 : rt);
+}
+static SHORT js_far(SHORT a, SHORT b) { return abs((int)b) > abs((int)a) ? b : a; }
+/* SDL's state p of slot k with the joystick device's put in */
+static void js_merge(int k, HostPad *p)
+{
+    int j; HostPad q;
+    for (j = 0; j < TT_JS_MAX; j++) if (s_js[j].fd >= 0 && s_js[j].slot == k) break;
+    if (j == TT_JS_MAX || !js_pump(j)) return;
+    js_state(j, &q);
+    if (!s_js[j].seen) return;   /* (nothing of the player's yet: SDL's alone) */
+    {   static int said;
+        if (!said && (q.buttons || q.lt || q.rt || abs(q.lx) > 8000 || abs(q.ly) > 8000) && !(p->buttons || p->lt || p->rt || abs(p->lx) > 4000 || abs(p->ly) > 4000)) {
+            said = 1; fprintf(stderr, "  [INPUT] %s: SDL gives nothing for %s; read from the joystick device\n", s_js[j].path, s_sp[k].name); fflush(stderr); } }
+    p->buttons |= q.buttons;
+    if (q.lt > p->lt) p->lt = q.lt;
+    if (q.rt > p->rt) p->rt = q.rt;
+    p->lx = js_far(p->lx, q.lx); p->ly = js_far(p->ly, q.ly);
+    p->rx = js_far(p->rx, q.rx); p->ry = js_far(p->ry, q.ry);
+}
+/* each joystick device to a slot: the next of SDL's PlayStation 3 pads with none, or a slot of its own */
+static void js_pair(void)
+{
+    int j, k, m;
+    for (j = 0; j < TT_JS_MAX; j++) {
+        if (s_js[j].fd < 0) { if (s_js[j].slot >= 0) { k = s_js[j].slot; s_js[j].slot = -1;
+                if (s_sp[k].js_only) { EnterCriticalSection(&s_sp_lock); memset(&s_sp[k], 0, sizeof s_sp[k]); LeaveCriticalSection(&s_sp_lock); } }
+            continue; }
+        if (s_js[j].slot >= 0 && (s_sp[s_js[j].slot].gc || s_sp[s_js[j].slot].js_only)) continue;
+        s_js[j].slot = -1;
+        for (k = 0; k < SP_MAX; k++) {
+            if (!s_sp[k].gc || s_sp[k].is_ps != 3) continue;
+            for (m = 0; m < TT_JS_MAX; m++) if (m != j && s_js[m].fd >= 0 && s_js[m].slot == k) break;
+            if (m == TT_JS_MAX) { s_js[j].slot = k; break; }
+        }
+        if (s_js[j].slot < 0 && s_js[j].seen) {   /* SDL has not listed it (and it has been used): a slot of its own */
+            for (k = 0; k < SP_MAX; k++) if (!s_sp[k].gc && !s_sp[k].js_only) break;
+            if (k == SP_MAX) continue;
+            EnterCriticalSection(&s_sp_lock);
+            memset(&s_sp[k], 0, sizeof s_sp[k]);
+            s_sp[k].js_only = 1; s_sp[k].is_ps = 3;
+            snprintf(s_sp[k].name, sizeof s_sp[k].name, "%s", "PS3 Controller");
+            LeaveCriticalSection(&s_sp_lock);
+            s_js[j].slot = k;
+            fprintf(stderr, "  [INPUT] controller connected: %s (PlayStation 3, from %s alone)\n", s_js[j].name, s_js[j].path); fflush(stderr);
+        }
+        if (s_js[j].slot >= 0 && !s_sp[s_js[j].slot].js_only) { fprintf(stderr, "  [INPUT] %s goes with %s\n", s_js[j].path, s_sp[s_js[j].slot].name); fflush(stderr); }
+    }
+}
+static void js_only_read(int k)
+{
+    HostPad p; memset(&p, 0, sizeof p);
+    js_merge(k, &p);
+    EnterCriticalSection(&s_sp_lock);
+    if (memcmp(&p, &s_sp[k].st, sizeof p - sizeof p.packet)) p.packet = s_sp[k].st.packet + 1;
+    else p.packet = s_sp[k].st.packet;
+    s_sp[k].st = p;
+    s_sp[k].connected = 1;
+    LeaveCriticalSection(&s_sp_lock);
+}
+static void js_unused_pump(void)   /* the ones with no slot yet: their events read (to see one used) */
+{
+    int j;
+    for (j = 0; j < TT_JS_MAX; j++) if (s_js[j].fd >= 0 && s_js[j].slot < 0) js_pump(j);
+}
+#endif
 
 extern void xbox_UnpinServiceThread(void);
 static DWORD WINAPI sp_thread(LPVOID arg)
@@ -513,9 +710,19 @@ static DWORD WINAPI sp_thread(LPVOID arg)
     for (;;) {
         DWORD now = GetTickCount();
         p_SDL_GameControllerUpdate();
-        if (!last_scan || now - last_scan > 500) { sp_scan(); last_scan = now; }
+        if (!last_scan || now - last_scan > 500) {
+            sp_scan();
+#if defined(__linux__)
+            { static DWORD jt; if (!jt || now - jt > 2000) { js_scan(); jt = now | 1; } }
+            js_pair();
+#endif
+            last_scan = now; }
         for (k = 0; k < SP_MAX; k++)
             if (s_sp[k].gc) { sp_read(k); sp_rumble(k); }
+#if defined(__linux__)
+            else if (s_sp[k].js_only) js_only_read(k);
+        js_unused_pump();
+#endif
         Sleep(4);
     }
     return 0;
@@ -610,7 +817,7 @@ static void pads_scan_once(void)
     if (s_sp_state > 0) {
         EnterCriticalSection(&s_sp_lock);
         for (k = 0; k < SP_MAX; k++)
-            if (s_sp[k].gc && s_sp[k].connected && nf < sizeof found / sizeof found[0]) found[nf++] = 8 + k;
+            if ((s_sp[k].gc || s_sp[k].js_only) && s_sp[k].connected && nf < sizeof found / sizeof found[0]) found[nf++] = 8 + k;
         LeaveCriticalSection(&s_sp_lock);
     }
 #endif
@@ -721,7 +928,7 @@ static DWORD pad_read(DWORD p, HostPad *out)
     if (p >= 8 && p < 8 + SP_MAX && s_sp_state > 0) {
         DWORD r = ERROR_DEVICE_NOT_CONNECTED;
         EnterCriticalSection(&s_sp_lock);
-        if (s_sp[p - 8].gc && s_sp[p - 8].connected) { *out = s_sp[p - 8].st; r = ERROR_SUCCESS; }
+        if ((s_sp[p - 8].gc || s_sp[p - 8].js_only) && s_sp[p - 8].connected) { *out = s_sp[p - 8].st; r = ERROR_SUCCESS; }
         LeaveCriticalSection(&s_sp_lock);
         return r;
     }
