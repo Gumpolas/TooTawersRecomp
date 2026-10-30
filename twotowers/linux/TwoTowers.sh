@@ -13,8 +13,15 @@ have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2
 # a message in a window without zenity: KDE's kdialog, else the game's own (SDL's message box)
 win_msg() {
     [ -n "$DISPLAY$WAYLAND_DISPLAY" ] || return 1
-    if command -v kdialog >/dev/null 2>&1; then kdialog --title "$TITLE" --error "$1" 2>/dev/null; return 0; fi
-    [ -x ./twotowers_recomp ] && TT_MSGBOX="$1" ./twotowers_recomp >/dev/null 2>&1
+    if command -v kdialog >/dev/null 2>&1 && kdialog --title "$TITLE" --error "$1" 2>/dev/null; then return 0; fi
+    # the game's own box (straight on X11, else SDL's); xmessage (x11-utils) when that could not open one
+    if [ -x ./twotowers_recomp ]; then
+        out=$(TT_MSGBOX="$1" ./twotowers_recomp 2>&1 >/dev/null | grep '^(')
+        [ -n "$out" ] && printf '%s\n' "$out" >&2
+        case "$out" in *"shown in a window"*) return 0;; esac
+    fi
+    if command -v xmessage >/dev/null 2>&1; then printf '%s\n' "$1" | xmessage -center -title "$TITLE" -buttons OK:0 -file - 2>/dev/null; return 0; fi
+    echo "(no window could be opened for this message)" >&2
     return 0
 }
 say() {
