@@ -3349,3 +3349,7 @@ twotowers/src/twotowers_manual.c
     after both: on the AppImage catalog's bare X server SDL's box never
     opened and the game quit there without a window. The message wraps to
     the screen.
+  - Linux: the message window has a class (WM_CLASS) and a UTF-8 title:
+    the AppImage catalog's test lists windows by name and class
+    (xwininfo), and one with no class was not counted -- "Could not find a
+    single window on screen" with the message on it.

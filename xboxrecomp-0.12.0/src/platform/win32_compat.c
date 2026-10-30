@@ -1606,7 +1606,7 @@ static int x11_box(const char *title, const char *text)
     XF(int, XDisplayWidth, (void *, int)) XF(int, XDisplayHeight, (void *, int)) XF(xid_t, XLookupKeysym, (void *, int))
     XF(int, XDestroyWindow, (void *, xid_t)) XF(int, XSetForeground, (void *, void *, unsigned long))
     XF(void *, XSetErrorHandler, (int (*)(void *, void *))) XF(int, XSync, (void *, int)) XF(char **, XListFonts, (void *, const char *, int, int *))
-    XF(int, XFreeFontNames, (char **))
+    XF(int, XFreeFontNames, (char **)) XF(int, XChangeProperty, (void *, xid_t, xid_t, xid_t, int, int, const unsigned char *, int))
 #undef XF
     void *d, *gc; int scr, sw, sh, fw = 6, fh = 15, asc = 10, maxc, n = 0, i, w, hgt, bw = 70, bh = 26, bx, by, nf = 0;
     char lines[40][200]; xid_t win, del; const char *q = text ? text : ""; long ev[24];
@@ -1636,6 +1636,13 @@ static int x11_box(const char *title, const char *text)
     bx = (w - bw) / 2; by = hgt - bh - 14;
     win = pXCreateSimpleWindow(d, pXRootWindow(d, scr), (sw - w) / 2, (sh - hgt) / 2, (unsigned)w, (unsigned)hgt, 1, pXBlackPixel(d, scr), pXWhitePixel(d, scr));
     pXStoreName(d, win, title ? title : "Message");
+    if (pXChangeProperty) {   /* its class (WM_CLASS: instance and class name) and its UTF-8 title: a window with no class is not counted as one
+                               * by tools that list the windows (xwininfo's '"name": ("class" "Class")' -- the AppImage catalog's test) */
+        static const char cls[] = "twotowers_recomp\0TwoTowersRecompiled";
+        const char *t = title ? title : "Message";
+        pXChangeProperty(d, win, 67 /* XA_WM_CLASS */, 31 /* XA_STRING */, 8, 0 /* PropModeReplace */, (const unsigned char *)cls, (int)sizeof cls);
+        pXChangeProperty(d, win, pXInternAtom(d, "_NET_WM_NAME", 0), pXInternAtom(d, "UTF8_STRING", 0), 8, 0, (const unsigned char *)t, (int)strlen(t));
+    }
     pXSelectInput(d, win, (1L << 15) | (1L << 0) | (1L << 2));   /* (Exposure, KeyPress, ButtonPress) */
     del = pXInternAtom(d, "WM_DELETE_WINDOW", 0); pXSetWMProtocols(d, win, &del, 1);
     pXMapRaised(d, win);
