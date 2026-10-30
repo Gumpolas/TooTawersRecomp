@@ -896,6 +896,8 @@ static void pad_name(DWORD p, char *out, int n)
 static DWORD WINAPI pads_scan_thread(LPVOID p)
 {
     (void)p;
+    xbox_UnpinServiceThread();   /* (1.9.9) off the guest's core: pinned there it never got to run on Linux -- player 1 got no controller at all, the keyboard
+                                  * stood in for it, and a DualShock 3 read fine was ignored (issue 14) */
     for (;;) { pads_scan_once(); Sleep(500); }
     return 0;
 }
@@ -911,7 +913,10 @@ static DWORD pad_for(DWORD port)
          * pad reads as not there, which the keyboard covers. */
         HANDLE h;
         sp_start();
-        h = CreateThread(NULL, 64 * 1024, pads_scan_thread, NULL, 0, NULL);
+        h = CreateThread(NULL, 1024 * 1024, pads_scan_thread, NULL, 0, NULL);   /* (1.9.9: 1 MB -- 64 KB is less than Linux needs for the program's thread-local
+                                                                                  * data, so the thread was never made there: no controller ever reached player 1
+                                                                                  * on Linux, the keyboard stood in (issue 14)) */
+        if (!h) { fprintf(stderr, "  [INPUT] the controller scan could not start: no controllers\n"); fflush(stderr); }
         if (h) { SetThreadPriority(h, THREAD_PRIORITY_BELOW_NORMAL); CloseHandle(h); }
     }
     return port < XBOX_MAX_CONTROLLERS ? (DWORD)s_player_pad[port] : PAD_NONE;

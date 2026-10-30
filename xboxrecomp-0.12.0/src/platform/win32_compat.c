@@ -797,7 +797,9 @@ HANDLE CreateThread(LPSECURITY_ATTRIBUTES sa, SIZE_T stackSize,
      * size of 0 inherits. Same here (address space only until touched). */
     pthread_attr_setstacksize(&attr, stackSize < 65536 ? (64u << 20) : stackSize);
 
-    if (pthread_create(&o->thread, &attr, thread_trampoline, o) != 0) {
+    if (pthread_create(&o->thread, &attr, thread_trampoline, o) != 0
+        && (pthread_attr_setstacksize(&attr, 8u << 20), pthread_create(&o->thread, &attr, thread_trampoline, o) != 0)) {   /* (1.9.9: a stack too small for
+                                                                                     * the thread-local data fails here: again with 8 MB) */
         pthread_attr_destroy(&attr);
         o->refcount = 1;
         obj_release(o);

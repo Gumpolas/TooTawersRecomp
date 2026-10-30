@@ -3356,3 +3356,10 @@ twotowers/src/twotowers_manual.c
   - Linux: the first start without the game files says so as a welcome
     (what to do, and the zenity tip) instead of "not installed yet": the
     AppImage catalog's test reads the screen and took that for an error.
+  - Linux / macOS: controllers reach the game. The thread that finds the
+    connected controllers and gives player 1 one was made with a 64 KB
+    stack, less than Linux needs for the program's thread-local data, so it
+    was never started: player 1 had no controller, the keyboard stood in,
+    and a DualShock 3 read fine ([PADLOG]) was ignored (GitHub issue 14).
+    1 MB now, and any thread whose stack is too small is made again with
+    8 MB.
