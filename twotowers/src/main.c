@@ -1251,6 +1251,10 @@ int main(int argc, char **argv)
 #if defined(_WIN32)
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOW);
 #else
+    if (getenv("TT_MSGBOX")) {   /* (1.9.9) TwoTowers.sh's message in a window, when the system has no zenity (an AppImage on a bare desktop) */
+        MessageBoxA(NULL, getenv("TT_MSGBOX"), "The Two Towers Recompiled", MB_ICONERROR);
+        return 1;
+    }
     {
         /* The guest runs on this thread, and translated code nests deeply on
          * the native stack: the Windows build links a 64 MB stack; the main

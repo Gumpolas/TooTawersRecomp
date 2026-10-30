@@ -18,7 +18,14 @@ cp "$HERE/AppRun" "$APPDIR/AppRun"
 cp "$HERE/twotowers-recompiled.desktop" "$APPDIR/"
 cp "$PKG/twotowers.png" "$APPDIR/twotowers.png"
 ln -s twotowers.png "$APPDIR/.DirIcon"
-chmod 755 "$APPDIR/AppRun" "$APPDIR/usr/lib/libSDL2-2.0.so.0"
+# (1.9.9) every file readable by everyone, the programs runnable: files copied from a Windows disk came as 0700 and,
+# owned by root inside the image, could not be read by the player -- AppRun's copy failed and the game never started
+# (the AppImage catalog's test: "cp: cannot open ... Permission denied")
+find "$APPDIR" -type d -exec chmod 755 {} +
+find "$APPDIR" -type f -exec chmod 644 {} +
+for x in AppRun usr/lib/libSDL2-2.0.so.0 usr/share/twotowers/twotowers_recomp usr/share/twotowers/twotowers-setup usr/share/twotowers/TwoTowers.sh; do
+    [ -f "$APPDIR/$x" ] && chmod 755 "$APPDIR/$x"
+done
 python3 "$HERE/pysquashfs.py" "$APPDIR" "$OUT.sqfs"
 cat "$RT" "$OUT.sqfs" > "$OUT"
 rm -f "$OUT.sqfs"

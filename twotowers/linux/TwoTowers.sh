@@ -10,13 +10,20 @@ cd "$(dirname "$(readlink -f "$0")")" || exit 1
 TITLE="The Two Towers Recompiled"
 
 have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2>&1; }
+# a message in a window without zenity: KDE's kdialog, else the game's own (SDL's message box)
+win_msg() {
+    [ -n "$DISPLAY$WAYLAND_DISPLAY" ] || return 1
+    if command -v kdialog >/dev/null 2>&1; then kdialog --title "$TITLE" --error "$1" 2>/dev/null; return 0; fi
+    [ -x ./twotowers_recomp ] && TT_MSGBOX="$1" ./twotowers_recomp >/dev/null 2>&1
+    return 0
+}
 say() {
     if have_gui; then zenity --info --title="$TITLE" --width=420 --text="$1" 2>/dev/null
     else printf '%s\n' "$1" >&2; fi
 }
 fail() {
     if have_gui; then zenity --error --title="$TITLE" --width=460 --text="$1" 2>/dev/null
-    else printf '%s\n' "$1" >&2; fi
+    else printf '%s\n' "$1" >&2; [ -t 2 ] || win_msg "$1"; fi
     exit 1
 }
 
@@ -56,8 +63,12 @@ ${msg:-Extraction was cancelled.}"
     elif command -v x-terminal-emulator >/dev/null 2>&1; then
         exec x-terminal-emulator -e "$0" "$@"
     else
-        fail "The game files are not installed. Open a terminal in this folder and run:
-  ./twotowers-setup install /path/to/TheTwoTowers.iso"
+        fail "The game files are not installed yet. Open a terminal in this folder:
+  $(pwd)
+and run:
+  ./twotowers-setup install /path/to/TheTwoTowers.iso
+
+(Or install zenity -- sudo apt install zenity -- and start the game again: it then asks for your disc image in a window.)"
     fi
 fi
 

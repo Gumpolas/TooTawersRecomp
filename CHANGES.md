@@ -3334,3 +3334,12 @@ twotowers/src/twotowers_manual.c
     reached the game (GitHub issue 14, again). A pad SDL does not list at
     all gets a slot of its own. RECOMP_NO_JSDEV=1: SDL alone;
     RECOMP_PADLOG=1 logs each pad's state as it changes.
+  - Linux AppImage: every file inside it readable (a few dozen came from a
+    Windows disk as owner-only, root's inside the image, so the start's
+    copy failed with "Permission denied" and the game never opened -- the
+    AppImage catalog's test, appimage.github.io PR 10821). AppRun goes on
+    when the program itself was copied; the tar.gz's files the same.
+  - Linux / macOS: an error the game stops on (no game files, ...) is shown
+    in a window too (SDL's message box), and TwoTowers.sh without zenity
+    says how to install the game files in one (kdialog, or the game's own
+    box) instead of only in a terminal no one sees.

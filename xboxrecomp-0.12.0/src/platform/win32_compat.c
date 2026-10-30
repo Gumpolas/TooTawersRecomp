@@ -26,6 +26,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <unistd.h>
+#include <dlfcn.h>
 #include <sched.h>
 #include <fenv.h>
 #include <sys/mman.h>
@@ -1583,9 +1584,20 @@ BOOL  EnumWindows(WNDENUMPROC p, LPARAM l) { (void)p; (void)l; return FALSE; }
 
 int MessageBoxA(HWND h, LPCSTR text, LPCSTR caption, UINT type)
 {
-    (void)h; (void)type;
+    (void)h;
     fprintf(stderr, "[%s] %s\n", caption ? caption : "MessageBox",
                                    text    ? text    : "");
+    /* An error is shown in a window too (SDL's message box, when the program has SDL2 -- looked up, not linked, so this
+     * layer needs no SDL): started from a menu or an AppImage there is no terminal to read it in, and the game seemed to
+     * do nothing at all */
+    if ((type & 0xF0u) == 0x10u) {
+        typedef int (*smb_fn)(unsigned flags, const char *title, const char *msg, void *win);
+        smb_fn f = (smb_fn)dlsym(RTLD_DEFAULT, "SDL_ShowSimpleMessageBox");
+#if !defined(__APPLE__)
+        if (!getenv("DISPLAY") && !getenv("WAYLAND_DISPLAY")) f = NULL;
+#endif
+        if (f) f(0x10u /* SDL_MESSAGEBOX_ERROR */, caption ? caption : "The Two Towers Recompiled", text ? text : "", NULL);
+    }
     return 1;   /* IDOK */
 }
 
