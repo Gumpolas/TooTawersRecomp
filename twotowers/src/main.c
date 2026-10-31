@@ -149,6 +149,10 @@ static void tt_thread_start_pin(void)
 #endif
 
 #include <signal.h>
+#if !defined(_WIN32)
+#include <dirent.h>
+#include <strings.h>
+#endif
 #include "twotowers_host.h"
 
 /* (1.9.3) getenv, looked up once per name (tt_env.h). The cache is keyed by
@@ -1072,11 +1076,46 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     }
 
     /* Step 1: Load XBE */
+#if !defined(_WIN32)
+    {   /* (1.9.9) Linux / macOS: the disc's names as they were extracted (DEFAULT.XBE on a copy made elsewhere) -- the game's own file
+         * look-ups ignore case, and twotowers-setup accepted the folder, but this one name was looked for exactly as "default.xbe" */
+        FILE *t = fopen(YOUR_GAME_XBE_PATH, "rb");
+        if (t) fclose(t);
+        else {
+            DIR *dd = opendir(YOUR_GAME_DIR); struct dirent *de;
+            if (dd) { while ((de = readdir(dd)) != NULL) if (!strcasecmp(de->d_name, "default.xbe")) {
+                        snprintf(g_xbe_path, sizeof g_xbe_path, "%s/%s", g_game_dir, de->d_name); break; }
+                      closedir(dd); }
+        }
+    }
+#endif
     if (!load_xbe(YOUR_GAME_XBE_PATH, &xbe_data, &xbe_size)) {
+#if defined(_WIN32)
         MessageBoxA(NULL, "Failed to load default.xbe.\n\n"
                     "Run \"The Two Towers Recompiled.exe\" and install from your ISO,\n"
                     "or set [Paths] game_dir in twotowers_recomp.ini.",
                     "Recomp", MB_ICONERROR);
+#else
+        {   /* (1.9.9) started directly (a Steam shortcut to this program, say) with no game files: the launcher script beside it, which
+             * asks for the disc image and installs -- once (TT_LAUNCHED: the script started us, so it already tried) */
+            char sh[MAX_PATH + 32];
+            snprintf(sh, sizeof sh, "%s/TwoTowers.sh", g_exe_dir);
+            if (!getenv("TT_LAUNCHED") && access(sh, X_OK) == 0) {
+                setenv("TT_LAUNCHED", "1", 1);
+                fprintf(stderr, "No game files: starting %s to install them\n", sh); fflush(stderr);
+                execl(sh, sh, (char *)NULL);
+            }
+        }
+        {   /* (1.9.9) Linux / macOS: the folder looked in, and the way to install there (the Windows launcher's name meant nothing here) */
+            char m[1400];
+            snprintf(m, sizeof m, "The game files were not found here:\n  %s\n\n"
+                     "Start the game with TwoTowers.sh (or the AppImage itself), not this program directly: it asks for your disc image "
+                     "(The Two Towers, USA, Xbox ISO) and copies the game files into the folder above.\n\n"
+                     "Or, in a terminal in this game's folder:\n  ./twotowers-setup install /path/to/TheTwoTowers.iso\n\n"
+                     "(A folder of your own: [Paths] game_dir in twotowers_recomp.ini, beside this program.)", g_game_dir);
+            MessageBoxA(NULL, m, "The Two Towers Recompiled", MB_ICONERROR);
+        }
+#endif
         return 1;
     }
     printf("XBE loaded: %zu bytes\n", xbe_size);

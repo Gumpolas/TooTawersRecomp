@@ -8,6 +8,7 @@
 
 cd "$(dirname "$(readlink -f "$0")")" || exit 1
 TITLE="The Two Towers Recompiled"
+export TT_LAUNCHED=1   # (the game: started from here, so it does not start this script again when its files are missing)
 
 have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2>&1; }
 # a message in a window without zenity: KDE's kdialog, else the game's own (SDL's message box)

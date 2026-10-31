@@ -3363,3 +3363,10 @@ twotowers/src/twotowers_manual.c
     and a DualShock 3 read fine ([PADLOG]) was ignored (GitHub issue 14).
     1 MB now, and any thread whose stack is too small is made again with
     8 MB.
+  - Linux / macOS: the game started directly (a Steam shortcut to
+    twotowers_recomp, on a Steam Deck say) with no game files starts
+    TwoTowers.sh beside it, which asks for the disc image and installs --
+    it stopped at "Failed to load default.xbe. Run The Two Towers
+    Recompiled.exe" (a Windows program). default.xbe is found whatever
+    its case (DEFAULT.XBE from a copy made elsewhere), and the message, if
+    it still comes, names the folder looked in and how to install there.
