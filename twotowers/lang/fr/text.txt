@@ -2032,3 +2032,4 @@ L:Hardened	Endurci
 L:Win 5 different levels on Impossible.	Remportez 5 niveaux différents en Impossible.
 L:DIAMOND: The Unbreakable	DIAMANT : L'Indestructible
 L:Win every level of the story on Impossible. Very few ever will.	Remportez tous les niveaux de l'histoire en Impossible. Bien peu y parviendront.
+P:Launcher	Lanceur

@@ -2032,3 +2032,4 @@ L:Hardened	Gehard
 L:Win 5 different levels on Impossible.	Versla 5 verschillende levels op Onmogelijk.
 L:DIAMOND: The Unbreakable	DIAMANT: De Onbreekbare
 L:Win every level of the story on Impossible. Very few ever will.	Versla elk level van het verhaal op Onmogelijk. Slechts weinigen zullen dat ooit doen.
+P:Launcher	Starter

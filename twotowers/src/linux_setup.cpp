@@ -387,7 +387,10 @@ static int cmdDesktop()
          "Exec=\"" << (dir / "TwoTowers.sh").string() << "\"\n"
          "Path=" << dir.string() << "\n"
          "Icon=" << (dir / "twotowers.png").string() << "\n"
-         "Terminal=false\nCategories=Game;ActionGame;\n";
+         "Terminal=false\nCategories=Game;ActionGame;\n"
+         "Actions=Launcher;\n\n"   // (1.9.9) right-click the entry: the launcher (mods, language, settings) before the game
+         "[Desktop Action Launcher]\nName=Launcher (mods and settings)\n"
+         "Exec=\"" << (dir / "TwoTowers.sh").string() << "\" --launcher\n";
     if (!o) { std::cerr << "Error: cannot write " << (apps / "twotowers-recompiled.desktop").string() << "\n"; return 2; }
     std::cout << "Added to your applications menu: " << (apps / "twotowers-recompiled.desktop").string() << "\n";
     return 0;
@@ -414,6 +417,7 @@ static int menu()
                      "  5) ECTS 2002 HUD mod: " << iniGet("Mods", "e3_hud", "0") << "\n"
                      "  6) Button prompts: " << iniGet("Input", "prompts", "auto") << "  (auto / xbox / xboxone / playstation / keyboard)\n"
                      "  7) Extra heroes mod: Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron\n     (0 off / 1 on, unlock with Isildur / 2 on, unlocked for testing): " << iniGet("Mods", "extra_heroes", "0") << "\n"
+                     "  o) Orange health pickups (ECTS 2002): " << iniGet("Mods", "e3_pickups", "0") << "\n"
                      "  l) Language: " << iniGet("Language", "language", "en") << "  (en, or a folder in lang/)\n"
                      "  8) Add to the applications menu\n"
                      "  9) Play\n"
@@ -440,6 +444,7 @@ static int menu()
             std::string v = iniGet("Mods", "extra_heroes", "0");
             iniSet("Mods", "extra_heroes", v == "0" ? "1" : v == "1" ? "2" : "0");   // 2: unlocked for testing
         }
+        else if (c == "o" || c == "O") iniSet("Mods", "e3_pickups", iniGet("Mods", "e3_pickups", "0") == "1" ? "0" : "1");
         else if (c == "l" || c == "L") {
             std::vector<std::string> codes{"en"};
             std::error_code ec;

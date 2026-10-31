@@ -2029,3 +2029,4 @@ L:Hardened	Megedzett
 L:Win 5 different levels on Impossible.	Nyerj meg 5 különböző pályát Lehetetlen fokozaton.
 L:DIAMOND: The Unbreakable	GYÉMÁNT: A Megtörhetetlen
 L:Win every level of the story on Impossible. Very few ever will.	Nyerd meg a történet összes pályáját Lehetetlen fokozaton. Kevesen fogják valaha.
+P:Launcher	Indító

@@ -521,12 +521,40 @@ static void help_move(void)
     if (getenv("TT_NOHELPMOVE")) return;
     if (G32(MM_HELP_I + 8) == 288u && G32(MM_HELP_T + 8) == 325u) { G32(MM_HELP_I + 8) = 488u; G32(MM_HELP_T + 8) = 525u; }
 }
+/* (1.9.9) F5: the launcher (mods, language, settings), for those who start the game without it (the AppImage, TwoTowers.sh,
+ * a Steam shortcut): "F5 Launcher" at the bottom left, in the Help prompt's own words */
+static uint32_t s_ln_el, s_ln_txt;
+static void launcher_prompt(void)
+{
+    extern int tt_launcher_avail(void); extern int tt_launcher_open(void);
+    extern int tt_tr16(const char *en, uint16_t *out, int max);
+    extern int xbox_InputKeyDown(int vk); extern int tt_opt_up(void);
+    static int was = 1, gone;
+    int down;
+    uint16_t txt[40];
+    uint32_t i, n;
+    if (gone || !tt_launcher_avail() || getenv("TT_NOLAUNCHKEY")) return;
+    if (!s_ln_el) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_ln_el = xbox_ContiguousAlloc(0x200, 16u); s_ln_txt = s_ln_el ? s_ln_el + 0x100 : 0; if (!s_ln_el) { gone = 1; return; } }
+    for (i = 0; i < EL_SIZE; i += 4) G32(s_ln_el + i) = G32(MM_HELP_T + i);
+    G32(s_ln_el + 8) = 30u; G32(s_ln_el + 0x10) = 220u;
+    txt[0] = 'F'; txt[1] = '5'; txt[2] = ' '; txt[3] = ' ';
+    n = 4 + (uint32_t)tt_tr16("Launcher", txt + 4, 36);
+    for (i = 0; i < n; i++) G16(s_ln_txt + 2 * i) = txt[i];
+    G16(s_ln_txt + 2 * i) = 0;
+    G32(s_ln_el + 0x34) = s_ln_txt;
+    G8(s_ln_el + 0x24) = 1;
+    tt_gcall(0x000C8940u, s_ln_el, 0, NULL);
+    down = xbox_InputKeyDown(VK_F5);
+    if (down && !was && !tt_opt_up()) { tt_dbg("[MENU] F5: the launcher\n"); if (tt_launcher_open()) gone = 1; }
+    was = down;
+}
 void tt_mm_draw(uint32_t scr)
 {
     if (getenv("TT_MMLOG")) { static int n, ls = -1; int sh = mm_shown(scr); if (n++ % 60 == 0 || sh != ls) { ls = sh; tt_dbg("[MMDRAW] n %d scr %08X shown %d sub %u nx %u screen %u vs %08X cred %d,%d coop %d,%d step %d prev %d\n", n, scr, mm_shown(scr), G32(scr + 0x10), G32(scr + 4), G32(FE_SCREEN), s_vs_el, (int)G32(MM_CREDITS + 8), (int)G32(MM_CREDITS + 0x0C), (int)G32(COOP_EL + 8), (int)G32(COOP_EL + 0x0C), mm_step(), (int)G32(MM_CREDITS - EL_SIZE + 0x0C)); } }
     mm_net(scr);
     if (!mm_shown(scr)) return;
     help_move();
+    launcher_prompt();
     exit_el_setup();
     G32(COOP_EL + 0x20) = G32(scr + 0x14) == ITEM_COOP || (s_coop_opening && !tt_vs_menu_on) ? COL_ON : COL_OFF;
     G8(COOP_EL + 0x24) = 1;

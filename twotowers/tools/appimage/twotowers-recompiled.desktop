@@ -6,3 +6,8 @@ Exec=AppRun %F
 Icon=twotowers
 Categories=Game;ActionGame;
 Terminal=false
+Actions=Launcher;
+
+[Desktop Action Launcher]
+Name=Launcher (mods and settings)
+Exec=AppRun --launcher

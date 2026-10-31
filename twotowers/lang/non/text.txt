@@ -2032,3 +2032,4 @@ L:Hardened	Harðnaðr
 L:Win 5 different levels on Impossible.	Vinn 5 ólík stig á Ómǫgulegt.
 L:DIAMOND: The Unbreakable	DEMANTR: Hinn óbrjótanligi
 L:Win every level of the story on Impossible. Very few ever will.	Vinn hvert stig sǫgunnar á Ómǫgulegt. Fáir munu nǫkkru sinni.
+P:Launcher	Ræsir

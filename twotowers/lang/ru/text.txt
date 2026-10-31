@@ -2032,3 +2032,4 @@ L:Hardened	Закалённый
 L:Win 5 different levels on Impossible.	Пройдите 5 разных уровней на сложности «Невозможная».
 L:DIAMOND: The Unbreakable	АЛМАЗ: Несокрушимый
 L:Win every level of the story on Impossible. Very few ever will.	Пройдите все уровни сюжета на сложности «Невозможная». Мало кому это удастся.
+P:Launcher	Лаунчер

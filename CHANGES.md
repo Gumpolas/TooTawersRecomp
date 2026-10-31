@@ -3382,3 +3382,22 @@ twotowers/src/twotowers_manual.c
     were for). The notes and the achievements' pop-ups, the ECTS labels,
     "Unavailable" and the hero select's lines now go through the
     translation (they were always English).
+  - The launcher from the game (F5 on the main menu, shown at its bottom
+    left as "F5 Launcher"): the game closes and the launcher opens, for
+    those who start the game without it -- the AppImage and TwoTowers.sh
+    go straight to the game, so the Extra Heroes mod and the other
+    settings were out of reach. Windows: The Two Towers Recompiled.exe;
+    Linux: TwoTowers.sh --launcher (from the AppImage, the AppImage
+    itself); macOS: twotowers-setup's menu in the game's terminal.
+  - Linux: a launcher in a window (zenity, or KDE's kdialog; else
+    twotowers-setup's menu in a terminal): the Extra Heroes mod, the ECTS
+    2002 HUD, the orange health pickups, the language, full screen, the
+    frame rate and the button prompts, then Play. TwoTowers.sh --launcher
+    or the AppImage with --launcher opens it, as does "Launcher (mods and
+    settings)" on a right click of the game's menu entry; it also opens
+    once after the first install. twotowers-setup's menu has the orange
+    health pickups too (o).
+  - Achievements: Seasoned Warrior and Legend of the Third Age (a hero at
+    level 5 / 10) only for a real level-up -- a hero's level rising by one
+    or two. The prologue hands its hero a ready-made level 10, so
+    finishing it earned both; loading a save is no level-up either.

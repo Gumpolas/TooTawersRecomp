@@ -2032,3 +2032,4 @@ L:Hardened	Calejado
 L:Win 5 different levels on Impossible.	Vença 5 fases diferentes no Impossível.
 L:DIAMOND: The Unbreakable	DIAMANTE: O Inquebrável
 L:Win every level of the story on Impossible. Very few ever will.	Vença todas as fases da história no Impossível. Pouquíssimos conseguirão.
+P:Launcher	Inicializador

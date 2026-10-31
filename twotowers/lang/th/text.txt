@@ -2029,3 +2029,4 @@ L:Hardened	แกร่ง​กล้า
 L:Win 5 different levels on Impossible.	ชนะ 5 ด่าน​ที่​ต่าง​กัน​ใน​ระดับ​เป็น​ไป​ไม่​ได้
 L:DIAMOND: The Unbreakable	เพชร: ผู้​ไม่​มี​วัน​แตก​หัก
 L:Win every level of the story on Impossible. Very few ever will.	ชนะ​ทุก​ด่าน​ใน​เนื้อ​เรื่อง​ระดับ​เป็น​ไป​ไม่​ได้ น้อย​คน​นัก​จะ​ทำ​ได้
+P:Launcher	ตัวเปิดเกม

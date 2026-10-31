@@ -2029,3 +2029,4 @@ L:Hardened	Karaistunut
 L:Win 5 different levels on Impossible.	Läpäise 5 eri tasoa Mahdoton-vaikeustasolla.
 L:DIAMOND: The Unbreakable	TIMANTTI: Murtumaton
 L:Win every level of the story on Impossible. Very few ever will.	Läpäise kaikki tarinan tasot Mahdoton-vaikeustasolla. Harva siihen koskaan pystyy.
+P:Launcher	Käynnistin

@@ -2032,3 +2032,4 @@ L:Hardened	Härdad
 L:Win 5 different levels on Impossible.	Klara 5 olika banor på Omöjlig.
 L:DIAMOND: The Unbreakable	DIAMANT: Den obrytbare
 L:Win every level of the story on Impossible. Very few ever will.	Klara alla banor i berättelsen på Omöjlig. Mycket få kommer någonsin att göra det.
+P:Launcher	Startprogram

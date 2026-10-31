@@ -5,9 +5,16 @@
 # image (The Two Towers, USA, Xbox) and extracts it into game_files/ --
 # with a file dialog when zenity is installed, otherwise in a terminal.
 # Then starts the game. Arguments are passed on to it.
+#
+#   TwoTowers.sh --launcher   the launcher first: mods (extra heroes, ECTS 2002
+#                             HUD, orange health), language, full screen, frame
+#                             rate, button prompts -- then Play. F5 on the
+#                             game's main menu comes back here too.
 
 cd "$(dirname "$(readlink -f "$0")")" || exit 1
 TITLE="The Two Towers Recompiled"
+LAUNCHER=0
+[ "$1" = "--launcher" ] && { LAUNCHER=1; shift; }
 export TT_LAUNCHED=1   # (the game: started from here, so it does not start this script again when its files are missing)
 
 have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2>&1; }
@@ -35,6 +42,64 @@ fail() {
     exit 1
 }
 
+# (1.9.9) the launcher: the Windows launcher's settings, for the AppImage and the Linux package (a window with zenity or
+# kdialog, else twotowers-setup's menu in a terminal). Returns when Play is chosen; Quit ends the script.
+get() { v=$(./twotowers-setup get "$1" "$2"); echo "${v:-$3}"; }
+onoff() { [ "$1" = "1" ] && echo "On" || echo "Off"; }
+lang_name() {
+    [ "$1" = "en" ] && { echo "English"; return; }
+    n=$(sed -n 's/^name=//p' "lang/$1/info.txt" 2>/dev/null | head -n 1); echo "${n:-$1}"
+}
+pick() {   # pick <text> <tag> <label> ... : the tag chosen
+    t=$1; shift
+    if have_gui; then
+        zenity --list --title="$TITLE" --text="$t" --column=id --column=" " --hide-column=1 --print-column=1 --hide-header \
+               --width=560 --height=440 --ok-label=Select --cancel-label=Quit "$@" 2>/dev/null
+    else
+        kdialog --title "$TITLE" --menu "$t" "$@" 2>/dev/null
+    fi
+}
+launcher() {
+    if ! have_gui && ! { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v kdialog >/dev/null 2>&1; }; then
+        if [ -t 0 ]; then ./twotowers-setup; exit $?; fi   # (its menu: 9 plays)
+        command -v x-terminal-emulator >/dev/null 2>&1 && exec x-terminal-emulator -e ./twotowers-setup
+        fail "The launcher needs zenity (or kdialog) to open in a window:
+  sudo apt install zenity
+Or open a terminal in this folder:
+  $(pwd)
+and run:  ./twotowers-setup"
+    fi
+    while :; do
+        eh=$(get Mods extra_heroes 0)
+        case "$eh" in 1) ehn="On (unlock them by playing)";; 2) ehn="On (all unlocked, for testing)";; *) ehn="Off";; esac
+        fps=$(get Display fps 30); lg=$(get Language language en)
+        c=$(pick "Choose a setting to change it, then Play." \
+            play "▶  Play" \
+            eh "Extra heroes mod (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron):  $ehn" \
+            hud "ECTS 2002 HUD mod:  $(onoff "$(get Mods e3_hud 0)")" \
+            pk "Orange health pickups (ECTS 2002):  $(onoff "$(get Mods e3_pickups 0)")" \
+            lang "Language:  $(lang_name "$lg")" \
+            fs "Full screen at start:  $(onoff "$(get Display fullscreen 0)")" \
+            fps "Frame rate:  $fps  (above 30 is experimental)" \
+            pr "Button prompts:  $(get Input prompts auto)") || exit 0
+        case "$c" in
+            play|"") return 0;;
+            eh) case "$eh" in 0) n=1;; 1) n=2;; *) n=0;; esac; ./twotowers-setup set Mods extra_heroes $n;;
+            hud) [ "$(get Mods e3_hud 0)" = "1" ] && n=0 || n=1; ./twotowers-setup set Mods e3_hud $n;;
+            pk) [ "$(get Mods e3_pickups 0)" = "1" ] && n=0 || n=1; ./twotowers-setup set Mods e3_pickups $n;;
+            fs) [ "$(get Display fullscreen 0)" = "1" ] && n=0 || n=1; ./twotowers-setup set Display fullscreen $n;;
+            fps) n=30; set -- 30 60 75 90 100 120 144 165 200 240 300 unlocked 30
+                 while [ $# -gt 1 ]; do [ "$1" = "$fps" ] && { n=$2; break; }; shift; done
+                 ./twotowers-setup set Display fps $n;;
+            pr) case "$(get Input prompts auto)" in auto) n=xbox;; xbox) n=xboxone;; xboxone) n=playstation;; playstation) n=keyboard;; *) n=auto;; esac
+                ./twotowers-setup set Input prompts $n;;
+            lang) set -- en "English"
+                  for d in lang/*/info.txt; do [ -f "$d" ] || continue; k=${d#lang/}; k=${k%/info.txt}; set -- "$@" "$k" "$(lang_name "$k")"; done
+                  n=$(pick "Language" "$@") && [ -n "$n" ] && ./twotowers-setup set Language language "$n";;
+        esac
+    done
+}
+
 # SDL2 (window, sound, controllers): from the system, or lib/ beside the game
 if ldd ./twotowers_recomp 2>/dev/null | grep -q "libSDL2.*not found"; then
     fail "SDL2 is not installed. Install it and start the game again:
@@ -60,6 +125,7 @@ if ! ./twotowers-setup status -q; then
 ${msg:-Extraction was cancelled.}"
         fi
         rm -f "$log"
+        LAUNCHER=1   # (the first time: the launcher, where the mods are)
         # (an AppImage: the menu entry is the AppImage's own, through AppImageLauncher or the like)
         if [ -z "$TT_APPIMAGE_HOME" ] && zenity --question --title="$TITLE" --width=420 \
                --text="The game files are installed.\n\nAdd The Two Towers to your applications menu?" 2>/dev/null; then
@@ -82,6 +148,8 @@ and run:
 Tip: with zenity on your system (sudo apt install zenity), the game asks for your disc image in a window of its own."
     fi
 fi
+
+[ "$LAUNCHER" = 1 ] && launcher
 
 # Ultra textures on, and the GLOS69 pack put here but not made ready yet:
 # made ready once (a few minutes)

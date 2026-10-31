@@ -2029,3 +2029,4 @@ L:Hardened	Σκληραγωγημένος
 L:Win 5 different levels on Impossible.	Νίκησε σε 5 διαφορετικές πίστες στην Αδύνατη δυσκολία.
 L:DIAMOND: The Unbreakable	ΔΙΑΜΑΝΤΙ: Ο Ακατάβλητος
 L:Win every level of the story on Impossible. Very few ever will.	Νίκησε σε κάθε πίστα της ιστορίας στην Αδύνατη δυσκολία. Ελάχιστοι θα τα καταφέρουν ποτέ.
+P:Launcher	Εκκινητής

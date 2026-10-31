@@ -2032,3 +2032,4 @@ L:Hardened	Caled fel Dur
 L:Win 5 different levels on Impossible.	Enillwch 5 lefel wahanol ar Amhosibl.
 L:DIAMOND: The Unbreakable	DIEMWNT: Yr Anorchfygol
 L:Win every level of the story on Impossible. Very few ever will.	Enillwch bob lefel o'r stori ar Amhosibl. Ychydig iawn a wna byth.
+P:Launcher	Lansiwr

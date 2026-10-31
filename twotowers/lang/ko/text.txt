@@ -2029,3 +2029,4 @@ L:Hardened	단련된 자
 L:Win 5 different levels on Impossible.	불가능 난이도로 서로 다른 레벨 5개에서 승리하세요.
 L:DIAMOND: The Unbreakable	다이아몬드: 불굴의 자
 L:Win every level of the story on Impossible. Very few ever will.	불가능 난이도로 스토리의 모든 레벨에서 승리하세요. 해낼 이는 극소수일 겁니다.
+P:Launcher	런처

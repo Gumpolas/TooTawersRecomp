@@ -2029,3 +2029,4 @@ L:Hardened	Çelikleşmiş
 L:Win 5 different levels on Impossible.	İmkânsız zorlukta 5 farklı bölüm kazanın.
 L:DIAMOND: The Unbreakable	ELMAS: Kırılmaz
 L:Win every level of the story on Impossible. Very few ever will.	Hikâyenin tüm bölümlerini İmkânsız zorlukta kazanın. Bunu çok az kişi başaracak.
+P:Launcher	Başlatıcı

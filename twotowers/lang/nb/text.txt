@@ -2029,3 +2029,4 @@ L:Hardened	Herdet
 L:Win 5 different levels on Impossible.	Fullfør 5 ulike baner på Umulig.
 L:DIAMOND: The Unbreakable	DIAMANT: Den ubrytelige
 L:Win every level of the story on Impossible. Very few ever will.	Fullfør alle baner i historien på Umulig. Svært få vil noen gang klare det.
+P:Launcher	Startprogram

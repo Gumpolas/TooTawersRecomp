@@ -289,11 +289,26 @@ void tt_ach_tick(void)
             if (h == 0) tt_ach_unlock("hero_aragorn"); else if (h == 1) tt_ach_unlock("hero_legolas"); else if (h == 2) tt_ach_unlock("hero_gimli"); else if (lv != 0) tt_ach_unlock("hero_isildur");
         }
     }
-    for (h = 1; h <= 4; h++) {
-        uint32_t l = A32(0x4AB60Cu + (uint32_t)h * 0x348u) + 1u;
-        if (getenv("TT_ACHLOG")) tt_dbg("[ACH] hero %d: level %u\n", h, l);
-        if (l >= 5 && l < 100) tt_ach_unlock("level5");
-        if (l >= 10 && l < 100) tt_ach_unlock("level10");
+    {   /* (1.9.9) a hero brought to level 5 / 10 -- only by a real level-up: his level rising by one (or two) between looks.
+         * The prologue hands the hero it plays a ready-made level 10 at once, and loading a save jumps the levels too: those
+         * are no level-ups, only a new starting point (a playtest: finishing the prologue earned both). Hero 4 only while an
+         * extra hero holds his place (his record is that hero's). */
+        extern int tt_heroes_guest(void);
+        static uint32_t prev[5]; static int prev_g = -2;
+        int ok5 = 0, ok10 = 0, g = tt_heroes_guest();
+        if (g != prev_g) { memset(prev, 0, sizeof prev); prev_g = g; }   /* (another hero in hero 4's place: start again) */
+        for (h = 1; h <= 4; h++) {
+            uint32_t l = A32(0x4AB60Cu + (uint32_t)h * 0x348u) + 1u, p = prev[h];
+            if (getenv("TT_ACHLOG")) tt_dbg("[ACH] hero %d: level %u (was %u, guest %d)\n", h, l, p, g);
+            if (l < 1 || l >= 100) { prev[h] = 0; continue; }
+            prev[h] = l;
+            if (!p || l <= p || l - p > 2) continue;   /* (the first look, no rise, or a jump: no level-up) */
+            if (h == 4 && g < 0) continue;   /* (the prologue sets no guest: Isildur there) */
+            if (l >= 5) ok5 = 1;
+            if (l >= 10) ok10 = 1;
+        }
+        if (ok5) tt_ach_unlock("level5");
+        if (ok10) tt_ach_unlock("level10");
     }
     { extern int tt_heroes_unlocked_count(void); if (tt_heroes_unlocked_count() >= 7) tt_ach_unlock("extra_all"); }
     story_check();

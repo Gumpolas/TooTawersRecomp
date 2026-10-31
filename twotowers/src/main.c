@@ -155,6 +155,74 @@ static void tt_thread_start_pin(void)
 #endif
 #include "twotowers_host.h"
 
+/* (1.9.9) the launcher from the main menu (F5): mods, language and settings for those who start the game without it --
+ * the AppImage and TwoTowers.sh go straight to the game. It is started on its own and the game closes; Play there starts
+ * the game again. Windows: "The Two Towers Recompiled.exe"; Linux: TwoTowers.sh --launcher (the AppImage itself when the
+ * game runs from one: its mount, and the SDL2 in it, go with this game); macOS: twotowers-setup's menu in the terminal
+ * the game was started from. */
+static int launcher_cmd(char *out, size_t n)
+{
+#if defined(_WIN32)
+    snprintf(out, n, "%s\\The Two Towers Recompiled.exe", g_exe_dir);
+    return GetFileAttributesA(out) != INVALID_FILE_ATTRIBUTES;
+#else
+    const char *ai = getenv("APPIMAGE");
+    if (ai && *ai && getenv("TT_APPIMAGE_HOME") && access(ai, X_OK) == 0) { snprintf(out, n, "%s", ai); return 1; }
+    snprintf(out, n, "%s/TwoTowers.sh", g_exe_dir);
+    if (access(out, X_OK) == 0) return 1;
+    snprintf(out, n, "%s/twotowers-setup", g_exe_dir);
+    return access(out, X_OK) == 0 && isatty(0);
+#endif
+}
+int tt_launcher_avail(void)
+{
+    static int have = -1;
+    char c[MAX_PATH + 64];
+    if (have < 0) have = launcher_cmd(c, sizeof c);
+    return have;
+}
+int tt_launcher_open(void)
+{
+    char c[MAX_PATH + 64];
+    if (!launcher_cmd(c, sizeof c)) return 0;
+    fprintf(stderr, "[LAUNCHER] F5: %s\n", c); fflush(stderr);
+#if defined(_WIN32)
+    {
+        STARTUPINFOA si; PROCESS_INFORMATION pi; char cl[MAX_PATH + 80];
+        memset(&si, 0, sizeof si); si.cb = sizeof si;
+        snprintf(cl, sizeof cl, "\"%s\"", c);
+        if (!CreateProcessA(c, cl, NULL, NULL, FALSE, 0, NULL, g_exe_dir, &si, &pi)) return 0;
+        CloseHandle(pi.hThread); CloseHandle(pi.hProcess);
+    }
+#else
+    {
+        int setup = strstr(c, "twotowers-setup") != NULL;
+        pid_t p;
+        if (setup) {   /* (macOS: its menu, in this terminal, in the game's place -- 9 plays again) */
+            fflush(stdout); fflush(stderr);
+            if (chdir(g_exe_dir) == 0) execl(c, c, (char *)NULL);
+            return 0;
+        }
+        p = fork();
+        if (p < 0) return 0;
+        if (p == 0) {
+            int fd;
+            setsid();
+            for (fd = 3; fd < 1024; fd++) close(fd);   /* (the window, sound: the game's alone) */
+            if (chdir(g_exe_dir) != 0) _exit(1);
+            if (strstr(c, "TwoTowers.sh")) { unsetenv("TT_LAUNCHED"); execl(c, c, "--launcher", (char *)NULL); }
+            else { unsetenv("LD_LIBRARY_PATH"); unsetenv("TT_APPIMAGE_HOME"); execl(c, c, "--launcher", (char *)NULL); }
+            _exit(127);
+        }
+    }
+#endif
+    {
+        extern void xbox_FramebufferRequestClose(void);
+        xbox_FramebufferRequestClose();
+    }
+    return 1;
+}
+
 /* (1.9.3) getenv, looked up once per name (tt_env.h). The cache is keyed by
  * the name's address (the names are string literals); the value is copied.
  * Lookups take no lock; a new name is added under one, its value written

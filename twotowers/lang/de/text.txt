@@ -2032,3 +2032,4 @@ L:Hardened	Abgehärtet
 L:Win 5 different levels on Impossible.	Gewinne 5 verschiedene Level auf Unmöglich.
 L:DIAMOND: The Unbreakable	DIAMANT: Der Unbeugsame
 L:Win every level of the story on Impossible. Very few ever will.	Gewinne jedes Level der Geschichte auf Unmöglich. Das schaffen nur die Wenigsten.
+P:Launcher	Starter

@@ -1582,3 +1582,4 @@ P:SMASHES ({1}+)	 ({1}+)
 P:TROLL BATTLE RECORDS	 WIGES 
 P:TROLL BATTLE RESULTS	 WIGES 
 P:P{1}	P{1}
+P:Launcher	

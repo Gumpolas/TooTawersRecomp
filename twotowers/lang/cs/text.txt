@@ -2029,3 +2029,4 @@ L:Hardened	Zocelený
 L:Win 5 different levels on Impossible.	Vyhraj 5 různých úrovní na obtížnost Nemožná.
 L:DIAMOND: The Unbreakable	DIAMANT: Nezlomný
 L:Win every level of the story on Impossible. Very few ever will.	Vyhraj všechny úrovně příběhu na obtížnost Nemožná. Málokomu se to kdy podaří.
+P:Launcher	Spouštěč
