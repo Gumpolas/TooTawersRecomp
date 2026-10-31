@@ -1833,3 +1833,198 @@ P:BRAWLER: PLAYER {1}	PETARUNG: PEMAIN {1}
 P:RELENTLESS: PLAYER {1}	TAK KENAL AMPUN: PEMAIN {1}
 P:Start Match	Mulai Laga
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Tanpa Bingkai
+P:Exclusive	Eksklusif
+P:Full Screen Res:	Resolusi Layar Penuh:
+P:Mode:	Mode:
+P:Troll Battle	Laga Troll
+P:Reset P2 Controls	Atur Ulang Kontrol P2
+P:Berserker	Berserker
+P:Cave Troll	Troll Gua
+P:Uruk Captain	Kapten Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Prajurit Elf
+P:Ent	Ent
+P:Player 1: choose your hero	Pemain 1: pilih pahlawan Anda
+P:Player 2: waiting	Pemain 2: menunggu
+P:Player 2: choose your hero	Pemain 2: pilih pahlawan Anda
+P:Player 1: {1}	Pemain 1: {1}
+P:Player 2: {1}	Pemain 2: {1}
+P:Player 2: {1} is Player 1's	Pemain 2: {1} milik Pemain 1
+P:Player 2: {1} not available	Pemain 2: {1} tidak tersedia
+P:Ready. Press Continue to begin	Siap. Tekan Lanjutkan untuk mulai
+P:Unavailable	Tidak tersedia
+P:Speed	Cepat
+P:Fierce	Ganas
+P:Special	Spesial
+P:Mixed	Campuran
+P:P{1} STAB GUARD: {2} LEFT	P{1} PENANGKAL TUSUK: SISA {2}
+P:FIND THE SHIELD: {1} AHEAD	TEMUKAN TAMENG: {1} DI DEPAN
+P:FIND THE SHIELD: {1} BEHIND	TEMUKAN TAMENG: {1} DI BELAKANG
+P:FIND THE SHIELD: {1} TO THE LEFT	TEMUKAN TAMENG: {1} DI KIRI
+P:FIND THE SHIELD: {1} TO THE RIGHT	TEMUKAN TAMENG: {1} DI KANAN
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	TEMUKAN TAMENG   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	PEMAIN {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HANTAMAN TERKUAT
+P:CLUB BLOWS / SWINGS	PUKULAN GADA / AYUNAN
+P:DAMAGE DEALT / TAKEN	KERUSAKAN DIBERIKAN / DITERIMA
+P:FASTEST KNOCKOUT	KO TERCEPAT
+P:MOST DAMAGE IN A MATCH	KERUSAKAN TERBANYAK DALAM LAGA
+P:ROCKS AND LOGS ON TARGET	BATU DAN KAYU KENA SASARAN
+P:SMASHES ({1}+)	HANTAMAN ({1}+)
+P:TROLL BATTLE RECORDS	REKOR LAGA TROLL
+P:TROLL BATTLE RESULTS	HASIL LAGA TROLL
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Ulang Laga: BACK (Backspace / Tab) atau klik
+L:Restart Round: Y (the I key) or click this line	Ulang Ronde: Y (tombol I) atau klik baris ini
+L:P2 Teleport: ON	Teleportasi P2: AKTIF
+L:P2 Teleport: OFF	Teleportasi P2: NONAKTIF
+L:Turn it off: Y (the I key) or click this note	Matikan: Y (tombol I) atau klik catatan ini
+L:Turn it on: Y (the I key) or click this note	Nyalakan: Y (tombol I) atau klik catatan ini
+L:IMPOSSIBLE	MUSTAHIL
+L:Harder than Expert: any enemy's second blow fells you	Lebih sulit dari Ahli: pukulan kedua musuh mana pun menjatuhkan Anda
+L:Achievement earned	Pencapaian diraih
+L:DIAMOND ACHIEVEMENT EARNED	PENCAPAIAN BERLIAN DIRAIH
+L:The Last Alliance	Aliansi Terakhir
+L:Win the prologue on the slopes of Mount Doom.	Menangkan prolog di lereng Gunung Maut.
+L:Fire on Weathertop	Api di Weathertop
+L:Drive the Ringwraiths from Weathertop.	Usir para Hantu Cincin dari Weathertop.
+L:Speak Friend	Ucapkan Kawan
+L:Escape the Watcher at the Gates of Moria.	Lolos dari Penjaga di Gerbang Moria.
+L:Drums in the Deep	Genderang di Kedalaman
+L:Fight your way out of Balin's Tomb.	Bertarunglah keluar dari Makam Balin.
+L:Breaking of the Fellowship	Pecahnya Persekutuan
+L:Stand against the Uruk-hai at Amon Hen.	Hadapi Uruk-hai di Amon Hen.
+L:Into the Forest	Masuk ke Hutan
+L:Get through Fangorn Forest.	Lalui Hutan Fangorn.
+L:Riders of Rohan	Penunggang Rohan
+L:Win the battle on the Plains of Rohan.	Menangkan pertempuran di Dataran Rohan.
+L:The Burning of the Westfold	Westfold Terbakar
+L:Save the villages of the Westfold.	Selamatkan desa-desa Westfold.
+L:Wolves on the Road	Serigala di Jalan
+L:Reach Helm's Deep along the road.	Capai Helm's Deep melalui jalan.
+L:The Deeping Wall	Tembok Deeping
+L:Hold the Deeping Wall.	Pertahankan Tembok Deeping.
+L:The Wall Is Breached	Tembok Telah Jebol
+L:Fight on when the wall is breached.	Terus bertarung saat tembok jebol.
+L:The Hornburg Holds	Hornburg Bertahan
+L:Defend the Hornburg's courtyard to the dawn.	Pertahankan pelataran Hornburg hingga fajar.
+L:The Two Towers	Dua Menara
+L:Win every level of the story.	Menangkan setiap level cerita.
+L:The Tower of Orthanc	Menara Orthanc
+L:Win the secret mission at Orthanc.	Menangkan misi rahasia di Orthanc.
+L:Ranger of the North	Ranger dari Utara
+L:Win a level as Aragorn.	Menangkan satu level sebagai Aragorn.
+L:Prince of Mirkwood	Pangeran Mirkwood
+L:Win a level as Legolas.	Menangkan satu level sebagai Legolas.
+L:Son of Gloin	Putra Glóin
+L:Win a level as Gimli.	Menangkan satu level sebagai Gimli.
+L:Heir of Elendil	Pewaris Elendil
+L:Win a level after the prologue as Isildur.	Menangkan satu level setelah prolog sebagai Isildur.
+L:The Three Hunters	Tiga Pemburu
+L:Win levels as Aragorn, Legolas and Gimli.	Menangkan level sebagai Aragorn, Legolas, dan Gimli.
+L:An Unexpected Ally	Sekutu Tak Terduga
+L:Win a level as one of the extra heroes.	Menangkan satu level sebagai salah satu pahlawan tambahan.
+L:A Fellowship Remade	Persekutuan Terbentuk Lagi
+L:Unlock every extra hero.	Buka semua pahlawan tambahan.
+L:Seasoned Warrior	Pejuang Kawakan
+L:Bring a hero to level 5.	Bawa seorang pahlawan ke level 5.
+L:Legend of the Third Age	Legenda Zaman Ketiga
+L:Bring a hero to level 10.	Bawa seorang pahlawan ke level 10.
+L:Side by Side	Berdampingan
+L:Win a level in co-op.	Menangkan satu level dalam co-op.
+L:Shoulder to Shoulder	Bahu-Membahu
+L:Hold the Deeping Wall in co-op.	Pertahankan Tembok Deeping dalam co-op.
+L:First Blood	Darah Pertama
+L:Win a round of Versus.	Menangkan satu ronde Versus.
+L:Champion of the Arena	Juara Arena
+L:Win a Deathmatch.	Menangkan satu Deathmatch.
+L:Untouched	Tak Tersentuh
+L:Win a round of Versus without taking a blow.	Menangkan satu ronde Versus tanpa terkena pukulan.
+L:Last Breath	Napas Terakhir
+L:Win a round of Versus with less than a tenth of your health left.	Menangkan satu ronde Versus dengan nyawa tersisa kurang dari sepersepuluh.
+L:Bearer of the Shield	Pembawa Tameng
+L:Win a match of Find the Shield.	Menangkan satu pertandingan Temukan Tameng.
+L:The Black Breath	Napas Hitam
+L:Win a Versus match as the Nazgul.	Menangkan pertandingan Versus sebagai Nazgûl.
+L:Iron and Leather	Besi dan Kulit
+L:Win a Versus match as the Shield Orc.	Menangkan pertandingan Versus sebagai Orc Bertameng.
+L:Third Marshal of the Riddermark	Marsekal Ketiga Riddermark
+L:Win a Versus match as Eomer.	Menangkan pertandingan Versus sebagai Éomer.
+L:Shield-breaker	Pemecah Tameng
+L:Break the Shield Orc's shield.	Hancurkan tameng Orc Bertameng.
+L:Unbroken Line	Barisan Tak Terputus
+L:As player 1, win 5 Versus rounds in a row.	Sebagai pemain 1, menangkan 5 ronde Versus berturut-turut.
+L:The Challenger Rises	Sang Penantang Bangkit
+L:As player 2, win 5 Versus rounds in a row.	Sebagai pemain 2, menangkan 5 ronde Versus berturut-turut.
+L:Get Back!	Mundur!
+L:Knock your opponent back 50 times in Versus.	Pukul mundur lawan Anda 50 kali dalam Versus.
+L:Eagle Eye	Mata Elang
+L:Land 40 locked-on arrows on your opponent in Versus.	Daratkan 40 panah terkunci ke lawan Anda dalam Versus.
+L:Scavenger	Pemulung
+L:Take 30 pickups in Versus.	Ambil 30 item dalam Versus.
+L:None Shall Pass	Takkan Ada yang Lewat
+L:Win a Versus match without losing a round.	Menangkan pertandingan Versus tanpa kalah satu ronde pun.
+L:Against All Hope	Meski Tanpa Harapan
+L:Win a Versus match after trailing by 3 rounds.	Menangkan pertandingan Versus setelah tertinggal 3 ronde.
+L:Veteran of the Arena	Veteran Arena
+L:Win 100 Versus rounds in all.	Menangkan total 100 ronde Versus.
+L:Wanderer	Pengembara
+L:Win a Versus match on 8 different arenas.	Menangkan pertandingan Versus di 8 arena berbeda.
+L:Many Faces	Banyak Wajah
+L:Win a Versus match as 10 different heroes.	Menangkan pertandingan Versus sebagai 10 pahlawan berbeda.
+L:Troll Brawler	Petarung Troll
+L:Win a Troll Battle match.	Menangkan satu pertandingan Laga Troll.
+L:Terror of Moria	Teror Moria
+L:Win 3 Troll Battle matches.	Menangkan 3 pertandingan Laga Troll.
+L:Lord of the Deep	Penguasa Kedalaman
+L:Win 10 Troll Battle matches.	Menangkan 10 pertandingan Laga Troll.
+L:Thick Hide	Kulit Tebal
+L:Win a Troll Battle match without losing a round.	Menangkan pertandingan Laga Troll tanpa kalah satu ronde pun.
+L:Bone Crusher	Peremuk Tulang
+L:Land a single smash of 400 damage or more in Troll Battle.	Daratkan satu hantaman sebesar 400 kerusakan atau lebih dalam Laga Troll.
+L:Troll Rampage	Amukan Troll
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Berikan 25.000 kerusakan dalam Laga Troll, dari semua pertandingan Anda.
+L:Swift Bludgeon	Gada Kilat
+L:Win a Troll Battle round in under 20 seconds.	Menangkan satu ronde Laga Troll dalam waktu kurang dari 20 detik.
+L:Rock and Log	Batu dan Kayu
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Daratkan 25 lemparan batu atau kayu ke troll lawan dalam Laga Troll.
+L:Orc-Slayer	Pembantai Orc
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Bunuh 25 orc dan Uruk-hai selama pertandingan Versus.
+L:Scourge of Isengard	Momok Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Bunuh 150 orc dan Uruk-hai selama pertandingan Versus.
+L:War on Two Fronts	Perang Dua Front
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Menangkan Deathmatch di kelima arena bermusuh (Amon Hen, Fangorn, Dataran Rohan, Tembok yang Jebol, Hornburg).
+L:The White Hand	Tangan Putih
+L:Win 3 Versus matches as Saruman.	Menangkan 3 pertandingan Versus sebagai Saruman.
+L:Shepherd of the Trees	Gembala Pepohonan
+L:Win 3 Versus matches as the Ent.	Menangkan 3 pertandingan Versus sebagai Ent.
+L:Captain of Isengard	Kapten Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Menangkan 3 pertandingan Versus sebagai Kapten Uruk.
+L:The Last Alliance Returns	Aliansi Terakhir Kembali
+L:Win 3 Versus matches as the Elven Warrior.	Menangkan 3 pertandingan Versus sebagai Prajurit Elf.
+L:Hunt Them Down	Buru Mereka
+L:Win 3 Versus matches as Lurtz.	Menangkan 3 pertandingan Versus sebagai Lurtz.
+L:The Dark Lord	Penguasa Kegelapan
+L:Win 3 Versus matches as Sauron.	Menangkan 3 pertandingan Versus sebagai Sauron.
+L:Servant of the Secret Fire	Pelayan Api Rahasia
+L:Win 3 Versus matches as Gandalf.	Menangkan 3 pertandingan Versus sebagai Gandalf.
+L:Lord of Rivendell	Penguasa Rivendell
+L:Win 3 Versus matches as Elrond.	Menangkan 3 pertandingan Versus sebagai Elrond.
+L:Captain of Gondor	Kapten Gondor
+L:Win 3 Versus matches as Boromir.	Menangkan 3 pertandingan Versus sebagai Boromir.
+L:Ring-bearer	Pembawa Cincin
+L:Win 3 Versus matches as Frodo.	Menangkan 3 pertandingan Versus sebagai Frodo.
+L:Blood Frenzy	Amukan Darah
+L:Win 3 Versus matches as the Berserker.	Menangkan 3 pertandingan Versus sebagai Berserker.
+L:Hurl the Stones	Lemparkan Batu
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Sebagai Ent, daratkan 20 lemparan batu ke lawan Anda dalam Versus.
+L:Mirror Image	Bayangan Cermin
+L:Win a match of first to 5 or more where both players are the same hero.	Menangkan pertandingan Pertama ke 5 atau lebih dengan kedua pemain memakai pahlawan yang sama.
+L:Defiance	Perlawanan
+L:Win a level on Impossible.	Menangkan satu level pada Mustahil.
+L:Hardened	Tertempa
+L:Win 5 different levels on Impossible.	Menangkan 5 level berbeda pada Mustahil.
+L:DIAMOND: The Unbreakable	BERLIAN: Yang Tak Terpatahkan
+L:Win every level of the story on Impossible. Very few ever will.	Menangkan setiap level cerita pada Mustahil. Sangat sedikit yang akan mampu.

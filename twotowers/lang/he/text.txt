@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	מתגושש: שחקן {1}
 P:RELENTLESS: PLAYER {1}	בלתי נלאה: שחקן {1}
 P:Start Match	התחל קרב
 P:ROUND {1}   P{2} {3} - {4} P{5}	סיבוב {1}   P{2} {3} - {4} P{5}
+P:Borderless	ללא גבולות
+P:Exclusive	בלעדי
+P:Full Screen Res:	רזולוציית מסך מלא:
+P:Mode:	מצב:
+P:Troll Battle	קרב טרולים
+P:Reset P2 Controls	איפוס שליטה P2
+P:Berserker	ברסרקר
+P:Cave Troll	טרול מערות
+P:Uruk Captain	קברניט אורוק
+P:Saruman	סארומן
+P:Elven Warrior	לוחם אלפי
+P:Ent	אנט
+P:Player 1: choose your hero	שחקן 1: בחר גיבור
+P:Player 2: waiting	שחקן 2: ממתין
+P:Player 2: choose your hero	שחקן 2: בחר גיבור
+P:Player 1: {1}	שחקן 1: {1}
+P:Player 2: {1}	שחקן 2: {1}
+P:Player 2: {1} is Player 1's	שחקן 2: {1} של שחקן 1
+P:Player 2: {1} not available	שחקן 2: {1} לא זמין
+P:Ready. Press Continue to begin	מוכן. לחץ על המשך כדי להתחיל
+P:Unavailable	לא זמין
+P:Speed	מהירות
+P:Fierce	עז
+P:Special	מיוחד
+P:Mixed	מעורב
+P:P{1} STAB GUARD: {2} LEFT	הגנת דקירה P{1}: נותרו {2}
+P:FIND THE SHIELD: {1} AHEAD	מצא את המגן: {1} לפנים
+P:FIND THE SHIELD: {1} BEHIND	מצא את המגן: {1} מאחור
+P:FIND THE SHIELD: {1} TO THE LEFT	מצא את המגן: {1} משמאל
+P:FIND THE SHIELD: {1} TO THE RIGHT	מצא את המגן: {1} מימין
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	מצא את המגן   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	שחקן {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	המחץ החזק ביותר
+P:CLUB BLOWS / SWINGS	מכות אלה / הנפות
+P:DAMAGE DEALT / TAKEN	נזק שנגרם / שנספג
+P:FASTEST KNOCKOUT	הנוקאאוט המהיר ביותר
+P:MOST DAMAGE IN A MATCH	הכי הרבה נזק במשחק
+P:ROCKS AND LOGS ON TARGET	סלעים וגזעים שפגעו
+P:SMASHES ({1}+)	מחצים ({1}+)
+P:TROLL BATTLE RECORDS	שיאי קרב הטרולים
+P:TROLL BATTLE RESULTS	תוצאות קרב הטרולים
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	התחל משחק מחדש: BACK (Backspace / Tab) או לחיצה
+L:Restart Round: Y (the I key) or click this line	התחל סיבוב מחדש: Y (מקש I) או לחץ על שורה זו
+L:P2 Teleport: ON	שיגור P2: פעיל
+L:P2 Teleport: OFF	שיגור P2: כבוי
+L:Turn it off: Y (the I key) or click this note	כיבוי: Y (מקש I) או לחץ על הערה זו
+L:Turn it on: Y (the I key) or click this note	הפעלה: Y (מקש I) או לחץ על הערה זו
+L:IMPOSSIBLE	בלתי אפשרי
+L:Harder than Expert: any enemy's second blow fells you	קשה ממומחה: המכה השנייה של כל אויב מפילה אותך
+L:Achievement earned	הישג הושג
+L:DIAMOND ACHIEVEMENT EARNED	הישג יהלום הושג
+L:The Last Alliance	הברית האחרונה
+L:Win the prologue on the slopes of Mount Doom.	נצח בפרולוג על מורדות הר האבדון.
+L:Fire on Weathertop	אש על צריח הרוחות
+L:Drive the Ringwraiths from Weathertop.	גרש את רפאי הטבעת מצריח הרוחות.
+L:Speak Friend	אמור ידיד
+L:Escape the Watcher at the Gates of Moria.	הימלט מהשומר שבמים בשערי מוריה.
+L:Drums in the Deep	תופים במעמקים
+L:Fight your way out of Balin's Tomb.	פלס את דרכך החוצה מקבר באלין.
+L:Breaking of the Fellowship	התפרקות האחווה
+L:Stand against the Uruk-hai at Amon Hen.	עמוד מול האורוק-היי באמון הן.
+L:Into the Forest	אל היער
+L:Get through Fangorn Forest.	עבור את יער פאנגורן.
+L:Riders of Rohan	רוכבי רוהאן
+L:Win the battle on the Plains of Rohan.	נצח בקרב במישורי רוהאן.
+L:The Burning of the Westfold	שריפת ווסטפולד
+L:Save the villages of the Westfold.	הצל את כפרי ווסטפולד.
+L:Wolves on the Road	זאבים בדרך
+L:Reach Helm's Deep along the road.	הגע לערוץ הלם לאורך הדרך.
+L:The Deeping Wall	חומת הערוץ
+L:Hold the Deeping Wall.	החזק את חומת הערוץ.
+L:The Wall Is Breached	החומה נפרצה
+L:Fight on when the wall is breached.	המשך להילחם כשהחומה נפרצת.
+L:The Hornburg Holds	הורנבורג עומדת
+L:Defend the Hornburg's courtyard to the dawn.	הגן על חצר הורנבורג עד השחר.
+L:The Two Towers	שני הצריחים
+L:Win every level of the story.	נצח בכל שלבי הסיפור.
+L:The Tower of Orthanc	צריח אורתנק
+L:Win the secret mission at Orthanc.	נצח במשימה הסודית באורתנק.
+L:Ranger of the North	סייר הצפון
+L:Win a level as Aragorn.	נצח בשלב בתור אראגורן.
+L:Prince of Mirkwood	נסיך יער האופל
+L:Win a level as Legolas.	נצח בשלב בתור לגולס.
+L:Son of Gloin	בן גלואין
+L:Win a level as Gimli.	נצח בשלב בתור גימלי.
+L:Heir of Elendil	יורש אלנדיל
+L:Win a level after the prologue as Isildur.	נצח בשלב שאחרי הפרולוג בתור איסילדור.
+L:The Three Hunters	שלושת הציידים
+L:Win levels as Aragorn, Legolas and Gimli.	נצח בשלבים בתור אראגורן, לגולס וגימלי.
+L:An Unexpected Ally	בעל ברית לא צפוי
+L:Win a level as one of the extra heroes.	נצח בשלב בתור אחד הגיבורים הנוספים.
+L:A Fellowship Remade	אחווה מחודשת
+L:Unlock every extra hero.	פתח את כל הגיבורים הנוספים.
+L:Seasoned Warrior	לוחם מנוסה
+L:Bring a hero to level 5.	הבא גיבור לרמה 5.
+L:Legend of the Third Age	אגדת העידן השלישי
+L:Bring a hero to level 10.	הבא גיבור לרמה 10.
+L:Side by Side	זה לצד זה
+L:Win a level in co-op.	נצח בשלב במשחק שיתופי.
+L:Shoulder to Shoulder	כתף אל כתף
+L:Hold the Deeping Wall in co-op.	החזק את חומת הערוץ במשחק שיתופי.
+L:First Blood	דם ראשון
+L:Win a round of Versus.	נצח בסיבוב ראש בראש.
+L:Champion of the Arena	אלוף הזירה
+L:Win a Deathmatch.	נצח בקרב עד המוות.
+L:Untouched	ללא פגע
+L:Win a round of Versus without taking a blow.	נצח בסיבוב ראש בראש בלי לספוג מכה.
+L:Last Breath	נשימה אחרונה
+L:Win a round of Versus with less than a tenth of your health left.	נצח בסיבוב ראש בראש כשנותרה לך פחות מעשירית מהבריאות.
+L:Bearer of the Shield	נושא המגן
+L:Win a match of Find the Shield.	נצח במשחק מצא את המגן.
+L:The Black Breath	הנשימה השחורה
+L:Win a Versus match as the Nazgul.	נצח במשחק ראש בראש בתור הנזגול.
+L:Iron and Leather	ברזל ועור
+L:Win a Versus match as the Shield Orc.	נצח במשחק ראש בראש בתור האורק נושא המגן.
+L:Third Marshal of the Riddermark	המרשל השלישי של הרידרמארק
+L:Win a Versus match as Eomer.	נצח במשחק ראש בראש בתור אאומר.
+L:Shield-breaker	שובר מגנים
+L:Break the Shield Orc's shield.	שבור את המגן של האורק נושא המגן.
+L:Unbroken Line	שורה בלתי נשברת
+L:As player 1, win 5 Versus rounds in a row.	בתור שחקן 1, נצח ב-5 סיבובי ראש בראש ברצף.
+L:The Challenger Rises	המתמודד קם
+L:As player 2, win 5 Versus rounds in a row.	בתור שחקן 2, נצח ב-5 סיבובי ראש בראש ברצף.
+L:Get Back!	אחורה!
+L:Knock your opponent back 50 times in Versus.	הדוף את יריבך לאחור 50 פעמים בראש בראש.
+L:Eagle Eye	עין הנשר
+L:Land 40 locked-on arrows on your opponent in Versus.	פגע ביריבך ב-40 חיצים נעולים בראש בראש.
+L:Scavenger	לקטן
+L:Take 30 pickups in Versus.	אסוף 30 פריטים בראש בראש.
+L:None Shall Pass	איש לא יעבור
+L:Win a Versus match without losing a round.	נצח במשחק ראש בראש בלי להפסיד סיבוב.
+L:Against All Hope	נגד כל תקווה
+L:Win a Versus match after trailing by 3 rounds.	נצח במשחק ראש בראש אחרי פיגור של 3 סיבובים.
+L:Veteran of the Arena	ותיק הזירה
+L:Win 100 Versus rounds in all.	נצח ב-100 סיבובי ראש בראש בסך הכול.
+L:Wanderer	נווד
+L:Win a Versus match on 8 different arenas.	נצח במשחק ראש בראש ב-8 זירות שונות.
+L:Many Faces	פנים רבות
+L:Win a Versus match as 10 different heroes.	נצח במשחק ראש בראש בתור 10 גיבורים שונים.
+L:Troll Brawler	מתגושש טרולים
+L:Win a Troll Battle match.	נצח במשחק קרב טרולים.
+L:Terror of Moria	אימת מוריה
+L:Win 3 Troll Battle matches.	נצח ב-3 משחקי קרב טרולים.
+L:Lord of the Deep	אדון המעמקים
+L:Win 10 Troll Battle matches.	נצח ב-10 משחקי קרב טרולים.
+L:Thick Hide	עור עבה
+L:Win a Troll Battle match without losing a round.	נצח במשחק קרב טרולים בלי להפסיד סיבוב.
+L:Bone Crusher	מרסק עצמות
+L:Land a single smash of 400 damage or more in Troll Battle.	הנחת מחץ יחיד של 400 נזק ומעלה בקרב טרולים.
+L:Troll Rampage	השתוללות טרול
+L:Deal 25,000 damage in Troll Battle, across all your matches.	גרום 25,000 נזק בקרב טרולים, בכל המשחקים שלך יחד.
+L:Swift Bludgeon	אלה זריזה
+L:Win a Troll Battle round in under 20 seconds.	נצח בסיבוב קרב טרולים בפחות מ-20 שניות.
+L:Rock and Log	סלע וגזע
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	פגע בטרול השני ב-25 סלעים או גזעים מושלכים בקרב טרולים.
+L:Orc-Slayer	קוטל אורקים
+L:Slay 25 orcs and Uruk-hai during Versus matches.	קטול 25 אורקים ואורוק-היי במשחקי ראש בראש.
+L:Scourge of Isengard	נגע איזנגרד
+L:Slay 150 orcs and Uruk-hai during Versus matches.	קטול 150 אורקים ואורוק-היי במשחקי ראש בראש.
+L:War on Two Fronts	מלחמה בשתי חזיתות
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	נצח בקרב עד המוות בכל חמש הזירות עם אויבים (אמון הן, פאנגורן, מישורי רוהאן, החומה הפרוצה, הורנבורג).
+L:The White Hand	היד הלבנה
+L:Win 3 Versus matches as Saruman.	נצח ב-3 משחקי ראש בראש בתור סארומן.
+L:Shepherd of the Trees	רועה העצים
+L:Win 3 Versus matches as the Ent.	נצח ב-3 משחקי ראש בראש בתור האנט.
+L:Captain of Isengard	קברניט איזנגרד
+L:Win 3 Versus matches as the Uruk Captain.	נצח ב-3 משחקי ראש בראש בתור קברניט האורוק.
+L:The Last Alliance Returns	שובה של הברית האחרונה
+L:Win 3 Versus matches as the Elven Warrior.	נצח ב-3 משחקי ראש בראש בתור הלוחם האלפי.
+L:Hunt Them Down	צודו אותם
+L:Win 3 Versus matches as Lurtz.	נצח ב-3 משחקי ראש בראש בתור לורץ.
+L:The Dark Lord	האדון האפל
+L:Win 3 Versus matches as Sauron.	נצח ב-3 משחקי ראש בראש בתור סאורון.
+L:Servant of the Secret Fire	משרת האש הסודית
+L:Win 3 Versus matches as Gandalf.	נצח ב-3 משחקי ראש בראש בתור גנדלף.
+L:Lord of Rivendell	אדון ריוונדל
+L:Win 3 Versus matches as Elrond.	נצח ב-3 משחקי ראש בראש בתור אלרונד.
+L:Captain of Gondor	קברניט גונדור
+L:Win 3 Versus matches as Boromir.	נצח ב-3 משחקי ראש בראש בתור בורומיר.
+L:Ring-bearer	נושא הטבעת
+L:Win 3 Versus matches as Frodo.	נצח ב-3 משחקי ראש בראש בתור פרודו.
+L:Blood Frenzy	טירוף דם
+L:Win 3 Versus matches as the Berserker.	נצח ב-3 משחקי ראש בראש בתור הברסרקר.
+L:Hurl the Stones	הטל את האבנים
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	בתור האנט, פגע ביריבך ב-20 סלעים מושלכים בראש בראש.
+L:Mirror Image	תמונת ראי
+L:Win a match of first to 5 or more where both players are the same hero.	נצח במשחק של הראשון ל-5 ומעלה שבו שני השחקנים הם אותו גיבור.
+L:Defiance	התרסה
+L:Win a level on Impossible.	נצח בשלב ברמת בלתי אפשרי.
+L:Hardened	מחושל
+L:Win 5 different levels on Impossible.	נצח ב-5 שלבים שונים ברמת בלתי אפשרי.
+L:DIAMOND: The Unbreakable	יהלום: הבלתי שביר
+L:Win every level of the story on Impossible. Very few ever will.	נצח בכל שלבי הסיפור ברמת בלתי אפשרי. מעטים מאוד יצליחו אי פעם.

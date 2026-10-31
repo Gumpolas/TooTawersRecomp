@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	นัก​บู๊: ผู้​เล่น {1}
 P:RELENTLESS: PLAYER {1}	ไม่​ลด​ละ: ผู้​เล่น {1}
 P:Start Match	เริ่ม​การ​ต่อสู้
 P:ROUND {1}   P{2} {3} - {4} P{5}	รอบ​ที่ {1}   P{2} {3} - {4} P{5}
+P:Borderless	ไร้​ขอบ
+P:Exclusive	เอกสิทธิ์
+P:Full Screen Res:	ความ​ละเอียด​เต็ม​จอ:
+P:Mode:	โหมด:
+P:Troll Battle	ศึก​โทรลล์
+P:Reset P2 Controls	รีเซ็ต​การ​ควบคุม P2
+P:Berserker	เบอร์เซิร์กเกอร์
+P:Cave Troll	โทรลล์​ถ้ำ
+P:Uruk Captain	หัวหน้า​อูรุก
+P:Saruman	ซารูมาน
+P:Elven Warrior	นัก​รบ​เอลฟ์
+P:Ent	เอนท์
+P:Player 1: choose your hero	ผู้​เล่น 1: เลือก​ฮีโร่​ของ​คุณ
+P:Player 2: waiting	ผู้​เล่น 2: รอ​อยู่
+P:Player 2: choose your hero	ผู้​เล่น 2: เลือก​ฮีโร่​ของ​คุณ
+P:Player 1: {1}	ผู้​เล่น 1: {1}
+P:Player 2: {1}	ผู้​เล่น 2: {1}
+P:Player 2: {1} is Player 1's	ผู้​เล่น 2: {1} เป็น​ของ​ผู้​เล่น 1
+P:Player 2: {1} not available	ผู้​เล่น 2: {1} ใช้​ไม่​ได้
+P:Ready. Press Continue to begin	พร้อม​แล้ว กด​เล่น​ต่อ​เพื่อ​เริ่ม
+P:Unavailable	ใช้​ไม่​ได้
+P:Speed	ความ​เร็ว
+P:Fierce	ดุ​ดัน
+P:Special	พิเศษ
+P:Mixed	ผสม
+P:P{1} STAB GUARD: {2} LEFT	กัน​แทง P{1}: เหลือ {2}
+P:FIND THE SHIELD: {1} AHEAD	ตาม​หา​โล่: {1} ข้าง​หน้า
+P:FIND THE SHIELD: {1} BEHIND	ตาม​หา​โล่: {1} ข้าง​หลัง
+P:FIND THE SHIELD: {1} TO THE LEFT	ตาม​หา​โล่: {1} ทาง​ซ้าย
+P:FIND THE SHIELD: {1} TO THE RIGHT	ตาม​หา​โล่: {1} ทาง​ขวา
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ตาม​หา​โล่   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	ผู้​เล่น {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ทุบ​แรง​ที่สุด
+P:CLUB BLOWS / SWINGS	กระบอง​โดน / เหวี่ยง
+P:DAMAGE DEALT / TAKEN	ความ​เสียหาย​ที่​ทำ / ที่​ได้​รับ
+P:FASTEST KNOCKOUT	น็อก​เร็ว​ที่สุด
+P:MOST DAMAGE IN A MATCH	ความ​เสียหาย​สูง​สุด​ใน​การ​แข่งขัน
+P:ROCKS AND LOGS ON TARGET	หิน​และ​ซุง​ที่​เข้า​เป้า
+P:SMASHES ({1}+)	การ​ทุบ ({1}+)
+P:TROLL BATTLE RECORDS	สถิติ​ศึก​โทรลล์
+P:TROLL BATTLE RESULTS	ผล​ศึก​โทรลล์
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	เริ่ม​การ​แข่งขัน​ใหม่: BACK (Backspace / Tab) หรือ​คลิก
+L:Restart Round: Y (the I key) or click this line	เริ่ม​รอบ​ใหม่: Y (ปุ่ม I) หรือ​คลิก​บรรทัด​นี้
+L:P2 Teleport: ON	วาร์ป P2: เปิด
+L:P2 Teleport: OFF	วาร์ป P2: ปิด
+L:Turn it off: Y (the I key) or click this note	ปิด: Y (ปุ่ม I) หรือ​คลิก​ข้อความ​นี้
+L:Turn it on: Y (the I key) or click this note	เปิด: Y (ปุ่ม I) หรือ​คลิก​ข้อความ​นี้
+L:IMPOSSIBLE	เป็น​ไป​ไม่​ได้
+L:Harder than Expert: any enemy's second blow fells you	ยาก​กว่า​ผู้​เชี่ยวชาญ: โดน​ศัตรู​ตี​ครั้ง​ที่​สอง​ก็​ล้ม
+L:Achievement earned	ได้​รับ​ความ​สำเร็จ
+L:DIAMOND ACHIEVEMENT EARNED	ได้​รับ​ความ​สำเร็จ​ระดับ​เพชร
+L:The Last Alliance	พันธมิตร​สุด​ท้าย
+L:Win the prologue on the slopes of Mount Doom.	ชนะ​บท​นำ​บน​เชิง​ภูเขา​มรณะ
+L:Fire on Weathertop	เพลิง​บน​เวเธอร์ท็อป
+L:Drive the Ringwraiths from Weathertop.	ขับ​ไล่​ภูต​แหวน​ออก​จาก​เวเธอร์ท็อป
+L:Speak Friend	เอ่ย​ว่า​มิตร
+L:Escape the Watcher at the Gates of Moria.	หนี​ผู้​เฝ้า​ใน​น้ำ​ที่​ประตู​โมเรีย
+L:Drums in the Deep	กลอง​ใน​ห้วง​ลึก
+L:Fight your way out of Balin's Tomb.	ฝ่า​ออก​จาก​สุสาน​บาลิน
+L:Breaking of the Fellowship	การ​แตก​สลาย​ของ​คณะ​พันธมิตร
+L:Stand against the Uruk-hai at Amon Hen.	ยืน​หยัด​ต้าน​อูรุกไฮ​ที่​อามอน​เฮน
+L:Into the Forest	สู่​ผืน​ป่า
+L:Get through Fangorn Forest.	ฝ่า​ป่า​ฟางกอร์น​ไป​ให้​ได้
+L:Riders of Rohan	อัศวิน​แห่ง​โรฮัน
+L:Win the battle on the Plains of Rohan.	ชนะ​ศึก​ที่​ทุ่ง​ราบ​โรฮัน
+L:The Burning of the Westfold	เพลิง​ผลาญ​เวสต์โฟลด์
+L:Save the villages of the Westfold.	ช่วย​หมู่​บ้าน​แห่ง​เวสต์โฟลด์
+L:Wolves on the Road	หมาป่า​บน​เส้น​ทาง
+L:Reach Helm's Deep along the road.	เดิน​ทาง​ไป​ให้​ถึง​หุบผาเฮล์ม
+L:The Deeping Wall	กำแพง​ดีพปิง
+L:Hold the Deeping Wall.	รักษา​กำแพง​ดีพปิง​ไว้
+L:The Wall Is Breached	กำแพง​ถูก​เจาะ
+L:Fight on when the wall is breached.	สู้​ต่อ​ไป​เมื่อ​กำแพง​ถูก​เจาะ
+L:The Hornburg Holds	ฮอร์นเบิร์ก​ยัง​ยืน​หยัด
+L:Defend the Hornburg's courtyard to the dawn.	ปก​ป้อง​ลาน​ฮอร์นเบิร์ก​จน​รุ่ง​สาง
+L:The Two Towers	ศึก​หอคอย​คู่​กู้​พิภพ
+L:Win every level of the story.	ชนะ​ทุก​ด่าน​ใน​เนื้อ​เรื่อง
+L:The Tower of Orthanc	หอคอย​ออร์ธองค์
+L:Win the secret mission at Orthanc.	ชนะ​ภารกิจ​ลับ​ที่​ออร์ธองค์
+L:Ranger of the North	เรนเจอร์​แห่ง​ทิศ​เหนือ
+L:Win a level as Aragorn.	ชนะ​ด่าน​หนึ่ง​ด้วย​อารากอร์น
+L:Prince of Mirkwood	เจ้า​ชาย​แห่ง​เมิร์ควู้ด
+L:Win a level as Legolas.	ชนะ​ด่าน​หนึ่ง​ด้วย​เลโกลัส
+L:Son of Gloin	บุตร​แห่ง​โกลอิน
+L:Win a level as Gimli.	ชนะ​ด่าน​หนึ่ง​ด้วย​กิมลี
+L:Heir of Elendil	ทายาท​แห่ง​เอเลนดิล
+L:Win a level after the prologue as Isildur.	ชนะ​ด่าน​หลัง​บท​นำ​ด้วย​อิซิลดูร์
+L:The Three Hunters	สาม​นัก​ล่า
+L:Win levels as Aragorn, Legolas and Gimli.	ชนะ​ด่าน​ด้วย​อารากอร์น เลโกลัส​และ​กิมลี
+L:An Unexpected Ally	พันธมิตร​ที่​ไม่​คาด​คิด
+L:Win a level as one of the extra heroes.	ชนะ​ด่าน​หนึ่ง​ด้วย​ฮีโร่​เพิ่ม​เติม​คน​ใด​ก็ได้
+L:A Fellowship Remade	คณะ​พันธมิตร​ที่​ฟื้น​คืน
+L:Unlock every extra hero.	ปลด​ล็อก​ฮีโร่​เพิ่ม​เติม​ทุก​คน
+L:Seasoned Warrior	นัก​รบ​ผู้​ช่ำ​ชอง
+L:Bring a hero to level 5.	พา​ฮีโร่​ไป​ถึง​เลเวล 5
+L:Legend of the Third Age	ตำนาน​แห่ง​ยุค​ที่​สาม
+L:Bring a hero to level 10.	พา​ฮีโร่​ไป​ถึง​เลเวล 10
+L:Side by Side	เคียง​ข้าง​กัน
+L:Win a level in co-op.	ชนะ​ด่าน​หนึ่ง​ใน​โหมด​ร่วม​มือ
+L:Shoulder to Shoulder	เคียง​บ่า​เคียง​ไหล่
+L:Hold the Deeping Wall in co-op.	รักษา​กำแพง​ดีพปิง​ไว้​ใน​โหมด​ร่วม​มือ
+L:First Blood	เลือด​แรก
+L:Win a round of Versus.	ชนะ​หนึ่ง​รอบ​ใน​โหมด​ประลอง
+L:Champion of the Arena	แชมป์​แห่ง​สนาม
+L:Win a Deathmatch.	ชนะ​เดธ​แมตช์
+L:Untouched	ไร้​รอย​ขีด​ข่วน
+L:Win a round of Versus without taking a blow.	ชนะ​หนึ่ง​รอบ​ใน​โหมด​ประลอง​โดย​ไม่​โดน​โจมตี​เลย
+L:Last Breath	ลม​หายใจ​สุด​ท้าย
+L:Win a round of Versus with less than a tenth of your health left.	ชนะ​หนึ่ง​รอบ​ใน​โหมด​ประลอง​ขณะ​พลัง​ชีวิต​เหลือ​ไม่​ถึง​หนึ่ง​ใน​สิบ
+L:Bearer of the Shield	ผู้​ถือ​โล่
+L:Win a match of Find the Shield.	ชนะ​การ​แข่งขัน​ตาม​หา​โล่
+L:The Black Breath	ลม​หายใจ​ทมิฬ
+L:Win a Versus match as the Nazgul.	ชนะ​การ​แข่งขัน​ประลอง​ด้วย​นาซกูล
+L:Iron and Leather	เหล็ก​และ​หนัง
+L:Win a Versus match as the Shield Orc.	ชนะ​การ​แข่งขัน​ประลอง​ด้วย​ออร์ค​ถือ​โล่
+L:Third Marshal of the Riddermark	จอม​พล​ที่​สาม​แห่ง​ริดเดอร์มาร์ก
+L:Win a Versus match as Eomer.	ชนะ​การ​แข่งขัน​ประลอง​ด้วย​เอโอเมอร์
+L:Shield-breaker	ผู้​ทำลาย​โล่
+L:Break the Shield Orc's shield.	ทำลาย​โล่​ของ​ออร์ค​ถือ​โล่
+L:Unbroken Line	แนว​รบ​ไม่​แตก
+L:As player 1, win 5 Versus rounds in a row.	ใน​ฐานะ​ผู้​เล่น 1 ชนะ​ประลอง 5 รอบ​ติด​กัน
+L:The Challenger Rises	ผู้​ท้า​ชิง​ผงาด
+L:As player 2, win 5 Versus rounds in a row.	ใน​ฐานะ​ผู้​เล่น 2 ชนะ​ประลอง 5 รอบ​ติด​กัน
+L:Get Back!	ถอย​ไป!
+L:Knock your opponent back 50 times in Versus.	กระแทก​คู่​ต่อสู้​ให้​กระเด็น 50 ครั้ง​ใน​โหมด​ประลอง
+L:Eagle Eye	ตา​เหยี่ยว
+L:Land 40 locked-on arrows on your opponent in Versus.	ยิง​ธนู​ล็อก​เป้า​โดน​คู่​ต่อสู้ 40 ดอก​ใน​โหมด​ประลอง
+L:Scavenger	นัก​เก็บ​ของ
+L:Take 30 pickups in Versus.	เก็บ​ไอเทม 30 ชิ้น​ใน​โหมด​ประลอง
+L:None Shall Pass	ไม่​มี​ใคร​ผ่าน​ไป​ได้
+L:Win a Versus match without losing a round.	ชนะ​การ​แข่งขัน​ประลอง​โดย​ไม่​เสีย​สัก​รอบ
+L:Against All Hope	แม้​ไร้​ความ​หวัง
+L:Win a Versus match after trailing by 3 rounds.	ชนะ​การ​แข่งขัน​ประลอง​หลัง​ตาม​หลัง 3 รอบ
+L:Veteran of the Arena	ขุน​ศึก​แห่ง​สนาม
+L:Win 100 Versus rounds in all.	ชนะ​ประลอง​รวม 100 รอบ
+L:Wanderer	ผู้​พเนจร
+L:Win a Versus match on 8 different arenas.	ชนะ​การ​แข่งขัน​ประลอง​ใน 8 สนาม​ที่​ต่าง​กัน
+L:Many Faces	หลาก​ใบ​หน้า
+L:Win a Versus match as 10 different heroes.	ชนะ​การ​แข่งขัน​ประลอง​ด้วย​ฮีโร่ 10 คน​ที่​ต่าง​กัน
+L:Troll Brawler	นัก​บู๊​โทรลล์
+L:Win a Troll Battle match.	ชนะ​การ​แข่งขัน​ศึก​โทรลล์
+L:Terror of Moria	ความ​สยอง​แห่ง​โมเรีย
+L:Win 3 Troll Battle matches.	ชนะ​การ​แข่งขัน​ศึก​โทรลล์ 3 ครั้ง
+L:Lord of the Deep	เจ้า​แห่ง​ห้วง​ลึก
+L:Win 10 Troll Battle matches.	ชนะ​การ​แข่งขัน​ศึก​โทรลล์ 10 ครั้ง
+L:Thick Hide	หนัง​หนา
+L:Win a Troll Battle match without losing a round.	ชนะ​การ​แข่งขัน​ศึก​โทรลล์​โดย​ไม่​เสีย​สัก​รอบ
+L:Bone Crusher	ผู้​บด​กระดูก
+L:Land a single smash of 400 damage or more in Troll Battle.	ทุบ​ครั้ง​เดียว​ให้​ได้​ความ​เสียหาย 400 ขึ้น​ไป​ใน​ศึก​โทรลล์
+L:Troll Rampage	โทรลล์​อาละวาด
+L:Deal 25,000 damage in Troll Battle, across all your matches.	สร้าง​ความ​เสียหาย 25,000 ใน​ศึก​โทรลล์ รวม​ทุก​การ​แข่งขัน
+L:Swift Bludgeon	กระบอง​สายฟ้า​แลบ
+L:Win a Troll Battle round in under 20 seconds.	ชนะ​หนึ่ง​รอบ​ใน​ศึก​โทรลล์​ภายใน​ไม่​ถึง 20 วินาที
+L:Rock and Log	หิน​และ​ซุง
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	ขว้าง​หิน​หรือ​ซุง​โดน​โทรลล์​อีก​ตัว 25 ครั้ง​ใน​ศึก​โทรลล์
+L:Orc-Slayer	นัก​ฆ่า​ออร์ค
+L:Slay 25 orcs and Uruk-hai during Versus matches.	สังหาร​ออร์ค​และ​อูรุกไฮ 25 ตน​ระหว่าง​การ​แข่งขัน​ประลอง
+L:Scourge of Isengard	หายนะ​แห่ง​ไอเซนการ์ด
+L:Slay 150 orcs and Uruk-hai during Versus matches.	สังหาร​ออร์ค​และ​อูรุกไฮ 150 ตน​ระหว่าง​การ​แข่งขัน​ประลอง
+L:War on Two Fronts	ศึก​สอง​แนว​รบ
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	ชนะ​เดธ​แมตช์​ใน​ทั้ง​ห้า​สนาม​ที่​มี​ศัตรู (อามอน​เฮน ฟางกอร์น ทุ่ง​ราบ​โรฮัน กำแพง​ที่​ถูก​เจาะ ฮอร์นเบิร์ก)
+L:The White Hand	หัตถ์​ขาว
+L:Win 3 Versus matches as Saruman.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​ซารูมาน
+L:Shepherd of the Trees	ผู้​เลี้ยง​ดู​พฤกษา
+L:Win 3 Versus matches as the Ent.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​เอนท์
+L:Captain of Isengard	แม่ทัพ​แห่ง​ไอเซนการ์ด
+L:Win 3 Versus matches as the Uruk Captain.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​หัวหน้า​อูรุก
+L:The Last Alliance Returns	พันธมิตร​สุด​ท้าย​คืน​ชีพ
+L:Win 3 Versus matches as the Elven Warrior.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​นัก​รบ​เอลฟ์
+L:Hunt Them Down	ไล่​ล่า​พวก​มัน
+L:Win 3 Versus matches as Lurtz.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​เลิร์ตซ์
+L:The Dark Lord	จอม​มาร
+L:Win 3 Versus matches as Sauron.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​เซารอน
+L:Servant of the Secret Fire	ผู้​รับใช้​แห่ง​เพลิง​ลับ
+L:Win 3 Versus matches as Gandalf.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​แกนดัล์ฟ
+L:Lord of Rivendell	เจ้า​แห่ง​ริเวนเดลล์
+L:Win 3 Versus matches as Elrond.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​เอลรอนด์
+L:Captain of Gondor	แม่ทัพ​แห่ง​กอนดอร์
+L:Win 3 Versus matches as Boromir.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​โบโรเมียร์
+L:Ring-bearer	ผู้​ถือ​แหวน
+L:Win 3 Versus matches as Frodo.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​โฟรโด
+L:Blood Frenzy	คลั่ง​เลือด
+L:Win 3 Versus matches as the Berserker.	ชนะ​การ​แข่งขัน​ประลอง 3 ครั้ง​ด้วย​เบอร์เซิร์กเกอร์
+L:Hurl the Stones	ขว้าง​ศิลา
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	ใน​ฐานะ​เอนท์ ขว้าง​หิน​โดน​คู่​ต่อสู้ 20 ครั้ง​ใน​โหมด​ประลอง
+L:Mirror Image	เงา​สะท้อน
+L:Win a match of first to 5 or more where both players are the same hero.	ชนะ​การ​แข่งขัน​แบบ​ชนะ 5 รอบ​ก่อน​ขึ้น​ไป ที่​ผู้​เล่น​ทั้ง​สอง​ใช้​ฮีโร่​ตัว​เดียว​กัน
+L:Defiance	ไม่​ยอม​จำนน
+L:Win a level on Impossible.	ชนะ​ด่าน​หนึ่ง​ใน​ระดับ​เป็น​ไป​ไม่​ได้
+L:Hardened	แกร่ง​กล้า
+L:Win 5 different levels on Impossible.	ชนะ 5 ด่าน​ที่​ต่าง​กัน​ใน​ระดับ​เป็น​ไป​ไม่​ได้
+L:DIAMOND: The Unbreakable	เพชร: ผู้​ไม่​มี​วัน​แตก​หัก
+L:Win every level of the story on Impossible. Very few ever will.	ชนะ​ทุก​ด่าน​ใน​เนื้อ​เรื่อง​ระดับ​เป็น​ไป​ไม่​ได้ น้อย​คน​นัก​จะ​ทำ​ได้

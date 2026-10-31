@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	BRIGÃO: JOGADOR {1}
 P:RELENTLESS: PLAYER {1}	IMPLACÁVEL: JOGADOR {1}
 P:Start Match	Iniciar luta
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROUND {1}   P{2} {3} - {4} P{5}
+P:Borderless	Sem bordas
+P:Exclusive	Exclusiva
+P:Full Screen Res:	Res. tela cheia:
+P:Mode:	Modo:
+P:Troll Battle	Batalha de trolls
+P:Reset P2 Controls	Restaurar controles J2
+P:Berserker	Berserker
+P:Cave Troll	Troll das cavernas
+P:Uruk Captain	Capitão uruk
+P:Saruman	Saruman
+P:Elven Warrior	Guerreiro élfico
+P:Ent	Ent
+P:Player 1: choose your hero	Jogador 1: escolha seu herói
+P:Player 2: waiting	Jogador 2: aguardando
+P:Player 2: choose your hero	Jogador 2: escolha seu herói
+P:Player 1: {1}	Jogador 1: {1}
+P:Player 2: {1}	Jogador 2: {1}
+P:Player 2: {1} is Player 1's	Jogador 2: {1} é do jogador 1
+P:Player 2: {1} not available	Jogador 2: {1} indisponível
+P:Ready. Press Continue to begin	Pronto. Pressione Continuar para começar
+P:Unavailable	Indisponível
+P:Speed	Velocidade
+P:Fierce	Feroz
+P:Special	Especial
+P:Mixed	Misto
+P:P{1} STAB GUARD: {2} LEFT	J{1} DEFESA ANTIESTOCADA: RESTAM {2}
+P:FIND THE SHIELD: {1} AHEAD	ENCONTRE O ESCUDO: {1} À FRENTE
+P:FIND THE SHIELD: {1} BEHIND	ENCONTRE O ESCUDO: {1} ATRÁS
+P:FIND THE SHIELD: {1} TO THE LEFT	ENCONTRE O ESCUDO: {1} À ESQUERDA
+P:FIND THE SHIELD: {1} TO THE RIGHT	ENCONTRE O ESCUDO: {1} À DIREITA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ENCONTRE O ESCUDO   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	JOGADOR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	MAIOR PANCADA
+P:CLUB BLOWS / SWINGS	GOLPES DE CLAVA / TENTATIVAS
+P:DAMAGE DEALT / TAKEN	DANO CAUSADO / SOFRIDO
+P:FASTEST KNOCKOUT	NOCAUTE MAIS RÁPIDO
+P:MOST DAMAGE IN A MATCH	MAIS DANO EM UMA PARTIDA
+P:ROCKS AND LOGS ON TARGET	PEDRAS E TRONCOS NO ALVO
+P:SMASHES ({1}+)	PANCADAS ({1}+)
+P:TROLL BATTLE RECORDS	RECORDES DA BATALHA DE TROLLS
+P:TROLL BATTLE RESULTS	RESULTADOS DA BATALHA DE TROLLS
+P:P{1}	J{1}

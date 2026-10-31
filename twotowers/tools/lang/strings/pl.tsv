@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	ZABIJAKA: GRACZ {1}
 P:RELENTLESS: PLAYER {1}	BEZLITOSNY: GRACZ {1}
 P:Start Match	Rozpocznij walkę
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Bez ramki
+P:Exclusive	Wyłączny
+P:Full Screen Res:	Rozdz. pełnoekr.:
+P:Mode:	Tryb:
+P:Troll Battle	Bitwa trolli
+P:Reset P2 Controls	Przywróć sterowanie P2
+P:Berserker	Berserker
+P:Cave Troll	Troll jaskiniowy
+P:Uruk Captain	Kapitan Uruków
+P:Saruman	Saruman
+P:Elven Warrior	Elficki wojownik
+P:Ent	Ent
+P:Player 1: choose your hero	Gracz 1: wybierz bohatera
+P:Player 2: waiting	Gracz 2: czeka
+P:Player 2: choose your hero	Gracz 2: wybierz bohatera
+P:Player 1: {1}	Gracz 1: {1}
+P:Player 2: {1}	Gracz 2: {1}
+P:Player 2: {1} is Player 1's	Gracz 2: {1} należy do gracza 1
+P:Player 2: {1} not available	Gracz 2: {1} niedostępny
+P:Ready. Press Continue to begin	Gotowe. Naciśnij Dalej, by zacząć
+P:Unavailable	Niedostępny
+P:Speed	Szybki
+P:Fierce	Mocny
+P:Special	Specjalny
+P:Mixed	Mieszany
+P:P{1} STAB GUARD: {2} LEFT	P{1} BLOK PCHNIĘĆ: ZOSTAŁO {2}
+P:FIND THE SHIELD: {1} AHEAD	ZNAJDŹ TARCZĘ: {1} PRZED TOBĄ
+P:FIND THE SHIELD: {1} BEHIND	ZNAJDŹ TARCZĘ: {1} ZA TOBĄ
+P:FIND THE SHIELD: {1} TO THE LEFT	ZNAJDŹ TARCZĘ: {1} PO LEWEJ
+P:FIND THE SHIELD: {1} TO THE RIGHT	ZNAJDŹ TARCZĘ: {1} PO PRAWEJ
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ZNAJDŹ TARCZĘ   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	GRACZ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NAJSILNIEJSZY CIOS
+P:CLUB BLOWS / SWINGS	CIOSY / ZAMACHY MACZUGĄ
+P:DAMAGE DEALT / TAKEN	OBRAŻENIA ZADANE / OTRZYMANE
+P:FASTEST KNOCKOUT	NAJSZYBSZY NOKAUT
+P:MOST DAMAGE IN A MATCH	NAJWIĘCEJ OBRAŻEŃ W MECZU
+P:ROCKS AND LOGS ON TARGET	CELNE GŁAZY I PNIE
+P:SMASHES ({1}+)	POTĘŻNE CIOSY ({1}+)
+P:TROLL BATTLE RECORDS	REKORDY BITWY TROLLI
+P:TROLL BATTLE RESULTS	WYNIKI BITWY TROLLI
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Restart meczu: BACK (Backspace / Tab) lub kliknij
+L:Restart Round: Y (the I key) or click this line	Restart rundy: Y (klawisz I) lub kliknij tę linię
+L:P2 Teleport: ON	Teleport P2: WŁ.
+L:P2 Teleport: OFF	Teleport P2: WYŁ.
+L:Turn it off: Y (the I key) or click this note	Wyłącz: Y (klawisz I) lub kliknij tę notkę
+L:Turn it on: Y (the I key) or click this note	Włącz: Y (klawisz I) lub kliknij tę notkę
+L:IMPOSSIBLE	NIEMOŻLIWY
+L:Harder than Expert: any enemy's second blow fells you	Trudniejszy niż Ekspert: drugi cios dowolnego wroga cię powala
+L:Achievement earned	Zdobyto osiągnięcie
+L:DIAMOND ACHIEVEMENT EARNED	ZDOBYTO DIAMENTOWE OSIĄGNIĘCIE
+L:The Last Alliance	Ostatni Sojusz
+L:Win the prologue on the slopes of Mount Doom.	Wygraj prolog na zboczach Góry Przeznaczenia.
+L:Fire on Weathertop	Ogień na Wichrowym Czubie
+L:Drive the Ringwraiths from Weathertop.	Przepędź Upiory Pierścienia z Wichrowego Czuba.
+L:Speak Friend	Powiedz „przyjaciel”
+L:Escape the Watcher at the Gates of Moria.	Umknij Strażnikowi w Wodzie u Wrót Morii.
+L:Drums in the Deep	Bębny w głębinach
+L:Fight your way out of Balin's Tomb.	Wywalcz sobie drogę z Grobowca Balina.
+L:Breaking of the Fellowship	Rozbicie Drużyny
+L:Stand against the Uruk-hai at Amon Hen.	Stań do walki z Uruk-hai na Amon Hen.
+L:Into the Forest	W głąb lasu
+L:Get through Fangorn Forest.	Przejdź przez Las Fangorn.
+L:Riders of Rohan	Jeźdźcy Rohanu
+L:Win the battle on the Plains of Rohan.	Wygraj bitwę na Równinach Rohanu.
+L:The Burning of the Westfold	Pożoga Zachodniej Bruzdy
+L:Save the villages of the Westfold.	Ocal wioski Zachodniej Bruzdy.
+L:Wolves on the Road	Wilki na drodze
+L:Reach Helm's Deep along the road.	Dotrzyj drogą do Helmowego Jaru.
+L:The Deeping Wall	Mur Helmowy
+L:Hold the Deeping Wall.	Utrzymaj Mur Helmowy.
+L:The Wall Is Breached	Mur przełamany
+L:Fight on when the wall is breached.	Walcz dalej, gdy mur zostanie przełamany.
+L:The Hornburg Holds	Rogaty Gród się trzyma
+L:Defend the Hornburg's courtyard to the dawn.	Broń dziedzińca Rogatego Grodu aż do świtu.
+L:The Two Towers	Dwie wieże
+L:Win every level of the story.	Wygraj każdy poziom fabuły.
+L:The Tower of Orthanc	Wieża Orthanku
+L:Win the secret mission at Orthanc.	Wygraj tajną misję w Orthanku.
+L:Ranger of the North	Strażnik z Północy
+L:Win a level as Aragorn.	Wygraj poziom jako Aragorn.
+L:Prince of Mirkwood	Książę Mrocznej Puszczy
+L:Win a level as Legolas.	Wygraj poziom jako Legolas.
+L:Son of Gloin	Syn Glóina
+L:Win a level as Gimli.	Wygraj poziom jako Gimli.
+L:Heir of Elendil	Dziedzic Elendila
+L:Win a level after the prologue as Isildur.	Wygraj poziom po prologu jako Isildur.
+L:The Three Hunters	Trzej Łowcy
+L:Win levels as Aragorn, Legolas and Gimli.	Wygraj poziomy jako Aragorn, Legolas i Gimli.
+L:An Unexpected Ally	Niespodziewany sojusznik
+L:Win a level as one of the extra heroes.	Wygraj poziom jako jeden z dodatkowych bohaterów.
+L:A Fellowship Remade	Drużyna odrodzona
+L:Unlock every extra hero.	Odblokuj wszystkich dodatkowych bohaterów.
+L:Seasoned Warrior	Zaprawiony wojownik
+L:Bring a hero to level 5.	Rozwiń bohatera do poziomu 5.
+L:Legend of the Third Age	Legenda Trzeciej Ery
+L:Bring a hero to level 10.	Rozwiń bohatera do poziomu 10.
+L:Side by Side	Ramię w ramię
+L:Win a level in co-op.	Wygraj poziom w kooperacji.
+L:Shoulder to Shoulder	Bark w bark
+L:Hold the Deeping Wall in co-op.	Utrzymaj Mur Helmowy w kooperacji.
+L:First Blood	Pierwsza krew
+L:Win a round of Versus.	Wygraj rundę w trybie Versus.
+L:Champion of the Arena	Mistrz areny
+L:Win a Deathmatch.	Wygraj Deathmatch.
+L:Untouched	Nietknięty
+L:Win a round of Versus without taking a blow.	Wygraj rundę Versus, nie przyjmując ani jednego ciosu.
+L:Last Breath	Ostatni oddech
+L:Win a round of Versus with less than a tenth of your health left.	Wygraj rundę Versus, mając mniej niż jedną dziesiątą zdrowia.
+L:Bearer of the Shield	Niosący tarczę
+L:Win a match of Find the Shield.	Wygraj mecz w trybie Znajdź tarczę.
+L:The Black Breath	Czarne Tchnienie
+L:Win a Versus match as the Nazgul.	Wygraj mecz Versus jako Nazgûl.
+L:Iron and Leather	Żelazo i skóra
+L:Win a Versus match as the Shield Orc.	Wygraj mecz Versus jako Ork z tarczą.
+L:Third Marshal of the Riddermark	Trzeci Marszałek Riddermarku
+L:Win a Versus match as Eomer.	Wygraj mecz Versus jako Éomer.
+L:Shield-breaker	Łamacz tarcz
+L:Break the Shield Orc's shield.	Rozbij tarczę Orka z tarczą.
+L:Unbroken Line	Nieprzerwana linia
+L:As player 1, win 5 Versus rounds in a row.	Jako gracz 1 wygraj 5 rund Versus z rzędu.
+L:The Challenger Rises	Pretendent rośnie w siłę
+L:As player 2, win 5 Versus rounds in a row.	Jako gracz 2 wygraj 5 rund Versus z rzędu.
+L:Get Back!	Precz!
+L:Knock your opponent back 50 times in Versus.	Odrzuć przeciwnika 50 razy w trybie Versus.
+L:Eagle Eye	Sokole oko
+L:Land 40 locked-on arrows on your opponent in Versus.	Traf przeciwnika 40 namierzonymi strzałami w trybie Versus.
+L:Scavenger	Zbieracz
+L:Take 30 pickups in Versus.	Zbierz 30 przedmiotów w trybie Versus.
+L:None Shall Pass	Nikt nie przejdzie
+L:Win a Versus match without losing a round.	Wygraj mecz Versus, nie przegrywając żadnej rundy.
+L:Against All Hope	Wbrew nadziei
+L:Win a Versus match after trailing by 3 rounds.	Wygraj mecz Versus po przegrywaniu trzema rundami.
+L:Veteran of the Arena	Weteran areny
+L:Win 100 Versus rounds in all.	Wygraj łącznie 100 rund Versus.
+L:Wanderer	Wędrowiec
+L:Win a Versus match on 8 different arenas.	Wygraj mecz Versus na 8 różnych arenach.
+L:Many Faces	Wiele twarzy
+L:Win a Versus match as 10 different heroes.	Wygraj mecz Versus 10 różnymi bohaterami.
+L:Troll Brawler	Trollowy zabijaka
+L:Win a Troll Battle match.	Wygraj mecz Bitwy trolli.
+L:Terror of Moria	Postrach Morii
+L:Win 3 Troll Battle matches.	Wygraj 3 mecze Bitwy trolli.
+L:Lord of the Deep	Władca Głębin
+L:Win 10 Troll Battle matches.	Wygraj 10 meczów Bitwy trolli.
+L:Thick Hide	Gruba skóra
+L:Win a Troll Battle match without losing a round.	Wygraj mecz Bitwy trolli, nie przegrywając żadnej rundy.
+L:Bone Crusher	Łamacz kości
+L:Land a single smash of 400 damage or more in Troll Battle.	Zadaj w Bitwie trolli jeden cios za 400 lub więcej obrażeń.
+L:Troll Rampage	Szał trolla
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Zadaj w Bitwie trolli łącznie 25 000 obrażeń we wszystkich meczach.
+L:Swift Bludgeon	Szybka pałka
+L:Win a Troll Battle round in under 20 seconds.	Wygraj rundę Bitwy trolli w mniej niż 20 sekund.
+L:Rock and Log	Głaz i pień
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Traf drugiego trolla 25 rzuconymi głazami lub pniami w Bitwie trolli.
+L:Orc-Slayer	Pogromca orków
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Zabij 25 orków i Uruk-hai podczas meczów Versus.
+L:Scourge of Isengard	Plaga Isengardu
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Zabij 150 orków i Uruk-hai podczas meczów Versus.
+L:War on Two Fronts	Wojna na dwa fronty
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Wygraj Deathmatch na wszystkich pięciu arenach z wrogami (Amon Hen, Fangorn, Równiny Rohanu, Wyłom w murze, Rogaty Gród).
+L:The White Hand	Biała Ręka
+L:Win 3 Versus matches as Saruman.	Wygraj 3 mecze Versus jako Saruman.
+L:Shepherd of the Trees	Pasterz Drzew
+L:Win 3 Versus matches as the Ent.	Wygraj 3 mecze Versus jako Ent.
+L:Captain of Isengard	Kapitan Isengardu
+L:Win 3 Versus matches as the Uruk Captain.	Wygraj 3 mecze Versus jako Kapitan Uruków.
+L:The Last Alliance Returns	Powrót Ostatniego Sojuszu
+L:Win 3 Versus matches as the Elven Warrior.	Wygraj 3 mecze Versus jako Elficki wojownik.
+L:Hunt Them Down	Wytropić ich
+L:Win 3 Versus matches as Lurtz.	Wygraj 3 mecze Versus jako Lurtz.
+L:The Dark Lord	Czarny Władca
+L:Win 3 Versus matches as Sauron.	Wygraj 3 mecze Versus jako Sauron.
+L:Servant of the Secret Fire	Sługa Tajemnego Ognia
+L:Win 3 Versus matches as Gandalf.	Wygraj 3 mecze Versus jako Gandalf.
+L:Lord of Rivendell	Władca Rivendell
+L:Win 3 Versus matches as Elrond.	Wygraj 3 mecze Versus jako Elrond.
+L:Captain of Gondor	Kapitan Gondoru
+L:Win 3 Versus matches as Boromir.	Wygraj 3 mecze Versus jako Boromir.
+L:Ring-bearer	Powiernik Pierścienia
+L:Win 3 Versus matches as Frodo.	Wygraj 3 mecze Versus jako Frodo.
+L:Blood Frenzy	Krwawy szał
+L:Win 3 Versus matches as the Berserker.	Wygraj 3 mecze Versus jako Berserker.
+L:Hurl the Stones	Ciskanie głazów
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Jako Ent traf przeciwnika 20 rzuconymi głazami w trybie Versus.
+L:Mirror Image	Lustrzane odbicie
+L:Win a match of first to 5 or more where both players are the same hero.	Wygraj mecz do 5 lub więcej wygranych, w którym obaj gracze mają tego samego bohatera.
+L:Defiance	Bunt
+L:Win a level on Impossible.	Wygraj poziom na trudności Niemożliwy.
+L:Hardened	Zahartowany
+L:Win 5 different levels on Impossible.	Wygraj 5 różnych poziomów na trudności Niemożliwy.
+L:DIAMOND: The Unbreakable	DIAMENT: Niezłomny
+L:Win every level of the story on Impossible. Very few ever will.	Wygraj każdy poziom fabuły na trudności Niemożliwy. Mało komu to się uda.

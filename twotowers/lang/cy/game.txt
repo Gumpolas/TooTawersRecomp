@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	YMLADDWR: CHWARAEWR {1}
 P:RELENTLESS: PLAYER {1}	DI-ILDIO: CHWARAEWR {1}
 P:Start Match	Dechrau Gornest
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROWND {1}   P{2} {3} - {4} P{5}
+P:Borderless	Heb ffin
+P:Exclusive	Unigryw
+P:Full Screen Res:	Cydraniad Sgrin Lawn:
+P:Mode:	Modd:
+P:Troll Battle	Brwydr Troliaid
+P:Reset P2 Controls	Ailosod Rheolaethau P2
+P:Berserker	Bersercer
+P:Cave Troll	Trol Ogof
+P:Uruk Captain	Capten Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Rhyfelwr Ellyll
+P:Ent	Ent
+P:Player 1: choose your hero	Chwaraewr 1: dewiswch eich arwr
+P:Player 2: waiting	Chwaraewr 2: yn aros
+P:Player 2: choose your hero	Chwaraewr 2: dewiswch eich arwr
+P:Player 1: {1}	Chwaraewr 1: {1}
+P:Player 2: {1}	Chwaraewr 2: {1}
+P:Player 2: {1} is Player 1's	Chwaraewr 2: mae {1} gan Chwaraewr 1
+P:Player 2: {1} not available	Chwaraewr 2: {1} ddim ar gael
+P:Ready. Press Continue to begin	Barod. Pwyswch Parhau i ddechrau
+P:Unavailable	Ddim ar gael
+P:Speed	Cyflymder
+P:Fierce	Ffyrnig
+P:Special	Arbennig
+P:Mixed	Cymysg
+P:P{1} STAB GUARD: {2} LEFT	AMDDIFFYN TRYWANU P{1}: {2} AR ÔL
+P:FIND THE SHIELD: {1} AHEAD	DOD O HYD I'R DARIAN: {1} O'CH BLAEN
+P:FIND THE SHIELD: {1} BEHIND	DOD O HYD I'R DARIAN: {1} Y TU ÔL
+P:FIND THE SHIELD: {1} TO THE LEFT	DOD O HYD I'R DARIAN: {1} I'R CHWITH
+P:FIND THE SHIELD: {1} TO THE RIGHT	DOD O HYD I'R DARIAN: {1} I'R DDE
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	DOD O HYD I'R DARIAN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	CHWARAEWR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ERGYD FWYAF
+P:CLUB BLOWS / SWINGS	TRAWIADAU / CHWIFIADAU PASTWN
+P:DAMAGE DEALT / TAKEN	NIWED A WNAED / A GAED
+P:FASTEST KNOCKOUT	LLORIAD CYFLYMAF
+P:MOST DAMAGE IN A MATCH	MWYAF O NIWED MEWN GORNEST
+P:ROCKS AND LOGS ON TARGET	CERRIG A BONION AR Y NOD
+P:SMASHES ({1}+)	ERGYDION ({1}+)
+P:TROLL BATTLE RECORDS	RECORDIAU BRWYDR TROLIAID
+P:TROLL BATTLE RESULTS	CANLYNIADAU BRWYDR TROLIAID
+P:P{1}	P{1}

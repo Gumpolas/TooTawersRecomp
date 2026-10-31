@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	PETARUNG: PEMAIN {1}
 P:RELENTLESS: PLAYER {1}	TAK KENAL AMPUN: PEMAIN {1}
 P:Start Match	Mulai Laga
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Tanpa Bingkai
+P:Exclusive	Eksklusif
+P:Full Screen Res:	Resolusi Layar Penuh:
+P:Mode:	Mode:
+P:Troll Battle	Laga Troll
+P:Reset P2 Controls	Atur Ulang Kontrol P2
+P:Berserker	Berserker
+P:Cave Troll	Troll Gua
+P:Uruk Captain	Kapten Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Prajurit Elf
+P:Ent	Ent
+P:Player 1: choose your hero	Pemain 1: pilih pahlawan Anda
+P:Player 2: waiting	Pemain 2: menunggu
+P:Player 2: choose your hero	Pemain 2: pilih pahlawan Anda
+P:Player 1: {1}	Pemain 1: {1}
+P:Player 2: {1}	Pemain 2: {1}
+P:Player 2: {1} is Player 1's	Pemain 2: {1} milik Pemain 1
+P:Player 2: {1} not available	Pemain 2: {1} tidak tersedia
+P:Ready. Press Continue to begin	Siap. Tekan Lanjutkan untuk mulai
+P:Unavailable	Tidak tersedia
+P:Speed	Cepat
+P:Fierce	Ganas
+P:Special	Spesial
+P:Mixed	Campuran
+P:P{1} STAB GUARD: {2} LEFT	P{1} PENANGKAL TUSUK: SISA {2}
+P:FIND THE SHIELD: {1} AHEAD	TEMUKAN TAMENG: {1} DI DEPAN
+P:FIND THE SHIELD: {1} BEHIND	TEMUKAN TAMENG: {1} DI BELAKANG
+P:FIND THE SHIELD: {1} TO THE LEFT	TEMUKAN TAMENG: {1} DI KIRI
+P:FIND THE SHIELD: {1} TO THE RIGHT	TEMUKAN TAMENG: {1} DI KANAN
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	TEMUKAN TAMENG   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	PEMAIN {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HANTAMAN TERKUAT
+P:CLUB BLOWS / SWINGS	PUKULAN GADA / AYUNAN
+P:DAMAGE DEALT / TAKEN	KERUSAKAN DIBERIKAN / DITERIMA
+P:FASTEST KNOCKOUT	KO TERCEPAT
+P:MOST DAMAGE IN A MATCH	KERUSAKAN TERBANYAK DALAM LAGA
+P:ROCKS AND LOGS ON TARGET	BATU DAN KAYU KENA SASARAN
+P:SMASHES ({1}+)	HANTAMAN ({1}+)
+P:TROLL BATTLE RECORDS	REKOR LAGA TROLL
+P:TROLL BATTLE RESULTS	HASIL LAGA TROLL
+P:P{1}	P{1}

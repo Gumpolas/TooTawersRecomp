@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	BORAC: IGRA {1}
 P:RELENTLESS: PLAYER {1}	NEUMOLJIV: IGRA {1}
 P:Start Match	Pokreni me
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. RUNDA   P{2} {3} - {4} P{5}
+P:Borderless	Bez obruba
+P:Exclusive	Ekskluzivno
+P:Full Screen Res:	Razlu. cijelog zasl.:
+P:Mode:	Nain:
+P:Troll Battle	Bitka trolova
+P:Reset P2 Controls	Vrati zadane kontrole P2
+P:Berserker	Berserker
+P:Cave Troll	piljski trol
+P:Uruk Captain	Kapetan Uruka
+P:Saruman	Saruman
+P:Elven Warrior	Vilenjaki ratnik
+P:Ent	Ent
+P:Player 1: choose your hero	Igra 1: odaberite junaka
+P:Player 2: waiting	Igra 2: eka
+P:Player 2: choose your hero	Igra 2: odaberite junaka
+P:Player 1: {1}	Igra 1: {1}
+P:Player 2: {1}	Igra 2: {1}
+P:Player 2: {1} is Player 1's	Igra 2: {1} je igraa 1
+P:Player 2: {1} not available	Igra 2: {1} nije dostupan
+P:Ready. Press Continue to begin	Spremno. Pritisnite Nastavi za poetak
+P:Unavailable	Nedostupno
+P:Speed	Brzi
+P:Fierce	estoki
+P:Special	Posebni
+P:Mixed	Mjeoviti
+P:P{1} STAB GUARD: {2} LEFT	P{1} OBRANA OD UBODA: JO {2}
+P:FIND THE SHIELD: {1} AHEAD	PRONAÐI TIT: {1} ISPRED
+P:FIND THE SHIELD: {1} BEHIND	PRONAÐI TIT: {1} IZA
+P:FIND THE SHIELD: {1} TO THE LEFT	PRONAÐI TIT: {1} LIJEVO
+P:FIND THE SHIELD: {1} TO THE RIGHT	PRONAÐI TIT: {1} DESNO
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	PRONAÐI TIT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	IGRA {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NAJJAI UDARAC
+P:CLUB BLOWS / SWINGS	UDARCI / ZAMASI TOLJAGOM
+P:DAMAGE DEALT / TAKEN	NANESENA / PRIMLJENA TETA
+P:FASTEST KNOCKOUT	NAJBRI NOKAUT
+P:MOST DAMAGE IN A MATCH	NAJVIE TETE U MEU
+P:ROCKS AND LOGS ON TARGET	POGOÐENO KAMENJEM I DEBLIMA
+P:SMASHES ({1}+)	TEKI UDARCI ({1}+)
+P:TROLL BATTLE RECORDS	REKORDI BITKE TROLOVA
+P:TROLL BATTLE RESULTS	REZULTATI BITKE TROLOVA
+P:P{1}	P{1}

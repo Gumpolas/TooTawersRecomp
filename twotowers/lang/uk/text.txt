@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	ЗАБІЯКА: ГРАВЕЦЬ {1}
 P:RELENTLESS: PLAYER {1}	НЕВБЛАГАННИЙ: ГРАВЕЦЬ {1}
 P:Start Match	Почати бій
 P:ROUND {1}   P{2} {3} - {4} P{5}	РАУНД {1}   P{2} {3} - {4} P{5}
+P:Borderless	Без рамки
+P:Exclusive	Ексклюзивний
+P:Full Screen Res:	Розд. повн. екрана:
+P:Mode:	Режим:
+P:Troll Battle	Битва тролів
+P:Reset P2 Controls	Скинути керування P2
+P:Berserker	Берсерк
+P:Cave Troll	Печерний троль
+P:Uruk Captain	Капітан урук-гаїв
+P:Saruman	Саруман
+P:Elven Warrior	Ельфійський воїн
+P:Ent	Ент
+P:Player 1: choose your hero	Гравець 1: оберіть героя
+P:Player 2: waiting	Гравець 2: очікування
+P:Player 2: choose your hero	Гравець 2: оберіть героя
+P:Player 1: {1}	Гравець 1: {1}
+P:Player 2: {1}	Гравець 2: {1}
+P:Player 2: {1} is Player 1's	Гравець 2: {1} уже в гравця 1
+P:Player 2: {1} not available	Гравець 2: {1} недоступний
+P:Ready. Press Continue to begin	Готово. Натисніть «Продовжити», щоб почати
+P:Unavailable	Недоступно
+P:Speed	Швидкість
+P:Fierce	Лютість
+P:Special	Особливе
+P:Mixed	Змішане
+P:P{1} STAB GUARD: {2} LEFT	P{1} ЗАХИСТ ВІД УКОЛІВ: ЛИШИЛОСЯ {2}
+P:FIND THE SHIELD: {1} AHEAD	ЗНАЙДИ ЩИТ: {1} ПОПЕРЕДУ
+P:FIND THE SHIELD: {1} BEHIND	ЗНАЙДИ ЩИТ: {1} ПОЗАДУ
+P:FIND THE SHIELD: {1} TO THE LEFT	ЗНАЙДИ ЩИТ: {1} ЛІВОРУЧ
+P:FIND THE SHIELD: {1} TO THE RIGHT	ЗНАЙДИ ЩИТ: {1} ПРАВОРУЧ
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ЗНАЙДИ ЩИТ   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	ГРАВЕЦЬ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	НАЙПОТУЖНІШИЙ УДАР
+P:CLUB BLOWS / SWINGS	УДАРИ ПАЛИЦЕЮ / ЗАМАХИ
+P:DAMAGE DEALT / TAKEN	ЗАВДАНА / ОТРИМАНА ШКОДА
+P:FASTEST KNOCKOUT	НАЙШВИДШИЙ НОКАУТ
+P:MOST DAMAGE IN A MATCH	НАЙБІЛЬШЕ ШКОДИ ЗА МАТЧ
+P:ROCKS AND LOGS ON TARGET	КАМЕНІ Й КОЛОДИ В ЦІЛЬ
+P:SMASHES ({1}+)	ПОТУЖНІ УДАРИ ({1}+)
+P:TROLL BATTLE RECORDS	РЕКОРДИ БИТВИ ТРОЛІВ
+P:TROLL BATTLE RESULTS	ПІДСУМКИ БИТВИ ТРОЛІВ
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Перезапуск матчу: BACK (Backspace / Tab) або клацання
+L:Restart Round: Y (the I key) or click this line	Перезапуск раунду: Y (клавіша I) або клацніть цей рядок
+L:P2 Teleport: ON	Телепорт P2: УВІМК.
+L:P2 Teleport: OFF	Телепорт P2: ВИМК.
+L:Turn it off: Y (the I key) or click this note	Вимкнути: Y (клавіша I) або клацніть цю нотатку
+L:Turn it on: Y (the I key) or click this note	Увімкнути: Y (клавіша I) або клацніть цю нотатку
+L:IMPOSSIBLE	НЕМОЖЛИВА
+L:Harder than Expert: any enemy's second blow fells you	Складніше за «Експерт»: другий удар будь-якого ворога збиває вас із ніг
+L:Achievement earned	Досягнення здобуто
+L:DIAMOND ACHIEVEMENT EARNED	ДІАМАНТОВЕ ДОСЯГНЕННЯ ЗДОБУТО
+L:The Last Alliance	Останній Союз
+L:Win the prologue on the slopes of Mount Doom.	Виграйте пролог на схилах Фатальної гори.
+L:Fire on Weathertop	Вогонь на Вітряній Вершині
+L:Drive the Ringwraiths from Weathertop.	Проженіть Примар Персня з Вітряної Вершини.
+L:Speak Friend	Скажи «друг»
+L:Escape the Watcher at the Gates of Moria.	Утечіть від Вартового біля Брами Морії.
+L:Drums in the Deep	Барабани в глибинах
+L:Fight your way out of Balin's Tomb.	Проб'йтеся з Гробниці Баліна.
+L:Breaking of the Fellowship	Розпад Братства
+L:Stand against the Uruk-hai at Amon Hen.	Вистійте проти урук-гаїв на Амон Гені.
+L:Into the Forest	До лісу
+L:Get through Fangorn Forest.	Пройдіть Ліс Фанґорн.
+L:Riders of Rohan	Вершники Рохану
+L:Win the battle on the Plains of Rohan.	Виграйте битву на Рівнинах Рохану.
+L:The Burning of the Westfold	Спалення Західної Лощини
+L:Save the villages of the Westfold.	Врятуйте села Західної Лощини.
+L:Wolves on the Road	Вовки на дорозі
+L:Reach Helm's Deep along the road.	Дістаньтеся дорогою до Гелмової Паді.
+L:The Deeping Wall	Мур Паді
+L:Hold the Deeping Wall.	Утримайте Мур Паді.
+L:The Wall Is Breached	Мур проламано
+L:Fight on when the wall is breached.	Бийтеся далі, коли мур проламано.
+L:The Hornburg Holds	Горнбург тримається
+L:Defend the Hornburg's courtyard to the dawn.	Захищайте двір Горнбурга до світанку.
+L:The Two Towers	Дві вежі
+L:Win every level of the story.	Пройдіть усі рівні сюжету.
+L:The Tower of Orthanc	Вежа Ортханк
+L:Win the secret mission at Orthanc.	Пройдіть секретну місію в Ортханку.
+L:Ranger of the North	Слідопит Півночі
+L:Win a level as Aragorn.	Пройдіть рівень за Арагорна.
+L:Prince of Mirkwood	Принц Лихолісся
+L:Win a level as Legolas.	Пройдіть рівень за Леголаса.
+L:Son of Gloin	Син Ґлоїна
+L:Win a level as Gimli.	Пройдіть рівень за Ґімлі.
+L:Heir of Elendil	Спадкоємець Еленділа
+L:Win a level after the prologue as Isildur.	Пройдіть рівень після прологу за Ісілдура.
+L:The Three Hunters	Три мисливці
+L:Win levels as Aragorn, Legolas and Gimli.	Пройдіть рівні за Арагорна, Леголаса й Ґімлі.
+L:An Unexpected Ally	Несподіваний союзник
+L:Win a level as one of the extra heroes.	Пройдіть рівень за одного з додаткових героїв.
+L:A Fellowship Remade	Братство відновлене
+L:Unlock every extra hero.	Відкрийте всіх додаткових героїв.
+L:Seasoned Warrior	Досвідчений воїн
+L:Bring a hero to level 5.	Доведіть героя до 5-го рівня.
+L:Legend of the Third Age	Легенда Третьої доби
+L:Bring a hero to level 10.	Доведіть героя до 10-го рівня.
+L:Side by Side	Пліч-о-пліч
+L:Win a level in co-op.	Пройдіть рівень у кооперативі.
+L:Shoulder to Shoulder	Плече до плеча
+L:Hold the Deeping Wall in co-op.	Утримайте Мур Паді в кооперативі.
+L:First Blood	Перша кров
+L:Win a round of Versus.	Виграйте раунд у режимі «Дуель».
+L:Champion of the Arena	Чемпіон арени
+L:Win a Deathmatch.	Виграйте бій на смерть.
+L:Untouched	Недоторканий
+L:Win a round of Versus without taking a blow.	Виграйте раунд «Дуелі», не отримавши жодного удару.
+L:Last Breath	Останній подих
+L:Win a round of Versus with less than a tenth of your health left.	Виграйте раунд «Дуелі», коли у вас лишилося менше десятої частини здоров'я.
+L:Bearer of the Shield	Носій щита
+L:Win a match of Find the Shield.	Виграйте матч у режимі «Знайди щит».
+L:The Black Breath	Чорний Подих
+L:Win a Versus match as the Nazgul.	Виграйте матч «Дуелі» за Назґула.
+L:Iron and Leather	Залізо і шкіра
+L:Win a Versus match as the Shield Orc.	Виграйте матч «Дуелі» за орка зі щитом.
+L:Third Marshal of the Riddermark	Третій маршал Ріддермарку
+L:Win a Versus match as Eomer.	Виграйте матч «Дуелі» за Еомера.
+L:Shield-breaker	Щитолам
+L:Break the Shield Orc's shield.	Розбийте щит орка зі щитом.
+L:Unbroken Line	Незламний стрій
+L:As player 1, win 5 Versus rounds in a row.	Гравцем 1 виграйте 5 раундів «Дуелі» поспіль.
+L:The Challenger Rises	Претендент повстає
+L:As player 2, win 5 Versus rounds in a row.	Гравцем 2 виграйте 5 раундів «Дуелі» поспіль.
+L:Get Back!	Назад!
+L:Knock your opponent back 50 times in Versus.	Відкиньте суперника 50 разів у «Дуелі».
+L:Eagle Eye	Орлине око
+L:Land 40 locked-on arrows on your opponent in Versus.	Влучте в суперника 40 стрілами з захопленням цілі в «Дуелі».
+L:Scavenger	Збирач
+L:Take 30 pickups in Versus.	Підберіть 30 предметів у «Дуелі».
+L:None Shall Pass	Ніхто не пройде
+L:Win a Versus match without losing a round.	Виграйте матч «Дуелі», не програвши жодного раунду.
+L:Against All Hope	Усупереч усякій надії
+L:Win a Versus match after trailing by 3 rounds.	Виграйте матч «Дуелі», відстаючи на 3 раунди.
+L:Veteran of the Arena	Ветеран арени
+L:Win 100 Versus rounds in all.	Виграйте загалом 100 раундів «Дуелі».
+L:Wanderer	Мандрівник
+L:Win a Versus match on 8 different arenas.	Виграйте матчі «Дуелі» на 8 різних аренах.
+L:Many Faces	Безліч облич
+L:Win a Versus match as 10 different heroes.	Виграйте матчі «Дуелі» за 10 різних героїв.
+L:Troll Brawler	Троль-забіяка
+L:Win a Troll Battle match.	Виграйте матч у «Битві тролів».
+L:Terror of Moria	Жах Морії
+L:Win 3 Troll Battle matches.	Виграйте 3 матчі в «Битві тролів».
+L:Lord of the Deep	Володар Глибин
+L:Win 10 Troll Battle matches.	Виграйте 10 матчів у «Битві тролів».
+L:Thick Hide	Товста шкура
+L:Win a Troll Battle match without losing a round.	Виграйте матч у «Битві тролів», не програвши жодного раунду.
+L:Bone Crusher	Костолом
+L:Land a single smash of 400 damage or more in Troll Battle.	Завдайте в «Битві тролів» одного удару на 400 шкоди або більше.
+L:Troll Rampage	Лють троля
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Завдайте 25 000 шкоди в «Битві тролів» за всі ваші матчі.
+L:Swift Bludgeon	Швидка палиця
+L:Win a Troll Battle round in under 20 seconds.	Виграйте раунд «Битви тролів» менш ніж за 20 секунд.
+L:Rock and Log	Камінь і колода
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Влучте в іншого троля 25 кинутими каменями чи колодами в «Битві тролів».
+L:Orc-Slayer	Винищувач орків
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Убийте 25 орків і урук-гаїв у матчах «Дуелі».
+L:Scourge of Isengard	Бич Ізенґарду
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Убийте 150 орків і урук-гаїв у матчах «Дуелі».
+L:War on Two Fronts	Війна на два фронти
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Виграйте бій на смерть на всіх п'яти аренах із ворогами (Амон Ген, Фанґорн, Рівнини Рохану, Проламаний мур, Горнбург).
+L:The White Hand	Біла Рука
+L:Win 3 Versus matches as Saruman.	Виграйте 3 матчі «Дуелі» за Сарумана.
+L:Shepherd of the Trees	Пастир дерев
+L:Win 3 Versus matches as the Ent.	Виграйте 3 матчі «Дуелі» за Ента.
+L:Captain of Isengard	Капітан Ізенґарду
+L:Win 3 Versus matches as the Uruk Captain.	Виграйте 3 матчі «Дуелі» за капітана урук-гаїв.
+L:The Last Alliance Returns	Повернення Останнього Союзу
+L:Win 3 Versus matches as the Elven Warrior.	Виграйте 3 матчі «Дуелі» за ельфійського воїна.
+L:Hunt Them Down	Вистежте їх
+L:Win 3 Versus matches as Lurtz.	Виграйте 3 матчі «Дуелі» за Лурца.
+L:The Dark Lord	Темний Володар
+L:Win 3 Versus matches as Sauron.	Виграйте 3 матчі «Дуелі» за Саурона.
+L:Servant of the Secret Fire	Слуга Таємного Вогню
+L:Win 3 Versus matches as Gandalf.	Виграйте 3 матчі «Дуелі» за Ґендальфа.
+L:Lord of Rivendell	Володар Рівенділу
+L:Win 3 Versus matches as Elrond.	Виграйте 3 матчі «Дуелі» за Елронда.
+L:Captain of Gondor	Капітан Ґондору
+L:Win 3 Versus matches as Boromir.	Виграйте 3 матчі «Дуелі» за Боромира.
+L:Ring-bearer	Персненосець
+L:Win 3 Versus matches as Frodo.	Виграйте 3 матчі «Дуелі» за Фродо.
+L:Blood Frenzy	Кривавий шал
+L:Win 3 Versus matches as the Berserker.	Виграйте 3 матчі «Дуелі» за берсерка.
+L:Hurl the Stones	Метайте каміння
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Граючи за Ента, влучте в суперника 20 кинутими каменями в «Дуелі».
+L:Mirror Image	Дзеркальний бій
+L:Win a match of first to 5 or more where both players are the same hero.	Виграйте матч до 5 або більше перемог, де обидва гравці грають одним героєм.
+L:Defiance	Непокора
+L:Win a level on Impossible.	Пройдіть рівень на складності «Неможлива».
+L:Hardened	Загартований
+L:Win 5 different levels on Impossible.	Пройдіть 5 різних рівнів на складності «Неможлива».
+L:DIAMOND: The Unbreakable	ДІАМАНТ: Незламний
+L:Win every level of the story on Impossible. Very few ever will.	Пройдіть усі рівні сюжету на складності «Неможлива». Мало кому це вдасться.

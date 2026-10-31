@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	格斗狂：玩家{1}
 P:RELENTLESS: PLAYER {1}	势不可挡：玩家{1}
 P:Start Match	开始对战
 P:ROUND {1}   P{2} {3} - {4} P{5}	第{1}回合   P{2} {3} - {4} P{5}
+P:Borderless	无边框
+P:Exclusive	独占
+P:Full Screen Res:	全屏分辨率：
+P:Mode:	模式：
+P:Troll Battle	巨魔大战
+P:Reset P2 Controls	重置P2操作
+P:Berserker	狂战士
+P:Cave Troll	洞穴巨魔
+P:Uruk Captain	强兽人队长
+P:Saruman	萨鲁曼
+P:Elven Warrior	精灵战士
+P:Ent	树人
+P:Player 1: choose your hero	玩家1：请选择英雄
+P:Player 2: waiting	玩家2：等待中
+P:Player 2: choose your hero	玩家2：请选择英雄
+P:Player 1: {1}	玩家1：{1}
+P:Player 2: {1}	玩家2：{1}
+P:Player 2: {1} is Player 1's	玩家2：{1}已被玩家1选择
+P:Player 2: {1} not available	玩家2：{1}不可用
+P:Ready. Press Continue to begin	准备就绪。按“继续”开始
+P:Unavailable	不可用
+P:Speed	迅捷
+P:Fierce	猛烈
+P:Special	特殊
+P:Mixed	混合
+P:P{1} STAB GUARD: {2} LEFT	P{1} 防刺护卫：剩余{2}
+P:FIND THE SHIELD: {1} AHEAD	寻找盾牌：前方{1}
+P:FIND THE SHIELD: {1} BEHIND	寻找盾牌：后方{1}
+P:FIND THE SHIELD: {1} TO THE LEFT	寻找盾牌：左方{1}
+P:FIND THE SHIELD: {1} TO THE RIGHT	寻找盾牌：右方{1}
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	寻找盾牌   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	玩家{1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	最强重击
+P:CLUB BLOWS / SWINGS	棒击命中 / 挥击
+P:DAMAGE DEALT / TAKEN	造成伤害 / 承受伤害
+P:FASTEST KNOCKOUT	最快击倒
+P:MOST DAMAGE IN A MATCH	单场最高伤害
+P:ROCKS AND LOGS ON TARGET	岩石与圆木命中
+P:SMASHES ({1}+)	重击次数（{1}+）
+P:TROLL BATTLE RECORDS	巨魔大战纪录
+P:TROLL BATTLE RESULTS	巨魔大战结果
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	重新开始比赛：BACK（Backspace / Tab）或点击
+L:Restart Round: Y (the I key) or click this line	重新开始回合：Y（I 键）或点击此行
+L:P2 Teleport: ON	P2传送：开
+L:P2 Teleport: OFF	P2传送：关
+L:Turn it off: Y (the I key) or click this note	关闭：Y（I 键）或点击此提示
+L:Turn it on: Y (the I key) or click this note	开启：Y（I 键）或点击此提示
+L:IMPOSSIBLE	不可能
+L:Harder than Expert: any enemy's second blow fells you	比专家更难：任何敌人的第二击就会将你击倒
+L:Achievement earned	达成成就
+L:DIAMOND ACHIEVEMENT EARNED	达成钻石成就
+L:The Last Alliance	最后联盟
+L:Win the prologue on the slopes of Mount Doom.	在末日火山山坡上赢得序章。
+L:Fire on Weathertop	风云顶之火
+L:Drive the Ringwraiths from Weathertop.	将戒灵逐出风云顶。
+L:Speak Friend	说出“朋友”
+L:Escape the Watcher at the Gates of Moria.	在墨瑞亚之门摆脱水中监视者。
+L:Drums in the Deep	地底鼓声
+L:Fight your way out of Balin's Tomb.	从巴林之墓杀出重围。
+L:Breaking of the Fellowship	护戒同盟分裂
+L:Stand against the Uruk-hai at Amon Hen.	在阿蒙汉迎战强兽人。
+L:Into the Forest	深入森林
+L:Get through Fangorn Forest.	穿越范贡森林。
+L:Riders of Rohan	洛汗骠骑
+L:Win the battle on the Plains of Rohan.	赢得洛汗平原之战。
+L:The Burning of the Westfold	西伏尔德烈焰
+L:Save the villages of the Westfold.	拯救西伏尔德的村庄。
+L:Wolves on the Road	路上群狼
+L:Reach Helm's Deep along the road.	沿路抵达海尔姆深谷。
+L:The Deeping Wall	深谷宽墙
+L:Hold the Deeping Wall.	守住深谷宽墙。
+L:The Wall Is Breached	城墙失守
+L:Fight on when the wall is breached.	城墙失守后继续奋战。
+L:The Hornburg Holds	号角堡屹立
+L:Defend the Hornburg's courtyard to the dawn.	守住号角堡庭院直到黎明。
+L:The Two Towers	双塔奇兵
+L:Win every level of the story.	赢得故事中的每一个关卡。
+L:The Tower of Orthanc	欧散克塔
+L:Win the secret mission at Orthanc.	赢得欧散克的秘密任务。
+L:Ranger of the North	北方游侠
+L:Win a level as Aragorn.	以阿拉贡赢得一个关卡。
+L:Prince of Mirkwood	黑森林王子
+L:Win a level as Legolas.	以莱戈拉斯赢得一个关卡。
+L:Son of Gloin	格罗因之子
+L:Win a level as Gimli.	以金雳赢得一个关卡。
+L:Heir of Elendil	埃兰迪尔的继承人
+L:Win a level after the prologue as Isildur.	在序章之后以伊西铎赢得一个关卡。
+L:The Three Hunters	三猎人
+L:Win levels as Aragorn, Legolas and Gimli.	分别以阿拉贡、莱戈拉斯和金雳赢得关卡。
+L:An Unexpected Ally	意外的盟友
+L:Win a level as one of the extra heroes.	以任一额外英雄赢得一个关卡。
+L:A Fellowship Remade	重组护戒同盟
+L:Unlock every extra hero.	解锁所有额外英雄。
+L:Seasoned Warrior	百战老兵
+L:Bring a hero to level 5.	将一名英雄提升至5级。
+L:Legend of the Third Age	第三纪元的传奇
+L:Bring a hero to level 10.	将一名英雄提升至10级。
+L:Side by Side	并肩作战
+L:Win a level in co-op.	在合作模式中赢得一个关卡。
+L:Shoulder to Shoulder	同仇敌忾
+L:Hold the Deeping Wall in co-op.	在合作模式中守住深谷宽墙。
+L:First Blood	首战告捷
+L:Win a round of Versus.	赢得一回合对战。
+L:Champion of the Arena	竞技场冠军
+L:Win a Deathmatch.	赢得一场死亡竞赛。
+L:Untouched	毫发无伤
+L:Win a round of Versus without taking a blow.	在未受任何攻击的情况下赢得一回合对战。
+L:Last Breath	最后一口气
+L:Win a round of Versus with less than a tenth of your health left.	在生命不足十分之一时赢得一回合对战。
+L:Bearer of the Shield	持盾者
+L:Win a match of Find the Shield.	赢得一场寻找盾牌比赛。
+L:The Black Breath	黑息
+L:Win a Versus match as the Nazgul.	以戒灵赢得一场对战比赛。
+L:Iron and Leather	铁与皮
+L:Win a Versus match as the Shield Orc.	以持盾半兽人赢得一场对战比赛。
+L:Third Marshal of the Riddermark	骠骑国第三元帅
+L:Win a Versus match as Eomer.	以伊奥梅尔赢得一场对战比赛。
+L:Shield-breaker	破盾者
+L:Break the Shield Orc's shield.	击碎持盾半兽人的盾牌。
+L:Unbroken Line	屹立不倒
+L:As player 1, win 5 Versus rounds in a row.	作为玩家1，在对战中连赢5个回合。
+L:The Challenger Rises	挑战者崛起
+L:As player 2, win 5 Versus rounds in a row.	作为玩家2，在对战中连赢5个回合。
+L:Get Back!	退后！
+L:Knock your opponent back 50 times in Versus.	在对战中将对手击退50次。
+L:Eagle Eye	鹰眼
+L:Land 40 locked-on arrows on your opponent in Versus.	在对战中用锁定的箭矢命中对手40次。
+L:Scavenger	拾荒者
+L:Take 30 pickups in Versus.	在对战中拾取30个补给。
+L:None Shall Pass	谁也别想通过
+L:Win a Versus match without losing a round.	在不输一回合的情况下赢得一场对战比赛。
+L:Against All Hope	绝境逢生
+L:Win a Versus match after trailing by 3 rounds.	在落后3回合后赢得一场对战比赛。
+L:Veteran of the Arena	竞技场老将
+L:Win 100 Versus rounds in all.	累计赢得100个对战回合。
+L:Wanderer	流浪者
+L:Win a Versus match on 8 different arenas.	在8个不同场地赢得对战比赛。
+L:Many Faces	千面
+L:Win a Versus match as 10 different heroes.	以10名不同英雄赢得对战比赛。
+L:Troll Brawler	巨魔斗士
+L:Win a Troll Battle match.	赢得一场巨魔大战比赛。
+L:Terror of Moria	墨瑞亚梦魇
+L:Win 3 Troll Battle matches.	赢得3场巨魔大战比赛。
+L:Lord of the Deep	地底之王
+L:Win 10 Troll Battle matches.	赢得10场巨魔大战比赛。
+L:Thick Hide	皮糙肉厚
+L:Win a Troll Battle match without losing a round.	在不输一回合的情况下赢得一场巨魔大战比赛。
+L:Bone Crusher	碎骨者
+L:Land a single smash of 400 damage or more in Troll Battle.	在巨魔大战中以单次重击造成400点或更高伤害。
+L:Troll Rampage	巨魔狂暴
+L:Deal 25,000 damage in Troll Battle, across all your matches.	在巨魔大战的所有比赛中累计造成25,000点伤害。
+L:Swift Bludgeon	迅捷重棒
+L:Win a Troll Battle round in under 20 seconds.	在20秒内赢得一回合巨魔大战。
+L:Rock and Log	岩石与圆木
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	在巨魔大战中用投掷的岩石或圆木命中另一只巨魔25次。
+L:Orc-Slayer	半兽人杀手
+L:Slay 25 orcs and Uruk-hai during Versus matches.	在对战比赛中击杀25个半兽人和强兽人。
+L:Scourge of Isengard	艾森加德之灾
+L:Slay 150 orcs and Uruk-hai during Versus matches.	在对战比赛中击杀150个半兽人和强兽人。
+L:War on Two Fronts	两线作战
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	在全部五个有敌人的场地（阿蒙汉、范贡、洛汗平原、城墙失守、号角堡）赢得死亡竞赛。
+L:The White Hand	白手
+L:Win 3 Versus matches as Saruman.	以萨鲁曼赢得3场对战比赛。
+L:Shepherd of the Trees	树木牧者
+L:Win 3 Versus matches as the Ent.	以树人赢得3场对战比赛。
+L:Captain of Isengard	艾森加德队长
+L:Win 3 Versus matches as the Uruk Captain.	以强兽人队长赢得3场对战比赛。
+L:The Last Alliance Returns	最后联盟重现
+L:Win 3 Versus matches as the Elven Warrior.	以精灵战士赢得3场对战比赛。
+L:Hunt Them Down	追猎到底
+L:Win 3 Versus matches as Lurtz.	以勒茨赢得3场对战比赛。
+L:The Dark Lord	黑暗魔君
+L:Win 3 Versus matches as Sauron.	以索伦赢得3场对战比赛。
+L:Servant of the Secret Fire	秘火的仆人
+L:Win 3 Versus matches as Gandalf.	以甘道夫赢得3场对战比赛。
+L:Lord of Rivendell	瑞文戴尔之主
+L:Win 3 Versus matches as Elrond.	以埃尔隆德赢得3场对战比赛。
+L:Captain of Gondor	刚铎统帅
+L:Win 3 Versus matches as Boromir.	以波罗米尔赢得3场对战比赛。
+L:Ring-bearer	持戒人
+L:Win 3 Versus matches as Frodo.	以佛罗多赢得3场对战比赛。
+L:Blood Frenzy	嗜血狂暴
+L:Win 3 Versus matches as the Berserker.	以狂战士赢得3场对战比赛。
+L:Hurl the Stones	投石
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	以树人在对战中用投掷的岩石命中对手20次。
+L:Mirror Image	镜像
+L:Win a match of first to 5 or more where both players are the same hero.	在双方使用同一英雄、先赢5局或以上的比赛中获胜。
+L:Defiance	不屈
+L:Win a level on Impossible.	在不可能难度下赢得一个关卡。
+L:Hardened	千锤百炼
+L:Win 5 different levels on Impossible.	在不可能难度下赢得5个不同关卡。
+L:DIAMOND: The Unbreakable	钻石：坚不可摧
+L:Win every level of the story on Impossible. Very few ever will.	在不可能难度下赢得故事中的每一个关卡。能做到的人寥寥无几。

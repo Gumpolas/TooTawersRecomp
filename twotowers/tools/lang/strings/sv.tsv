@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	SLAGSKÄMPE: SPELARE {1}
 P:RELENTLESS: PLAYER {1}	OBEVEKLIG: SPELARE {1}
 P:Start Match	Starta matchen
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROND {1}   P{2} {3} - {4} P{5}
+P:Borderless	Kantlös
+P:Exclusive	Exklusiv
+P:Full Screen Res:	Helskärmsuppl.:
+P:Mode:	Läge:
+P:Troll Battle	Trollstrid
+P:Reset P2 Controls	Återställ P2-kontroller
+P:Berserker	Bärsärk
+P:Cave Troll	Grottroll
+P:Uruk Captain	Uruk-kapten
+P:Saruman	Saruman
+P:Elven Warrior	Alvkrigare
+P:Ent	Ent
+P:Player 1: choose your hero	Spelare 1: välj din hjälte
+P:Player 2: waiting	Spelare 2: väntar
+P:Player 2: choose your hero	Spelare 2: välj din hjälte
+P:Player 1: {1}	Spelare 1: {1}
+P:Player 2: {1}	Spelare 2: {1}
+P:Player 2: {1} is Player 1's	Spelare 2: {1} tillhör Spelare 1
+P:Player 2: {1} not available	Spelare 2: {1} inte tillgänglig
+P:Ready. Press Continue to begin	Klart. Tryck på Fortsätt för att börja
+P:Unavailable	Ej tillgänglig
+P:Speed	Snabb
+P:Fierce	Våldsam
+P:Special	Special
+P:Mixed	Blandad
+P:P{1} STAB GUARD: {2} LEFT	P{1} STICKGARDE: {2} KVAR
+P:FIND THE SHIELD: {1} AHEAD	HITTA SKÖLDEN: {1} FRAMÅT
+P:FIND THE SHIELD: {1} BEHIND	HITTA SKÖLDEN: {1} BAKOM
+P:FIND THE SHIELD: {1} TO THE LEFT	HITTA SKÖLDEN: {1} TILL VÄNSTER
+P:FIND THE SHIELD: {1} TO THE RIGHT	HITTA SKÖLDEN: {1} TILL HÖGER
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	HITTA SKÖLDEN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPELARE {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HÅRDASTE SMÄLL
+P:CLUB BLOWS / SWINGS	KLUBBSLAG / SVINGAR
+P:DAMAGE DEALT / TAKEN	UTDELAD / MOTTAGEN SKADA
+P:FASTEST KNOCKOUT	SNABBASTE KNOCKOUT
+P:MOST DAMAGE IN A MATCH	MEST SKADA I EN MATCH
+P:ROCKS AND LOGS ON TARGET	STENAR OCH STOCKAR I MÅL
+P:SMASHES ({1}+)	SMÄLLAR ({1}+)
+P:TROLL BATTLE RECORDS	TROLLSTRIDSREKORD
+P:TROLL BATTLE RESULTS	TROLLSTRIDSRESULTAT
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Starta om matchen: BACK (Backspace / Tab) eller klicka
+L:Restart Round: Y (the I key) or click this line	Starta om ronden: Y (I-tangenten) eller klicka på raden
+L:P2 Teleport: ON	P2-teleport: PÅ
+L:P2 Teleport: OFF	P2-teleport: AV
+L:Turn it off: Y (the I key) or click this note	Stäng av: Y (I-tangenten) eller klicka på meddelandet
+L:Turn it on: Y (the I key) or click this note	Slå på: Y (I-tangenten) eller klicka på meddelandet
+L:IMPOSSIBLE	OMÖJLIG
+L:Harder than Expert: any enemy's second blow fells you	Svårare än Expert: varje fiendes andra slag fäller dig
+L:Achievement earned	Prestation upplåst
+L:DIAMOND ACHIEVEMENT EARNED	DIAMANTPRESTATION UPPLÅST
+L:The Last Alliance	Det sista förbundet
+L:Win the prologue on the slopes of Mount Doom.	Klara prologen på Domedagsbergets sluttningar.
+L:Fire on Weathertop	Eld på Väderklint
+L:Drive the Ringwraiths from Weathertop.	Driv bort ringvålnaderna från Väderklint.
+L:Speak Friend	Tala, vän
+L:Escape the Watcher at the Gates of Moria.	Fly från Vaktaren vid Morias portar.
+L:Drums in the Deep	Trummor i djupet
+L:Fight your way out of Balin's Tomb.	Slå dig ut ur Balins grav.
+L:Breaking of the Fellowship	Brödraskapets upplösning
+L:Stand against the Uruk-hai at Amon Hen.	Stå emot Uruk-hai vid Amon Hen.
+L:Into the Forest	In i skogen
+L:Get through Fangorn Forest.	Ta dig igenom Fangornskogen.
+L:Riders of Rohan	Rohans ryttare
+L:Win the battle on the Plains of Rohan.	Vinn slaget på Rohans slätter.
+L:The Burning of the Westfold	Västfoldens brand
+L:Save the villages of the Westfold.	Rädda Västfoldens byar.
+L:Wolves on the Road	Vargar på vägen
+L:Reach Helm's Deep along the road.	Nå Helms klyfta längs vägen.
+L:The Deeping Wall	Klyftmuren
+L:Hold the Deeping Wall.	Håll Klyftmuren.
+L:The Wall Is Breached	Muren är bruten
+L:Fight on when the wall is breached.	Kämpa vidare när muren har brutits.
+L:The Hornburg Holds	Hornborgen håller
+L:Defend the Hornburg's courtyard to the dawn.	Försvara Hornborgens borggård till gryningen.
+L:The Two Towers	De två tornen
+L:Win every level of the story.	Klara alla banor i berättelsen.
+L:The Tower of Orthanc	Orthancs torn
+L:Win the secret mission at Orthanc.	Klara det hemliga uppdraget i Orthanc.
+L:Ranger of the North	Nordens utbygdsjägare
+L:Win a level as Aragorn.	Klara en bana som Aragorn.
+L:Prince of Mirkwood	Prins av Mörkmården
+L:Win a level as Legolas.	Klara en bana som Legolas.
+L:Son of Gloin	Glóins son
+L:Win a level as Gimli.	Klara en bana som Gimli.
+L:Heir of Elendil	Elendils arvinge
+L:Win a level after the prologue as Isildur.	Klara en bana efter prologen som Isildur.
+L:The Three Hunters	De tre jägarna
+L:Win levels as Aragorn, Legolas and Gimli.	Klara banor som Aragorn, Legolas och Gimli.
+L:An Unexpected Ally	En oväntad bundsförvant
+L:Win a level as one of the extra heroes.	Klara en bana som en av de extra hjältarna.
+L:A Fellowship Remade	Ett nytt brödraskap
+L:Unlock every extra hero.	Lås upp alla extra hjältar.
+L:Seasoned Warrior	Erfaren krigare
+L:Bring a hero to level 5.	Ta en hjälte till nivå 5.
+L:Legend of the Third Age	Den tredje tidsålderns legend
+L:Bring a hero to level 10.	Ta en hjälte till nivå 10.
+L:Side by Side	Sida vid sida
+L:Win a level in co-op.	Klara en bana i co-op.
+L:Shoulder to Shoulder	Axel mot axel
+L:Hold the Deeping Wall in co-op.	Håll Klyftmuren i co-op.
+L:First Blood	Första blodet
+L:Win a round of Versus.	Vinn en rond i Versus.
+L:Champion of the Arena	Arenans mästare
+L:Win a Deathmatch.	Vinn en Deathmatch.
+L:Untouched	Oberörd
+L:Win a round of Versus without taking a blow.	Vinn en rond i Versus utan att ta ett enda slag.
+L:Last Breath	Sista andetaget
+L:Win a round of Versus with less than a tenth of your health left.	Vinn en rond i Versus med mindre än en tiondel av hälsan kvar.
+L:Bearer of the Shield	Sköldbäraren
+L:Win a match of Find the Shield.	Vinn en match i Hitta skölden.
+L:The Black Breath	Den svarta andedräkten
+L:Win a Versus match as the Nazgul.	Vinn en Versus-match som Nazgûl.
+L:Iron and Leather	Järn och läder
+L:Win a Versus match as the Shield Orc.	Vinn en Versus-match som Sköldorch.
+L:Third Marshal of the Riddermark	Riddermarkens tredje marsk
+L:Win a Versus match as Eomer.	Vinn en Versus-match som Éomer.
+L:Shield-breaker	Sköldkrossare
+L:Break the Shield Orc's shield.	Krossa sköldorchens sköld.
+L:Unbroken Line	Obruten linje
+L:As player 1, win 5 Versus rounds in a row.	Vinn 5 Versus-ronder i rad som spelare 1.
+L:The Challenger Rises	Utmanaren reser sig
+L:As player 2, win 5 Versus rounds in a row.	Vinn 5 Versus-ronder i rad som spelare 2.
+L:Get Back!	Tillbaka!
+L:Knock your opponent back 50 times in Versus.	Slå tillbaka motståndaren 50 gånger i Versus.
+L:Eagle Eye	Örnöga
+L:Land 40 locked-on arrows on your opponent in Versus.	Träffa motståndaren med 40 pilar med låst sikte i Versus.
+L:Scavenger	Asätare
+L:Take 30 pickups in Versus.	Plocka upp 30 föremål i Versus.
+L:None Shall Pass	Ingen ska passera
+L:Win a Versus match without losing a round.	Vinn en Versus-match utan att förlora en rond.
+L:Against All Hope	Mot allt hopp
+L:Win a Versus match after trailing by 3 rounds.	Vinn en Versus-match efter att ha legat 3 ronder under.
+L:Veteran of the Arena	Arenans veteran
+L:Win 100 Versus rounds in all.	Vinn totalt 100 Versus-ronder.
+L:Wanderer	Vandrare
+L:Win a Versus match on 8 different arenas.	Vinn en Versus-match på 8 olika arenor.
+L:Many Faces	Många ansikten
+L:Win a Versus match as 10 different heroes.	Vinn en Versus-match som 10 olika hjältar.
+L:Troll Brawler	Trollslagskämpe
+L:Win a Troll Battle match.	Vinn en match i Trollstrid.
+L:Terror of Moria	Morias skräck
+L:Win 3 Troll Battle matches.	Vinn 3 matcher i Trollstrid.
+L:Lord of the Deep	Djupets herre
+L:Win 10 Troll Battle matches.	Vinn 10 matcher i Trollstrid.
+L:Thick Hide	Tjock hud
+L:Win a Troll Battle match without losing a round.	Vinn en match i Trollstrid utan att förlora en rond.
+L:Bone Crusher	Benkrossare
+L:Land a single smash of 400 damage or more in Troll Battle.	Dela ut en enda smäll på 400 skada eller mer i Trollstrid.
+L:Troll Rampage	Trollraseri
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Dela ut 25 000 skada i Trollstrid, sammanlagt över alla dina matcher.
+L:Swift Bludgeon	Snabb klubba
+L:Win a Troll Battle round in under 20 seconds.	Vinn en rond i Trollstrid på under 20 sekunder.
+L:Rock and Log	Sten och stock
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Träffa det andra trollet med 25 kastade stenar eller stockar i Trollstrid.
+L:Orc-Slayer	Orchdräpare
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Dräp 25 orcher och Uruk-hai under Versus-matcher.
+L:Scourge of Isengard	Isengards gissel
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Dräp 150 orcher och Uruk-hai under Versus-matcher.
+L:War on Two Fronts	Krig på två fronter
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Vinn en Deathmatch på alla fem arenor med fiender (Amon Hen, Fangorn, Rohans slätter, Den brutna muren, Hornborgen).
+L:The White Hand	Den vita handen
+L:Win 3 Versus matches as Saruman.	Vinn 3 Versus-matcher som Saruman.
+L:Shepherd of the Trees	Trädens herde
+L:Win 3 Versus matches as the Ent.	Vinn 3 Versus-matcher som Ent.
+L:Captain of Isengard	Isengards kapten
+L:Win 3 Versus matches as the Uruk Captain.	Vinn 3 Versus-matcher som Uruk-kapten.
+L:The Last Alliance Returns	Det sista förbundet återvänder
+L:Win 3 Versus matches as the Elven Warrior.	Vinn 3 Versus-matcher som Alvkrigare.
+L:Hunt Them Down	Jaga dem
+L:Win 3 Versus matches as Lurtz.	Vinn 3 Versus-matcher som Lurtz.
+L:The Dark Lord	Mörkrets herre
+L:Win 3 Versus matches as Sauron.	Vinn 3 Versus-matcher som Sauron.
+L:Servant of the Secret Fire	Den hemliga eldens tjänare
+L:Win 3 Versus matches as Gandalf.	Vinn 3 Versus-matcher som Gandalf.
+L:Lord of Rivendell	Vattnadals herre
+L:Win 3 Versus matches as Elrond.	Vinn 3 Versus-matcher som Elrond.
+L:Captain of Gondor	Gondors kapten
+L:Win 3 Versus matches as Boromir.	Vinn 3 Versus-matcher som Boromir.
+L:Ring-bearer	Ringbäraren
+L:Win 3 Versus matches as Frodo.	Vinn 3 Versus-matcher som Frodo.
+L:Blood Frenzy	Blodsrus
+L:Win 3 Versus matches as the Berserker.	Vinn 3 Versus-matcher som Bärsärk.
+L:Hurl the Stones	Slunga stenarna
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Träffa som Ent motståndaren med 20 kastade stenar i Versus.
+L:Mirror Image	Spegelbild
+L:Win a match of first to 5 or more where both players are the same hero.	Vinn en match först till 5 eller mer där båda spelarna är samma hjälte.
+L:Defiance	Trots
+L:Win a level on Impossible.	Klara en bana på Omöjlig.
+L:Hardened	Härdad
+L:Win 5 different levels on Impossible.	Klara 5 olika banor på Omöjlig.
+L:DIAMOND: The Unbreakable	DIAMANT: Den obrytbare
+L:Win every level of the story on Impossible. Very few ever will.	Klara alla banor i berättelsen på Omöjlig. Mycket få kommer någonsin att göra det.

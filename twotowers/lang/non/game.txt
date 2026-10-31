@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	ÓEIRÐARMAÐR: LEIKMAÐR {1}
 P:RELENTLESS: PLAYER {1}	ÓÞREYTANDI: LEIKMAÐR {1}
 P:Start Match	Hefja leik
 P:ROUND {1}   P{2} {3} - {4} P{5}	LOTA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Rammalauss
+P:Exclusive	Einráðr
+P:Full Screen Res:	Upplausn alls skjás:
+P:Mode:	Háttr:
+P:Troll Battle	Trollabardagi
+P:Reset P2 Controls	Endrstilla P2 stjórn
+P:Berserker	Berserkr
+P:Cave Troll	Hellistroll
+P:Uruk Captain	Uruk-foringi
+P:Saruman	Saruman
+P:Elven Warrior	Álfakappi
+P:Ent	Ent
+P:Player 1: choose your hero	Leikmaðr 1: vel kappa þinn
+P:Player 2: waiting	Leikmaðr 2: bíðr
+P:Player 2: choose your hero	Leikmaðr 2: vel kappa þinn
+P:Player 1: {1}	Leikmaðr 1: {1}
+P:Player 2: {1}	Leikmaðr 2: {1}
+P:Player 2: {1} is Player 1's	Leikmaðr 2: {1} er Leikmanns 1
+P:Player 2: {1} not available	Leikmaðr 2: {1} eigi tiltækr
+P:Ready. Press Continue to begin	Búit. Þrýst á Áfram til at byrja
+P:Unavailable	Ótiltækr
+P:Speed	Hraði
+P:Fierce	Grimmr
+P:Special	Sérstakr
+P:Mixed	Blandaðr
+P:P{1} STAB GUARD: {2} LEFT	P{1} LAGVRN: {2} EPTIR
+P:FIND THE SHIELD: {1} AHEAD	FINN SKJLDINN: {1} FRAMUNDAN
+P:FIND THE SHIELD: {1} BEHIND	FINN SKJLDINN: {1} APTAN VIÐ
+P:FIND THE SHIELD: {1} TO THE LEFT	FINN SKJLDINN: {1} TIL VINSTRI
+P:FIND THE SHIELD: {1} TO THE RIGHT	FINN SKJLDINN: {1} TIL HÆGRI
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FINN SKJLDINN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	LEIKMAÐR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	MESTA HGG
+P:CLUB BLOWS / SWINGS	KYLFUHGG / SVEIFLUR
+P:DAMAGE DEALT / TAKEN	SKAÐI GRR / ÞOLAÐR
+P:FASTEST KNOCKOUT	SKJÓTASTA FELLING
+P:MOST DAMAGE IN A MATCH	MESTR SKAÐI Í LEIK
+P:ROCKS AND LOGS ON TARGET	STEINAR OK BOLIR Í MARK
+P:SMASHES ({1}+)	HGG ({1}+)
+P:TROLL BATTLE RECORDS	MET TROLLABARDAGA
+P:TROLL BATTLE RESULTS	ÚRSLIT TROLLABARDAGA
+P:P{1}	P{1}

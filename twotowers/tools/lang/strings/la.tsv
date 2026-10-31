@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	RIXATOR: LUSOR {1}
 P:RELENTLESS: PLAYER {1}	INDEFESSUS: LUSOR {1}
 P:Start Match	Pugnam incipere
 P:ROUND {1}   P{2} {3} - {4} P{5}	CERTAMEN {1}   P{2} {3} - {4} P{5}
+P:Borderless	Sine margine
+P:Exclusive	Exclusivum
+P:Full Screen Res:	Resolutio quadri pleni:
+P:Mode:	Modus:
+P:Troll Battle	Proelium Trollorum
+P:Reset P2 Controls	P2 Moderamina reficere
+P:Berserker	Furibundus
+P:Cave Troll	Trollus Cavernae
+P:Uruk Captain	Dux Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Bellator Elfus
+P:Ent	Ent
+P:Player 1: choose your hero	Lusor 1: heroem elige
+P:Player 2: waiting	Lusor 2: exspectat
+P:Player 2: choose your hero	Lusor 2: heroem elige
+P:Player 1: {1}	Lusor 1: {1}
+P:Player 2: {1}	Lusor 2: {1}
+P:Player 2: {1} is Player 1's	Lusor 2: {1} Lusoris 1 est
+P:Player 2: {1} not available	Lusor 2: {1} non praesto est
+P:Ready. Press Continue to begin	Paratus. Preme Perge ut incipias
+P:Unavailable	Non praesto
+P:Speed	Celeritas
+P:Fierce	Ferox
+P:Special	Singularis
+P:Mixed	Mixtus
+P:P{1} STAB GUARD: {2} LEFT	P{1} CUSTODIA ICTUUM: {2} RELIQUAE
+P:FIND THE SHIELD: {1} AHEAD	INVENI SCUTUM: {1} ANTE
+P:FIND THE SHIELD: {1} BEHIND	INVENI SCUTUM: {1} POST
+P:FIND THE SHIELD: {1} TO THE LEFT	INVENI SCUTUM: {1} AD LAEVAM
+P:FIND THE SHIELD: {1} TO THE RIGHT	INVENI SCUTUM: {1} AD DEXTRAM
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	INVENI SCUTUM   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	LUSOR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ICTUS MAXIMUS
+P:CLUB BLOWS / SWINGS	ICTUS / VIBRATIONES CLAVAE
+P:DAMAGE DEALT / TAKEN	DAMNUM ILLATUM / ACCEPTUM
+P:FASTEST KNOCKOUT	DEIECTIO CELERRIMA
+P:MOST DAMAGE IN A MATCH	PLURIMUM DAMNI IN PUGNA
+P:ROCKS AND LOGS ON TARGET	SAXA ET TRABES IN SCOPO
+P:SMASHES ({1}+)	ICTUS ({1}+)
+P:TROLL BATTLE RECORDS	FASTI PROELII TROLLORUM
+P:TROLL BATTLE RESULTS	EXITUS PROELII TROLLORUM
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Pugnam iterare: BACK (Backspace / Tab) aut preme
+L:Restart Round: Y (the I key) or click this line	Certamen iterare: Y (clavis I) aut preme hunc versum
+L:P2 Teleport: ON	P2 Transvectio: ACCENSA
+L:P2 Teleport: OFF	P2 Transvectio: EXSTINCTA
+L:Turn it off: Y (the I key) or click this note	Exstingue: Y (clavis I) aut preme hanc notam
+L:Turn it on: Y (the I key) or click this note	Accende: Y (clavis I) aut preme hanc notam
+L:IMPOSSIBLE	IMPOSSIBILIS
+L:Harder than Expert: any enemy's second blow fells you	Difficilior quam Peritus: secundus cuiusvis hostis ictus te prosternit
+L:Achievement earned	Res gesta parta
+L:DIAMOND ACHIEVEMENT EARNED	RES GESTA ADAMANTINA PARTA
+L:The Last Alliance	Ultimum Foedus
+L:Win the prologue on the slopes of Mount Doom.	Prologum in clivis Montis Fati vince.
+L:Fire on Weathertop	Ignis in Weathertop
+L:Drive the Ringwraiths from Weathertop.	Spectra Anuli ex Weathertop expelle.
+L:Speak Friend	Dic, Amice
+L:Escape the Watcher at the Gates of Moria.	Custodem ad Portas Moria effuge.
+L:Drums in the Deep	Tympana in Profundo
+L:Fight your way out of Balin's Tomb.	Pugnando e Sepulcro Balin evade.
+L:Breaking of the Fellowship	Sodalitatis Dissolutio
+L:Stand against the Uruk-hai at Amon Hen.	Contra Uruk-hai ad Amon Hen consiste.
+L:Into the Forest	In Silvam
+L:Get through Fangorn Forest.	Silvam Fangorn transi.
+L:Riders of Rohan	Equites Rohan
+L:Win the battle on the Plains of Rohan.	Proelium in Campis Rohan vince.
+L:The Burning of the Westfold	Incendium Westfold
+L:Save the villages of the Westfold.	Vicos Westfold serva.
+L:Wolves on the Road	Lupi in Via
+L:Reach Helm's Deep along the road.	Per viam ad Helm's Deep perveni.
+L:The Deeping Wall	Murus Profundi
+L:Hold the Deeping Wall.	Murum Profundi tene.
+L:The Wall Is Breached	Murus Perruptus Est
+L:Fight on when the wall is breached.	Perge pugnare cum murus perrumpitur.
+L:The Hornburg Holds	Hornburg Resistit
+L:Defend the Hornburg's courtyard to the dawn.	Atrium Hornburg ad lucem defende.
+L:The Two Towers	Duae Turres
+L:Win every level of the story.	Omnes gradus fabulae vince.
+L:The Tower of Orthanc	Turris Orthanc
+L:Win the secret mission at Orthanc.	Munus arcanum ad Orthanc vince.
+L:Ranger of the North	Explorator Septentrionis
+L:Win a level as Aragorn.	Gradum ut Aragorn vince.
+L:Prince of Mirkwood	Princeps Silvae Obscurae
+L:Win a level as Legolas.	Gradum ut Legolas vince.
+L:Son of Gloin	Filius Gloin
+L:Win a level as Gimli.	Gradum ut Gimli vince.
+L:Heir of Elendil	Heres Elendil
+L:Win a level after the prologue as Isildur.	Gradum post prologum ut Isildur vince.
+L:The Three Hunters	Tres Venatores
+L:Win levels as Aragorn, Legolas and Gimli.	Gradus ut Aragorn, Legolas et Gimli vince.
+L:An Unexpected Ally	Socius Inopinatus
+L:Win a level as one of the extra heroes.	Gradum ut unus ex heroibus additis vince.
+L:A Fellowship Remade	Sodalitas Renovata
+L:Unlock every extra hero.	Omnes heroes additos resera.
+L:Seasoned Warrior	Bellator Exercitatus
+L:Bring a hero to level 5.	Heroem ad gradum 5 perduc.
+L:Legend of the Third Age	Fama Aetatis Tertiae
+L:Bring a hero to level 10.	Heroem ad gradum 10 perduc.
+L:Side by Side	Latus ad Latus
+L:Win a level in co-op.	Gradum in Societate vince.
+L:Shoulder to Shoulder	Umerus ad Umerum
+L:Hold the Deeping Wall in co-op.	Murum Profundi in Societate tene.
+L:First Blood	Primus Sanguis
+L:Win a round of Versus.	Certamen modi Contra vince.
+L:Champion of the Arena	Victor Arenae
+L:Win a Deathmatch.	Pugnam ad mortem vince.
+L:Untouched	Intactus
+L:Win a round of Versus without taking a blow.	Certamen modi Contra sine ullo ictu accepto vince.
+L:Last Breath	Ultimus Spiritus
+L:Win a round of Versus with less than a tenth of your health left.	Certamen modi Contra vince cum minus decima parte valetudinis reliqua.
+L:Bearer of the Shield	Scutifer
+L:Win a match of Find the Shield.	Pugnam modi Inveni scutum vince.
+L:The Black Breath	Halitus Niger
+L:Win a Versus match as the Nazgul.	Pugnam modi Contra ut Nazgul vince.
+L:Iron and Leather	Ferrum et Corium
+L:Win a Versus match as the Shield Orc.	Pugnam modi Contra ut Orcus Scutatus vince.
+L:Third Marshal of the Riddermark	Marescalcus Tertius Marcae Equitum
+L:Win a Versus match as Eomer.	Pugnam modi Contra ut Eomer vince.
+L:Shield-breaker	Fractor Scutorum
+L:Break the Shield Orc's shield.	Scutum Orci Scutati frange.
+L:Unbroken Line	Acies Infracta
+L:As player 1, win 5 Versus rounds in a row.	Ut lusor 1, 5 certamina modi Contra continua vince.
+L:The Challenger Rises	Provocator Surgit
+L:As player 2, win 5 Versus rounds in a row.	Ut lusor 2, 5 certamina modi Contra continua vince.
+L:Get Back!	Recede!
+L:Knock your opponent back 50 times in Versus.	Adversarium tuum 50 vicibus in modo Contra repelle.
+L:Eagle Eye	Oculus Aquilae
+L:Land 40 locked-on arrows on your opponent in Versus.	Adversarium tuum 40 sagittis directis in modo Contra feri.
+L:Scavenger	Collector
+L:Take 30 pickups in Versus.	30 remedia in modo Contra cape.
+L:None Shall Pass	Nemo Transibit
+L:Win a Versus match without losing a round.	Pugnam modi Contra sine certamine amisso vince.
+L:Against All Hope	Contra Omnem Spem
+L:Win a Versus match after trailing by 3 rounds.	Pugnam modi Contra vince postquam 3 certaminibus inferior fuisti.
+L:Veteran of the Arena	Veteranus Arenae
+L:Win 100 Versus rounds in all.	100 certamina modi Contra in summa vince.
+L:Wanderer	Peregrinator
+L:Win a Versus match on 8 different arenas.	Pugnam modi Contra in 8 arenis diversis vince.
+L:Many Faces	Multae Facies
+L:Win a Versus match as 10 different heroes.	Pugnam modi Contra cum 10 heroibus diversis vince.
+L:Troll Brawler	Rixator Trollus
+L:Win a Troll Battle match.	Pugnam Proelii Trollorum vince.
+L:Terror of Moria	Terror Moria
+L:Win 3 Troll Battle matches.	3 pugnas Proelii Trollorum vince.
+L:Lord of the Deep	Dominus Profundi
+L:Win 10 Troll Battle matches.	10 pugnas Proelii Trollorum vince.
+L:Thick Hide	Corium Crassum
+L:Win a Troll Battle match without losing a round.	Pugnam Proelii Trollorum sine certamine amisso vince.
+L:Bone Crusher	Ossifragus
+L:Land a single smash of 400 damage or more in Troll Battle.	Unum ictum 400 damni vel plus in Proelio Trollorum infer.
+L:Troll Rampage	Furor Trolli
+L:Deal 25,000 damage in Troll Battle, across all your matches.	25,000 damni in Proelio Trollorum infer, per omnes pugnas tuas.
+L:Swift Bludgeon	Clava Velox
+L:Win a Troll Battle round in under 20 seconds.	Certamen Proelii Trollorum infra 20 secunda vince.
+L:Rock and Log	Saxum et Trabs
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Alterum trollum 25 saxis aut trabibus iactis in Proelio Trollorum feri.
+L:Orc-Slayer	Orcicida
+L:Slay 25 orcs and Uruk-hai during Versus matches.	25 orcos et Uruk-hai in pugnis modi Contra neca.
+L:Scourge of Isengard	Flagellum Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	150 orcos et Uruk-hai in pugnis modi Contra neca.
+L:War on Two Fronts	Bellum in Duabus Frontibus
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Pugnam ad mortem in omnibus quinque arenis cum hostibus vince (Amon Hen, Fangorn, Campi Rohan, Murus Perruptus, Hornburg).
+L:The White Hand	Manus Alba
+L:Win 3 Versus matches as Saruman.	3 pugnas modi Contra ut Saruman vince.
+L:Shepherd of the Trees	Pastor Arborum
+L:Win 3 Versus matches as the Ent.	3 pugnas modi Contra ut Ent vince.
+L:Captain of Isengard	Dux Isengard
+L:Win 3 Versus matches as the Uruk Captain.	3 pugnas modi Contra ut Dux Uruk vince.
+L:The Last Alliance Returns	Ultimum Foedus Redit
+L:Win 3 Versus matches as the Elven Warrior.	3 pugnas modi Contra ut Bellator Elfus vince.
+L:Hunt Them Down	Persequere Eos
+L:Win 3 Versus matches as Lurtz.	3 pugnas modi Contra ut Lurtz vince.
+L:The Dark Lord	Dominus Tenebrarum
+L:Win 3 Versus matches as Sauron.	3 pugnas modi Contra ut Sauron vince.
+L:Servant of the Secret Fire	Minister Ignis Arcani
+L:Win 3 Versus matches as Gandalf.	3 pugnas modi Contra ut Gandalf vince.
+L:Lord of Rivendell	Dominus Rivendell
+L:Win 3 Versus matches as Elrond.	3 pugnas modi Contra ut Elrond vince.
+L:Captain of Gondor	Dux Gondor
+L:Win 3 Versus matches as Boromir.	3 pugnas modi Contra ut Boromir vince.
+L:Ring-bearer	Anulifer
+L:Win 3 Versus matches as Frodo.	3 pugnas modi Contra ut Frodo vince.
+L:Blood Frenzy	Furor Sanguinis
+L:Win 3 Versus matches as the Berserker.	3 pugnas modi Contra ut Furibundus vince.
+L:Hurl the Stones	Saxa Iace
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Ut Ent, adversarium tuum 20 saxis iactis in modo Contra feri.
+L:Mirror Image	Imago Speculi
+L:Win a match of first to 5 or more where both players are the same hero.	Pugnam ad 5 vel plures victorias vince ubi ambo lusores idem heros sunt.
+L:Defiance	Contumacia
+L:Win a level on Impossible.	Gradum in Impossibili vince.
+L:Hardened	Duratus
+L:Win 5 different levels on Impossible.	5 gradus diversos in Impossibili vince.
+L:DIAMOND: The Unbreakable	ADAMAS: Infrangibilis
+L:Win every level of the story on Impossible. Very few ever will.	Omnes gradus fabulae in Impossibili vince. Paucissimi umquam vincent.

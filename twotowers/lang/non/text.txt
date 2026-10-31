@@ -1837,3 +1837,198 @@ P:BRAWLER: PLAYER {1}	ÓEIRÐARMAÐR: LEIKMAÐR {1}
 P:RELENTLESS: PLAYER {1}	ÓÞREYTANDI: LEIKMAÐR {1}
 P:Start Match	Hefja leik
 P:ROUND {1}   P{2} {3} - {4} P{5}	LOTA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Rammalauss
+P:Exclusive	Einráðr
+P:Full Screen Res:	Upplausn alls skjás:
+P:Mode:	Háttr:
+P:Troll Battle	Trollabardagi
+P:Reset P2 Controls	Endrstilla P2 stjórn
+P:Berserker	Berserkr
+P:Cave Troll	Hellistroll
+P:Uruk Captain	Uruk-foringi
+P:Saruman	Saruman
+P:Elven Warrior	Álfakappi
+P:Ent	Ent
+P:Player 1: choose your hero	Leikmaðr 1: vel kappa þinn
+P:Player 2: waiting	Leikmaðr 2: bíðr
+P:Player 2: choose your hero	Leikmaðr 2: vel kappa þinn
+P:Player 1: {1}	Leikmaðr 1: {1}
+P:Player 2: {1}	Leikmaðr 2: {1}
+P:Player 2: {1} is Player 1's	Leikmaðr 2: {1} er Leikmanns 1
+P:Player 2: {1} not available	Leikmaðr 2: {1} eigi tiltækr
+P:Ready. Press Continue to begin	Búit. Þrýst á Áfram til at byrja
+P:Unavailable	Ótiltækr
+P:Speed	Hraði
+P:Fierce	Grimmr
+P:Special	Sérstakr
+P:Mixed	Blandaðr
+P:P{1} STAB GUARD: {2} LEFT	P{1} LAGVǪRN: {2} EPTIR
+P:FIND THE SHIELD: {1} AHEAD	FINN SKJǪLDINN: {1} FRAMUNDAN
+P:FIND THE SHIELD: {1} BEHIND	FINN SKJǪLDINN: {1} APTAN VIÐ
+P:FIND THE SHIELD: {1} TO THE LEFT	FINN SKJǪLDINN: {1} TIL VINSTRI
+P:FIND THE SHIELD: {1} TO THE RIGHT	FINN SKJǪLDINN: {1} TIL HÆGRI
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FINN SKJǪLDINN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	LEIKMAÐR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	MESTA HǪGG
+P:CLUB BLOWS / SWINGS	KYLFUHǪGG / SVEIFLUR
+P:DAMAGE DEALT / TAKEN	SKAÐI GǪRR / ÞOLAÐR
+P:FASTEST KNOCKOUT	SKJÓTASTA FELLING
+P:MOST DAMAGE IN A MATCH	MESTR SKAÐI Í LEIK
+P:ROCKS AND LOGS ON TARGET	STEINAR OK BOLIR Í MARK
+P:SMASHES ({1}+)	HǪGG ({1}+)
+P:TROLL BATTLE RECORDS	MET TROLLABARDAGA
+P:TROLL BATTLE RESULTS	ÚRSLIT TROLLABARDAGA
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Hefja leik aptr: BACK (Backspace / Tab) eða smell
+L:Restart Round: Y (the I key) or click this line	Hefja lotu aptr: Y (I-lykillinn) eða smell á þessa línu
+L:P2 Teleport: ON	P2 Fjarflutningr: Á
+L:P2 Teleport: OFF	P2 Fjarflutningr: AF
+L:Turn it off: Y (the I key) or click this note	Slǫkk: Y (I-lykillinn) eða smell á þessa grein
+L:Turn it on: Y (the I key) or click this note	Kveik: Y (I-lykillinn) eða smell á þessa grein
+L:IMPOSSIBLE	ÓMǪGULEGT
+L:Harder than Expert: any enemy's second blow fells you	Harðara en Kunnátta: annat hǫgg hvers óvinar fellir þik
+L:Achievement earned	Afrek unnit
+L:DIAMOND ACHIEVEMENT EARNED	DEMANTSAFREK UNNIT
+L:The Last Alliance	Hit síðasta bandalag
+L:Win the prologue on the slopes of Mount Doom.	Vinn forleikinn í hlíðum Dómsfjalls.
+L:Fire on Weathertop	Eldr á Weathertop
+L:Drive the Ringwraiths from Weathertop.	Rek Hringvofurnar frá Weathertop.
+L:Speak Friend	Mæl, vinr
+L:Escape the Watcher at the Gates of Moria.	Flý Varðmanninn við Hlið Moria.
+L:Drums in the Deep	Bumbur í djúpinu
+L:Fight your way out of Balin's Tomb.	Berzk út ór Haugi Balins.
+L:Breaking of the Fellowship	Rof fǫruneytisins
+L:Stand against the Uruk-hai at Amon Hen.	Stand gegn Uruk-hai at Amon Hen.
+L:Into the Forest	Inn í skóginn
+L:Get through Fangorn Forest.	Kom gegnum Fangornsskóg.
+L:Riders of Rohan	Riddarar Rohan
+L:Win the battle on the Plains of Rohan.	Vinn orrostuna á Vǫllum Rohan.
+L:The Burning of the Westfold	Bruni Westfold
+L:Save the villages of the Westfold.	Bjarg þorpum Westfold.
+L:Wolves on the Road	Vargar á veginum
+L:Reach Helm's Deep along the road.	Kom til Helm's Deep eptir veginum.
+L:The Deeping Wall	Djúpsveggrinn
+L:Hold the Deeping Wall.	Halt Djúpsveggnum.
+L:The Wall Is Breached	Veggrinn er rofinn
+L:Fight on when the wall is breached.	Berzk áfram er veggrinn er rofinn.
+L:The Hornburg Holds	Hornburg heldr
+L:Defend the Hornburg's courtyard to the dawn.	Ver hlað Hornburg til dags.
+L:The Two Towers	Turnarnir tveir
+L:Win every level of the story.	Vinn hvert stig sǫgunnar.
+L:The Tower of Orthanc	Turninn Orthanc
+L:Win the secret mission at Orthanc.	Vinn leynisendiferðina at Orthanc.
+L:Ranger of the North	Landvǫrðr norðrsins
+L:Win a level as Aragorn.	Vinn stig sem Aragorn.
+L:Prince of Mirkwood	Konungsson Myrkviðar
+L:Win a level as Legolas.	Vinn stig sem Legolas.
+L:Son of Gloin	Sonr Glóins
+L:Win a level as Gimli.	Vinn stig sem Gimli.
+L:Heir of Elendil	Erfingi Elendils
+L:Win a level after the prologue as Isildur.	Vinn stig eptir forleikinn sem Isildur.
+L:The Three Hunters	Veiðimennirnir þrír
+L:Win levels as Aragorn, Legolas and Gimli.	Vinn stig sem Aragorn, Legolas ok Gimli.
+L:An Unexpected Ally	Óvæntr bandamaðr
+L:Win a level as one of the extra heroes.	Vinn stig sem einn aukakappanna.
+L:A Fellowship Remade	Fǫruneyti endrskapat
+L:Unlock every extra hero.	Opna hvern aukakappa.
+L:Seasoned Warrior	Reyndr kappi
+L:Bring a hero to level 5.	Kom kappa á stig 5.
+L:Legend of the Third Age	Saga þriðju aldar
+L:Bring a hero to level 10.	Kom kappa á stig 10.
+L:Side by Side	Hlið við hlið
+L:Win a level in co-op.	Vinn stig í samleik.
+L:Shoulder to Shoulder	Ǫxl við ǫxl
+L:Hold the Deeping Wall in co-op.	Halt Djúpsveggnum í samleik.
+L:First Blood	Fyrsta blóð
+L:Win a round of Versus.	Vinn lotu í Móti.
+L:Champion of the Arena	Kappi vallarins
+L:Win a Deathmatch.	Vinn Bardaga til bana.
+L:Untouched	Ósnortinn
+L:Win a round of Versus without taking a blow.	Vinn lotu í Móti án þess at fá hǫgg.
+L:Last Breath	Hinzti andi
+L:Win a round of Versus with less than a tenth of your health left.	Vinn lotu í Móti með minna en tíunda hluta heilsu þinnar eptir.
+L:Bearer of the Shield	Skjaldberi
+L:Win a match of Find the Shield.	Vinn leik í Finn skjǫldinn.
+L:The Black Breath	Hinn svarti andi
+L:Win a Versus match as the Nazgul.	Vinn Móti-leik sem Nazgul.
+L:Iron and Leather	Járn ok leðr
+L:Win a Versus match as the Shield Orc.	Vinn Móti-leik sem Skjaldorkr.
+L:Third Marshal of the Riddermark	Þriði marskálkr Riddaramerkr
+L:Win a Versus match as Eomer.	Vinn Móti-leik sem Eomer.
+L:Shield-breaker	Skjaldbrjótr
+L:Break the Shield Orc's shield.	Brjót skjǫld Skjaldorksins.
+L:Unbroken Line	Órofin fylking
+L:As player 1, win 5 Versus rounds in a row.	Sem leikmaðr 1, vinn 5 Móti-lotur í rǫð.
+L:The Challenger Rises	Áskorandinn rís
+L:As player 2, win 5 Versus rounds in a row.	Sem leikmaðr 2, vinn 5 Móti-lotur í rǫð.
+L:Get Back!	Aptr!
+L:Knock your opponent back 50 times in Versus.	Hrind andstæðingi þínum aptr 50 sinnum í Móti.
+L:Eagle Eye	Arnarauga
+L:Land 40 locked-on arrows on your opponent in Versus.	Hitt andstæðing þinn með 40 miðuðum ǫrum í Móti.
+L:Scavenger	Safnari
+L:Take 30 pickups in Versus.	Tak 30 fǫng í Móti.
+L:None Shall Pass	Engi skal fara hjá
+L:Win a Versus match without losing a round.	Vinn Móti-leik án þess at tapa lotu.
+L:Against All Hope	Gegn allri von
+L:Win a Versus match after trailing by 3 rounds.	Vinn Móti-leik eptir at hafa verit 3 lotum undir.
+L:Veteran of the Arena	Vígreyndr á vellinum
+L:Win 100 Versus rounds in all.	Vinn 100 Móti-lotur alls.
+L:Wanderer	Gangleri
+L:Win a Versus match on 8 different arenas.	Vinn Móti-leik á 8 ólíkum vǫllum.
+L:Many Faces	Mǫrg andlit
+L:Win a Versus match as 10 different heroes.	Vinn Móti-leik sem 10 ólíkir kappar.
+L:Troll Brawler	Áflogatroll
+L:Win a Troll Battle match.	Vinn leik í Trollabardaga.
+L:Terror of Moria	Ógn Moria
+L:Win 3 Troll Battle matches.	Vinn 3 leiki í Trollabardaga.
+L:Lord of the Deep	Dróttinn djúpsins
+L:Win 10 Troll Battle matches.	Vinn 10 leiki í Trollabardaga.
+L:Thick Hide	Þykk húð
+L:Win a Troll Battle match without losing a round.	Vinn leik í Trollabardaga án þess at tapa lotu.
+L:Bone Crusher	Beinbrjótr
+L:Land a single smash of 400 damage or more in Troll Battle.	Ger eitt hǫgg með 400 skaða eða meira í Trollabardaga.
+L:Troll Rampage	Trollaæði
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Ger 25,000 skaða í Trollabardaga, í ǫllum leikjum þínum.
+L:Swift Bludgeon	Skjót kylfa
+L:Win a Troll Battle round in under 20 seconds.	Vinn lotu í Trollabardaga á minna en 20 sekúndum.
+L:Rock and Log	Steinn ok bolr
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Lát 25 kastaða steina eða boli hæfa hitt trollit í Trollabardaga.
+L:Orc-Slayer	Orkabani
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Drep 25 orka ok Uruk-hai í Móti-leikjum.
+L:Scourge of Isengard	Plága Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Drep 150 orka ok Uruk-hai í Móti-leikjum.
+L:War on Two Fronts	Ófriðr á tvær hendr
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Vinn Bardaga til bana á ǫllum fimm vǫllum með óvinum (Amon Hen, Fangorn, Vellir Rohan, Rofni veggrinn, Hornburg).
+L:The White Hand	Hǫndin hvíta
+L:Win 3 Versus matches as Saruman.	Vinn 3 Móti-leiki sem Saruman.
+L:Shepherd of the Trees	Hirðir trjánna
+L:Win 3 Versus matches as the Ent.	Vinn 3 Móti-leiki sem Entinn.
+L:Captain of Isengard	Foringi Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Vinn 3 Móti-leiki sem Uruk-foringinn.
+L:The Last Alliance Returns	Hit síðasta bandalag snýr aptr
+L:Win 3 Versus matches as the Elven Warrior.	Vinn 3 Móti-leiki sem Álfakappinn.
+L:Hunt Them Down	Elt þá uppi
+L:Win 3 Versus matches as Lurtz.	Vinn 3 Móti-leiki sem Lurtz.
+L:The Dark Lord	Myrkradróttinn
+L:Win 3 Versus matches as Sauron.	Vinn 3 Móti-leiki sem Sauron.
+L:Servant of the Secret Fire	Þjónn hins leynda elds
+L:Win 3 Versus matches as Gandalf.	Vinn 3 Móti-leiki sem Gandalf.
+L:Lord of Rivendell	Dróttinn Rivendell
+L:Win 3 Versus matches as Elrond.	Vinn 3 Móti-leiki sem Elrond.
+L:Captain of Gondor	Foringi Gondor
+L:Win 3 Versus matches as Boromir.	Vinn 3 Móti-leiki sem Boromir.
+L:Ring-bearer	Hringberi
+L:Win 3 Versus matches as Frodo.	Vinn 3 Móti-leiki sem Frodo.
+L:Blood Frenzy	Blóðæði
+L:Win 3 Versus matches as the Berserker.	Vinn 3 Móti-leiki sem Berserkrinn.
+L:Hurl the Stones	Kasta steinunum
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Sem Entinn, hitt andstæðing þinn með 20 kastaðum steinum í Móti.
+L:Mirror Image	Spegilmynd
+L:Win a match of first to 5 or more where both players are the same hero.	Vinn leik upp á 5 eða fleiri þar sem báðir leikmenn eru sami kappi.
+L:Defiance	Þrjózka
+L:Win a level on Impossible.	Vinn stig á Ómǫgulegt.
+L:Hardened	Harðnaðr
+L:Win 5 different levels on Impossible.	Vinn 5 ólík stig á Ómǫgulegt.
+L:DIAMOND: The Unbreakable	DEMANTR: Hinn óbrjótanligi
+L:Win every level of the story on Impossible. Very few ever will.	Vinn hvert stig sǫgunnar á Ómǫgulegt. Fáir munu nǫkkru sinni.

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	FEOHTERE: PLEGERE {1}
 P:RELENTLESS: PLAYER {1}	UNWERIG: PLEGERE {1}
 P:Start Match	Onginn Camp
 P:ROUND {1}   P{2} {3} - {4} P{5}	GEFEOHT {1}   P{2} {3} - {4} P{5}
+P:Borderless	Rimleas
+P:Exclusive	Sundorlic
+P:Full Screen Res:	Ealscirmes Pricena Rim:
+P:Mode:	Wise:
+P:Troll Battle	Þyrsa Wig
+P:Reset P2 Controls	P2 Wealdas Edniwian
+P:Berserker	Berserc
+P:Cave Troll	Scræfþyrs
+P:Uruk Captain	Uruk Ealdor
+P:Saruman	Saruman
+P:Elven Warrior	Ælfcempa
+P:Ent	Ent
+P:Player 1: choose your hero	Plegere 1: ceos þinne hæleþ
+P:Player 2: waiting	Plegere 2: bidaþ
+P:Player 2: choose your hero	Plegere 2: ceos þinne hæleþ
+P:Player 1: {1}	Plegere 1: {1}
+P:Player 2: {1}	Plegere 2: {1}
+P:Player 2: {1} is Player 1's	Plegere 2: {1} is Plegeres 1
+P:Player 2: {1} not available	Plegere 2: {1} nis gearu
+P:Ready. Press Continue to begin	Gearu. Þring Forþ to onginnenne
+P:Unavailable	Ungearu
+P:Speed	Hrædnes
+P:Fierce	Reþe
+P:Special	Synderlic
+P:Mixed	Gemenged
+P:P{1} STAB GUARD: {2} LEFT	P{1} STICES WEARD: {2} TO LAFE
+P:FIND THE SHIELD: {1} AHEAD	FIND ÞONE SCYLD: {1} BEFORAN
+P:FIND THE SHIELD: {1} BEHIND	FIND ÞONE SCYLD: {1} BÆFTAN
+P:FIND THE SHIELD: {1} TO THE LEFT	FIND ÞONE SCYLD: {1} ON WINSTRE
+P:FIND THE SHIELD: {1} TO THE RIGHT	FIND ÞONE SCYLD: {1} ON SWIÞRE
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FIND ÞONE SCYLD   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	PLEGERE {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	MÆSTA SLEGE
+P:CLUB BLOWS / SWINGS	SAGLES SLEGAS / SWENGAS
+P:DAMAGE DEALT / TAKEN	DEMM GEDON / ÞROWOD
+P:FASTEST KNOCKOUT	HRÆDOSTE FELLUNG
+P:MOST DAMAGE IN A MATCH	MÆST DEMM ON ANUM CAMPE
+P:ROCKS AND LOGS ON TARGET	STANAS AND STOCCAS ON MEARCE
+P:SMASHES ({1}+)	SLEGAS ({1}+)
+P:TROLL BATTLE RECORDS	ÞYRSA WIGES GEMYND
+P:TROLL BATTLE RESULTS	ÞYRSA WIGES ENDUNGA
+P:P{1}	P{1}

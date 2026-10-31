@@ -1833,3 +1833,198 @@ P:BRAWLER: PLAYER {1}	المشاكس: اللاعب {1}
 P:RELENTLESS: PLAYER {1}	لا يرحم: اللاعب {1}
 P:Start Match	ابدأ المباراة
 P:ROUND {1}   P{2} {3} - {4} P{5}	الجولة {1}   P{2} {3} - {4} P{5}
+P:Borderless	بلا حواف
+P:Exclusive	حصري
+P:Full Screen Res:	دقة ملء الشاشة:
+P:Mode:	الوضع:
+P:Troll Battle	معركة الترول
+P:Reset P2 Controls	إعادة ضبط تحكم P2
+P:Berserker	الهائج
+P:Cave Troll	ترول الكهف
+P:Uruk Captain	قائد الأوروك
+P:Saruman	سارومان
+P:Elven Warrior	المحارب الإلفي
+P:Ent	الإنت
+P:Player 1: choose your hero	اللاعب 1: اختر بطلك
+P:Player 2: waiting	اللاعب 2: في الانتظار
+P:Player 2: choose your hero	اللاعب 2: اختر بطلك
+P:Player 1: {1}	اللاعب 1: {1}
+P:Player 2: {1}	اللاعب 2: {1}
+P:Player 2: {1} is Player 1's	اللاعب 2: {1} للاعب 1
+P:Player 2: {1} not available	اللاعب 2: {1} غير متاح
+P:Ready. Press Continue to begin	جاهز. اضغط متابعة للبدء
+P:Unavailable	غير متاح
+P:Speed	السرعة
+P:Fierce	الشراسة
+P:Special	خاص
+P:Mixed	مختلط
+P:P{1} STAB GUARD: {2} LEFT	صد الطعن P{1}: بقي {2}
+P:FIND THE SHIELD: {1} AHEAD	ابحث عن الدرع: {1} أمامك
+P:FIND THE SHIELD: {1} BEHIND	ابحث عن الدرع: {1} خلفك
+P:FIND THE SHIELD: {1} TO THE LEFT	ابحث عن الدرع: {1} إلى اليسار
+P:FIND THE SHIELD: {1} TO THE RIGHT	ابحث عن الدرع: {1} إلى اليمين
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ابحث عن الدرع   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	اللاعب {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	أقوى سحقة
+P:CLUB BLOWS / SWINGS	ضربات الهراوة / التلويحات
+P:DAMAGE DEALT / TAKEN	الضرر المُلحق / المُتلقى
+P:FASTEST KNOCKOUT	أسرع ضربة قاضية
+P:MOST DAMAGE IN A MATCH	أكبر ضرر في مباراة
+P:ROCKS AND LOGS ON TARGET	صخور وجذوع أصابت الهدف
+P:SMASHES ({1}+)	السحقات ({1}+)
+P:TROLL BATTLE RECORDS	سجلات معركة الترول
+P:TROLL BATTLE RESULTS	نتائج معركة الترول
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	إعادة المباراة: BACK (Backspace / Tab) أو انقر
+L:Restart Round: Y (the I key) or click this line	إعادة الجولة: Y (مفتاح I) أو انقر هذا السطر
+L:P2 Teleport: ON	انتقال P2: تشغيل
+L:P2 Teleport: OFF	انتقال P2: إيقاف
+L:Turn it off: Y (the I key) or click this note	لإيقافه: Y (مفتاح I) أو انقر هذه الملاحظة
+L:Turn it on: Y (the I key) or click this note	لتشغيله: Y (مفتاح I) أو انقر هذه الملاحظة
+L:IMPOSSIBLE	مستحيل
+L:Harder than Expert: any enemy's second blow fells you	أصعب من خبير: الضربة الثانية من أي عدو تسقطك
+L:Achievement earned	تم نيل إنجاز
+L:DIAMOND ACHIEVEMENT EARNED	تم نيل إنجاز ماسي
+L:The Last Alliance	التحالف الأخير
+L:Win the prologue on the slopes of Mount Doom.	فز بالمقدمة على منحدرات جبل الهلاك.
+L:Fire on Weathertop	نار على ويذرتوب
+L:Drive the Ringwraiths from Weathertop.	اطرد أشباح الخاتم من ويذرتوب.
+L:Speak Friend	قل صديق
+L:Escape the Watcher at the Gates of Moria.	اهرب من حارس الماء عند بوابات موريا.
+L:Drums in the Deep	طبول في الأعماق
+L:Fight your way out of Balin's Tomb.	شق طريقك إلى خارج ضريح بالين.
+L:Breaking of the Fellowship	تفكك الرفقة
+L:Stand against the Uruk-hai at Amon Hen.	اصمد أمام الأوروك هاي في آمون هين.
+L:Into the Forest	إلى الغابة
+L:Get through Fangorn Forest.	اعبر غابة فانغورن.
+L:Riders of Rohan	فرسان روهان
+L:Win the battle on the Plains of Rohan.	فز بالمعركة في سهول روهان.
+L:The Burning of the Westfold	حريق ويستفولد
+L:Save the villages of the Westfold.	أنقذ قرى ويستفولد.
+L:Wolves on the Road	ذئاب على الطريق
+L:Reach Helm's Deep along the road.	اسلك الطريق حتى تبلغ هيلمز ديب.
+L:The Deeping Wall	جدار ديبينغ
+L:Hold the Deeping Wall.	اصمد على جدار ديبينغ.
+L:The Wall Is Breached	اختُرق الجدار
+L:Fight on when the wall is breached.	واصل القتال حين يُخترق الجدار.
+L:The Hornburg Holds	هورنبرغ صامدة
+L:Defend the Hornburg's courtyard to the dawn.	دافع عن فناء هورنبرغ حتى الفجر.
+L:The Two Towers	البرجان
+L:Win every level of the story.	فز بكل مراحل القصة.
+L:The Tower of Orthanc	برج أورثانك
+L:Win the secret mission at Orthanc.	فز بالمهمة السرية في أورثانك.
+L:Ranger of the North	جوال الشمال
+L:Win a level as Aragorn.	فز بمرحلة بصفتك أراغورن.
+L:Prince of Mirkwood	أمير ميركوود
+L:Win a level as Legolas.	فز بمرحلة بصفتك ليغولاس.
+L:Son of Gloin	ابن غلوين
+L:Win a level as Gimli.	فز بمرحلة بصفتك غيملي.
+L:Heir of Elendil	وريث إلينديل
+L:Win a level after the prologue as Isildur.	فز بمرحلة بعد المقدمة بصفتك إيسيلدور.
+L:The Three Hunters	الصيادون الثلاثة
+L:Win levels as Aragorn, Legolas and Gimli.	فز بمراحل بصفتك أراغورن وليغولاس وغيملي.
+L:An Unexpected Ally	حليف غير متوقع
+L:Win a level as one of the extra heroes.	فز بمرحلة بصفتك أحد الأبطال الإضافيين.
+L:A Fellowship Remade	رفقة من جديد
+L:Unlock every extra hero.	افتح كل الأبطال الإضافيين.
+L:Seasoned Warrior	محارب متمرس
+L:Bring a hero to level 5.	ارفع بطلا إلى المستوى 5.
+L:Legend of the Third Age	أسطورة العصر الثالث
+L:Bring a hero to level 10.	ارفع بطلا إلى المستوى 10.
+L:Side by Side	جنبا إلى جنب
+L:Win a level in co-op.	فز بمرحلة في اللعب التعاوني.
+L:Shoulder to Shoulder	كتفا بكتف
+L:Hold the Deeping Wall in co-op.	اصمد على جدار ديبينغ في اللعب التعاوني.
+L:First Blood	الدم الأول
+L:Win a round of Versus.	فز بجولة مواجهة.
+L:Champion of the Arena	بطل الساحة
+L:Win a Deathmatch.	فز بقتال حتى الموت.
+L:Untouched	بلا خدش
+L:Win a round of Versus without taking a blow.	فز بجولة مواجهة دون أن تتلقى ضربة.
+L:Last Breath	النفس الأخير
+L:Win a round of Versus with less than a tenth of your health left.	فز بجولة مواجهة وقد بقي لك أقل من عشر صحتك.
+L:Bearer of the Shield	حامل الدرع
+L:Win a match of Find the Shield.	فز بمباراة ابحث عن الدرع.
+L:The Black Breath	النفس الأسود
+L:Win a Versus match as the Nazgul.	فز بمباراة مواجهة بصفتك النازغول.
+L:Iron and Leather	حديد وجلد
+L:Win a Versus match as the Shield Orc.	فز بمباراة مواجهة بصفتك أورك بدرع.
+L:Third Marshal of the Riddermark	المارشال الثالث للريدرمارك
+L:Win a Versus match as Eomer.	فز بمباراة مواجهة بصفتك إيومر.
+L:Shield-breaker	كاسر الدروع
+L:Break the Shield Orc's shield.	حطم درع الأورك بدرع.
+L:Unbroken Line	صف لا ينكسر
+L:As player 1, win 5 Versus rounds in a row.	بصفتك اللاعب 1، فز بـ5 جولات مواجهة متتالية.
+L:The Challenger Rises	المتحدي ينهض
+L:As player 2, win 5 Versus rounds in a row.	بصفتك اللاعب 2، فز بـ5 جولات مواجهة متتالية.
+L:Get Back!	تراجع!
+L:Knock your opponent back 50 times in Versus.	ادفع خصمك إلى الخلف 50 مرة في المواجهة.
+L:Eagle Eye	عين النسر
+L:Land 40 locked-on arrows on your opponent in Versus.	أصب خصمك بـ40 سهما مثبتة الهدف في المواجهة.
+L:Scavenger	جامع الغنائم
+L:Take 30 pickups in Versus.	التقط 30 عنصرا في المواجهة.
+L:None Shall Pass	لن يعبر أحد
+L:Win a Versus match without losing a round.	فز بمباراة مواجهة دون خسارة أي جولة.
+L:Against All Hope	على غير أمل
+L:Win a Versus match after trailing by 3 rounds.	فز بمباراة مواجهة بعد التأخر بـ3 جولات.
+L:Veteran of the Arena	مخضرم الساحة
+L:Win 100 Versus rounds in all.	فز بـ100 جولة مواجهة إجمالا.
+L:Wanderer	الهائم
+L:Win a Versus match on 8 different arenas.	فز بمباراة مواجهة في 8 ساحات مختلفة.
+L:Many Faces	وجوه كثيرة
+L:Win a Versus match as 10 different heroes.	فز بمباراة مواجهة بـ10 أبطال مختلفين.
+L:Troll Brawler	مصارع الترول
+L:Win a Troll Battle match.	فز بمباراة في معركة الترول.
+L:Terror of Moria	رعب موريا
+L:Win 3 Troll Battle matches.	فز بـ3 مباريات في معركة الترول.
+L:Lord of the Deep	سيد الأعماق
+L:Win 10 Troll Battle matches.	فز بـ10 مباريات في معركة الترول.
+L:Thick Hide	جلد سميك
+L:Win a Troll Battle match without losing a round.	فز بمباراة في معركة الترول دون خسارة أي جولة.
+L:Bone Crusher	ساحق العظام
+L:Land a single smash of 400 damage or more in Troll Battle.	سدد سحقة واحدة بضرر 400 أو أكثر في معركة الترول.
+L:Troll Rampage	هياج الترول
+L:Deal 25,000 damage in Troll Battle, across all your matches.	ألحق 25,000 ضرر في معركة الترول عبر كل مبارياتك.
+L:Swift Bludgeon	الهراوة السريعة
+L:Win a Troll Battle round in under 20 seconds.	فز بجولة في معركة الترول في أقل من 20 ثانية.
+L:Rock and Log	صخرة وجذع
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	أصب الترول الآخر بـ25 صخرة أو جذعا مقذوفا في معركة الترول.
+L:Orc-Slayer	قاتل الأورك
+L:Slay 25 orcs and Uruk-hai during Versus matches.	اقتل 25 من الأورك والأوروك هاي خلال مباريات المواجهة.
+L:Scourge of Isengard	بلاء آيزنغارد
+L:Slay 150 orcs and Uruk-hai during Versus matches.	اقتل 150 من الأورك والأوروك هاي خلال مباريات المواجهة.
+L:War on Two Fronts	حرب على جبهتين
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	فز بقتال حتى الموت في الساحات الخمس التي فيها أعداء (آمون هين، فانغورن، سهول روهان، الجدار المخترق، هورنبرغ).
+L:The White Hand	اليد البيضاء
+L:Win 3 Versus matches as Saruman.	فز بـ3 مباريات مواجهة بصفتك سارومان.
+L:Shepherd of the Trees	راعي الأشجار
+L:Win 3 Versus matches as the Ent.	فز بـ3 مباريات مواجهة بصفتك الإنت.
+L:Captain of Isengard	قائد آيزنغارد
+L:Win 3 Versus matches as the Uruk Captain.	فز بـ3 مباريات مواجهة بصفتك قائد الأوروك.
+L:The Last Alliance Returns	عودة التحالف الأخير
+L:Win 3 Versus matches as the Elven Warrior.	فز بـ3 مباريات مواجهة بصفتك المحارب الإلفي.
+L:Hunt Them Down	تعقبوهم
+L:Win 3 Versus matches as Lurtz.	فز بـ3 مباريات مواجهة بصفتك لورتز.
+L:The Dark Lord	سيد الظلام
+L:Win 3 Versus matches as Sauron.	فز بـ3 مباريات مواجهة بصفتك ساورون.
+L:Servant of the Secret Fire	خادم النار السرية
+L:Win 3 Versus matches as Gandalf.	فز بـ3 مباريات مواجهة بصفتك غاندالف.
+L:Lord of Rivendell	سيد ريفنديل
+L:Win 3 Versus matches as Elrond.	فز بـ3 مباريات مواجهة بصفتك إلروند.
+L:Captain of Gondor	قائد غوندور
+L:Win 3 Versus matches as Boromir.	فز بـ3 مباريات مواجهة بصفتك بورومير.
+L:Ring-bearer	حامل الخاتم
+L:Win 3 Versus matches as Frodo.	فز بـ3 مباريات مواجهة بصفتك فرودو.
+L:Blood Frenzy	سعار الدم
+L:Win 3 Versus matches as the Berserker.	فز بـ3 مباريات مواجهة بصفتك الهائج.
+L:Hurl the Stones	اقذف الحجارة
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	بصفتك الإنت، أصب خصمك بـ20 صخرة مقذوفة في المواجهة.
+L:Mirror Image	صورة المرآة
+L:Win a match of first to 5 or more where both players are the same hero.	فز بمباراة من 5 انتصارات أو أكثر يكون فيها اللاعبان البطل نفسه.
+L:Defiance	تحد
+L:Win a level on Impossible.	فز بمرحلة على مستوى مستحيل.
+L:Hardened	صلب العود
+L:Win 5 different levels on Impossible.	فز بـ5 مراحل مختلفة على مستوى مستحيل.
+L:DIAMOND: The Unbreakable	ماسي: الذي لا ينكسر
+L:Win every level of the story on Impossible. Very few ever will.	فز بكل مراحل القصة على مستوى مستحيل. قلة قليلة ستفعلها.

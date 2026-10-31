@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	VEREKEDŐ: {1}. JÁTÉKOS
 P:RELENTLESS: PLAYER {1}	KÖNYÖRTELEN: {1}. JÁTÉKOS
 P:Start Match	Meccs indítása
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. KÖR   P{2} {3} - {4} P{5}
+P:Borderless	Keret nélküli
+P:Exclusive	Kizárólagos
+P:Full Screen Res:	Teljes kép. felb.:
+P:Mode:	Mód:
+P:Troll Battle	Trollcsata
+P:Reset P2 Controls	P2 irányítás visszaállítása
+P:Berserker	Berzerker
+P:Cave Troll	Barlangi troll
+P:Uruk Captain	Uruk kapitány
+P:Saruman	Szarumán
+P:Elven Warrior	Tünde harcos
+P:Ent	Ent
+P:Player 1: choose your hero	1. játékos: válassz hőst
+P:Player 2: waiting	2. játékos: várakozik
+P:Player 2: choose your hero	2. játékos: válassz hőst
+P:Player 1: {1}	1. játékos: {1}
+P:Player 2: {1}	2. játékos: {1}
+P:Player 2: {1} is Player 1's	2. játékos: {1} az 1. játékosé
+P:Player 2: {1} not available	2. játékos: {1} nem elérhető
+P:Ready. Press Continue to begin	Kész. Indításhoz: Folytatás
+P:Unavailable	Nem elérhető
+P:Speed	Gyors
+P:Fierce	Heves
+P:Special	Különleges
+P:Mixed	Vegyes
+P:P{1} STAB GUARD: {2} LEFT	P{1} SZÚRÁSVÉDELEM: MÉG {2}
+P:FIND THE SHIELD: {1} AHEAD	KERESD A PAJZSOT: {1} ELŐTTED
+P:FIND THE SHIELD: {1} BEHIND	KERESD A PAJZSOT: {1} MÖGÖTTED
+P:FIND THE SHIELD: {1} TO THE LEFT	KERESD A PAJZSOT: {1} BALRA
+P:FIND THE SHIELD: {1} TO THE RIGHT	KERESD A PAJZSOT: {1} JOBBRA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	KERESD A PAJZSOT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	{1}. JÁTÉKOS +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	LEGNAGYOBB CSAPÁS
+P:CLUB BLOWS / SWINGS	BUZOGÁNYTALÁLAT / LENDÍTÉS
+P:DAMAGE DEALT / TAKEN	OKOZOTT / KAPOTT SEBZÉS
+P:FASTEST KNOCKOUT	LEGGYORSABB KIÜTÉS
+P:MOST DAMAGE IN A MATCH	LEGTÖBB SEBZÉS EGY MECCSEN
+P:ROCKS AND LOGS ON TARGET	TALÁLT SZIKLÁK ÉS RÖNKÖK
+P:SMASHES ({1}+)	CSAPÁSOK ({1}+)
+P:TROLL BATTLE RECORDS	TROLLCSATA REKORDOK
+P:TROLL BATTLE RESULTS	TROLLCSATA EREDMÉNYEK
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Meccs újrakezdése: BACK (Backspace / Tab) vagy kattints
+L:Restart Round: Y (the I key) or click this line	Kör újrakezdése: Y (az I billentyű) vagy kattints ide
+L:P2 Teleport: ON	P2 teleport: BE
+L:P2 Teleport: OFF	P2 teleport: KI
+L:Turn it off: Y (the I key) or click this note	Kikapcsolás: Y (az I billentyű) vagy kattints ide
+L:Turn it on: Y (the I key) or click this note	Bekapcsolás: Y (az I billentyű) vagy kattints ide
+L:IMPOSSIBLE	LEHETETLEN
+L:Harder than Expert: any enemy's second blow fells you	Nehezebb a Szakértőnél: bármely ellenség második csapása leterít
+L:Achievement earned	Teljesítmény megszerezve
+L:DIAMOND ACHIEVEMENT EARNED	GYÉMÁNT TELJESÍTMÉNY MEGSZEREZVE
+L:The Last Alliance	Az Utolsó Szövetség
+L:Win the prologue on the slopes of Mount Doom.	Nyerd meg a prológust a Végzet-hegy lejtőin.
+L:Fire on Weathertop	Tűz a Széltetőn
+L:Drive the Ringwraiths from Weathertop.	Űzd el a Gyűrűlidérceket a Széltetőről.
+L:Speak Friend	Mondd: barát
+L:Escape the Watcher at the Gates of Moria.	Menekülj a Víz Őrzője elől Mória kapuinál.
+L:Drums in the Deep	Dobok a mélyben
+L:Fight your way out of Balin's Tomb.	Harcold ki magad Balin sírjából.
+L:Breaking of the Fellowship	A Szövetség felbomlása
+L:Stand against the Uruk-hai at Amon Hen.	Állj ki az uruk-haiok ellen Amon Hennél.
+L:Into the Forest	Be az erdőbe
+L:Get through Fangorn Forest.	Juss át a Fangorn erdőn.
+L:Riders of Rohan	Rohan lovasai
+L:Win the battle on the Plains of Rohan.	Nyerd meg a csatát Rohan síkságain.
+L:The Burning of the Westfold	Nyugatvölgy lángjai
+L:Save the villages of the Westfold.	Mentsd meg Nyugatvölgy falvait.
+L:Wolves on the Road	Farkasok az úton
+L:Reach Helm's Deep along the road.	Érd el az úton a Helm-szurdokot.
+L:The Deeping Wall	A Szurdokfal
+L:Hold the Deeping Wall.	Tartsd meg a Szurdokfalat.
+L:The Wall Is Breached	A fal leomlott
+L:Fight on when the wall is breached.	Harcolj tovább, amikor a fal leomlik.
+L:The Hornburg Holds	A Kürtvár kitart
+L:Defend the Hornburg's courtyard to the dawn.	Védd a Kürtvár udvarát hajnalig.
+L:The Two Towers	A két torony
+L:Win every level of the story.	Nyerd meg a történet összes pályáját.
+L:The Tower of Orthanc	Orthanc tornya
+L:Win the secret mission at Orthanc.	Nyerd meg a titkos küldetést Orthancban.
+L:Ranger of the North	Északi kósza
+L:Win a level as Aragorn.	Nyerj meg egy pályát Aragornként.
+L:Prince of Mirkwood	Bakacsinerdő hercege
+L:Win a level as Legolas.	Nyerj meg egy pályát Legolasként.
+L:Son of Gloin	Glóin fia
+L:Win a level as Gimli.	Nyerj meg egy pályát Gimliként.
+L:Heir of Elendil	Elendil örököse
+L:Win a level after the prologue as Isildur.	Nyerj meg egy pályát a prológus után Isildurként.
+L:The Three Hunters	A három vadász
+L:Win levels as Aragorn, Legolas and Gimli.	Nyerj pályákat Aragornként, Legolasként és Gimliként.
+L:An Unexpected Ally	Váratlan szövetséges
+L:Win a level as one of the extra heroes.	Nyerj meg egy pályát az extra hősök egyikeként.
+L:A Fellowship Remade	Az újjáalakult Szövetség
+L:Unlock every extra hero.	Oldd fel az összes extra hőst.
+L:Seasoned Warrior	Edzett harcos
+L:Bring a hero to level 5.	Juttass el egy hőst az 5. szintre.
+L:Legend of the Third Age	A Harmadkor legendája
+L:Bring a hero to level 10.	Juttass el egy hőst a 10. szintre.
+L:Side by Side	Egymás mellett
+L:Win a level in co-op.	Nyerj meg egy pályát kooperatív módban.
+L:Shoulder to Shoulder	Vállvetve
+L:Hold the Deeping Wall in co-op.	Tartsd meg a Szurdokfalat kooperatív módban.
+L:First Blood	Első vér
+L:Win a round of Versus.	Nyerj meg egy Versus kört.
+L:Champion of the Arena	Az aréna bajnoka
+L:Win a Deathmatch.	Nyerj meg egy Deathmatchet.
+L:Untouched	Érintetlen
+L:Win a round of Versus without taking a blow.	Nyerj meg egy Versus kört úgy, hogy egy csapást sem kapsz.
+L:Last Breath	Utolsó lehelet
+L:Win a round of Versus with less than a tenth of your health left.	Nyerj meg egy Versus kört kevesebb mint egytized életerővel.
+L:Bearer of the Shield	A pajzs hordozója
+L:Win a match of Find the Shield.	Nyerj meg egy Keresd a pajzsot meccset.
+L:The Black Breath	A fekete lehelet
+L:Win a Versus match as the Nazgul.	Nyerj meg egy Versus meccset a Nazgûlként.
+L:Iron and Leather	Vas és bőr
+L:Win a Versus match as the Shield Orc.	Nyerj meg egy Versus meccset a Pajzsos orkként.
+L:Third Marshal of the Riddermark	A Riddermark harmadik marsallja
+L:Win a Versus match as Eomer.	Nyerj meg egy Versus meccset Éomerként.
+L:Shield-breaker	Pajzstörő
+L:Break the Shield Orc's shield.	Törd össze a Pajzsos ork pajzsát.
+L:Unbroken Line	Megtörhetetlen sor
+L:As player 1, win 5 Versus rounds in a row.	1. játékosként nyerj meg 5 Versus kört egymás után.
+L:The Challenger Rises	A kihívó felemelkedik
+L:As player 2, win 5 Versus rounds in a row.	2. játékosként nyerj meg 5 Versus kört egymás után.
+L:Get Back!	Hátra!
+L:Knock your opponent back 50 times in Versus.	Lökd hátra az ellenfeled 50-szer Versusban.
+L:Eagle Eye	Sasszem
+L:Land 40 locked-on arrows on your opponent in Versus.	Találd el az ellenfeled 40 célzott nyílvesszővel Versusban.
+L:Scavenger	Gyűjtögető
+L:Take 30 pickups in Versus.	Vegyél fel 30 tárgyat Versusban.
+L:None Shall Pass	Senki sem jut át
+L:Win a Versus match without losing a round.	Nyerj meg egy Versus meccset kör elvesztése nélkül.
+L:Against All Hope	Minden remény ellenére
+L:Win a Versus match after trailing by 3 rounds.	Nyerj meg egy Versus meccset 3 kör hátrányból.
+L:Veteran of the Arena	Az aréna veteránja
+L:Win 100 Versus rounds in all.	Nyerj meg összesen 100 Versus kört.
+L:Wanderer	Vándor
+L:Win a Versus match on 8 different arenas.	Nyerj Versus meccset 8 különböző arénán.
+L:Many Faces	Sok arc
+L:Win a Versus match as 10 different heroes.	Nyerj Versus meccset 10 különböző hőssel.
+L:Troll Brawler	Trollverekedő
+L:Win a Troll Battle match.	Nyerj meg egy Trollcsata meccset.
+L:Terror of Moria	Mória réme
+L:Win 3 Troll Battle matches.	Nyerj meg 3 Trollcsata meccset.
+L:Lord of the Deep	A Mélység ura
+L:Win 10 Troll Battle matches.	Nyerj meg 10 Trollcsata meccset.
+L:Thick Hide	Vastag bőr
+L:Win a Troll Battle match without losing a round.	Nyerj meg egy Trollcsata meccset kör elvesztése nélkül.
+L:Bone Crusher	Csonttörő
+L:Land a single smash of 400 damage or more in Troll Battle.	Mérj egyetlen legalább 400 sebzésű csapást a Trollcsatában.
+L:Troll Rampage	Trollámok
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Okozz összesen 25 000 sebzést a Trollcsatában az összes meccsed során.
+L:Swift Bludgeon	Gyors bunkó
+L:Win a Troll Battle round in under 20 seconds.	Nyerj meg egy Trollcsata kört 20 másodpercen belül.
+L:Rock and Log	Szikla és rönk
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Találd el a másik trollt 25 eldobott sziklával vagy rönkkel a Trollcsatában.
+L:Orc-Slayer	Orkölő
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Ölj meg 25 orkot és uruk-hait Versus meccsek során.
+L:Scourge of Isengard	Vasudvar csapása
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Ölj meg 150 orkot és uruk-hait Versus meccsek során.
+L:War on Two Fronts	Háború két fronton
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Nyerj Deathmatchet mind az öt ellenséges arénán (Amon Hen, Fangorn, Rohan síkságai, Áttört fal, Kürtvár).
+L:The White Hand	A Fehér Kéz
+L:Win 3 Versus matches as Saruman.	Nyerj meg 3 Versus meccset Szarumánként.
+L:Shepherd of the Trees	A fák pásztora
+L:Win 3 Versus matches as the Ent.	Nyerj meg 3 Versus meccset az Entként.
+L:Captain of Isengard	Vasudvar kapitánya
+L:Win 3 Versus matches as the Uruk Captain.	Nyerj meg 3 Versus meccset az Uruk kapitányként.
+L:The Last Alliance Returns	Az Utolsó Szövetség visszatér
+L:Win 3 Versus matches as the Elven Warrior.	Nyerj meg 3 Versus meccset a Tünde harcosként.
+L:Hunt Them Down	Vadásszátok le őket
+L:Win 3 Versus matches as Lurtz.	Nyerj meg 3 Versus meccset Lurtzként.
+L:The Dark Lord	A Sötét Úr
+L:Win 3 Versus matches as Sauron.	Nyerj meg 3 Versus meccset Szauronként.
+L:Servant of the Secret Fire	A Titkos Tűz szolgája
+L:Win 3 Versus matches as Gandalf.	Nyerj meg 3 Versus meccset Gandalfként.
+L:Lord of Rivendell	Völgyzugoly ura
+L:Win 3 Versus matches as Elrond.	Nyerj meg 3 Versus meccset Elrondként.
+L:Captain of Gondor	Gondor kapitánya
+L:Win 3 Versus matches as Boromir.	Nyerj meg 3 Versus meccset Boromirként.
+L:Ring-bearer	Gyűrűhordozó
+L:Win 3 Versus matches as Frodo.	Nyerj meg 3 Versus meccset Frodóként.
+L:Blood Frenzy	Vérszomj
+L:Win 3 Versus matches as the Berserker.	Nyerj meg 3 Versus meccset a Berzerkerként.
+L:Hurl the Stones	Kőhajítás
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Entként találd el az ellenfeled 20 eldobott sziklával Versusban.
+L:Mirror Image	Tükörkép
+L:Win a match of first to 5 or more where both players are the same hero.	Nyerj meg egy legalább 5 győzelemig tartó meccset, ahol mindkét játékos ugyanaz a hős.
+L:Defiance	Dac
+L:Win a level on Impossible.	Nyerj meg egy pályát Lehetetlen fokozaton.
+L:Hardened	Megedzett
+L:Win 5 different levels on Impossible.	Nyerj meg 5 különböző pályát Lehetetlen fokozaton.
+L:DIAMOND: The Unbreakable	GYÉMÁNT: A Megtörhetetlen
+L:Win every level of the story on Impossible. Very few ever will.	Nyerd meg a történet összes pályáját Lehetetlen fokozaton. Kevesen fogják valaha.

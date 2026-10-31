@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	SLÅSSKJEMPE: SPILLER {1}
 P:RELENTLESS: PLAYER {1}	UBØNNHØRLIG: SPILLER {1}
 P:Start Match	Start kamp
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Uten ramme
+P:Exclusive	Eksklusiv
+P:Full Screen Res:	Fullskjermoppl.:
+P:Mode:	Modus:
+P:Troll Battle	Trollkamp
+P:Reset P2 Controls	Tilbakestill P2-kontroller
+P:Berserker	Bersærk
+P:Cave Troll	Huletroll
+P:Uruk Captain	Uruk-kaptein
+P:Saruman	Saruman
+P:Elven Warrior	Alvekriger
+P:Ent	Ent
+P:Player 1: choose your hero	Spiller 1: velg din helt
+P:Player 2: waiting	Spiller 2: venter
+P:Player 2: choose your hero	Spiller 2: velg din helt
+P:Player 1: {1}	Spiller 1: {1}
+P:Player 2: {1}	Spiller 2: {1}
+P:Player 2: {1} is Player 1's	Spiller 2: {1} tilhører Spiller 1
+P:Player 2: {1} not available	Spiller 2: {1} ikke tilgjengelig
+P:Ready. Press Continue to begin	Klar. Trykk på Fortsett for å begynne
+P:Unavailable	Utilgjengelig
+P:Speed	Fart
+P:Fierce	Kraft
+P:Special	Spesial
+P:Mixed	Blandet
+P:P{1} STAB GUARD: {2} LEFT	P{1} STIKKGARDE: {2} IGJEN
+P:FIND THE SHIELD: {1} AHEAD	FINN SKJOLDET: {1} FORAN
+P:FIND THE SHIELD: {1} BEHIND	FINN SKJOLDET: {1} BAK
+P:FIND THE SHIELD: {1} TO THE LEFT	FINN SKJOLDET: {1} TIL VENSTRE
+P:FIND THE SHIELD: {1} TO THE RIGHT	FINN SKJOLDET: {1} TIL HØYRE
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FINN SKJOLDET   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPILLER {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HARDESTE KNUSESLAG
+P:CLUB BLOWS / SWINGS	KØLLESLAG / SVING
+P:DAMAGE DEALT / TAKEN	PÅFØRT / MOTTATT SKADE
+P:FASTEST KNOCKOUT	RASKESTE KNOCKOUT
+P:MOST DAMAGE IN A MATCH	MEST SKADE I EN KAMP
+P:ROCKS AND LOGS ON TARGET	STEINER OG STOKKER I MÅL
+P:SMASHES ({1}+)	KNUSESLAG ({1}+)
+P:TROLL BATTLE RECORDS	TROLLKAMPREKORDER
+P:TROLL BATTLE RESULTS	TROLLKAMPRESULTATER
+P:P{1}	P{1}

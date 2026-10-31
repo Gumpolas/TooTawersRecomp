@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	ĐẤU SĨ: NGƯỜI CHƠI {1}
 P:RELENTLESS: PLAYER {1}	KHÔNG KHOAN NHƯỢNG: NGƯỜI CHƠI {1}
 P:Start Match	Bắt đầu trận
 P:ROUND {1}   P{2} {3} - {4} P{5}	HIỆP {1}   P{2} {3} - {4} P{5}
+P:Borderless	Không viền
+P:Exclusive	Độc quyền
+P:Full Screen Res:	Phân giải toàn MH:
+P:Mode:	Chế độ:
+P:Troll Battle	Đại chiến Troll
+P:Reset P2 Controls	Đặt lại điều khiển P2
+P:Berserker	Cuồng Chiến Binh
+P:Cave Troll	Troll Hang Động
+P:Uruk Captain	Thủ lĩnh Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Chiến binh Tiên Tộc
+P:Ent	Ent
+P:Player 1: choose your hero	Người chơi 1: chọn anh hùng
+P:Player 2: waiting	Người chơi 2: đang chờ
+P:Player 2: choose your hero	Người chơi 2: chọn anh hùng
+P:Player 1: {1}	Người chơi 1: {1}
+P:Player 2: {1}	Người chơi 2: {1}
+P:Player 2: {1} is Player 1's	Người chơi 2: {1} đã thuộc Người chơi 1
+P:Player 2: {1} not available	Người chơi 2: {1} không khả dụng
+P:Ready. Press Continue to begin	Sẵn sàng. Nhấn Tiếp tục để bắt đầu
+P:Unavailable	Không khả dụng
+P:Speed	Tốc độ
+P:Fierce	Mãnh liệt
+P:Special	Đặc biệt
+P:Mixed	Hỗn hợp
+P:P{1} STAB GUARD: {2} LEFT	P{1} THẾ ĐỠ ĐÂM: CÒN {2}
+P:FIND THE SHIELD: {1} AHEAD	TÌM KHIÊN: {1} PHÍA TRƯỚC
+P:FIND THE SHIELD: {1} BEHIND	TÌM KHIÊN: {1} PHÍA SAU
+P:FIND THE SHIELD: {1} TO THE LEFT	TÌM KHIÊN: {1} BÊN TRÁI
+P:FIND THE SHIELD: {1} TO THE RIGHT	TÌM KHIÊN: {1} BÊN PHẢI
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	TÌM KHIÊN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	NGƯỜI CHƠI {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	CÚ ĐẬP MẠNH NHẤT
+P:CLUB BLOWS / SWINGS	ĐÒN CHÙY TRÚNG / VUNG
+P:DAMAGE DEALT / TAKEN	SÁT THƯƠNG GÂY RA / NHẬN
+P:FASTEST KNOCKOUT	HẠ GỤC NHANH NHẤT
+P:MOST DAMAGE IN A MATCH	SÁT THƯƠNG CAO NHẤT 1 TRẬN
+P:ROCKS AND LOGS ON TARGET	ĐÁ VÀ GỖ TRÚNG ĐÍCH
+P:SMASHES ({1}+)	CÚ ĐẬP ({1}+)
+P:TROLL BATTLE RECORDS	KỶ LỤC ĐẠI CHIẾN TROLL
+P:TROLL BATTLE RESULTS	KẾT QUẢ ĐẠI CHIẾN TROLL
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Chơi lại trận: BACK (Backspace / Tab) hoặc nhấp
+L:Restart Round: Y (the I key) or click this line	Chơi lại hiệp: Y (phím I) hoặc nhấp vào dòng này
+L:P2 Teleport: ON	Dịch chuyển P2: BẬT
+L:P2 Teleport: OFF	Dịch chuyển P2: TẮT
+L:Turn it off: Y (the I key) or click this note	Tắt: Y (phím I) hoặc nhấp vào ghi chú này
+L:Turn it on: Y (the I key) or click this note	Bật: Y (phím I) hoặc nhấp vào ghi chú này
+L:IMPOSSIBLE	BẤT KHẢ THI
+L:Harder than Expert: any enemy's second blow fells you	Khó hơn Chuyên gia: đòn thứ hai của bất kỳ kẻ thù nào cũng hạ gục bạn
+L:Achievement earned	Đạt thành tựu
+L:DIAMOND ACHIEVEMENT EARNED	ĐẠT THÀNH TỰU KIM CƯƠNG
+L:The Last Alliance	Liên Minh Cuối Cùng
+L:Win the prologue on the slopes of Mount Doom.	Thắng màn mở đầu trên sườn Núi Diệt Vong.
+L:Fire on Weathertop	Lửa trên Đỉnh Gió
+L:Drive the Ringwraiths from Weathertop.	Đánh đuổi Nhẫn Ma khỏi Đỉnh Gió.
+L:Speak Friend	Hãy Nói "Bằng Hữu"
+L:Escape the Watcher at the Gates of Moria.	Thoát khỏi Kẻ Canh Giữ ở Cổng Moria.
+L:Drums in the Deep	Tiếng Trống Dưới Lòng Sâu
+L:Fight your way out of Balin's Tomb.	Chiến đấu mở đường ra khỏi Lăng mộ Balin.
+L:Breaking of the Fellowship	Hiệp Hội Tan Rã
+L:Stand against the Uruk-hai at Amon Hen.	Chống lại quân Uruk-hai tại Amon Hen.
+L:Into the Forest	Vào Rừng
+L:Get through Fangorn Forest.	Vượt qua Rừng Fangorn.
+L:Riders of Rohan	Kỵ Sĩ Rohan
+L:Win the battle on the Plains of Rohan.	Thắng trận chiến trên Đồng bằng Rohan.
+L:The Burning of the Westfold	Westfold Bốc Cháy
+L:Save the villages of the Westfold.	Cứu các ngôi làng của Westfold.
+L:Wolves on the Road	Sói Trên Đường
+L:Reach Helm's Deep along the road.	Theo con đường đến Thung lũng Helm.
+L:The Deeping Wall	Tường Deeping
+L:Hold the Deeping Wall.	Giữ vững Tường Deeping.
+L:The Wall Is Breached	Tường Thành Bị Phá
+L:Fight on when the wall is breached.	Tiếp tục chiến đấu khi tường thành bị phá.
+L:The Hornburg Holds	Hornburg Đứng Vững
+L:Defend the Hornburg's courtyard to the dawn.	Bảo vệ sân Hornburg đến bình minh.
+L:The Two Towers	Hai Tòa Tháp
+L:Win every level of the story.	Thắng mọi màn của cốt truyện.
+L:The Tower of Orthanc	Tháp Orthanc
+L:Win the secret mission at Orthanc.	Thắng nhiệm vụ bí mật tại Orthanc.
+L:Ranger of the North	Du Hiệp Phương Bắc
+L:Win a level as Aragorn.	Thắng một màn với Aragorn.
+L:Prince of Mirkwood	Hoàng Tử Mirkwood
+L:Win a level as Legolas.	Thắng một màn với Legolas.
+L:Son of Gloin	Con Trai Của Glóin
+L:Win a level as Gimli.	Thắng một màn với Gimli.
+L:Heir of Elendil	Người Kế Vị Elendil
+L:Win a level after the prologue as Isildur.	Thắng một màn sau phần mở đầu với Isildur.
+L:The Three Hunters	Ba Thợ Săn
+L:Win levels as Aragorn, Legolas and Gimli.	Thắng các màn với Aragorn, Legolas và Gimli.
+L:An Unexpected Ally	Đồng Minh Bất Ngờ
+L:Win a level as one of the extra heroes.	Thắng một màn với một trong các anh hùng bổ sung.
+L:A Fellowship Remade	Hiệp Hội Tái Lập
+L:Unlock every extra hero.	Mở khóa mọi anh hùng bổ sung.
+L:Seasoned Warrior	Chiến Binh Dày Dạn
+L:Bring a hero to level 5.	Đưa một anh hùng lên cấp 5.
+L:Legend of the Third Age	Huyền Thoại Kỷ Thứ Ba
+L:Bring a hero to level 10.	Đưa một anh hùng lên cấp 10.
+L:Side by Side	Sát Cánh
+L:Win a level in co-op.	Thắng một màn ở chế độ Hợp tác.
+L:Shoulder to Shoulder	Kề Vai
+L:Hold the Deeping Wall in co-op.	Giữ vững Tường Deeping ở chế độ Hợp tác.
+L:First Blood	Giọt Máu Đầu Tiên
+L:Win a round of Versus.	Thắng một hiệp Đối kháng.
+L:Champion of the Arena	Nhà Vô Địch Đấu Trường
+L:Win a Deathmatch.	Thắng một trận Tử chiến.
+L:Untouched	Không Tì Vết
+L:Win a round of Versus without taking a blow.	Thắng một hiệp Đối kháng mà không trúng đòn nào.
+L:Last Breath	Hơi Thở Cuối Cùng
+L:Win a round of Versus with less than a tenth of your health left.	Thắng một hiệp Đối kháng khi còn chưa đến một phần mười máu.
+L:Bearer of the Shield	Người Mang Khiên
+L:Win a match of Find the Shield.	Thắng một trận Tìm khiên.
+L:The Black Breath	Hơi Thở Đen
+L:Win a Versus match as the Nazgul.	Thắng một trận Đối kháng với Nazgûl.
+L:Iron and Leather	Sắt Và Da
+L:Win a Versus match as the Shield Orc.	Thắng một trận Đối kháng với Orc cầm khiên.
+L:Third Marshal of the Riddermark	Đệ Tam Thống Chế Riddermark
+L:Win a Versus match as Eomer.	Thắng một trận Đối kháng với Éomer.
+L:Shield-breaker	Kẻ Phá Khiên
+L:Break the Shield Orc's shield.	Phá vỡ khiên của Orc cầm khiên.
+L:Unbroken Line	Phòng Tuyến Bất Phá
+L:As player 1, win 5 Versus rounds in a row.	Là người chơi 1, thắng 5 hiệp Đối kháng liên tiếp.
+L:The Challenger Rises	Kẻ Thách Đấu Trỗi Dậy
+L:As player 2, win 5 Versus rounds in a row.	Là người chơi 2, thắng 5 hiệp Đối kháng liên tiếp.
+L:Get Back!	Lùi Lại!
+L:Knock your opponent back 50 times in Versus.	Đánh bật đối thủ 50 lần trong Đối kháng.
+L:Eagle Eye	Mắt Đại Bàng
+L:Land 40 locked-on arrows on your opponent in Versus.	Bắn trúng đối thủ 40 mũi tên khóa mục tiêu trong Đối kháng.
+L:Scavenger	Kẻ Nhặt Nhạnh
+L:Take 30 pickups in Versus.	Nhặt 30 vật phẩm trong Đối kháng.
+L:None Shall Pass	Không Kẻ Nào Qua Được
+L:Win a Versus match without losing a round.	Thắng một trận Đối kháng mà không thua hiệp nào.
+L:Against All Hope	Bất Chấp Tuyệt Vọng
+L:Win a Versus match after trailing by 3 rounds.	Thắng một trận Đối kháng sau khi bị dẫn 3 hiệp.
+L:Veteran of the Arena	Lão Binh Đấu Trường
+L:Win 100 Versus rounds in all.	Thắng tổng cộng 100 hiệp Đối kháng.
+L:Wanderer	Kẻ Lang Thang
+L:Win a Versus match on 8 different arenas.	Thắng trận Đối kháng trên 8 đấu trường khác nhau.
+L:Many Faces	Muôn Gương Mặt
+L:Win a Versus match as 10 different heroes.	Thắng trận Đối kháng với 10 anh hùng khác nhau.
+L:Troll Brawler	Troll Hiếu Chiến
+L:Win a Troll Battle match.	Thắng một trận Đại chiến Troll.
+L:Terror of Moria	Nỗi Kinh Hoàng Moria
+L:Win 3 Troll Battle matches.	Thắng 3 trận Đại chiến Troll.
+L:Lord of the Deep	Chúa Tể Lòng Sâu
+L:Win 10 Troll Battle matches.	Thắng 10 trận Đại chiến Troll.
+L:Thick Hide	Da Dày
+L:Win a Troll Battle match without losing a round.	Thắng một trận Đại chiến Troll mà không thua hiệp nào.
+L:Bone Crusher	Kẻ Nghiền Xương
+L:Land a single smash of 400 damage or more in Troll Battle.	Tung một cú đập gây 400 sát thương trở lên trong Đại chiến Troll.
+L:Troll Rampage	Troll Nổi Cơn
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Gây 25.000 sát thương trong Đại chiến Troll qua mọi trận của bạn.
+L:Swift Bludgeon	Chùy Thần Tốc
+L:Win a Troll Battle round in under 20 seconds.	Thắng một hiệp Đại chiến Troll trong chưa đầy 20 giây.
+L:Rock and Log	Đá Và Gỗ
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Ném trúng troll kia 25 tảng đá hoặc khúc gỗ trong Đại chiến Troll.
+L:Orc-Slayer	Kẻ Diệt Orc
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Hạ 25 Orc và Uruk-hai trong các trận Đối kháng.
+L:Scourge of Isengard	Tai Họa Của Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Hạ 150 Orc và Uruk-hai trong các trận Đối kháng.
+L:War on Two Fronts	Chiến Tranh Hai Mặt Trận
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Thắng một trận Tử chiến trên cả năm đấu trường có kẻ thù (Amon Hen, Fangorn, Đồng bằng Rohan, Tường bị phá, Hornburg).
+L:The White Hand	Bàn Tay Trắng
+L:Win 3 Versus matches as Saruman.	Thắng 3 trận Đối kháng với Saruman.
+L:Shepherd of the Trees	Người Chăn Cây
+L:Win 3 Versus matches as the Ent.	Thắng 3 trận Đối kháng với Ent.
+L:Captain of Isengard	Thủ Lĩnh Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Thắng 3 trận Đối kháng với Thủ lĩnh Uruk.
+L:The Last Alliance Returns	Liên Minh Cuối Cùng Trở Lại
+L:Win 3 Versus matches as the Elven Warrior.	Thắng 3 trận Đối kháng với Chiến binh Tiên Tộc.
+L:Hunt Them Down	Truy Lùng Chúng
+L:Win 3 Versus matches as Lurtz.	Thắng 3 trận Đối kháng với Lurtz.
+L:The Dark Lord	Chúa Tể Bóng Tối
+L:Win 3 Versus matches as Sauron.	Thắng 3 trận Đối kháng với Sauron.
+L:Servant of the Secret Fire	Tôi Tớ Của Ngọn Lửa Bí Mật
+L:Win 3 Versus matches as Gandalf.	Thắng 3 trận Đối kháng với Gandalf.
+L:Lord of Rivendell	Chúa Tể Rivendell
+L:Win 3 Versus matches as Elrond.	Thắng 3 trận Đối kháng với Elrond.
+L:Captain of Gondor	Thủ Lĩnh Gondor
+L:Win 3 Versus matches as Boromir.	Thắng 3 trận Đối kháng với Boromir.
+L:Ring-bearer	Người Mang Nhẫn
+L:Win 3 Versus matches as Frodo.	Thắng 3 trận Đối kháng với Frodo.
+L:Blood Frenzy	Cơn Khát Máu
+L:Win 3 Versus matches as the Berserker.	Thắng 3 trận Đối kháng với Cuồng Chiến Binh.
+L:Hurl the Stones	Ném Đá
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Khi là Ent, ném trúng đối thủ 20 tảng đá trong Đối kháng.
+L:Mirror Image	Ảnh Phản Chiếu
+L:Win a match of first to 5 or more where both players are the same hero.	Thắng một trận chạm 5 trở lên mà cả hai người chơi cùng dùng một anh hùng.
+L:Defiance	Thách Thức
+L:Win a level on Impossible.	Thắng một màn ở độ khó Bất khả thi.
+L:Hardened	Tôi Luyện
+L:Win 5 different levels on Impossible.	Thắng 5 màn khác nhau ở độ khó Bất khả thi.
+L:DIAMOND: The Unbreakable	KIM CƯƠNG: Bất Khuất
+L:Win every level of the story on Impossible. Very few ever will.	Thắng mọi màn của cốt truyện ở độ khó Bất khả thi. Rất ít người làm được điều này.

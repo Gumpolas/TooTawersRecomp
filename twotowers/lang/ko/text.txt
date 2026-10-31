@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	싸움꾼: 플레이어 {1}
 P:RELENTLESS: PLAYER {1}	무자비: 플레이어 {1}
 P:Start Match	대전 시작
 P:ROUND {1}   P{2} {3} - {4} P{5}	라운드 {1}   P{2} {3} - {4} P{5}
+P:Borderless	테두리 없음
+P:Exclusive	전용
+P:Full Screen Res:	전체 화면 해상도:
+P:Mode:	모드:
+P:Troll Battle	트롤 대전
+P:Reset P2 Controls	P2 조작 초기화
+P:Berserker	광전사
+P:Cave Troll	동굴 트롤
+P:Uruk Captain	우루크 대장
+P:Saruman	사루만
+P:Elven Warrior	요정 전사
+P:Ent	엔트
+P:Player 1: choose your hero	플레이어 1: 영웅을 선택하세요
+P:Player 2: waiting	플레이어 2: 대기 중
+P:Player 2: choose your hero	플레이어 2: 영웅을 선택하세요
+P:Player 1: {1}	플레이어 1: {1}
+P:Player 2: {1}	플레이어 2: {1}
+P:Player 2: {1} is Player 1's	플레이어 2: {1}은(는) 플레이어 1이 선택함
+P:Player 2: {1} not available	플레이어 2: {1} 사용 불가
+P:Ready. Press Continue to begin	준비 완료. 계속을 눌러 시작
+P:Unavailable	사용 불가
+P:Speed	속공
+P:Fierce	강공
+P:Special	특수
+P:Mixed	혼합
+P:P{1} STAB GUARD: {2} LEFT	P{1} 찌르기 방어: {2} 남음
+P:FIND THE SHIELD: {1} AHEAD	방패 찾기: 앞쪽 {1}
+P:FIND THE SHIELD: {1} BEHIND	방패 찾기: 뒤쪽 {1}
+P:FIND THE SHIELD: {1} TO THE LEFT	방패 찾기: 왼쪽 {1}
+P:FIND THE SHIELD: {1} TO THE RIGHT	방패 찾기: 오른쪽 {1}
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	방패 찾기   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	플레이어 {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	최대 강타
+P:CLUB BLOWS / SWINGS	몽둥이 적중 / 휘두름
+P:DAMAGE DEALT / TAKEN	가한 피해 / 받은 피해
+P:FASTEST KNOCKOUT	최단 KO
+P:MOST DAMAGE IN A MATCH	한 경기 최다 피해
+P:ROCKS AND LOGS ON TARGET	바위와 통나무 명중
+P:SMASHES ({1}+)	강타 ({1}+)
+P:TROLL BATTLE RECORDS	트롤 대전 기록
+P:TROLL BATTLE RESULTS	트롤 대전 결과
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	경기 재시작: BACK (Backspace / Tab) 또는 클릭
+L:Restart Round: Y (the I key) or click this line	라운드 재시작: Y (I 키) 또는 이 줄 클릭
+L:P2 Teleport: ON	P2 순간이동: 켜기
+L:P2 Teleport: OFF	P2 순간이동: 끄기
+L:Turn it off: Y (the I key) or click this note	끄기: Y (I 키) 또는 이 알림 클릭
+L:Turn it on: Y (the I key) or click this note	켜기: Y (I 키) 또는 이 알림 클릭
+L:IMPOSSIBLE	불가능
+L:Harder than Expert: any enemy's second blow fells you	전문가보다 어려움: 적의 두 번째 공격에 쓰러집니다
+L:Achievement earned	업적 달성
+L:DIAMOND ACHIEVEMENT EARNED	다이아몬드 업적 달성
+L:The Last Alliance	최후의 동맹
+L:Win the prologue on the slopes of Mount Doom.	운명의 산 비탈에서 프롤로그에서 승리하세요.
+L:Fire on Weathertop	바람마루의 불길
+L:Drive the Ringwraiths from Weathertop.	바람마루에서 반지악령을 몰아내세요.
+L:Speak Friend	친구라 말하라
+L:Escape the Watcher at the Gates of Moria.	모리아의 관문에서 감시자를 피해 탈출하세요.
+L:Drums in the Deep	깊은 곳의 북소리
+L:Fight your way out of Balin's Tomb.	발린의 무덤에서 싸워서 빠져나오세요.
+L:Breaking of the Fellowship	원정대의 와해
+L:Stand against the Uruk-hai at Amon Hen.	아몬 헨에서 우루크하이에 맞서세요.
+L:Into the Forest	숲 속으로
+L:Get through Fangorn Forest.	팡고른 숲을 통과하세요.
+L:Riders of Rohan	로한의 기사들
+L:Win the battle on the Plains of Rohan.	로한 평원의 전투에서 승리하세요.
+L:The Burning of the Westfold	불타는 웨스트폴드
+L:Save the villages of the Westfold.	웨스트폴드의 마을들을 구하세요.
+L:Wolves on the Road	길 위의 늑대들
+L:Reach Helm's Deep along the road.	길을 따라 헬름협곡에 도착하세요.
+L:The Deeping Wall	협곡벽
+L:Hold the Deeping Wall.	협곡벽을 지켜 내세요.
+L:The Wall Is Breached	성벽이 뚫리다
+L:Fight on when the wall is breached.	성벽이 뚫려도 계속 싸우세요.
+L:The Hornburg Holds	나팔산성은 버틴다
+L:Defend the Hornburg's courtyard to the dawn.	새벽까지 나팔산성 안뜰을 지켜 내세요.
+L:The Two Towers	두 개의 탑
+L:Win every level of the story.	스토리의 모든 레벨에서 승리하세요.
+L:The Tower of Orthanc	오르상크의 탑
+L:Win the secret mission at Orthanc.	오르상크의 비밀 임무에서 승리하세요.
+L:Ranger of the North	북부의 순찰자
+L:Win a level as Aragorn.	아라곤으로 레벨에서 승리하세요.
+L:Prince of Mirkwood	어둠숲의 왕자
+L:Win a level as Legolas.	레골라스로 레벨에서 승리하세요.
+L:Son of Gloin	글로인의 아들
+L:Win a level as Gimli.	김리로 레벨에서 승리하세요.
+L:Heir of Elendil	엘렌딜의 후계자
+L:Win a level after the prologue as Isildur.	프롤로그 이후 레벨에서 이실두르로 승리하세요.
+L:The Three Hunters	세 사냥꾼
+L:Win levels as Aragorn, Legolas and Gimli.	아라곤, 레골라스, 김리로 각각 레벨에서 승리하세요.
+L:An Unexpected Ally	뜻밖의 동맹
+L:Win a level as one of the extra heroes.	추가 영웅 중 하나로 레벨에서 승리하세요.
+L:A Fellowship Remade	다시 모인 원정대
+L:Unlock every extra hero.	추가 영웅을 모두 잠금 해제하세요.
+L:Seasoned Warrior	노련한 전사
+L:Bring a hero to level 5.	영웅을 레벨 5까지 올리세요.
+L:Legend of the Third Age	제3시대의 전설
+L:Bring a hero to level 10.	영웅을 레벨 10까지 올리세요.
+L:Side by Side	나란히
+L:Win a level in co-op.	협동으로 레벨에서 승리하세요.
+L:Shoulder to Shoulder	어깨를 맞대고
+L:Hold the Deeping Wall in co-op.	협동으로 협곡벽을 지켜 내세요.
+L:First Blood	첫 피
+L:Win a round of Versus.	대전에서 라운드를 이기세요.
+L:Champion of the Arena	경기장의 챔피언
+L:Win a Deathmatch.	데스매치에서 승리하세요.
+L:Untouched	무결
+L:Win a round of Versus without taking a blow.	한 대도 맞지 않고 대전 라운드를 이기세요.
+L:Last Breath	마지막 숨결
+L:Win a round of Versus with less than a tenth of your health left.	체력이 10분의 1 미만 남은 상태로 대전 라운드를 이기세요.
+L:Bearer of the Shield	방패를 든 자
+L:Win a match of Find the Shield.	방패 찾기 경기에서 승리하세요.
+L:The Black Breath	검은 입김
+L:Win a Versus match as the Nazgul.	나즈굴로 대전 경기에서 승리하세요.
+L:Iron and Leather	쇠와 가죽
+L:Win a Versus match as the Shield Orc.	방패 오크로 대전 경기에서 승리하세요.
+L:Third Marshal of the Riddermark	리더마크의 제3원수
+L:Win a Versus match as Eomer.	에오메르로 대전 경기에서 승리하세요.
+L:Shield-breaker	방패 파괴자
+L:Break the Shield Orc's shield.	방패 오크의 방패를 부수세요.
+L:Unbroken Line	무너지지 않는 전열
+L:As player 1, win 5 Versus rounds in a row.	플레이어 1로 대전 라운드를 5연승하세요.
+L:The Challenger Rises	도전자의 반격
+L:As player 2, win 5 Versus rounds in a row.	플레이어 2로 대전 라운드를 5연승하세요.
+L:Get Back!	물러서라!
+L:Knock your opponent back 50 times in Versus.	대전에서 상대를 50번 밀쳐 내세요.
+L:Eagle Eye	매의 눈
+L:Land 40 locked-on arrows on your opponent in Versus.	대전에서 조준 고정한 화살을 상대에게 40발 명중시키세요.
+L:Scavenger	수집가
+L:Take 30 pickups in Versus.	대전에서 아이템을 30개 획득하세요.
+L:None Shall Pass	아무도 지나갈 수 없다
+L:Win a Versus match without losing a round.	한 라운드도 잃지 않고 대전 경기에서 승리하세요.
+L:Against All Hope	희망이 없어도
+L:Win a Versus match after trailing by 3 rounds.	3라운드 뒤진 뒤 대전 경기에서 승리하세요.
+L:Veteran of the Arena	경기장의 베테랑
+L:Win 100 Versus rounds in all.	대전 라운드에서 총 100번 승리하세요.
+L:Wanderer	방랑자
+L:Win a Versus match on 8 different arenas.	서로 다른 경기장 8곳에서 대전 경기를 이기세요.
+L:Many Faces	여러 얼굴
+L:Win a Versus match as 10 different heroes.	서로 다른 영웅 10명으로 대전 경기에서 승리하세요.
+L:Troll Brawler	트롤 싸움꾼
+L:Win a Troll Battle match.	트롤 대전 경기에서 승리하세요.
+L:Terror of Moria	모리아의 공포
+L:Win 3 Troll Battle matches.	트롤 대전 경기에서 3번 승리하세요.
+L:Lord of the Deep	지하의 군주
+L:Win 10 Troll Battle matches.	트롤 대전 경기에서 10번 승리하세요.
+L:Thick Hide	두꺼운 가죽
+L:Win a Troll Battle match without losing a round.	한 라운드도 잃지 않고 트롤 대전 경기에서 승리하세요.
+L:Bone Crusher	뼈 분쇄자
+L:Land a single smash of 400 damage or more in Troll Battle.	트롤 대전에서 한 번의 강타로 400 이상의 피해를 주세요.
+L:Troll Rampage	트롤의 광란
+L:Deal 25,000 damage in Troll Battle, across all your matches.	트롤 대전의 모든 경기를 합쳐 25,000의 피해를 주세요.
+L:Swift Bludgeon	날쌘 몽둥이
+L:Win a Troll Battle round in under 20 seconds.	트롤 대전 라운드를 20초 안에 이기세요.
+L:Rock and Log	바위와 통나무
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	트롤 대전에서 던진 바위나 통나무를 상대 트롤에게 25번 명중시키세요.
+L:Orc-Slayer	오크 학살자
+L:Slay 25 orcs and Uruk-hai during Versus matches.	대전 경기 중 오크와 우루크하이를 25마리 처치하세요.
+L:Scourge of Isengard	아이센가드의 재앙
+L:Slay 150 orcs and Uruk-hai during Versus matches.	대전 경기 중 오크와 우루크하이를 150마리 처치하세요.
+L:War on Two Fronts	양면 전쟁
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	적이 나오는 경기장 다섯 곳 모두(아몬 헨, 팡고른, 로한 평원, 무너진 성벽, 나팔산성)에서 데스매치에 승리하세요.
+L:The White Hand	하얀 손
+L:Win 3 Versus matches as Saruman.	사루만으로 대전 경기에서 3번 승리하세요.
+L:Shepherd of the Trees	나무의 목자
+L:Win 3 Versus matches as the Ent.	엔트로 대전 경기에서 3번 승리하세요.
+L:Captain of Isengard	아이센가드의 대장
+L:Win 3 Versus matches as the Uruk Captain.	우루크 대장으로 대전 경기에서 3번 승리하세요.
+L:The Last Alliance Returns	돌아온 최후의 동맹
+L:Win 3 Versus matches as the Elven Warrior.	요정 전사로 대전 경기에서 3번 승리하세요.
+L:Hunt Them Down	놈들을 사냥하라
+L:Win 3 Versus matches as Lurtz.	러츠로 대전 경기에서 3번 승리하세요.
+L:The Dark Lord	암흑의 군주
+L:Win 3 Versus matches as Sauron.	사우론으로 대전 경기에서 3번 승리하세요.
+L:Servant of the Secret Fire	비밀의 불을 섬기는 자
+L:Win 3 Versus matches as Gandalf.	간달프로 대전 경기에서 3번 승리하세요.
+L:Lord of Rivendell	깊은골의 군주
+L:Win 3 Versus matches as Elrond.	엘론드로 대전 경기에서 3번 승리하세요.
+L:Captain of Gondor	곤도르의 대장
+L:Win 3 Versus matches as Boromir.	보로미르로 대전 경기에서 3번 승리하세요.
+L:Ring-bearer	반지의 사자
+L:Win 3 Versus matches as Frodo.	프로도로 대전 경기에서 3번 승리하세요.
+L:Blood Frenzy	피의 광란
+L:Win 3 Versus matches as the Berserker.	광전사로 대전 경기에서 3번 승리하세요.
+L:Hurl the Stones	돌을 던져라
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	엔트로 대전에서 던진 바위를 상대에게 20번 명중시키세요.
+L:Mirror Image	거울상
+L:Win a match of first to 5 or more where both players are the same hero.	두 플레이어가 같은 영웅인 5선승 이상 경기에서 승리하세요.
+L:Defiance	저항
+L:Win a level on Impossible.	불가능 난이도로 레벨에서 승리하세요.
+L:Hardened	단련된 자
+L:Win 5 different levels on Impossible.	불가능 난이도로 서로 다른 레벨 5개에서 승리하세요.
+L:DIAMOND: The Unbreakable	다이아몬드: 불굴의 자
+L:Win every level of the story on Impossible. Very few ever will.	불가능 난이도로 스토리의 모든 레벨에서 승리하세요. 해낼 이는 극소수일 겁니다.

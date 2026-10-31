@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	BAGARREUR : JOUEUR {1}
 P:RELENTLESS: PLAYER {1}	IMPLACABLE : JOUEUR {1}
 P:Start Match	Lancer le duel
 P:ROUND {1}   P{2} {3} - {4} P{5}	MANCHE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Sans bordure
+P:Exclusive	Exclusif
+P:Full Screen Res:	Rés. plein écran :
+P:Mode:	Mode :
+P:Troll Battle	Combat de trolls
+P:Reset P2 Controls	Réinit. commandes J2
+P:Berserker	Berserker
+P:Cave Troll	Troll des cavernes
+P:Uruk Captain	Capitaine uruk
+P:Saruman	Saroumane
+P:Elven Warrior	Guerrier elfe
+P:Ent	Ent
+P:Player 1: choose your hero	Joueur 1 : choisissez votre héros
+P:Player 2: waiting	Joueur 2 : en attente
+P:Player 2: choose your hero	Joueur 2 : choisissez votre héros
+P:Player 1: {1}	Joueur 1 : {1}
+P:Player 2: {1}	Joueur 2 : {1}
+P:Player 2: {1} is Player 1's	Joueur 2 : {1} est au joueur 1
+P:Player 2: {1} not available	Joueur 2 : {1} indisponible
+P:Ready. Press Continue to begin	Prêt. Appuyez sur Continuer pour commencer
+P:Unavailable	Indisponible
+P:Speed	Vitesse
+P:Fierce	Puissance
+P:Special	Spécial
+P:Mixed	Mixte
+P:P{1} STAB GUARD: {2} LEFT	J{1} GARDE ANTI-ESTOC : ENCORE {2}
+P:FIND THE SHIELD: {1} AHEAD	TROUVEZ LE BOUCLIER : {1} DEVANT
+P:FIND THE SHIELD: {1} BEHIND	TROUVEZ LE BOUCLIER : {1} DERRIÈRE
+P:FIND THE SHIELD: {1} TO THE LEFT	TROUVEZ LE BOUCLIER : {1} À GAUCHE
+P:FIND THE SHIELD: {1} TO THE RIGHT	TROUVEZ LE BOUCLIER : {1} À DROITE
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	TROUVER LE BOUCLIER   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	JOUEUR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	PLUS GROSSE FRAPPE
+P:CLUB BLOWS / SWINGS	COUPS DE MASSUE / MOULINETS
+P:DAMAGE DEALT / TAKEN	DÉGÂTS INFLIGÉS / SUBIS
+P:FASTEST KNOCKOUT	K.-O. LE PLUS RAPIDE
+P:MOST DAMAGE IN A MATCH	PLUS DE DÉGÂTS EN UN MATCH
+P:ROCKS AND LOGS ON TARGET	ROCHERS ET TRONCS AU BUT
+P:SMASHES ({1}+)	FRAPPES ({1}+)
+P:TROLL BATTLE RECORDS	RECORDS DU COMBAT DE TROLLS
+P:TROLL BATTLE RESULTS	RÉSULTATS DU COMBAT DE TROLLS
+P:P{1}	J{1}

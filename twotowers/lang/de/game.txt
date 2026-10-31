@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	RAUFBOLD: SPIELER {1}
 P:RELENTLESS: PLAYER {1}	UNERBITTLICH: SPIELER {1}
 P:Start Match	Kampf starten
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Randlos
+P:Exclusive	Exklusiv
+P:Full Screen Res:	Vollbild-Aufl.:
+P:Mode:	Modus:
+P:Troll Battle	Trollkampf
+P:Reset P2 Controls	S2-Steuerung zurücksetzen
+P:Berserker	Berserker
+P:Cave Troll	Höhlentroll
+P:Uruk Captain	Uruk-Hauptmann
+P:Saruman	Saruman
+P:Elven Warrior	Elbenkrieger
+P:Ent	Ent
+P:Player 1: choose your hero	Spieler 1: Wähle deinen Helden
+P:Player 2: waiting	Spieler 2: wartet
+P:Player 2: choose your hero	Spieler 2: Wähle deinen Helden
+P:Player 1: {1}	Spieler 1: {1}
+P:Player 2: {1}	Spieler 2: {1}
+P:Player 2: {1} is Player 1's	Spieler 2: {1} gehört Spieler 1
+P:Player 2: {1} not available	Spieler 2: {1} nicht verfügbar
+P:Ready. Press Continue to begin	Bereit. Drücke Weiter, um zu beginnen
+P:Unavailable	Nicht verfügbar
+P:Speed	Schnell
+P:Fierce	Heftig
+P:Special	Spezial
+P:Mixed	Gemischt
+P:P{1} STAB GUARD: {2} LEFT	S{1} STICHDECKUNG: NOCH {2}
+P:FIND THE SHIELD: {1} AHEAD	FINDE DEN SCHILD: {1} VORAUS
+P:FIND THE SHIELD: {1} BEHIND	FINDE DEN SCHILD: {1} HINTER DIR
+P:FIND THE SHIELD: {1} TO THE LEFT	FINDE DEN SCHILD: {1} LINKS
+P:FIND THE SHIELD: {1} TO THE RIGHT	FINDE DEN SCHILD: {1} RECHTS
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FINDE DEN SCHILD   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPIELER {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HÄRTESTER SCHLAG
+P:CLUB BLOWS / SWINGS	KEULENTREFFER / SCHWÜNGE
+P:DAMAGE DEALT / TAKEN	SCHADEN VERURSACHT / ERLITTEN
+P:FASTEST KNOCKOUT	SCHNELLSTER K.O.
+P:MOST DAMAGE IN A MATCH	MEISTER SCHADEN IN EINEM MATCH
+P:ROCKS AND LOGS ON TARGET	FELS- UND STAMMTREFFER
+P:SMASHES ({1}+)	SCHLÄGE ({1}+)
+P:TROLL BATTLE RECORDS	TROLLKAMPF-REKORDE
+P:TROLL BATTLE RESULTS	TROLLKAMPF-ERGEBNIS
+P:P{1}	S{1}

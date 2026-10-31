@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	ᚠᛇᚻᛏᛖᚱᛖ: ᛈᛚᛖᚷᛖᚱᛖ {1}
 P:RELENTLESS: PLAYER {1}	ᚢᚾᚹᛖᚱᛁᚷ: ᛈᛚᛖᚷᛖᚱᛖ {1}
 P:Start Match	ᚩᛝᛁᚾᚾ ᚳᚪᛗᛈ
 P:ROUND {1}   P{2} {3} - {4} P{5}	ᚷᛖᚠᛇᚻᛏ {1}   P{2} {3} - {4} P{5}
+P:Borderless	ᚱᛁᛗᛚᛠᛋ
+P:Exclusive	ᛋᚢᚾᛞᚩᚱᛚᛁᚳ
+P:Full Screen Res:	ᛠᛚᛋᚳᛁᚱᛗᛖᛋ ᛈᚱᛁᚳᛖᚾᚪ ᚱᛁᛗ:
+P:Mode:	ᚹᛁᛋᛖ:
+P:Troll Battle	ᚦᚣᚱᛋᚪ ᚹᛁᚷ
+P:Reset P2 Controls	P2 ᚹᛠᛚᛞᚪᛋ ᛖᛞᚾᛁᚹᛁᚪᚾ
+P:Berserker	ᛒᛖᚱᛋᛖᚱᚳ
+P:Cave Troll	ᛋᚳᚱᚫᚠᚦᚣᚱᛋ
+P:Uruk Captain	ᚢᚱᚢᛣ ᛠᛚᛞᚩᚱ
+P:Saruman	ᛋᚪᚱᚢᛗᚪᚾ
+P:Elven Warrior	ᚫᛚᚠᚳᛖᛗᛈᚪ
+P:Ent	ᛖᚾᛏ
+P:Player 1: choose your hero	ᛈᛚᛖᚷᛖᚱᛖ 1: ᚳᛇᛋ ᚦᛁᚾᚾᛖ ᚻᚫᛚᛖᚦ
+P:Player 2: waiting	ᛈᛚᛖᚷᛖᚱᛖ 2: ᛒᛁᛞᚪᚦ
+P:Player 2: choose your hero	ᛈᛚᛖᚷᛖᚱᛖ 2: ᚳᛇᛋ ᚦᛁᚾᚾᛖ ᚻᚫᛚᛖᚦ
+P:Player 1: {1}	ᛈᛚᛖᚷᛖᚱᛖ 1: {1}
+P:Player 2: {1}	ᛈᛚᛖᚷᛖᚱᛖ 2: {1}
+P:Player 2: {1} is Player 1's	ᛈᛚᛖᚷᛖᚱᛖ 2: {1} ᛁᛋ ᛈᛚᛖᚷᛖᚱᛖᛋ 1
+P:Player 2: {1} not available	ᛈᛚᛖᚷᛖᚱᛖ 2: {1} ᚾᛁᛋ ᚷᛠᚱᚢ
+P:Ready. Press Continue to begin	ᚷᛠᚱᚢ. ᚦᚱᛁᛝ ᚠᚩᚱᚦ ᛏᚩ ᚩᛝᛁᚾᚾᛖᚾᚾᛖ
+P:Unavailable	ᚢᛝᛠᚱᚢ
+P:Speed	ᚻᚱᚫᛞᚾᛖᛋ
+P:Fierce	ᚱᛖᚦᛖ
+P:Special	ᛋᚣᚾᛞᛖᚱᛚᛁᚳ
+P:Mixed	ᚷᛖᛗᛖᛝᛖᛞ
+P:P{1} STAB GUARD: {2} LEFT	P{1} ᛋᛏᛁᚳᛖᛋ WEARD: {2} TO LAFE
+P:FIND THE SHIELD: {1} AHEAD	FIND ᚦᚩᚾᛖ SCYLD: {1} ᛒᛖᚠᚩᚱᚪᚾ
+P:FIND THE SHIELD: {1} BEHIND	FIND ᚦᚩᚾᛖ SCYLD: {1} ᛒᚫᚠᛏᚪᚾ
+P:FIND THE SHIELD: {1} TO THE LEFT	FIND ᚦᚩᚾᛖ SCYLD: {1} ON ᚹᛁᚾᛋᛏᚱᛖ
+P:FIND THE SHIELD: {1} TO THE RIGHT	FIND ᚦᚩᚾᛖ SCYLD: {1} ON ᛋᚹᛁᚦᚱᛖ
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	FIND ᚦᚩᚾᛖ SCYLD   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	ᛈᛚᛖᚷᛖᚱᛖ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ᛗᚫᛋᛏᚪ SLEGE
+P:CLUB BLOWS / SWINGS	ᛋᚪᚷᛚᛖᛋ ᛋᛚᛖᚷᚪᛋ / ᛋᚹᛖᛝᚪᛋ
+P:DAMAGE DEALT / TAKEN	DEMM GEDON / ᚦᚱᚩᚹᚩᛞ
+P:FASTEST KNOCKOUT	ᚻᚱᚫᛞᚩᛋᛏᛖ ᚠᛖᛚᛚᚢᛝ
+P:MOST DAMAGE IN A MATCH	ᛗᚫᛋᛏ DEMM ON ANUM CAMPE
+P:ROCKS AND LOGS ON TARGET	ᛋᛏᚪᚾᚪᛋ AND ᛋᛏᚩᚳᚳᚪᛋ ON ᛗᛠᚱᚳᛖ
+P:SMASHES ({1}+)	ᛋᛚᛖᚷᚪᛋ ({1}+)
+P:TROLL BATTLE RECORDS	ᚦᚣᚱᛋᚪ WIGES ᚷᛖᛗᚣᚾᛞ
+P:TROLL BATTLE RESULTS	ᚦᚣᚱᛋᚪ WIGES ᛖᚾᛞᚢᛝᚪ
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Onginn Camp Eft: BACK (Backspace / Tab) oþþe cnyll
+L:Restart Round: Y (the I key) or click this line	Onginn Gefeoht Eft: Y (seo I cæg) oþþe cnyll þas line
+L:P2 Teleport: ON	P2 Feorrfær: ON
+L:P2 Teleport: OFF	P2 Feorrfær: OF
+L:Turn it off: Y (the I key) or click this note	Do hit of: Y (seo I cæg) oþþe cnyll þis gewrit
+L:Turn it on: Y (the I key) or click this note	Do hit on: Y (seo I cæg) oþþe cnyll þis gewrit
+L:IMPOSSIBLE	UNMIHTLIC
+L:Harder than Expert: any enemy's second blow fells you	Heardre þonne Cræftig: ælces feondes æfterra slege þe fylþ
+L:Achievement earned	Weorþmynd geearnod
+L:DIAMOND ACHIEVEMENT EARNED	ADAMANTES WEORÞMYND GEEARNOD
+L:The Last Alliance	Seo Ytemeste Geþeodnes
+L:Win the prologue on the slopes of Mount Doom.	Gewinn þone foresprecan on Domes Beorges hliþum.
+L:Fire on Weathertop	Fyr on Weathertop
+L:Drive the Ringwraiths from Weathertop.	Drif þa Hringgæstas fram Weathertop.
+L:Speak Friend	Sprec, Freond
+L:Escape the Watcher at the Gates of Moria.	Ætfleoh þone Weard æt Moria Geatum.
+L:Drums in the Deep	Timpan on þære Deopnesse
+L:Fight your way out of Balin's Tomb.	Feoht þe ut of Balines Byrgenne.
+L:Breaking of the Fellowship	Seo Tobrecung þæs Geferscipes
+L:Stand against the Uruk-hai at Amon Hen.	Stand wiþ þa Uruk-hai æt Amon Hen.
+L:Into the Forest	On þone Wudu
+L:Get through Fangorn Forest.	Far þurh Fangornes Wudu.
+L:Riders of Rohan	Ridendas Rohanes
+L:Win the battle on the Plains of Rohan.	Gewinn þone wig on Rohanes Feldum.
+L:The Burning of the Westfold	Se Bryne þæs Westfoldes
+L:Save the villages of the Westfold.	Nere þa tunas þæs Westfoldes.
+L:Wolves on the Road	Wulfas on þam Wege
+L:Reach Helm's Deep along the road.	Becum to Helm's Deep be þam wege.
+L:The Deeping Wall	Se Deopinga Weall
+L:Hold the Deeping Wall.	Heald þone Deopinga Weall.
+L:The Wall Is Breached	Se Weall Is Tobrocen
+L:Fight on when the wall is breached.	Feoht forþ þonne se weall tobrocen bið.
+L:The Hornburg Holds	Seo Hornburg Healdeþ
+L:Defend the Hornburg's courtyard to the dawn.	Werie Hornburges cafertun oþ dægred.
+L:The Two Towers	Þa Twegen Torras
+L:Win every level of the story.	Gewinn ælcne stæpe þæs spelles.
+L:The Tower of Orthanc	Orthances Torr
+L:Win the secret mission at Orthanc.	Gewinn þæt digle ærende æt Orthanc.
+L:Ranger of the North	Wealdgenga þæs Norþdæles
+L:Win a level as Aragorn.	Gewinn stæpe swa Aragorn.
+L:Prince of Mirkwood	Myrcwudes Æþeling
+L:Win a level as Legolas.	Gewinn stæpe swa Legolas.
+L:Son of Gloin	Gloines Sunu
+L:Win a level as Gimli.	Gewinn stæpe swa Gimli.
+L:Heir of Elendil	Elendiles Yrfeweard
+L:Win a level after the prologue as Isildur.	Gewinn stæpe æfter þam foresprecan swa Isildur.
+L:The Three Hunters	Þa Þry Huntan
+L:Win levels as Aragorn, Legolas and Gimli.	Gewinn stæpas swa Aragorn, Legolas and Gimli.
+L:An Unexpected Ally	Ungewened Gefera
+L:Win a level as one of the extra heroes.	Gewinn stæpe swa an þara maran hæleþa.
+L:A Fellowship Remade	Geferscipe Edniwod
+L:Unlock every extra hero.	Onluc ælcne maran hæleþ.
+L:Seasoned Warrior	Gecostod Cempa
+L:Bring a hero to level 5.	Bring hæleþ to stæpe 5.
+L:Legend of the Third Age	Spell þære Þriddan Ylde
+L:Bring a hero to level 10.	Bring hæleþ to stæpe 10.
+L:Side by Side	Side be Side
+L:Win a level in co-op.	Gewinn stæpe samod.
+L:Shoulder to Shoulder	Eaxl be Eaxle
+L:Hold the Deeping Wall in co-op.	Heald þone Deopinga Weall samod.
+L:First Blood	Forma Blod
+L:Win a round of Versus.	Gewinn gefeoht on Wiþ.
+L:Champion of the Arena	Plegstowe Cempa
+L:Win a Deathmatch.	Gewinn Deaþgecamp.
+L:Untouched	Ungewundod
+L:Win a round of Versus without taking a blow.	Gewinn gefeoht on Wiþ butan ænigum slege.
+L:Last Breath	Ytemesta Æþm
+L:Win a round of Versus with less than a tenth of your health left.	Gewinn gefeoht on Wiþ mid læs þonne teoþan dæle þinre hælu to lafe.
+L:Bearer of the Shield	Scyldes Berend
+L:Win a match of Find the Shield.	Gewinn camp on Find þone Scyld.
+L:The Black Breath	Se Swearta Æþm
+L:Win a Versus match as the Nazgul.	Gewinn Wiþ-camp swa se Nazgul.
+L:Iron and Leather	Isen and Leþer
+L:Win a Versus match as the Shield Orc.	Gewinn Wiþ-camp swa se Scyldorc.
+L:Third Marshal of the Riddermark	Þridda Mearcealdor Riddena Mearce
+L:Win a Versus match as Eomer.	Gewinn Wiþ-camp swa Eomer.
+L:Shield-breaker	Scyldbrecend
+L:Break the Shield Orc's shield.	Tobrec þæs Scyldorces scyld.
+L:Unbroken Line	Untobrocen Truma
+L:As player 1, win 5 Versus rounds in a row.	Swa plegere 1, gewinn 5 Wiþ-gefeoht on an.
+L:The Challenger Rises	Se Andsaca Ariseþ
+L:As player 2, win 5 Versus rounds in a row.	Swa plegere 2, gewinn 5 Wiþ-gefeoht on an.
+L:Get Back!	Onbæc!
+L:Knock your opponent back 50 times in Versus.	Scuf þinne wiþerwinnan onbæc 50 siþum on Wiþ.
+L:Eagle Eye	Earnes Eage
+L:Land 40 locked-on arrows on your opponent in Versus.	Drep þinne wiþerwinnan mid 40 gemearcodum earum on Wiþ.
+L:Scavenger	Gaderere
+L:Take 30 pickups in Versus.	Nim 30 upnimunga on Wiþ.
+L:None Shall Pass	Nan Ne Sceal Faran
+L:Win a Versus match without losing a round.	Gewinn Wiþ-camp butan þæt þu gefeoht forleose.
+L:Against All Hope	Wiþ Ælcne Hiht
+L:Win a Versus match after trailing by 3 rounds.	Gewinn Wiþ-camp æfter þæt þu 3 gefeoht on bæce wære.
+L:Veteran of the Arena	Ealdcempa þære Plegstowe
+L:Win 100 Versus rounds in all.	Gewinn 100 Wiþ-gefeoht ealles.
+L:Wanderer	Eardstapa
+L:Win a Versus match on 8 different arenas.	Gewinn Wiþ-camp on 8 mislicum plegstowum.
+L:Many Faces	Manige Ansyna
+L:Win a Versus match as 10 different heroes.	Gewinn Wiþ-camp swa 10 mislice hæleþas.
+L:Troll Brawler	Þyrsa Feohtere
+L:Win a Troll Battle match.	Gewinn camp on Þyrsa Wige.
+L:Terror of Moria	Moria Broga
+L:Win 3 Troll Battle matches.	Gewinn 3 campas on Þyrsa Wige.
+L:Lord of the Deep	Deopnesse Hlaford
+L:Win 10 Troll Battle matches.	Gewinn 10 campas on Þyrsa Wige.
+L:Thick Hide	Þicce Hyd
+L:Win a Troll Battle match without losing a round.	Gewinn camp on Þyrsa Wige butan þæt þu gefeoht forleose.
+L:Bone Crusher	Banbrecend
+L:Land a single smash of 400 damage or more in Troll Battle.	Sleah anne slege 400 demmes oþþe mare on Þyrsa Wige.
+L:Troll Rampage	Þyrses Ræs
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Do 25,000 demmes on Þyrsa Wige, ofer ealle þine campas.
+L:Swift Bludgeon	Swift Sagol
+L:Win a Troll Battle round in under 20 seconds.	Gewinn gefeoht on Þyrsa Wige on læs þonne 20 stunda.
+L:Rock and Log	Stan and Stocc
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Drep þone oþerne þyrs mid 25 worpenum stanum oþþe stoccum on Þyrsa Wige.
+L:Orc-Slayer	Orcslaga
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Ofsleah 25 orcas and Uruk-hai on Wiþ-campum.
+L:Scourge of Isengard	Isengardes Swipu
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Ofsleah 150 orcas and Uruk-hai on Wiþ-campum.
+L:War on Two Fronts	Wig on Twa Healfa
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Gewinn Deaþgecamp on eallum fif plegstowum mid feondum (Amon Hen, Fangorn, Rohanes Feldas, Se Tobrocena Weall, Hornburg).
+L:The White Hand	Seo Hwite Hand
+L:Win 3 Versus matches as Saruman.	Gewinn 3 Wiþ-campas swa Saruman.
+L:Shepherd of the Trees	Treowa Hierde
+L:Win 3 Versus matches as the Ent.	Gewinn 3 Wiþ-campas swa se Ent.
+L:Captain of Isengard	Isengardes Ealdor
+L:Win 3 Versus matches as the Uruk Captain.	Gewinn 3 Wiþ-campas swa se Uruk Ealdor.
+L:The Last Alliance Returns	Seo Ytemeste Geþeodnes Cymþ Eft
+L:Win 3 Versus matches as the Elven Warrior.	Gewinn 3 Wiþ-campas swa se Ælfcempa.
+L:Hunt Them Down	Huntiaþ Hie
+L:Win 3 Versus matches as Lurtz.	Gewinn 3 Wiþ-campas swa Lurtz.
+L:The Dark Lord	Se Þeostra Hlaford
+L:Win 3 Versus matches as Sauron.	Gewinn 3 Wiþ-campas swa Sauron.
+L:Servant of the Secret Fire	Þegn þæs Digelan Fyres
+L:Win 3 Versus matches as Gandalf.	Gewinn 3 Wiþ-campas swa Gandalf.
+L:Lord of Rivendell	Rivendelles Hlaford
+L:Win 3 Versus matches as Elrond.	Gewinn 3 Wiþ-campas swa Elrond.
+L:Captain of Gondor	Gondores Ealdor
+L:Win 3 Versus matches as Boromir.	Gewinn 3 Wiþ-campas swa Boromir.
+L:Ring-bearer	Hringberend
+L:Win 3 Versus matches as Frodo.	Gewinn 3 Wiþ-campas swa Frodo.
+L:Blood Frenzy	Blodes Wodnes
+L:Win 3 Versus matches as the Berserker.	Gewinn 3 Wiþ-campas swa se Berserc.
+L:Hurl the Stones	Weorp þa Stanas
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Swa se Ent, drep þinne wiþerwinnan mid 20 worpenum stanum on Wiþ.
+L:Mirror Image	Gelicnes
+L:Win a match of first to 5 or more where both players are the same hero.	Gewinn camp of 5 siga oþþe ma þær þe begen plegeras sindon se ilca hæleþ.
+L:Defiance	Wiþerstandnes
+L:Win a level on Impossible.	Gewinn stæpe on Unmihtlic.
+L:Hardened	Aheardod
+L:Win 5 different levels on Impossible.	Gewinn 5 mislice stæpas on Unmihtlic.
+L:DIAMOND: The Unbreakable	ADAMANT: Se Untobrecendlica
+L:Win every level of the story on Impossible. Very few ever will.	Gewinn ælcne stæpe þæs spelles on Unmihtlic. Swiþe fea æfre willaþ.

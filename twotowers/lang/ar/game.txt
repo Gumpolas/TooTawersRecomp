@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	:  {1}
 P:RELENTLESS: PLAYER {1}	 :  {1}
 P:Start Match	 
 P:ROUND {1}   P{2} {3} - {4} P{5}	 {1}   P{2} {3} - {4} P{5}
+P:Borderless	 
+P:Exclusive	
+P:Full Screen Res:	  :
+P:Mode:	:
+P:Troll Battle	 
+P:Reset P2 Controls	   P2
+P:Berserker	
+P:Cave Troll	 
+P:Uruk Captain	 
+P:Saruman	
+P:Elven Warrior	 
+P:Ent	
+P:Player 1: choose your hero	 1:  
+P:Player 2: waiting	 2:  
+P:Player 2: choose your hero	 2:  
+P:Player 1: {1}	 1: {1}
+P:Player 2: {1}	 2: {1}
+P:Player 2: {1} is Player 1's	 2: {1}  1
+P:Player 2: {1} not available	 2: {1}  
+P:Ready. Press Continue to begin	.   
+P:Unavailable	 
+P:Speed	
+P:Fierce	
+P:Special	
+P:Mixed	
+P:P{1} STAB GUARD: {2} LEFT	  P{1}:  {2}
+P:FIND THE SHIELD: {1} AHEAD	  : {1} 
+P:FIND THE SHIELD: {1} BEHIND	  : {1} 
+P:FIND THE SHIELD: {1} TO THE LEFT	  : {1}  
+P:FIND THE SHIELD: {1} TO THE RIGHT	  : {1}  
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	     P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	 {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	 
+P:CLUB BLOWS / SWINGS	  / 
+P:DAMAGE DEALT / TAKEN	  / 
+P:FASTEST KNOCKOUT	  
+P:MOST DAMAGE IN A MATCH	   
+P:ROCKS AND LOGS ON TARGET	   
+P:SMASHES ({1}+)	 ({1}+)
+P:TROLL BATTLE RECORDS	  
+P:TROLL BATTLE RESULTS	  
+P:P{1}	P{1}

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	ZABIJAKA: GRACZ {1}
 P:RELENTLESS: PLAYER {1}	BEZLITOSNY: GRACZ {1}
 P:Start Match	Rozpocznij walk
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Bez ramki
+P:Exclusive	Wyczny
+P:Full Screen Res:	Rozdz. penoekr.:
+P:Mode:	Tryb:
+P:Troll Battle	Bitwa trolli
+P:Reset P2 Controls	Przywró sterowanie P2
+P:Berserker	Berserker
+P:Cave Troll	Troll jaskiniowy
+P:Uruk Captain	Kapitan Uruków
+P:Saruman	Saruman
+P:Elven Warrior	Elficki wojownik
+P:Ent	Ent
+P:Player 1: choose your hero	Gracz 1: wybierz bohatera
+P:Player 2: waiting	Gracz 2: czeka
+P:Player 2: choose your hero	Gracz 2: wybierz bohatera
+P:Player 1: {1}	Gracz 1: {1}
+P:Player 2: {1}	Gracz 2: {1}
+P:Player 2: {1} is Player 1's	Gracz 2: {1} naley do gracza 1
+P:Player 2: {1} not available	Gracz 2: {1} niedostpny
+P:Ready. Press Continue to begin	Gotowe. Nacinij Dalej, by zacz
+P:Unavailable	Niedostpny
+P:Speed	Szybki
+P:Fierce	Mocny
+P:Special	Specjalny
+P:Mixed	Mieszany
+P:P{1} STAB GUARD: {2} LEFT	P{1} BLOK PCHNI: ZOSTAO {2}
+P:FIND THE SHIELD: {1} AHEAD	ZNAJD TARCZ: {1} PRZED TOB
+P:FIND THE SHIELD: {1} BEHIND	ZNAJD TARCZ: {1} ZA TOB
+P:FIND THE SHIELD: {1} TO THE LEFT	ZNAJD TARCZ: {1} PO LEWEJ
+P:FIND THE SHIELD: {1} TO THE RIGHT	ZNAJD TARCZ: {1} PO PRAWEJ
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ZNAJD TARCZ   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	GRACZ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NAJSILNIEJSZY CIOS
+P:CLUB BLOWS / SWINGS	CIOSY / ZAMACHY MACZUG
+P:DAMAGE DEALT / TAKEN	OBRAENIA ZADANE / OTRZYMANE
+P:FASTEST KNOCKOUT	NAJSZYBSZY NOKAUT
+P:MOST DAMAGE IN A MATCH	NAJWICEJ OBRAE W MECZU
+P:ROCKS AND LOGS ON TARGET	CELNE GAZY I PNIE
+P:SMASHES ({1}+)	POTNE CIOSY ({1}+)
+P:TROLL BATTLE RECORDS	REKORDY BITWY TROLLI
+P:TROLL BATTLE RESULTS	WYNIKI BITWY TROLLI
+P:P{1}	P{1}

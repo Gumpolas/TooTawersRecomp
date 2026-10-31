@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	RIXATOR: LUSOR {1}
 P:RELENTLESS: PLAYER {1}	INDEFESSUS: LUSOR {1}
 P:Start Match	Pugnam incipere
 P:ROUND {1}   P{2} {3} - {4} P{5}	CERTAMEN {1}   P{2} {3} - {4} P{5}
+P:Borderless	Sine margine
+P:Exclusive	Exclusivum
+P:Full Screen Res:	Resolutio quadri pleni:
+P:Mode:	Modus:
+P:Troll Battle	Proelium Trollorum
+P:Reset P2 Controls	P2 Moderamina reficere
+P:Berserker	Furibundus
+P:Cave Troll	Trollus Cavernae
+P:Uruk Captain	Dux Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Bellator Elfus
+P:Ent	Ent
+P:Player 1: choose your hero	Lusor 1: heroem elige
+P:Player 2: waiting	Lusor 2: exspectat
+P:Player 2: choose your hero	Lusor 2: heroem elige
+P:Player 1: {1}	Lusor 1: {1}
+P:Player 2: {1}	Lusor 2: {1}
+P:Player 2: {1} is Player 1's	Lusor 2: {1} Lusoris 1 est
+P:Player 2: {1} not available	Lusor 2: {1} non praesto est
+P:Ready. Press Continue to begin	Paratus. Preme Perge ut incipias
+P:Unavailable	Non praesto
+P:Speed	Celeritas
+P:Fierce	Ferox
+P:Special	Singularis
+P:Mixed	Mixtus
+P:P{1} STAB GUARD: {2} LEFT	P{1} CUSTODIA ICTUUM: {2} RELIQUAE
+P:FIND THE SHIELD: {1} AHEAD	INVENI SCUTUM: {1} ANTE
+P:FIND THE SHIELD: {1} BEHIND	INVENI SCUTUM: {1} POST
+P:FIND THE SHIELD: {1} TO THE LEFT	INVENI SCUTUM: {1} AD LAEVAM
+P:FIND THE SHIELD: {1} TO THE RIGHT	INVENI SCUTUM: {1} AD DEXTRAM
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	INVENI SCUTUM   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	LUSOR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ICTUS MAXIMUS
+P:CLUB BLOWS / SWINGS	ICTUS / VIBRATIONES CLAVAE
+P:DAMAGE DEALT / TAKEN	DAMNUM ILLATUM / ACCEPTUM
+P:FASTEST KNOCKOUT	DEIECTIO CELERRIMA
+P:MOST DAMAGE IN A MATCH	PLURIMUM DAMNI IN PUGNA
+P:ROCKS AND LOGS ON TARGET	SAXA ET TRABES IN SCOPO
+P:SMASHES ({1}+)	ICTUS ({1}+)
+P:TROLL BATTLE RECORDS	FASTI PROELII TROLLORUM
+P:TROLL BATTLE RESULTS	EXITUS PROELII TROLLORUM
+P:P{1}	P{1}

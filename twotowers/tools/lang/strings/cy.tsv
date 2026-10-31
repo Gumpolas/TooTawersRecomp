@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	YMLADDWR: CHWARAEWR {1}
 P:RELENTLESS: PLAYER {1}	DI-ILDIO: CHWARAEWR {1}
 P:Start Match	Dechrau Gornest
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROWND {1}   P{2} {3} - {4} P{5}
+P:Borderless	Heb ffin
+P:Exclusive	Unigryw
+P:Full Screen Res:	Cydraniad Sgrin Lawn:
+P:Mode:	Modd:
+P:Troll Battle	Brwydr Troliaid
+P:Reset P2 Controls	Ailosod Rheolaethau P2
+P:Berserker	Bersercer
+P:Cave Troll	Trol Ogof
+P:Uruk Captain	Capten Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Rhyfelwr Ellyll
+P:Ent	Ent
+P:Player 1: choose your hero	Chwaraewr 1: dewiswch eich arwr
+P:Player 2: waiting	Chwaraewr 2: yn aros
+P:Player 2: choose your hero	Chwaraewr 2: dewiswch eich arwr
+P:Player 1: {1}	Chwaraewr 1: {1}
+P:Player 2: {1}	Chwaraewr 2: {1}
+P:Player 2: {1} is Player 1's	Chwaraewr 2: mae {1} gan Chwaraewr 1
+P:Player 2: {1} not available	Chwaraewr 2: {1} ddim ar gael
+P:Ready. Press Continue to begin	Barod. Pwyswch Parhau i ddechrau
+P:Unavailable	Ddim ar gael
+P:Speed	Cyflymder
+P:Fierce	Ffyrnig
+P:Special	Arbennig
+P:Mixed	Cymysg
+P:P{1} STAB GUARD: {2} LEFT	AMDDIFFYN TRYWANU P{1}: {2} AR ÔL
+P:FIND THE SHIELD: {1} AHEAD	DOD O HYD I'R DARIAN: {1} O'CH BLAEN
+P:FIND THE SHIELD: {1} BEHIND	DOD O HYD I'R DARIAN: {1} Y TU ÔL
+P:FIND THE SHIELD: {1} TO THE LEFT	DOD O HYD I'R DARIAN: {1} I'R CHWITH
+P:FIND THE SHIELD: {1} TO THE RIGHT	DOD O HYD I'R DARIAN: {1} I'R DDE
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	DOD O HYD I'R DARIAN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	CHWARAEWR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ERGYD FWYAF
+P:CLUB BLOWS / SWINGS	TRAWIADAU / CHWIFIADAU PASTWN
+P:DAMAGE DEALT / TAKEN	NIWED A WNAED / A GAED
+P:FASTEST KNOCKOUT	LLORIAD CYFLYMAF
+P:MOST DAMAGE IN A MATCH	MWYAF O NIWED MEWN GORNEST
+P:ROCKS AND LOGS ON TARGET	CERRIG A BONION AR Y NOD
+P:SMASHES ({1}+)	ERGYDION ({1}+)
+P:TROLL BATTLE RECORDS	RECORDIAU BRWYDR TROLIAID
+P:TROLL BATTLE RESULTS	CANLYNIADAU BRWYDR TROLIAID
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Ailgychwyn Gornest: BACK (Backspace / Tab) neu cliciwch
+L:Restart Round: Y (the I key) or click this line	Ailgychwyn Rownd: Y (y fysell I) neu cliciwch y llinell hon
+L:P2 Teleport: ON	Teleportio P2: YMLAEN
+L:P2 Teleport: OFF	Teleportio P2: I FFWRDD
+L:Turn it off: Y (the I key) or click this note	Ei ddiffodd: Y (y fysell I) neu cliciwch y nodyn hwn
+L:Turn it on: Y (the I key) or click this note	Ei droi ymlaen: Y (y fysell I) neu cliciwch y nodyn hwn
+L:IMPOSSIBLE	AMHOSIBL
+L:Harder than Expert: any enemy's second blow fells you	Anoddach nag Arbenigwr: mae ail ergyd unrhyw elyn yn eich cwympo
+L:Achievement earned	Camp wedi'i hennill
+L:DIAMOND ACHIEVEMENT EARNED	CAMP DDIEMWNT WEDI'I HENNILL
+L:The Last Alliance	Y Gynghrair Olaf
+L:Win the prologue on the slopes of Mount Doom.	Enillwch y prolog ar lethrau Mynydd Tynged.
+L:Fire on Weathertop	Tân ar Weathertop
+L:Drive the Ringwraiths from Weathertop.	Gyrrwch Ysbrydion y Fodrwy o Weathertop.
+L:Speak Friend	Llefara, Gyfaill
+L:Escape the Watcher at the Gates of Moria.	Dihangwch rhag y Gwyliwr wrth Byrth Moria.
+L:Drums in the Deep	Drymiau yn y Dwfn
+L:Fight your way out of Balin's Tomb.	Ymladdwch eich ffordd allan o Feddrod Balin.
+L:Breaking of the Fellowship	Torri'r Gymdeithas
+L:Stand against the Uruk-hai at Amon Hen.	Safwch yn erbyn yr Uruk-hai yn Amon Hen.
+L:Into the Forest	I Mewn i'r Fforest
+L:Get through Fangorn Forest.	Ewch drwy Fforest Fangorn.
+L:Riders of Rohan	Marchogion Rohan
+L:Win the battle on the Plains of Rohan.	Enillwch y frwydr ar Wastadeddau Rohan.
+L:The Burning of the Westfold	Llosgi'r Westfold
+L:Save the villages of the Westfold.	Achubwch bentrefi'r Westfold.
+L:Wolves on the Road	Bleiddiaid ar y Ffordd
+L:Reach Helm's Deep along the road.	Cyrhaeddwch Helm's Deep ar hyd y ffordd.
+L:The Deeping Wall	Y Mur Dwfn
+L:Hold the Deeping Wall.	Daliwch y Mur Dwfn.
+L:The Wall Is Breached	Mae'r Mur Wedi'i Dorri
+L:Fight on when the wall is breached.	Ymladdwch ymlaen pan dorrir y mur.
+L:The Hornburg Holds	Mae'r Hornburg yn Dal
+L:Defend the Hornburg's courtyard to the dawn.	Amddiffynnwch gwrt yr Hornburg hyd y wawr.
+L:The Two Towers	Y Ddau Dŵr
+L:Win every level of the story.	Enillwch bob lefel o'r stori.
+L:The Tower of Orthanc	Tŵr Orthanc
+L:Win the secret mission at Orthanc.	Enillwch y genhadaeth gudd yn Orthanc.
+L:Ranger of the North	Ceidwad y Gogledd
+L:Win a level as Aragorn.	Enillwch lefel fel Aragorn.
+L:Prince of Mirkwood	Tywysog Mirkwood
+L:Win a level as Legolas.	Enillwch lefel fel Legolas.
+L:Son of Gloin	Mab Gloin
+L:Win a level as Gimli.	Enillwch lefel fel Gimli.
+L:Heir of Elendil	Etifedd Elendil
+L:Win a level after the prologue as Isildur.	Enillwch lefel ar ôl y prolog fel Isildur.
+L:The Three Hunters	Y Tri Heliwr
+L:Win levels as Aragorn, Legolas and Gimli.	Enillwch lefelau fel Aragorn, Legolas a Gimli.
+L:An Unexpected Ally	Cynghreiriad Annisgwyl
+L:Win a level as one of the extra heroes.	Enillwch lefel fel un o'r arwyr ychwanegol.
+L:A Fellowship Remade	Cymdeithas o'r Newydd
+L:Unlock every extra hero.	Datglowch bob arwr ychwanegol.
+L:Seasoned Warrior	Rhyfelwr Profiadol
+L:Bring a hero to level 5.	Dewch ag arwr i lefel 5.
+L:Legend of the Third Age	Chwedl y Drydedd Oes
+L:Bring a hero to level 10.	Dewch ag arwr i lefel 10.
+L:Side by Side	Ochr yn Ochr
+L:Win a level in co-op.	Enillwch lefel ar y cyd.
+L:Shoulder to Shoulder	Ysgwydd wrth Ysgwydd
+L:Hold the Deeping Wall in co-op.	Daliwch y Mur Dwfn ar y cyd.
+L:First Blood	Y Gwaed Cyntaf
+L:Win a round of Versus.	Enillwch rownd yn y modd Yn erbyn.
+L:Champion of the Arena	Pencampwr yr Arena
+L:Win a Deathmatch.	Enillwch Ornest Angau.
+L:Untouched	Dianaf
+L:Win a round of Versus without taking a blow.	Enillwch rownd yn y modd Yn erbyn heb gael eich taro.
+L:Last Breath	Yr Anadl Olaf
+L:Win a round of Versus with less than a tenth of your health left.	Enillwch rownd yn y modd Yn erbyn gyda llai na degfed o'ch iechyd ar ôl.
+L:Bearer of the Shield	Cludydd y Darian
+L:Win a match of Find the Shield.	Enillwch ornest Dod o Hyd i'r Darian.
+L:The Black Breath	Yr Anadl Ddu
+L:Win a Versus match as the Nazgul.	Enillwch ornest Yn erbyn fel y Nazgul.
+L:Iron and Leather	Haearn a Lledr
+L:Win a Versus match as the Shield Orc.	Enillwch ornest Yn erbyn fel yr Orc Tarian.
+L:Third Marshal of the Riddermark	Trydydd Marsial y Riddermark
+L:Win a Versus match as Eomer.	Enillwch ornest Yn erbyn fel Eomer.
+L:Shield-breaker	Torrwr Tarianau
+L:Break the Shield Orc's shield.	Torrwch darian yr Orc Tarian.
+L:Unbroken Line	Rheng Ddi-dor
+L:As player 1, win 5 Versus rounds in a row.	Fel chwaraewr 1, enillwch 5 rownd Yn erbyn yn olynol.
+L:The Challenger Rises	Mae'r Heriwr yn Codi
+L:As player 2, win 5 Versus rounds in a row.	Fel chwaraewr 2, enillwch 5 rownd Yn erbyn yn olynol.
+L:Get Back!	Yn Ôl!
+L:Knock your opponent back 50 times in Versus.	Bwriwch eich gwrthwynebydd yn ôl 50 gwaith yn y modd Yn erbyn.
+L:Eagle Eye	Llygad Eryr
+L:Land 40 locked-on arrows on your opponent in Versus.	Trawch eich gwrthwynebydd â 40 saeth wedi'u cloi arno yn y modd Yn erbyn.
+L:Scavenger	Sborionwr
+L:Take 30 pickups in Versus.	Codwch 30 eitem yn y modd Yn erbyn.
+L:None Shall Pass	Ni Chaiff Neb Fynd Heibio
+L:Win a Versus match without losing a round.	Enillwch ornest Yn erbyn heb golli rownd.
+L:Against All Hope	Yn Erbyn Pob Gobaith
+L:Win a Versus match after trailing by 3 rounds.	Enillwch ornest Yn erbyn ar ôl bod 3 rownd ar ei hôl hi.
+L:Veteran of the Arena	Cyn-filwr yr Arena
+L:Win 100 Versus rounds in all.	Enillwch 100 rownd Yn erbyn i gyd.
+L:Wanderer	Crwydryn
+L:Win a Versus match on 8 different arenas.	Enillwch ornest Yn erbyn ar 8 arena wahanol.
+L:Many Faces	Llawer Wyneb
+L:Win a Versus match as 10 different heroes.	Enillwch ornest Yn erbyn fel 10 arwr gwahanol.
+L:Troll Brawler	Paffiwr Trol
+L:Win a Troll Battle match.	Enillwch ornest Brwydr Troliaid.
+L:Terror of Moria	Arswyd Moria
+L:Win 3 Troll Battle matches.	Enillwch 3 gornest Brwydr Troliaid.
+L:Lord of the Deep	Arglwydd y Dwfn
+L:Win 10 Troll Battle matches.	Enillwch 10 gornest Brwydr Troliaid.
+L:Thick Hide	Croen Trwchus
+L:Win a Troll Battle match without losing a round.	Enillwch ornest Brwydr Troliaid heb golli rownd.
+L:Bone Crusher	Malwr Esgyrn
+L:Land a single smash of 400 damage or more in Troll Battle.	Glaniwch un ergyd o 400 niwed neu fwy ym Mrwydr Troliaid.
+L:Troll Rampage	Rhuthr y Trol
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Gwnewch 25,000 niwed ym Mrwydr Troliaid, ar draws eich holl ornestau.
+L:Swift Bludgeon	Pastwn Chwim
+L:Win a Troll Battle round in under 20 seconds.	Enillwch rownd Brwydr Troliaid mewn llai nag 20 eiliad.
+L:Rock and Log	Craig a Boncyff
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Trawch y trol arall â 25 carreg neu foncyff wedi'u taflu ym Mrwydr Troliaid.
+L:Orc-Slayer	Lladdwr Orcod
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Lladdwch 25 orc ac Uruk-hai mewn gornestau Yn erbyn.
+L:Scourge of Isengard	Fflangell Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Lladdwch 150 orc ac Uruk-hai mewn gornestau Yn erbyn.
+L:War on Two Fronts	Rhyfel ar Ddwy Ffrynt
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Enillwch Ornest Angau ar bob un o'r pum arena â gelynion (Amon Hen, Fangorn, Gwastadeddau Rohan, Y Mur Toredig, Hornburg).
+L:The White Hand	Y Llaw Wen
+L:Win 3 Versus matches as Saruman.	Enillwch 3 gornest Yn erbyn fel Saruman.
+L:Shepherd of the Trees	Bugail y Coed
+L:Win 3 Versus matches as the Ent.	Enillwch 3 gornest Yn erbyn fel yr Ent.
+L:Captain of Isengard	Capten Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Enillwch 3 gornest Yn erbyn fel y Capten Uruk.
+L:The Last Alliance Returns	Y Gynghrair Olaf yn Dychwelyd
+L:Win 3 Versus matches as the Elven Warrior.	Enillwch 3 gornest Yn erbyn fel y Rhyfelwr Ellyll.
+L:Hunt Them Down	Helwch Hwy
+L:Win 3 Versus matches as Lurtz.	Enillwch 3 gornest Yn erbyn fel Lurtz.
+L:The Dark Lord	Yr Arglwydd Tywyll
+L:Win 3 Versus matches as Sauron.	Enillwch 3 gornest Yn erbyn fel Sauron.
+L:Servant of the Secret Fire	Gwas y Tân Cudd
+L:Win 3 Versus matches as Gandalf.	Enillwch 3 gornest Yn erbyn fel Gandalf.
+L:Lord of Rivendell	Arglwydd Rivendell
+L:Win 3 Versus matches as Elrond.	Enillwch 3 gornest Yn erbyn fel Elrond.
+L:Captain of Gondor	Capten Gondor
+L:Win 3 Versus matches as Boromir.	Enillwch 3 gornest Yn erbyn fel Boromir.
+L:Ring-bearer	Cludydd y Fodrwy
+L:Win 3 Versus matches as Frodo.	Enillwch 3 gornest Yn erbyn fel Frodo.
+L:Blood Frenzy	Gwallgofrwydd Gwaed
+L:Win 3 Versus matches as the Berserker.	Enillwch 3 gornest Yn erbyn fel y Bersercer.
+L:Hurl the Stones	Hyrddio'r Cerrig
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Fel yr Ent, trawch eich gwrthwynebydd â 20 carreg wedi'u taflu yn y modd Yn erbyn.
+L:Mirror Image	Adlewyrchiad
+L:Win a match of first to 5 or more where both players are the same hero.	Enillwch ornest y cyntaf i 5 neu fwy lle mae'r ddau chwaraewr yr un arwr.
+L:Defiance	Herfeiddiad
+L:Win a level on Impossible.	Enillwch lefel ar Amhosibl.
+L:Hardened	Caled fel Dur
+L:Win 5 different levels on Impossible.	Enillwch 5 lefel wahanol ar Amhosibl.
+L:DIAMOND: The Unbreakable	DIEMWNT: Yr Anorchfygol
+L:Win every level of the story on Impossible. Very few ever will.	Enillwch bob lefel o'r stori ar Amhosibl. Ychydig iawn a wna byth.

@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	ΚΑΒΓΑΤΖΗΣ: ΠΑΙΚΤΗΣ {1}
 P:RELENTLESS: PLAYER {1}	ΑΝΗΛΕΗΣ: ΠΑΙΚΤΗΣ {1}
 P:Start Match	Έναρξη αγώνα
 P:ROUND {1}   P{2} {3} - {4} P{5}	ΓΥΡΟΣ {1}   P{2} {3} - {4} P{5}
+P:Borderless	Χωρίς περίγραμμα
+P:Exclusive	Αποκλειστική
+P:Full Screen Res:	Ανάλυση πλήρ. οθόνης:
+P:Mode:	Λειτουργία:
+P:Troll Battle	Μάχη Τρολ
+P:Reset P2 Controls	Επαναφορά χειρισμού P2
+P:Berserker	Μαινόμενος
+P:Cave Troll	Τρολ των Σπηλαίων
+P:Uruk Captain	Λοχαγός Ουρούκ
+P:Saruman	Σάρουμαν
+P:Elven Warrior	Ξωτικός πολεμιστής
+P:Ent	Εντ
+P:Player 1: choose your hero	Παίκτης 1: διάλεξε ήρωα
+P:Player 2: waiting	Παίκτης 2: αναμονή
+P:Player 2: choose your hero	Παίκτης 2: διάλεξε ήρωα
+P:Player 1: {1}	Παίκτης 1: {1}
+P:Player 2: {1}	Παίκτης 2: {1}
+P:Player 2: {1} is Player 1's	Παίκτης 2: {1} – τον έχει ο Παίκτης 1
+P:Player 2: {1} not available	Παίκτης 2: {1} – μη διαθέσιμος
+P:Ready. Press Continue to begin	Έτοιμοι. Πάτησε Συνέχεια για να ξεκινήσεις
+P:Unavailable	Μη διαθέσιμο
+P:Speed	Ταχύτητα
+P:Fierce	Άγριο
+P:Special	Ειδικό
+P:Mixed	Μικτό
+P:P{1} STAB GUARD: {2} LEFT	P{1} ΑΜΥΝΑ ΚΑΤΑ ΝΥΓΜΩΝ: ΜΕΝΟΥΝ {2}
+P:FIND THE SHIELD: {1} AHEAD	ΒΡΕΣ ΤΗΝ ΑΣΠΙΔΑ: {1} ΜΠΡΟΣΤΑ
+P:FIND THE SHIELD: {1} BEHIND	ΒΡΕΣ ΤΗΝ ΑΣΠΙΔΑ: {1} ΠΙΣΩ
+P:FIND THE SHIELD: {1} TO THE LEFT	ΒΡΕΣ ΤΗΝ ΑΣΠΙΔΑ: {1} ΑΡΙΣΤΕΡΑ
+P:FIND THE SHIELD: {1} TO THE RIGHT	ΒΡΕΣ ΤΗΝ ΑΣΠΙΔΑ: {1} ΔΕΞΙΑ
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ΒΡΕΣ ΤΗΝ ΑΣΠΙΔΑ   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	ΠΑΙΚΤΗΣ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	ΜΕΓΑΛΥΤΕΡΟ ΧΤΥΠΗΜΑ
+P:CLUB BLOWS / SWINGS	ΧΤΥΠΗΜΑΤΑ / ΑΠΟΠΕΙΡΕΣ ΡΟΠΑΛΟΥ
+P:DAMAGE DEALT / TAKEN	ΖΗΜΙΑ ΠΟΥ ΠΡΟΚΑΛΕΣΕ / ΔΕΧΤΗΚΕ
+P:FASTEST KNOCKOUT	ΤΑΧΥΤΕΡΟ ΝΟΚ-ΑΟΥΤ
+P:MOST DAMAGE IN A MATCH	ΜΕΓΙΣΤΗ ΖΗΜΙΑ ΣΕ ΑΓΩΝΑ
+P:ROCKS AND LOGS ON TARGET	ΠΕΤΡΕΣ ΚΑΙ ΚΟΡΜΟΙ ΣΤΟΝ ΣΤΟΧΟ
+P:SMASHES ({1}+)	ΧΤΥΠΗΜΑΤΑ ({1}+)
+P:TROLL BATTLE RECORDS	ΡΕΚΟΡ ΜΑΧΗΣ ΤΡΟΛ
+P:TROLL BATTLE RESULTS	ΑΠΟΤΕΛΕΣΜΑΤΑ ΜΑΧΗΣ ΤΡΟΛ
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Επανέναρξη αγώνα: BACK (Backspace / Tab) ή κλικ
+L:Restart Round: Y (the I key) or click this line	Επανέναρξη γύρου: Y (το πλήκτρο I) ή κλικ σε αυτή τη γραμμή
+L:P2 Teleport: ON	Τηλεμεταφορά P2: ΝΑΙ
+L:P2 Teleport: OFF	Τηλεμεταφορά P2: ΟΧΙ
+L:Turn it off: Y (the I key) or click this note	Απενεργοποίηση: Y (το πλήκτρο I) ή κλικ σε αυτή τη σημείωση
+L:Turn it on: Y (the I key) or click this note	Ενεργοποίηση: Y (το πλήκτρο I) ή κλικ σε αυτή τη σημείωση
+L:IMPOSSIBLE	ΑΔΥΝΑΤΗ
+L:Harder than Expert: any enemy's second blow fells you	Δυσκολότερη από την Έμπειρη: το δεύτερο χτύπημα οποιουδήποτε εχθρού σε ρίχνει
+L:Achievement earned	Επίτευγμα ξεκλειδώθηκε
+L:DIAMOND ACHIEVEMENT EARNED	ΔΙΑΜΑΝΤΕΝΙΟ ΕΠΙΤΕΥΓΜΑ ΞΕΚΛΕΙΔΩΘΗΚΕ
+L:The Last Alliance	Η Τελευταία Συμμαχία
+L:Win the prologue on the slopes of Mount Doom.	Νίκησε στον πρόλογο στις πλαγιές του Όρους του Χαμού.
+L:Fire on Weathertop	Φωτιά στην Ανεμοκορφή
+L:Drive the Ringwraiths from Weathertop.	Διώξε τα Φαντάσματα του Δαχτυλιδιού από την Ανεμοκορφή.
+L:Speak Friend	Μίλα, φίλε
+L:Escape the Watcher at the Gates of Moria.	Ξέφυγε από τον Φύλακα στις Πύλες της Μόρια.
+L:Drums in the Deep	Τύμπανα στα βάθη
+L:Fight your way out of Balin's Tomb.	Άνοιξε δρόμο με μάχη έξω από τον Τάφο του Μπάλιν.
+L:Breaking of the Fellowship	Η Διάλυση της Συντροφιάς
+L:Stand against the Uruk-hai at Amon Hen.	Αντιστάσου στους Ουρούκ-χάι στο Άμον Χεν.
+L:Into the Forest	Μέσα στο δάσος
+L:Get through Fangorn Forest.	Διάσχισε το Δάσος Φάνγκορν.
+L:Riders of Rohan	Οι Καβαλάρηδες του Ρόχαν
+L:Win the battle on the Plains of Rohan.	Κέρδισε τη μάχη στις Πεδιάδες του Ρόχαν.
+L:The Burning of the Westfold	Το Κάψιμο του Γουέστφολντ
+L:Save the villages of the Westfold.	Σώσε τα χωριά του Γουέστφολντ.
+L:Wolves on the Road	Λύκοι στον δρόμο
+L:Reach Helm's Deep along the road.	Φτάσε στο Φαράγγι του Χελμ ακολουθώντας τον δρόμο.
+L:The Deeping Wall	Το Τείχος του Φαραγγιού
+L:Hold the Deeping Wall.	Κράτησε το Τείχος του Φαραγγιού.
+L:The Wall Is Breached	Το τείχος έπεσε
+L:Fight on when the wall is breached.	Συνέχισε να πολεμάς όταν γκρεμιστεί το τείχος.
+L:The Hornburg Holds	Το Χόρνμπουργκ αντέχει
+L:Defend the Hornburg's courtyard to the dawn.	Υπερασπίσου την αυλή του Χόρνμπουργκ ως την αυγή.
+L:The Two Towers	Οι Δύο Πύργοι
+L:Win every level of the story.	Νίκησε σε κάθε πίστα της ιστορίας.
+L:The Tower of Orthanc	Ο Πύργος του Όρθανκ
+L:Win the secret mission at Orthanc.	Νίκησε στη μυστική αποστολή στο Όρθανκ.
+L:Ranger of the North	Περιπλανώμενος του Βορρά
+L:Win a level as Aragorn.	Νίκησε σε μια πίστα με τον Άραγκορν.
+L:Prince of Mirkwood	Πρίγκιπας του Σκοτεινού Δάσους
+L:Win a level as Legolas.	Νίκησε σε μια πίστα με τον Λέγκολας.
+L:Son of Gloin	Γιος του Γκλόιν
+L:Win a level as Gimli.	Νίκησε σε μια πίστα με τον Γκίμλι.
+L:Heir of Elendil	Κληρονόμος του Έλεντιλ
+L:Win a level after the prologue as Isildur.	Νίκησε σε μια πίστα μετά τον πρόλογο με τον Ισίλντουρ.
+L:The Three Hunters	Οι Τρεις Κυνηγοί
+L:Win levels as Aragorn, Legolas and Gimli.	Νίκησε σε πίστες με τον Άραγκορν, τον Λέγκολας και τον Γκίμλι.
+L:An Unexpected Ally	Ένας απρόσμενος σύμμαχος
+L:Win a level as one of the extra heroes.	Νίκησε σε μια πίστα με έναν από τους επιπλέον ήρωες.
+L:A Fellowship Remade	Μια νέα Συντροφιά
+L:Unlock every extra hero.	Ξεκλείδωσε όλους τους επιπλέον ήρωες.
+L:Seasoned Warrior	Έμπειρος πολεμιστής
+L:Bring a hero to level 5.	Ανέβασε έναν ήρωα στο επίπεδο 5.
+L:Legend of the Third Age	Θρύλος της Τρίτης Εποχής
+L:Bring a hero to level 10.	Ανέβασε έναν ήρωα στο επίπεδο 10.
+L:Side by Side	Πλάι πλάι
+L:Win a level in co-op.	Νίκησε σε μια πίστα σε Συνεργασία.
+L:Shoulder to Shoulder	Ώμο με ώμο
+L:Hold the Deeping Wall in co-op.	Κράτησε το Τείχος του Φαραγγιού σε Συνεργασία.
+L:First Blood	Πρώτο αίμα
+L:Win a round of Versus.	Κέρδισε έναν γύρο στην Αναμέτρηση.
+L:Champion of the Arena	Πρωταθλητής της αρένας
+L:Win a Deathmatch.	Κέρδισε ένα Deathmatch.
+L:Untouched	Ανέγγιχτος
+L:Win a round of Versus without taking a blow.	Κέρδισε έναν γύρο στην Αναμέτρηση χωρίς να δεχτείς χτύπημα.
+L:Last Breath	Τελευταία πνοή
+L:Win a round of Versus with less than a tenth of your health left.	Κέρδισε έναν γύρο στην Αναμέτρηση με λιγότερο από το ένα δέκατο της υγείας σου.
+L:Bearer of the Shield	Φορέας της ασπίδας
+L:Win a match of Find the Shield.	Κέρδισε έναν αγώνα στο Βρες την ασπίδα.
+L:The Black Breath	Η Μαύρη Πνοή
+L:Win a Versus match as the Nazgul.	Κέρδισε έναν αγώνα Αναμέτρησης ως Ναζγκούλ.
+L:Iron and Leather	Σίδερο και δέρμα
+L:Win a Versus match as the Shield Orc.	Κέρδισε έναν αγώνα Αναμέτρησης ως Ορκ με ασπίδα.
+L:Third Marshal of the Riddermark	Τρίτος Στρατάρχης του Ρίντερμαρκ
+L:Win a Versus match as Eomer.	Κέρδισε έναν αγώνα Αναμέτρησης ως Έομερ.
+L:Shield-breaker	Σπάστης ασπίδων
+L:Break the Shield Orc's shield.	Σπάσε την ασπίδα του Ορκ με ασπίδα.
+L:Unbroken Line	Αδιάσπαστη γραμμή
+L:As player 1, win 5 Versus rounds in a row.	Ως παίκτης 1, κέρδισε 5 συνεχόμενους γύρους στην Αναμέτρηση.
+L:The Challenger Rises	Ο αμφισβητίας ανατέλλει
+L:As player 2, win 5 Versus rounds in a row.	Ως παίκτης 2, κέρδισε 5 συνεχόμενους γύρους στην Αναμέτρηση.
+L:Get Back!	Πίσω!
+L:Knock your opponent back 50 times in Versus.	Σπρώξε πίσω τον αντίπαλό σου 50 φορές στην Αναμέτρηση.
+L:Eagle Eye	Μάτι αετού
+L:Land 40 locked-on arrows on your opponent in Versus.	Πέτυχε τον αντίπαλό σου με 40 κλειδωμένα βέλη στην Αναμέτρηση.
+L:Scavenger	Συλλέκτης
+L:Take 30 pickups in Versus.	Μάζεψε 30 αντικείμενα στην Αναμέτρηση.
+L:None Shall Pass	Κανείς δεν θα περάσει
+L:Win a Versus match without losing a round.	Κέρδισε έναν αγώνα Αναμέτρησης χωρίς να χάσεις γύρο.
+L:Against All Hope	Ενάντια σε κάθε ελπίδα
+L:Win a Versus match after trailing by 3 rounds.	Κέρδισε έναν αγώνα Αναμέτρησης αφού έχανες με 3 γύρους διαφορά.
+L:Veteran of the Arena	Βετεράνος της αρένας
+L:Win 100 Versus rounds in all.	Κέρδισε συνολικά 100 γύρους στην Αναμέτρηση.
+L:Wanderer	Οδοιπόρος
+L:Win a Versus match on 8 different arenas.	Κέρδισε αγώνα Αναμέτρησης σε 8 διαφορετικές αρένες.
+L:Many Faces	Πολλά πρόσωπα
+L:Win a Versus match as 10 different heroes.	Κέρδισε αγώνα Αναμέτρησης με 10 διαφορετικούς ήρωες.
+L:Troll Brawler	Καβγατζής Τρολ
+L:Win a Troll Battle match.	Κέρδισε έναν αγώνα στη Μάχη Τρολ.
+L:Terror of Moria	Ο Τρόμος της Μόρια
+L:Win 3 Troll Battle matches.	Κέρδισε 3 αγώνες στη Μάχη Τρολ.
+L:Lord of the Deep	Άρχοντας των Βαθών
+L:Win 10 Troll Battle matches.	Κέρδισε 10 αγώνες στη Μάχη Τρολ.
+L:Thick Hide	Χοντρό τομάρι
+L:Win a Troll Battle match without losing a round.	Κέρδισε έναν αγώνα στη Μάχη Τρολ χωρίς να χάσεις γύρο.
+L:Bone Crusher	Θραύστης οστών
+L:Land a single smash of 400 damage or more in Troll Battle.	Κάνε ένα μόνο χτύπημα 400 ή περισσότερων πόντων ζημιάς στη Μάχη Τρολ.
+L:Troll Rampage	Λύσσα του Τρολ
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Προκάλεσε 25.000 ζημιά στη Μάχη Τρολ, σε όλους τους αγώνες σου.
+L:Swift Bludgeon	Γρήγορο ρόπαλο
+L:Win a Troll Battle round in under 20 seconds.	Κέρδισε έναν γύρο στη Μάχη Τρολ σε λιγότερο από 20 δευτερόλεπτα.
+L:Rock and Log	Πέτρα και κορμός
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Πέτυχε το άλλο τρολ με 25 πέτρες ή κορμούς που πέταξες στη Μάχη Τρολ.
+L:Orc-Slayer	Σφαγέας των Ορκ
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Σκότωσε 25 Ορκ και Ουρούκ-χάι σε αγώνες Αναμέτρησης.
+L:Scourge of Isengard	Μάστιγα του Άιζενγκαρντ
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Σκότωσε 150 Ορκ και Ουρούκ-χάι σε αγώνες Αναμέτρησης.
+L:War on Two Fronts	Πόλεμος σε δύο μέτωπα
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Κέρδισε ένα Deathmatch και στις πέντε αρένες με εχθρούς (Άμον Χεν, Φάνγκορν, Πεδιάδες του Ρόχαν, Γκρεμισμένο τείχος, Χόρνμπουργκ).
+L:The White Hand	Το Λευκό Χέρι
+L:Win 3 Versus matches as Saruman.	Κέρδισε 3 αγώνες Αναμέτρησης ως Σάρουμαν.
+L:Shepherd of the Trees	Βοσκός των Δέντρων
+L:Win 3 Versus matches as the Ent.	Κέρδισε 3 αγώνες Αναμέτρησης ως Εντ.
+L:Captain of Isengard	Λοχαγός του Άιζενγκαρντ
+L:Win 3 Versus matches as the Uruk Captain.	Κέρδισε 3 αγώνες Αναμέτρησης ως Λοχαγός Ουρούκ.
+L:The Last Alliance Returns	Η Τελευταία Συμμαχία επιστρέφει
+L:Win 3 Versus matches as the Elven Warrior.	Κέρδισε 3 αγώνες Αναμέτρησης ως Ξωτικός πολεμιστής.
+L:Hunt Them Down	Κυνηγήστε τους
+L:Win 3 Versus matches as Lurtz.	Κέρδισε 3 αγώνες Αναμέτρησης ως Λουρτζ.
+L:The Dark Lord	Ο Σκοτεινός Άρχοντας
+L:Win 3 Versus matches as Sauron.	Κέρδισε 3 αγώνες Αναμέτρησης ως Σάουρον.
+L:Servant of the Secret Fire	Υπηρέτης της Μυστικής Φλόγας
+L:Win 3 Versus matches as Gandalf.	Κέρδισε 3 αγώνες Αναμέτρησης ως Γκάνταλφ.
+L:Lord of Rivendell	Άρχοντας του Ρίβεντελ
+L:Win 3 Versus matches as Elrond.	Κέρδισε 3 αγώνες Αναμέτρησης ως Έλροντ.
+L:Captain of Gondor	Λοχαγός της Γκόντορ
+L:Win 3 Versus matches as Boromir.	Κέρδισε 3 αγώνες Αναμέτρησης ως Μπορόμιρ.
+L:Ring-bearer	Δακτυλιδοφόρος
+L:Win 3 Versus matches as Frodo.	Κέρδισε 3 αγώνες Αναμέτρησης ως Φρόντο.
+L:Blood Frenzy	Μανία αίματος
+L:Win 3 Versus matches as the Berserker.	Κέρδισε 3 αγώνες Αναμέτρησης ως Μαινόμενος.
+L:Hurl the Stones	Ρίξε τις πέτρες
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Ως Εντ, πέτυχε τον αντίπαλό σου με 20 πέτρες που πέταξες στην Αναμέτρηση.
+L:Mirror Image	Κατοπτρικό είδωλο
+L:Win a match of first to 5 or more where both players are the same hero.	Κέρδισε έναν αγώνα έως 5 ή περισσότερες νίκες όπου και οι δύο παίκτες έχουν τον ίδιο ήρωα.
+L:Defiance	Αψηφισιά
+L:Win a level on Impossible.	Νίκησε σε μια πίστα στην Αδύνατη δυσκολία.
+L:Hardened	Σκληραγωγημένος
+L:Win 5 different levels on Impossible.	Νίκησε σε 5 διαφορετικές πίστες στην Αδύνατη δυσκολία.
+L:DIAMOND: The Unbreakable	ΔΙΑΜΑΝΤΙ: Ο Ακατάβλητος
+L:Win every level of the story on Impossible. Very few ever will.	Νίκησε σε κάθε πίστα της ιστορίας στην Αδύνατη δυσκολία. Ελάχιστοι θα τα καταφέρουν ποτέ.

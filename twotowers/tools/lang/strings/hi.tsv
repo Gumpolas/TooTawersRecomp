@@ -1833,3 +1833,198 @@ P:BRAWLER: PLAYER {1}	लड़ाका: खिलाड़ी {1}
 P:RELENTLESS: PLAYER {1}	अथक: खिलाड़ी {1}
 P:Start Match	मुकाबला शुरू करें
 P:ROUND {1}   P{2} {3} - {4} P{5}	राउंड {1}   P{2} {3} - {4} P{5}
+P:Borderless	बॉर्डरलेस
+P:Exclusive	एक्सक्लूसिव
+P:Full Screen Res:	फ़ुल स्क्रीन रिज़ॉल्यूशन:
+P:Mode:	मोड:
+P:Troll Battle	ट्रोल युद्ध
+P:Reset P2 Controls	P2 नियंत्रण रीसेट करें
+P:Berserker	उन्मादी
+P:Cave Troll	गुफा ट्रोल
+P:Uruk Captain	उरुक कप्तान
+P:Saruman	सरूमान
+P:Elven Warrior	एल्फ़ योद्धा
+P:Ent	एंट
+P:Player 1: choose your hero	खिलाड़ी 1: अपना नायक चुनें
+P:Player 2: waiting	खिलाड़ी 2: प्रतीक्षा में
+P:Player 2: choose your hero	खिलाड़ी 2: अपना नायक चुनें
+P:Player 1: {1}	खिलाड़ी 1: {1}
+P:Player 2: {1}	खिलाड़ी 2: {1}
+P:Player 2: {1} is Player 1's	खिलाड़ी 2: {1} खिलाड़ी 1 का है
+P:Player 2: {1} not available	खिलाड़ी 2: {1} उपलब्ध नहीं
+P:Ready. Press Continue to begin	तैयार। शुरू करने के लिए जारी रखें दबाएँ
+P:Unavailable	अनुपलब्ध
+P:Speed	गति
+P:Fierce	उग्र
+P:Special	विशेष
+P:Mixed	मिश्रित
+P:P{1} STAB GUARD: {2} LEFT	P{1} वार-बचाव: {2} शेष
+P:FIND THE SHIELD: {1} AHEAD	ढाल खोजो: {1} आगे
+P:FIND THE SHIELD: {1} BEHIND	ढाल खोजो: {1} पीछे
+P:FIND THE SHIELD: {1} TO THE LEFT	ढाल खोजो: {1} बाईं ओर
+P:FIND THE SHIELD: {1} TO THE RIGHT	ढाल खोजो: {1} दाईं ओर
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ढाल खोजो   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	खिलाड़ी {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	सबसे ज़ोरदार प्रहार
+P:CLUB BLOWS / SWINGS	गदा वार / घुमाव
+P:DAMAGE DEALT / TAKEN	दी / झेली गई क्षति
+P:FASTEST KNOCKOUT	सबसे तेज़ नॉकआउट
+P:MOST DAMAGE IN A MATCH	एक मैच में सबसे ज़्यादा क्षति
+P:ROCKS AND LOGS ON TARGET	निशाने पर पत्थर और लट्ठे
+P:SMASHES ({1}+)	प्रहार ({1}+)
+P:TROLL BATTLE RECORDS	ट्रोल युद्ध रिकॉर्ड
+P:TROLL BATTLE RESULTS	ट्रोल युद्ध परिणाम
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	मैच फिर शुरू करें: BACK (Backspace / Tab) या क्लिक करें
+L:Restart Round: Y (the I key) or click this line	राउंड फिर शुरू करें: Y (I कुंजी) या इस पंक्ति पर क्लिक करें
+L:P2 Teleport: ON	P2 टेलीपोर्ट: चालू
+L:P2 Teleport: OFF	P2 टेलीपोर्ट: बंद
+L:Turn it off: Y (the I key) or click this note	बंद करें: Y (I कुंजी) या इस नोट पर क्लिक करें
+L:Turn it on: Y (the I key) or click this note	चालू करें: Y (I कुंजी) या इस नोट पर क्लिक करें
+L:IMPOSSIBLE	असंभव
+L:Harder than Expert: any enemy's second blow fells you	विशेषज्ञ से भी कठिन: किसी भी दुश्मन का दूसरा वार आपको गिरा देता है
+L:Achievement earned	उपलब्धि मिली
+L:DIAMOND ACHIEVEMENT EARNED	हीरा उपलब्धि मिली
+L:The Last Alliance	अंतिम गठबंधन
+L:Win the prologue on the slopes of Mount Doom.	माउंट डूम की ढलानों पर प्रस्तावना जीतें।
+L:Fire on Weathertop	वेदरटॉप पर आग
+L:Drive the Ringwraiths from Weathertop.	रिंगव्रेथ्स को वेदरटॉप से खदेड़ें।
+L:Speak Friend	मित्र कहो
+L:Escape the Watcher at the Gates of Moria.	मोरिया के द्वार पर जल के पहरेदार से बच निकलें।
+L:Drums in the Deep	गहराइयों में नगाड़े
+L:Fight your way out of Balin's Tomb.	लड़ते हुए बालिन के मक़बरे से बाहर निकलें।
+L:Breaking of the Fellowship	दल का बिखराव
+L:Stand against the Uruk-hai at Amon Hen.	अमोन हेन पर उरुक-हाई के आगे डटे रहें।
+L:Into the Forest	जंगल की ओर
+L:Get through Fangorn Forest.	फ़ैंगोर्न का जंगल पार करें।
+L:Riders of Rohan	रोहन के घुड़सवार
+L:Win the battle on the Plains of Rohan.	रोहन के मैदानों की लड़ाई जीतें।
+L:The Burning of the Westfold	वेस्टफ़ोल्ड का दहन
+L:Save the villages of the Westfold.	वेस्टफ़ोल्ड के गाँवों को बचाएँ।
+L:Wolves on the Road	राह में भेड़िये
+L:Reach Helm's Deep along the road.	राह से होते हुए हेल्म्स डीप पहुँचें।
+L:The Deeping Wall	डीपिंग की दीवार
+L:Hold the Deeping Wall.	डीपिंग की दीवार थामे रखें।
+L:The Wall Is Breached	दीवार टूट गई
+L:Fight on when the wall is breached.	दीवार टूटने पर भी लड़ते रहें।
+L:The Hornburg Holds	हॉर्नबर्ग डटा है
+L:Defend the Hornburg's courtyard to the dawn.	भोर तक हॉर्नबर्ग के आँगन की रक्षा करें।
+L:The Two Towers	द टू टावर्स
+L:Win every level of the story.	कहानी का हर लेवल जीतें।
+L:The Tower of Orthanc	ओर्थैंक की मीनार
+L:Win the secret mission at Orthanc.	ओर्थैंक का गुप्त मिशन जीतें।
+L:Ranger of the North	उत्तर का रेंजर
+L:Win a level as Aragorn.	अरागॉर्न बनकर कोई लेवल जीतें।
+L:Prince of Mirkwood	मर्कवुड का राजकुमार
+L:Win a level as Legolas.	लेगोलस बनकर कोई लेवल जीतें।
+L:Son of Gloin	ग्लोइन का पुत्र
+L:Win a level as Gimli.	गिमली बनकर कोई लेवल जीतें।
+L:Heir of Elendil	एलेंडिल का वारिस
+L:Win a level after the prologue as Isildur.	प्रस्तावना के बाद इसिलडर बनकर कोई लेवल जीतें।
+L:The Three Hunters	तीन शिकारी
+L:Win levels as Aragorn, Legolas and Gimli.	अरागॉर्न, लेगोलस और गिमली बनकर लेवल जीतें।
+L:An Unexpected Ally	एक अनपेक्षित साथी
+L:Win a level as one of the extra heroes.	किसी अतिरिक्त नायक के रूप में कोई लेवल जीतें।
+L:A Fellowship Remade	फिर से बना दल
+L:Unlock every extra hero.	हर अतिरिक्त नायक अनलॉक करें।
+L:Seasoned Warrior	मँजा हुआ योद्धा
+L:Bring a hero to level 5.	किसी नायक को लेवल 5 तक पहुँचाएँ।
+L:Legend of the Third Age	तीसरे युग की किंवदंती
+L:Bring a hero to level 10.	किसी नायक को लेवल 10 तक पहुँचाएँ।
+L:Side by Side	साथ-साथ
+L:Win a level in co-op.	को-ऑप में कोई लेवल जीतें।
+L:Shoulder to Shoulder	कंधे से कंधा मिलाकर
+L:Hold the Deeping Wall in co-op.	को-ऑप में डीपिंग की दीवार थामे रखें।
+L:First Blood	पहला ख़ून
+L:Win a round of Versus.	वर्सस का एक राउंड जीतें।
+L:Champion of the Arena	अखाड़े का चैंपियन
+L:Win a Deathmatch.	एक डेथमैच जीतें।
+L:Untouched	अछूता
+L:Win a round of Versus without taking a blow.	बिना एक भी वार खाए वर्सस का एक राउंड जीतें।
+L:Last Breath	आख़िरी साँस
+L:Win a round of Versus with less than a tenth of your health left.	दसवें हिस्से से कम स्वास्थ्य बचे रहते वर्सस का एक राउंड जीतें।
+L:Bearer of the Shield	ढाल का वाहक
+L:Win a match of Find the Shield.	ढाल खोजो का एक मैच जीतें।
+L:The Black Breath	काली साँस
+L:Win a Versus match as the Nazgul.	नाज़गुल बनकर वर्सस मैच जीतें।
+L:Iron and Leather	लोहा और चमड़ा
+L:Win a Versus match as the Shield Orc.	ढाल वाला ऑर्क बनकर वर्सस मैच जीतें।
+L:Third Marshal of the Riddermark	रिडरमार्क का तीसरा मार्शल
+L:Win a Versus match as Eomer.	एओमर बनकर वर्सस मैच जीतें।
+L:Shield-breaker	ढाल-भंजक
+L:Break the Shield Orc's shield.	ढाल वाले ऑर्क की ढाल तोड़ें।
+L:Unbroken Line	अटूट पंक्ति
+L:As player 1, win 5 Versus rounds in a row.	खिलाड़ी 1 के रूप में लगातार 5 वर्सस राउंड जीतें।
+L:The Challenger Rises	दावेदार का उदय
+L:As player 2, win 5 Versus rounds in a row.	खिलाड़ी 2 के रूप में लगातार 5 वर्सस राउंड जीतें।
+L:Get Back!	पीछे हटो!
+L:Knock your opponent back 50 times in Versus.	वर्सस में प्रतिद्वंद्वी को 50 बार पीछे धकेलें।
+L:Eagle Eye	बाज़ की नज़र
+L:Land 40 locked-on arrows on your opponent in Versus.	वर्सस में प्रतिद्वंद्वी पर 40 लॉक-ऑन तीर लगाएँ।
+L:Scavenger	संग्राहक
+L:Take 30 pickups in Versus.	वर्सस में 30 पिकअप उठाएँ।
+L:None Shall Pass	कोई नहीं गुज़रेगा
+L:Win a Versus match without losing a round.	एक भी राउंड हारे बिना वर्सस मैच जीतें।
+L:Against All Hope	हर आशा के विपरीत
+L:Win a Versus match after trailing by 3 rounds.	3 राउंड से पीछे रहने के बाद वर्सस मैच जीतें।
+L:Veteran of the Arena	अखाड़े का दिग्गज
+L:Win 100 Versus rounds in all.	कुल 100 वर्सस राउंड जीतें।
+L:Wanderer	यायावर
+L:Win a Versus match on 8 different arenas.	8 अलग-अलग अखाड़ों पर वर्सस मैच जीतें।
+L:Many Faces	अनेक चेहरे
+L:Win a Versus match as 10 different heroes.	10 अलग-अलग नायकों के रूप में वर्सस मैच जीतें।
+L:Troll Brawler	ट्रोल लड़ाका
+L:Win a Troll Battle match.	ट्रोल युद्ध का एक मैच जीतें।
+L:Terror of Moria	मोरिया का आतंक
+L:Win 3 Troll Battle matches.	ट्रोल युद्ध के 3 मैच जीतें।
+L:Lord of the Deep	गहराइयों का स्वामी
+L:Win 10 Troll Battle matches.	ट्रोल युद्ध के 10 मैच जीतें।
+L:Thick Hide	मोटी खाल
+L:Win a Troll Battle match without losing a round.	एक भी राउंड हारे बिना ट्रोल युद्ध का मैच जीतें।
+L:Bone Crusher	हड्डी-तोड़
+L:Land a single smash of 400 damage or more in Troll Battle.	ट्रोल युद्ध में एक ही प्रहार से 400 या अधिक क्षति करें।
+L:Troll Rampage	ट्रोल का कहर
+L:Deal 25,000 damage in Troll Battle, across all your matches.	अपने सभी मैचों को मिलाकर ट्रोल युद्ध में 25,000 क्षति करें।
+L:Swift Bludgeon	फुर्तीला मुगदर
+L:Win a Troll Battle round in under 20 seconds.	ट्रोल युद्ध का एक राउंड 20 सेकंड से कम में जीतें।
+L:Rock and Log	पत्थर और लट्ठा
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	ट्रोल युद्ध में दूसरे ट्रोल पर 25 पत्थर या लट्ठे फेंककर मारें।
+L:Orc-Slayer	ऑर्क-संहारक
+L:Slay 25 orcs and Uruk-hai during Versus matches.	वर्सस मैचों में 25 ऑर्क और उरुक-हाई मारें।
+L:Scourge of Isengard	आइज़नगार्ड का क़हर
+L:Slay 150 orcs and Uruk-hai during Versus matches.	वर्सस मैचों में 150 ऑर्क और उरुक-हाई मारें।
+L:War on Two Fronts	दो मोर्चों पर युद्ध
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	दुश्मनों वाले पाँचों अखाड़ों (अमोन हेन, फ़ैंगोर्न, रोहन के मैदान, टूटी हुई दीवार, हॉर्नबर्ग) पर डेथमैच जीतें।
+L:The White Hand	श्वेत हस्त
+L:Win 3 Versus matches as Saruman.	सरूमान बनकर 3 वर्सस मैच जीतें।
+L:Shepherd of the Trees	पेड़ों का चरवाहा
+L:Win 3 Versus matches as the Ent.	एंट बनकर 3 वर्सस मैच जीतें।
+L:Captain of Isengard	आइज़नगार्ड का कप्तान
+L:Win 3 Versus matches as the Uruk Captain.	उरुक कप्तान बनकर 3 वर्सस मैच जीतें।
+L:The Last Alliance Returns	अंतिम गठबंधन की वापसी
+L:Win 3 Versus matches as the Elven Warrior.	एल्फ़ योद्धा बनकर 3 वर्सस मैच जीतें।
+L:Hunt Them Down	उन्हें ढूँढ़ निकालो
+L:Win 3 Versus matches as Lurtz.	लर्ट्ज़ बनकर 3 वर्सस मैच जीतें।
+L:The Dark Lord	अंधकार का स्वामी
+L:Win 3 Versus matches as Sauron.	सौरोन बनकर 3 वर्सस मैच जीतें।
+L:Servant of the Secret Fire	गुप्त अग्नि का सेवक
+L:Win 3 Versus matches as Gandalf.	गैंडाल्फ़ बनकर 3 वर्सस मैच जीतें।
+L:Lord of Rivendell	रिवेनडेल का स्वामी
+L:Win 3 Versus matches as Elrond.	एलरॉन्ड बनकर 3 वर्सस मैच जीतें।
+L:Captain of Gondor	गोंडोर का कप्तान
+L:Win 3 Versus matches as Boromir.	बोरोमिर बनकर 3 वर्सस मैच जीतें।
+L:Ring-bearer	अंगूठी-वाहक
+L:Win 3 Versus matches as Frodo.	फ़्रोडो बनकर 3 वर्सस मैच जीतें।
+L:Blood Frenzy	रक्त-उन्माद
+L:Win 3 Versus matches as the Berserker.	उन्मादी बनकर 3 वर्सस मैच जीतें।
+L:Hurl the Stones	पत्थर बरसाओ
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	एंट बनकर वर्सस में प्रतिद्वंद्वी पर 20 पत्थर फेंककर मारें।
+L:Mirror Image	प्रतिबिंब
+L:Win a match of first to 5 or more where both players are the same hero.	पहले 5 या अधिक जीत वाला ऐसा मैच जीतें जिसमें दोनों खिलाड़ी एक ही नायक हों।
+L:Defiance	ललकार
+L:Win a level on Impossible.	असंभव पर कोई लेवल जीतें।
+L:Hardened	तपा हुआ
+L:Win 5 different levels on Impossible.	असंभव पर 5 अलग-अलग लेवल जीतें।
+L:DIAMOND: The Unbreakable	हीरा: अटूट
+L:Win every level of the story on Impossible. Very few ever will.	असंभव पर कहानी का हर लेवल जीतें। बहुत कम लोग कभी ऐसा कर पाएँगे।

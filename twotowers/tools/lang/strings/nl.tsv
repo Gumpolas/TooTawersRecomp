@@ -1836,3 +1836,198 @@ P:BRAWLER: PLAYER {1}	VECHTERSBAAS: SPELER {1}
 P:RELENTLESS: PLAYER {1}	MEEDOGENLOOS: SPELER {1}
 P:Start Match	Start gevecht
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Randloos
+P:Exclusive	Exclusief
+P:Full Screen Res:	Res. volledig scherm:
+P:Mode:	Modus:
+P:Troll Battle	Trollengevecht
+P:Reset P2 Controls	Besturing S2 herstellen
+P:Berserker	Berserker
+P:Cave Troll	Grottrol
+P:Uruk Captain	Uruk-kapitein
+P:Saruman	Saruman
+P:Elven Warrior	Elfenkrijger
+P:Ent	Ent
+P:Player 1: choose your hero	Speler 1: kies je held
+P:Player 2: waiting	Speler 2: wacht
+P:Player 2: choose your hero	Speler 2: kies je held
+P:Player 1: {1}	Speler 1: {1}
+P:Player 2: {1}	Speler 2: {1}
+P:Player 2: {1} is Player 1's	Speler 2: {1} is van Speler 1
+P:Player 2: {1} not available	Speler 2: {1} niet beschikbaar
+P:Ready. Press Continue to begin	Klaar. Druk op Doorgaan om te beginnen
+P:Unavailable	Niet beschikbaar
+P:Speed	Snel
+P:Fierce	Woest
+P:Special	Speciaal
+P:Mixed	Gemengd
+P:P{1} STAB GUARD: {2} LEFT	S{1} STEEKDEKKING: NOG {2}
+P:FIND THE SHIELD: {1} AHEAD	VIND HET SCHILD: {1} VOORUIT
+P:FIND THE SHIELD: {1} BEHIND	VIND HET SCHILD: {1} ACHTER JE
+P:FIND THE SHIELD: {1} TO THE LEFT	VIND HET SCHILD: {1} NAAR LINKS
+P:FIND THE SHIELD: {1} TO THE RIGHT	VIND HET SCHILD: {1} NAAR RECHTS
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	VIND HET SCHILD   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPELER {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HARDSTE DREUN
+P:CLUB BLOWS / SWINGS	KNOTSLAGEN / ZWAAIEN
+P:DAMAGE DEALT / TAKEN	SCHADE GEDAAN / GEKREGEN
+P:FASTEST KNOCKOUT	SNELSTE KNOCK-OUT
+P:MOST DAMAGE IN A MATCH	MEESTE SCHADE IN EEN WEDSTRIJD
+P:ROCKS AND LOGS ON TARGET	STENEN EN STAMMEN RAAK
+P:SMASHES ({1}+)	DREUNEN ({1}+)
+P:TROLL BATTLE RECORDS	TROLLENGEVECHT-RECORDS
+P:TROLL BATTLE RESULTS	TROLLENGEVECHT-UITSLAG
+P:P{1}	S{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Wedstrijd herstarten: BACK (Backspace / Tab) of klik
+L:Restart Round: Y (the I key) or click this line	Ronde herstarten: Y (de I-toets) of klik op deze regel
+L:P2 Teleport: ON	S2 teleporteren: AAN
+L:P2 Teleport: OFF	S2 teleporteren: UIT
+L:Turn it off: Y (the I key) or click this note	Uitzetten: Y (de I-toets) of klik op deze melding
+L:Turn it on: Y (the I key) or click this note	Aanzetten: Y (de I-toets) of klik op deze melding
+L:IMPOSSIBLE	ONMOGELIJK
+L:Harder than Expert: any enemy's second blow fells you	Moeilijker dan Expert: de tweede klap van elke vijand velt je
+L:Achievement earned	Prestatie behaald
+L:DIAMOND ACHIEVEMENT EARNED	DIAMANTEN PRESTATIE BEHAALD
+L:The Last Alliance	Het Laatste Bondgenootschap
+L:Win the prologue on the slopes of Mount Doom.	Versla de proloog op de hellingen van de Doemberg.
+L:Fire on Weathertop	Vuur op Weertop
+L:Drive the Ringwraiths from Weathertop.	Verdrijf de Ringgeesten van Weertop.
+L:Speak Friend	Spreek, vriend
+L:Escape the Watcher at the Gates of Moria.	Ontsnap aan de Wachter bij de Poorten van Moria.
+L:Drums in the Deep	Trommels in de diepte
+L:Fight your way out of Balin's Tomb.	Vecht je een weg uit het Graf van Balin.
+L:Breaking of the Fellowship	Het uiteenvallen van het Genootschap
+L:Stand against the Uruk-hai at Amon Hen.	Bied weerstand aan de Uruk-hai bij Amon Hen.
+L:Into the Forest	Het woud in
+L:Get through Fangorn Forest.	Kom door het Fangornwoud.
+L:Riders of Rohan	De Ruiters van Rohan
+L:Win the battle on the Plains of Rohan.	Win de strijd op de Vlakten van Rohan.
+L:The Burning of the Westfold	De brand in de Westfold
+L:Save the villages of the Westfold.	Red de dorpen van de Westfold.
+L:Wolves on the Road	Wolven op de weg
+L:Reach Helm's Deep along the road.	Bereik Helmsdiep langs de weg.
+L:The Deeping Wall	De Diepingmuur
+L:Hold the Deeping Wall.	Houd de Diepingmuur.
+L:The Wall Is Breached	De muur is doorbroken
+L:Fight on when the wall is breached.	Vecht door als de muur is doorbroken.
+L:The Hornburg Holds	De Hoornburg houdt stand
+L:Defend the Hornburg's courtyard to the dawn.	Verdedig de binnenplaats van de Hoornburg tot de dageraad.
+L:The Two Towers	De Twee Torens
+L:Win every level of the story.	Versla elk level van het verhaal.
+L:The Tower of Orthanc	De Toren van Orthanc
+L:Win the secret mission at Orthanc.	Versla de geheime missie in Orthanc.
+L:Ranger of the North	Doler van het Noorden
+L:Win a level as Aragorn.	Versla een level als Aragorn.
+L:Prince of Mirkwood	Prins van Demsterwold
+L:Win a level as Legolas.	Versla een level als Legolas.
+L:Son of Gloin	Zoon van Glóin
+L:Win a level as Gimli.	Versla een level als Gimli.
+L:Heir of Elendil	Erfgenaam van Elendil
+L:Win a level after the prologue as Isildur.	Versla na de proloog een level als Isildur.
+L:The Three Hunters	De drie jagers
+L:Win levels as Aragorn, Legolas and Gimli.	Versla levels als Aragorn, Legolas en Gimli.
+L:An Unexpected Ally	Een onverwachte bondgenoot
+L:Win a level as one of the extra heroes.	Versla een level als een van de extra helden.
+L:A Fellowship Remade	Een nieuw Genootschap
+L:Unlock every extra hero.	Speel alle extra helden vrij.
+L:Seasoned Warrior	Geharde strijder
+L:Bring a hero to level 5.	Breng een held naar level 5.
+L:Legend of the Third Age	Legende van de Derde Era
+L:Bring a hero to level 10.	Breng een held naar level 10.
+L:Side by Side	Zij aan zij
+L:Win a level in co-op.	Versla een level in co-op.
+L:Shoulder to Shoulder	Schouder aan schouder
+L:Hold the Deeping Wall in co-op.	Houd de Diepingmuur in co-op.
+L:First Blood	Eerste bloed
+L:Win a round of Versus.	Win een ronde in Versus.
+L:Champion of the Arena	Kampioen van de arena
+L:Win a Deathmatch.	Win een Deathmatch.
+L:Untouched	Onaangeroerd
+L:Win a round of Versus without taking a blow.	Win een ronde in Versus zonder een klap te krijgen.
+L:Last Breath	Laatste adem
+L:Win a round of Versus with less than a tenth of your health left.	Win een ronde in Versus met minder dan een tiende van je gezondheid over.
+L:Bearer of the Shield	Drager van het schild
+L:Win a match of Find the Shield.	Win een wedstrijd Vind het schild.
+L:The Black Breath	De Zwarte Adem
+L:Win a Versus match as the Nazgul.	Win een Versus-wedstrijd als de Nazgûl.
+L:Iron and Leather	IJzer en leer
+L:Win a Versus match as the Shield Orc.	Win een Versus-wedstrijd als de Schildork.
+L:Third Marshal of the Riddermark	Derde Maarschalk van de Riddermark
+L:Win a Versus match as Eomer.	Win een Versus-wedstrijd als Éomer.
+L:Shield-breaker	Schildbreker
+L:Break the Shield Orc's shield.	Breek het schild van de Schildork.
+L:Unbroken Line	Ongebroken linie
+L:As player 1, win 5 Versus rounds in a row.	Win als speler 1 5 Versus-rondes op rij.
+L:The Challenger Rises	De uitdager staat op
+L:As player 2, win 5 Versus rounds in a row.	Win als speler 2 5 Versus-rondes op rij.
+L:Get Back!	Terug!
+L:Knock your opponent back 50 times in Versus.	Sla je tegenstander 50 keer terug in Versus.
+L:Eagle Eye	Arendsoog
+L:Land 40 locked-on arrows on your opponent in Versus.	Raak je tegenstander in Versus met 40 pijlen met doelvergrendeling.
+L:Scavenger	Aaseter
+L:Take 30 pickups in Versus.	Pak 30 items op in Versus.
+L:None Shall Pass	Niemand komt erdoor
+L:Win a Versus match without losing a round.	Win een Versus-wedstrijd zonder een ronde te verliezen.
+L:Against All Hope	Tegen alle hoop in
+L:Win a Versus match after trailing by 3 rounds.	Win een Versus-wedstrijd na een achterstand van 3 rondes.
+L:Veteran of the Arena	Veteraan van de arena
+L:Win 100 Versus rounds in all.	Win in totaal 100 Versus-rondes.
+L:Wanderer	Zwerver
+L:Win a Versus match on 8 different arenas.	Win een Versus-wedstrijd in 8 verschillende arena's.
+L:Many Faces	Vele gezichten
+L:Win a Versus match as 10 different heroes.	Win een Versus-wedstrijd als 10 verschillende helden.
+L:Troll Brawler	Trollenvechtersbaas
+L:Win a Troll Battle match.	Win een wedstrijd Trollengevecht.
+L:Terror of Moria	Verschrikking van Moria
+L:Win 3 Troll Battle matches.	Win 3 wedstrijden Trollengevecht.
+L:Lord of the Deep	Heer van de diepte
+L:Win 10 Troll Battle matches.	Win 10 wedstrijden Trollengevecht.
+L:Thick Hide	Dikke huid
+L:Win a Troll Battle match without losing a round.	Win een wedstrijd Trollengevecht zonder een ronde te verliezen.
+L:Bone Crusher	Bottenbreker
+L:Land a single smash of 400 damage or more in Troll Battle.	Deel in Trollengevecht één dreun uit van 400 schade of meer.
+L:Troll Rampage	Trollenrazernij
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Deel in Trollengevecht 25.000 schade uit, over al je wedstrijden.
+L:Swift Bludgeon	Snelle knots
+L:Win a Troll Battle round in under 20 seconds.	Win een ronde Trollengevecht in minder dan 20 seconden.
+L:Rock and Log	Steen en stam
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Raak in Trollengevecht de andere trol met 25 geworpen stenen of stammen.
+L:Orc-Slayer	Orkendoder
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Dood 25 orks en Uruk-hai tijdens Versus-wedstrijden.
+L:Scourge of Isengard	Gesel van Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Dood 150 orks en Uruk-hai tijdens Versus-wedstrijden.
+L:War on Two Fronts	Oorlog op twee fronten
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Win een Deathmatch in alle vijf arena's met vijanden (Amon Hen, Fangorn, Vlakten van Rohan, Doorbroken muur, Hoornburg).
+L:The White Hand	De Witte Hand
+L:Win 3 Versus matches as Saruman.	Win 3 Versus-wedstrijden als Saruman.
+L:Shepherd of the Trees	Herder van de bomen
+L:Win 3 Versus matches as the Ent.	Win 3 Versus-wedstrijden als de Ent.
+L:Captain of Isengard	Kapitein van Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Win 3 Versus-wedstrijden als de Uruk-kapitein.
+L:The Last Alliance Returns	Het Laatste Bondgenootschap keert terug
+L:Win 3 Versus matches as the Elven Warrior.	Win 3 Versus-wedstrijden als de Elfenkrijger.
+L:Hunt Them Down	Jaag ze op
+L:Win 3 Versus matches as Lurtz.	Win 3 Versus-wedstrijden als Lurtz.
+L:The Dark Lord	De Duistere Heer
+L:Win 3 Versus matches as Sauron.	Win 3 Versus-wedstrijden als Sauron.
+L:Servant of the Secret Fire	Dienaar van het Geheime Vuur
+L:Win 3 Versus matches as Gandalf.	Win 3 Versus-wedstrijden als Gandalf.
+L:Lord of Rivendell	Heer van Rivendel
+L:Win 3 Versus matches as Elrond.	Win 3 Versus-wedstrijden als Elrond.
+L:Captain of Gondor	Kapitein van Gondor
+L:Win 3 Versus matches as Boromir.	Win 3 Versus-wedstrijden als Boromir.
+L:Ring-bearer	Ringdrager
+L:Win 3 Versus matches as Frodo.	Win 3 Versus-wedstrijden als Frodo.
+L:Blood Frenzy	Bloedroes
+L:Win 3 Versus matches as the Berserker.	Win 3 Versus-wedstrijden als de Berserker.
+L:Hurl the Stones	Werp de stenen
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Raak als Ent je tegenstander in Versus met 20 geworpen stenen.
+L:Mirror Image	Spiegelbeeld
+L:Win a match of first to 5 or more where both players are the same hero.	Win een wedstrijd van eerst tot 5 of meer waarin beide spelers dezelfde held zijn.
+L:Defiance	Verzet
+L:Win a level on Impossible.	Versla een level op Onmogelijk.
+L:Hardened	Gehard
+L:Win 5 different levels on Impossible.	Versla 5 verschillende levels op Onmogelijk.
+L:DIAMOND: The Unbreakable	DIAMANT: De Onbreekbare
+L:Win every level of the story on Impossible. Very few ever will.	Versla elk level van het verhaal op Onmogelijk. Slechts weinigen zullen dat ooit doen.
