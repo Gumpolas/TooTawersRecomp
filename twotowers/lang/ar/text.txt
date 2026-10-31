@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	فز بـ5 مراحل مختلفة عل�
 L:DIAMOND: The Unbreakable	ماسي: الذي لا ينكسر
 L:Win every level of the story on Impossible. Very few ever will.	فز بكل مراحل القصة على مستوى مستحيل. قلة قليلة ستفعلها.
 P:Launcher	المشغّل
+L:Mod: 13 extra heroes	تعديل: 13 بطلاً إضافياً
+L:Unlock through Isildur and Orthanc victories (progress counts)	تُفتح بانتصارات إيسيلدور وأورثانك (يُحتسب التقدم)
+L:Extras unlocked from the start (progress counts)	الأبطال الإضافيون مفتوحون منذ البداية (يُحتسب التقدم)
+L:Exclusive full screen	ملء الشاشة الحصري
+L:Full-screen resolution (exclusive)	دقة ملء الشاشة (الحصري)
+L:The desktop's	دقة سطح المكتب
+L:Quit	خروج
+L:Select	اختيار
+L:Launcher	المشغّل
+L:Choose a setting to change it, then Play.	اختر إعداداً لتغييره، ثم تشغيل.
+L:Voices:	الأصوات:
+L:Films:	الأفلام:
+L:(as the text)	(مثل النص)

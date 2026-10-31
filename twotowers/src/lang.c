@@ -45,6 +45,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifndef _WIN32
+#include <dirent.h>
+#include <unistd.h>
+#endif
 #include "../../xboxrecomp-0.12.0/src/kernel/kernel.h"
 
 extern ptrdiff_t xbox_GetMemoryOffset(void);
@@ -399,6 +403,10 @@ int tt_lang_on(void)
         snprintf(p, sizeof p, "%s/text.txt", s_pack); load_lines(p, 0); s_stamp = s_stamp * 31u + file_stamp(p);
         snprintf(p, sizeof p, "%s/glyphs.bin", s_pack); load_glyphs(p); s_stamp = s_stamp * 31u + file_stamp(p);
         snprintf(p, sizeof p, "%s/glyphs4.bin", s_pack); s_stamp = s_stamp * 31u + file_stamp(p);
+        /* (1.9.9) the Ultra textures' state too: a copy made before the pack was made ready had no upscaled fonts to pair
+         * (its list empty), and was used as it was from then on -- that language's words never upscaled, even with the
+         * Ultra textures on. The pack made (again): the copies made again, with their upscaled fonts */
+        snprintf(p, sizeof p, "%s/textures_ultra/built.txt", s_dir); s_stamp = s_stamp * 31u + file_stamp(p);
         s_on = s_ng > 0;
         tt_dbg("[LANG] %s: %d game strings, %d texts, %d font sizes%s%s\n", s_code, s_ng, s_nt, s_nslot,
                s_rtl ? ", right to left" : "", s_on ? "" : " -- no pack, English");
@@ -940,6 +948,45 @@ static int texty(const char *xp)
     if (l > 4 && (strstr(xp, "orlds\\") || strstr(xp, "ORLDS\\")) && !_strnicmp(b + l - 4, ".bf", 3)) return 1;
     return 0;
 }
+/* (1.9.9) the copies of a file made before (another version of the pack, the Ultra textures made since): taken away
+ * when it is made again -- each was the whole file (several MB with the Asian languages' letters) */
+static void drop_old(const char *dir, const char *name, const char *keep)
+{
+    char tail[320], full[1000];
+    size_t tl, nl;
+    snprintf(tail, sizeof tail, "_%s", name);
+    tl = strlen(tail);
+#ifdef _WIN32
+    {
+        WIN32_FIND_DATAA fd; HANDLE h; char pat[900];
+        snprintf(pat, sizeof pat, "%s/*", dir);
+        if ((h = FindFirstFileA(pat, &fd)) == INVALID_HANDLE_VALUE) return;
+        do {
+            const char *n = fd.cFileName;
+            nl = strlen(n);
+            if (!strncmp(n, keep, strlen(keep))) continue;
+            if ((nl > tl && !_stricmp(n + nl - tl, tail)) || (nl > tl + 6 && !_strnicmp(n + nl - tl - 6, tail, tl) && !_stricmp(n + nl - 6, ".ultra"))) {
+                snprintf(full, sizeof full, "%s/%s", dir, n); DeleteFileA(full);
+            }
+        } while (FindNextFileA(h, &fd));
+        FindClose(h);
+    }
+#else
+    {
+        DIR *d = opendir(dir); struct dirent *de;
+        if (!d) return;
+        while ((de = readdir(d)) != NULL) {
+            const char *n = de->d_name;
+            nl = strlen(n);
+            if (!strncmp(n, keep, strlen(keep))) continue;
+            if ((nl > tl && !strcasecmp(n + nl - tl, tail)) || (nl > tl + 6 && !strncasecmp(n + nl - tl - 6, tail, tl) && !strcasecmp(n + nl - 6, ".ultra"))) {
+                snprintf(full, sizeof full, "%s/%s", dir, n); unlink(full);
+            }
+        }
+        closedir(d);
+    }
+#endif
+}
 /* the copy for the file the game would open (src: its host path) */
 static const char *lang_copy(const char *xp, const char *src)
 {
@@ -976,6 +1023,12 @@ static const char *lang_copy(const char *xp, const char *src)
         remove(out);
     }
     mkdirs(out);
+    {
+        char dir[900], keep[64];
+        snprintf(dir, sizeof dir, "%s/lang_cache/%s", s_dir, s_code);
+        snprintf(keep, sizeof keep, "%08lX_%08lX_", st, s_stamp & 0xFFFFFFFFul);
+        drop_old(dir, name, keep);
+    }
     s_ulist_n = 0; s_ulist[0] = 0;
     if (!build(src, out, &ntr, &ng)) { tt_dbg("[LANG] %s: kept as it is\n", xp); return NULL; }
     if ((f = fopen(stp, "wb"))) { fwrite(s_ulist, 1, s_ulist_n, f); fclose(f); }

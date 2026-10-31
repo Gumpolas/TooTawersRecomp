@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	Thắng 5 màn khác nhau ở độ khó
 L:DIAMOND: The Unbreakable	KIM CƯƠNG: Bất Khuất
 L:Win every level of the story on Impossible. Very few ever will.	Thắng mọi màn của cốt truyện ở độ khó Bất khả thi. Rất ít người làm được điều này.
 P:Launcher	Trình khởi chạy
+L:Mod: 13 extra heroes	Mod: 13 anh hùng bổ sung
+L:Unlock through Isildur and Orthanc victories (progress counts)	Mở khóa bằng chiến thắng của Isildur và ở Orthanc (tiến độ được tính)
+L:Extras unlocked from the start (progress counts)	Anh hùng bổ sung mở khóa từ đầu (tiến độ được tính)
+L:Exclusive full screen	Toàn màn hình độc quyền
+L:Full-screen resolution (exclusive)	Độ phân giải toàn màn hình (độc quyền)
+L:The desktop's	Theo màn hình nền
+L:Quit	Thoát
+L:Select	Chọn
+L:Launcher	Trình khởi chạy
+L:Choose a setting to change it, then Play.	Chọn một cài đặt để thay đổi, rồi Chơi.
+L:Voices:	Giọng nói:
+L:Films:	Phim:
+L:(as the text)	(như văn bản)

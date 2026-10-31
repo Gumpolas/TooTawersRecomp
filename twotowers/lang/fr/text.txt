@@ -2033,3 +2033,13 @@ L:Win 5 different levels on Impossible.	Remportez 5 niveaux différents en Impos
 L:DIAMOND: The Unbreakable	DIAMANT : L'Indestructible
 L:Win every level of the story on Impossible. Very few ever will.	Remportez tous les niveaux de l'histoire en Impossible. Bien peu y parviendront.
 P:Launcher	Lanceur
+L:Mod: 13 extra heroes	Mod : 13 héros supplémentaires
+L:Unlock through Isildur and Orthanc victories (progress counts)	Débloqués par les victoires d'Isildur et d'Orthanc (la progression compte)
+L:Extras unlocked from the start (progress counts)	Héros supplémentaires débloqués dès le début (la progression compte)
+L:Exclusive full screen	Plein écran exclusif
+L:Full-screen resolution (exclusive)	Résolution plein écran (exclusif)
+L:The desktop's	Celle du bureau
+L:Quit	Quitter
+L:Select	Choisir
+L:Launcher	Lanceur
+L:Choose a setting to change it, then Play.	Choisissez un réglage pour le modifier, puis Jouer.

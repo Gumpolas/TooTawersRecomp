@@ -3401,3 +3401,18 @@ twotowers/src/twotowers_manual.c
     level 5 / 10) only for a real level-up -- a hero's level rising by one
     or two. The prologue hands its hero a ready-made level 10, so
     finishing it earned both; loading a save is no level-up either.
+  - Ultra textures and the languages: every word upscaled, at all times.
+    The languages' fonts are paired with their upscaled pictures each time
+    a file of the game is loaded (each level, each menu), and after 512 of
+    those pairings every new one was dropped: later in a session the text
+    loaded since went back to the blurry font. A pairing given before is
+    now not given again (and 4096 can be held). And a language's copy of a
+    file made before the Ultra textures were made ready had no upscaled
+    fonts, and was used as it was from then on -- that language's words
+    never upscaled. The copies now follow the pack: made again (with their
+    upscaled fonts) when it is made or made again, the old copies taken
+    away.
+  - The launcher in every language: the words it lacked (Exclusive full
+    screen, the full-screen resolution, the 13 extra heroes mod and its
+    choices; Voices / Films / (as the text) in 22 languages), and the
+    Linux launcher's window, which uses the launcher's own words.

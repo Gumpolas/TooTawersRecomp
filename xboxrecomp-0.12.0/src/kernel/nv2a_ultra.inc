@@ -52,17 +52,33 @@ static int g_ultra_log = -1;
  * language's letters added, upscaled: twotowers lang.c), paired with a
  * texture by its hash: xbox_UltraAddPair(hash, path relative to the game's
  * folder). Any thread; taken in by the renderer's next look. */
-#define UADD_N 512
+#define UADD_N 4096
 static struct { uint32_t hash; char path[120]; } g_uadd[UADD_N];
 static volatile LONG g_uaddn;
 static int g_uadd_done;   /* (taken in so far) */
+/* (1.9.9) a pair already given is not given again: the languages' fonts are paired again each time a file of the game
+ * is loaded (each level, each menu), and after 512 of them every new one was dropped -- the text of the files loaded
+ * later in a session (the levels' and menus' words in that language) lost its upscaled font */
+static CRITICAL_SECTION g_uadd_lock;
+static volatile LONG g_uadd_lock_state;   /* 0 not made, 1 being made, 2 ready */
 void xbox_UltraAddPair(uint32_t hash, const char *path)
 {
-    LONG i = g_uaddn;
-    if (i >= UADD_N || !path || strlen(path) >= 120) return;
-    g_uadd[i].hash = hash;
-    snprintf(g_uadd[i].path, sizeof g_uadd[i].path, "%s", path);
-    InterlockedExchange(&g_uaddn, i + 1);
+    LONG i, k;
+    if (!path || strlen(path) >= 120) return;
+    if (InterlockedCompareExchange(&g_uadd_lock_state, 1, 0) == 0) { InitializeCriticalSection(&g_uadd_lock); InterlockedExchange(&g_uadd_lock_state, 2); }
+    while (g_uadd_lock_state != 2) Sleep(0);
+    EnterCriticalSection(&g_uadd_lock);
+    i = g_uaddn;
+    for (k = 0; k < i; k++) if (g_uadd[k].hash == hash && !strcmp(g_uadd[k].path, path)) break;
+    if (k == i) {
+        if (i >= UADD_N) { static int told; if (!told++) { fprintf(stderr, "  [ULTRA] too many of the title's pictures paired (%d)\n", UADD_N); fflush(stderr); } }
+        else {
+            g_uadd[i].hash = hash;
+            snprintf(g_uadd[i].path, sizeof g_uadd[i].path, "%s", path);
+            InterlockedExchange(&g_uaddn, i + 1);
+        }
+    }
+    LeaveCriticalSection(&g_uadd_lock);
 }
 
 static void ultra_adds(int all);

@@ -2033,3 +2033,13 @@ L:Win 5 different levels on Impossible.	Gana 5 niveles distintos en Imposible.
 L:DIAMOND: The Unbreakable	DIAMANTE: El Inquebrantable
 L:Win every level of the story on Impossible. Very few ever will.	Gana todos los niveles de la historia en Imposible. Muy pocos lo lograrán.
 P:Launcher	Lanzador
+L:Mod: 13 extra heroes	Mod: 13 héroes extra
+L:Unlock through Isildur and Orthanc victories (progress counts)	Se desbloquean con victorias de Isildur y en Orthanc (el progreso cuenta)
+L:Extras unlocked from the start (progress counts)	Héroes extra desbloqueados desde el inicio (el progreso cuenta)
+L:Exclusive full screen	Pantalla completa exclusiva
+L:Full-screen resolution (exclusive)	Resolución de pantalla completa (exclusiva)
+L:The desktop's	La del escritorio
+L:Quit	Salir
+L:Select	Seleccionar
+L:Launcher	Lanzador
+L:Choose a setting to change it, then Play.	Elige una opción para cambiarla y luego Jugar.

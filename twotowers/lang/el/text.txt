@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	Νίκησε σε 5 διαφορετικ
 L:DIAMOND: The Unbreakable	ΔΙΑΜΑΝΤΙ: Ο Ακατάβλητος
 L:Win every level of the story on Impossible. Very few ever will.	Νίκησε σε κάθε πίστα της ιστορίας στην Αδύνατη δυσκολία. Ελάχιστοι θα τα καταφέρουν ποτέ.
 P:Launcher	Εκκινητής
+L:Mod: 13 extra heroes	Mod: 13 επιπλέον ήρωες
+L:Unlock through Isildur and Orthanc victories (progress counts)	Ξεκλείδωμα με νίκες του Ισίλντουρ και στο Όρθανκ (η πρόοδος μετράει)
+L:Extras unlocked from the start (progress counts)	Επιπλέον ήρωες ξεκλείδωτοι από την αρχή (η πρόοδος μετράει)
+L:Exclusive full screen	Αποκλειστική πλήρης οθόνη
+L:Full-screen resolution (exclusive)	Ανάλυση πλήρους οθόνης (αποκλειστική)
+L:The desktop's	Της επιφάνειας εργασίας
+L:Quit	Έξοδος
+L:Select	Επιλογή
+L:Launcher	Εκκινητής
+L:Choose a setting to change it, then Play.	Επιλέξτε μια ρύθμιση για να την αλλάξετε και μετά Παιχνίδι.
+L:Voices:	Φωνές:
+L:Films:	Ταινίες:
+L:(as the text)	(όπως το κείμενο)

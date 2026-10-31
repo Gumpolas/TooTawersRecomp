@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	נצח ב-5 שלבים שונים ברמ
 L:DIAMOND: The Unbreakable	יהלום: הבלתי שביר
 L:Win every level of the story on Impossible. Very few ever will.	נצח בכל שלבי הסיפור ברמת בלתי אפשרי. מעטים מאוד יצליחו אי פעם.
 P:Launcher	משגר
+L:Mod: 13 extra heroes	מוד: 13 גיבורים נוספים
+L:Unlock through Isildur and Orthanc victories (progress counts)	נפתחים בניצחונות עם איסילדור ובאורתנק (ההתקדמות נספרת)
+L:Extras unlocked from the start (progress counts)	גיבורים נוספים פתוחים מההתחלה (ההתקדמות נספרת)
+L:Exclusive full screen	מסך מלא בלעדי
+L:Full-screen resolution (exclusive)	רזולוציית מסך מלא (בלעדי)
+L:The desktop's	של שולחן העבודה
+L:Quit	יציאה
+L:Select	בחירה
+L:Launcher	משגר
+L:Choose a setting to change it, then Play.	בחרו הגדרה כדי לשנות אותה, ואז שחק.
+L:Voices:	קולות:
+L:Films:	סרטונים:
+L:(as the text)	(כמו הטקסט)

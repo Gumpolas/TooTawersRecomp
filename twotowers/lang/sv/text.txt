@@ -2033,3 +2033,13 @@ L:Win 5 different levels on Impossible.	Klara 5 olika banor på Omöjlig.
 L:DIAMOND: The Unbreakable	DIAMANT: Den obrytbare
 L:Win every level of the story on Impossible. Very few ever will.	Klara alla banor i berättelsen på Omöjlig. Mycket få kommer någonsin att göra det.
 P:Launcher	Startprogram
+L:Mod: 13 extra heroes	Mod: 13 extra hjältar
+L:Unlock through Isildur and Orthanc victories (progress counts)	Låses upp med segrar med Isildur och i Orthanc (framsteg räknas)
+L:Extras unlocked from the start (progress counts)	Extra hjältar upplåsta från början (framsteg räknas)
+L:Exclusive full screen	Exklusiv helskärm
+L:Full-screen resolution (exclusive)	Upplösning i helskärm (exklusiv)
+L:The desktop's	Skrivbordets
+L:Quit	Avsluta
+L:Select	Välj
+L:Launcher	Startprogram
+L:Choose a setting to change it, then Play.	Välj en inställning för att ändra den, sedan Spela.

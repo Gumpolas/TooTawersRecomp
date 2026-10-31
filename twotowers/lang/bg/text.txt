@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	Завършете 5 различни н
 L:DIAMOND: The Unbreakable	ДИАМАНТ: Несломимият
 L:Win every level of the story on Impossible. Very few ever will.	Завършете всички нива от историята на Невъзможна трудност. Малцина някога ще успеят.
 P:Launcher	Стартер
+L:Mod: 13 extra heroes	Мод: 13 допълнителни героя
+L:Unlock through Isildur and Orthanc victories (progress counts)	Отключват се с победите с Исилдур и в Ортанк (напредъкът се брои)
+L:Extras unlocked from the start (progress counts)	Допълнителните герои са отключени от началото (напредъкът се брои)
+L:Exclusive full screen	Изключителен цял екран
+L:Full-screen resolution (exclusive)	Резолюция на цял екран (изключителен)
+L:The desktop's	Тази на работния плот
+L:Quit	Изход
+L:Select	Избери
+L:Launcher	Стартер
+L:Choose a setting to change it, then Play.	Изберете настройка, за да я промените, после Играй.
+L:Voices:	Гласове:
+L:Films:	Филми:
+L:(as the text)	(като текста)

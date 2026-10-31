@@ -12,6 +12,7 @@
 //   twotowers-setup set <section> <key> <value>
 //   twotowers-setup get <section> <key>
 //   twotowers-setup desktop             add the game to the applications menu
+//   twotowers-setup tr <English>        the launcher's words in the chosen language
 //   twotowers-setup                     a small menu in the terminal
 //
 // "install" prints "PROGRESS <0-100>" lines while it extracts (for zenity).
@@ -416,7 +417,7 @@ static int menu()
                      "  4) Frame rate: " << iniGet("Display", "fps", "30") << "  (30 / 60 / 75 / 90 / 100 / 120 / 144 / 165 / 200 / 240 / 300 / unlocked; above 30 is experimental)\n"
                      "  5) ECTS 2002 HUD mod: " << iniGet("Mods", "e3_hud", "0") << "\n"
                      "  6) Button prompts: " << iniGet("Input", "prompts", "auto") << "  (auto / xbox / xboxone / playstation / keyboard)\n"
-                     "  7) Extra heroes mod: Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron\n     (0 off / 1 on, unlock with Isildur / 2 on, unlocked for testing): " << iniGet("Mods", "extra_heroes", "0") << "\n"
+                     "  7) Extra heroes mod: Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron\n     (0 off / 1 on, unlock with Isildur and Orthanc / 2 on, unlocked for testing / 3 on, unlocked from the start): " << iniGet("Mods", "extra_heroes", "0") << "\n"
                      "  o) Orange health pickups (ECTS 2002): " << iniGet("Mods", "e3_pickups", "0") << "\n"
                      "  l) Language: " << iniGet("Language", "language", "en") << "  (en, or a folder in lang/)\n"
                      "  8) Add to the applications menu\n"
@@ -442,7 +443,7 @@ static int menu()
         }
         else if (c == "7") {
             std::string v = iniGet("Mods", "extra_heroes", "0");
-            iniSet("Mods", "extra_heroes", v == "0" ? "1" : v == "1" ? "2" : "0");   // 2: unlocked for testing
+            iniSet("Mods", "extra_heroes", v == "0" ? "1" : v == "1" ? "2" : v == "2" ? "3" : "0");   // 2: unlocked for testing; 3: from the start (progress counts)
         }
         else if (c == "o" || c == "O") iniSet("Mods", "e3_pickups", iniGet("Mods", "e3_pickups", "0") == "1" ? "0" : "1");
         else if (c == "l" || c == "L") {
@@ -490,6 +491,30 @@ static int cmdUltra()
     return r;
 }
 
+// (1.9.9) the launcher's words in the chosen language: lang/<code>/text.txt's "L:<English>\t<translation>" (the Windows
+// launcher's own), else the English
+static int cmdTr(const std::string &en)
+{
+    std::string code = iniGet("Language", "language", "en"), ln, out = en;
+    if (!code.empty() && code != "en") {
+        std::ifstream in(exeDir() / "lang" / code / "text.txt", std::ios::binary);
+        std::string key = "L:" + en + "\t";
+        while (std::getline(in, ln)) {
+            if (!ln.empty() && ln.back() == '\r') ln.pop_back();
+            if (ln.compare(0, key.size(), key) != 0) continue;
+            std::string v = ln.substr(key.size());
+            out.clear();
+            for (size_t i = 0; i < v.size(); i++) {
+                if (v[i] == '\\' && i + 1 < v.size()) { char c = v[++i]; out += c == 'n' ? '\n' : c == 't' ? '\t' : c; }
+                else out += v[i];
+            }
+            break;
+        }
+    }
+    std::cout << out << "\n";
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     std::string c = argc > 1 ? argv[1] : "";
@@ -497,6 +522,7 @@ int main(int argc, char **argv)
     if (c == "install" && argc > 2) return cmdInstall(argv[2]);
     if (c == "folder" && argc > 2) return cmdFolder(argv[2]);
     if (c == "desktop") return cmdDesktop();
+    if (c == "tr" && argc > 2) return cmdTr(argv[2]);
     if (c == "ultra") return cmdUltra();
     if (c == "ultra-needed") return ultra_build::needed(exeDir()) ? 0 : 1;   // 0: the pack is there and not built yet
     if (c == "set" && argc > 4) return iniSet(argv[2], argv[3], argv[4]) ? 0 : 1;

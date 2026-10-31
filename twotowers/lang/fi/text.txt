@@ -2030,3 +2030,16 @@ L:Win 5 different levels on Impossible.	Läpäise 5 eri tasoa Mahdoton-vaikeusta
 L:DIAMOND: The Unbreakable	TIMANTTI: Murtumaton
 L:Win every level of the story on Impossible. Very few ever will.	Läpäise kaikki tarinan tasot Mahdoton-vaikeustasolla. Harva siihen koskaan pystyy.
 P:Launcher	Käynnistin
+L:Mod: 13 extra heroes	Modi: 13 lisäsankaria
+L:Unlock through Isildur and Orthanc victories (progress counts)	Avautuvat Isildurin ja Orthancin voitoilla (edistyminen lasketaan)
+L:Extras unlocked from the start (progress counts)	Lisäsankarit avattu alusta asti (edistyminen lasketaan)
+L:Exclusive full screen	Yksinomainen koko näyttö
+L:Full-screen resolution (exclusive)	Koko näytön tarkkuus (yksinomainen)
+L:The desktop's	Työpöydän
+L:Quit	Lopeta
+L:Select	Valitse
+L:Launcher	Käynnistin
+L:Choose a setting to change it, then Play.	Valitse muutettava asetus ja sitten Pelaa.
+L:Voices:	Äänet:
+L:Films:	Elokuvat:
+L:(as the text)	(kuten teksti)

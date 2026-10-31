@@ -2033,3 +2033,13 @@ L:Win 5 different levels on Impossible.	Versla 5 verschillende levels op Onmogel
 L:DIAMOND: The Unbreakable	DIAMANT: De Onbreekbare
 L:Win every level of the story on Impossible. Very few ever will.	Versla elk level van het verhaal op Onmogelijk. Slechts weinigen zullen dat ooit doen.
 P:Launcher	Starter
+L:Mod: 13 extra heroes	Mod: 13 extra helden
+L:Unlock through Isildur and Orthanc victories (progress counts)	Vrijspelen met overwinningen met Isildur en in Orthanc (voortgang telt)
+L:Extras unlocked from the start (progress counts)	Extra helden vanaf het begin vrijgespeeld (voortgang telt)
+L:Exclusive full screen	Exclusief volledig scherm
+L:Full-screen resolution (exclusive)	Resolutie volledig scherm (exclusief)
+L:The desktop's	Die van het bureaublad
+L:Quit	Afsluiten
+L:Select	Kiezen
+L:Launcher	Starter
+L:Choose a setting to change it, then Play.	Kies een instelling om te wijzigen, daarna Spelen.
