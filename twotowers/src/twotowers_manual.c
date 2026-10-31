@@ -12234,6 +12234,7 @@ extern void sub_0003F9A0_gen(void);
 void sub_0003F9A0(void)
 {
     uint32_t sc = ecx, w; float dt, k, sp0;
+    if (MEM32(esp) == 0x000710E1u && sc >= 0x10000u) { extern void tt_credits_music_tick(void); tt_credits_music_tick(); }   /* (1.9.9: the credits' second song) */
     if (MEM32(esp) != 0x000710E1u || sc < 0x10000u || getenv("TT_CREDITS_PERFRAME")) { sub_0003F9A0_gen(); return; }
     w = MEM32(0x4B8BA0u); memcpy(&dt, &w, 4);
     k = dt * 30.0f; if (!(k > 0.02f)) k = 0.02f; if (k > 4.0f) k = 4.0f;

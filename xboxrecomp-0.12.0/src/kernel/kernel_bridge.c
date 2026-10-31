@@ -3587,6 +3587,9 @@ static int bridge_async_io_enabled(void)
     return on;
 }
 
+/* (1.9.9) a title's look at its file reads (where, how much, from which caller) -- the credits' song read from its wave
+ * bank, say */
+void (*xbox_read_observer)(uint32_t caller, long long offset, uint32_t length) = NULL;
 /* ── NtReadFile (ordinal 219, 8 args = 32 bytes) ──────── */
 static void bridge_NtReadFile(void)
 {
@@ -3638,6 +3641,7 @@ static void bridge_NtReadFile(void)
                     got > 0 ? p[0] : 0, got > 1 ? p[1] : 0,
                     got > 2 ? p[2] : 0, got > 3 ? p[3] : 0);
         fflush(stderr);
+        if (xbox_read_observer && poff) xbox_read_observer(g_xbox_kernel_caller, (long long)off.QuadPart, length);
     }
     bridge_write_iostatus(iostatus, ios.Status, (uint32_t)ios.Information);
     bridge_complete_file_io(STACK_ARG(1), STACK_ARG(2), STACK_ARG(3),

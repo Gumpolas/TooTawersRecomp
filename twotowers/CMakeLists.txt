@@ -100,6 +100,7 @@ set(GAME_SOURCES
     src/options.c
     src/versus.c
     src/achieve.c
+    src/credits_music.c
     # Add game-specific sources here, e.g.:
     # src/asset_loader.c
     # src/custom_renderer.c

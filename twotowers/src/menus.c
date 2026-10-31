@@ -552,6 +552,7 @@ void tt_mm_draw(uint32_t scr)
 {
     if (getenv("TT_MMLOG")) { static int n, ls = -1; int sh = mm_shown(scr); if (n++ % 60 == 0 || sh != ls) { ls = sh; tt_dbg("[MMDRAW] n %d scr %08X shown %d sub %u nx %u screen %u vs %08X cred %d,%d coop %d,%d step %d prev %d\n", n, scr, mm_shown(scr), G32(scr + 0x10), G32(scr + 4), G32(FE_SCREEN), s_vs_el, (int)G32(MM_CREDITS + 8), (int)G32(MM_CREDITS + 0x0C), (int)G32(COOP_EL + 8), (int)G32(COOP_EL + 0x0C), mm_step(), (int)G32(MM_CREDITS - EL_SIZE + 0x0C)); } }
     mm_net(scr);
+    { extern void tt_credits_music_init(void); tt_credits_music_init(); }
     if (!mm_shown(scr)) return;
     help_move();
     launcher_prompt();

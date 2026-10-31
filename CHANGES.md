@@ -3416,3 +3416,13 @@ twotowers/src/twotowers_manual.c
     screen, the full-screen resolution, the 13 extra heroes mod and its
     choices; Voices / Films / (as the text) in 22 languages), and the
     Linux launcher's window, which uses the launcher's own words.
+  - The credits' second song: the credits outlast their song, which the
+    game started again until they ended. With music/credits2.wav beside
+    the game (16-bit PCM WAV, mono or stereo, any rate) that plays once
+    the first song has ended, as loud as the game's music came out (so
+    the music volume holds), round again if the credits still go on, and
+    the game's sound is its own again when the credits end. The song's
+    going round is seen in the game's reads of its wave bank; the credits'
+    sound is held back half a second so that its top is never heard.
+    Without the file, the credits are as they were. TT_CREDITS2=<file>:
+    another file; TT_NOCREDITS2: off.

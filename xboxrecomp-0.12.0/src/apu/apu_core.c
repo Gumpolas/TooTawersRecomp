@@ -288,6 +288,8 @@ void mcpx_apu_monitor_finalize(MCPXAPUState *d)
 
 volatile unsigned g_apu_periods, g_apu_short, g_apu_feheld;   /* (g_apu_short: voice frames a playing voice had no data for) */   /* 256-sample periods produced (187.5/s in real time) */
 
+/* (1.9.9) the title's say over the finished mix (stereo s16 at 48 kHz, a period at a time): the credits' second song */
+void (*xbox_apu_post_mix)(int16_t *samples, int n) = NULL;
 void mcpx_apu_monitor_frame(MCPXAPUState *d)
 {
     if ((d->ep_frame_div + 1) % 8) {
@@ -337,8 +339,10 @@ void mcpx_apu_monitor_frame(MCPXAPUState *d)
         }
         if (g_audio_muted)
             memset(xa2_tmp, 0, sizeof(xa2_tmp));
-        else
+        else {
+            if (xbox_apu_post_mix) xbox_apu_post_mix(&xa2_tmp[0][0], MIXER_FRAME_SAMPLES);
             mixer_render(xa2_tmp, MIXER_FRAME_SAMPLES);
+        }
         xa2_submit_samples((const int16_t *)xa2_tmp, MIXER_FRAME_SAMPLES);
         memset(d->monitor.frame_buf, 0, sizeof(d->monitor.frame_buf));
         return;
