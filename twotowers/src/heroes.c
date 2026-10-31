@@ -7421,9 +7421,10 @@ int tt_select_unavail = -1;
 static uint32_t s_unav_mem, s_unav_save[2];
 static uint32_t unav_text(void)
 {
-    static const char t[] = "Unavailable"; int i;
+    extern int tt_tr16(const char *en, uint16_t *out, int max); uint16_t u[24]; int i, n;
     if (!s_unav_mem) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_unav_mem = xbox_ContiguousAlloc(64u, 16u); if (!s_unav_mem) return 0;
-        for (i = 0; t[i]; i++) G16(s_unav_mem + 2 * i) = (uint8_t)t[i];
+        n = tt_tr16("Unavailable", u, 24);   /* (1.9.9: in the chosen language) */
+        for (i = 0; i < n; i++) G16(s_unav_mem + 2 * i) = u[i];
         G16(s_unav_mem + 2 * i) = 0; G16(s_unav_mem + 0x30) = 0; }
     return s_unav_mem;
 }

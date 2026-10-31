@@ -1,0 +1,1839 @@
+# Latina -- made by tools/lang/build_lang.py
+GA81157BF	DOMINUS ANULORUM:  DUAE TURRES
+G20EBC61E	Pellicula a Peter Jackson facta
+G2D8D3B98	Productum a
+G7EDB1AE9	Coproductum a
+G90AF53E8	Effectus Speciales
+G893165F0	Weta Digital
+GD9523953	Musica a Howard Shore
+G7B677F6E	Voces Ludi
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	TURMA XBOX
+GAAA9253B	Administratio Operis
+G2E65B2E4	Programmatio
+G1E165282	Ars
+G4CFF767B	Sonus
+G1B12D0CA	TURMA PRIMA FABRICATORUM
+G5BB408B8	Director Operis
+GA9D987DE	Director Technicus
+GA4E53836	Director Fabricationis
+GCBF9A863	Director Soni
+G71D27F1C	Designator Primus
+GABE6171F	Programmator Primus
+GB6AEE806	Artifices Ambitus Primi
+G0FAA1BD8	Artifex Cinematicus Primus
+G93A039A2	Animator Primus
+G85851417	Directio Artis
+GEC5EB699	Productor Socius
+G1E1B7E49	Artifex Effectuum
+GE457B26A	Artifices Ambitus
+G09AFDB2B	Artifices Cinematici Ludi
+GC6201467	Artifices Notionum
+GCE12C680	Fictores/Animatores Personarum
+G958F64A1	Artifex Interfaciei
+G5817028D	Programmatores Graphici
+G8E313DB8	Programmatores AI
+G7559A05A	Programmatores Ludi
+G47FDFA0D	Designatores Ludi
+G2A1A4D1F	Designatio Soni et Musicae
+GD6AC199C	Designatio Soni
+G83731102	Directio Fabricationis Addita
+G9B9AC6A2	Administratio Operis Addita
+G2C8B85F3	Ars Addita
+G154B3F75	Programmatio Addita
+GEC34AAA5	Designatio Soni Addita
+GE9E2F454	Scriptura Addita
+G8B63E4D8	Incrementum Negotiorum
+G8E754AFA	Praefectus Fabricationis
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Productor Exsecutivus
+GF944BB31	Productor Senior
+G49F95533	Productor Socius Translationis
+GE5AAA381	Productor Adiutor
+G20A463E8	Machinatores Programmatum
+GEDDCFA70	Probator Primus
+G6EC637F4	Probator Primus Adiutor
+GA9C92124	Probatores Nuclei
+GDDEFB046	Productores
+G5F4C2C91	Director Fabricationis Ludi
+G53E62C46	Designator Graduum
+G4019279E	Director Artis Socius
+G3548CB79	Cinematica Ludi
+G5BF26924	Designatio Graphica (U.I.)
+GF5E6331B	Productor Adiutor Translationis
+GB9029242	Productores Adiutores
+G81160EAA	Animator Senior
+GB1B5EEDE	Animator
+G1D384099	Fictores Ambitus
+GD670D187	Pelliculae
+GB4300D0E	Curator Productionis
+GDB61FEB0	Praefectus Productionis FMV
+G13204F99	Director Artis Technicus
+G8774AEB2	Director Artis
+G2EDA5AA3	Director Animationis
+G4761EC6C	TD Personarum
+GC40AEB65	Artifex Ambitus Primus
+G04B7AD9A	Scriptor
+GCCDC1EDE	Artifices Personarum
+G765B2120	Animatores Personarum Seniores
+GDB98BF7E	Artifex Luminis Senior
+G8AEFA15C	Animator FX Senior
+GB64D9748	Animator FX
+GB770287B	Armator/Fictores CG
+GA89434BE	Dispositio Camerae
+GBAA388EF	Editores
+GA79B5345	Designator Soni/Rescriptor
+GE2D38E72	Praefectus Productionis Artis
+G29C8EC71	Adiutor Praefecti
+GB01B1D73	Administrator Systematis
+G257D0532	Adiutor Productionis
+GB2965969	Emendatio Dialogorum
+G2ACF75E1	Tractatio Soni Addita
+G821EF7A5	Voces
+G3CCB3DF3	EA Cura Qualitatis
+G2851776E	Praefectus QA
+G3D43CCDD	Curator QA
+G997D9582	Duces QA
+G5B5CE9C6	Duces Adiutores QA
+GE0B33004	Probatores Nuclei QA
+GBBB3A592	Dux Operis FLT
+G7F330F1A	Probatores Linguae Functionales
+G731958CD	Probatores Linguae
+G7005C763	Custodia Qualitatis Emptorum
+GCC3D24EF	Praefectus CQC
+G0FF24E54	Curator CQC
+G7498FE74	Dux Sectionis CQC
+G5AB35ED0	Examinatores Mercium CQC
+G6E529086	Officina Ultima
+G0229B6F3	Director, Incrementum Mercium Internationale
+G6B435E81	Praefectus Operis Translationis
+GF8BA9878	Coordinator Operis Translationis
+G906896D8	Praefectus, Licentiae et Probationes Sociorum
+G860EDA13	Negotia
+G7AC94AC6	Iura
+GFDF965B3	Res Officinae
+G9FF9799E	Coordinator Pactorum Officinae
+G9E24FEC0	Director Mercaturae
+G44C57DC5	Praefectus Mercis
+GE1A6D911	Rationes Publicae
+GA5ADE5FF	Documenta
+G4C2A256D	Dispositio Documentorum
+G279BA159	Administratio Involucri
+G482E9235	Designatio Involucri
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Turma Pelliculae Domini Anulorum
+GE196FA55	Director
+GE364782E	Productores Exsecutivi
+GB11B5F1A	Coproductores
+GDDE9A104	Archivista
+G73D53EB3	Custos Rerum
+G4616CF92	Adiutor Productorum
+GD98C077D	Curatores Postproductionis
+G26FFE43A	Primus Adiutor Editoris
+GFAE3387C	Custos Exemplorum Minorum
+G0D7D1A1D	Vicepraeses WW Licentiarum et Mercium
+GD58105C6	Director Creativus
+GB0E8D9D5	Histriones
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Theoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	VP Negotiorum Musicae
+G96EBB4D8	Praefectus Musicae
+G2728DB7D	Director Musicae
+GFE08F13A	3Foot6
+GCFF1286B	Coordinator Mercium
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Vicepraeses
+GE58F283A	Productor/Praefectus Productionis
+G97C336EB	Curator Animationis
+G96FF4CEA	Director Technicus Senior
+GE816CF3D	Dux Apparatus Technici
+G22B756F5	Animatores
+G86F5B2D9	Pictor Scaenarum
+GBC50C796	Praefectus Officii
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Productor Operis
+G14C96B5C	Artifex CG Primus
+GD9742A3C	Artifices/Animatores CG
+GBA7D6969	Arnson Communications
+G22C5AB99	Productor Exsecutivus/Director Creativus
+G45C5172D	Scriptor/Productor
+GDCC6F23E	Director Artis/Animator
+G9C4F3B3B	Artifex DS
+GF0F58DD3	GRATIAE SPECIALES EA
+G895C842A	GRATIAE SPECIALES STORMFRONT STUDIOS
+G9D4DD21A	In terris Mediae Terrae fama narrat de Sauron, Domino Tenebrarum,
+G6CFA90F6	et de Anulo qui ei vim daret mundum subiugandi.
+G18F2969C	Et nunc in manus eius pervenit quem nemo umquam crederet.
+G378C79D6	Ludorum valde studiosus sum, itaque scilicet omnia de ludo electronico Domini Anulorum scire volui.
+GDCF04190	In eum ludendi modum incido ut semper ludam,
+G977EBA13	et plerumque cum ludum, ut ita dicam, casuum ludo, animus meus ibi est.
+G49C9AB1A	Cum semel ingressus sum, de eo cogitare non desino, et personam meam ad finem ducere debeo.
+GD2647A40	Hoc munus tibi datum est, et si tu viam non inveneris, nemo inveniet.
+G3AC8371A	Tegite vos!
+GAD82B19D	De hac re passim quaesivi, et tandem ei ludere licuit, et incredibilis est.
+G8DE86872	Pulcher est aspectu.
+G72E74697	O, quam praeclarum!
+GF9824FCA	Ita, perge, Aragorn! Age!
+G2EE7D5D4	Veniunt.
+G61F7CD7D	Quasi praemium est ludum electronicum accendere et me ipsum discurrentem videre.
+G57A5BC04	Male mulcor.
+G1F85273D	Frodo mei similis est! Nonne praeclarum?
+G1FFE0A40	Praeclarum.
+GE6E563F9	Anulum invenient,
+GD135555F	et eum qui fert interficient.
+G18844D24	I! Perge, Frodo!
+G525D5AD9	Anulum volunt! Non debent eum capere.
+GB99DAE56	Inter ADR pellicularum et voces ludo dandas hoc interest, quod ADR pellicularum plerumque ad imaginem fit.
+G7558081F	Pelliculam spectas et verba quae ante dixisti imitari conaris et cum verbis pelliculae congruere facere.
+GDD3F428F	Quis es?
+GE906BA5B	Timesne?
+G9BDAB30C	Ita.
+G3B07B1B1	Nequaquam satis times.
+GFBD6613D	In ludo nulla est imago, sed multa quasi elementa ambitus quae inicis.
+G0EE06D0F	Periculum, auxilium, talia.
+G2F9FC8E2	Aragorn! Succurre! Aragorn! Aragorn!
+G289F7C03	Simulacra et ludos amo, et si includor, id mihi homini studioso merum praemium est, et placet.
+G67346E61	Etiam minimus homo cursum futuri mutare potest.
+G16420686	Tam incitatus sum - exemplar meum vix exspectare possum. Egregium est.
+GDBA69463	Moria.
+G1D429D96	Times in illas fodinas ire.
+G372C9F91	Scis quid in tenebris excitaverint.
+G34515230	Ludum faciendo valde delectatus sum, quia non tantum laboris maledicti agendum est
+G93AEF9C3	quantum cum personam primum creas.
+GA9883FB4	Pellicula facienda necessario lentissima est.
+G0C1E0E8C	Mirum in ludo electronico est, scilicet, quod fucari non debeo.
+GA5F1044B	Cum ludum facis, in officina stas
+GCE4A81AD	et dicis: age, puto te hoc et hoc et hoc dicere debere
+G049A3A66	et acervum scriptorum habent, et omnia haec mira verba dicis.
+G70F1359D	Insidiae! Insidiae!
+G65325B21	Deinde omnia sumunt, in ludum inserunt, et tu partem laudis accipis.
+G39F1D126	Illae machinae displosivae delendae sunt!
+GEB33699E	Hoc simulacrum mei ut Gimli amo.
+GD9A0C650	Puto eam personam tam vegetam, virilem, venustam esse.
+G43591DCA	Revera sola persona est quam agere velis.
+G5C0A6C1E	Ceteros dico, scis, quales Aragorn, scis, Legolas, scis, formosos, pulchros viros et cetera,
+G3D52D95F	sed ad verum, optimum bellum, Gimli eligendus est.
+G8E74524F	Quattuordecim menses in pulcherrimis orbis locis in Nova Zelandia egimus ut pelliculae speciem rectam daremus.
+GAD562976	Ludus est condicio belli et pugnae, et mire atque egregie factus est.
+G7F21BCD6	Eum ibi relinquere non possum! Deus!
+G9AA947F5	Quantum temporis id consumet.
+G669C44C6	Nova enim est cupiditas quam inveni.
+G63540AD1	Ergo, lusores, bene factum, gratulor quod in hunc angulum pervenistis qui vobis colloquium praebet.
+G925FED56	Utinam vobis dicere possem quomodo melius ludatis, sed revera numquam ad hunc gradum perveni.
+GC3162ADB	Bona fortuna, et ludere pergite.
+GA3572714	Fatum mundi mox decernetur.
+G922859CB	Tota ratio ludi electronici construendi vel aedificandi
+GD9B03397	maxime est ut cum rebus et ninjis pugnes... nescio quid.
+G24326AFA	Miratus sum, et multo verior videtur,
+G3E302C15	quasi ad alium gradum ascendat.
+GBD830A87	Puto Aragorn in ludo electronico melius quam me collimare...
+GF76948D6	sed de eo non querar.
+GD27FED3E	Si vita vel morte mea te tueri possum, tuebor.
+G56368F53	Gladium meum habes.
+G8D6DAFD1	Quod de ludo electronico vidi ostendere videtur
+G970D4AB6	alteram pelliculam - contra primam - maiore modo factam esse
+GFD0BADCA	et eas videre exspecto, sicut et reliquum huius ludi.
+G1F48F697	Hodie specimen tantum vidi.
+GB689F1B9	Gaudeo videre, exempli gratia, Aragorn interdum deici, aut cadere, aut volvi,
+G6F6072BC	et pugnandi modum eius mutari, scis, ut rei conveniat.
+GA3A3F7A1	Non semper mundum et compositum est, scis, est quasi...
+G28095E46	interdum rixosus est - saltem sic in pellicula fecit - et ludus id ostendit, ut puto.
+G43AA6A0B	Mirabile est.
+G8559FF90	Advenae e terris longinquis, huc vocati estis ut minis Mordor respondeatis.
+GC2A75F48	Terra Media in margine exitii stat.
+GFE143A07	Nemo id effugere potest. Coniungimini, aut cadetis.
+GF59E5460	Semper miror cum progressum artium et talium video
+GAD5CBAE4	et quam prope ad rem veram pervenerit.
+GF96BCD4B	Ad Boromir mihi nunc eundum est!
+GD262135E	Cum ADR pelliculae recordaris, scis, quadrum scilicet spectas,
+G83EECB7A	actionem coram te videns ut illo die egisti.
+G3C0B6913	Cum vocem huic rei inscribis,
+G2A8B6AD2	nulla camera in te est,
+G52F7D105	nec labra ad imaginem coram te accommodare conaris,
+G8EE2279F	itaque revera ulterius progredi potes et quasi
+GA5BE0F5A	augere et exornare quod in pagina est.
+G51E230FB	Redite in foveas quae vos genuerunt!
+G97400E1E	Magis exaggerata sunt quam in pellicula.
+GC26338C3	Scisne quid dicam?
+G40EB5D5C	Paulum ridicula sunt, et iucundum est.
+G52FECFA2	Iucundum erat sic cum eo ludere.
+G91D69630	Veni!
+G87873143	Illam pugnam vincere non potes!
+G47AECCC4	Puto, si ludo luderem,
+GB0CCD2A6	iucundum fore scire veros histriones voces dedisse actioni quam persona a computatro facta agebat,
+GC1719889	et opinor, quo plus veritatis in mundo computatrali, eo iucundius esse lusori.
+G77ECFBF0	Eo uti non potes. Nemo nostrum potest.
+GB42EC53B	Anulus delendus est.
+G43E793ED	Periculum Anuliferi gravescit.
+G6E2FF8E0	Nam alius est qui Anulum venatur.
+GDD26CBEC	Numquam in vita ludum electronicum lusi.
+GF783F574	Regulas numquam intellego.
+G573BC826	Manus habeo magnas et inhabiles nec eam manus mentisque concordiam quam necessariam puto
+GFBB68CB5	quae omnibus sex annis minoribus data esse videtur.
+G8D9D9F75	Quod tam mirum est in hoc ludo, Domino Anulorum,
+G81AEE08E	est quod voces histrionum primorum habes--omnium.
+GAE3BFBD7	Et hodie voces Gandalf Cinerei et Gandalf Albi inscripsi,
+G21F22F52	duas personas quas in Domino Anulorum ago.
+GCED01E94	Quid vides?
+GB4F26455	Notae sunt.
+G5C7EB8BC	Est quaedam lingua Elfica.
+G27A03C42	Legere non possum.
+G8E22513B	Pauci sunt qui possint.
+G4B2817A2	Nunc foedus est inter Duas Turres: Orthanc et Barad-dur.
+GC69D576A	In ludo paulo asperius est, paulo promptius, paulo praesentius, fortasse.
+G363960EA	Unus vestrum intrare debet.
+GFFCB2D5D	Succurrite vicanis qui adhuc vivunt.
+GF4DAF5B8	Re vera haec pugna acris est.
+G00009069	Pars militaris Gandalf apparet: imperator, samurai, dux.
+G4519FC71	Non transibis!
+G066F3360	Itaque quod in quadro vides tam prope est - malum! -
+GF4CF848B	Gandalf quem in pelliculis vides. Atque utinam venire et tecum ludere possem.
+G699B7BF2	In hunc Anulum crudelitatem suam, malitiam, et cupiditatem omni vitae dominandi infudit.
+GA1469225	Unus Anulus ad omnes regendos.
+G01090CE9	Quod fecimus fastigium est ingentis laboris quo milia hominum interfuerunt.
+G74E1F68D	Titulus, Duae Turres, ad Turrim Orthanc spectat,
+G0AE01FA9	ubi Saruman, persona a Christopher Lee acta, sedem habet,
+GD9642178	et Turris Barad-dur in Mordor, domus Sauron.
+G573418F9	Pellicula secunda, ut omnis huius trilogiae, difficultas est. Et manebit donec eam tradiderimus.
+GB2A31EA0	Magna pellicula est. Maior erit quam prima.
+GB831FA3A	Certe puto tantam curam in his pelliculis faciendis adhibitam esse,
+GCCFC11FE	et eam scientiam turmae ludos aedificanti tradere posse optimum est, 
+G327C2028	nam scio eos parem curam laboremque adhibere ut ludum vere opulentum populo afferant.
+G2C4A352E	Tolkien Edoras in libris vividissime describit
+G10EFB23A	ut urbem aedificiorum ligneorum in colle ante montes nivosos.
+G50D180A4	Cum primum loca exploraremus, dixi: ecce, locum in Nova Zelandia invenire debemus,
+GDA11996F	necesse est collem talem ante montes esse.
+GD6F61F77	Itaque helicoptero per totam terram volaverunt et cum imagine collis omnino perfecti redierunt.
+GC56228ED	Circiter sexaginta aut septuaginta milia passuum a proximo oppido aberat.
+GF796DA0F	In media Insula Australi erat; longinqua admodum erat.
+GFA1CD969	Septem fere aut octo menses in his ingentibus aedificiis exstruendis consumpsimus.
+GC2D0BAAA	Exitus fuit ut in pellicula Edoras habeamus omnino credibilem.
+GC2774958	Illuc ire potui et filmare quasi locus verus esset.
+G99F69515	Unum ex rebus maxime excitantibus de ludis EA et quod in exemplaribus vidi dum aedificantur
+G6B3554D6	est magna imitatio scaenarum et personarum nostrarum
+GB997C9B4	adeo ut EA cum actoribus nostris pactum faceret ut venirent et sermones suos ipsi recitarent.
+G815CAC49	Actores ea re valde excitati sunt.
+GA1640DEB	Proelium de Helm's Deep confectum est.
+G93BD7122	Proelium de Terra Media mox incipiet.
+G958468DE	Exemplar parvum Helm's Deep aedificavimus, sed mirum erat quod non exemplar tantum erat. 
+G1BC58576	Ingens exemplar erat. Quarta pars magnitudinis, sed ipsum triginta fere aut quadraginta pedes latum.
+GFA4F689B	Tam magnum erat ut id machinis nostris photographare possemus neque exemplar parvum videretur.
+G2571B991	Omnino credibile videbatur.
+G31C24FB0	Quod magnam pelliculam facit est vere magna fabula et magni actores.
+G9C04D37F	Puto, cum ludum facias, multas easdem esse difficultates.
+GA0B86A25	Ingenia idonea ad ludum allicere debes.
+G0B7DC714	Fabulam habere debes quae spectatores alliciat et deinde ea fabula excitentur
+G5E1101AB	et ea fabula cogantur eam vivescere videre.
+G87FC774C	Nihil pro Frodo facere possumus.
+G3C9AA8BC	Quaestio vitam eius auferet.
+G98F7C221	Rohan infirma est et casui parata
+GA01F7D34	itaque in orbem Hominum dure et celeriter feriet.
+GA8723617	Bellum nobis imminet.
+GE1AF4B03	Pretiosum meum furati sunt et nos id volumus.
+G6A5F57B3	Fortasse quod maxime terrebat in hoc opere incipiendo erat
+GDE1DC635	sensus nos incredibile onus habere praestandi
+GCFDFC743	in forma interactiva eodem modo quo Peter Jackson in pellicula praestiterat.
+GC87068A6	Aliqua opera litteraria omnium temporum carissima sumpsit
+G423C7E0C	et in pelliculam epicam egregiam convertit quae milia milium fautorum toto orbe peperit.
+GC8F29411	Initio operis de notionibus et de designatione laboras.
+GBACB2DE5	Dum opus procedit - programmatores, artifices, animatores, artifices locorum,
+G047AC48F	periti exemplarium, periti texturae - hi omnes de sua parte ludi cogitantes,
+GB60517EB	sed ratione totius experientiae.
+G13170460	Unum ex commodis quod tam arte cum pelliculae factoribus laborare possumus
+GA03610FF	est quod exemplaria et instrumenta quae pro pellicula fecerunt adhibere potuimus
+G9DADDEE4	ut exemplum rerum quas in ludo nostro creare oportebat.
+GF0D449E5	Umbra in tenebris movetur.
+GEC940136	Aragorn designantes de omnibus tribus personis lusoriis simul cogitare debuimus.
+GBB381F7C	Exempli gratia, Legolas multo magis persona celeritatis et subtilitatis est.
+G4CE351A9	Gimli parvus currus bellicus est.
+G21025B26	Aragorn magis mixtura utriusque est.
+G3ADE6E66	Motus singularum personarum inspeximus - imaginem post imaginem - antequam quidquam aedificare coepimus.
+G80ADBA8B	Deinde formam filorum personae faciebamus. Haec sunt proportiones, magnitudo et modulus.
+G85E5A400	Deinde texturam et lumen addebamus ut vestitum perficeremus et subtilia personae adderemus.
+GCD3CDD42	Actores nobiscum laborare valde cupiebant.
+G092B49A0	Semel Viggo Mortensen nobis aliquos motus suos pugnae ostendit.
+G915A1A70	Ipse et vicarius eius cistam gladiorum aperuerunt et inter se digladiari coeperunt.
+G215B5E15	Id fundamentum multorum motuum Aragorn factum est.
+G7126178B	Inveniri vult.
+G7E02AF05	Cum scaenas e pellicula in ludum nostrum eligeremus, Sepulcrum Balin maxime eminuit.
+GF4146E18	Unum ex momentis memorabilissimis primae pelliculae est.
+GE152213A	Volebamus sensum ambitus recreare in hoc validissimo radio luminis in ipsum sepulcrum.
+GB236432D	Difficultas erat fabricatoribus locorum et peritis luminis nostris.
+GD3C26DBB	Gradus Vici Rohan singulares sunt quod nobis facultatem dederunt regiones pelliculae amplificandi.
+G8669E69D	Ipse gradus ludi aspectu et sensu locis pelliculae simillimus est quoad lumen,
+GF9B205CF	formam architecturae, homines qui ibi sunt, sed hoc loco ea re amplius aedificamus
+GB285B32E	et regiones gradus creamus quas lusor exploret et in quibus pugnet, quas fortasse in pellicula non vidit.
+G5E5F1D1C	Quod tam mirum est in hoc ludo, Dominus Anulorum,
+G610E0BE4	est quod in tuo quadro voces actorum primorum accipis--omnium.
+GC6FCAA65	Auxilium! Aragorn! Aragorn! Auxilium!
+G20165D69	Incredibiliter verus est, et puto difficillimum esse ludum ex pellicula facere.
+GBF3A0A5B	Hic ludus id facit. Pelliculae simillimus est.
+GDD010A37	Systema musicae valde mobile designavimus quod animum eventuum in ludo reddit.
+G96BEDA9C	Anulus unus ut omnes adducat et in tenebris vinciat.
+G91629050	In pellicula Saruman Helm's Deep cum decem milibus Uruk-hai oppugnat.
+G3B702B98	Itaque aliis rebus quae nobis praesto erant uti debuimus ut sensum proelii crearemus.
+GDEFA604D	Effectibus sonorum et sono efficimus ut milia orcorum in loco esse videantur.
+G204351C8	Si quis ludum inserit et sibi dicit:
+GEC81BA2D	Di boni! Haec est pellicula! Tum id ipsum quod voluimus consecuti sumus.
+G52BF957B	Hic est locus quem e pellicula memini.
+G571B482E	Ibi sum. Aliquid facere possum. Nunc mea vice.
+G625B0A6D	Sic lusorem sentire volumus.
+GB222979D	Ubi est equus et eques?
+G2457FF85	Ubi est cornu quod canebat?
+G8B36CA83	Transierunt ut pluvia in montibus;
+G50095CA7	ut ventus in prato.
+G10EB8BCF	Dies in Occidente occiderunt,
+G109A0CCE	post colles,
+G02628501	in umbram.
+G80A942D2	Aragorn!
+GDDEA48AC	Auxilium
+G4C40E774	Preme START
+GEE711094	Pergere
+GF9202936	Iterare
+G2E427514	Accensum
+GFC4343CA	Exstinctum
+G52E4CD32	Navigare
+G39D074FD	Eligere
+GAC3A8B6E	Retro
+G42B46F3C	@ 2002 New Line Productions, Inc.  Dominus Anulorum et personae, nomina et loca in eo, * The Saul Zaentz Company d/b/a Tolkien Enterprises sub licentia New Line Productions, Inc.  Omnia iura reservata.
+G035F710A	EA GAMES* nota Electronic Arts* est.
+GBAC3ED5F	Codex ludi et quaedam elementa audiovisualia @ 2002 Electronic Arts Inc. Omnia iura reservata.
+G0EF5F91F	Novus Ludus
+GB8D9D2FD	Ludum Onerare
+G0BE2A075	Optiones
+G5D6AEEF7	Modus Purgandi
+G83335327	Additamenta
+G731194FA	Ludum Servare
+G7BA082D0	Preme START ut pergas
+G755B3BA1	Ordinatio Moderatoris
+G03961FD4	Ordinatio Ludi
+GABEE6EA4	Difficultas:
+GF065116B	Facilis
+G8D3A16F6	Usitatus
+GACDD0363	Peritus
+GAEA05F86	Mono
+G913A11F7	Stereophonia
+G2A253083	Circumsonus
+GA10C5C21	Vis Vocis:
+G7F04050E	Vis Musicae:
+GF30A57F8	Subscriptiones:
+G64752D2D	Tremor:
+GB3F78571	Vis Ludi:
+GED3C9F14	Sonus:
+GB065D5A4	Elige ludum onerandum:
+G00FF7920	Elige locum servandi:
+GC99B6C1E	Elige foramen MEMORY CARD:
+GFB5C0BA2	Discus Durus Xbox
+GD2F916B6	MEMORY CARD foramen 2
+GAEFBDEF3	Abrogare
+GDA714102	Ita
+GB893E04C	Minime
+GE506E266	Certusne es?
+G574C52F2	Certusne hanc emendationem emere vis?
+G0D91D779	Certusne es? Eventus ultimi lusus huius muneris peribunt.
+G1CF7123A	Certusne es? Omnis progressus non servatus in hoc ludo peribit.
+GEF04DC5D	Certusne es? Progressus in hoc munere peribit.
+GEDF6F861	Certusne hunc ludum superscribere vis?
+GF44D8878	Finivistine emendationes emere?
+G1EF3EFE3	Ludum in Disco Duro Servare
+G05163971	Ludum e Disco Duro Onerare
+G8F93A6FE	Elige difficultatem
+G654484DF	Clausum
+G5A7CB330	Perfectum
+G8D6AAF13	Non lusum
+GBE8C099C	Prologus
+GF4FBBE46	Weathertop
+GE7EA3020	Portae Moria
+GE13A531D	Sepulcrum Balin
+G79C1EAD3	Amon Hen
+G51C82E11	Silva Fangorn
+G35CCE51F	Campi Rohan
+GAD341B58	Westfold
+G94ADD008	Fauces Rohan
+G9760067E	Murus Profundi
+GF8B38ED5	Murus Perruptus
+G644C89AD	Atrium Hornburg
+G69B8B4C2	Turris Orthanc
+GBF00F963	Helm's Deep:
+GE34AB2FD	Vivarium New Line
+GE132F5FF	Elige FMV spectandum:
+G4B3C17B9	Initium
+GAD303F2A	Finis
+G668B98BD	Solum
+G9C7A95F0	Puncta emendationis:
+G4AE44639	4) Seriem codicis datam insere.
+G5374B3F5	Codices Arcani
+GDF7B6B3A	Semper Vastans:
+GFECB245B	2 Lusores:
+GCAB16744	Hostes Parvi:
+G587D657D	Omnes Emendationes:
+G58E34314	Invulnerabilis:
+GF0336180	Tarde:
+G5A122CB0	Ut codicem inseras:
+G35BC6746	1) Incipe munus.
+G46DF9919	2) Preme START ut consistas.
+G5A1291EE	3) Trahe et tene
+GEB88B42D	Valetudo Infinita:
+G6AE6FFFE	Tela Infinita:
+GAA29A634	Finire Munus:
+GB2AE1BCE	Modus Pausae:
+GAA467E08	Adde usum:
+GEA42298C	Gradum Augere:
+G6BA0C403	Valetudinem Reficere:
+G41D871E0	Tela Reficere:
+G04DBD06B	Emendatio Telorum:
+GA7A50BB5	Emendationes Monstrare
+GA67DF58D	Ad Indicem Exire
+G773B79A5	Ad Munus Proximum Ire
+G96540044	Munus non perfecisti.
+G5ADDCAC2	Munus iterare
+G9DD85D6D	Ad indicem exire
+G730918CA	Iterum Conari
+GB437BA93	Tituli
+G798A44A2	Munus Iterare
+G6F46B26E	Elige linguam, quaeso.
+G2809E047	Anglice
+GE3AAFF7A	Celeritas
+GD0DB46DB	Ferox
+G9AD854EF	Nex
+GE83BE834	Specialis
+GDB34AED9	Series
+GDACF8DCA	Emptum
+G125CAC9A	Nondum reseratum. Preme globulum A ut pergas.
+GDA9711D2	Non satis puncta emendationis collegisti ut hanc emendationem emas. Preme globulum A ut pergas.
+GEB0E0008	vel
+G90A54691	post repulsionem
+GF5F43483	cum iaces
+GFC1C2104	Spatium Vacuum
+GB8BCCCB9	Ludus 2
+G92BA5250	Ludus 3
+G9CCBAB2F	Ludus 4
+G76C930C6	Ludus 5
+G50C6B65D	Ludus 6
+G2AC43BF4	Ludus 7
+G34D594D3	Ludus 8
+G0ED31A6A	Ludus 9
+GBE76BA62	Ludus 10
+GE47934CB	Ludus 11
+G6ED86859	Memory Card (PS2) non inserta est. Saltem 80 KB opus sunt ad haec data ludi servanda. Visne pergere?
+G87DE26DA	Spatium non sufficit in Memory Card (PS2) in MEMORY CARD foramine 1.  Saltem 80 KB opus sunt ad haec data servanda. Visne pergere?
+G7118C569	Spatium non sufficit in Memory Card (PS2) in MEMORY CARD foramine 2.  Saltem 80 KB opus sunt ad haec data servanda. Visne pergere?
+G6804B4C2	Spatium non sufficit in Memory Cards (PS2) in foraminibus MEMORY CARD. Saltem 80 KB opus sunt ad haec data servanda. Visne pergere?
+G849021EA	Nulla Memory Card (PS2) in MEMORY CARD foramine 1. Preme globulum X ut pergas.
+G59CE2129	Nulla Memory Card (PS2) in MEMORY CARD foramine 2. Preme globulum X ut pergas.
+GC5BD8B5F	Moderatorem iterum conecte et preme START ut pergas.
+GC2BDD02C	Memory Card (PS2) in MEMORY CARD foramine 2 non formata est. Formarene Memory Card (PS2)?
+G6B64948C	Xbox tua non satis caudicum liberorum habet ad ludos servandos.  Preme A ut sine servando pergas vel B ut liberes saltem
+GEDAB4EA9	Moderatorem iterum conecte et preme START ut pergas
+G00E55934	Discus durus non satis caudicum liberorum huic ludo servato habet.
+G20A17FB1	caudices liberandi sunt.
+G353AAE58	Formatio defecit! Error in Memory Card (PS2) in MEMORY CARD foramine 2! Preme globulum X ut pergas.
+G9CAF03E3	Ludus servari non potest. Preme globulum A ut pergas.
+GCB03752D	Ludus Servatus.  Preme globulum A ut pergas.
+GACBFB64F	Servatum in Memory Card (PS2) in MEMORY CARD foramine 2! Preme globulum X ut pergas.
+GC7C0454F	Data servantur in Memory Card (PS2) in MEMORY CARD foramine 1. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+G4B14AAB4	Data servantur in Memory Card (PS2) in MEMORY CARD foramine 2. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+G53DAC278	Data onerantur e Memory Card (PS2) in MEMORY CARD foramine 1. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+GF144B8B3	Data onerantur e Memory Card (PS2) in MEMORY CARD foramine 2. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+G063DD8CC	Ludus onerari non potest. Preme globulum A ut pergas.
+GE5BDAC0B	Visne ludum tuum servare?
+GED3A9CCF	Nulli ludi servati. Preme globulum A ut pergas.
+GAF453999	caudices.
+GEE649E5A	Memory Card (PS2) in MEMORY CARD foramine 1 non formata est. Preme globulum X ut pergas.
+G81447581	Memory Card (PS2) in MEMORY CARD foramine 2 non formata est. Preme globulum X ut pergas.
+GB36F8F0C	Data leguntur e Memory Card (PS2) in MEMORY CARD foramine 1. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+G97EC5687	Data leguntur e Memory Card (PS2) in MEMORY CARD foramine 2. Noli Memory Card (PS2) removere, reponere aut consolam exstinguere.
+G8E8AF6C1	Vitium est in disco quo uteris. Fortasse sordidus aut laesus est.
+G9CB8DFF0	Munus 1
+G0EC04F2B	Munus 2
+GE8BDD4C2	Munus 3
+G5AC543FD	Munus 4
+G34C2C994	Munus 5
+GA6CA38CF	Munus 6
+G80C7BE66	Munus 7
+GF2CF2DA1	Munus 8
+GCCCCB338	Munus 9
+GA1F545C0	Munus 10
+GC7F7C029	Munus 11
+GEDFA3A92	Munus 12
+G13FCB4FB	Munus 13
+GFBA35200	Munus A
+G6DAAC13B	Munus B
+G47A846D2	Munus C
+GB9AFB60D	Munus D
+G0111B4C5	Usus Muneris:
+G10CB2024	Aestimatio Muneris:
+GB8F11F62	Summa Punctorum Emendationis:
+G94649BD6	Perfectus
+GE424E811	Egregius
+G70E9184E	Bonus
+GE98543F1	Mediocris
+GF9792B5F	Malus
+G4DE9139C	Ars
+GB525F096	Fortis
+G5F8C23CD	Defendere
+G8673311D	Impetus
+G7829DFB2	Series celeris.  Efficax contra hostes minores sine scutis.
+G63E6B4FD	Series noxia ad impedimenta perrumpenda vel scuta hostium frangenda.
+G406CD62A	Trahe et tene ligulam sinistram ut utaris.  Emitte globulo A (tene ut damnum augeas).
+G7651B078	Hic ictus quemvis hostem prostratum conficit.
+G09258F36	Hostes a te repelle et extra ictum pelle.
+G36E84E05	Impetus hostium et tela arcet.
+G074FC78D	Impetus vastans.  Preme et tene globulum Y ut utaris.
+GE5C8740D	Valetudinem tuam in perpetuum auge.
+G791AEDAB	Procurre et hostes sine scutis ad terram deice.
+GF4A5485B	Impetum fac dum surgis, hostes de improviso capiens.
+GC0B8F80A	Series efficacissima ad hostes sine scutis tollendos.
+G6CBE68E9	Efficacissima ad hostes scutatos quam celerrime conficiendos.
+GD7BB121B	MOTUS IUNCTUS: Statim cobalum impetum facientem neca.
+G4A59663E	Ut Arcus Dunedain emissae, sagittae hamatae Rohirrim grave damnum faciunt.
+G96A8AB86	Valetudinem tuam in perpetuum auge.  (Requirit Robur Stewards)
+GED26DEB8	E longinquo procurre et hostes sine scutis ad terram deice. (Requirit Impetus Cursu)
+GB4790643	Hac serie hostem vulnera, deice et feri.
+G9709901B	Hac serie hostem sine scuto feri, eum confice et alium celeriter feri.
+G066B80A4	MOTUS IUNCTUS: Statim orcum impetum facientem neca.
+GB54F0B8A	Valetudinem tuam in perpetuum auge.  (Requirit Robur Isildur)
+G1C742C09	Impetus magis vastans.  (Requirit Furor Vagi)
+G9F299E6A	Auge damnum quod Impetus Celer facit.
+G2A888253	Hac serie hostes validos vulnera, deice, deinde confice.
+GEF4043FD	Valetudinem tuam in perpetuum auge.  (Requirit Robur Elendil)
+GF3D48718	Hic impetus vastans multos hostes incendit.  (Requirit Ira Solitudinis)
+GDAE09290	Sagittae ferreae Gondor dirum damnum faciunt.  (Requirit Arcus Rohan)
+GBD1ED2AE	MOTUS IUNCTUS: Uruk-Hai irruentem statim neca.
+G6DF8DC34	Contra hostem validum adhibe, ut scutum eius frangas, eum humi prosternas et ferias.
+GB1BCB280	Nihil
+GE225A1EC	Ligulam sinistram trahe et tene ut utaris.  Bulla A iace (tene diu ut damnum augeas).
+GFF3FB1CE	Hic ictus securis quemvis hostem prostratum conficit.
+G81A89461	Valetudinem in perpetuum auge.  (Requiritur: Potentia Saxi)
+GF266C7E6	Valetudinem in perpetuum auge.  (Requiritur: Potentia Ferri)
+G2FCD00C0	E longinquo procurre ut hostes sine scutis humi prosternas.  (Requiritur: Impetus Cursu)
+G00247254	Valetudinem in perpetuum auge.  (Requiritur: Runa Tutelae)
+GA505D28C	Valetudinem in perpetuum auge.  (Requiritur: Potentia Balin)
+G34C62FC4	Ut Secures Erebor iactae, acutissimae secures Moria plus etiam damni inferunt.
+G57901BB9	Impetus perniciosior.  (Requiritur: Furor Nanorum)
+G8840F62F	Valetudinem in perpetuum auge.  (Requiritur: Potentia Gloin)
+G361F0511	Hic impetus perniciosus multos hostes incendit.  (Requiritur: Ira Montium)
+G219C0125	Hae laminae acie Mithril horribile damnum inferunt.  (Requiritur: Secures Moria)
+G9986DAAB	Auge damnum Impetus Ferocis tui.
+G11BF2FC5	Ut ex Arcu longo Mirkwood missae, sagittae fraxineae Rivendell plus etiam nocent.
+G7A9893BB	Sagittae incantatae Lothlorien dire nocent.  (Requiritur: Arcus longus Rivendell)
+G42E47239	Hae sagittae magicae hostes tuos incendent.  (Requiritur: Arcus longus Lothlorien)
+G5BAB8220	Valetudinem in perpetuum auge.  (Requiritur: Vis Celeborn)
+G39265CB0	Impetus perniciosior.  (Requiritur: Furor Elficus)
+G084B6AEF	Hae sagittae omnes hostes in via sua transfigunt.  (Requiritur: Sagittae Ignis Draconis)
+GB1D19C39	Auge damnum cuiusque sagittae quam mittis.
+G06E26BE1	Ictus Triplex
+G20A303C1	Caesio Duplex
+GCB8F4087	Arcus Dunedain
+G3F6F3751	Ictus Umbrae
+GBE8C73E9	Calcitratio
+G5660E3B0	Repulsio Gladii
+GDF332280	Furor Vagi
+GB8AB07B9	Robur Stewards
+G187F8CC1	Impetus Cursu
+G86E487F5	Impetus Surgens
+GF7D6DC76	Terror Celer Isildur
+GB34DCC39	Liberatio Isildur
+GC9303634	Pernicies Cobalorum
+G3A0786A5	Arcus Rohan
+G8B17B5C5	Robur Isildur
+G579A1927	Impetus Procursu
+G207C1523	Impetus Mortifer Isildur
+G6C2653E9	Dolus Isildur
+G2A3BA153	Pernicies Orcorum
+GA28B29AA	Robur Elendil
+G7D213CCE	Ira Solitudinis
+G006BF315	Magister Gladii
+G6B68444D	Incursus Belli Isildur
+G3B0A3720	Robur Argonath
+G78BAB3BC	Iracundia Numenor
+GCEDAD8B0	Arcus Gondor
+G3BE146BB	Pernicies Saruman
+G701FD063	Iudicium Isildur
+G0251EC9F	Secures Erebor
+G96C77DAD	Impulsus Securis
+GDD4B6691	Repulsio Securis
+GADD20DD0	Furor Nanorum
+GB0D95BC6	Potentia Saxi
+G4FB6CF69	Potentia Ferri
+G5F017E32	Terror Celer Balin
+GDFD7CADD	Liberatio Balin
+GDF1B571B	Runa Tutelae
+G9B37EDE7	Impetus Mortifer Balin
+GCDB1A82D	Dolus Balin
+G2DEF1D03	Potentia Balin
+GE89D3658	Potentia Gloin
+G31B06C3A	Secures Moria
+GADFB76EF	Ira Montium
+G75612F09	Incursus Belli Balin
+G8CE2E527	Potentia Khazad-dum
+GE4E87FCC	Iracundia Moria
+GA16173AB	Secures Montium Nebulosorum
+G24288EA5	Ars Securis Regum
+G45AAD667	Iudicium Balin
+GB752504B	Arcus longus Mirkwood
+GA018F71A	Repulsio Cultri
+G0DCE9941	Furor Elficus
+G4A27D7DF	Vis Celeborn
+GE0EC06AA	Arcus longus Rivendell
+G76059454	Terror Celer Elrond
+GE8C0678B	Liberatio Elrond
+GE9F2F2C9	Arcus longus Lothlorien
+G5FE47D01	Impetus Mortifer Elrond
+G4B1902CB	Dolus Elrond
+GB3FB8DDE	Sagittae Ignis Draconis
+G4A61DECC	Vis Galadriel
+G204DE538	Ira Gil-galad
+G5B85BC6F	Incursus Belli Elrond
+GBDF43860	Sagittae Mithril
+G4B69DAC6	Ars Arcus Elfica
+G43AB31C1	Iudicium Elrond
+GEAA8149B	Gradus
+G11886F39	Repelle ut impetus hostium arceas et sagittas avertas.
+GE4E78CFD	Repulsio
+G3226B277	Ligulam sinistram trahe et tene ut ad Telum transeas.  Preme bullam A ut mittas.  Vecticulo sinistro collima.
+GFF931564	Telum
+G9A309E3D	Mittere
+GC4AB2A6D	Impetu Celeri utere ut hostes sine scutis ferias.
+G5C64BDED	Impetu Feroci utere ut scuta hostium frangas.
+G4B1F5E2B	Impetus Ferox
+G12993772	Impetus Celer
+G5550F308	Puncta Usus para ut Gradum personae augeas et emendationes pretiosas emas.
+GD5F0D645	Puncta Usus Parta
+G109A17A7	Coniunctionibus provectis utere et ictus hostium vita ut Mensuram Artis impleas et plurima Puncta Usus pares.
+GDB22979F	Mensura Artis
+GF7AF01B8	Collimare
+G552324EC	Retro Salire
+G3962B27E	Motus Letalis
+G819AB384	Repellere
+GB5FE5915	Mittere/Impetus Celer
+G1438BF1E	Ire/Collimare
+GCDD8B9EF	Mora
+G63E0263C	Colloquium
+GA970F7F6	Peter Jackson et Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Dominus Anulorum
+GF0462ED4	Fabricatio Ludi Electronici
+G0DB34230	Excerpta Cinematica Rara
+G9DF19E57	'Societas Anuli'
+G1704CE51	Imagines Productionis
+G330E63EE	Fangorn et Orthanc
+GD722C1B8	Rohan et Helm's Deep
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Lude ut Aragorn
+GA8934934	Lude ut Legolas
+G84C57E95	Lude ut Gimli
+G46EA0007	Lude ut Isildur
+G5689E41F	Munus Arcanum
+G7F2C7A4C	Lude ut Persona Arcana
+G96AF0882	Adumbrationes
+G8813AE29	Perfice Portas Moria ut Reseres
+G4EEEB554	Perfice Sepulcrum Balin ut Reseres
+G3182CC3A	Perfice Amon Hen ut Reseres
+G54747798	Perfice Silvam Fangorn ut Reseres
+G5D796BA6	Perfice Campos Rohan ut Reseres
+G758A2B31	Perfice Westfold ut Reseres
+GD1B66361	Perfice Fauces Rohan ut Reseres
+GEC95C099	Perfice Helm's Deep: Murum Profundi ut Reseres
+G4F6E6B62	Perfice Helm's Deep: Murum Perruptum ut Reseres
+G7E4B2F5F	Gradum 5 cum Aragorn attinge
+GA825B93E	Gradum 5 cum Legolas attinge
+GD08EF3EF	Gradum 5 cum Gimli attinge
+G060F3A0C	Perfice Helm's Deep: Aream Hornburg et Gradum 10 cum Aragorn attinge
+G9C00EBDD	Perfice Helm's Deep: Aream Hornburg et Gradum 10 cum Legolas attinge
+GCA301FEC	Perfice Helm's Deep: Aream Hornburg et Gradum 10 cum Gimli attinge
+G2A4097F8	Perfice Munus Arcanum quavis persona
+GF80714A8	Perfice Munus Arcanum persona arcana
+GF281A415	Peter Jackson et Barrie Osborne de pellicula et ludo disserunt
+GEF6D5A30	Elijah Wood de Frodo agendo in ludo electronico 'Dominus Anulorum' loquitur
+G1B7C2E20	Ian McKellen de Gandalf agendo in ludo electronico 'Dominus Anulorum' disserit
+G100A11D4	Post scaenam: quomodo ludus electronicus 'Dominus Anulorum' factus sit
+G14A8622F	Imagines personarum et locorum ex 'Societas Anuli'
+G228511D6	Imagines personarum et locorum ex Fangorn et Orthanc
+GFDF064C7	Ars John Howe et Alan Lee, a 'Dominus Anulorum' inspirata
+GAAE1A0C0	Imagines personarum et locorum ex Rohan et Helm's Deep
+G6CEBDAE1	Viggo Mortensen de Aragorn agendo in ludo electronico 'Dominus Anulorum' loquitur
+G6824CF13	Orlando Bloom de Legolas agendo in ludo electronico 'Dominus Anulorum' disserit
+G84770794	John Rhys-Davies de Gimli agendo in ludo electronico 'Dominus Anulorum' loquitur
+G775EAFA1	Notae arcanae ad res occultas ludi electronici 'Dominus Anulorum' reserandas
+G640E4463	Mutare electionem
+G6D02770F	Eligere
+GE5EE10E6	Redire
+GA75BE7EE	Mutare vel corrigere electionem
+GE7B4EE86	Exire ad Indicem
+G47C91DD4	Mutare imaginem
+GE445F6CE	Punctis Emendationis utere ut personae tuae emendationes emas.
+GB2D2B6DB	Omnes necate!
+GFD9FFC0E	Hanc beluam impetibus celeribus prosterne!
+G7BD97E94	Impetu feroci utere ut scutum eius deleas!
+G62FC14DC	Ecce adveniunt! Omnes necate!
+GA3F97A90	Commodate mihi gladios vestros!
+G88F3FEA7	Uggh! Morere, belua Mordor!
+G4888927E	Pro Urbe Alba!
+GB5DB8B33	Actum est de te!
+G91F156A0	Abi, belua umbrae!
+G8F5E1C57	Morere, proles Sauron! Morere!
+GEF59BEBD	Repellite eos!
+G263E18E0	Progredimini!
+G8715790C	State firmi!
+G09E491AC	Morere!
+GC9D8887A	Faex Gondor!
+GD909145B	Tu, morere!
+G8524085B	Non omnes nos necare potestis!
+GFA0F31A8	Morere, faex!
+G6949F8FB	Nimis multi sunt, te defendere debes!
+GAB41028F	Defende te, domine.
+GC99D9EF1	Impetus celeres hunc vincent.
+G8BC62719	Impetus feroces illa scuta frangent.
+G24319240	Mundus mutatus est.
+G6FC7E51E	Id in aqua sentio.
+G586AE929	Id in terra sentio.
+GA0D1D398	Id in aere olfacio.
+G20A7EC8F	Multa quae olim erant perierunt,
+G9A5EEA48	nam nemo nunc vivit qui meminerit.
+G991F588A	Coepit a fabricatione Magnorum Anulorum.
+GDCCA686B	Tres Elfis dati sunt -
+G64D4928C	immortalibus, omnium sapientissimis et pulcherrimis.
+GC38B0B40	Septem Dominis Nanorum,
+GE4E9DA85	magnis fossoribus et artificibus aularum montanarum.
+G8EA28015	Et novem... novem Anuli generi Hominum donati sunt,
+G5415D8A9	qui super omnia potentiam cupiunt.
+GCAF2B8E3	Nam his Anulis vis et voluntas cuique generi imperandi inclusa erat.
+GEAB51D48	Sed omnes decepti sunt...
+G9968C959	nam alius Anulus factus est.
+G6DF9A86C	In Terra Mordor, in ignibus Montis Fati,
+GD5CC3D06	Dominus Tenebrarum Sauron clam Anulum Principem fabricavit ut ceteris omnibus imperaret.
+GA5AF65D9	Et in hunc Anulum crudelitatem suam, malitiam, voluntatemque omnis vitae dominandae infudit...
+GF9C8C37E	Singillatim terrae liberae Terrae Mediae potestati Anuli succubuerunt.
+GD7B567A4	Sed erant qui resisterent.
+G9673067D	Ultimum Foedus Hominum et Elforum contra exercitus Mordor processit,
+G9292CF8B	et in clivis Montis Fati pro libertate Terrae Mediae pugnaverunt.
+G9C449910	Hoc ipso momento,
+G4E624CE3	cum spes omnis evanuisset...
+G8B971AFC	...Isildur, filius Regis, gladium patris sustulit.
+GA0976A20	Sauron, hostis liberorum populorum Terrae Mediae, victus est.
+GCE1FEBD6	Anulus ad Isildur transiit, cui haec una occasio erat malum in perpetuum delendi.
+G4653B8E6	Sed corda Hominum facile corrumpuntur.
+GF1F12CD3	Dele eum!
+G7A59BC32	Minime.
+GEDAFB589	Heres Isildur sum, non ipse Isildur. Fatum meum meum est.
+GECD0FC9B	Ad Helm's Deep! Brego, i!
+GE526C94A	Frodo! Ab eis abstine!
+GE5AC368C	Auxilium! Ubique sunt!
+GE18CFED5	Te inveniemus.
+G754CEC13	Retro, res foeda!
+G0EE492EC	Anuliferum quaerunt! Prope manete!
+GA236A198	Resistere non potes, Semihomo.
+GB0F6888B	Perditi sumus.
+GABCB70B5	Totus Isengard exhaustus est.
+GD4A9E9B3	Exercitus est ad unum finem alitus: ad mundum Hominum delendum.
+G65599300	Dominus Tenebrarum appropinquat.
+GC6B5C82C	Baggins...
+GDE3725D0	Umbrae Anulorum! Recedite!
+GDB2A2A63	Strider!
+GDF3A925F	Ei parcatur. Serva eum.
+G4867AD04	In asylo Rivendell minimus nostrum maximam fortitudinem praestitit.
+G3505351D	Ego eum feram!
+G5B8CB3F8	Et Societas conflata est.
+GF6138FE1	Anulum in Mordor feram!
+GA7DC204A	Quamquam...
+G2FFEE7D1	...viam nescio.
+GD051F7C5	Te hoc onus ferre iuvabo, Frodo Baggins...
+G82079845	...dum tibi ferendum est.
+G8308B082	Fatum omnium nostrum fers, parvule.
+G32030F3F	Et arcum meum habes.
+G7A19CD10	Et securim meam.
+G18A439E8	Da nobis anulum, semihomo.
+G5E09B681	Anulus noster est.
+GC7625599	Veni ad nos, semihomo.
+GB2DCED15	Adiuva me!
+GF8B88DB9	Veni, adiuva me!
+G111D0DD5	Morior.
+G439D87CA	Haec terra mutata est.
+GB5DB841A	Hic manebimus donec via ulterior tuta videatur.
+GF0EB3761	Multos annos nullum nuntium e Moria accepimus.
+G3A9580D6	Per Fodinas Moria transire possemus.
+G852B83DE	Consobrinus meus, Balin, nos regie exciperet.
+G48D6F333	Cavete!
+G20BEF03C	Celeriter! Hac!
+G37B7E741	Belua dira.
+G70A83B75	Haec est Ianua Durin, Domini Moria.
+GE6E19D64	Ergo, Gandalf, eos per Caradhras ducere conaris.
+GF7BC40D4	Et si id frustra fuerit -
+GC7F3ECF5	quo tum ibis?
+G4F7AA217	Ad Moria!
+G0F8A9576	Dic, amice, et intra.
+GCB3668DA	Mellon.
+G64134F99	Nunc una tantum optio nobis est.
+GE57BDBA1	Longis tenebris Moria obviam eundum est.
+G3CA10A85	Faex Mordor!
+GC753F514	Insidiae!
+G66D5EE9E	Sunt Orci. Multi.
+G8AB8C148	In angustiis, nanum mitte!
+G6F4359B4	Bene ictum, Gimli!
+G43E71D7A	Praecurram ut viam perviam inveniam.
+G0F5D4F40	Belua.
+G0BFC06A5	Hic multo plura quam Sepulcrum Balin, Domini Moria, inventuri eramus.
+G79CBD185	Portas obseravimus. Tympana in profundo.
+G676CE560	Exire non possumus.
+GC2C2532E	Retro, beluae exanimes!
+G41169039	Legolas! Arcu tuo egemus!
+GED8A660A	Festina, Gimli!
+G548B1E16	Abi, belua dira!
+G8B6C996D	Eum capiam!
+GD624A593	Post te!
+G22876487	Locum tenete!
+G6E72BC38	Retro, beluae!
+G98FB35D8	Huc!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Nimis multi sunt!
+GEB38BB38	Quomodo eos sistere possumus?
+GDB1D4894	Cum eis pugnare non possum!
+GCA82C10C	Eos arcere non possum!
+G839F36D1	Eos arcu tuo conficite!
+G426819B7	Pro Balin!
+G32A709EE	Iam te invado!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Nimis multi sunt!
+GB502E0B9	Pro Mirkwood!
+G5C8B1856	Foramina vermibus in ventre tuo secabo!
+GF8D92047	Omnes capite!
+GDFB1C64C	Contundite eos!
+G5AF9060B	Redi in umbram!
+GF1BFC8A0	Aragorn! Gladio tuo egeo!
+GF83070F8	Ad me, Gimli! Huc!
+G2EC65D74	Firmate animos!
+GCD82317C	Mittite!
+GCEA41230	Dispergimini! Ne nos circumdent!
+G3AD812AF	Invenite Semihominem!
+G6B59AA20	Frodo fatum omnium nostrum fert!
+G4B4B5CA5	Eum defendere debemus!
+G1881769E	Pro honore eius poenas dabis!
+G743E1105	Moria iter obscurum Societati nostrae fuerat.
+G32DCF8A9	Fugite, stulti!
+G10D542AD	Noooooon!
+GD10EAA8A	Inceptum in acie cultri stat.
+GF997012E	Si paulum erraveritis, peribit.
+G01C6A95F	Sed obscurius etiam futurum erat, nam Societas nostra deficiebat.
+G212FEF60	Tecum ad finem issem, in ipsos ignes Mordor.
+G960898CD	Currite!
+GD941582B	In pace esto...
+G9D8421F1	...fili Gondor.
+G60BC6BA4	Hos Uruk-hai vincere debemus ut Frodo effugiat!
+GF0E0DD02	Boromir!
+G1C9C2949	Paulum auxilii hic, Elfe!
+GB1E7FF01	Uruk-hai! Impetum facite!
+G62308F86	Hoc me delectabit!
+GA7F87EAC	Redi in puteos qui te genuerunt.
+G06BA8520	Hac venerunt, venite.
+G817C5460	Sed vestigia hic desinunt. Dividi debemus ut eos cito inveniamus.
+G934A6365	Aragorn, aliquid illic est.
+G32456D68	Quid vides, Legolas?
+G090A57A6	Magus Albus.
+G3BE10384	Saruman.
+GF471A310	Quamvis Boromir fortiter pugnavisset, servi Saruman socios nostros quosdam ceperunt.
+G9EB3E2D9	Sed socios nostros cruciatui et morti non relinquebamus.
+GC9337F85	Per dies vestigia eorum secuti sumus...
+G1A87CFBD	...tandem nos ad Silvam Fangorn duxerunt.
+G7754D2C1	Haec silva antiqua est...
+G9261B17A	...antiquissima.
+GF7DCBBD1	Plena memoriae est...
+GC4192431	...et irae.
+G92086B9D	In illa magna silva multae viae convenerunt.
+G6F680400	Fieri non potest.
+G7A0AC815	Nunc foedus est inter duas turres - Orthanc et Barad-dur.
+GF36A1977	Alibi tui opus est.
+GA926AFE5	Bellum in Rohan venit.
+GC5293984	Nunc ludum habemus!
+GCF6954E1	Id antea vidi, sed numquam sic.
+G2E930B75	Una spes nostra est simul stare!
+GFD82D6F4	Copiae Saruman miras machinas displosivas per hoc oppidum ferunt. Adiuvate nos eas delere!
+G86FA279C	Ad portam eos retinete!
+G7B48AD72	Pauci nostrum qui pugnare possunt Helm's Deep petunt.
+GD55B6BE3	Ibi futurum Rohan vivet aut morietur.
+G2256A18D	Cavete machinas displosivas!
+GE0BD0D44	Ita! Ignem eis gustandum date!
+G82C8009F	Hoc eos tardabit!
+GA0C82879	Quid hic habemus?
+G751859FC	Quid est hoc?
+G06637EF0	Has machinas displosivas delere debemus!
+GABF94061	Illae machinae displosivae delendae sunt.
+G13114F1E	Quidnam hoc sit?
+G5B2AF650	Hoc utile esse possit.
+G14659B9A	Hoc pretiosum videtur.
+G418ECC01	Ecce. Hoc servabo.
+G136EC46C	Hoc ferre operae pretium est.
+G360BBC1D	Insania Saruman et voluntate Domini Tenebrarum aguntur.
+G4840EFEC	Plures ignes artificiosi? Ha! Omnes nos cadavera facere volunt!
+G19910876	Nunc in nos veniunt!
+G08EB8FDB	Invium est.
+G6FED1000	Aliam viam inveniam oportet.
+G68F91872	Hic vicus ut fomes aridus ardet!
+G57BD9573	Satis utile.
+G424E3FF5	Hoc sufficiet!
+G501ABC20	State firmi!
+G31FDA576	Hunc quoque locum invadunt!
+GB60A7265	Non soli Rohan defendebamus.
+GA48B596C	Custodes Regis quoque ad Helm's Deep pugnantes pervadebant.
+G65866A2E	Omnia quae potuisti hic fecisti.
+G115A6D12	Superstites Helm's Deep petent.
+GC07CBB0E	Tibi adhuc opus faciendum est. Ad te redibo cum aestus vertetur.
+G63B48C52	Perruperunt!
+GAAD29572	Obsecro! Non! Non! Non!
+G589F2E2F	Omnes quos possumus servare debemus, aliter hic vicus cadet.
+GE1654ECA	Priusquam longum iter nos Edoras duxit...
+G97FC9F74	...populus tuus iam in magno periculo erat.
+GB52DB0C9	Parce mihi!
+GDDA274AE	Obsecro! Parce mihi!
+GA354A5CD	Ahhh! Non!
+G1C74FEB5	Non!
+G946E2F3A	Non! Non! Noli!
+GF46D4AC5	Non! Non! Non!
+G1BD76207	Educite nos! Festinate!
+GE57CB50F	Parce mihi, oro te!
+G716689E1	Protegite nos!
+G6295F93F	Servate me! Obsecro, servate me!
+GFA27E38F	Aaaaaah! Nos vivos urunt!
+G25B702F8	Sine me vivere! Obsecro!
+GDE034FBB	Pergere debes.  Alibi mei opus est.
+G898F1CFF	Facite ut lupos Isengard timeant!
+G04FC403B	Non sinere poteramus has beluas ad profugos pervenire.
+GD8C5307E	Populus tuus defensus est, sed multis vitis id solvimus.
+G4FD6FE99	Paene meam amisi.
+G753DFA73	Ita est ut variis viis omnes ad castellum Helm's Deep venerimus, ut extremum resistamus.
+G932478E9	Nunc illum necate!
+GF940F960	Ita, deliciae meae!
+G646F5FC4	Vargi nostri hac nocte epulabuntur!
+G948FC6FF	Nolite cum eo ludere!  Necate eum!
+G99617AA4	Recesserunt.  Nunc finis est.
+G4A0F838F	Undeviginti cepi!
+GC16105A6	Ergo pares sumus.
+GAC4FD1F9	Videbimus.
+GF71FBCA2	Duos cepi.
+G641CA89C	Satis sunt nobis ambobus, Gimli!
+GF4B76D82	Oculos Sauron in nos defixos tenere debemus - eum caecum ad omnia alia quae moventur!
+G5B04C967	Retro!
+G3487D102	Descendite de muro!
+G8B575855	Orci in muro sunt!
+GCE3C16C0	Iam septendecim habeo!
+G3D052135	Petite tegimen!
+G05C9D273	Iterum in nos sagittant!
+G4941BF74	Deicite illam scalam priusquam opprimamur!
+G265760A3	Deorsum!  Procumbite!
+G2E8173A8	Non sinere possumus eos Speluncis Fulgentibus appropinquare!
+G36DE1341	Numquam talem securis artem vidi, Domine Nane.
+G80FBF437	Nec ego talem arcus peritiam.
+G3F35FF0E	Sed numquam resurgunt postquam eos percussi.
+GEC633822	Defensio nostra superata est! Mulieres et liberi intercluduntur!
+G17070638	Ducite eos in Aulam Magnam!
+G5CAB82D3	Hic eos retinebimus, aut ad Arcem!
+GFFC47594	Eos retinuimus. Mulieres et liberi tuti sunt - in praesentia.
+GBD5794D5	Eos diutius retinere non possumus! In Aulam Magnam!
+G088ED5E4	Eos retinere non possumus!
+G7C6E3511	Sauron et Saruman laqueum astringunt.
+G7B236705	Sed quamvis callidi sint, unum commodum habemus.
+GFCAC9515	Anulus adhuc latet.
+G1C7DF558	Et nos eum delere quaerere nondum in somnia eorum obscurissima venit.
+GB72B409D	Itaque telum hostis Mordor versus in manibus Hobbiti movetur -
+G86CED6F6	quisque dies id propius ad ignes Montis Fati fert.
+GD9BB4CD5	Sauron te timet, Aragorn.
+GDD966B5E	Sagittarii in murum!
+G6A122B51	Recedite! Vallum mox cadet!
+G427F5206	Festina, Domine Nane!
+G113213B2	I ad Legolas, ego eos hic retinebo!
+GA7B95A20	Pro Gondor!
+G7C696E8A	Aragorn superatur! Ad eum!
+GFC98A99D	Amicus noster Elfus auxilio eget.
+G66A680C0	Uruk-hai!
+G8968245E	Vallum mox perfringent!
+G428EE07E	Intra arcem sunt. Perditi sumus!
+GFAE8490C	NOOOOOON!!
+G63F31F0F	Finis tuus prope est.
+GE8B9DB2E	Viam doloris elegisti!
+G910D7B12	Stulte.
+G58E8BBAA	Tempus est ut desinas.
+GD8425223	Num credidisti vagum pannosum cum voluntate mea certare posse? Ultra vim tuam sum.
+G1A989E68	Poenas superbiae tuae dabis.
+G0079D300	Non putavisti Nanum cum voluntate Saruman certare posse. Nemo potest.
+GFB1E1C33	Num serio putavisti Elfum cum Saruman certare posse? Nemo potest, nec audere debet.
+GCB4F521C	Ut Arcus Procuratoris emissae, sagittae hamatae Rohirrim graviter laedunt.
+G906620AF	Valetudinem in perpetuum auge.  (Requiritur Potentia Denethor)
+GE4F990F3	Impetus vastior.  (Requiritur Furor Gondor)
+G55B83821	Valetudinem in perpetuum auge.  (Requiritur Robur Gondor)
+GD4900EBD	Hic impetus vastus multos hostes incendit.  (Requiritur Iracundia Gondor)
+GF1EE1785	Arcus Procuratoris
+GC7DFC68A	Furor Gondor
+G26838C80	Cornu Gondor
+G948EF2DD	Statio Ducis
+GC354B788	Potentia Denethor
+G2675AC6D	Impetus Minas Tirith
+G3A16134F	Dolus Procuratoris
+G7C6E9536	Robur Gondor
+G909BDBD3	Iracundia Gondor
+GBCA2DB1D	Incursus Turris Albae
+GA70E206F	Statio Amon Hen
+GECE9E935	Ludere ut Boromir
+G2BAAD5AF	Trahe et tene pulsatorem sinistrum ut utaris.  Mitte bulla A (deprime ut damnum augeas).
+GF2DB6139	Ut Lux Magi missa, flamma Narya hostes graviter urit.
+G4E51B4E3	Valetudinem in perpetuum auge.  (Requiritur Robur Istari)
+G701450DF	Valetudinem in perpetuum auge.  (Requiritur Robur Olorin)
+G876BFE80	Impetus vastior.  (Requiritur Furor Maia)
+G554AF8D3	Valetudinem in perpetuum auge.  (Requiritur Robur Narya)
+GF20F1105	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Magi)
+GE86497FB	Ignis albus Istari atrociter urit. (Requiritur Ignis Anuli)
+G5D1DA1B0	Lux Magi
+GE4245C5B	Repulsio Baculi
+G68852FD1	Furor Maia
+G63891384	Robur Istari
+G3023E8DD	Flamma Anor
+G03053C48	Non Transibis
+G44E88937	Ignis Anuli
+G31781C88	Robur Olorin
+GC67FABAE	Impetus Shadowfax
+GB28BAB38	Peregrinus Canus
+GBB647C84	Robur Narya
+G3A1959EB	Ira Magi
+G910A4D18	Magister Glamdring
+GE54BB6DF	Incursus Mithrandir
+G80CB05F7	Robur Albi
+G5500602D	Iracundia Olorin
+GB3B8BA9A	Ignis Albus
+G4D3F3799	Iracundia Maia
+GB06CD44C	Ludere ut Gandalf
+GD63AEB69	Trahe et tene pulsatorem sinistrum ut utaris.  Iace bulla A (deprime ut damnum augeas).
+GF1500B18	Ut Lapides Shire iacti, acuti silices Brandywine graviter laedunt.
+G1594107A	Valetudinem in perpetuum auge.  (Requiritur Robur Shire)
+G223FB1F4	Valetudinem in perpetuum auge.  (Requiritur Robur Bilbo)
+G419FBE06	Impetus vastior.  (Requiritur Furor Hobbitorum)
+G549E8839	Valetudinem in perpetuum auge.  (Requiritur Robur Samwise)
+G3E7B6E97	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Shire)
+G5DBA6F26	Lapides ab Elfis benedicti atrociter laedunt.  (Requiritur Iactus Silicum)
+G586DFFA8	Lapides Shire
+GAF333BB7	Furor Hobbitorum
+GA30AB0B5	Robur Shire
+G5B952654	Morsus Sting
+G3F0B7A46	Voluntas Anuliferi
+GE7A5F0EC	Iactus Silicum
+G97512A2B	Robur Bilbo
+G4F6E34B0	Impetus Baggins
+G8AFDEEE2	Fortuna Hobbiti
+G9AE8326E	Robur Samwise
+G5FECDC01	Ira Shire
+GB7F9A847	Peritia Sting
+GD629F714	Incursus Tukianus
+G31486B52	Robur Bag End
+G4023054B	Iracundia Sting
+GD48B81F2	Lapides Elfici
+G371FFFDE	Constantia Mithril
+G031E765B	Ludere ut Frodo
+G63C78123	Ut Arcus Isengard emissae, sagittae hamatae Orthanc graviter laedunt.
+G266F9F27	Valetudinem in perpetuum auge.  (Requiritur Robur Isengard)
+G4451D279	Valetudinem in perpetuum auge.  (Requiritur Robur Saruman)
+G2DE635F5	Impetus vastior.  (Requiritur Furor Uruk)
+G4D25FA2B	Valetudinem in perpetuum auge.  (Requiritur Robur Orthanc)
+G055C2C2B	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Isengard)
+G478E4DB1	Sagittae nigrae Isengard atrociter laedunt.  (Requiritur Arcus Uruk)
+GB0EED2A6	Arcus Isengard
+G13D5F1B3	Repulsio Laminae
+GCC2F9E7C	Furor Uruk
+GF496EAA0	Robur Isengard
+GC727C10B	Venatio Lurtz
+G73D0C070	Voluntas Saruman
+GD64B9B56	Arcus Uruk
+G9E8D350E	Robur Saruman
+G6426C642	Impetus Uruk Pugnacis
+GCC3C5342	Dolus Lanii
+G0DEF3FCC	Robur Orthanc
+G0EBAA8C5	Ira Isengard
+GFC62112E	Magister Lanius
+GEE7780E5	Oppugnatio Isengard
+G838B10AC	Robur Uruk-hai
+GF44614A3	Iracundia Saruman
+G45DC8B08	Arcus Niger
+G4F638CF6	Pernicies Rohan
+G9E606E3B	Fatum Uruk Primi
+GE31550F8	Lurtz
+G981416DE	Ludere ut Lurtz
+G6F22BB2E	Ut Arcus Elficus emissae, sagittae Rivendell graviter laedunt.
+GCA4A15A1	Valetudinem in perpetuum auge.  (Requiritur Robur Rivendell)
+G75BCF244	Valetudinem in perpetuum auge.  (Requiritur Potentia Gil-galad)
+G216AF74D	Valetudinem in perpetuum auge.  (Requiritur Robur Vilya)
+G0B6CC0B6	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Noldor)
+G0355C5D7	Sagittae argenteae Eldar atrociter laedunt. (Requiritur Arcus Vanya)
+GD3F16BA3	Arcus Elficus
+G710A6666	Robur Rivendell
+G96D9F158	Gratia Vilya
+GF127A06E	Ultimum Foedus
+GB426C696	Arcus Vanya
+G71620C4B	Potentia Gil-galad
+GFBF3A490	Impetus Lindon
+G00542D8B	Dolus Praeconis
+G5104305A	Robur Vilya
+G221633E0	Ira Noldor
+G11A9FF39	Incursus Belli Noldor
+GDE2839BE	Robur Eldar
+GB0E7C432	Iracundia Lindon
+G008B68D9	Arcus Eldar
+G10607364	Dominus Imladris
+G0BA28B85	Ludere ut Elrond
+GD6BB77A1	Ut Fulmen Atrum missus, ignis Barad-dur graviter laedit.
+G113CAFFC	Valetudinem in perpetuum auge.  (Requiritur Robur Barad-dur)
+G2F14F0F7	Valetudinem in perpetuum auge.  (Requiritur Robur Mordor)
+G573FFFF8	Impetus vastior.  (Requiritur Furor Tenebrosus)
+G6AE28C4F	Valetudinem in perpetuum auge.  (Requiritur Potentia Anuli)
+GC4B7E7DB	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Mordor)
+G5FEE9C56	Flammae Montis Fati atrociter laedunt.  (Requiritur Ignis Inferni)
+GA07FAB7C	Fulmen Atrum
+G59838F7F	Repulsio Clavae
+G0ACE1349	Furor Tenebrosus
+GD97CF863	Robur Barad-dur
+GF62B2130	Saltatio Sauron
+G53F430F0	Voluntas Anuli Unici
+GB60C89B8	Ignis Inferni
+GC26DDD50	Robur Mordor
+G29856B22	Impetus Domini Tenebrarum
+G27C67462	Dolus Annatar
+G66205DC8	Potentia Anuli
+GA64C9515	Ira Mordor
+G278CB8C1	Magister Clavarum
+G4B8493DC	Incursus Belli Mordor
+G5487C52D	Robur Montis Fati
+GE9A37F55	Iracundia Mordor
+G3F70A0C4	Ignis Fati
+GBB8776B5	Pernicies Elforum
+G6E2AA149	Oculus Sauron
+G1C11BF19	Sauron
+G3057B52F	Ludere ut Sauron
+GB76B50B9	Ut Saxa Rupium iacta, haec saxa e puteis graviter laedunt.
+GECFE6FA3	Valetudinem in perpetuum auge.  (Requiritur Potentia Puteorum)
+G47753157	Hic impetus vastus multos hostes incendit.  (Requiritur Ira Berserkorum)
+GF2D43E42	Saxa liquefacta atrociter laedunt.  (Requiritur Saxa Belli)
+GC390874C	Saxa Rupis
+G035878D4	Rabies Berserkorum
+GC2D0B8DB	Fax Profundi
+GFF1647F7	Saxa Belli
+G98869254	Potentia Pits
+GC4A495AD	Incursio Muri Profundi
+GE0FB4F25	Dolus Uruk-hai
+G8925F4A1	Ira Berserkorum
+G468B4A5C	Magister Berserkorum
+GB0E58D9C	Incursus Obsidionis
+GD5AF6DD1	Iracundia Orthanc
+G01AF5769	Saxa Lavae
+G18494AB3	Iracundia Pits
+GB3AAE2E1	Uruk-hai
+G683077D7	Ludere ut Uruk-hai
+P:Frame Rate:	Frequentia:
+P:Unlocked	Solutum
+P:Display Mode:	Modus visus:
+P:Window	Fenestra
+P:Full Screen	Quadrum plenum
+P:Window Size:	Mensura fenestrae:
+P:Automatic	Automaticum
+P:Aspect Ratio:	Proportio:
+P:Custom	Arbitrarium
+P:Resolution:	Resolutio:
+P:Anisotropic:	Anisotropia:
+P:Mipmaps:	Mipmaps:
+P:Off	Exstinctum
+P:On	Accensum
+P:Ultra Textures:	Texturae Ultra:
+P:Wide Cutscenes:	Scaenae latae:
+P:Anti-aliasing:	Levigatio:
+P:VSync:	VSync:
+P:Picture:	Imago:
+P:Keep Shape	Formam servare
+P:Stretch	Extendere
+P:Vertex Programs:	Programmata verticum:
+P:Brightness:	Claritas:
+P:Sharpening:	Acuitas:
+P:Colour:	Color:
+P:Original	Pristinum
+P:Vivid	Vividum
+P:Muted	Hebes
+P:HUD Widescreen:	HUD in quadro lato:
+P:Edges	Margines
+P:Centred	Centratum
+P:Menus:	Indices:
+P:Fill	Implere
+P:Movies:	Pelliculae:
+P:As Made	Ut factum
+P:Button Prompts:	Monita globulorum:
+P:Keyboard	Claviatura
+P:Mouse Pointer:	Indicator muris:
+P:Sensitivity:	Sensibilitas:
+P:Pointer Size:	Mensura indicatoris:
+P:Mouse Aiming:	Collimatio muris:
+P:Invert Aiming:	Collimatio inversa:
+P:Up/Down	Sursum/Deorsum
+P:Left/Right	Laeva/Dextra
+P:Both	Utrumque
+P:Mouse Steering:	Gubernatio muris:
+P:A Button:	Globulus A:
+P:B Button:	Globulus B:
+P:X Button:	Globulus X:
+P:Y Button:	Globulus Y:
+P:Black Button:	Globulus niger:
+P:White Button:	Globulus albus:
+P:Left Trigger:	Pulsator sinister:
+P:Right Trigger:	Pulsator dexter:
+P:Start:	Initium:
+P:Back:	Retro:
+P:D-pad Up:	Crux sursum:
+P:D-pad Down:	Crux deorsum:
+P:D-pad Left:	Crux ad laevam:
+P:D-pad Right:	Crux ad dextram:
+P:L Stick Click:	Pressus vectis S:
+P:R Stick Click:	Pressus vectis D:
+P:Move Forward:	Prorsum:
+P:Move Back:	Retrorsum:
+P:Move Left:	Ad laevam:
+P:Move Right:	Ad dextram:
+P:Look Up:	Suspicere:
+P:Look Down:	Despicere:
+P:Look Left:	Spectare laevam:
+P:Look Right:	Spectare dextram:
+P:Walk:	Ambulare:
+P:General Options	Optiones generales
+P:Display Options	Optiones visus
+P:Controls	Moderamina
+P:Reset Controls	Moderamina reficere
+P:Press a key...  (Esc: cancel, Delete: clear)	Preme clavem...  (Esc: abrogare, Delete: delere)
+P:R Stick	Vectis D
+P:Stick	Vectis
+P:L Stick	Vectis S
+P:Black button	Globulus niger
+P:White button	Globulus albus
+P:Left trigger	Pulsator sinister
+P:Right trigger	Pulsator dexter
+P:Start	Initium
+P:Back	Retro
+P:D-pad up	Crux sursum
+P:D-pad down	Crux deorsum
+P:D-pad left	Crux ad laevam
+P:D-pad right	Crux ad dextram
+P:Left stick click	Pressus vectis S
+P:Right stick click	Pressus vectis D
+P:Move forward	Prorsum
+P:Move back	Retrorsum
+P:Move left	Ad laevam
+P:Move right	Ad dextram
+P:Right stick up	Vectis D sursum
+P:Right stick down	Vectis D deorsum
+P:Right stick left	Vectis D ad laevam
+P:Right stick right	Vectis D ad dextram
+P:Walk	Ambulare
+P:None	Nihil
+P:LS click	VS pressus
+P:RS click	VD pressus
+P:Mouse Left	Mus sinistra
+P:Mouse Right	Mus dextra
+P:Mouse Middle	Mus media
+P:Mouse 4	Mus 4
+P:Mouse 5	Mus 5
+P:Space	Space
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Sursum
+P:Down	Deorsum
+P:Left	Laeva
+P:Right	Dextra
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num *
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Semicolon
+P:Equals	Aequale
+P:Comma	Virgula
+P:Minus	Minus
+P:Period	Punctum
+P:Slash	Obliqua
+P:Backquote	Apex gravis
+P:Backslash	Obliqua inversa
+P:Quote	Citatio
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Tene {6} ut ad Telum tuum transeas.  Preme {0} ut emittas.  {M} utere ut collimes.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Trahe et tene {6} ut ad Telum tuum transeas.  Preme {0} ut emittas.  {M} utere ut collimes.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Tene {6} ut utaris.  Emitte {0} premendo (tene ut plus noceas).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Trahe et tene {6} ut utaris.  Emitte {0} premendo (tene ut plus noceas).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Tene {6} ut utaris.  Iace {0} premendo (tene ut plus noceas).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Trahe et tene {6} ut utaris.  Iace {0} premendo (tene ut plus noceas).
+P:A devastating attack.  Press and hold {3} to use.	Impetus vastificus.  Preme et tene {3} ut utaris.
+P:Game Saved.  Press {8} to continue.	Ludus servatus.  Preme {8} ut pergas.
+P:Game Saved.  Press {0} to continue.	Ludus servatus.  Preme {0} ut pergas.
+P:Unable to save game. Press {8} to continue.	Ludus servari non potuit. Preme {8} ut pergas.
+P:Unable to save game. Press {0} to continue.	Ludus servari non potuit. Preme {0} ut pergas.
+P:Unable to load game. Press {8} to continue.	Ludus onerari non potuit. Preme {8} ut pergas.
+P:Unable to load game. Press {0} to continue.	Ludus onerari non potuit. Preme {0} ut pergas.
+P:No saved games. Press {8} to continue.	Nulli ludi servati. Preme {8} ut pergas.
+P:No saved games. Press {0} to continue.	Nulli ludi servati. Preme {0} ut pergas.
+P:Not unlocked yet. Press {8} to continue.	Nondum reseratum. Preme {8} ut pergas.
+P:Not unlocked yet. Press {0} to continue.	Nondum reseratum. Preme {0} ut pergas.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Non satis punctorum emendationis collegisti ut hanc emendationem emas. Preme {8} ut pergas.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Non satis punctorum emendationis collegisti ut hanc emendationem emas. Preme {0} ut pergas.
+P:Press {8} to resume	Preme {8} ut pergas
+P:the left mouse button	globulum muris sinistrum
+P:the right mouse button	globulum muris dextrum
+P:the middle mouse button	globulum muris medium
+P:mouse button 4	globulum muris 4
+P:mouse button 5	globulum muris 5
+P:the A button	globulum A
+P:the B button	globulum B
+P:the X button	globulum X
+P:the Y button	globulum Y
+P:the Black button	globulum nigrum
+P:the White button	globulum album
+P:the left trigger	pulsatorem sinistrum
+P:the right trigger	pulsatorem dextrum
+P:up on the d-pad	sursum in cruce
+P:down on the d-pad	deorsum in cruce
+P:left on the d-pad	ad laevam in cruce
+P:right on the d-pad	ad dextram in cruce
+P:the left thumbstick button	globulum vectis sinistri
+P:the right thumbstick button	globulum vectis dextri
+P:the Menu button	globulum Indicis
+P:the View button	globulum Visus
+P:the cross button	globulum crucis
+P:the circle button	globulum circuli
+P:the square button	globulum quadrati
+P:the triangle button	globulum trianguli
+P:Left Click	Pressus sinister
+P:Right Click	Pressus dexter
+P:Middle Click	Pressus medius
+P: or 	 vel 
+P:Exit	Egredi
+P:Press {k}	Preme {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+L:The Two Towers Recompiled	Duae Turres Recompilatae
+L:Paths	Viae
+L:Game files ready:  	Fasciculi ludi parati:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	Fasciculi ludi nondum instituti. Elige ISO Xbox Duarum Turrium (USA) aut plicam disci extractam.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Texturae Ultra ex fasce GLOS69 struuntur (semel; paucis minutis)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Imago disci Xbox (*.iso;*.xiso)\\0*.iso;*.xiso\\0Omnes fasciculi\\0*.*\\0
+L:Checking disc...	Discus inspicitur...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Elige plicam disci Duarum Turrium extractam (continet default.xbe)
+L:Display	Visus
+L:Developer	Opifex
+L:Renderer	Pictor
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, in plicam dxvk pone)
+L:Software (no graphics card)	Programmatura (sine scheda graphica)
+L:Frame rate	Frequentia imaginum
+L:30 fps (as on the Xbox)	30 fps (ut in Xbox)
+L:60 fps (experimental)	60 fps (experimentum)
+L:Unlocked (experimental)	Solutum (experimentum)
+L:Display mode	Modus visus
+L:Windowed	In fenestra
+L:Full screen (borderless)	Quadrum plenum (sine margine)
+L:Window size	Mensura fenestrae
+L:Automatic	Automaticum
+L:Aspect ratio	Proportio
+L:4:3 (original)	4:3 (pristinum)
+L:16:9 widescreen	16:9 quadrum latum
+L:21:9 ultrawide	21:9 latissimum
+L:32:9 super ultrawide	32:9 longe latissimum
+L:HUD in widescreen	HUD in quadro lato
+L:At the screen's edges	Ad margines quadri
+L:Centred (4:3)	Centratum (4:3)
+L:Menus	Indices
+L:Fill the screen (past the old TV margin)	Quadrum implere (ultra marginem televisorii veteris)
+L:Original (with a margin)	Pristinum (cum margine)
+L:Movies in widescreen	Pelliculae in quadro lato
+L:As made (4:3)	Ut factum (4:3)
+L:Fill the width (black bands cut off)	Latitudinem implere (fasciae nigrae abscisae)
+L:Widescreen cutscenes	Scaenae latae
+L:Off (4:3, side bars)	Exstinctum (4:3, fasciae)
+L:On (the sky's edges can show)	Accensum (margines caeli apparere possunt)
+L:Ultra textures	Texturae Ultra
+L:Off	Exstinctum
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	Accensum (indices et HUD acutiores; omnia cum fasce GLOS69)
+L:Internal resolution	Resolutio interna
+L:1x  (640 x 480, original)	1x  (640 x 480, pristina)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 lineae: 3840 x 2160 in 16:9)
+L:Anisotropic filtering	Filtratio anisotropica
+L:Mipmaps	Mipmaps
+L:On (less shimmer)	Accensum (minor micatio)
+L:Anti-aliasing	Levigatio
+L:FXAA (the finished picture)	FXAA (imago perfecta)
+L:VSync	VSync
+L:On (no tearing)	Accensum (sine scissura)
+L:Picture shape	Forma imaginis
+L:Keep aspect (black bars)	Formam servare (fasciae nigrae)
+L:Stretch to fill	Extendere ad implendum
+L:Vertex programs	Programmata verticum
+L:Graphics card (faster)	Scheda graphica (celerior)
+L:CPU (old method)	CPU (modus vetus)
+L:Brightness	Claritas
+L:Darker	Obscurius
+L:Original	Pristinum
+L:Brighter	Clarius
+L:Brighter +	Clarius +
+L:Brightest	Clarissimum
+L:Sharpening	Acuitas
+L:Low	Humile
+L:Medium	Medium
+L:High	Altum
+L:Colour	Color
+L:Vivid	Vividum
+L:Muted	Hebes
+L:Button prompts	Monita globulorum
+L:Automatic (follows the pad or keys you use)	Automaticum (sequitur moderatorem aut claves quibus uteris)
+L:Keyboard / mouse (your bound keys)	Claviatura / mus (claves tuae assignatae)
+L:Input	Ingressus
+L:Mouse pointer in menus	Indicator muris in indicibus
+L:On (point and click in the menus)	Accensum (monstra et preme in indicibus)
+L:Off (mouse buttons as bound)	Exstinctum (globuli muris ut assignati)
+L:Mouse sensitivity	Sensibilitas muris
+L:Normal	Usitatus
+L:Very high	Altissimum
+L:Pointer size	Mensura indicatoris
+L:Small	Parvum
+L:Large	Magnum
+L:Extra large	Permagnum
+L:Mouse aiming (ranged)	Collimatio muris (tela)
+L:On (hold the ranged button, move the mouse)	Accensum (tene globulum teli, move murem)
+L:Mouse aiming: invert	Collimatio muris: inverte
+L:Up / down	Sursum / deorsum
+L:Left / right	Sinistra / dextra
+L:Both	Utrumque
+L:Mouse steering (movement)	Gubernatio muris (motus)
+L:On (the mouse sets the way; W A S D move by it)	Accensum (mus viam regit; W A S D secundum eam movent)
+L:Mod: ECTS 2002 HUD (experimental)	Mutatio: ECTS 2002 HUD (experimentum)
+L:Off (retail HUD)	Exstinctum (HUD venale)
+L:On (ECTS 2002 demo HUD)	Accensum (HUD probae ECTS 2002)
+L:Mods	Mutationes
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Mutatio: Remedia aurantia (visa in pelliculis praeviis & de ludo faciendo)
+L:Off (green, as retail)	Exstinctum (viridia, ut olim)
+L:On (orange health pickups)	Accensum (remedia aurantia)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Mutatio: Heroes additi (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; cum Isildur reserantur)
+L:Off (four heroes, as retail)	Exstinctum (quattuor heroes, ut olim)
+L:On (eleven heroes)	Accensum (undecim heroes)
+L:On, unlocked for testing (save not changed)	Accensum, reseratum ad probandum (servata non mutata)
+L:Custom: 	Proprium: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Texturae Ultra accensae sunt: indices, delectus graduum et HUD acutiora sunt.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	Ad omnes texturas, fasciculum texturarum GameCube altae resolutionis (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	ab auctore eius demitte et plicam eius GLOS69 hic pone:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nInitiator eum parat cum proxime Ludere premes (semel; paucis minutis).
+L:Graphics settings	Optiones graphicae
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	Omnia praeter mutationes etiam ludendo mutari possunt: preme F10 (aut tene Retro et preme Initium). 
+L:The mods are set here and take effect when the game starts.	Mutationes hic statuuntur et vim habent cum ludus incipit.
+L:Defaults	Praefinita
+L:Cancel	Abrogare
+L:A button	Globulus A
+L:B button	Globulus B
+L:X button	Globulus X
+L:Y button	Globulus Y
+L:Black button	Globulus niger
+L:White button	Globulus albus
+L:Left trigger	Ligula sinistra
+L:Right trigger	Ligula dextra
+L:Start	Initium
+L:Back	Retro
+L:D-pad up	Crux sursum
+L:D-pad down	Crux deorsum
+L:D-pad left	Crux sinistrorsum
+L:D-pad right	Crux dextrorsum
+L:Left stick click	Pressus baculi sinistri
+L:Right stick click	Pressus baculi dextri
+L:Move forward	Progredi
+L:Move back	Regredi
+L:Move left	Sinistrorsum ire
+L:Move right	Dextrorsum ire
+L:Right stick up	Baculum dextrum sursum
+L:Right stick down	Baculum dextrum deorsum
+L:Right stick left	Baculum dextrum sinistrorsum
+L:Right stick right	Baculum dextrum dextrorsum
+L:Walk (hold)	Ambulare (tenere)
+L:None	Nullum
+L:LS click	Pressus LS
+L:RS click	Pressus RS
+L:Mouse Left	Mus sinistra
+L:Mouse Right	Mus dextra
+L:Mouse Middle	Mus media
+L:Mouse 4	Mus 4
+L:Mouse 5	Mus 5
+L:Space	Spatium
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Sursum
+L:Down	Deorsum
+L:Left	Sinistra
+L:Right	Dextra
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num *
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Semicolon
+L:Equals	Aequale
+L:Comma	Virgula
+L:Minus	Minus
+L:Period	Punctum
+L:Slash	Obliqua
+L:Backquote	Gravis
+L:Backslash	Retroobliqua
+L:Quote	Citatio
+L:Key 	Clavis 
+L:Controls	Moderamina
+L:press a key or mouse button…	preme clavem aut globulum muris…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Preme clavem aut globulum muris huic actioni (Esc abrogat). Primam clavem actionis substituit; ceterae actiones eam amittunt.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Preme capsam clavis, deinde clavem aut globulum muris. Indices demissi eligunt quem globulum moderatoris quaeque actio adhibeat. Haec etiam in ludo mutari possunt: F10, pagina Moderaminum.
+L:Action	Actio
+L:Keyboard / mouse	Claviatura / mus
+L:Controller	Moderator
+L:stick part way	baculum ex parte
+L:right stick	baculum dextrum
+L:left stick	baculum sinistrum
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Adhuc laborat (instituit, aut texturas Ultra struit). Exire tamen?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	Dominus Anulorum: Duae Turres  -  recompilatio nativa PC
+L:Install from ISO…	Instituere ex ISO…
+L:Use extracted folder…	Uti plica extracta…
+L:Show the game window	Monstrare fenestram ludi
+L:Write a log file (for bug reports)	Scribere acta (pro nuntiis vitiorum)
+L:Graphics settings…	Optiones graphicae…
+L:Controls…	Moderamina…
+L:Play	Ludere
+L:Open folder	Aperire plicam
+L:30 fps (original)	30 fps (originale)
+L:60 / unlocked can run some scenes faster than normal	60 / liberum quasdam scaenas celerius solito agere potest
+L:Full screen	Quadrum plenum
+L:Alt+Enter or F11 also switches	Alt+Enter aut F11 quoque mutat
+L:The 3D view widens fully after the next load	Visus 3D plene dilatatur post proximam onerationem
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Acutius, sed validiorem chartam graphicam postulat (9x et supra: multum memoriae)
+L:On	Accensum
+L:Less shimmer on distant textures	Minus tremoris in texturis longinquis
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA margines 3D dum pingitur levigat; FXAA picturam perfectam
+L:Waits for the monitor: no tearing	Quadrum exspectat: nulla scissura
+L:Picture	Pictura
+L:Keep shape	Formam servare
+L:Graphics card	Charta graphica
+L:Graphics card is much faster	Charta graphica multo celerior est
+L:Lifts the dark areas (gamma)	Obscura loca attollit (gamma)
+L:Crisper textures, best with a higher internal resolution	Texturae acutiores, optime cum resolutione interna maiore
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Automaticum: sequitur quo proxime lusisti (moderator, moderator PlayStation, claves)
+L:Where the HUD sits when the picture is wider than 4:3	Ubi HUD sedet cum pictura latior est quam 4:3
+L:Fill the screen	Implere quadrum
+L:Menus, loading and upgrade screens: past the old TV margin	Indices, quadra onerandi et emendationum: ultra marginem veterem televisionis
+L:Fill the width	Implere latitudinem
+L:Fill: the films' black bands cut off, a little closer	Implere: fasciae nigrae pellicularum abscisae, paulo propius
+L:Point and click in the menus (Off: the mouse buttons act as before)	Monstra et preme in indicibus (Exstinctum: globuli muris ut antea agunt)
+L:The pointer's speed and the mouse aiming's	Celeritas indicis et collimationis muris
+L:Hold the ranged button and move the mouse to aim	Tene globulum teli et move murem ut collimes
+L:Press to toggle	Preme ut mutes
+L:Hold	Tenere
+L:Windowed mode	Modus fenestrae
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	Fasciculus texturarum altae resolutionis (GLOS69 et textures_ultra iuxta ludum)
+L:Off (4:3)	Exstinctum (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	Accensum: scaenae machinae quoque dilatatae (margines caeli apparere possunt)
+L:Mod: ECTS 2002 HUD	Mutatio: ECTS 2002 HUD
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Imago, globus runarum et numerus EXP demonstrationis ECTS 2002
+L:Mod: Orange health pickups	Mutatio: Remedia aurantia
+L:Health pickups are orange, as in pre-release and making-of videos	Remedia aurantia sunt, ut in pelliculis praeviis et de ludo faciendo
+L:Custom (%.2f:1)	Proprium (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	OPTIONES GRAPHICAE
+L:Page	Pagina
+L:Graphics	Graphica
+L:Left/Right: switch to the Controls page	Sinistra/Dextra: ad paginam Moderaminum
+L:press a key...	preme clavem...
+L:Reset all controls to the defaults	Omnia moderamina ad praefinita restituere
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Preme clavem aut globulum muris.  Esc: abrogare.  Delete: purgare.
+L:A / Enter: reset	A / Enter: restituere
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: clavem statuere.   Sinistra/Dextra: globulus moderatoris.
+L:Left/Right: switch to the Graphics page	Sinistra/Dextra: ad paginam Graphicam
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Sursum/Deorsum: eligere     Sinistra/Dextra aut A: mutare     B / Esc / F10: claudere
+L:Changes are saved automatically	Mutata sponte servantur
+L:Language	Lingua
+L:Restart the game for the language to change	Ludum iterum incipe ut lingua mutetur
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Mus viam praeit; W, A, S et D secundum eam movent (Ambulare adhuc ambulat)
+L:Language (game and launcher):	Lingua (ludus et initiator):
+L:CONTROLS	MODERAMINA
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Heroes additi: Sauron currit pressu baculi sinistri (Shift in claviatura)
+L:Sauron's sprint	Cursus Sauron
+L:hold	tenere
+L:toggle	mutare
+L:Combo Runes	Runae Nexuum
+L:Speed	Celeritas
+L:Fierce	Ferox
+L:Special	Singularis
+L:Each attack fills a quarter	Quisque impetus quartam partem implet
+L:OK	Bene
+L:Could not start twotowers_recomp.exe.	twotowers_recomp.exe incipi non potuit.
+P:the left thumbstick	baculum pollicis sinistrum
+L:default.xbe was not found in that folder.	default.xbe in illa plica non inventum est.
+L:That default.xbe is not the USA retail release this port was built from.	Illud default.xbe non est editio venalis USA ex qua haec translatio facta est.
+L:Error: 	Error: 
+L:Error: the disc has no default.xbe.	Error: discus default.xbe non habet.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Error: hoc ISO non est discus venalis USA Duarum Turrium quem haec translatio sustinet.
+L:Extracting 	Extraho 
+L:Ultra textures (once): 	Texturae Ultra (semel): 
+L:Ultra textures: 	Texturae Ultra: 
+L:Converting 	Converto 
+L:Softening the edges of 	Mollio margines 
+L:Fixing the transparency of 	Emendo perspicuitatem 
+L:Writing the index	Indicem scribo
+L:Ultra textures ready: 	Texturae Ultra paratae: 
+L: pictures	 picturae
+L: could not be made	 fieri non potuit
+L:The GLOS69 texture pack is not in the game's folder.	Fasciculus texturarum GLOS69 in plica ludi non est.
+L:Could not write textures_ultra/index.bin.	textures_ultra/index.bin scribi non potuit.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	Accensum (tene W: currit quo mus impellit; Ambulare ambulat)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	Tene W: currit quo mus impellit (Ambulare ambulat)
+L:Films:	Pelliculae:
+L:Voices:	Voces:
+L:(as the text)	(ut textus)
+P:Co-op	Societas
+P:Versus	Contra
+P:Co-op Options	Optiones Societatis
+P:Difficulty:	Difficultas:
+P:Easy	Facilis
+P:Normal	Usitatus
+P:Expert	Peritus
+P:Impossible	Impossibilis
+P:Impossible:	Impossibilis:
+P:Player Icons:	Signa Lusorum:
+P:Camera Zoom:	Propinquitas:
+P:Wide	Latum
+P:P2 Teleport:	P2 Transvectio:
+P:P2 Device:	P2 Instrumentum:
+P:P1 Device:	P1 Instrumentum:
+P:P2 Bot:	P2 Automaton:
+P:When Idle	Cum otiosus
+P:Always	Semper
+P:Pickups:	Remedia:
+P:Double	Duplex
+P:P2 Controls	P2 Moderamina
+P:New Game	Novus Ludus
+P:Load Game	Onerare Ludum
+P:Player 1:	Lusor 1:
+P:Player 2:	Lusor 2:
+P:Arena:	Arena:
+P:Rounds to win:	Certamina vincenda:
+P:First to 3	Primus ad 3
+P:First to 5	Primus ad 5
+P:First to 7	Primus ad 7
+P:Deathmatch	Pugna ad mortem
+P:Find the Shield	Inveni scutum
+P:Keyboard & Mouse	Claviatura & Mus
+P:Automatic ({1})	Automaticum ({1})
+P:Automatic (Keyboard & Mouse)	Automaticum (Claviatura & Mus)
+P:Automatic (none connected)	Automaticum (nullum conexum)
+P:Controller {1} (not connected)	Moderator {1} (non conexus)
+P:No controller connected	Nullus moderator conexus
+P:Press A	Preme A
+P:Already Beaten	Iam victum
+P:Weathertop	Weathertop
+P:Balin's Tomb	Sepulcrum Balin
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Silva Fangorn
+P:Gates of Moria	Portae Moria
+P:Plains of Rohan	Campi Rohan
+P:Road to Helm's Deep	Via ad Helm's Deep
+P:The Deeping Wall	Murus Profundi
+P:The Breached Wall	Murus Perruptus
+P:Hornburg Courtyard	Atrium Hornburg
+P:Orthanc	Orthanc
+P:Orthanc Summit	Culmen Orthanc
+P:Mount Doom	Mons Fati
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Eomer
+P:Nazgul	Nazgul
+P:Shield Orc	Orcus Scutatus
+P:FIGHT!	PUGNATE!
+P:PLAYER {1} WINS ROUND {2}	LUSOR {1} CERTAMEN {2} VINCIT
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	LUSOR {1} PUGNAM VINCIT  {2} - {3}
+P:ROUND {1}: A DRAW	CERTAMEN {1}: AEQUUM
+P:P{1} GUARD BROKEN	CUSTODIA P{1} FRACTA
+P:P{1}'S SHIELD CRACKS!	SCUTUM P{1} FINDITUR!
+P:P{1}'S SHIELD IS BROKEN!	SCUTUM P{1} FRACTUM EST!
+P:PLAYER {1} HAS THE SHIELD!	LUSOR {1} SCUTUM HABET!
+P:P{1} RESPAWN {2}	P{1} REDITUS {2}
+P:DOWN  RESPAWN {1}	PROSTRATUS  REDITUS {1}
+P:MATCH RESULTS	EXITUS PUGNAE
+P:PLAYER {1} WINS  {2} - {3}	LUSOR {1} VINCIT  {2} - {3}
+P:ROUNDS WON	CERTAMINA VICTA
+P:HITS LANDED	ICTUS ILLATI
+P:DAMAGE DEALT	DAMNUM ILLATUM
+P:BIGGEST HIT	ICTUS MAXIMUS
+P:ARROWS ON TARGET	SAGITTAE IN SCOPO
+P:FASTEST ROUND	CERTAMEN CELERRIMUM
+P:TIMES DOWNED	QUOTIENS PROSTRATUS
+P:SHARPSHOOTER: PLAYER {1}	SAGITTARIUS: LUSOR {1}
+P:HEAVY HITTER: PLAYER {1}	PERCUSSOR GRAVIS: LUSOR {1}
+P:IRON WALL: PLAYER {1}	MURUS FERREUS: LUSOR {1}
+P:SPEED DEMON: PLAYER {1}	DAEMON VELOX: LUSOR {1}
+P:BRAWLER: PLAYER {1}	RIXATOR: LUSOR {1}
+P:RELENTLESS: PLAYER {1}	INDEFESSUS: LUSOR {1}
+P:Start Match	Pugnam incipere
+P:ROUND {1}   P{2} {3} - {4} P{5}	CERTAMEN {1}   P{2} {3} - {4} P{5}

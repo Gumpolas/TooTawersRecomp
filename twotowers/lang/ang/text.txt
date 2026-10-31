@@ -1,0 +1,1839 @@
+# Ænglisc -- made by tools/lang/build_lang.py
+GA81157BF	HRINGA HLAFORD:  ÞA TWEGEN TORRAS
+G20EBC61E	Scirmspell fram Peter Jackson
+G2D8D3B98	Gegearwod fram
+G7EDB1AE9	Samod gegearwod fram
+G90AF53E8	Syndrige Wundra
+G893165F0	Weta Digital
+GD9523953	Dream fram Howard Shore
+G7B677F6E	Plegan Stefna
+G566C1E23	Aragorn
+GCD74F192	Legolas
+G78602DD3	Gimli
+G74CA5DDD	Frodo
+G025D44AA	Gandalf
+GE45CBA98	STORMFRONT STUDIOS
+GF5BD4D35	XBOX GETRUM
+GAAA9253B	Weorces Steor
+G2E65B2E4	Endebyrdung
+G1E165282	Cræft
+G4CFF767B	Sweg
+G1B12D0CA	FRUMGETIMBRUNGE GETRUM
+G5BB408B8	Weorces Ealdor
+GA9D987DE	Searucræftes Ealdor
+GA4E53836	Getimbrunge Ealdor
+GCBF9A863	Sweges Ealdor
+G71D27F1C	Heahhiwere
+GABE6171F	Heahendebyrdere
+GB6AEE806	Heahcræftigan Ymbhwyrftes
+G0FAA1BD8	Heahcræftiga Scirmspella
+G93A039A2	Heahcwicere
+G85851417	Fægercræftes Steor
+GEC5EB699	Geferlic Gearwere
+G1E1B7E49	Syndrigra Wundra Cræftiga
+GE457B26A	Cræftigan Ymbhwyrftes
+G09AFDB2B	Plegan Scirmspella Cræftigan
+GC6201467	Geþohtcræftigan
+GCE12C680	Hada Bisenwyrhtan/Cwiceras
+G958F64A1	Ansynes Cræftiga
+G5817028D	Bilda Endebyrderas
+G8E313DB8	AI Endebyrderas
+G7559A05A	Plegan Endebyrderas
+G47FDFA0D	Plegan Hiweras
+G2A1A4D1F	Swegcræft & Dreames Gerihtung
+GD6AC199C	Swegcræft
+G83731102	Eacgetimbrunge Steor
+G9B9AC6A2	Eacweorces Steor
+G2C8B85F3	Eacfægercræft
+G154B3F75	Eacendebyrdung
+GEC34AAA5	Eacswegcræft
+GE9E2F454	Eacwritung
+G8B63E4D8	Ceapes Getimbrung
+G8E754AFA	Gerefa ofer Getimbrunge
+G3DF35EA1	ELECTRONIC ARTS INC.
+G3C6E648D	Ealdorgearwere
+GF944BB31	Yldra Gearwere
+G49F95533	Landwendunge Geferlic Gearwere
+GE5AAA381	Fultumgearwere
+G20A463E8	Searucræftigan
+GEDDCFA70	Heahcunnere
+G6EC637F4	Heahcunneres Fultum
+GA9C92124	Heortcunneras
+GDDEFB046	Gearweras
+G5F4C2C91	Ealdor Plegena Getimbrunge
+G53E62C46	Stæpa Hiwere
+G4019279E	Geferlic Fægercræftes Ealdor
+G3548CB79	Plegan Scirmspell
+G5BF26924	Bildhiwung (U.I.)
+GF5E6331B	Landwendunge Fultumgearwere
+GB9029242	Fultumgearweras
+G81160EAA	Yldra Cwicere
+GB1B5EEDE	Cwicere
+G1D384099	Ymbhwyrftes Bisenwyrhtan
+GD670D187	Fulcwice Scirmspell
+GB4300D0E	Gearwunge Ofersceawere
+GDB61FEB0	FMV Gearwunge Stiweard
+G13204F99	Searufægercræftes Ealdor
+G8774AEB2	Fægercræftes Ealdor
+G2EDA5AA3	Cwicunge Ealdor
+G4761EC6C	Hada TD
+GC40AEB65	Heahcræftiga Ymbhwyrftes
+G04B7AD9A	Writere
+GCCDC1EDE	Hada Cræftigan
+G765B2120	Yldran Hada Cwiceras
+GDB98BF7E	Yldra Leohtcræftiga
+G8AEFA15C	Yldra FX Cwicere
+GB64D9748	FX Cwicere
+GB770287B	Sceorperas/CG Bisenwyrhtan
+GA89434BE	Bildfætes Setl
+GBAA388EF	Gerihteras
+GA79B5345	Sweghiwere/Edwritere
+GE2D38E72	Fægercræftgearwunge Stiweard
+G29C8EC71	Gerefan Fultumend
+GB01B1D73	Gefegnesse Stiweard
+G257D0532	Gearwunge Fultumend
+GB2965969	Gesprecena Gerihtung
+G2ACF75E1	Eacswegwyrcung
+G821EF7A5	Stefncræftigan
+G3CCB3DF3	EA Godnesse Trymming
+G2851776E	QA Stiweard
+G3D43CCDD	QA Ofersceawere
+G997D9582	QA Latteowas
+G5B5CE9C6	QA Fultumlatteowas
+GE0B33004	QA Heortcunneras
+GBBB3A592	FLT Weorces Latteow
+G7F330F1A	Nytte Gereordcunneras
+G731958CD	Gereordcunneras
+G7005C763	Ceapmanna Godnesse Steor
+GCC3D24EF	CQC Stiweard
+G0FF24E54	CQC Ofersceawere
+G7498FE74	CQC Dæles Latteow
+G5AB35ED0	CQC Wæstma Smeageras
+G6E529086	Frumweorces Ærn
+G0229B6F3	Ealdor, Ealþeodlicre Wæstma Getimbrunge
+G6B435E81	Landwendunge Weorces Stiweard
+GF8BA9878	Landwendunge Weorces Gefadiend
+G906896D8	Stiweard, Gefera Leafa and Geþafunga
+G860EDA13	Ceapþing
+G7AC94AC6	Lahcræft
+GFDF965B3	Weorcærnes Dæda
+G9FF9799E	Weorcærnes Wedda Gefadiend
+G9E24FEC0	Ealdor Ceapunge
+G44C57DC5	Wæstma Stiweard
+GE1A6D911	Folcspræc
+GA5ADE5FF	Gewritu
+G4C2A256D	Gewrita Endebyrdnes
+G279BA159	Fætelses Weorces Steor
+G482E9235	Fætelses Hiwung
+GC087DB92	NEW LINE CINEMA
+G7899B0AA	Hringa Hlafordes Scirmspelles Getrum
+GE196FA55	Ealdor
+GE364782E	Ealdorgearweras
+GB11B5F1A	Samodgearweras
+GDDE9A104	Bochordweard
+G73D53EB3	Æhta Hyrde
+G4616CF92	Gearwera Fultumend
+GD98C077D	Æftergearwunge Ofersceaweras
+G26FFE43A	Forma Fultumgerihtere
+GFAE3387C	Lytelbysena Hyrde
+G0D7D1A1D	Heahgerefa Middangeardes Leafa and Ceapunge
+GD58105C6	Scieppendlic Ealdor
+GB0E8D9D5	Scirmplegmenn
+G4267BE40	Galadriel
+GD1604ECA	Saruman
+GA16F6333	Elrond
+GE1DA74FC	Theoden
+G147FCF02	Arwen
+GDEEF44C1	Isildur
+G4C33F9AA	Samwise
+G4A7482A5	Gollum
+GC771C093	Boromir
+GF440E316	New Line Music
+GB9E9E9DC	Undergerefa Dreames Ceapþinga
+G96EBB4D8	Gerefa ofer Dreame
+G2728DB7D	Dreames Ealdor
+GFE08F13A	3Foot6
+GCFF1286B	Ceapunge Gefadiend
+GDDC9DB88	Phantagram Entertainment, Inc.
+G04437C72	Undergerefa
+GE58F283A	Gearwere/Gearwunge Stiweard
+G97C336EB	Cwicunge Ofersceawere
+G96FF4CEA	Yldra Searucræftes Ealdor
+GE816CF3D	Heah Searucræftes Gearwung
+G22B756F5	Cwiceras
+G86F5B2D9	Bæclandes Metere
+GBC50C796	Writærnes Stiweard
+GA86FDE79	The Finish Line
+G2C6CF2FB	Super 78
+G4B519D93	Rawe Gearwere
+G14C96B5C	CG Heahcræftiga
+GD9742A3C	CG Cræftigan/Cwiceras
+GBA7D6969	Arnson Communications
+G22C5AB99	Ealdorgearwere/Scieppendlic Ealdor
+G45C5172D	Writere/Gearwere
+GDCC6F23E	Fægercræftes Ealdor/Cwicere
+G9C4F3B3B	DS Cræftiga
+GF0F58DD3	EA SYNDRIGE ÞANCAS
+G895C842A	STORMFRONT STUDIOS SYNDRIGE ÞANCAS
+G9D4DD21A	On Middangeardes landum secgaþ ealde spell be þam Deorcan Hlaforde Sauron,
+G6CFA90F6	and be þam Hringe þe him anweald sealde ealne middangeard to þeowienne.
+G18F2969C	And nu is he becumen on þæs unwenlicestan mannes handa þe man geþencan mæg.
+G378C79D6	Ic eom swiþe plegena freond, forþam ic wolde witan eall be Hringa Hlafordes scirmplegan.
+GDCF04190	Ic gebringe me on swylce wisan þæt ic plegie ealne dæg,
+G977EBA13	and gewunelice þonne ic plegie, swa swa, frecednesse plegan, þær bið min heafod.
+G49C9AB1A	Siþþan ic inne eom, ne mæg ic geswican þæs geþohtes, and ic sceal minne had to ende lædan.
+GD2647A40	Þis weorc wæs þe geteod, and gif þu weg ne findest, ne findeþ hine nan man.
+G3AC8371A	Behydaþ eow!
+GAD82B19D	Ic hæbbe ymbe þis þing gefrignen, and æt nyhstan ic hit plegode, and hit is ungeleaflic.
+G8DE86872	Hit is swiþe fæger on to locianne.
+G72E74697	Eala, þæt is swa wynsum!
+GF9824FCA	Gea, ga forþ, Aragorn! Cum nu!
+G2EE7D5D4	Hie cumaþ.
+G61F7CD7D	Hit is sum eaca þæt man mæge scirmplegan onælan and me ymbe yrnan geseon.
+G57A5BC04	Ic eom swiþe beswungen.
+G1F85273D	Frodo is me gelic! Nis þæt wynsum?
+G1FFE0A40	Swa wynsum.
+GE6E563F9	Hie willaþ þone Hring findan,
+GD135555F	and þone ofslean þe hine bereþ.
+G18844D24	Ga! Ga forþ, Frodo!
+G525D5AD9	Hie willaþ þone Hring! Ne moton hie hine niman.
+GB99DAE56	Se todal betweox ADR for scirmspelle and stefnunge plegan is þæt ADR for scirmspelle gewunelice to bilde bið.
+G7558081F	Þu locast on þæt scirmspell and fandast þa spræce eft to cweþenne þe þu ær cwæde, and hie to þæs scirmspelles spræce gefegan.
+GDD3F428F	Hwa eart þu?
+GE906BA5B	Eart þu afyrht?
+G9BDAB30C	Gea.
+G3B07B1B1	Nales genoh afyrht.
+GFBD6613D	For þære plegan nis nan bilde, ac manige lyftlice dælas þe þu inn wyrpst.
+G0EE06D0F	Frecednes, help, swylc þing.
+G2F9FC8E2	Aragorn! Help! Aragorn! Aragorn!
+G289F7C03	Ic lufige gefeohtes anlicnessa and plegan, and gif ic beo onfangen, hit is fullic dysiges eaca, and hit me licaþ.
+G67346E61	Ge furþon se læsta man mæg þæs toweardan ryne awendan.
+G16420686	Ic eom swa onstyred - ne mæg ic abidan minre bysene. Hit is wundorlic.
+GDBA69463	Moria.
+G1D429D96	Þu ondrætst on þa grafu to ganne.
+G372C9F91	Þu wast hwæt hie aweahton on þam þeostrum.
+G34515230	Me licode swiþe þa plegan to wyrcenne, forþam þu ne þearft swa micel heard geswinc don
+G93AEF9C3	swa swa þu dest þonne þu ærest þone had scypst.
+GA9883FB4	Scirmspell to wyrcenne bið niede swiþe læt.
+G0C1E0E8C	Wundorlic þing be þære rimcræftes plegan is, witodlice, þæt ic ne þearf ansyne metan.
+GA5F1044B	Þonne þu þa plegan dest, þu stentst on weorcærne
+GCE4A81AD	and þu cwist, wel, ic wene þæt þu sceolde þis and þis and þis cweþan
+G049A3A66	and hie habbaþ heap gewrita, and þu cwist ealle þas wundorlican cwidas.
+G70F1359D	Sætung! Sætung!
+G65325B21	And þonne nimaþ hie eall þæt, doþ hit on þa plegan, and þu onfehst sumne dæl þæs lofes.
+G39F1D126	Þa berstendan searu sculon beon fordon!
+GEB33699E	Ic lufige þas bysene minre swa swa Gimli.
+GD9A0C650	Ic wene þæt he is swa cene, werlic and wlitig had.
+G43591DCA	He is soþlice se ana had þe þu plegian woldest.
+G5C0A6C1E	Ic mæne þa oþre, þu wast, þa Aragornas, þu wast, þa Legolasas, þu wast, wlitige, fægere guman and eall þæt,
+G3D52D95F	ac for soþum, godum wige, þu scealt Gimli geceosan.
+G8E74524F	We wunodon feowertyne monþas on middangeardes fægerestum stowum on Niwan Sælande for þæs scirmspelles rihtum hiwe.
+GAD562976	Seo plega is gewinnes and gefeohtes tid, and heo is wundorlice and beorhte geworht.
+G7F21BCD6	Ne mæg ic hine þær forlætan! God!
+G9AA947F5	Hu micle tide hit nimeþ!
+G669C44C6	Ic mæne þæt hit is niwe gebind þe ic onfunde.
+G63540AD1	Eala, plegeras, wel gedon, wel eow þæs þe ge on þisne lytelan hwamm becomon þe eow þa spræce gifeþ.
+G925FED56	Ic wolde þæt ic eow secgan meahte hu ge sceolon bet plegian, ac soþlice ic næfre to þissum stæpe ne becom.
+GC3162ADB	God speow eow, and plegiaþ forþ.
+GA3572714	Middangeardes wyrd bið hraþe gedemed.
+G922859CB	Eall se færeld þære scirmplegan getimbrunge oþþe weorces
+GD9B03397	is mæst þæt þu feohtest wiþ þingum and ninja þingum... ic nat hwæt.
+G24326AFA	Ic wæs ofwundrod, and hit þyncþ micle soþlicor,
+G3E302C15	hit þyncþ swilce hit to oþrum stæpe gæþ.
+GBD830A87	Ic wene þæt Aragorn on þære scirmplegan bet sceote þonne ic...
+GF76948D6	ac ic nelle be þam seofian.
+GD27FED3E	Gif ic þe mid minum life oþþe deaþe gescildan mæg, ic wille.
+G56368F53	Þu hæfst min sweord.
+G8D6DAFD1	Þæt ic geseah of þære scirmplegan þyncþ cyþan
+G970D4AB6	þæt þæt æftere scirmspell - ungelice þam forman - is on maran mæþe
+GFD0BADCA	and ic gewilnige hie to geseonne swa swa ic gewilnige þa lafe þisse plegan to geseonne.
+G1F48F697	Ic geseah to dæg ane bysene.
+GB689F1B9	Me licaþ to geseonne, swa swa, þæt Aragorn hwilum bið ofercnyssed, oþþe fealleþ, oþþe ymbe wealwaþ,
+G6F6072BC	and þæt his feohtwise onwendeþ, þu wast, to þam þinge gecwemlic.
+GA3A3F7A1	Þæt nis symle clæne and gedefe, þu wast, hit is swylce...
+G28095E46	hwilum he mæg beon sum geflitere - huru swa he hit dyde on þam scirmspelle - and seo plega þæt cyþ, ic wene.
+G43AA6A0B	Hit is mærlic.
+G8559FF90	Fremde of feorrum landum, ge sindon hider geclipode to andswarianne þam þreate of Mordor.
+GC2A75F48	Middangeard stent on forwyrde ofre.
+GFE143A07	Nan ne mæg him ætberstan. Geþeodaþ eow, oþþe ge feallaþ.
+GF59E5460	Ic wundrige symle þonne ic geseo þone forþgang searucræftes and swylces
+GAD5CBAE4	and hu neah þam soþan þinge hit becumen is.
+GF96BCD4B	Ic sceal to Boromir cuman, nu!
+GD262135E	Þonne þu þæt ADR for scirmspelle writst, þu wast, þu behealdest openlice þone scirm,
+G83EECB7A	and gesihst þa dæde beforan þe swa swa þu hie on þam dæge plegodest.
+G3C0B6913	Þonne þu þæt swegspor for þissum writst,
+G2A8B6AD2	nis nan bildfæt on þe,
+G52F7D105	and þu ne fandast þine weloras to bilde beforan þe to gefegenne,
+G8EE2279F	forþam þu miht soþlice þa eacan mile gan and swylce
+GA5BE0F5A	onhebban and brædan þæt þe on þam leafe stent.
+G51E230FB	Eft to þam seaþum þe eow cendon!
+G97400E1E	Hie sindon hearran þonne þu on þam scirmspelle hæfdest.
+GC26338C3	Wast þu hwæt ic mæne?
+G40EB5D5C	Hie sindon hwæthwega dysige, and hit is gamen.
+G52FECFA2	Hit wæs gamen soþlice mid him on þa wisan to plegienne.
+G91D69630	Cumaþ!
+G87873143	Ne miht þu þæt gefeoht gewinnan!
+G47AECCC4	Ic wene gif ic þa plegan plegode
+GB0CCD2A6	hit wære god to witanne þæt þa soþan plegmenn stefnodon þa dæde þe se rimcræftes had plegode,
+GC1719889	and ic wene þe ma soþnesse þu hæfst on þære rimcræftes worulde, þe hit bið þam plegere onstyrendre.
+G77ECFBF0	Ne miht þu hine wealdan. Nan ure ne mæg.
+GB42EC53B	Se Hring sceal beon fordon.
+G43E793ED	Þæs Hringberendes frecednes deopaþ.
+G6E2FF8E0	Forþam þe oþer is þe æfter þam Hringe huntaþ.
+GDD26CBEC	Ic næfre on minum life scirmplegan ne plegode.
+GF783F574	Ne mæg ic næfre þa regolas understandan.
+G573BC826	Ic hæbbe swiþe micele and unhendige handa, and nis me seo hand-modes gefegnes þe ic wene niedþearf beon,
+GFBB68CB5	seo þe þyncþ ælcum men under siex wintrum gearu.
+G8D9D9F75	Þæt þe swa wundorlic is be þisse plegan, Hringa Hlaford,
+G81AEE08E	is þæt ge habbaþ þara frumplegmanna stefna--ealra.
+GAE3BFBD7	And to dæg ic wrat Gandalf þone Grægan and Gandalf þone Hwitan,
+G21F22F52	þa twegen hadas þe ic plegie on Hringa Hlaforde.
+GCED01E94	Hwæt gesihst þu?
+GB4F26455	Þær sindon mearca.
+G5C7EB8BC	Hit is sum ylfisc gereord.
+G27A03C42	Ne mæg ic hit rædan.
+G8E22513B	Feawe magon.
+G4B2817A2	Nu is geþeodnes betweox þam Twam Torrum: Orthanc and Barad-dur.
+GC69D576A	For þære plegan hit is hwene reþre, hwene gearwre, hwene hrædre, wenunga.
+G363960EA	An eower sceal ingan.
+GFFCB2D5D	Help þam tunmannum þe gyt libbaþ.
+GF4DAF5B8	Soþlice, þis is reþe dæl gefeohtes.
+G00009069	Hit is seo wiglice healf of Gandalf þe ut cymþ: se heretoga, se samurai, se latteow.
+G4519FC71	Ne scealt þu forþ faran!
+G066F3360	Forþam þæt þe ge on þam scirme geseoþ is swa neah swa - wa la -
+GF4CF848B	þam Gandalf þe ge on þam scirmspellum geseoþ. And ic wolde þæt ic mihte cuman and mid eow plegian.
+G699B7BF2	On þisne Hring he geot his reþnesse, his niþ, and his willan ealles lifes to wealdenne.
+GA1469225	An Hring hie ealle to wealdenne.
+G01090CE9	Þæt we gedon habbaþ is ende micles geswinces þusenda manna.
+G74E1F68D	Se nama, Þa Twegen Torras, belimpþ to þam Torre Orthanc, 
+G0AE01FA9	þær þe Saruman wunaþ, se þe Christopher Lee plegaþ,
+GD9642178	and se Stypel Barad-dur on Mordor, Saurones ham.
+G573418F9	Þæt æftere scirmspell, swa ælc scirmspell on þisse þrinesse, is earfoþe. And swa hit bið oþ þæt we hit agifaþ.
+GB2A31EA0	Hit is mære scirmspell. Hit bið mare þonne þæt forme scirmspell.
+GB831FA3A	Ic wene witodlice þæt swa micel gemen wæs on þissa scirmspella wyrcunge,
+GCCFC11FE	and þæt we magon þa gewitnesse sellan þam weorode þe þa plegan timbraþ is god, 
+G327C2028	forþon ic wat þæt hie efenmicel gemen and geswinc doþ þæt hie swiþe welig plega þam folce bringen.
+G2C4A352E	Tolkien asecgþ Edoras swiþe cwiclice on þam bocum
+G10EFB23A	swa swa burh treowenra getimbra on sumre dune ætforan snawigra beorga ræwe.
+G50D180A4	Þa we ærest stowa sohton, ic cwæþ: loca, we sculon sume stowe findan on Niwe Sælande,
+GDA11996F	þær sceal beon swilc dun þe stent ætforan þam beorgum.
+GD6F61F77	Þa fleogon hie on lyftscipe geond eall þæt land and eft comon mid anlicnesse þære fulfremedestan dune.
+GC56228ED	Hit wæs ymbe sixtig oþþe hundseofontig mila fram þam nyhstan tune.
+GF796DA0F	Hit wæs on middan þæm Suþiglande; hit wæs swiþe feorr.
+GFA1CD969	We wunodon ymbe seofon oþþe eahta monþas on þissa micelra getimbra wyrcunge.
+GC2D0BAAA	Se ende wæs þæt we on þam scirmspelle habbaþ Edoras þe is eallunga gelyfedlic.
+GC2774958	Ic meahte þider faran and anlicnessa niman swa swa hit soþ stow wære.
+G99F69515	An þara spedigra þinga be EA plegum, and þæt ic geseah on þam bisenum þa hie getimbrode wæron,
+G6B3554D6	is seo micle edlicnes ure stowa and ura hada
+GB997C9B4	swa feorr þæt EA geþingode wiþ ure plegmenn þæt hie comen and heora agene word gehealden.
+G815CAC49	Þa plegmenn wæron þæs swiþe bliþe.
+GA1640DEB	Þæt Gefeoht ymb Helm's Deep is geendod.
+G93BD7122	Þæt Gefeoht ymb Middangeard sona onginþ.
+G958468DE	We timbrodon lytle anlicnesse Helm's Deep, ac þæt wundorlice wæs þæt hit næs na an bisen. 
+G1BC58576	Hit wæs micel lytel anlicnes. Hit wæs feorþan dæles micelnesse, ac hit wæs ymbe þritig oþþe feowertig fota brad.
+GFA4F689B	Hit wæs swa micel þæt we hit mid urum leohtcræftum anlicnian meahton, and hit ne þuhte na lytel anlicnes.
+G2571B991	Hit þuhte eallunga gelyfedlic.
+G31C24FB0	Þæt þe mære scirmspell wyrcþ is soþlice god gewrit and god plegmanna werod.
+G9C04D37F	Ic wene þæt þa ilcan earfoþu beoþ þonne man plegan wyrcþ.
+GA0B86A25	Þu scealt þa rihtan cræftigan to þam plegan getyhtan.
+G0B7DC714	Þu scealt spell begitan þe hlysteras getyhþ, and hie þonne þurh þæt spell onbryrde weorþan
+G5E1101AB	and þurh þæt spell genedde þæt hie hit cwic geseon willen.
+G87FC774C	Nis nan þing þe we for Frodo don magon.
+G3C9AA8BC	Seo secung his feorh nimþ.
+G98F7C221	Rohan is unstrang and gearo to feallenne
+GA01F7D34	and swa he sleahþ heardlice and hrædlice on Manna weorold.
+GA8723617	Wig is ofer us.
+GE1AF4B03	Hie forstælon min deorwyrþe and we hit wille.
+G6A5F57B3	Wenunga þæt egeslicoste on þisses weorces onginne wæs
+GDE1DC635	seo gefelnes þæt us wæs ungelyfedlic andswaru to forþbringenne
+GCFDFC743	on wiþerwyrcendum hiwe on þa ilcan wisan þe Peter Jackson on scirmspelle dyde.
+GC87068A6	He nam sume þa leofestan bocweorc ealra tida
+G423C7E0C	and hie awende on mære scirmspell þe hæfþ manig þusendo þusenda lufiendra geond middangeard geworht.
+GC8F29411	On weorces fruman þu wyrcst on geþohtes healfe and on hiwunge healfe.
+GBACB2DE5	Swa þæt weorc forþgæþ - endebyrderas, cræftigan, cwicigendas, landes cræftigan,
+G047AC48F	bisena wyrhtan, webbes wyrhtan - ealle þas menn þe ymb heora anne dæl þæs plegan þencaþ,
+GB60517EB	ac be þære ealre cunnunge.
+G13170460	An þara freomena þæt we swa neah mid þam scirmspelles wyrhtum wyrcan meahton
+GA03610FF	is þæt we brucan meahton þara bisena and andluman þe hie for þam scirmspelle worhton
+G9DADDEE4	to bisene þara þinga þe we on urum plegan wyrcan sceoldon.
+GF0D449E5	Sceadu færþ on þeostrum.
+GEC940136	Þa we Aragorn hiwodon, we sceoldon ymb ealle þreo plegendlice hadas ætgædere þencan.
+GBB381F7C	Bysene to, Legolas is swiþor had swiftnesse and searucræftes.
+G4CE351A9	Gimli is lytel gefeohtwægn.
+G21025B26	Aragorn is swiþor gemengnes þara twegra.
+G3ADE6E66	We sceawodon ælces hades styrunga - bild æfter bilde - ær we ænig þing timbrian ongunnon.
+G80ADBA8B	Þonne worhton we wirgrind þæs hades. Þæt is his grundlic gemet and micelnes and mæþ.
+G85E5A400	Þonne ecton we webb and leoht to fulfremmenne heora gewæda and þa smalan dælas heora hades.
+GCD3CDD42	Þa plegmenn wæron swiþe georne mid us to wyrcenne.
+G092B49A0	On anum siþe, Viggo Mortensen us geiewde sume his gefeohtstyrunga.
+G915A1A70	He and his gelica geopenodon cyste sweorda and ongunnon him betweonan pleglice feohtan.
+G215B5E15	Þæt wearþ se grundweall manigra Aragornes styrunga.
+G7126178B	Hit wile beon funden.
+G7E02AF05	Þa we sceawunga of þam scirmspelle curon to urum plegan, Balines Byrgen swiþe forþ stod swa strang cyre.
+GF4146E18	Hit is an þara gemyndegostra hwila on þam forman scirmspelle.
+GE152213A	We woldon eft wyrcan þære stowe stemne on þam swiþe strangan leohtes leoman ofer þære byrgenne selfre.
+GB236432D	Hit wæs earfoþnes urum landes bisenwyrhtum and leohtes wyrhtum.
+GD3C26DBB	Þa stæpas þæs Tunes on Rohan sindon synderlice, forþon þe hie us alyfdon to bradienne þa stowa of þam scirmspelle.
+G8669E69D	Se plegan stæpe self locaþ and felþ swiþe gelice þam stowum þæs scirmspelles be leohte,
+GF9B205CF	be þara getimbra hiwe, be þam folce þe þær is, ac we on þissum siþe ofer þæt timbriaþ
+GB285B32E	and wyrcaþ stowa þæs stæpes þær se plegere smeagan and feohtan mæg, þe he wenunga on þam scirmspelle ne geseah.
+G5E5F1D1C	Þæt þe swa wundorlic is be þissum plegan, Hlaford þara Hringa,
+G610E0BE4	is þæt þu on þinum agenum scirme hæfst þara frumplegmanna stefna--ealra.
+GC6FCAA65	Fultuma! Aragorn! Aragorn! Fultuma!
+G20165D69	Hit is wundorlice soþfæst, and ic wene þæt hit is swiþe earfoþe plegan of scirmspelle to wyrcenne.
+GBF3A0A5B	Þes plega hit deþ. Hit is swiþe gelic þam scirmspelle.
+GDD010A37	We hiwodon swiþe styrigendne dreames cræft þe þæt mod þara gelimpa on þam plegan eowaþ.
+G96BEDA9C	An Hring hie ealle to bringenne and on þeostrum to bindenne.
+G91629050	On þam scirmspelle, Saruman onræsþ on Helm's Deep mid tyn þusendum Uruk-hai.
+G3B702B98	Forþy we sceoldon oþerra þinga brucan þe us to handa wæron, to wyrcenne gefeohtes gefelnesse.
+GDEFA604D	Þurh sweges cræftas and hlyd we doþ þæt hit þincþ swilce þusenda Orca on þære stowe sien.
+G204351C8	Gif hwa þone plegan onginþ and to him selfum cwiþ:
+GEC81BA2D	Eala min Drihten! Þis is þæt scirmspell! Þonne habbaþ we gefremed eall þæt we ongunnon.
+G52BF957B	Þis is seo stow þe ic of þam scirmspelle gemune.
+G571B482E	Ic eom þær. Ic mæg sum þing don. Nu is min tima.
+G625B0A6D	Swa we willaþ þæt se plegere gefele.
+GB222979D	Hwær cwom mearh and se Ridda?
+G2457FF85	Hwær cwom se horn þe bleow?
+G8B36CA83	Hie forþgewiton swa regn on beorgum;
+G50095CA7	swa wind on mæde.
+G10EB8BCF	Þa dagas sind niþer gangene on Westan,
+G109A0CCE	behindan þam dunum,
+G02628501	on sceadu.
+G80A942D2	Aragorn!
+GDDEA48AC	Fultum
+G4C40E774	Þring þone START cnæpp
+GEE711094	Forþgan
+GF9202936	Eftplegan
+G2E427514	On
+GFC4343CA	Of
+G52E4CD32	Steoran
+G39D074FD	Ceosan
+GAC3A8B6E	Underbæc
+G42B46F3C	@ 2002 New Line Productions, Inc.  The Lord of The Rings and þa hadas, naman, and stowa þærinne, * The Saul Zaentz Company d/b/a Tolkien Enterprises under leafe to New Line Productions, Inc.  Ealle Riht Gehealden.
+G035F710A	EA GAMES* is Electronic Arts* tacn.
+GBAC3ED5F	Plegan gewrit and sume sweg/gesihþ dælas @ 2002 Electronic Arts Inc. Ealle riht gehealden.
+G0EF5F91F	Niwe Plega
+GB8D9D2FD	Plegan Hladan
+G0BE2A075	Cyras
+G5D6AEEF7	Gedwolsecung
+G83335327	Eacan Þing
+G731194FA	Plegan Healdan
+G7BA082D0	Þring START to forþgange
+G755B3BA1	Wealdendes Gesetnes
+G03961FD4	Plegan Gesetnes
+GABEE6EA4	Earfoþnes:
+GF065116B	Eaþe
+G8D3A16F6	Gewunelic
+GACDD0363	Cræftig
+GAEA05F86	Anstefne
+G913A11F7	Twistefne
+G2A253083	Ymbsweg
+GA10C5C21	Stefne Hlydnes:
+G7F04050E	Dreames Hlydnes:
+GF30A57F8	Undergewritu:
+G64752D2D	Bifung:
+GB3F78571	Plegan Hlydnes:
+GED3C9F14	Sweg:
+GB065D5A4	Ceos Plegan to Hladenne:
+G00FF7920	Ceos Stowe to Healdenne:
+GC99B6C1E	Ceos MEMORY CARD stede:
+GFB5C0BA2	Xbox Heard Disc
+GD2F916B6	MEMORY CARD stede 2
+GAEFBDEF3	Onlæc
+GDA714102	Gea
+GB893E04C	Nese
+GE506E266	Eart þu gewiss?
+G574C52F2	Eart þu gewiss þæt þu þas betrunge bycgan wilt?
+G0D91D779	Eart þu gewiss? Þa wæstmas þines ytemestan plegan þisses ærendes beoþ forlorene.
+G1CF7123A	Eart þu gewiss? Eall ungehealden forþgang on þissum plegan bið forloren.
+GEF04DC5D	Eart þu gewiss? Forþgang on þissum ærende bið forloren.
+GEDF6F861	Eart þu gewiss þæt þu ofer þisne plegan writan wilt?
+GF44D8878	Hæfst þu geendod betrunga to bycgenne?
+G1EF3EFE3	Plegan Healdan on Heard Disc
+G05163971	Plegan Hladan of Heard Disce
+G8F93A6FE	Ceos earfoþnesse
+G654484DF	Belocen
+G5A7CB330	Geendod
+G8D6AAF13	Ungeplegod
+GBE8C099C	Forespræc
+GF4FBBE46	Weathertop
+GE7EA3020	Moria Geatu
+GE13A531D	Balines Byrgen
+G79C1EAD3	Amon Hen
+G51C82E11	Fangorn Wudu
+G35CCE51F	Rohan Feldas
+GAD341B58	Se Westfold
+G94ADD008	Rohan Scard
+G9760067E	Se Deeping Weall
+GF8B38ED5	Tobrocen Weall
+G644C89AD	Hornburg Cafertun
+G69B8B4C2	Orthanc Stypel
+GBF00F963	Helm's Deep:
+GE34AB2FD	New Line Deortun
+GE132F5FF	Ceos FMV to sceawienne:
+G4B3C17B9	Fruma
+GAD303F2A	Ende
+G668B98BD	Flor
+G9C7A95F0	Betrunga pricas:
+G4AE44639	4) Inn writ þa genemnedan runa endebyrdnesse.
+G5374B3F5	Dierne Runa
+GDF7B6B3A	Æfre Forhergiende:
+GFECB245B	2 Plegeras:
+GCAB16744	Lytle Fynd:
+G587D657D	Ealle Betrunga:
+G58E34314	Unwundigendlic:
+GF0336180	Slaw:
+G5A122CB0	Rune to inwritenne:
+G35BC6746	1) Onginn ærende.
+G46DF9919	2) Þring þone START cnæpp to restenne.
+G5A1291EE	3) Teoh and heald
+GEB88B42D	Endelease Hælu:
+G6AE6FFFE	Endelease Scotunga:
+GAA29A634	Ærende Geendian:
+GB2AE1BCE	Reste Wise:
+GAA467E08	Cunnunge ecan:
+GEA42298C	Stæpe Upp:
+G6BA0C403	Hælu Edniwian:
+G41D871E0	Scotunga Edniwian:
+G04DBD06B	Scotunge Betrung:
+GA7A50BB5	Betrunga Eowian
+GA67DF58D	Forlæt to Getæle
+G773B79A5	To Nyhstan Ærende
+G96540044	Þe misspeow on þam ærende.
+G5ADDCAC2	Ærende eftplegan
+G9DD85D6D	Forlæt to getæle
+G730918CA	Eft Fanda
+GB437BA93	Wyrhtan
+G798A44A2	Ærende Eftplegan
+G6F46B26E	Ic bidde, ceos gereord.
+G2809E047	Englisc
+GE3AAFF7A	Swiftnes
+GD0DB46DB	Reþe
+G9AD854EF	Slege
+GE83BE834	Synderlic
+GDB34AED9	Gefeg
+GDACF8DCA	Geboht
+G125CAC9A	Gyt unlocen. Þring þone A cnæpp to forþgange.
+GDA9711D2	Þu ne gegaderodest genoge betrunga pricas to bycgenne þas betrunge. Þring þone A cnæpp to forþgange.
+GEB0E0008	oþþe
+G90A54691	æfter wiþstande
+GF5F43483	on eorþan
+GFC1C2104	Æmtig Stede
+GB8BCCCB9	Plega 2
+G92BA5250	Plega 3
+G9CCBAB2F	Plega 4
+G76C930C6	Plega 5
+G50C6B65D	Plega 6
+G2AC43BF4	Plega 7
+G34D594D3	Plega 8
+G0ED31A6A	Plega 9
+GBE76BA62	Plega 10
+GE47934CB	Plega 11
+G6ED86859	Nan Memory Card (PS2) nis inne. Huru 80 KB is þearf to healdenne þisses plegan gewritu. Wilt þu forþgan?
+G87DE26DA	Nis genog rum on Memory Card (PS2) on MEMORY CARD stede 1.  Huru 80 KB is þearf to healdenne þisses weorces gewritu. Wilt þu forþgan?
+G7118C569	Nis genog rum on Memory Card (PS2) on MEMORY CARD stede 2.  Huru 80 KB is þearf to healdenne þisses weorces gewritu. Wilt þu forþgan?
+G6804B4C2	Nis genog rum on Memory Cards (PS2) on þam MEMORY CARD stedum. Huru 80 KB is þearf to healdenne þisses weorces gewritu. Wilt þu forþgan?
+G849021EA	Nan Memory Card (PS2) nis on MEMORY CARD stede 1. Þring þone X cnæpp to forþgange.
+G59CE2129	Nan Memory Card (PS2) nis on MEMORY CARD stede 2. Þring þone X cnæpp to forþgange.
+GC5BD8B5F	Ic bidde, geþeod eft þone wealdend and þring START to forþgange.
+GC2BDD02C	Memory Card (PS2) on MEMORY CARD stede 2 is ungehiwod. Hiwian Memory Card (PS2)?
+G6B64948C	Þin Xbox næfþ genoge freo stoccas to healdenne plegan.  Þring A to forþgange butan healdunge oþþe B to freogenne huru
+GEDAB4EA9	Ic bidde, geþeod eft þone wealdend and þring START to forþgange
+G00E55934	Se heard disc næfþ genoge freo stoccas for þisne gehealdenan plegan.
+G20A17FB1	stoccas sculon beon gefreode.
+G353AAE58	Hiwung misspeow! Gedwola on Memory Card (PS2) on MEMORY CARD stede 2! Þring þone X cnæpp to forþgange.
+G9CAF03E3	Ne mæg þone plegan healdan. Þring þone A cnæpp to forþgange.
+GCB03752D	Plega Gehealden.  Þring þone A cnæpp to forþgange.
+GACBFB64F	Healdung on Memory Card (PS2) on MEMORY CARD stede 2 speow! Þring þone X cnæpp to forþgange.
+GC7C0454F	Gewritu man healdeþ on Memory Card (PS2) on MEMORY CARD stede 1. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+G4B14AAB4	Gewritu man healdeþ on Memory Card (PS2) on MEMORY CARD stede 2. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+G53DAC278	Gewritu man hladeþ of Memory Card (PS2) on MEMORY CARD stede 1. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+GF144B8B3	Gewritu man hladeþ of Memory Card (PS2) on MEMORY CARD stede 2. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+G063DD8CC	Ne mæg þone plegan hladan. Þring þone A cnæpp to forþgange.
+GE5BDAC0B	Wilt þu þinne plegan healdan?
+GED3A9CCF	Nan gehealden plega. Þring þone A cnæpp to forþgange.
+GAF453999	stoccas.
+GEE649E5A	Memory Card (PS2) on MEMORY CARD stede 1 is ungehiwod. Þring þone X cnæpp to forþgange.
+G81447581	Memory Card (PS2) on MEMORY CARD stede 2 is ungehiwod. Þring þone X cnæpp to forþgange.
+GB36F8F0C	Gewritu man rædeþ of Memory Card (PS2) on MEMORY CARD stede 1. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+G97EC5687	Gewritu man rædeþ of Memory Card (PS2) on MEMORY CARD stede 2. Ne nim ut Memory Card (PS2), ne edsete, ne acwenc þone plegcist.
+G8E8AF6C1	Sum unriht is on þam disce þe þu brycst. Hit mæg beon ful oþþe gewemmed.
+G9CB8DFF0	Ærende 1
+G0EC04F2B	Ærende 2
+GE8BDD4C2	Ærende 3
+G5AC543FD	Ærende 4
+G34C2C994	Ærende 5
+GA6CA38CF	Ærende 6
+G80C7BE66	Ærende 7
+GF2CF2DA1	Ærende 8
+GCCCCB338	Ærende 9
+GA1F545C0	Ærende 10
+GC7F7C029	Ærende 11
+GEDFA3A92	Ærende 12
+G13FCB4FB	Ærende 13
+GFBA35200	Ærende A
+G6DAAC13B	Ærende B
+G47A846D2	Ærende C
+GB9AFB60D	Ærende D
+G0111B4C5	Ærendes Cunnung:
+G10CB2024	Ærendes Dom:
+GB8F11F62	Ealle Betrunga Pricas:
+G94649BD6	Fulfremed
+GE424E811	Æþele
+G70E9184E	God
+GE98543F1	Gemetlic
+GF9792B5F	Earm
+G4DE9139C	Cræft
+GB525F096	Strang
+G5F8C23CD	Scildan
+G8673311D	Onræs
+G7829DFB2	Swift gefeg.  Nytt ongean læssan fynd butan scieldum.
+G63E6B4FD	Derigendlic gefeg to brecenne þurh lettingas oþþe feonda scieldas to toslitenne.
+G406CD62A	Teoh and heald þone winstran scotgripe to brucanne.  Scet mid þam A cnæppe (heald niþer to ecenne þone demm).
+G7651B078	Þes stice geendaþ ælcne gefylledne feond.
+G09258F36	Sleah fynd fram þe and ut of slæges fæce.
+G36E84E05	Wiþstent feonda onræsas and scotunga.
+G074FC78D	Forhergiende onræs.  Þring and heald þone Y cnæpp to brucanne.
+GE5C8740D	Ec þine hælu ecelice.
+G791AEDAB	Ræs forþ and drif fynd butan scieldum to eorþan.
+GF4A5485B	Onræs þa hwile þe þu upp arisest, and gefoh fynd unwære.
+GC0B8F80A	Swiþe nytt gefeg to fordonne fynd butan scieldum.
+G6CBE68E9	Swiþe nytt to fordonne gescildede fynd swa hraþe swa man mæg.
+GD7BB121B	GEÞEODED STYRUNG: Cwel onræsendne pucel sona.
+G4A59663E	Gescotene swa se Dunedain Boga, doþ þa gehocodan earhas þara Rohirrim micelne demm.
+G96A8AB86	Ec þine hælu ecelice.  (Behofaþ Strengþu þæra Stewards)
+GED26DEB8	Ræs forþ of feorran to drifenne fynd butan scieldum to eorþan. (Behofaþ Ræsonræs)
+GB4790643	Wunda, fyll, and sleah þinne feond mid þissum gefegedum onræse.
+G9709901B	Bruc þisses gefeges to sleanne feond butan scielde, hine to fordonne, and hraþe oþerne to sleanne.
+G066B80A4	GEÞEODED STYRUNG: Cwel onræsendne orc sona.
+GB54F0B8A	Ec þine hælu ecelice.  (Behofaþ Strengþu Isildur)
+G1C742C09	Forhergiendra onræs.  (Behofaþ Weardes Ierre)
+G9F299E6A	Ec þone demm þines Swiftnesse onræses.
+G2A888253	Wunda, fyll, and þonne geend mihtige fynd mid þissum gefege.
+GEF4043FD	Ec þine hælu ecelice.  (Behofaþ Strengþu Elendil)
+GF3D48718	Þes forhergienda onræs onæleþ manige fynd.  (Behofaþ Wilddeores Wodnes)
+GDAE09290	Þa isenan earhas of Gondor doþ egeslicne demm.  (Behofaþ Rohan Boga)
+GBD1ED2AE	GEÞEODED STYRE: Ofslih sona onræsendne Uruk-Hai.
+G6DF8DC34	Bruc wiþ strangne feond to tobrecanne his scield, hine to eorþan to fellanne, and hine to sleanne.
+GB1BCB280	Naht
+GE225A1EC	Teoh and heald þone winstran scytel to brucanne.  Weorp mid þam A cnæppe (heald to ecanne þone demm).
+GFF3FB1CE	Þes æxslege geendaþ ælcne gefyldne feond.
+G81A89461	Ec þine hælu ecelice.  (Behofaþ Miht Stanes)
+GF266C7E6	Ec þine hælu ecelice.  (Behofaþ Miht Isernes)
+G2FCD00C0	Ræs forþ of feorran to fellanne unscildede fynd to eorþan.  (Behofaþ Ræsonræs)
+G00247254	Ec þine hælu ecelice.  (Behofaþ Run Gescildnesse)
+GA505D28C	Ec þine hælu ecelice.  (Behofaþ Miht Balin)
+G34C62FC4	Worpene swa Erebor Æxa, þa scearpan Moria æxa doþ gyt mare demm.
+G57901BB9	Swiþra onræs.  (Behofaþ Dweorgisc Ierre)
+G8840F62F	Ec þine hælu ecelice.  (Behofaþ Miht Gloin)
+G361F0511	Þes swiþa onræs ontent manige fynd.  (Behofaþ Beorges Wodnes)
+G219C0125	Þas Mithril-ecgedan bladu doþ egeslic demm.  (Behofaþ Moria Æxa)
+G9986DAAB	Ec þone demm þines Reþan Onræses.
+G11BF2FC5	Scotene swa se Mirkwood Langboga, þa æscenan earhas Rivendell doþ gyt mare demm.
+G7A9893BB	Þa galdorlican earhas Lothlorien doþ grislic demm.  (Behofaþ Rivendell Langboga)
+G42E47239	Þas drylican earhas ontendaþ þine fynd.  (Behofaþ Lothlorien Langboga)
+G5BAB8220	Ec þine hælu ecelice.  (Behofaþ Mægen Celeborn)
+G39265CB0	Swiþra onræs.  (Behofaþ Ylfisc Ierre)
+G084B6AEF	Þas earhas þurhfaraþ and deriaþ eallum feondum on heora wege.  (Behofaþ Dracanfyres Earhas)
+GB1D19C39	Ec þone demm ælces earhes þe þu scytst.
+G06E26BE1	Þrifeald Slege
+G20A303C1	Twifeald Heaw
+GCB8F4087	Dunedain Boga
+G3F6F3751	Sceadu Slege
+GBE8C73E9	Wigspyrn
+G5660E3B0	Sweord Wiþstand
+GDF332280	Weardes Ierre
+GB8AB07B9	Strengþu þæra Stewards
+G187F8CC1	Ræsonræs
+G86E487F5	Upstigende Onræs
+GF7D6DC76	Isildures Swift Broga
+GB34DCC39	Isildures Alysnes
+GC9303634	Scuccena Bana
+G3A0786A5	Rohan Boga
+G8B17B5C5	Strengþu Isildur
+G579A1927	Forþræs
+G207C1523	Isildures Deaþræs
+G6C2653E9	Isildures Searu
+G2A3BA153	Orca Bana
+GA28B29AA	Strengþu Elendil
+G7D213CCE	Wilddeores Wodnes
+G006BF315	Sweordes Magister
+G6B68444D	Isildures Wigræs
+G3B0A3720	Strengþu þæra Argonath
+G78BAB3BC	Grama Numenor
+GCEDAD8B0	Gondor Boga
+G3BE146BB	Bana Saruman
+G701FD063	Isildures Dom
+G0251EC9F	Erebor Æxa
+G96C77DAD	Æxstice
+GDD4B6691	Æx Wiþstand
+GADD20DD0	Dweorgisc Ierre
+GB0D95BC6	Miht Stanes
+G4FB6CF69	Miht Isernes
+G5F017E32	Balines Swift Broga
+GDFD7CADD	Balines Alysnes
+GDF1B571B	Run Gescildnesse
+G9B37EDE7	Balines Deaþræs
+GCDB1A82D	Balines Searu
+G2DEF1D03	Miht Balin
+GE89D3658	Miht Gloin
+G31B06C3A	Moria Æxa
+GADFB76EF	Beorges Wodnes
+G75612F09	Balines Wigræs
+G8CE2E527	Miht Khazad-dum
+GE4E87FCC	Grama Moria
+GA16173AB	Mistbeorga Æxa
+G24288EA5	Cyninga Æxcræft
+G45AAD667	Balines Dom
+GB752504B	Mirkwood Langboga
+GA018F71A	Seax Wiþstand
+G0DCE9941	Ylfisc Ierre
+G4A27D7DF	Mægen Celeborn
+GE0EC06AA	Rivendell Langboga
+G76059454	Elrondes Swift Broga
+GE8C0678B	Elrondes Alysnes
+GE9F2F2C9	Lothlorien Langboga
+G5FE47D01	Elrondes Deaþræs
+G4B1902CB	Elrondes Searu
+GB3FB8DDE	Dracanfyres Earhas
+G4A61DECC	Mægen Galadriel
+G204DE538	Gil-galad Wodnes
+G5B85BC6F	Elrondes Wigræs
+GBDF43860	Mithril Earhas
+G4B69DAC6	Ylfisc Bogacræft
+G43AB31C1	Elrondes Dom
+GEAA8149B	Stæpe
+G11886F39	Wiþstand to forwyrnenne feonda onræsas and earhas to awendenne.
+GE4E78CFD	Wiþstand
+G3226B277	Teoh and heald þone winstran scytel to wendenne to þinum Feorrwæpne.  Þring þone A cnæpp to sceotenne.  Bruc þone winstran þumstæf to myntenne.
+GFF931564	Feorrwæpen
+G9A309E3D	Sceotan
+GC4AB2A6D	Bruc Hræd Onræs to sleanne unscildede fynd.
+G5C64BDED	Bruc þone Reþe Onræs to tobrecanne feonda scieldas.
+G4B1F5E2B	Reþe Onræs
+G12993772	Hræd Onræs
+G5550F308	Gestrien Cunnunge Pricas to ecanne þines hæleþes Stæpe and to bicgenne deorwyrþe betrunga.
+GD5F0D645	Gestriende Cunnunge Pricas
+G109A17A7	Bruc cræftige gefegnessa and forbuh feonda slegas to fyllanne þæt Cræftes Gemet and to gestrienenne þa mæstan Cunnunge Pricas.
+GDB22979F	Cræftes Gemet
+GF7AF01B8	Myntan
+G552324EC	Bæchlyp
+G3962B27E	Cwealmstyre
+G819AB384	Bæcscyfe
+GB5FE5915	Sceotan/Hræd Onræs
+G1438BF1E	Styrian/Myntan
+GCDD8B9EF	Rest
+G63E0263C	Gespræc
+GA970F7F6	Peter Jackson and Barrie Osborne
+G286B72BD	Elijah Wood
+GBCE2F8C0	Ian McKellen
+GFD2A8768	Hringa Hlaford
+GF0462ED4	Þæs Scirmplegan Wyrcung
+G0DB34230	Synderlice Filmdælas
+G9DF19E57	'Hringes Geferscipe'
+G1704CE51	Wyrcunge Anlicnessa
+G330E63EE	Fangorn and Orthanc
+GD722C1B8	Rohan and Helm's Deep
+GE704E302	Viggo Mortensen
+GDAFCF62B	Orlando Bloom
+GFE6CEDF7	John Rhys-Davies
+G1192CE25	Plega swa Aragorn
+GA8934934	Plega swa Legolas
+G84C57E95	Plega swa Gimli
+G46EA0007	Plega swa Isildur
+G5689E41F	Dyrne Ærende
+G7F2C7A4C	Plega swa Dyrne Hæleþ
+G96AF0882	Frumcræft
+G8813AE29	Oferswiþ Moria Geatu to Unlucanne
+G4EEEB554	Oferswiþ Balines Byrgen to Unlucanne
+G3182CC3A	Oferswiþ Amon Hen to Unlucanne
+G54747798	Oferswiþ Fangorn Wudu to Unlucanne
+G5D796BA6	Oferswiþ Rohan Feldas to Unlucanne
+G758A2B31	Oferswiþ Westfold to Unlucanne
+GD1B66361	Oferswiþ Rohan Gæp to Unlucanne
+GEC95C099	Oferswiþ Helm's Deep: Deeping Weall to Unlucanne
+G4F6E6B62	Oferswiþ Helm's Deep: Tobrocen Weall to Unlucanne
+G7E4B2F5F	Becum to Stæpe 5 mid Aragorn
+GA825B93E	Becum to Stæpe 5 mid Legolas
+GD08EF3EF	Becum to Stæpe 5 mid Gimli
+G060F3A0C	Oferswiþ Helm's Deep: Hornburg Cafertun and becum to Stæpe 10 mid Aragorn
+G9C00EBDD	Oferswiþ Helm's Deep: Hornburg Cafertun and becum to Stæpe 10 mid Legolas
+GCA301FEC	Oferswiþ Helm's Deep: Hornburg Cafertun and becum to Stæpe 10 mid Gimli
+G2A4097F8	Oferswiþ þæt Dyrne Ærende mid ælcum hæleþe
+GF80714A8	Oferswiþ þæt Dyrne Ærende mid þam dyrnan hæleþe
+GF281A415	Peter Jackson and Barrie Osborne sprecaþ ymb þone film and þone plegan
+GEF6D5A30	Elijah Wood sprecþ ymb Frodo to plegienne on þam 'Hringa Hlaford' scirmplegan
+G1B7C2E20	Ian McKellen sprecþ ymb Gandalf to plegienne on þam 'Hringa Hlaford' scirmplegan
+G100A11D4	Sceawung behindan þam wage hu se 'Hringa Hlaford' scirmplega wæs geworht
+G14A8622F	Anlicnessa hæleþa and landsceapa of 'Hringes Geferscipe'
+G228511D6	Anlicnessa hæleþa and landsceapa of Fangorn and Orthanc
+GFDF064C7	Cræft onbryrd of 'Hringa Hlaford' fram John Howe and Alan Lee
+GAAE1A0C0	Anlicnessa hæleþa and landsceapa of Rohan and Helm's Deep
+G6CEBDAE1	Viggo Mortensen sprecþ ymb Aragorn to plegienne on þam 'Hringa Hlaford' scirmplegan
+G6824CF13	Orlando Bloom sprecþ ymb Legolas to plegienne on þam 'Hringa Hlaford' scirmplegan
+G84770794	John Rhys-Davies sprecþ ymb Gimli to plegienne on þam 'Hringa Hlaford' scirmplegan
+G775EAFA1	Dyrne tacnu to unlucanne þa behydedan þing þæs 'Hringa Hlaford' scirmplegan
+G640E4463	Wend cyre
+G6D02770F	Ceos
+GE5EE10E6	Underbæc
+GA75BE7EE	Wend oþþe betre cyre
+GE7B4EE86	Forlæt to Heafodtæfle
+G47C91DD4	Wend biliþ
+GE445F6CE	Bruc þine Betrunge Pricas to bicgenne bota þinum hæleþe.
+GB2D2B6DB	Ofslead hie ealle!
+GFD9FFC0E	Fyll þas wiht mid hrædum onræsum!
+G7BD97E94	Bruc þinne reþan onræs to forspillanne his scield!
+G62FC14DC	Her hie cumaþ! Ofslead hie ealle!
+GA3F97A90	Lænaþ me eowru sweord!
+G88F3FEA7	Eala! Swelt, wiht of Mordor!
+G4888927E	For þære Hwitan Byrig!
+GB5DB8B33	Þu eart geendod!
+G91F156A0	Gewit þu, sceadwes wiht!
+G8F5E1C57	Swelt, tudor Sauron! Swelt!
+GEF59BEBD	Scufaþ hie underbæc!
+G263E18E0	Forþ!
+G8715790C	Standaþ fæste!
+G09E491AC	Swelt!
+GC9D8887A	Horh of Gondor!
+GD909145B	Þu, swelt!
+G8524085B	Ne meaht þu us ealle ofslean!
+GFA0F31A8	Swelt, horh!
+G6949F8FB	Hie sindon to manige, þu scealt werian!
+GAB41028F	Wera þe, hlaford.
+GC99D9EF1	Hræde onræsas oferswiþaþ þisne.
+G8BC62719	Reþe onræsas tobrecaþ þa scieldas.
+G24319240	Seo woruld is onwended.
+G6FC7E51E	Ic hit gefele on þam wætere.
+G586AE929	Ic hit gefele on þære eorþan.
+GA0D1D398	Ic hit stince on þære lyfte.
+G20A7EC8F	Micel þæs þe iu wæs is forloren,
+G9A5EEA48	forþon þe nan nu ne leofaþ þe his gemune.
+G991F588A	Hit ongann mid þære smiþunge þara Miclena Hringa.
+GDCCA686B	Þreo wæron gesealde þam Ylfum -
+G64D4928C	undeadlice, wisoste and fægroste ealra wihta.
+GC38B0B40	Seofon þam Dweorga Hlafordum,
+GE4E9DA85	miclum delferum and cræftigum þara beorhheala.
+G8EA28015	And nigon... nigon Hringas wæron forgifene manna cynne,
+G5415D8A9	þe ofer eall oþer anwealdes wilniaþ.
+GCAF2B8E3	Forþon on þissum Hringum wæs gebunden seo strengþu and se willa to wealdenne ælcum cynne.
+GEAB51D48	Ac hie ealle wæron beswicene...
+G9968C959	forþon þe oþer Hring wæs geworht.
+G6DF9A86C	On þam lande Mordor, on þam fyrum þæs Dombeorges,
+GD5CC3D06	smiþode se Deorca Hlaford Sauron dearnunga Ealdorhring to wealdenne eallum oþrum.
+GA5AF65D9	And on þisne Hring he geot his wælhreownesse, his niþ, and his willan to wealdenne eallum life...
+GF9C8C37E	An æfter anum feollon þa freon land Middangeardes under þæs Hringes miht.
+GD7B567A4	Ac sume wæron þe wiþstodon.
+G9673067D	Seo Nihste Geferræden manna and ylfa ferde ongean þa heras Mordor,
+G9292CF8B	and on þæs Dombeorges hliþum hie fuhton for Middangeardes freodome.
+G9C449910	On þisse tide hit wæs,
+G4E624CE3	þa se hyht eall wæs aswunden...
+G8B971AFC	...þæt Isildur, þæs Cyninges sunu, his fæder sweord upahof.
+GA0976A20	Sauron, se feond þara freora folca Middangeardes, wæs oferswiþed.
+GCE1FEBD6	Se Hring becom to Isildur, þe hæfde þas ane hwile to forspillanne yfel on ecnesse.
+G4653B8E6	Ac manna heortan beoþ eaþe gewemde.
+GF1F12CD3	Forspill hine!
+G7A59BC32	Nese.
+GEDAFB589	Ic eom Isildures yrfeweard, na Isildur sylf. Min wyrd is min agen.
+GECD0FC9B	To Helm's Deep! Brego, far!
+GE526C94A	Frodo! Heald þe fram him!
+GE5AC368C	Fultum! Hie sindon æghwær!
+GE18CFED5	We þe findaþ.
+G754CEC13	Underbæc, fule þing!
+G0EE492EC	Hie secaþ þone Hringberend! Wuniaþ neah!
+GA236A198	Ne meaht þu wiþstandan, Healfling.
+GB0F6888B	We sindon forlorene.
+GABCB70B5	Eall Isengard is geæmtod.
+GD4A9E9B3	Hit is here to anum intingan getydd: to forspillanne manna woruld.
+G65599300	Se Deorca Hlaford genealæcþ.
+GC6B5C82C	Baggins...
+GDE3725D0	Hringgastas! Gewitaþ underbæc!
+GDB2A2A63	Strider!
+GDF3A925F	Sy he gesparod. Nere hine.
+G4867AD04	On þære friþstowe Rivendell, se læsta ure ætywde þæt mæste ellen.
+G3505351D	Ic hine nime!
+G5B8CB3F8	And Geferscipe wæs gesmiþod.
+GF6138FE1	Ic bere þone Hring to Mordor!
+GA7DC204A	Þeah...
+G2FFEE7D1	...ic ne cann þone weg.
+GD051F7C5	Ic þe fultumie þas byrþenne to berenne, Frodo Baggins...
+G82079845	...swa lange swa heo þin is to berenne.
+G8308B082	Þu berst ure ealra wyrd, lytling.
+G32030F3F	And þu hæfst minne bogan.
+G7A19CD10	And mine æxe.
+G18A439E8	Syle us þone hring, healfling.
+G5E09B681	Se hring is ure.
+GC7625599	Cum to us, healfling.
+GB2DCED15	Fultuma me!
+GF8B88DB9	Cum and fultuma me!
+G111D0DD5	Ic swelte.
+G439D87CA	Þis land is onwended.
+GB5DB841A	We her bidaþ oþþæt se weg begeondan orsorh þynce.
+GF0EB3761	We nan word of Moria ne gehyrdon manigum gearum.
+G3A9580D6	We meahton faran þurh Moria Seaþas.
+G852B83DE	Min mæg, Balin, wolde us cynelice onfon.
+G48D6F333	Wara þe!
+G20BEF03C	Hraþe! Þisne weg!
+G37B7E741	Grimm deor.
+G70A83B75	Þis is seo Duru Durin, Hlafordes Moria.
+GE6E19D64	Swa, Gandalf, þu fandast hie ofer Caradhras to lædenne.
+GF7BC40D4	And gif þæt geswicþ -
+GC7F3ECF5	hwider wilt þu þonne faran?
+G4F7AA217	To Moria!
+G0F8A9576	Sprec, freond, and gang in.
+GCB3668DA	Mellon.
+G64134F99	We habbaþ nu buton anne cyre.
+GE57BDBA1	We sculon gegan þa langan þeostru Moria.
+G3CA10A85	Horh of Mordor!
+GC753F514	Sætung!
+G66D5EE9E	Þær sindon Orcas. Manige.
+G8AB8C148	On earfoþe, send in dweorh!
+G6F4359B4	Wel geslagen, Gimli!
+G43E71D7A	Ic sceal foran sceawian to findenne weg þurh.
+G0F5D4F40	Wiht.
+G0BFC06A5	Her we scoldon findan micle mare þonne Balines Byrgen, Hlafordes Moria.
+G79CBD185	We habbaþ þa geatu forscotod. Tympanan on þam deope.
+G676CE560	We ne magon ut faran.
+GC2C2532E	Underbæc, ge sawolleasan deor!
+G41169039	Legolas! We behofiaþ þines bogan!
+GED8A660A	Efst, Gimli!
+G548B1E16	Gewit þu, grimme deor!
+G8B6C996D	Ic hine nime!
+GD624A593	Behindan þe!
+G22876487	Healdaþ eowerne stede!
+G6E72BC38	Underbæc, ge wihta!
+G98FB35D8	Hider!
+G758C706B	Legolas!
+G7D3C2C42	Gimli!
+G96015B03	Gandalf!
+G2F5D8C59	Hie sindon to manige!
+GEB38BB38	Hu magon we hie gestillan?
+GDB1D4894	Ic ne mæg wiþ hie feohtan!
+GCA82C10C	Ic ne mæg hie onweg healdan!
+G839F36D1	Fyll hie mid þinum bogan!
+G426819B7	For Balin!
+G32A709EE	Ic eom ofer þe!
+G7BC2A45C	Frodo!
+GE0A9DD2D	Hie sindon to fela!
+GB502E0B9	For Mirkwood!
+G5C8B1856	Ic wille maþan þyrlu on þinum hrife ceorfan!
+GF8D92047	Gefoh hie ealle!
+GDFB1C64C	Tobrecaþ hie!
+G5AF9060B	Underbæc to sceadwe!
+GF1BFC8A0	Aragorn! Ic behofie þines billes!
+GF83070F8	To me, Gimli! Hider!
+G2EC65D74	Heardiaþ eow!
+GCD82317C	Sceotaþ!
+GCEA41230	Tostencaþ eow! Hie ne moton us ymbsellan!
+G3AD812AF	Findaþ þone Healfling!
+G6B59AA20	Frodo bereþ ure ealra wyrd!
+G4B4B5CA5	We sculon hine gescildan!
+G1881769E	Be his weorþmynde, ge sculon forgieldan!
+G743E1105	Moria wæs deorc siþ urum Geferscipe.
+G32DCF8A9	Fleoþ, ge dysegan!
+G10D542AD	Naaaaaaa!
+GD10EAA8A	Se siþ stent on seaxes ecge.
+GF997012E	Dweliaþ hwonlice, and he ateoraþ.
+G01C6A95F	Ac hit wurde git deorcre, forþon þe ure Geferscipe ateorode.
+G212FEF60	Ic wolde mid þe faran oþ ende, on þa selfan fyr Mordor.
+G960898CD	Yrnaþ!
+GD941582B	Beo on sibbe...
+G9D8421F1	...sunu Gondor.
+G60BC6BA4	We sculon þas Uruk-hai oferswiþan þæt Frodo ætberste!
+GF0E0DD02	Boromir!
+G1C9C2949	Lytel fultum her, Ylf!
+GB1E7FF01	Uruk-hai! Onræsaþ!
+G62308F86	Ic wille þisses brucan!
+GA7F87EAC	Underbæc to þæm seaþum þe eow cendon.
+G06BA8520	Hie comon þisne weg, cumaþ.
+G817C5460	Ac hira last endaþ her. We sculon us todælan þæt we hie hraþe findon.
+G934A6365	Aragorn, þær is hwæt ute.
+G32456D68	Hwæt gesihst þu, Legolas?
+G090A57A6	Se Hwita Dry.
+G3BE10384	Saruman.
+GF471A310	Þeah Boromires ellen, Sarumanes þegnas gefengon sume ures Geferscipes.
+G9EB3E2D9	Ac we noldon ure geferan forlætan to tintregum and deaþe.
+GC9337F85	Manige dagas we folgodon hira laste...
+G1A87CFBD	...æt nehstan hit us lædde to Fangorn Wuda.
+G7754D2C1	Þes wudu is eald...
+G9261B17A	...swiþe eald.
+GF7DCBBD1	He is full gemyndes...
+GC4192431	...and irres.
+G92086B9D	On þæm miclan wuda comon manige paþas togædere.
+G6F680400	Hit ne mæg beon.
+G7A0AC815	Nu is gecwide betweox þæm twam torrum - Orthanc and Barad-dur.
+GF36A1977	Þin is elles hwær þearf.
+GA926AFE5	Wig cymþ to Rohan.
+GC5293984	Nu we habbaþ sumne plegan!
+GCF6954E1	Ic hit ær geseah, ac næfre swa þis.
+G2E930B75	Ure ana hyht is ætgædere to standanne!
+GFD82D6F4	Sarumanes werod ferigaþ selcuþe berstendlice searu þurh þas burg. Fultumiaþ us hie to fordonne!
+G86FA279C	Healdaþ hie æt þam geate!
+G7B48AD72	Þa feawa ure þe feohtan magon faraþ to Helm's Deep.
+GD55B6BE3	Þær sceal þæt towearde Rohan libban oþþe sweltan.
+G2256A18D	Warniaþ eow wiþ þa berstendan!
+GE0BD0D44	Gea! Sellaþ him fyres smæc!
+G82C8009F	Þæt hie sceolde lættan!
+GA0C82879	Hwæt habbaþ we her?
+G751859FC	Hwæt is þis?
+G06637EF0	We sculon þas berstendlican searu fordon!
+GABF94061	Þa berstendlican searu sculon beon fordone.
+G13114F1E	Hwæt mæg þis beon?
+G5B2AF650	Þis mæg nytt beon.
+G14659B9A	Þis þyncþ deorwyrþe.
+G418ECC01	Her. Ic wille þis healdan.
+G136EC46C	Þis is wyrþe to berenne.
+G360BBC1D	Hie sind gedrifene þurh Sarumanes wodnesse and þæs Deorcan Hlafordes willan.
+G4840EFEC	Ma fyrweorca? Ha! Hie þenceaþ us ealle to licum gedon!
+G19910876	Hie cumaþ nu ongean us!
+G08EB8FDB	Hit is unoferfere.
+G6FED1000	Ic sceal oþerne weg findan.
+G68F91872	Þes tun byrnþ swa drige tyndre!
+G57BD9573	Swiþe nytt.
+G424E3FF5	Þæt hit gedeþ!
+G501ABC20	Standaþ fæste!
+G31FDA576	Hie oferyrnaþ eac þas stowe!
+GB60A7265	Næron we ana on Rohan to gescildanne.
+GA48B596C	Þæs Cyninges Weard eac feaht þurh to Helm's Deep.
+G65866A2E	Þu hæfst eall gedon þæt þu her miht.
+G115A6D12	Þa lafe willaþ to Helm's Deep faran.
+GC07CBB0E	Þu hæfst git weorc to donne. Ic cume eft to þe æt þæs flodes wendinge.
+G63B48C52	Hie sind þurhbrocene!
+GAAD29572	Ic bidde! Na! Na! Na!
+G589F2E2F	We sculon ealle generian þe we magon, oþþe þes tun fealleþ.
+GE1654ECA	Ær ure langa siþ us to Edoras brohte...
+G97FC9F74	...wæs þin folc ær on miclum frecennesse.
+GB52DB0C9	Ara me!
+GDDA274AE	Ic bidde! Ara me!
+GA354A5CD	Ahhh! Na!
+G1C74FEB5	Na!
+G946E2F3A	Na! Na! Ne do!
+GF46D4AC5	Na! Na! Na!
+G1BD76207	Lædaþ us ut! Efstaþ!
+GE57CB50F	Ara me, ic þe bidde!
+G716689E1	Gescildaþ us!
+G6295F93F	Nere me! Ic bidde, nere me!
+GFA27E38F	Aaaaaah! Hie bærnaþ us cwice!
+G25B702F8	Læt me libban! Ic bidde!
+GDE034FBB	Þu scealt forþ þringan.  Min is elles hwær þearf.
+G898F1CFF	Doþ þæt hie ondræden þa wulfas Isengard!
+G04FC403B	We ne mihton lætan þas wihta þa flyman geræcan.
+GD8C5307E	Þin folc wæs gescild, ac we hit forguldon mid manegum lifum.
+G4FD6FE99	Ic forleas fornean min agen.
+G753DFA73	Swa hit is, þæt we ealle on mislicum paþum sind cumen to þam fæstene Helm's Deep, to þam ytemestan gewinne.
+G932478E9	Nu, ofsleaþ þone!
+GF940F960	Gea, mine leofan!
+G646F5FC4	Ure wargas sculon to niht symblian!
+G948FC6FF	Ne plega mid him!  Ofslea hine!
+G99617AA4	Hie sind underbæc gewitene.  Hit is nu geendod.
+G4A0F838F	Ic hæfde nigontyne!
+GC16105A6	Þonne sind we efne.
+GAC4FD1F9	We þæt geseoþ.
+GF71FBCA2	Ic hæfde twegen.
+G641CA89C	Her sind genoge unc bam, Gimli!
+GF4B76D82	We sculon Saurones gesihþe on us healdan - hine blindne healdan to eallum oþrum þe styriaþ!
+G5B04C967	Underbæc!
+G3487D102	Of þam wealle!
+G8B575855	Þa Orcas sind on þam wealle!
+GCE3C16C0	Ic eom æt seofontyne!
+G3D052135	Secaþ hleo!
+G05C9D273	Hie sceotaþ eft on us!
+G4941BF74	Weorpaþ þone hlæder niþer ær we oferyrnede sien!
+G265760A3	Niþer!  Bugaþ niþer!
+G2E8173A8	We ne magon hie lætan neah þæm Glitniendum Scrafum!
+G36DE1341	Næfre ic ne geseah swylc æxweorc, Magister Dweorg.
+G80FBF437	Ne ic swylcne bogan cræft.
+G3F35FF0E	Ac hie næfre eft ne arisaþ siþþan ic hie slea.
+GEC633822	Ure scild is oferyrned! Þa wif and cild beoþ besette!
+G17070638	Lædaþ hie to þære Miclan Healle!
+G5CAB82D3	We hie healdaþ her, oþþe æt þam Fæstene!
+GFFC47594	We hie heoldon. Þa wif and cild sind orsorge - nu git.
+GBD5794D5	We ne magon hie leng healdan! On þa Miclan Healle!
+G088ED5E4	We ne magon hie healdan!
+G7C6E3511	Sauron and Saruman nearwiaþ þone grin.
+G7B236705	Ac for eallum hira searwum, we habbaþ ane fremu.
+GFCAC9515	Se Hring wunaþ behyded.
+G1C7DF558	And þæt we hine fordon secen ne com git on hira deorcostan swefnas.
+GB72B409D	And swa þæs feondes wæpen færþ wiþ Mordor on Hobbites handum -
+G86CED6F6	ælc dæg hit bringþ near þæm fyrum Mount Doom.
+GD9BB4CD5	Sauron þe ondrædeþ, Aragorn.
+GDD966B5E	Sceoteras on þone weall!
+G6A122B51	Standaþ underbæc! Se hege wile feallan!
+G427F5206	Efst, Magister Dweorg!
+G113213B2	Ga to Legolas, ic hie her healde!
+GA7B95A20	For Gondor!
+G7C696E8A	Aragorn is oferswiþed! To him!
+GFC98A99D	Ure Ylfwine behofaþ fultumes.
+G66A680C0	Uruk-hai!
+G8968245E	Hie willaþ þone hege tobrecan!
+G428EE07E	Hie sind binnan þam fæstene. We sind forlorene!
+GFAE8490C	NAAAAAAA!!
+G63F31F0F	Þin ende is neah.
+GE8B9DB2E	Þu hæfst þone weg sares gecoren!
+G910D7B12	Þu dysega.
+G58E8BBAA	Nu is tima þæt þu geswice.
+GD8425223	Ne gelyfdest þu þæt tættecede weard wiþ minne willan winnan meahte, la? Ic eom ofer þine mihte.
+G1A989E68	Þu scealt þin ofermod forgieldan.
+G0079D300	Ne þohtest þu þæt Dweorg wiþ Sarumanes willan winnan meahte. Nis nan þe mæge.
+GFB1E1C33	Ne þohtest þu soþlice þæt Ylf wiþ Saruman winnan meahte? Nan ne mæg, ne furþon durran sceolde.
+GCB4F521C	Scotene swa Stigweardes Boga, þa hocedan earhas þara Rohirrim doþ micelne hearm.
+G906620AF	Ece þine hælu ecelice.  (Behofaþ Miht Denethor)
+GE4F990F3	Wælgrimmra onræs.  (Behofaþ Gondor Ierre)
+G55B83821	Ece þine hælu ecelice.  (Behofaþ Strengþu Gondor)
+GD4900EBD	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Grama Gondor)
+GF1EE1785	Stigweardes Boga
+GC7DFC68A	Gondor Ierre
+G26838C80	Horn Gondor
+G948EF2DD	Ealdormannes Stede
+GC354B788	Miht Denethor
+G2675AC6D	Minas Tirith Ræs
+G3A16134F	Stigweardes Searu
+G7C6E9536	Strengþu Gondor
+G909BDBD3	Grama Gondor
+GBCA2DB1D	Hwites Torres Ræs
+GA70E206F	Amon Hen Stede
+GECE9E935	Plega swa Boromir
+G2BAAD5AF	Teoh and heald þa winstran gripan to brucanne.  Weorp mid þam A cnæppe (heald niþer to ecanne þone hearm).
+GF2DB6139	Worpen swa Dryes Leoht, se lieg Narya bærnþ feondas to micelum hearme.
+G4E51B4E3	Ece þine hælu ecelice.  (Behofaþ Strengþu þæra Istari)
+G701450DF	Ece þine hælu ecelice.  (Behofaþ Strengþu Olorin)
+G876BFE80	Wælgrimmra onræs.  (Behofaþ Maia Ierre)
+G554AF8D3	Ece þine hælu ecelice.  (Behofaþ Strengþu Narya)
+GF20F1105	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Dryes Wodnes)
+GE86497FB	Þæt hwite fyr þara Istari bærnþ egeslice. (Behofaþ Hringfyr)
+G5D1DA1B0	Dryes Leoht
+GE4245C5B	Stæf Wiþstand
+G68852FD1	Maia Ierre
+G63891384	Strengþu þæra Istari
+G3023E8DD	Lieg Anor
+G03053C48	Ne Scealt Þu Faran
+G44E88937	Hringfyr
+G31781C88	Strengþu Olorin
+GC67FABAE	Shadowfax Ræs
+GB28BAB38	Græga Wræcca
+GBB647C84	Strengþu Narya
+G3A1959EB	Dryes Wodnes
+G910A4D18	Glamdring Magister
+GE54BB6DF	Mithrandires Ræs
+G80CB05F7	Strengþu þæs Hwitan
+G5500602D	Grama Olorin
+GB3B8BA9A	Hwit Fyr
+G4D3F3799	Grama þæs Maia
+GB06CD44C	Plega swa Gandalf
+GD63AEB69	Teoh and heald þa winstran gripan to brucanne.  Torfa mid þam A cnæppe (heald niþer to ecanne þone hearm).
+GF1500B18	Worpene swa Shire Stanas, scearpe Brandywine flintas doþ micelne hearm.
+G1594107A	Ece þine hælu ecelice.  (Behofaþ Strengþu þæra Shire)
+G223FB1F4	Ece þine hælu ecelice.  (Behofaþ Strengþu Bilbo)
+G419FBE06	Wælgrimmra onræs.  (Behofaþ Hobbit Ierre)
+G549E8839	Ece þine hælu ecelice.  (Behofaþ Strengþu Samwise)
+G3E7B6E97	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Shire Wodnes)
+G5DBA6F26	Ylfbletsode stanas doþ egeslicne hearm.  (Behofaþ Flintscot)
+G586DFFA8	Shire Stanas
+GAF333BB7	Hobbit Ierre
+GA30AB0B5	Strengþu þæra Shire
+G5B952654	Stinges Bite
+G3F0B7A46	Hringberendes Willa
+GE7A5F0EC	Flintscot
+G97512A2B	Strengþu Bilbo
+G4F6E34B0	Baggins Ræs
+G8AFDEEE2	Hobbites Gesælþ
+G9AE8326E	Strengþu Samwise
+G5FECDC01	Shire Wodnes
+GB7F9A847	Sting Cræft
+GD629F714	Tookisc Ræs
+G31486B52	Strengþu Bag End
+G4023054B	Grama Sting
+GD48B81F2	Ylfisce Stanas
+G371FFFDE	Mithril Anrædnes
+G031E765B	Plega swa Frodo
+G63C78123	Scotene swa Isengard Boga, þa hocedan earhas Orthanc doþ micelne hearm.
+G266F9F27	Ece þine hælu ecelice.  (Behofaþ Strengþu Isengard)
+G4451D279	Ece þine hælu ecelice.  (Behofaþ Strengþu Saruman)
+G2DE635F5	Wælgrimmra onræs.  (Behofaþ Uruk Ierre)
+G4D25FA2B	Ece þine hælu ecelice.  (Behofaþ Strengþu Orthanc)
+G055C2C2B	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Isengard Wodnes)
+G478E4DB1	Sweart earhas Isengard doþ egeslicne hearm.  (Behofaþ Uruk Boga)
+GB0EED2A6	Isengard Boga
+G13D5F1B3	Ecg Wiþstand
+GCC2F9E7C	Uruk Ierre
+GF496EAA0	Strengþu Isengard
+GC727C10B	Lurtzes Huntoþ
+G73D0C070	Sarumanes Willa
+GD64B9B56	Uruk Boga
+G9E8D350E	Strengþu Saruman
+G6426C642	Wigendes Uruk Ræs
+GCC3C5342	Cwelleres Searu
+G0DEF3FCC	Strengþu Orthanc
+G0EBAA8C5	Isengard Wodnes
+GFC62112E	Heahcwellere
+GEE7780E5	Isengard Hergung
+G838B10AC	Strengþu þæra Uruk-hai
+GF44614A3	Grama Saruman
+G45DC8B08	Sweart Boga
+G4F638CF6	Bana Rohan
+G9E606E3B	Wyrd þæs Forman Uruk
+GE31550F8	Lurtz
+G981416DE	Plega swa Lurtz
+G6F22BB2E	Scotene swa Ylfisc Boga, þa earhas Rivendell doþ micelne hearm.
+GCA4A15A1	Ece þine hælu ecelice.  (Behofaþ Strengþu Rivendell)
+G75BCF244	Ece þine hælu ecelice.  (Behofaþ Miht Gil-galad)
+G216AF74D	Ece þine hælu ecelice.  (Behofaþ Strengþu Vilya)
+G0B6CC0B6	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Noldor Wodnes)
+G0355C5D7	Seolfrene earhas þara Eldar doþ egeslicne hearm. (Behofaþ Vanya Boga)
+GD3F16BA3	Ylfisc Boga
+G710A6666	Strengþu Rivendell
+G96D9F158	Vilyes Ar
+GF127A06E	Se Ytemesta Wær
+GB426C696	Vanya Boga
+G71620C4B	Miht Gil-galad
+GFBF3A490	Ræs Lindon
+G00542D8B	Bodan Searu
+G5104305A	Strengþu Vilya
+G221633E0	Noldor Wodnes
+G11A9FF39	Noldor Wigræs
+GDE2839BE	Strengþu þæra Eldar
+GB0E7C432	Grama Lindon
+G008B68D9	Eldar Boga
+G10607364	Hlaford Imladris
+G0BA28B85	Plega swa Elrond
+GD6BB77A1	Worpen swa Deorc Flan, þæt fyr Barad-dur deþ micelne hearm.
+G113CAFFC	Ece þine hælu ecelice.  (Behofaþ Strengþu Barad-dur)
+G2F14F0F7	Ece þine hælu ecelice.  (Behofaþ Strengþu Mordor)
+G573FFFF8	Wælgrimmra onræs.  (Behofaþ Deorc Ierre)
+G6AE28C4F	Ece þine hælu ecelice.  (Behofaþ Miht þæs Ring)
+GC4B7E7DB	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Mordor Wodnes)
+G5FEE9C56	Þa ligas Mount Doom doþ egeslicne hearm.  (Behofaþ Helfyr)
+GA07FAB7C	Deorc Flan
+G59838F7F	Sagol Wiþstand
+G0ACE1349	Deorc Ierre
+GD97CF863	Strengþu Barad-dur
+GF62B2130	Saurones Sealtung
+G53F430F0	Þæs Anes Hringes Willa
+GB60C89B8	Helfyr
+GC26DDD50	Strengþu Mordor
+G29856B22	Deorchlafordes Ræs
+G27C67462	Annatares Searu
+G66205DC8	Miht þæs Ring
+GA64C9515	Mordor Wodnes
+G278CB8C1	Sagla Magister
+G4B8493DC	Mordor Wigræs
+G5487C52D	Strengþu Mount Doom
+GE9A37F55	Grama Mordor
+G3F70A0C4	Domfyr
+GBB8776B5	Bana Ylfa
+G6E2AA149	Saurones Eage
+G1C11BF19	Sauron
+G3057B52F	Plega swa Sauron
+GB76B50B9	Worpene swa Cludstanas, þas stanas of þæm seaþum doþ micelne hearm.
+GECFE6FA3	Ece þine hælu ecelice.  (Behofaþ Miht þæra Pits)
+G47753157	Þes wælgrimma onræs onælþ manige feondas.  (Behofaþ Berserker Wodnes)
+GF2D43E42	Gemyltan stanas doþ egeslicne hearm.  (Behofaþ Wigstanas)
+GC390874C	Clifstanas
+G035878D4	Berserker Wylm
+GC2D0B8DB	Blysa þæs Deopes
+GFF1647F7	Wigstanas
+G98869254	Miht þæra Pits
+GC4A495AD	Deepingwealles Ræs
+GE0FB4F25	Uruk-hai Searu
+G8925F4A1	Berserker Wodnes
+G468B4A5C	Berserker Magister
+GB0E58D9C	Ymbsetræs
+GD5AF6DD1	Grama Orthanc
+G01AF5769	Gledstanas
+G18494AB3	Grama þæra Pits
+GB3AAE2E1	Uruk-hai
+G683077D7	Plega swa Uruk-hai
+P:Frame Rate:	Bilda Hrædnes:
+P:Unlocked	Unlocen
+P:Display Mode:	Ætywunge Wise:
+P:Window	Eagþyrel
+P:Full Screen	Ealscirm
+P:Window Size:	Eagþyrles Mæþ:
+P:Automatic	Selfwyrcende
+P:Aspect Ratio:	Scirmes Hiw:
+P:Custom	Agen
+P:Resolution:	Pricena Rim:
+P:Anisotropic:	Anisotropic:
+P:Mipmaps:	Mipmaps:
+P:Off	Of
+P:On	On
+P:Ultra Textures:	Ultra Webbas:
+P:Wide Cutscenes:	Brade Gesihþa:
+P:Anti-aliasing:	Ecga Smeþung:
+P:VSync:	VSync:
+P:Picture:	Bild:
+P:Keep Shape	Heald Hiw
+P:Stretch	Aþen
+P:Vertex Programs:	Vertex Wyrcunga:
+P:Brightness:	Beorhtnes:
+P:Sharpening:	Scearpung:
+P:Colour:	Bleo:
+P:Original	Frumlic
+P:Vivid	Glæd
+P:Muted	Wann
+P:HUD Widescreen:	HUD Bradscirm:
+P:Edges	Ecga
+P:Centred	On Middan
+P:Menus:	Cyrbredu:
+P:Fill	Fyll
+P:Movies:	Cwicbilda:
+P:As Made	Swa Geworht
+P:Button Prompts:	Cnæpa Tacnas:
+P:Keyboard	Cægbord
+P:Mouse Pointer:	Muse Pricel:
+P:Sensitivity:	Gefelnes:
+P:Pointer Size:	Priceles Mæþ:
+P:Mouse Aiming:	Muse Miercung:
+P:Invert Aiming:	Miercung Onwend:
+P:Up/Down	Up/Nyþer
+P:Left/Right	Winstre/Swiþre
+P:Both	Begen
+P:Mouse Steering:	Muse Steornung:
+P:A Button:	A Cnæp:
+P:B Button:	B Cnæp:
+P:X Button:	X Cnæp:
+P:Y Button:	Y Cnæp:
+P:Black Button:	Sweart Cnæp:
+P:White Button:	Hwit Cnæp:
+P:Left Trigger:	Winstre Hoc:
+P:Right Trigger:	Swiþre Hoc:
+P:Start:	Onginn:
+P:Back:	Underbæc:
+P:D-pad Up:	D-pad Up:
+P:D-pad Down:	D-pad Nyþer:
+P:D-pad Left:	D-pad Winstre:
+P:D-pad Right:	D-pad Swiþre:
+P:L Stick Click:	L Sticcan Cnyll:
+P:R Stick Click:	R Sticcan Cnyll:
+P:Move Forward:	Forþ Faran:
+P:Move Back:	Underbæc Faran:
+P:Move Left:	Winstre Faran:
+P:Move Right:	Swiþre Faran:
+P:Look Up:	Up Locian:
+P:Look Down:	Nyþer Locian:
+P:Look Left:	Winstre Locian:
+P:Look Right:	Swiþre Locian:
+P:Walk:	Gangan:
+P:General Options	Gemænlice Cyras
+P:Display Options	Ætywunge Cyras
+P:Controls	Wealdas
+P:Reset Controls	Wealdas Edniwian
+P:Press a key...  (Esc: cancel, Delete: clear)	Þring cæge...  (Esc: onlæc, Delete: adilga)
+P:R Stick	R Sticca
+P:Stick	Sticca
+P:L Stick	L Sticca
+P:Black button	Sweart cnæp
+P:White button	Hwit cnæp
+P:Left trigger	Winstre hoc
+P:Right trigger	Swiþre hoc
+P:Start	Onginn
+P:Back	Underbæc
+P:D-pad up	D-pad up
+P:D-pad down	D-pad nyþer
+P:D-pad left	D-pad winstre
+P:D-pad right	D-pad swiþre
+P:Left stick click	Winstran sticcan cnyll
+P:Right stick click	Swiþran sticcan cnyll
+P:Move forward	Forþ faran
+P:Move back	Underbæc faran
+P:Move left	Winstre faran
+P:Move right	Swiþre faran
+P:Right stick up	Swiþre sticca up
+P:Right stick down	Swiþre sticca nyþer
+P:Right stick left	Swiþre sticca winstre
+P:Right stick right	Swiþre sticca swiþre
+P:Walk	Gangan
+P:None	Nan
+P:LS click	LS cnyll
+P:RS click	RS cnyll
+P:Mouse Left	Mus Winstre
+P:Mouse Right	Mus Swiþre
+P:Mouse Middle	Mus Midde
+P:Mouse 4	Mus 4
+P:Mouse 5	Mus 5
+P:Space	Rum
+P:Enter	Enter
+P:Esc	Esc
+P:Tab	Tab
+P:Backspace	Backspace
+P:Shift	Shift
+P:Ctrl	Ctrl
+P:Alt	Alt
+P:Caps Lock	Caps Lock
+P:Up	Up
+P:Down	Nyþer
+P:Left	Winstre
+P:Right	Swiþre
+P:Insert	Insert
+P:Delete	Delete
+P:Home	Home
+P:End	End
+P:Page Up	Page Up
+P:Page Down	Page Down
+P:Num 0	Num 0
+P:Num 1	Num 1
+P:Num 2	Num 2
+P:Num 3	Num 3
+P:Num 4	Num 4
+P:Num 5	Num 5
+P:Num 6	Num 6
+P:Num 7	Num 7
+P:Num 8	Num 8
+P:Num 9	Num 9
+P:Num *	Num *
+P:Num +	Num +
+P:Num -	Num -
+P:Num .	Num .
+P:Num /	Num /
+P:Semicolon	Healfcolon
+P:Equals	Gelic
+P:Comma	Comma
+P:Minus	Læs
+P:Period	Prica
+P:Slash	Slite
+P:Backquote	Bæcpricu
+P:Backslash	Bæcslite
+P:Quote	Cwidmearc
+P:Hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Heald {6} to wendenne to þinum Feorrwæpne.  Þring {0} to sceotenne.  Bruc {M} to miercienne.
+P:Pull and hold {6} to switch to your Ranged Weapon.  Press {0} to fire.  Use {M} to aim.	Teoh and heald {6} to wendenne to þinum Feorrwæpne.  Þring {0} to sceotenne.  Bruc {M} to miercienne.
+P:Hold {6} to use.  Fire with {0} (hold down to increase damage).	Heald {6} to brucenne.  Sceot mid {0} (heald adune þæt se demm weaxe).
+P:Pull and hold {6} to use.  Fire with {0} (hold down to increase damage).	Teoh and heald {6} to brucenne.  Sceot mid {0} (heald adune þæt se demm weaxe).
+P:Hold {6} to use.  Throw with {0} (hold down to increase damage).	Heald {6} to brucenne.  Weorp mid {0} (heald adune þæt se demm weaxe).
+P:Pull and hold {6} to use.  Throw with {0} (hold down to increase damage).	Teoh and heald {6} to brucenne.  Weorp mid {0} (heald adune þæt se demm weaxe).
+P:A devastating attack.  Press and hold {3} to use.	Wælgrim onræs.  Þring and heald {3} to brucenne.
+P:Game Saved.  Press {8} to continue.	Plega Gehealden.  Þring {8} to forþganne.
+P:Game Saved.  Press {0} to continue.	Plega Gehealden.  Þring {0} to forþganne.
+P:Unable to save game. Press {8} to continue.	Ne mæg þone plegan healdan. Þring {8} to forþganne.
+P:Unable to save game. Press {0} to continue.	Ne mæg þone plegan healdan. Þring {0} to forþganne.
+P:Unable to load game. Press {8} to continue.	Ne mæg þone plegan hladan. Þring {8} to forþganne.
+P:Unable to load game. Press {0} to continue.	Ne mæg þone plegan hladan. Þring {0} to forþganne.
+P:No saved games. Press {8} to continue.	Nis nan plega gehealden. Þring {8} to forþganne.
+P:No saved games. Press {0} to continue.	Nis nan plega gehealden. Þring {0} to forþganne.
+P:Not unlocked yet. Press {8} to continue.	Nis gyt unlocen. Þring {8} to forþganne.
+P:Not unlocked yet. Press {0} to continue.	Nis gyt unlocen. Þring {0} to forþganne.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {8} to continue.	Þu ne gegaderodest genoge betrunga pricas þas betrunge to bicgenne. Þring {8} to forþganne.
+P:You have not collected enough upgrade points to purchase this upgrade. Press {0} to continue.	Þu ne gegaderodest genoge betrunga pricas þas betrunge to bicgenne. Þring {0} to forþganne.
+P:Press {8} to resume	Þring {8} to eftonginnenne
+P:the left mouse button	þone winstran cnæp þære muse
+P:the right mouse button	þone swiþran cnæp þære muse
+P:the middle mouse button	þone midlestan cnæp þære muse
+P:mouse button 4	þære muse cnæp 4
+P:mouse button 5	þære muse cnæp 5
+P:the A button	þone A cnæp
+P:the B button	þone B cnæp
+P:the X button	þone X cnæp
+P:the Y button	þone Y cnæp
+P:the Black button	þone Sweartan cnæp
+P:the White button	þone Hwitan cnæp
+P:the left trigger	þone winstran hoc
+P:the right trigger	þone swiþran hoc
+P:up on the d-pad	up on þam d-pad
+P:down on the d-pad	nyþer on þam d-pad
+P:left on the d-pad	winstre on þam d-pad
+P:right on the d-pad	swiþre on þam d-pad
+P:the left thumbstick button	þone cnæp þæs winstran þumansticcan
+P:the right thumbstick button	þone cnæp þæs swiþran þumansticcan
+P:the Menu button	þone Cyrbredes cnæp
+P:the View button	þone Sceawunge cnæp
+P:the cross button	þone rodecnæp
+P:the circle button	þone hringcnæp
+P:the square button	þone feowerhyrnedan cnæp
+P:the triangle button	þone þrihyrnedan cnæp
+P:Left Click	Winstre Cnyll
+P:Right Click	Swiþre Cnyll
+P:Middle Click	Midde Cnyll
+P: or 	 oþþe 
+P:Exit	Utgang
+P:Press {k}	Þring {k}
+P:Boromir	Boromir
+P:Gandalf	Gandalf
+P:Frodo	Frodo
+P:Lurtz	Lurtz
+P:Elrond	Elrond
+P:Sauron	Sauron
+P:Uruk-hai	Uruk-hai
+L:The Two Towers Recompiled	The Two Towers Recompiled
+L:Paths	Paþas
+L:Game files ready:  	Þæs plegan gewritu gearu:  
+L:Game files not installed yet. Select your The Two Towers (USA) Xbox ISO or extracted disc folder.	Þæs plegan gewritu ne sindon gyt gesette. Geceos þin The Two Towers (USA) Xbox ISO oþþe þone utatogenan trendles fald.
+L:Building the Ultra textures from the GLOS69 pack (once; a few minutes)...	Timbrung þara Ultra webba of þam GLOS69 fætelse (æne; feawa minutena)...
+L:Xbox disc image (*.iso;*.xiso)\0*.iso;*.xiso\0All files\0*.*\0	Xbox trendles anlicnes (*.iso;*.xiso)\\0*.iso;*.xiso\\0Ealle gewritu\\0*.*\\0
+L:Checking disc...	Sceawung þæs trendles...
+L:Select the extracted The Two Towers disc folder (contains default.xbe)	Geceos þone utatogenan The Two Towers trendles fald (hæfð default.xbe)
+L:Display	Ætywung
+L:Developer	Wyrhta
+L:Renderer	Bildwyrhta
+L:Vulkan (DXVK, put in the dxvk folder)	Vulkan (DXVK, sete on þone dxvk fald)
+L:Software (no graphics card)	Hnescwaru (nan bildbred)
+L:Frame rate	Bilda hrædnes
+L:30 fps (as on the Xbox)	30 fps (swa on Xbox)
+L:60 fps (experimental)	60 fps (fandunglic)
+L:Unlocked (experimental)	Unlocen (fandunglic)
+L:Display mode	Ætywunge wise
+L:Windowed	On eagþyrle
+L:Full screen (borderless)	Ealscirm (rimleas)
+L:Window size	Eagþyrles mæþ
+L:Automatic	Selfwyrcende
+L:Aspect ratio	Scirmes hiw
+L:4:3 (original)	4:3 (frumlic)
+L:16:9 widescreen	16:9 bradscirm
+L:21:9 ultrawide	21:9 oferbrad
+L:32:9 super ultrawide	32:9 ealoferbrad
+L:HUD in widescreen	HUD on bradscirme
+L:At the screen's edges	Æt þæs scirmes ecgum
+L:Centred (4:3)	On middan (4:3)
+L:Menus	Cyrbredu
+L:Fill the screen (past the old TV margin)	Fyll þone scirm (ofer þone ealdan feorrsynes rand)
+L:Original (with a margin)	Frumlic (mid rande)
+L:Movies in widescreen	Cwicbilda on bradscirme
+L:As made (4:3)	Swa geworht (4:3)
+L:Fill the width (black bands cut off)	Fyll þa brædu (sweart bendas ofaceorfene)
+L:Widescreen cutscenes	Bradscirmes gesihþa
+L:Off (4:3, side bars)	Of (4:3, sidebendas)
+L:On (the sky's edges can show)	On (þæs heofones ecga magon ætywan)
+L:Ultra textures	Ultra webbas
+L:Off	Of
+L:On (sharper menus and HUD; everything with the GLOS69 pack)	On (scearpran cyrbredu and HUD; eall mid þam GLOS69 fætelse)
+L:Internal resolution	Innanweard pricena rim
+L:1x  (640 x 480, original)	1x  (640 x 480, frumlic)
+L:4.5x (2160 lines: 3840 x 2160 at 16:9)	4.5x (2160 linena: 3840 x 2160 æt 16:9)
+L:Anisotropic filtering	Anisotropic hlutrung
+L:Mipmaps	Mipmaps
+L:On (less shimmer)	On (læs glitenunge)
+L:Anti-aliasing	Ecga smeþung
+L:FXAA (the finished picture)	FXAA (þæt fullworhte bild)
+L:VSync	VSync
+L:On (no tearing)	On (nan toslitnes)
+L:Picture shape	Bildes hiw
+L:Keep aspect (black bars)	Heald hiw (sweart bendas)
+L:Stretch to fill	Aþen to fyllenne
+L:Vertex programs	Vertex wyrcunga
+L:Graphics card (faster)	Bildbred (hrædre)
+L:CPU (old method)	CPU (eald wise)
+L:Brightness	Beorhtnes
+L:Darker	Deorcre
+L:Original	Frumlic
+L:Brighter	Beorhtre
+L:Brighter +	Beorhtre +
+L:Brightest	Beorhtost
+L:Sharpening	Scearpung
+L:Low	Hean
+L:Medium	Medeme
+L:High	Heah
+L:Colour	Bleo
+L:Vivid	Glæd
+L:Muted	Wann
+L:Button prompts	Cnæpa tacnas
+L:Automatic (follows the pad or keys you use)	Selfwyrcende (folgaþ þam pade oþþe cægum þe þu brucst)
+L:Keyboard / mouse (your bound keys)	Cægbord / mus (þine gebundenan cæga)
+L:Input	Inbring
+L:Mouse pointer in menus	Muse pricel on cyrbredum
+L:On (point and click in the menus)	On (prica and cnyll on þam cyrbredum)
+L:Off (mouse buttons as bound)	Of (muse cnæpas swa gebundene)
+L:Mouse sensitivity	Muse gefelnes
+L:Normal	Gewunelic
+L:Very high	Swiþe heah
+L:Pointer size	Priceles mæþ
+L:Small	Lytel
+L:Large	Micel
+L:Extra large	Swiþe micel
+L:Mouse aiming (ranged)	Mus-myrcung (feorran)
+L:On (hold the ranged button, move the mouse)	On (heald þone sceotcnæp, styr þa mus)
+L:Mouse aiming: invert	Mus-myrcung: onwendan
+L:Up / down	Up / nyþer
+L:Left / right	Winstre / swiþre
+L:Both	Begen
+L:Mouse steering (movement)	Mus-steorung (styrung)
+L:On (the mouse sets the way; W A S D move by it)	On (seo mus tæcþ þone weg; W A S D farað be hire)
+L:Mod: ECTS 2002 HUD (experimental)	Wendung: ECTS 2002 HUD (fandiendlic)
+L:Off (retail HUD)	Of (ceapes HUD)
+L:On (ECTS 2002 demo HUD)	On (HUD þære ECTS 2002 fandunge)
+L:Mods	Wendunga
+L:Mod: Orange health pickups (shown in pre-release & making-of videos)	Wendung: Geoluread hæluþing (gesewen on styrbildum ær utsendunge & be wyrcunge)
+L:Off (green, as retail)	Of (grene, swa on ceape)
+L:On (orange health pickups)	On (geoluread hæluþing)
+L:Mod: Extra heroes (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; unlock with Isildur)	Wendung: Ma hæleþa (Boromir, Gandalf, Frodo, Lurtz, Elrond, Uruk-hai, Sauron; onlucan mid Isildur)
+L:Off (four heroes, as retail)	Of (feower hæleþas, swa on ceape)
+L:On (eleven heroes)	On (endleofan hæleþas)
+L:On, unlocked for testing (save not changed)	On, onlocen to fandunge (gehealdenes ne bið awend)
+L:Custom: 	Agen: 
+L:Ultra textures are on: the menus, level select and HUD are sharper.\n\n	Ultra-webbas sindon on: þa cyrebredu, stæpe-cyre and HUD sindon scearpran.\n\n
+L:For every texture, download the GameCube high-resolution texture pack (GLOS69) 	For ælcum webbe, hlad niþer þone GameCube webba-fætels heahre scirnesse (GLOS69) 
+L:from its author and put its GLOS69 folder here:\n\n	fram his writere and lege his GLOS69 fealdan her:\n\n
+L:\n\nThe launcher makes it ready the next time you press Play (once; a few minutes).	\n\nSe onstellend hit gearwaþ þy æfterran cierre þe þu Plega þringst (æne; lytle hwile).
+L:Graphics settings	Bilda gesetnessa
+L:All but the mods can also be changed while playing: press F10 (or hold Back and press Start). 	Eall butan þam wendungum mæg man eac awendan þa hwile þe þu plegast: þring F10 (oþþe heald Underbæc and þring Onginn). 
+L:The mods are set here and take effect when the game starts.	Þa wendunga beoþ her gesette and weorþaþ fremmende þonne se plega onginþ.
+L:Defaults	Ærsetnessa
+L:Cancel	Onlæc
+L:A button	Cnæp A
+L:B button	Cnæp B
+L:X button	Cnæp X
+L:Y button	Cnæp Y
+L:Black button	Sweart cnæp
+L:White button	Hwit cnæp
+L:Left trigger	Winstra spura
+L:Right trigger	Swiþra spura
+L:Start	Onginn
+L:Back	Underbæc
+L:D-pad up	D-pad upweard
+L:D-pad down	D-pad nyþerweard
+L:D-pad left	D-pad winstre
+L:D-pad right	D-pad swiþre
+L:Left stick click	Winstran sticcan þring
+L:Right stick click	Swiþran sticcan þring
+L:Move forward	Faran forþ
+L:Move back	Faran underbæc
+L:Move left	Faran winstre
+L:Move right	Faran swiþre
+L:Right stick up	Swiþra sticca up
+L:Right stick down	Swiþra sticca nyþer
+L:Right stick left	Swiþra sticca winstre
+L:Right stick right	Swiþra sticca swiþre
+L:Walk (hold)	Gan (heald)
+L:None	Nan
+L:LS click	LS þring
+L:RS click	RS þring
+L:Mouse Left	Mus Winstre
+L:Mouse Right	Mus Swiþre
+L:Mouse Middle	Mus Middel
+L:Mouse 4	Mus 4
+L:Mouse 5	Mus 5
+L:Space	Rum
+L:Enter	Enter
+L:Esc	Esc
+L:Tab	Tab
+L:Backspace	Backspace
+L:Shift	Shift
+L:Ctrl	Ctrl
+L:Alt	Alt
+L:Caps Lock	Caps Lock
+L:Up	Up
+L:Down	Nyþer
+L:Left	Winstre
+L:Right	Swiþre
+L:Insert	Insert
+L:Delete	Delete
+L:Home	Home
+L:End	End
+L:Page Up	Page Up
+L:Page Down	Page Down
+L:Num 0	Num 0
+L:Num 1	Num 1
+L:Num 2	Num 2
+L:Num 3	Num 3
+L:Num 4	Num 4
+L:Num 5	Num 5
+L:Num 6	Num 6
+L:Num 7	Num 7
+L:Num 8	Num 8
+L:Num 9	Num 9
+L:Num *	Num *
+L:Num +	Num +
+L:Num -	Num -
+L:Num .	Num .
+L:Num /	Num /
+L:Semicolon	Healfprica
+L:Equals	Gelic
+L:Comma	Comma
+L:Minus	Læs
+L:Period	Prica
+L:Slash	Sliht
+L:Backquote	Bæccwide
+L:Backslash	Bæcsliht
+L:Quote	Cwide
+L:Key 	Cæg 
+L:Controls	Wealdas
+L:press a key or mouse button…	þring cæge oþþe muscnæp…
+L:Press the key or mouse button for this action (Esc cancels). It replaces the action's first key; other actions lose it.	Þring þa cæge oþþe þone muscnæp for þisse dæde (Esc onlæcþ). Heo wrixlaþ þære dæde forman cæge; oþre dæda hie forleosaþ.
+L:Click a key box, then press a key or mouse button. The drop-downs choose which button of your controller does each action. These can also be changed in game: F10, Controls page.	Hrin cægcyste, þonne þring cæge oþþe muscnæp. Þa nyþerhleapendan cyrebredu ceosaþ hwilc cnæp þines wealdendes ælce dæde deþ. Þas man mæg eac on plegan awendan: F10, Wealda leaf.
+L:Action	Dæd
+L:Keyboard / mouse	Cægbord / mus
+L:Controller	Wealdend
+L:stick part way	sticca be dæle
+L:right stick	swiþra sticca
+L:left stick	winstra sticca
+L:Still working (installing, or building the Ultra textures). Quit anyway?	Gyt wyrcende (onstellende, oþþe Ultra-webbas timbriende). Forlætan swa þeah?
+L:The Lord of the Rings: The Two Towers  -  native PC recompilation	Se Hringa Hlaford: Þa Twegen Torras  -  inlendisc PC eftgegaderung
+L:Install from ISO…	Onstellan of ISO…
+L:Use extracted folder…	Bruc utatogenre fealdan…
+L:Show the game window	Ætyw þæs plegan eagþyrel
+L:Write a log file (for bug reports)	Writ dægboc (to wom-meldungum)
+L:Graphics settings…	Bilda gesetnessa…
+L:Controls…	Wealdas…
+L:Play	Plega
+L:Open folder	Geopena fealdan
+L:30 fps (original)	30 fps (frumlic)
+L:60 / unlocked can run some scenes faster than normal	60 / unbunden mæg sume sceawunga hrædor yrnan þonne gewunelic
+L:Full screen	Ealscirm
+L:Alt+Enter or F11 also switches	Alt+Enter oþþe F11 eac wendeþ
+L:The 3D view widens fully after the next load	Seo 3D sceawung bradaþ fullice æfter þære æfterran hladunge
+L:Sharper, but needs a stronger graphics card (9x and up: a lot of video memory)	Scearpra, ac beþearf strengran bildbredes (9x and ufor: micel bildgemyndes)
+L:On	On
+L:Less shimmer on distant textures	Læsse glisnung on feorrum webbum
+L:MSAA smooths the edges of the 3D as it is drawn; FXAA the finished picture	MSAA smeþaþ þa ecga þæs 3D þa hwile þe hit biþ getogen; FXAA þæt gefylde bild
+L:Waits for the monitor: no tearing	Bideþ þæs scirmes: nan toslitung
+L:Picture	Bild
+L:Keep shape	Heald hiw
+L:Graphics card	Bildbred
+L:Graphics card is much faster	Bildbred is micle hrædra
+L:Lifts the dark areas (gamma)	Ahefeþ þa deorcan stowa (gamma)
+L:Crisper textures, best with a higher internal resolution	Scearpran webbas, betst mid hierran inran scirnesse
+L:Automatic: follows what you last played with (pad, PlayStation pad, keys)	Selfgenge: fyligþ þam þe þu æt nyhstan mid plegodest (pad, PlayStation pad, cæga)
+L:Where the HUD sits when the picture is wider than 4:3	Hwær se HUD sit þonne þæt bild is bradre þonne 4:3
+L:Fill the screen	Fyll þone scirm
+L:Menus, loading and upgrade screens: past the old TV margin	Cyrebredu, hladunga and betrunga scirmas: ofer þone ealdan feorrsceawunge rand
+L:Fill the width	Fyll þa brædu
+L:Fill: the films' black bands cut off, a little closer	Fyll: þara styrbilda sweartan bendas ofcorfene, lytle near
+L:Point and click in the menus (Off: the mouse buttons act as before)	Tæc and hrin on þam cyrebredum (Of: þa muscnæppas doþ swa ær)
+L:The pointer's speed and the mouse aiming's	Þæs tacnes hrædnes and þære mus-myrcunge
+L:Hold the ranged button and move the mouse to aim	Heald þone sceotcnæp and styr þa mus to myrcenne
+L:Press to toggle	Þring to wendenne
+L:Hold	Heald
+L:Windowed mode	Eagþyrel-wise
+L:The high-resolution texture pack (GLOS69 and textures_ultra beside the game)	Se webba-fætels heahre scirnesse (GLOS69 and textures_ultra be þam plegan)
+L:Off (4:3)	Of (4:3)
+L:On: the in-engine scenes widened too (the sky's edges can show)	On: þa sceawunga on þære searwe eac gebrædde (þæs heofones ecga magon ætywan)
+L:Mod: ECTS 2002 HUD	Wendung: ECTS 2002 HUD
+L:Portrait, rune orb and EXP readout of the ECTS 2002 demo	Anlicnes, run-cliwen and EXP ræding þære ECTS 2002 fandunge
+L:Mod: Orange health pickups	Wendung: Geoluread hæluþing
+L:Health pickups are orange, as in pre-release and making-of videos	Hæluþing sindon geoluread, swa on styrbildum ær utsendunge and be wyrcunge
+L:Custom (%.2f:1)	Agen (%.2f:1)
+L:%dx%d	%dx%d
+L:GRAPHICS SETTINGS	BILDA GESETNESSA
+L:Page	Leaf
+L:Graphics	Bilda
+L:Left/Right: switch to the Controls page	Winstre/Swiþre: wend to Wealda leafe
+L:press a key...	þring cæge...
+L:Reset all controls to the defaults	Eftsete ealle wealdas to ærsetnessum
+L:Press the key or mouse button.  Esc: cancel.  Delete: clear.	Þring þa cæge oþþe þone muscnæp.  Esc: onlæc.  Delete: aidla.
+L:A / Enter: reset	A / Enter: eftsettan
+L:A / Enter: set a key.   Left/Right: controller button.	A / Enter: sete cæge.   Winstre/Swiþre: wealdendes cnæp.
+L:Left/Right: switch to the Graphics page	Winstre/Swiþre: wend to Bilda leafe
+L:Up/Down: choose     Left/Right or A: change     B / Esc / F10: close	Up/Nyþer: ceos     Winstre/Swiþre oþþe A: wend     B / Esc / F10: beluc
+L:Changes are saved automatically	Wendinga beoþ selfgenge gehealdene
+L:Language	Gereord
+L:Restart the game for the language to change	Onginn eft þone plegan þæt þæt gereord wende
+L:The mouse sets the way ahead; W, A, S and D move by it (Walk still walks)	Seo mus tæcþ þone weg forþ; W, A, S and D farað be hire (Gan gyt gæþ)
+L:Language (game and launcher):	Gereord (plega and onstellend):
+L:CONTROLS	WEALDAS
+L:Extra heroes: Sauron sprints with the left stick click (Shift on the keyboard)	Ma hæleþa: Sauron ærneþ mid þy winstran sticcan þringe (Shift on þam cægborde)
+L:Sauron's sprint	Saurones ræs
+L:hold	heald
+L:toggle	wendan
+L:Combo Runes	Gefegruna
+L:Speed	Hrædnes
+L:Fierce	Reþe
+L:Special	Synderlic
+L:Each attack fills a quarter	Ælc onræs fylleþ feorþan dæl
+L:OK	Wel
+L:Could not start twotowers_recomp.exe.	Ne mihte twotowers_recomp.exe onginnan.
+P:the left thumbstick	se winstra þumasticca
+L:default.xbe was not found in that folder.	default.xbe næs funden on þære fealdan.
+L:That default.xbe is not the USA retail release this port was built from.	Þæt default.xbe nis se USA ceapes utsending þe þes port of wæs getimbrod.
+L:Error: 	Gedwola: 
+L:Error: the disc has no default.xbe.	Gedwola: se disc næfþ nan default.xbe.
+L:Error: this ISO is not the USA retail The Two Towers disc this port supports.	Gedwola: þes ISO nis se USA ceapes disc Þara Twegra Torra þe þes port underwreþaþ.
+L:Extracting 	Utateon 
+L:Ultra textures (once): 	Ultra-webbas (æne): 
+L:Ultra textures: 	Ultra-webbas: 
+L:Converting 	Awendan 
+L:Softening the edges of 	Hnescian þa ecga 
+L:Fixing the transparency of 	Betan þa þurhsiht 
+L:Writing the index	Writan þæt getæl
+L:Ultra textures ready: 	Ultra-webbas gearwe: 
+L: pictures	 bilda
+L: could not be made	 ne mihton beon geworht
+L:The GLOS69 texture pack is not in the game's folder.	Se GLOS69 webba-fætels nis on þæs plegan fealdan.
+L:Could not write textures_ultra/index.bin.	Ne mihte textures_ultra/index.bin writan.
+L:On (hold W: he runs the way the mouse pushes; Walk walks)	On (heald W: he yrnþ swa seo mus scyfþ; Gan gæþ)
+L:Hold W: he runs the way the mouse pushes (Walk walks)	Heald W: he yrnþ swa seo mus scyfþ (Gan gæþ)
+L:Films:	Styrbilda:
+L:Voices:	Stefna:
+L:(as the text)	(swa þæt gewrit)
+P:Co-op	Samod
+P:Versus	Wiþ
+P:Co-op Options	Samod Cyras
+P:Difficulty:	Earfoþnes:
+P:Easy	Eaþe
+P:Normal	Gewunelic
+P:Expert	Cræftig
+P:Impossible	Unmihtlic
+P:Impossible:	Unmihtlic:
+P:Player Icons:	Plegera Tacnu:
+P:Camera Zoom:	Sceawendes Neahnes:
+P:Wide	Brad
+P:P2 Teleport:	P2 Feorrfær:
+P:P2 Device:	P2 Tol:
+P:P1 Device:	P1 Tol:
+P:P2 Bot:	P2 Selfgenga:
+P:When Idle	Þonne Idel
+P:Always	Ealne Weg
+P:Pickups:	Upnimunga:
+P:Double	Twifeald
+P:P2 Controls	P2 Wealdas
+P:New Game	Niwe Plega
+P:Load Game	Hladan Plegan
+P:Player 1:	Plegere 1:
+P:Player 2:	Plegere 2:
+P:Arena:	Plegstow:
+P:Rounds to win:	Gefeoht to winnenne:
+P:First to 3	Ærest to 3
+P:First to 5	Ærest to 5
+P:First to 7	Ærest to 7
+P:Deathmatch	Deaþgecamp
+P:Find the Shield	Find þone Scyld
+P:Keyboard & Mouse	Cægbord & Mus
+P:Automatic ({1})	Selfgenge ({1})
+P:Automatic (Keyboard & Mouse)	Selfgenge (Cægbord & Mus)
+P:Automatic (none connected)	Selfgenge (nan gefæstnod)
+P:Controller {1} (not connected)	Wealdend {1} (ungefæstnod)
+P:No controller connected	Nan wealdend gefæstnod
+P:Press A	Þring A
+P:Already Beaten	Ær Oferswiþed
+P:Weathertop	Weathertop
+P:Balin's Tomb	Balines Byrgen
+P:Amon Hen	Amon Hen
+P:Fangorn Forest	Fangornes Wudu
+P:Gates of Moria	Moria Geatu
+P:Plains of Rohan	Rohanes Feldas
+P:Road to Helm's Deep	Weg to Helm's Deep
+P:The Deeping Wall	Se Deopinga Weall
+P:The Breached Wall	Se Tobrocena Weall
+P:Hornburg Courtyard	Hornburges Cafertun
+P:Orthanc	Orthanc
+P:Orthanc Summit	Orthances Hrof
+P:Mount Doom	Domes Beorg
+P:Aragorn	Aragorn
+P:Legolas	Legolas
+P:Gimli	Gimli
+P:Isildur	Isildur
+P:Eomer	Eomer
+P:Nazgul	Nazgul
+P:Shield Orc	Scyldorc
+P:FIGHT!	FEOHTAÞ!
+P:PLAYER {1} WINS ROUND {2}	PLEGERE {1} WINÞ GEFEOHT {2}
+P:PLAYER {1} WINS THE MATCH  {2} - {3}	PLEGERE {1} WINÞ ÞONE CAMP  {2} - {3}
+P:ROUND {1}: A DRAW	GEFEOHT {1}: EFENLIC
+P:P{1} GUARD BROKEN	P{1} WEARD TOBROCEN
+P:P{1}'S SHIELD CRACKS!	P{1}ES SCYLD BERSTEÞ!
+P:P{1}'S SHIELD IS BROKEN!	P{1}ES SCYLD IS TOBROCEN!
+P:PLAYER {1} HAS THE SHIELD!	PLEGERE {1} HÆFÞ ÞONE SCYLD!
+P:P{1} RESPAWN {2}	P{1} EFTCYME {2}
+P:DOWN  RESPAWN {1}	FEALLEN  EFTCYME {1}
+P:MATCH RESULTS	ÞÆS CAMPES ENDUNGA
+P:PLAYER {1} WINS  {2} - {3}	PLEGERE {1} WINÞ  {2} - {3}
+P:ROUNDS WON	GEFEOHT GEWUNNEN
+P:HITS LANDED	SLEGAS ÞE HRINON
+P:DAMAGE DEALT	DEMM GEDON
+P:BIGGEST HIT	MÆSTE SLEGE
+P:ARROWS ON TARGET	EARAS ON MEARCE
+P:FASTEST ROUND	HRÆDOSTE GEFEOHT
+P:TIMES DOWNED	SIÞAS GEFYLLED
+P:SHARPSHOOTER: PLAYER {1}	SCEARPSCEOTA: PLEGERE {1}
+P:HEAVY HITTER: PLAYER {1}	HEFIGSLAGA: PLEGERE {1}
+P:IRON WALL: PLAYER {1}	ISERN WEALL: PLEGERE {1}
+P:SPEED DEMON: PLAYER {1}	HRÆD SCUCCA: PLEGERE {1}
+P:BRAWLER: PLAYER {1}	FEOHTERE: PLEGERE {1}
+P:RELENTLESS: PLAYER {1}	UNWERIG: PLEGERE {1}
+P:Start Match	Onginn Camp
+P:ROUND {1}   P{2} {3} - {4} P{5}	GEFEOHT {1}   P{2} {3} - {4} P{5}

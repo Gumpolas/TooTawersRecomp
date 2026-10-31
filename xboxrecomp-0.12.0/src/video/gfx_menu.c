@@ -1012,6 +1012,7 @@ void xbox_ToastShow3(const char *title, const char *line, const char *desc)
     int k;
     gfx_init();
     EnterCriticalSection(&s_lock);
+    if (title) title = TR(title); if (line) line = TR(line); if (desc) desc = TR(desc);   /* (1.9.9: in the chosen language -- an achievement's name and what it was for) */
     if (s_tq_n < 8) { k = (s_tq_head + s_tq_n) % 8; snprintf(s_toastq[k].t, sizeof s_toastq[k].t, "%s", title ? title : ""); snprintf(s_toastq[k].l, sizeof s_toastq[k].l, "%s", line ? line : ""); snprintf(s_toastq[k].d, sizeof s_toastq[k].d, "%s", desc ? desc : ""); s_tq_n++; if (s_tq_n == 1) { s_toast_t0 = 0; s_toast_ver++; } }
     LeaveCriticalSection(&s_lock);
 }
@@ -1078,6 +1079,7 @@ void xbox_BannerSet(const char *title, const char *line)
     EnterCriticalSection(&s_lock);
     if (!title) title = "";
     if (!line) line = "";
+    if (*title) title = TR(title); if (*line) line = TR(line);   /* (1.9.9: in the chosen language -- Restart Round, P2 Teleport) */
     if (strcmp(s_ban_t, title) || strcmp(s_ban_l, line)) { snprintf(s_ban_t, sizeof s_ban_t, "%s", title); snprintf(s_ban_l, sizeof s_ban_l, "%s", line); s_ban_ver++; }
     LeaveCriticalSection(&s_lock);
 }

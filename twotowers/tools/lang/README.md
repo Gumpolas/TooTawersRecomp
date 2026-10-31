@@ -27,6 +27,10 @@ Needs Python 3 with Pillow built with libraqm, and the fonts named in `build_lan
 
 Copy `twotowers/lang` beside `twotowers_recomp.exe`. The game makes its copies of the game files with the language's text in `lang_cache` (rebuilt when the pack changes).
 
+## Runes (1.9.9)
+
+`ang-Runr` is Old English written in the Anglo-Saxon runes (the futhorc). `python3 runes.py` makes `strings/ang-Runr.tsv` from `strings/ang.tsv`, letter by letter; placeholders, numbers, file names, acronyms, button letters and key names stay in Latin letters, and the `L:` keys (drawn with the computer's fonts) stay as the Old English. `build_lang.py` draws each rune from its strokes (`runes.STROKES`, script `runic` in `languages.json`), so no font with runes is needed.
+
 ## Adding a language
 
 Add it to `languages.json` (`script`: `latin` for alphabets written letter by letter -- Latin, Greek, Cyrillic, Hebrew --, `cjk` with a `cjk` font, `thai`, `indic`, `arabic`; `rtl: true` for right to left), write `strings/<code>.tsv` with every key of an existing one, and build.

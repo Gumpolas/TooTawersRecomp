@@ -35,5 +35,7 @@
   "ar": {"name": "العربية", "script": "arabic", "rtl": true},
   "cy": {"name": "Cymraeg"},
   "ang": {"name": "Ænglisc"},
-  "ang-Runr": {"name": "Ænglisc (runstafas)", "script": "runic"}
+  "ang-Runr": {"name": "Ænglisc (runstafas)", "script": "runic"},
+  "non": {"name": "Norrœnt mál"},
+  "la": {"name": "Latina"}
 }

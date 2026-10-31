@@ -3370,3 +3370,15 @@ twotowers/src/twotowers_manual.c
     Recompiled.exe" (a Windows program). default.xbe is found whatever
     its case (DEFAULT.XBE from a copy made elsewhere), and the message, if
     it still comes, names the folder looked in and how to install there.
+  - Languages: Welsh (Cymraeg), Old English (Ænglisc), Old English in the
+    Anglo-Saxon runes (Ænglisc (runstafas): each rune drawn from its
+    strokes to the game font's measures, made from the Old English by
+    tools/lang/runes.py), Old Norse (Norrœnt mál) and Latin (Latina).
+  - Every language: the newer words translated -- the Versus menu (Mode,
+    Troll Battle, the newer heroes), the Troll Battle results and records,
+    Find the Shield's notes, the co-op hero select's status lines, the
+    Restart Round and P2 Teleport notes, the ECTS HUD's labels, the hero
+    select's "Unavailable", and the achievements (their names and what they
+    were for). The notes and the achievements' pop-ups, the ECTS labels,
+    "Unavailable" and the hero select's lines now go through the
+    translation (they were always English).
