@@ -5591,7 +5591,17 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
          * p1"). Lurtz was left out of this before: his statue commands work from the player. TT_COOP_NOBOSSAGGRO: as before */
         boss = !getenv("TT_COOP_NOBOSSAGGRO") && (coop_is_lurtz(e) || coop_boss_kind(e) == 1 || coop_boss_kind(e) == 3 || (!_strnicmp(coop_nm(e), "troll", 5) && coop_boss_kind(e) != 4));
         if (!boss && coop_is_lurtz(e)) continue;
-        if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1 && !boss) { coop_thr[k].cur = -1; continue; }   /* no threat: the game decides */
+        if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1 && !boss) {   /* no threat: the game decides, but for the hero much nearer it: left alone it favoured player 1
+             * (playtest logs, enemies with player 2 the nearer: 20 on player 1, 9 on him). 2 units of margin, or they would flip between two heroes side by side.
+             * TT_COOP_NOPROXAGGRO: as before */
+            static int noprox = -1; if (noprox < 0) noprox = getenv("TT_COOP_NOPROXAGGRO") != 0;
+            coop_thr[k].cur = -1; c = MEM32(e + 0x494);
+            if (!noprox && !d0 && !d1 && c >= 0x10000u) { uint32_t t = MEM32(c + 0x98);
+                if (t == coop_first_char || t == coop_p2) { float x0 = MEMF(e + 0xF0) - MEMF(coop_first_char + 0xF0), y0 = MEMF(e + 0xF4) - MEMF(coop_first_char + 0xF4), x1 = MEMF(e + 0xF0) - MEMF(coop_p2 + 0xF0), y1 = MEMF(e + 0xF4) - MEMF(coop_p2 + 0xF4), n0 = sqrtf(x0 * x0 + y0 * y0), n1 = sqrtf(x1 * x1 + y1 * y1);
+                    want = t == coop_first_char ? (n1 + 2.0f < n0 ? coop_p2 : t) : (n0 + 2.0f < n1 ? coop_first_char : t);
+                    if (want != t) { uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; static unsigned n; if ((n++ & 63) == 0) tt_dbg("[COOPTHREAT] nearer hero: enemy %08X on P%d (%.1f from P1, %.1f from P2), %u so far\n", e, want == coop_p2 ? 2 : 1, n0, n1, n);
+                        PUSH32(esp, want); PUSH32(esp, 0x00053AE0u); ecx = c; sub_00053AE0(); esp = sp; eax = r0; ecx = r1; edx = r2; coop_thr_set++; } } }
+            continue; }
         if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1) w = coop_thr[k].cur >= 0 ? coop_thr[k].cur : 0;
         else w = coop_thr[k].th[1] > coop_thr[k].th[0] ? 1 : 0;
         if (coop_thr[k].cur >= 0 && w != coop_thr[k].cur) {   /* hysteresis */
