@@ -1685,13 +1685,14 @@ static void pad_filter(unsigned long port, XState *st)
          * screen and the main menu then heard only player 1's keyboard -- a playtest: "p2 lose input as soon as he leaves coop
          * menu"; not in play, 6 / 8, nor on the stats and shops, 9 / 10, which are each player's in turn) */
         {   /* (who pressed B on a menu, and whether the menus heard it: a playtest, "sometimes" no way back on a menu screen) */
-            static int was[4]; uint32_t pl = G32(0x4AD054u); int paused0 = (fe == 6 || fe == 8) && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0;
+            static int was[4]; uint32_t pl = G32(0x4AD054u); int paused0 = (fe == 6 || fe == 8) && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0; { extern int coop_is_gameover(void); if ((fe == 6 || fe == 8) && coop_is_gameover()) paused0 = 2; }
             if (xbox_input_two_players && port == (prim < 4u ? prim : 0u) && ((fe != 6 && fe != 8) || paused0)) { unsigned long q; for (q = 0; q < 4; q++) { XState s3; int down;
                 s_pad_merging = 1; down = xbox_InputGetState((DWORD)q, &s3) == 0 && s3.Gamepad.bAnalogButtons[1] > 30; s_pad_merging = 0;
                 if (down && !was[q]) { static int n; if (n++ < 200) tt_dbg("[MENUBACK] screen %u paused %d: B on port %lu; the menus read port %lu%s\n", fe, paused0, q, port, q == port || paused0 || (fe != 9 && fe != 10) ? "" : " (not heard: this screen hears one pad)"); }
                 was[q] = down; } } }
         /* (the pause menu too, screen 6 or 8 with the pause list up: only the pad on player 1's port could leave it) */
         {   uint32_t pl2 = G32(0x4AD054u); int paused = (fe == 6 || fe == 8) && pl2 >= 0x10000u && pl2 < 0x04000000u && (G32(pl2 + 0x4DDCu) & 0xFFu) != 0 && !getenv("TT_COOP_PAUSEONEPAD");
+        {   extern int coop_is_gameover(void); if ((fe == 6 || fe == 8) && coop_is_gameover() && !getenv("TT_COOP_PAUSEONEPAD")) paused = 1; }   /* (the game over menu, Replay / Exit: the screen stays 6, no pause flag; only player 1's pad could answer it: a playtest) */
         if ((tt_opt_coop_page() || (xbox_input_two_players && ((fe != 6 && fe != 8 && fe != 9 && fe != 10) || paused))) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
             unsigned long q; int k, got;
             for (q = 0; q < 4; q++) { XState s2;
