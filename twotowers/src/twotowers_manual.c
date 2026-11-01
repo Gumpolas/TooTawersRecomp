@@ -4426,7 +4426,7 @@ static int vs_keep_enemy(uint32_t rec)
  * the original or its weapon answers the copy. Levels: Gates of Moria (2), Balin's Tomb (3), Amon Hen (4), the Plains of Rohan (6), Westfold (7); TT_COOP_CLONELEVELS="2,11" others,
  * TT_COOP_NOCLONES off, TT_COOP_CLONES copies each, TT_COOP_CLONEMAX all copies (80) */
 #define COOP_NOC 160
-static struct { uint32_t orig, clone, worig, wclone; int follow, out; } coop_oc[COOP_NOC]; static int coop_noc;
+static struct { uint32_t orig, clone, worig, wclone, worig2, wclone2; int follow, out; } coop_oc[COOP_NOC]; static int coop_noc;
 static uint32_t coop_oc_force, coop_oc_world; static int coop_oc_replaying, coop_oc_cur = -1, coop_oc_fi = -1;
 void coop_oc_reset(void) { coop_noc = 0; coop_oc_force = 0; coop_oc_cur = coop_oc_fi = -1; coop_oc_replaying = 0; }
 static int coop_mult_kind(uint32_t a);
@@ -4452,7 +4452,7 @@ static void coop_oc_build(uint32_t w, uint32_t rec, uint32_t key, uint32_t orig)
         PUSH32(esp, key); PUSH32(esp, rec); PUSH32(esp, 0x000F5BC0u); ecx = w; sub_000F5BC0_gen();   /* ret 8 */
         c = coop_last_char; esp = sp;
         if (c < 0x10000u || c == orig || MEM32(c) != 0x1741C0u) { tt_dbg("[COOPCLONE] building a copy of %08X '%s' gave %08X: no more\n", orig, coop_nm(orig), c); break; }
-        coop_oc[coop_noc].orig = orig; coop_oc[coop_noc].clone = c; coop_oc[coop_noc].worig = coop_oc[coop_noc].wclone = 0; coop_noc++;
+        coop_oc[coop_noc].orig = orig; coop_oc[coop_noc].clone = c; coop_oc[coop_noc].worig = coop_oc[coop_noc].wclone = coop_oc[coop_noc].worig2 = coop_oc[coop_noc].wclone2 = 0; coop_noc++;
         { static int nl; if (nl++ < 200) tt_dbg("[COOPCLONE] copy %d of %08X '%s': %08X (%d copies in all)\n", i + 1, orig, coop_nm(orig), c, coop_noc); }
     }
     esp = sp; eax = ra; ecx = rc; edx = rd; coop_last_char = orig;
@@ -5578,11 +5578,20 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
     static int off = -1; int i;
     if (off < 0) off = getenv("TT_COOP_NOTHREAT") != 0;
     if (off || coop_mode() != 3 || coop_p2 < 0x10000u || coop_first_char < 0x10000u) return;
+    if (!getenv("TT_COOP_NOCOPYDETACH")) { int q;   /* a copy has its original's weapons on its model's list too (the instance +0x3D0: objects +0x74, 8 bytes each, count +0x174), besides its own: one weapon on several
+         * characters, drawn at each in turn: enemies' weapons and shields flickered (a playtest; 94 of 268 attachments at Balin's Tomb). Each frame such an entry becomes the copy's own weapon, or goes */
+        for (q = 0; q < coop_noc; q++) { uint32_t cc = coop_oc[q].clone, ins = cc >= 0x10000u ? MEM32(cc + 0x3D0) : 0, n, j, jj; if (ins < 0x10000u || ins >= 0x84000000u) continue; n = MEM32(ins + 0x174); if (n > 32u) continue;
+            for (j = 0; j < n; j++) { uint32_t o = MEM32(ins + 0x74 + 8 * j), own = 0; int has = 0; if (o < 0x10000u || o >= 0x84000000u || MEM32(o) != 0x174980u || MEM32(o + 0x11C) != coop_oc[q].orig) continue;
+                if (o == coop_oc[q].worig) own = coop_oc[q].wclone; else if (o == coop_oc[q].worig2) own = coop_oc[q].wclone2;
+                for (jj = 0; jj < n && own; jj++) if (MEM32(ins + 0x74 + 8 * jj) == own) has = 1;
+                if (own >= 0x10000u && !has) { MEM32(ins + 0x74 + 8 * j) = own; continue; }
+                for (jj = j; jj + 1 < n; jj++) { MEM32(ins + 0x74 + 8 * jj) = MEM32(ins + 0x74 + 8 * (jj + 1)); MEM32(ins + 0x78 + 8 * jj) = MEM32(ins + 0x78 + 8 * (jj + 1)); }
+                MEM32(ins + 0x174) = --n; j--; } } }
     {   /* a copy's weapon (coop_oc_weapon) has no id: @SetWeaponID's numbers never reached it (+0x2F4 -1, +0x374 its damage 1), so copies swung for 1 where their
          * originals swing for 35 (a playtest: attacks that did nothing to either hero). Each second it takes its original's. TT_COOP_NOCOPYWPN: as before */
         static uint32_t lt; static int nw = -1; if (nw < 0) nw = getenv("TT_COOP_NOCOPYWPN") != 0;
         if (!nw && coop_now() - lt > 1000u) { int q; lt = coop_now();
-            for (q = 0; q < coop_noc; q++) { uint32_t wo = coop_oc[q].worig, wc = coop_oc[q].wclone, f;
+            for (q = 0; q < coop_noc * 2; q++) { uint32_t wo = q & 1 ? coop_oc[q / 2].worig2 : coop_oc[q / 2].worig, wc = q & 1 ? coop_oc[q / 2].wclone2 : coop_oc[q / 2].wclone, f;
                 if (wo < 0x10000u || wc < 0x10000u || MEM32(wo + 0x2F4) == 0xFFFFFFFFu || MEM32(wc + 0x2F4) == MEM32(wo + 0x2F4)) continue;
                 MEM32(wc + 0x2F4) = MEM32(wo + 0x2F4); MEM32(wc + 0x2FC) = MEM32(wo + 0x300); MEM32(wc + 0x300) = MEM32(wo + 0x300); MEM32(wc + 0x374) = MEM32(wo + 0x374);
                 for (f = 0x37Cu; f <= 0x390u; f += 4) MEM32(wc + f) = MEM32(wo + f);
@@ -10204,6 +10213,7 @@ void sub_000B4690(void)
         if (ci >= 0 && ci < coop_noc && eax >= 0x10000u) {
             if (eax == coop_oc[ci].orig) eax = coop_oc[ci].clone;
             else if (eax == coop_oc[ci].worig && coop_oc[ci].wclone) eax = coop_oc[ci].wclone;
+            else if (eax == coop_oc[ci].worig2 && coop_oc[ci].wclone2) eax = coop_oc[ci].wclone2;
         }
     }
     if (coop_lad_watch && eax == coop_lad_watch && coop_now() - coop_lad_watch_t < 15000u) { static int n; if (n++ < 200) tt_dbg("[COOPMULT]   the script's ladder orc %08X looked up from %06X, %u ms after his @ClimbLadder\n", eax, ra, coop_now() - coop_lad_watch_t); }   /* (research, TT_SPAWNLOG) */
@@ -10502,6 +10512,7 @@ static void coop_oc_after(uint32_t fn, void (*call)(void), uint32_t vm, unsigned
             uint32_t c = coop_oc[i].clone; MEM32(c + 0x110) = (MEM32(c + 0x110) | 0x200000u) & ~0x1000u;
             tt_dbg("[COOPCLONE] %08X: spawner %08X '%s' full, the copy left out (hidden)\n", c, sp0, coop_nm(sp0)); continue; }
         if (wo && fn == 0x000A0DB0u && !coop_oc[i].wclone) { coop_oc[i].worig = wo; coop_oc[i].wclone = coop_oc_weapon(wo, i); }
+        else if (wo && fn == 0x000A0DB0u && wo != coop_oc[i].worig && !coop_oc[i].wclone2 && !getenv("TT_COOP_NOCOPYWPN2")) { coop_oc[i].worig2 = wo; coop_oc[i].wclone2 = coop_oc_weapon(wo, i); }   /* (a shield orc's second weapon: without a copy of its own the original's was attached to him and all his copies, and flickered between them: a playtest) */
         if (coop_oc_svvm == vm) { uint32_t k2, b2; for (k2 = 0; k2 < 8; k2++) MEM32(vm + k2 * 4u) = coop_oc_svh[k2]; b2 = MEM32(vm + 0x10); for (k2 = 0; k2 < (uint32_t)coop_oc_svn; k2++) MEM32(b2 + k2 * 4u) = coop_oc_svs[k2]; }   /* (@AddToSpawnPool takes its arguments up: they are put back for each copy, or the copy was never pooled and stood about the level, a playtest) */
         coop_oc_fi = i; coop_oc_replaying = 1;
         PUSH32(esp, vm); PUSH32(esp, fn); call(); esp += 4;   /* cdecl (vm) */
@@ -10956,6 +10967,7 @@ static void coop_pool_frame(void)
                 MEM32(c + 0x2EC) = MEM32(o + 0x2EC); MEM32(c + 0x110) &= ~0x200000u;
                 tt_gcall(MEM32(MEM32(c) + 0x28u), c, 3, xyz); tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &one);
                 if (wc >= 0x10000u) tt_gcall(MEM32(MEM32(wc) + 0x30u), wc, 1, &one);
+                if (coop_oc[i].wclone2 >= 0x10000u) tt_gcall(MEM32(MEM32(coop_oc[i].wclone2) + 0x30u), coop_oc[i].wclone2, 1, &one);
                 coop_oc[i].out = 1;
                 { static int nl; if (nl++ < 120) tt_dbg("[COOPCLONE] %08X comes with '%s' at %.1f %.1f %.1f (pathmap %d)\n", c, coop_nm(o), xyzf[0], xyzf[1], xyzf[2], (int)MEM32(c + 0x2EC)); }
             } else if (coop_oc[i].out && !on && (int32_t)MEM32(o + 0x2FC) > 0 && (int32_t)MEM32(c + 0x2FC) > 0) {
