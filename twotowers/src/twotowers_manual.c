@@ -5299,6 +5299,18 @@ static void coop_p2_target(void)
     c = MEM32(coop_p2 + 0x494); if (c < 0x10000u) return;
     if (tt_vs_on()) { vs_targets(); return; }   /* (Versus: each hero's target is the other) */
     { extern uint32_t coop_bot_aim_until; if (coop_now() < coop_bot_aim_until) return; }   /* (the P2 Bot aiming: the lock is the game's own) */
+    {   /* his lock held while he aims: several of the game's passes write it, and on his swinging heading it jumped or went to none (bot runs, the
+         * same inputs: 43 changes in 145 samples of aiming, none in 75; a playtest: "very erratic"). Once he has one it stays while it lives
+         * within the pick's 35 units, unless he pushes the stick past 60 %, at most a change each 0.4 s; a lock on a prop is left to the game.
+         * TT_COOP_NOP2LOCKHOLD: as before */
+        extern uint8_t tt_vs_lt[2]; extern int16_t tt_vs_stick[2][2]; static uint32_t held, ht; uint32_t cur = MEM32(c + 0x98), now = coop_now();
+        if (tt_vs_lt[1] > 30 && !getenv("TT_COOP_NOP2LOCKHOLD")) {
+            float dx = held >= 0x10000u ? MEMF(held + 0xF0) - MEMF(coop_p2 + 0xF0) : 0, dy = held >= 0x10000u ? MEMF(held + 0xF4) - MEMF(coop_p2 + 0xF4) : 0, sx = tt_vs_stick[1][0] / 32767.0f, sy = tt_vs_stick[1][1] / 32767.0f;
+            int ok = held >= 0x10000u && held < 0x84000000u && MEM32(held) == 0x1741C0u && MEM32(held + 0x114) == 3u && (int32_t)MEM32(held + 0x2FC) > 0 && dx * dx + dy * dy < 1225.0f;
+            if (!ok || (sx * sx + sy * sy >= 0.36f && now - ht >= 400u)) { if (cur != held) ht = now; held = cur; }
+            else if (cur != held) MEM32(c + 0x98) = held;
+        } else held = 0;
+    }
     {   /* (1.9.8) nor while player 2 himself aims (LT: bit 0x4000 of his pad record's held buttons, as the aim dot reads it), and
          * a little after: his lock is the game's own pick then -- an explosive barrel too. Before, this put the nearest orc
          * back every frame, and he could never lock on (or hit) a barrel (the Westfold, a playtest). TT_COOP_P2AIMFILL: as before */
@@ -5510,7 +5522,7 @@ static void coop_rec_gauge(uint32_t rec, int32_t *cur, int32_t *max)
  * seconds (default 6). Right after each arbitration (hook on 0x5A920) an enemy whose top threat is a player is
  * retargeted (the game's setter 0x53AE0) to that player; it switches only when the other player's threat passes the
  * current one by 25 % and 60 health. No threat yet: the game's own choice stands. TT_COOP_NOTHREAT turns it off. */
-static struct { uint32_t e, lastt; int32_t hp; float th[2]; int lastw, cur; } coop_thr[COOP_MAXCHARS];
+static struct { uint32_t e, lastt, rt, ru; int32_t hp; float th[2]; int lastw, cur, rw; } coop_thr[COOP_MAXCHARS];
 static unsigned coop_thr_switch[2], coop_thr_set;
 static int coop_thr_idx(uint32_t e) { int i; for (i = 0; i < coop_nchars && i < COOP_MAXCHARS; i++) if (coop_chars[i] == e) { if (coop_thr[i].e != e) { memset(&coop_thr[i], 0, sizeof coop_thr[i]); coop_thr[i].e = e; coop_thr[i].hp = (int32_t)MEM32(e + 0x2FC); coop_thr[i].cur = -1; } return i; } return -1; }
 /* Lurtz (Amon Hen) is run by his script: his bow phase takes arrows, then he charges a pillar near "the player" and, stuck in
@@ -5562,13 +5574,29 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
     if (off < 0) off = getenv("TT_COOP_NOTHREAT") != 0;
     if (off || coop_mode() != 3 || coop_p2 < 0x10000u || coop_first_char < 0x10000u) return;
     for (i = 0; i < coop_nchars && i < COOP_MAXCHARS; i++) {
-        uint32_t e = coop_chars[i], c, want, cur; int k = coop_thr_idx(e), w;
-        if (k < 0 || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_is_lurtz(e)) continue;
-        if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1) { coop_thr[k].cur = -1; continue; }   /* no threat: the game decides */
-        w = coop_thr[k].th[1] > coop_thr[k].th[0] ? 1 : 0;
+        uint32_t e = coop_chars[i], c, want, cur; int k = coop_thr_idx(e), w, boss, d0, d1; extern int coop_hero_down(int); uint32_t now = coop_now();
+        if (k < 0 || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
+        d0 = coop_hero_down(0); d1 = coop_hero_down(1);
+        if (d0 != d1 && !getenv("TT_COOP_DOWNAGGRO")) {   /* a downed hero is left alone, by everyone: Lurtz and the trolls too (a playtest) */
+            want = d0 ? coop_p2 : coop_first_char; c = MEM32(e + 0x494);
+            if (c >= 0x10000u && MEM32(c + 0x98) == (d0 ? coop_first_char : coop_p2)) { uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; PUSH32(esp, want); PUSH32(esp, 0x00053AE0u); ecx = c; sub_00053AE0(); esp = sp; eax = r0; ecx = r1; edx = r2; coop_thr_set++; }
+            continue; }
+        /* the cave trolls, the Watcher's tentacles and Lurtz: by threat with a lower bar, their last target kept when it fades (the game's own
+         * pick is always player 1), and now and then the other hero for 5 s (a third of the times, each 8-16 s) (a playtest: they "only aggro
+         * p1"). Lurtz was left out of this before: his statue commands work from the player. TT_COOP_NOBOSSAGGRO: as before */
+        boss = !getenv("TT_COOP_NOBOSSAGGRO") && (coop_is_lurtz(e) || coop_boss_kind(e) == 1 || coop_boss_kind(e) == 3 || (!_strnicmp(coop_nm(e), "troll", 5) && coop_boss_kind(e) != 4));
+        if (!boss && coop_is_lurtz(e)) continue;
+        if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1 && !boss) { coop_thr[k].cur = -1; continue; }   /* no threat: the game decides */
+        if (coop_thr[k].th[0] < 1 && coop_thr[k].th[1] < 1) w = coop_thr[k].cur >= 0 ? coop_thr[k].cur : 0;
+        else w = coop_thr[k].th[1] > coop_thr[k].th[0] ? 1 : 0;
         if (coop_thr[k].cur >= 0 && w != coop_thr[k].cur) {   /* hysteresis */
             float a = coop_thr[k].th[coop_thr[k].cur], b = coop_thr[k].th[w];
-            if (!(b > 1.25f * a && b - a > 60.0f)) w = coop_thr[k].cur;
+            if (boss ? !(b > 1.1f * a && b - a > 20.0f) : !(b > 1.25f * a && b - a > 60.0f)) w = coop_thr[k].cur;
+        }
+        if (boss) {
+            if (!coop_thr[k].rt) coop_thr[k].rt = now + 8000u;
+            if ((int32_t)(now - coop_thr[k].rt) >= 0) { coop_thr[k].rt = now + 8000u + (uint32_t)(rand() % 8000); if (rand() % 100 < 33) { coop_thr[k].ru = now + 5000u; coop_thr[k].rw = !w; tt_dbg("[COOPTHREAT] %s turns on P%d for a moment\n", coop_nm(e), !w + 1); } }
+            if (coop_thr[k].ru && (int32_t)(now - coop_thr[k].ru) < 0) w = coop_thr[k].rw; else coop_thr[k].ru = 0;
         }
         if (w != coop_thr[k].cur) { if (coop_thr[k].cur >= 0) coop_thr_switch[w]++; tt_dbg("[COOPTHREAT] enemy %08X now on P%d (threat P1 %.0f, P2 %.0f)\n", e, w + 1, coop_thr[k].th[0], coop_thr[k].th[1]); coop_thr[k].cur = w; }
         { extern int coop_hero_down(int); if (coop_hero_down(w)) continue; }   /* never onto a downed hero */
@@ -5717,12 +5745,16 @@ static void coop_respawn(int who)
     uint32_t a = who ? coop_p2 : coop_first_char, o = who ? coop_first_char : coop_p2, c = MEM32(a + 0x494);
     CoopStood tp; uint32_t opm = coop_pathmap(o); int tk = coop_trail_pick(MEMF(o + 0xF0), MEMF(o + 0xF4), &tp);
     if (tk == 1 && opm && coop_cell_clear(opm, MEMF(o + 0xF0), MEMF(o + 0xF4))) tk = 0;   /* (none near the other, who stands on clear ground: beside him, below) */
+    if (!who && opm && !getenv("TT_COOP_P1RESPAWNTRAIL")) tk = 0;   /* (player 1: beside player 2 on his ground; the trail is player 1's own, far behind him at times, a playtest) */
     if (tk) {   /* (a spot player 1 stood on: above) */
         MEMF(a + 0xF0) = tp.x; MEMF(a + 0xF4) = tp.y; MEMF(a + 0xF8) = tp.z; MEM32(a + 0x2EC) = tp.pm;
         tt_dbg("[COOPDEATH] P%d back at %.1f %.1f %.1f (pathmap %u), a spot player 1 stood on, %.1f from P%d\n", who + 1, tp.x, tp.y, tp.z, tp.pm,
                sqrtf((tp.x - MEMF(o + 0xF0)) * (tp.x - MEMF(o + 0xF0)) + (tp.y - MEMF(o + 0xF4)) * (tp.y - MEMF(o + 0xF4))), 2 - who);
     } else { float x, y; coop_place_target(o, &x, &y); MEMF(a + 0xF0) = x; MEMF(a + 0xF4) = y; MEMF(a + 0xF8) = MEMF(o + 0xF8); MEM32(a + 0x2EC) = MEM32(o + 0x2EC); }   /* (no trail yet: beside the other on his pathmap) */
-    MEM32(a + 0x90) = MEM32(a + 0xF0); MEM32(a + 0x94) = MEM32(a + 0xF4); MEM32(a + 0x98) = MEM32(a + 0xF8);
+    {   /* every place of his, as coop_place, and the game's SetPosition with his model: with the fields alone a fall took him back */
+        extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t q, bd = MEM32(a + 0x494), xyz[3];
+        for (q = 0; q < 3; q++) { xyz[q] = MEM32(a + 0xF0 + 4 * q); MEM32(a + 0x90 + 4 * q) = MEM32(a + 0x130 + 4 * q) = MEM32(a + 0x140 + 4 * q) = MEM32(a + 0x628 + 4 * q) = xyz[q]; if (bd >= 0x80000000u && bd < 0x84000000u) MEM32(bd + 0xE8 + 4 * q) = xyz[q]; }
+        if (MEM32(a) == 0x1741C0u) tt_gcall(MEM32(MEM32(a) + 0x28u), a, 3, xyz); }
     MEM32(a + 0x2FC) = MEM32(a + 0x300);   /* full health */
     if (!getenv("TT_COOP_NOHITFLAGS")) {   /* the death sequence leaves +0x49C bit 0x40 set and +0x110 bit 0x20 clear: no hit reached him after a respawn (observed). Put them back. */
         uint32_t f1 = MEM32(a + 0x49C), f2 = MEM32(a + 0x110);
@@ -11285,7 +11317,7 @@ void coop_launch_pre(uint32_t sp)
         float px = MEMF(pj + 0xF0), py = MEMF(pj + 0xF4), pz = MEMF(pj + 0xF8), dx, dy, dn, sx, sy, sz, hz = getenv("TT_COOP_P2SHOTZ") ? (float)atof(getenv("TT_COOP_P2SHOTZ")) : 3.6f; uint32_t v;
         if (!buf) buf = xbox_ContiguousAlloc(4 * 16, 16u);
         sx = MEMF(a); sy = MEMF(a + 4); sz = MEMF(a + 8);
-        if (buf && ((sx - px) * (sx - px) + (sy - py) * (sy - py) > 2.25f || fabsf(sz - pz) > 7.0f)) {   /* (not already at him) */
+        if (buf && ((sx - px) * (sx - px) + (sy - py) * (sy - py) > 36.0f || fabsf(sz - pz) > 12.0f)) {   /* (only a place well off him: the game's own is his bow, 2.5 ahead and 6.9 up for Legolas, and this took it for a stale one: his arrows left from his chest, a playtest) */
             if (b >= 0x10000u && b < 0x84000000u && (MEMF(b) != 0.0f || MEMF(b + 4) != 0.0f)) { dx = MEMF(b) - px; dy = MEMF(b + 4) - py; }
             else if (c >= 0x10000u && c < 0x84000000u) { dx = MEMF(c); dy = MEMF(c + 4); } else { dx = MEMF(pj + 0x70); dy = MEMF(pj + 0x74); }
             dn = sqrtf(dx * dx + dy * dy); if (dn > 1e-3f) { dx /= dn; dy /= dn; } else dx = dy = 0;
@@ -11394,6 +11426,9 @@ void sub_000C7030(void)
             const char *q; int cam = 0; for (q = nm; *q && !cam; q++) if (!_strnicmp(q, "camera", 6)) cam = 1;
             if (cam) { static int n; if (n++ < 6) tt_dbg("[VS] camera plane '%s' (event %u) left alone: the camera is ours here\n", nm, ty); eax = 0; esp += 20; return; }
         }
+        {   /* while player 1 is down the camera's planes are player 2's: he walks on and the view follows (a playtest). The other triggers stay player 1's */
+            extern int coop_hero_down(int); const char *q; int cam = 0; for (q = nm; h && *q && !cam; q++) if (!_strnicmp(q, "camera", 6)) cam = 1;
+            if (cam && ac == coop_p2 && coop_hero_down(0) && !getenv("TT_COOP_NOP2DOWNCAM")) { static int n; if (n++ < 12) tt_dbg("[COOPCAM] player 1 down: player 2's event %u on '%s' taken\n", ty, nm); sub_000C7030_gen(); return; } }
         if (ac == coop_p2 && h && _strnicmp(nm, "camera", 6) && _strnicmp(nm, "dynamicPickup", 13) && !getenv("TT_COOP_P2TRIGGERS")) {   /* (pickups are his to take) */
             static int n; if (n++ < 12) tt_dbg("[COOPTRIG] player 2's event %u on '%s' dropped: triggers are player 1's\n", ty, nm);
             eax = 0; esp += 20; return;   /* (thiscall, 4 arguments: ret 16) */
