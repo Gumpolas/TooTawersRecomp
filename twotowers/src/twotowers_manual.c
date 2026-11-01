@@ -5578,6 +5578,15 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
     static int off = -1; int i;
     if (off < 0) off = getenv("TT_COOP_NOTHREAT") != 0;
     if (off || coop_mode() != 3 || coop_p2 < 0x10000u || coop_first_char < 0x10000u) return;
+    {   /* a copy's weapon (coop_oc_weapon) has no id: @SetWeaponID's numbers never reached it (+0x2F4 -1, +0x374 its damage 1), so copies swung for 1 where their
+         * originals swing for 35 (a playtest: attacks that did nothing to either hero). Each second it takes its original's. TT_COOP_NOCOPYWPN: as before */
+        static uint32_t lt; static int nw = -1; if (nw < 0) nw = getenv("TT_COOP_NOCOPYWPN") != 0;
+        if (!nw && coop_now() - lt > 1000u) { int q; lt = coop_now();
+            for (q = 0; q < coop_noc; q++) { uint32_t wo = coop_oc[q].worig, wc = coop_oc[q].wclone, f;
+                if (wo < 0x10000u || wc < 0x10000u || MEM32(wo + 0x2F4) == 0xFFFFFFFFu || MEM32(wc + 0x2F4) == MEM32(wo + 0x2F4)) continue;
+                MEM32(wc + 0x2F4) = MEM32(wo + 0x2F4); MEM32(wc + 0x2FC) = MEM32(wo + 0x300); MEM32(wc + 0x300) = MEM32(wo + 0x300); MEM32(wc + 0x374) = MEM32(wo + 0x374);
+                for (f = 0x37Cu; f <= 0x390u; f += 4) MEM32(wc + f) = MEM32(wo + f);
+                { static int n; if (n++ < 6) tt_dbg("[COOPCLONE] copy's weapon %08X takes its original's numbers: id %X, damage %d\n", wc, MEM32(wc + 0x2F4), (int32_t)MEM32(wc + 0x374)); } } } }
     for (i = 0; i < coop_nchars && i < COOP_MAXCHARS; i++) {
         uint32_t e = coop_chars[i], c, want, cur; int k = coop_thr_idx(e), w, boss, d0, d1; extern int coop_hero_down(int); uint32_t now = coop_now();
         if (k < 0 || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
