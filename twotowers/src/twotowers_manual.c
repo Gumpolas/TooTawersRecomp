@@ -10326,6 +10326,46 @@ void coop_p2_show_hands(uint32_t only)
  * state, a machine made as 0xF1C60 makes one (0x4490 bytes, 0x525F0, the name +0x18, not on the level's object list), and player
  * 1's machine's name run in that state on it: the game's own script builds his machine. Its strings stay in that copy, kept until
  * the next level. TT_COOP_NOFILEMACHINE: off */
+/* Lua 4 tables in guest memory: node [+0], size [+8]; a node is key tag, key, value tag, value, next (20 bytes); tags 1 nil, 2
+ * number, 3 string, 4 table; a string's text +0x14, its hash +0 */
+static uint32_t coop_lt_find(uint32_t t, const char *key)
+{
+    uint32_t n = MEM32(t), sz = MEM32(t + 8), i;
+    for (i = 0; i < sz; i++) { uint32_t e = n + i * 20; if (MEM32(e) == 3u && !strcmp((const char *)XBOX_PTR(MEM32(e + 4) + 0x14), key)) return e; }
+    return 0;
+}
+/* The state handlers of a machine are given the actor's name and read his table in the globals (weapon, weapon2 ... arrow):
+ * [state+0x38]. Player 2's body is named as player 1's hero, which his variant's state has no entry for, and that variant's table
+ * names that variant's weapons: he swung and nothing was hit (a playtest). So the name goes into his state's globals, on his hero's
+ * table there, with player 1's strings and numbers in it: the names the level has, which player 2's lookups answer with his copies. */
+static int coop_fm_alias(uint32_t l1, uint32_t l2, const char *name)
+{
+    extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
+    uint32_t g1 = MEM32(l1 + 0x38), g2 = MEM32(l2 + 0x38), e1 = coop_lt_find(g1, name), t1, t2 = 0, n2 = MEM32(g2), sz = MEM32(g2 + 8), i, ts, h, e, a[2]; const char *suf = strstr(name, "Hero"); int cnt = 0, top;
+    if (!e1 || MEM32(e1 + 8) != 4u || !suf || sz < 2u) return -1;
+    t1 = MEM32(e1 + 0xC);
+    for (i = 0; i < sz && !t2; i++) { uint32_t q = n2 + i * 20; const char *k, *f; if (MEM32(q) != 3u || MEM32(q + 8) != 4u) continue; k = (const char *)XBOX_PTR(MEM32(q + 4) + 0x14); f = strstr(k, "Hero"); if (f && !strcmp(f, suf)) t2 = MEM32(q + 0xC); }
+    if (!t2) return -2;
+    {   uint32_t n1 = MEM32(t1), s1 = MEM32(t1 + 8);
+        for (i = 0; i < s1; i++) { uint32_t q = n1 + i * 20, v = MEM32(q + 8), d; if (MEM32(q) != 3u || (v != 2u && v != 3u)) continue;
+            d = coop_lt_find(t2, (const char *)XBOX_PTR(MEM32(q + 4) + 0x14)); if (d) { MEM32(d + 8) = v; MEM32(d + 0xC) = MEM32(q + 0xC); cnt++; } } }
+    /* (0xB4940, a string to the state, only finds: this Lua makes no strings as it runs, and the actor's name, unknown there, reached
+     * the handlers as nil. It goes in the state's table: [+0x34] of [+0x2C], chained at +0xC; hash +0, length +8, text +0x14) */
+    {   size_t ln = strlen(name); uint32_t hv = 0, sa[1], st = MEM32(l2 + 0x34), k; const char *c;
+        for (c = name; *c; c++) { int32_t d = (signed char)*c; hv += (hv << (d & 7)) + (uint32_t)d; }
+        sa[0] = (uint32_t)ln + 0x18u; ts = tt_gcall(0x000E6B50u, 0, 1, sa);
+        if (!ts) return -5;
+        MEM32(ts) = hv; MEM32(ts + 4) = 0; MEM32(ts + 8) = (uint32_t)ln; MEM32(ts + 0x10) = 0;
+        for (k = 0; k <= ln; k++) MEM8(ts + 0x14 + k) = (uint8_t)name[k];
+        k = hv & (MEM32(l2 + 0x2C) - 1u); MEM32(ts + 0xC) = MEM32(st + k * 4); MEM32(st + k * 4) = ts; }
+    h = MEM32(ts) & (sz - 1u); e = n2 + h * 20;
+    if (MEM32(e) != 1u) { uint32_t f = 0; for (i = sz; i-- > 0 && !f; ) { uint32_t q = n2 + i * 20; if (MEM32(q) == 1u && MEM32(q + 8) == 1u && !MEM32(q + 0x10)) f = q; }
+        if (!f) return -3;
+        MEM32(f + 0x10) = MEM32(e + 0x10); MEM32(e + 0x10) = f; e = f; }
+    MEM32(e) = 3u; MEM32(e + 4) = ts; MEM32(e + 8) = 4u; MEM32(e + 0xC) = t2;
+    a[0] = l2; a[1] = MEM32(coop_first_char + 0x18); tt_gcall(0x0009F420u, 0, 2, a); top = (int)MEM32(MEM32(l2) - 8); MEM32(l2) -= 8;   /* (read back) */
+    return top == 4 ? cnt : -4;
+}
 static uint32_t coop_machine_from_file(const char *w)
 {
     extern uint32_t coop_fm, coop_fm_l; extern uint32_t tt_heroes_hero_script(const char *hero, unsigned *size); extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
@@ -10344,10 +10384,12 @@ static uint32_t coop_machine_from_file(const char *w)
     sv0 = MEM8(0x6B1CEC); sv1 = MEM32(0x6B1D00); sv2 = MEM32(0x6B1D04);
     MEM32(left_word) = 0x100000u; MEM32(0x6B1D00) = arena; MEM32(0x6B1D04) = left_word; MEM8(0x6B1CEC) = 1;
     coop_fm = m; coop_fm_l = l2;
+    {   int r = coop_fm_alias(l1, l2, (const char *)XBOX_PTR(MEM32(coop_first_char + 0x18))); tt_dbg("[COOP2] '%s' in his script state: %d fields from player 1's table\n", (const char *)XBOX_PTR(MEM32(coop_first_char + 0x18)), r); }
     MEM32(0x43B438u) = l2;
     a[0] = m; a[1] = 7u; a[2] = rec; tt_gcall(0x0009E9D0u, 0, 3, a);
     MEM32(0x43B438u) = l1; MEM32(0x43B4A4u) = self;
     MEM8(0x6B1CEC) = sv0; MEM32(0x6B1D00) = sv1; MEM32(0x6B1D04) = sv2;
+    MEM32(m + 0x16C) = MEM32(pm + 0x16C); MEM32(m + 0x110) = MEM32(pm + 0x110); MEM32(m + 0x124) = MEM32(pm + 0x124);   /* (0x922A0 runs only the events in +0x16C, which 0x92250 sets as a level loads: without it his state handlers never ran, so no attack windows; the flags as player 1's machine has them) */
     tt_dbg("[COOP2] the machine took %u bytes\n", 0x100000u - MEM32(left_word));
     tt_dbg("[COOP2] player 2 (%s): machine %08X built from his hero's level file as '%s' (script state %u bytes at %08X): +170 %u +174 %u +178 %u +480 %u +484 %u +488 %u; player 1's %08X: +170 %u +174 %u +178 %u +480 %u +484 %u +488 %u\n", w, m, (const char *)XBOX_PTR(MEM32(m + 0x18)), n, l2,
            MEM32(m + 0x170), MEM32(m + 0x174), MEM32(m + 0x178), MEM32(m + 0x480), MEM32(m + 0x484), MEM32(m + 0x488), pm, MEM32(pm + 0x170), MEM32(pm + 0x174), MEM32(pm + 0x178), MEM32(pm + 0x480), MEM32(pm + 0x484), MEM32(pm + 0x488));
