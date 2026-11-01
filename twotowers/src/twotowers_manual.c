@@ -9046,6 +9046,12 @@ void sub_0009C380(void)
                 tt_dbg("[COOPEND] test: EndMission(%u), level [1BB2A4] %d\n", code, (int32_t)MEM32(0x1BB2A4u));
                 PUSH32(esp, code); PUSH32(esp, 0x000F1230u); ecx = MEM32(0x8D2484u); sub_000F1230(); esp = sp; eax = r0; ecx = r1; edx = r2; } }
     }
+    if (getenv("TT_COOP_P2DIFF") && coop_p2_t0 && coop_p2 >= 0x10000u && coop_now() - coop_p2_t0 >= (uint32_t)atoi(getenv("TT_COOP_P2DIFF"))) {   /* (research) once a level: the words player 1 and player 2 differ in, and in their components */
+        static unsigned lv = ~0u;
+        if (lv != coop_level_n) { uint32_t q, a1 = coop_first_char, a2 = coop_p2, c1 = MEM32(a1 + 0x494), c2 = MEM32(a2 + 0x494); lv = coop_level_n;
+            tt_dbg("[P2DIFF] P1 %08X P2 %08X, P1 state %u P2 state %u\n", a1, a2, MEM32(a1 + 0x408), MEM32(a2 + 0x408));
+            for (q = 0x100; q < 0x620; q += 4) { uint32_t v1 = MEM32(a1 + q), v2 = MEM32(a2 + q); if (v1 != v2) tt_dbg("[P2DIFF] +%03X %08X %08X\n", q, v1, v2); }
+            if (c1 >= 0x10000u && c2 >= 0x10000u) for (q = 0; q < 0x120; q += 4) { uint32_t v1 = MEM32(c1 + q), v2 = MEM32(c2 + q); if (v1 != v2) tt_dbg("[P2DIFF] c+%03X %08X %08X\n", q, v1, v2); } } }
     if (getenv("TT_COOP_CHARDUMP") && coop_p2_t0) {   /* (research) every 3 s: the characters whose name has this in it: where, health, role, target */
         static uint32_t lt; int i; if (coop_now() - lt >= 3000u) { lt = coop_now();
             for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i], hn = MEM32(a + 0x18), c = MEM32(a + 0x494); const char *nm = hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : "";
