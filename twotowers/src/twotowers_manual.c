@@ -9075,11 +9075,11 @@ void sub_0009C380(void)
         if (lv != coop_level_n) { lv = coop_level_n; done = 0; pr = 0; }
         if (v && !done && coop_p2_t0 && coop_p2 >= 0x10000u && !coop_depth && coop_now() - coop_p2_t0 >= (uint32_t)atoi(v)) { float bd = 1e12f, fx = MEMF(coop_p2 + 0x70), fy = MEMF(coop_p2 + 0x74), fz; int i; uint32_t q, bdy = MEM32(coop_p2 + 0x494), xyz[3]; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
             done = 1;
-            for (i = 0; i < coop_nwobjs; i++) { uint32_t o = coop_wobjs[i]; float dx, dy; if (MEM32(o) != 0x174980u || MEM32(o + 0x114) != 7u || (int32_t)MEM32(o + 0x2FC) <= 1) continue; dx = MEMF(o + 0xF0) - MEMF(coop_first_char + 0xF0); dy = MEMF(o + 0xF4) - MEMF(coop_first_char + 0xF4); { static int n; if (n++ < 40) tt_dbg("[PROPTEST] prop %08X '%s' health %d, %.1f from player 1\n", o, coop_nm(o), (int)MEM32(o + 0x2FC), sqrtf(dx * dx + dy * dy)); } if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; pr = o; } }
+            for (i = 0; i < coop_nwobjs; i++) { uint32_t o = coop_wobjs[i], ro; float dx, dy; const char *nm, *w = getenv("TT_COOP_PROPNAME"); if (MEM32(o) != 0x174980u) continue; ro = MEM32(o + 0x114); nm = coop_nm(o); if (ro == 0x16u || ro == 0x11u || !_strnicmp(nm, "weaponObj", 9)) continue; dx = MEMF(o + 0xF0) - MEMF(coop_first_char + 0xF0); dy = MEMF(o + 0xF4) - MEMF(coop_first_char + 0xF4); { static int n; if (n++ < 150) tt_dbg("[PROPTEST] prop %08X '%s' role %u health %d +124 %08X, %.1f from player 1\n", o, nm, ro, (int)MEM32(o + 0x2FC), MEM32(o + 0x124), sqrtf(dx * dx + dy * dy)); } if ((int32_t)MEM32(o + 0x2FC) <= 0 || (w && !strstr(nm, w))) continue; if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; pr = o; } }
             if (pr) { fz = MEMF(pr + 0xF8); MEMF(coop_p2 + 0xF0) = MEMF(pr + 0xF0) - fx * 1.5f; MEMF(coop_p2 + 0xF4) = MEMF(pr + 0xF4) - fy * 1.5f; MEMF(coop_p2 + 0xF8) = fz + 0.5f;
                 for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x90 + 4 * q) = MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bdy >= 0x80000000u && bdy < 0x84000000u) MEM32(bdy + 0xE8 + 4 * q) = xyz[q]; }
                 tt_gcall(MEM32(MEM32(coop_p2) + 0x28u), coop_p2, 3, xyz); tt_dbg("[PROPTEST] player 2 put by %08X '%s' at %.1f %.1f %.1f, health %d\n", pr, coop_nm(pr), MEMF(pr + 0xF0), MEMF(pr + 0xF4), MEMF(pr + 0xF8), (int)MEM32(pr + 0x2FC)); } else tt_dbg("[PROPTEST] no breakable prop\n"); }
-        if (pr && coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[PROPTEST] '%s' health %d | P2 state %u at %.1f %.1f %.1f\n", coop_nm(pr), (int)MEM32(pr + 0x2FC), MEM32(coop_p2 + 0x408), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8)); }
+        if (pr && coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[PROPTEST] '%s' health %d +110 %08X +3F8 %08X +408 %08X +430 %08X | P2 state %u at %.1f %.1f %.1f\n", coop_nm(pr), (int)MEM32(pr + 0x2FC), MEM32(pr + 0x110), MEM32(pr + 0x3F8), MEM32(pr + 0x408), MEM32(pr + 0x430), MEM32(coop_p2 + 0x408), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8)); }
     }
     {   /* bot test: TT_COOP_P2GOTO = "x,y,ms": player 2 put at x,y (on player 1's height) ms after he takes over, once a level */
         const char *v = getenv("TT_COOP_P2GOTO"); static unsigned lv; static int done;
@@ -12185,6 +12185,13 @@ extern void sub_00091200_gen(void); void sub_00091200(void) { int sw = tt_coop_e
  * runs, 30 hits). A hit by player 2 (the record's attacker +0x1C) is handled in his context, with the record's weapon (+4,
  * his copy) given as player 1's own: in his context alone there was still no light (a bot run); with both, the script lit
  * his torch (relightTorchExpander in his context, his flame slot set). TT_COOP_NOP2PROPCTX / TT_COOP_NOP2PROPWPN: as before */
+extern void sub_000A9D80_gen(void);
+void sub_000A9D80(void)   /* (research) @GetWeaponDamageVsProps: the object its lookup answered, and the id */
+{
+    unsigned n0 = coop_lkn; uint32_t p0 = MEM32(0x43B15Cu);
+    sub_000A9D80_gen();
+    if (getenv("TT_COOP_PROPHITLOG")) { static int n; uint32_t w = coop_lkn > n0 ? coop_lk[n0 & 63].obj : 0; if (n++ < 40) tt_dbg("[PROPWPN] @GetWeaponDamageVsProps: '%s' id %X, player %08X\n", w >= 0x10000u && w < 0x84000000u ? coop_nm(w) : "-", w >= 0x10000u && w < 0x84000000u ? MEM32(w + 0x2F4) : 0, p0); }
+}
 extern void sub_00091AC0_gen(void);
 uint32_t coop_prop_hit_by, coop_prop_hit_t;   /* the hero whose hit on a prop came last, and when (sub_000B2930) */
 void sub_00091AC0(void)
@@ -12938,7 +12945,10 @@ void sub_00091920(void)
         if (MEM32(0x43B15Cu) != coop_p2) { extern int tt_coop_enter_ctx(void); sw = tt_coop_enter_ctx(); }
         { static unsigned n; if (n++ < 10) tt_dbg("[COOPPROP] player 2's hit on '%s' (damage %d, kind %u): taken as the player's\n", coop_nm(o), (int32_t)MEM32(r + 0x14), MEM32(r + 0x18)); }
     }
-    sub_00091920_gen();
+    {   uint32_t m0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x574) : 0, f0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x110) : 0; int32_t h0 = o >= 0x10000u && o < 0x84000000u ? (int32_t)MEM32(o + 0x2FC) : 0;
+        sub_00091920_gen();
+        if (getenv("TT_COOP_PROPHITLOG") && o >= 0x10000u && o < 0x84000000u && (at == coop_p2 || at == coop_first_char)) { static int n; if (n++ < 60) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
+            at == coop_p2 ? "P2" : "P1", MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x84000000u ? coop_nm(MEM32(r + 4)) : "-", MEM32(0x1B1078u), h0, (int32_t)MEM32(o + 0x2FC), f0, MEM32(o + 0x110)); } }
     if (add) MEM32(o + 0x574) &= ~add;
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
 }
