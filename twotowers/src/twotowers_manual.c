@@ -2788,7 +2788,6 @@ static float coop_hp_scale(void)
     return f[d >= 0 && d < 3 ? d : d == 3 ? 2 : 1];
 }
 static uint32_t coop_p2, coop_p2_ally, coop_p2_t0;
-uint32_t coop_p2_aim_held;   /* (coop_p2_target: the lock he holds while he aims) */
 static unsigned coop_level_n;   /* levels loaded (coop_level_reset): once-a-level code compares it */
 static int coop_depth;
 static int coop_triglog_on(void) { static int tl = -1; if (tl < 0) { tl = getenv("TT_COOP_TRIGLOG") != NULL; } return tl; }   /* (or a file triglog.on in the game folder: a playtest) */
@@ -4125,14 +4124,6 @@ void sub_001697D9(void)
         static uint32_t packet; CoopPad p; uint32_t i;
         coop_pad2(&p);
         { extern int coop_hero_down(int); extern int tt_vs_frozen(void); if (coop_hero_down(1) || tt_vs_frozen()) memset(&p, 0, sizeof p); }   /* no input while down (or in Versus' countdown) */
-        {   /* while he aims with a lock and his stick is at rest, the stick turned gently to it (camera-relative, as the bots' aim), which is what turns
-             * him: he kept his heading, player 1 steers toward his target (a bot run: facing 1.60, his lock at 0.08; written to his forward +0x70
-             * the game put it back; a playtest). His own push wins. TT_COOP_NOP2AIMTURN: off */
-            uint32_t t = coop_p2_aim_held, cm = MEM32(0x43B164u);
-            if (t >= 0x10000u && t < 0x84000000u && coop_p2 >= 0x10000u && cm >= 0x10000u && p.analog[6] > 30 && !tt_vs_on() && (int)p.lx * p.lx + (int)p.ly * p.ly < 36000000 && !getenv("TT_COOP_NOP2AIMTURN")) {
-                float wx = MEMF(t + 0xF0) - MEMF(coop_p2 + 0xF0), wy = MEMF(t + 0xF4) - MEMF(coop_p2 + 0xF4), wn = sqrtf(wx * wx + wy * wy), fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy);
-                if (wn > 0.5f && fn > 1e-3f) { wx /= wn; wy /= wn; fx /= fn; fy /= fn; p.ly = (int16_t)((wx * fx + wy * fy) * 8000.0f); p.lx = (int16_t)((wx * fy - wy * fx) * 8000.0f); } }
-        }
         MEM32(st) = ++packet;
         MEM16(st + 4) = p.buttons;
         for (i = 0; i < 8; i++) MEM8(st + 6 + i) = p.analog[i];
@@ -4220,7 +4211,11 @@ static struct { uint32_t a, n; } coop_blk[] = {
     { 0x1B0C40u, 0x20 }, { 0x1B1078u, 4 }, { 0x1B1080u, 0x24 }, { 0x43B15Cu, 4 }, { 0x43B160u, 4 }, { 0x1CB8B4u, 4 },
     { 0x43B22Cu, 0x14 }, { 0x43B248u, 0x14 },
     { 0x43B240u, 8 }, { 0x43B25Cu, 8 }, { 0x43B3DAu, 1 },
-    { 0x43B264u, 0x20 }, { 0x43B0FCu, 4 } };
+    { 0x43B264u, 0x20 }, { 0x43B0FCu, 4 },
+    { 0x1B107Cu, 4 }, { 0x1B10A4u, 8 }, { 0x43B220u, 4 }, { 0x43B390u, 8 }, { 0x43B3BCu, 8 }, { 0x43B3DCu, 0x14 },   /* (the moves' own timers and flags, each written and read by the step alone: 98D50, 984A0, 9A640, 97E60, 9C380: a scan of what the step reaches outside this list) */
+    { 0x43B100u, 0x14 } };   /* (the aim's own direction: [0x43B110] set and the camera's heading kept in [0x43B10C] as a hero starts to aim (0x97E10), read by the pick 0x5A150 and
+                           * the control step 0x99140. Shared, the step of the hero not aiming cleared the other's: player 1 could not aim at a thing while player 2 lay down
+                           * (his empty pad), and player 2's aim swung and did not steer (a playtest: "each players should have their own targeting system")) */
     /* (0x43B22C..0x43B23F and 0x43B248..0x43B25B: the player weapon effects, one handle and one attach node per slot, @StartPlayerWeaponPfx / @StopPlayerWeaponPfx
      * (0xB2930 / 0xB29F0 through 0x9BEA0): an effect put on the current player [0x43B15C] -- Weathertop's torch flame is
      * slot 4 (0x43B23C), lit by the level script each time the hero's swing hits the fire. Shared, a light for one player
@@ -5312,19 +5307,6 @@ static void coop_p2_target(void)
     c = MEM32(coop_p2 + 0x494); if (c < 0x10000u) return;
     if (tt_vs_on()) { vs_targets(); return; }   /* (Versus: each hero's target is the other) */
     { extern uint32_t coop_bot_aim_until; if (coop_now() < coop_bot_aim_until) return; }   /* (the P2 Bot aiming: the lock is the game's own) */
-    {   /* his lock held while he aims: several of the game's passes write it, and on his swinging heading it jumped or went to none (bot runs, the
-         * same inputs: 43 changes in 145 samples of aiming, none in 75; a playtest: "very erratic"). Once he has one it stays while it lives
-         * within the pick's 35 units, unless he pushes the stick past 60 %, at most a change each 0.4 s; a lock on a prop is left to the game.
-         * TT_COOP_NOP2LOCKHOLD: as before */
-        extern uint8_t tt_vs_lt[2]; extern int16_t tt_vs_stick[2][2]; static uint32_t held, ht; uint32_t cur = MEM32(c + 0x98), now = coop_now();
-        if (tt_vs_lt[1] > 30 && !getenv("TT_COOP_NOP2LOCKHOLD")) {
-            float dx = held >= 0x10000u ? MEMF(held + 0xF0) - MEMF(coop_p2 + 0xF0) : 0, dy = held >= 0x10000u ? MEMF(held + 0xF4) - MEMF(coop_p2 + 0xF4) : 0, sx = tt_vs_stick[1][0] / 32767.0f, sy = tt_vs_stick[1][1] / 32767.0f;
-            int ok = held >= 0x10000u && held < 0x84000000u && MEM32(held) == 0x1741C0u && MEM32(held + 0x114) == 3u && (int32_t)MEM32(held + 0x2FC) > 0 && dx * dx + dy * dy < 1225.0f;
-            if (!ok || (sx * sx + sy * sy >= 0.36f && now - ht >= 400u)) { if (cur != held) ht = now; held = cur; }
-            else if (cur != held) MEM32(c + 0x98) = held;
-            coop_p2_aim_held = held;
-        } else coop_p2_aim_held = held = 0;
-    }
     {   /* (1.9.8) nor while player 2 himself aims (LT: bit 0x4000 of his pad record's held buttons, as the aim dot reads it), and
          * a little after: his lock is the game's own pick then -- an explosive barrel too. Before, this put the nearest orc
          * back every frame, and he could never lock on (or hit) a barrel (the Westfold, a playtest). TT_COOP_P2AIMFILL: as before */
