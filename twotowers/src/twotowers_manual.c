@@ -9070,6 +9070,17 @@ void sub_0009C380(void)
                 MEM32(a + 0x90) = MEM32(a + 0xF0); MEM32(a + 0x94) = MEM32(a + 0xF4); MEM32(a + 0x98) = MEM32(a + 0xF8);
                 tt_dbg("[COOPGOTO] test: player 1 put at %.1f %.1f %.1f\n", MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0xF8)); } }
     }
+    {   /* bot test: TT_COOP_P2TOPROP = ms: player 2 put 1.5 before the nearest breakable prop, facing it, once a level, and its health logged each second */
+        const char *v = getenv("TT_COOP_P2TOPROP"); static unsigned lv; static int done; static uint32_t pr, lt; extern uint32_t coop_wobjs[]; extern int coop_nwobjs;
+        if (lv != coop_level_n) { lv = coop_level_n; done = 0; pr = 0; }
+        if (v && !done && coop_p2_t0 && coop_p2 >= 0x10000u && !coop_depth && coop_now() - coop_p2_t0 >= (uint32_t)atoi(v)) { float bd = 1e12f, fx = MEMF(coop_p2 + 0x70), fy = MEMF(coop_p2 + 0x74), fz; int i; uint32_t q, bdy = MEM32(coop_p2 + 0x494), xyz[3]; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
+            done = 1;
+            for (i = 0; i < coop_nwobjs; i++) { uint32_t o = coop_wobjs[i]; float dx, dy; if (MEM32(o) != 0x174980u || MEM32(o + 0x114) != 7u || (int32_t)MEM32(o + 0x2FC) <= 1) continue; dx = MEMF(o + 0xF0) - MEMF(coop_first_char + 0xF0); dy = MEMF(o + 0xF4) - MEMF(coop_first_char + 0xF4); { static int n; if (n++ < 40) tt_dbg("[PROPTEST] prop %08X '%s' health %d, %.1f from player 1\n", o, coop_nm(o), (int)MEM32(o + 0x2FC), sqrtf(dx * dx + dy * dy)); } if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; pr = o; } }
+            if (pr) { fz = MEMF(pr + 0xF8); MEMF(coop_p2 + 0xF0) = MEMF(pr + 0xF0) - fx * 1.5f; MEMF(coop_p2 + 0xF4) = MEMF(pr + 0xF4) - fy * 1.5f; MEMF(coop_p2 + 0xF8) = fz + 0.5f;
+                for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x90 + 4 * q) = MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bdy >= 0x80000000u && bdy < 0x84000000u) MEM32(bdy + 0xE8 + 4 * q) = xyz[q]; }
+                tt_gcall(MEM32(MEM32(coop_p2) + 0x28u), coop_p2, 3, xyz); tt_dbg("[PROPTEST] player 2 put by %08X '%s' at %.1f %.1f %.1f, health %d\n", pr, coop_nm(pr), MEMF(pr + 0xF0), MEMF(pr + 0xF4), MEMF(pr + 0xF8), (int)MEM32(pr + 0x2FC)); } else tt_dbg("[PROPTEST] no breakable prop\n"); }
+        if (pr && coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[PROPTEST] '%s' health %d | P2 state %u at %.1f %.1f %.1f\n", coop_nm(pr), (int)MEM32(pr + 0x2FC), MEM32(coop_p2 + 0x408), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8)); }
+    }
     {   /* bot test: TT_COOP_P2GOTO = "x,y,ms": player 2 put at x,y (on player 1's height) ms after he takes over, once a level */
         const char *v = getenv("TT_COOP_P2GOTO"); static unsigned lv; static int done;
         if (lv != coop_level_n) { lv = coop_level_n; done = 0; }

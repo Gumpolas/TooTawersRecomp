@@ -1611,10 +1611,12 @@ static void pad_filter(unsigned long port, XState *st)
         /* (the packet number moves with what is added, or the game sees no change) */
         st->dwPacketNumber += s_inj_serial << 20;
     }
-    if (port == 0 && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too */
+    if (port == (G32(0x1CB8B4u) & 3u) && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too. (On the port the menus read,
+         * the game's primary pad [0x1CB8B4], and the other's merged: on port 0 alone, with the primary on the other, his presses went nowhere: a playtest, his directions dead) */
         extern DWORD xbox_InputGetState(DWORD port, void *state);
-        XState s2; int k;
-        if (xbox_InputGetState(1, &s2) == 0) {
+        XState s2; int k; DWORD other = port ? 0 : 1;
+        { static int n; if (port && n++ < 4) tt_dbg("[P2SELECT] the menus read port %lu: player 2's turn merges port %lu\n", port, other); }
+        if (xbox_InputGetState(other, &s2) == 0) {
             st->Gamepad.wButtons |= s2.Gamepad.wButtons;
             for (k = 0; k < 8; k++) if (s2.Gamepad.bAnalogButtons[k] > st->Gamepad.bAnalogButtons[k]) st->Gamepad.bAnalogButtons[k] = s2.Gamepad.bAnalogButtons[k];
             if (abs(s2.Gamepad.sThumbLX) > abs(st->Gamepad.sThumbLX)) st->Gamepad.sThumbLX = s2.Gamepad.sThumbLX;
