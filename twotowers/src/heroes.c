@@ -244,7 +244,7 @@ static int arrow_is_his(int sk) { return sk >= 0 && s_skins[sk].nobow && !getenv
 /* a weapon's second texture (the weapon op looks up two for some: Sting's
  * glow, as Frodo carries it in Balin's Tomb), or 0 */
 static uint32_t weapon_tex2(uint32_t mesh) { return mesh == 0x69DAC4B8u ? 0xDB3B3452u : 0; }
-static char s_ini[600], s_dir[600];
+static char s_ini[600], s_dir[600], s_level_xp[300];
 static int s_on = -1;
 static int s_test_unlock;   /* [Mods] extra_heroes=2 */
 static int s_heroes_mode;
@@ -4817,6 +4817,7 @@ static const char *redirect(const char *xp)
     if (tt_heroes_on() && (!_stricmp(base, "upgbigi.BFF") || !_stricmp(base, "upgradei.BFF") || !_stricmp(base, "endlvl.BFF"))) return upg_redirect(xp, base);
     if (!strstr(xp, "orlds\\") && !strstr(xp, "ORLDS\\")) return NULL;
     { extern void coop_level_reset(void); coop_level_reset(); }   /* (co-op: a level loads; the last one's state goes) */
+    snprintf(s_level_xp, sizeof s_level_xp, "%s", xp);
     if (!getenv("TT_PLAYAS") && (ends_with(xp, ".bfa") || ends_with(xp, ".bfl") || ends_with(xp, ".bfg") || ends_with(xp, ".bfi"))) {   /* (player 1 a guest: the level is his rebuild; player 2 a copy) */   /* co-op: player 2's character for this level (twotowers_manual.c decides: forced, chosen, or a copy of player 1's hero) */
         extern const char *tt_coop_p2_char(const char *level);
         const char *c = tt_coop_p2_char(base);
@@ -8353,6 +8354,29 @@ int tt_vs_image_pixels(const char *file, uint32_t *out, float k)
     free(src);
     tt_dbg("[VS] picture %s: %d x %d\n", p, w, h);
     return 1;
+}
+/* co-op: the script state (resource 400) of the level in this hero's variant, in guest memory (twotowers_manual.c:
+ * coop_machine_from_file); 0 when that variant holds no player machine of his (00ISUL1 and 01WEAT1 have no .bfl) */
+uint32_t tt_heroes_hero_script(const char *hero, unsigned *size)
+{
+    extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
+    static uint32_t mem, cap;
+    const char *ext = !_stricmp(hero, "legolas") ? ".bfl" : !_stricmp(hero, "gimli") ? ".bfg" : !_stricmp(hero, "aragorn") ? ".bfa" : NULL;
+    const char *nm = !_stricmp(hero, "legolas") ? "createLegolasAnimMachine" : !_stricmp(hero, "gimli") ? "createGimliAnimMachine" : "createAragornAnimMachine";
+    char xp[300], host[700], *dot; unsigned char *b; size_t len = 0, nl = strlen(nm), i; uint32_t off, end, typ, ok = 0, q;
+    if (!ext || !s_level_xp[0]) return 0;
+    snprintf(xp, sizeof xp, "%s", s_level_xp);
+    dot = strrchr(xp, '.'); if (!dot || strlen(dot) != 4) return 0;
+    memcpy(dot, ext, 4);
+    if (!host_path(xp, host, sizeof host) || !(b = read_all(host, &len))) { tt_dbg("[HEROES] co-op: no %s to read player 2's machine from\n", xp); return 0; }
+    if (res_find(b, len, 0u, 400, &off, &end, &typ) && end > off + 8u) {
+        for (i = off; i + nl <= end; i++) if (b[i] == 'c' && !memcmp(b + i, nm, nl)) { ok = 1; break; }
+        if (!ok) tt_dbg("[HEROES] co-op: %s has no %s\n", xp, nm);
+    }
+    if (ok && end - off > cap) { cap = (end - off + 0xFFFFu) & ~0xFFFFu; mem = xbox_ContiguousAlloc(cap, 0x1000u); if (mem == 0x80000000u) mem = xbox_ContiguousAlloc(cap, 0x1000u); if (!mem) cap = 0; }
+    if (ok && mem) { for (q = 0; q < end - off; q++) G8(mem + q) = b[off + q]; *size = end - off; } else ok = 0;
+    free(b);
+    return ok ? mem : 0;
 }
 int tt_host_path(const char *xbox_path, char *out, size_t n) { return host_path(xbox_path, out, n); }   /* (versus.c) */
 /* (1.9.9, Versus) the level whose sound bank a skin's own sounds are in (its resources' level: "00ISUL1", ...), or NULL */

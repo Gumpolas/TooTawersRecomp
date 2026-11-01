@@ -2023,11 +2023,13 @@ void sub_000FF13D(void)
 }
 
 /* a script callback (OnBreakShield, OnKillingBlow, ...): testing counts */
+uint32_t coop_fm, coop_fm_l;   /* (coop_machine_from_file) */
 extern void sub_0009E9D0_gen(void);
 extern void tt_cbev(uint32_t obj, uint32_t ev);
 void sub_0009E9D0(void)
 {
     tt_cbev(MEM32(esp + 4), MEM16(esp + 8));
+    if (coop_fm && MEM32(esp + 4) == coop_fm && MEM32(0x43B438u) != coop_fm_l) { uint32_t l1 = MEM32(0x43B438u); MEM32(0x43B438u) = coop_fm_l; sub_0009E9D0_gen(); MEM32(0x43B438u) = l1; return; }   /* (a machine built from another variant's script state: its own events there) */
     sub_0009E9D0_gen();
 }
 
@@ -2823,7 +2825,7 @@ int coop_moves_hero_swap(uint32_t ret, uint8_t *keep)
 {
     static int off = -1; static unsigned n; extern int tt_heroes_retail_byte(const char *skin); extern const char *tt_coop_p2_char_now; int b;
     if (!coop_depth) return 0;
-    if (!((ret >= 0x99A90u && ret < 0x99AABu) || (ret >= 0x9A1F0u && ret < 0x9A594u) || (ret >= 0x9AA90u && ret < 0x9B170u) ||
+    if (!(ret == 0x99B33u || ret == 0x9C8AFu || (ret >= 0x99A90u && ret < 0x99AABu) || (ret >= 0x9A1F0u && ret < 0x9A594u) || (ret >= 0x9AA90u && ret < 0x9B170u) ||
           (ret >= 0x9B4D0u && ret < 0x9BE96u) || (ret >= 0x9BFD0u && ret < 0x9C37Eu) ||
           (ret >= 0xCCA50u && ret < 0xCCAF8u && !getenv("TT_COOP_NOP2HPUPG")))) return 0;   /* (1.9.9) 0xCCA50: how many health upgrades (0x15-0x1A) the hero
                                                                                        * has, for his most health (0x82670: +0x300 + 200 each) and the HUD's sword. In
@@ -4843,7 +4845,7 @@ static void coop_place(void)
             bh[j].hp = hp; }
     }
     coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); coop_steps_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
-    if (getenv("TT_COOP_STLOG") && p1 >= 0x10000u && a >= 0x10000u) { static uint32_t ls[2]; int w; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, st = MEM32(h + 0x408); if (st != ls[w]) { ls[w] = st; tt_dbg("[STLOG] t %u P%d state %u anim %08X\n", coop_now(), w + 1, st, MEM32(h + 0x3F8)); } } }   /* (research) each hero's state changes, for how long his attacks take */
+    if (p1 >= 0x10000u && a >= 0x10000u) { static uint32_t ls[2]; static int n; int w; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, st = MEM32(h + 0x408); if (st != ls[w]) { ls[w] = st; if (n++ < 3000) tt_dbg("[STLOG] t %u P%d state %u anim %08X\n", coop_now(), w + 1, st, MEM32(h + 0x3F8)); } } }   /* (research) each hero's state changes, for how long his attacks take */
     if (getenv("TT_COOP_AIMHEAD") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero while he aims: his heading and turn fields against the bearing to his lock */
         static uint32_t lt; int w; if (coop_now() - lt >= 100u) { lt = coop_now(); for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
             if ((MEM32(r + 0x34u) & 0x4000u) || MEM32(h + 0x408) == 26u || MEM32(h + 0x408) == 27u || MEM32(h + 0x408) == 29u) { int ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u; float dx = ok ? MEMF(t + 0xF0) - MEMF(h + 0xF0) : 0, dy = ok ? MEMF(t + 0xF4) - MEMF(h + 0xF4) : 0, dz = ok ? MEMF(t + 0xF8) - MEMF(h + 0xF8) : 0;
@@ -10314,6 +10316,43 @@ void coop_p2_show_hands(uint32_t only)
         if ((only && q != only) || MEM32(q) != 0x174980u || coop_p2w_slot[k] < 0 || coop_p2w_slot[k] > 1 || coop_rng_key(qm)) continue;
         if (!(MEM32(q + 0x110) & 0x20000u)) { static int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's %08X (slot %d) drawn\n", q, coop_p2w_slot[k]); MEM32(q + 0x110) |= 0x20000u; } }
 }
+/* no companion of his hero: the level's script state has no machine of his. Fangorn, the Westfold, the Plains, 18HOLE1 and
+ * 21ORTH1/2: their .bfa holds Aragorn's alone, .bfl Legolas', .bfg Gimli's, and with player 1's machine player 2's moves ran on
+ * another hero's timing (Gimli's swings, states 33-35: about 540 ms on his own, 300-400 ms on Aragorn's, bot runs at Balin's
+ * Tomb). The script resource (type 400) is a saved Lua 4 state: 0x9E190 fixes its pointers up in place and answers the state,
+ * [0x43B438] is the one in use, every @command works on [0x43B4A4] (the object an event runs on) and on the state it is called
+ * with, and an event runs by the object's name in the globals (0x9E9D0: object, event, its record; 7 OnInitAnimMachine). The
+ * variants differ in the hero's five functions and name their machines alike. So his hero's variant is loaded beside the level's
+ * state, a machine made as 0xF1C60 makes one (0x4490 bytes, 0x525F0, the name +0x18, not on the level's object list), and player
+ * 1's machine's name run in that state on it: the game's own script builds his machine. Its strings stay in that copy, kept until
+ * the next level. TT_COOP_NOFILEMACHINE: off */
+static uint32_t coop_machine_from_file(const char *w)
+{
+    extern uint32_t coop_fm, coop_fm_l; extern uint32_t tt_heroes_hero_script(const char *hero, unsigned *size); extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
+    static uint32_t m, rec, arena, left_word; uint8_t sv0; uint32_t sv1, sv2; uint32_t pm = MEM32(coop_first_char + 0x3F8), b, l2, l1 = MEM32(0x43B438u), self = MEM32(0x43B4A4u), a[3], q; unsigned n = 0;
+    if (getenv("TT_COOP_NOFILEMACHINE") || pm < 0x10000u || pm >= 0x84000000u || !(b = tt_heroes_hero_script(w, &n))) return 0;
+    if (!m) { m = xbox_ContiguousAlloc(0x4490u + 0x40u, 16u); if (m == 0x80000000u) m = xbox_ContiguousAlloc(0x4490u + 0x40u, 16u); rec = m + 0x4490u; }
+    if (!arena) { arena = xbox_ContiguousAlloc(0x100000u, 16u); left_word = xbox_ContiguousAlloc(16u, 16u); }
+    if (!m || !arena || !left_word) return 0;
+    for (q = 0; q < 0x4490u + 0x40u; q += 4) MEM32(m + q) = 0;
+    a[0] = b; l2 = tt_gcall(0x0009E190u, 0, 1, a);
+    if (l2 < 0x10000u) return 0;
+    MEM32(l2 + 0x18) = MEM32(l1 + 0x18); MEM32(l2 + 0x1C) = MEM32(l1 + 0x1C);   /* (as 0x9F1A0 sets a level's state) */
+    tt_gcall(0x000525F0u, m, 0, NULL);
+    MEM32(m + 0x18) = MEM32(pm + 0x18); MEM32(m + 0x14) = MEM32(pm + 0x14);
+    /* (the level's arena is spent once a level is loaded: the allocator's second arena, as for the effects' pool) */
+    sv0 = MEM8(0x6B1CEC); sv1 = MEM32(0x6B1D00); sv2 = MEM32(0x6B1D04);
+    MEM32(left_word) = 0x100000u; MEM32(0x6B1D00) = arena; MEM32(0x6B1D04) = left_word; MEM8(0x6B1CEC) = 1;
+    coop_fm = m; coop_fm_l = l2;
+    MEM32(0x43B438u) = l2;
+    a[0] = m; a[1] = 7u; a[2] = rec; tt_gcall(0x0009E9D0u, 0, 3, a);
+    MEM32(0x43B438u) = l1; MEM32(0x43B4A4u) = self;
+    MEM8(0x6B1CEC) = sv0; MEM32(0x6B1D00) = sv1; MEM32(0x6B1D04) = sv2;
+    tt_dbg("[COOP2] the machine took %u bytes\n", 0x100000u - MEM32(left_word));
+    tt_dbg("[COOP2] player 2 (%s): machine %08X built from his hero's level file as '%s' (script state %u bytes at %08X): +170 %u +174 %u +178 %u +480 %u +484 %u +488 %u; player 1's %08X: +170 %u +174 %u +178 %u +480 %u +484 %u +488 %u\n", w, m, (const char *)XBOX_PTR(MEM32(m + 0x18)), n, l2,
+           MEM32(m + 0x170), MEM32(m + 0x174), MEM32(m + 0x178), MEM32(m + 0x480), MEM32(m + 0x484), MEM32(m + 0x488), pm, MEM32(pm + 0x170), MEM32(pm + 0x174), MEM32(pm + 0x178), MEM32(pm + 0x480), MEM32(pm + 0x484), MEM32(pm + 0x488));
+    return m;
+}
 static void coop_own_machines(void);
 void coop_own_machines_x(void) { coop_own_machines(); }
 static void coop_own_machines(void)   /* each frame (coop_place): once a level */
@@ -10354,7 +10393,9 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
             } }
         done_lv = coop_level_n; t0 = 0; return;
     }
-    if (coop_now() - t0 > 10000u) {   /* no companion of his hero within 10 s of the level's start */
+    if (coop_now() - t0 > 3000u) {   /* no companion of his hero within 3 s of the level's start */
+        uint32_t own = coop_machine_from_file(w);
+        if (own) { MEM32(coop_twin + 0x3F8) = own; coop_p2_show_hands(0); done_lv = coop_level_n; t0 = 0; return; }
         tt_dbg("[COOP2] player 2 (%s): no companion of his hero (type %d) among %d machine users: player 1's machines kept\n", w, ty, coop_mevn[0]);
         if (getenv("TT_COOP_MACHLOG")) for (i = 0; i < coop_mevn[0]; i++) { uint32_t a = coop_mev[0][i].actor; if (MEM32(a + 0x114) == 2) tt_dbg("[MACH]   %s type %u\n", (const char *)XBOX_PTR(MEM32(a + 0x18)), MEM32(a + 0x2F0)); }
         done_lv = coop_level_n; t0 = 0;
@@ -12190,7 +12231,7 @@ void sub_000A9D80(void)   /* (research) @GetWeaponDamageVsProps: the object its 
 {
     unsigned n0 = coop_lkn; uint32_t p0 = MEM32(0x43B15Cu);
     sub_000A9D80_gen();
-    if (getenv("TT_COOP_PROPHITLOG")) { static int n; uint32_t w = coop_lkn > n0 ? coop_lk[n0 & 63].obj : 0; if (n++ < 40) tt_dbg("[PROPWPN] @GetWeaponDamageVsProps: '%s' id %X, player %08X\n", w >= 0x10000u && w < 0x84000000u ? coop_nm(w) : "-", w >= 0x10000u && w < 0x84000000u ? MEM32(w + 0x2F4) : 0, p0); }
+    if (coop_mode() == 3) { static int n; uint32_t w = coop_lkn > n0 ? coop_lk[n0 & 63].obj : 0; if (n++ < 60) tt_dbg("[PROPWPN] @GetWeaponDamageVsProps: '%s' id %X, player %08X\n", w >= 0x10000u && w < 0x84000000u ? coop_nm(w) : "-", w >= 0x10000u && w < 0x84000000u ? MEM32(w + 0x2F4) : 0, p0); }
 }
 extern void sub_00091AC0_gen(void);
 uint32_t coop_prop_hit_by, coop_prop_hit_t;   /* the hero whose hit on a prop came last, and when (sub_000B2930) */
@@ -12947,7 +12988,7 @@ void sub_00091920(void)
     }
     {   uint32_t m0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x574) : 0, f0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x110) : 0; int32_t h0 = o >= 0x10000u && o < 0x84000000u ? (int32_t)MEM32(o + 0x2FC) : 0;
         sub_00091920_gen();
-        if (getenv("TT_COOP_PROPHITLOG") && o >= 0x10000u && o < 0x84000000u && (at == coop_p2 || at == coop_first_char)) { static int n; if (n++ < 60) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
+        if (coop_mode() == 3 && o >= 0x10000u && o < 0x84000000u && (at == coop_p2 || at == coop_first_char) && MEM32(o + 0x114) != 3u) { static int n; if (n++ < 200) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
             at == coop_p2 ? "P2" : "P1", MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x84000000u ? coop_nm(MEM32(r + 4)) : "-", MEM32(0x1B1078u), h0, (int32_t)MEM32(o + 0x2FC), f0, MEM32(o + 0x110)); } }
     if (add) MEM32(o + 0x574) &= ~add;
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
