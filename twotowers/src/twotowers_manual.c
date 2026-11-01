@@ -4426,7 +4426,7 @@ static int vs_keep_enemy(uint32_t rec)
  * the original or its weapon answers the copy. Levels: Gates of Moria (2), Balin's Tomb (3), Amon Hen (4), the Plains of Rohan (6), Westfold (7); TT_COOP_CLONELEVELS="2,11" others,
  * TT_COOP_NOCLONES off, TT_COOP_CLONES copies each, TT_COOP_CLONEMAX all copies (80) */
 #define COOP_NOC 160
-static struct { uint32_t orig, clone, worig, wclone, worig2, wclone2; int follow, out; } coop_oc[COOP_NOC]; static int coop_noc;
+static struct { uint32_t orig, clone, worig, wclone, worig2, wclone2; int follow, out, dead[2]; } coop_oc[COOP_NOC]; static int coop_noc;
 static uint32_t coop_oc_force, coop_oc_world; static int coop_oc_replaying, coop_oc_cur = -1, coop_oc_fi = -1;
 void coop_oc_reset(void) { coop_noc = 0; coop_oc_force = 0; coop_oc_cur = coop_oc_fi = -1; coop_oc_replaying = 0; }
 static int coop_mult_kind(uint32_t a);
@@ -4452,7 +4452,7 @@ static void coop_oc_build(uint32_t w, uint32_t rec, uint32_t key, uint32_t orig)
         PUSH32(esp, key); PUSH32(esp, rec); PUSH32(esp, 0x000F5BC0u); ecx = w; sub_000F5BC0_gen();   /* ret 8 */
         c = coop_last_char; esp = sp;
         if (c < 0x10000u || c == orig || MEM32(c) != 0x1741C0u) { tt_dbg("[COOPCLONE] building a copy of %08X '%s' gave %08X: no more\n", orig, coop_nm(orig), c); break; }
-        coop_oc[coop_noc].orig = orig; coop_oc[coop_noc].clone = c; coop_oc[coop_noc].worig = coop_oc[coop_noc].wclone = coop_oc[coop_noc].worig2 = coop_oc[coop_noc].wclone2 = 0; coop_noc++;
+        coop_oc[coop_noc].orig = orig; coop_oc[coop_noc].clone = c; coop_oc[coop_noc].worig = coop_oc[coop_noc].wclone = coop_oc[coop_noc].worig2 = coop_oc[coop_noc].wclone2 = 0; coop_oc[coop_noc].dead[0] = coop_oc[coop_noc].dead[1] = 0; coop_noc++;
         { static int nl; if (nl++ < 200) tt_dbg("[COOPCLONE] copy %d of %08X '%s': %08X (%d copies in all)\n", i + 1, orig, coop_nm(orig), c, coop_noc); }
     }
     esp = sp; eax = ra; ecx = rc; edx = rd; coop_last_char = orig;
@@ -5587,6 +5587,18 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
                 if (own >= 0x10000u && !has) { MEM32(ins + 0x74 + 8 * j) = own; continue; }
                 for (jj = j; jj + 1 < n; jj++) { MEM32(ins + 0x74 + 8 * jj) = MEM32(ins + 0x74 + 8 * (jj + 1)); MEM32(ins + 0x78 + 8 * jj) = MEM32(ins + 0x78 + 8 * (jj + 1)); }
                 MEM32(ins + 0x174) = --n; j--; } } }
+    {   /* a copy's weapon breaks as its original does: a shield breaks with +0x5EC bit 1 (0x92000), and its OnDie runs by name, which a copy's has no entry for: copies' shields never broke (a
+         * playtest). The bit is taken; at 0 health the original's OnDie runs with the original's name and the lookups answering the copy (coop_oc_fi). TT_COOP_NOCOPYBREAK: as before */
+        extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); static int nb = -1; static uint32_t rec; int q, w2; if (nb < 0) nb = getenv("TT_COOP_NOCOPYBREAK") != 0;
+        if (!nb) for (q = 0; q < coop_noc; q++) for (w2 = 0; w2 < 2; w2++) { uint32_t wo = w2 ? coop_oc[q].worig2 : coop_oc[q].worig, wc = w2 ? coop_oc[q].wclone2 : coop_oc[q].wclone; if (wo < 0x10000u || wc < 0x10000u) continue;
+            if ((MEM32(wo + 0x5EC) & 1u) && !(MEM32(wc + 0x5EC) & 1u)) MEM32(wc + 0x5EC) |= 1u;
+            if ((int32_t)MEM32(wc + 0x2FC) > 0) { coop_oc[q].dead[w2] = 0; continue; }
+            if (coop_oc[q].dead[w2] || MEM32(wc + 0x2F4) == 0xFFFFFFFFu) continue;
+            coop_oc[q].dead[w2] = 1;
+            if ((MEM32(wo + 0x16C) & 4u) && MEM32(0x43B438u) >= 0x10000u) { uint32_t nm0 = MEM32(wc + 0x18), a3[3], sp = esp, r0 = eax, r1 = ecx, r2 = edx; int fi0 = coop_oc_fi;
+                if (!rec) rec = xbox_ContiguousAlloc(0x40u, 16u);
+                if (rec) { tt_dbg("[COOPCLONE] copy's '%s' broke: its original's OnDie for it\n", coop_nm(wc)); MEM32(wc + 0x18) = MEM32(wo + 0x18); coop_oc_fi = q; a3[0] = wc; a3[1] = 2u; a3[2] = rec; tt_gcall(0x0009E9D0u, 0, 3, a3); coop_oc_fi = fi0; MEM32(wc + 0x18) = nm0; }
+                esp = sp; eax = r0; ecx = r1; edx = r2; } } }
     {   /* a copy's weapon (coop_oc_weapon) has no id: @SetWeaponID's numbers never reached it (+0x2F4 -1, +0x374 its damage 1), so copies swung for 1 where their
          * originals swing for 35 (a playtest: attacks that did nothing to either hero). Each second it takes its original's. TT_COOP_NOCOPYWPN: as before */
         static uint32_t lt; static int nw = -1; if (nw < 0) nw = getenv("TT_COOP_NOCOPYWPN") != 0;
