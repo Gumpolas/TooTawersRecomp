@@ -9359,7 +9359,7 @@ void sub_0009C380(void)
     if (coop_p2 >= 0x10000u && p1 >= 0x10000u && p1 != coop_p2 && !getenv("TT_COOP_NOTURNSPEED")) {
         uint32_t a = MEM32(coop_p2 + 0x164), c = MEM32(p1 + 0x164);
         if (a >= 0x10000u && c >= 0x10000u && a != c && MEM32(a + 8) == coop_p2 && MEM32(c + 8) == p1) {
-            float acc = MEMF(c + 0x34), top = MEMF(c + 0x38) > acc ? MEMF(c + 0x38) : acc;
+            float acc = MEMF(c + 0x34) * (getenv("TT_COOP_P2TURNACC") ? (float)atof(getenv("TT_COOP_P2TURNACC")) : 1.3f), top = 1000.0f;   /* (no top speed, a request: it never limited him. The acceleration does: 180 degrees in 18 frames at 1x, 16 at 1.3x, player 1's, 14 at 2x, bot runs) */
             if (getenv("TT_COOP_P2TURNMAX")) top = (float)atof(getenv("TT_COOP_P2TURNMAX"));
             if (MEMF(a + 0x34) != acc || MEMF(a + 0x38) != top) {
                 static int n; if (n++ < 4) tt_dbg("[COOPTURN] player 2's turn %.3f %.3f -> %.3f %.3f (player 1's %.3f %.3f)\n", MEMF(a + 0x34), MEMF(a + 0x38), acc, top, MEMF(c + 0x34), MEMF(c + 0x38));
