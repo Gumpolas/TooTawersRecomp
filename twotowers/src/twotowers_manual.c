@@ -11300,7 +11300,7 @@ void sub_0005A920(void)
     {   /* player 2 as a candidate target: appended to the engagement list 0x4110C0 (count 0x411394, 32 slots), which the
          * arbitration reads after [0x43B15C]; so the game itself can give attack slots against him. TT_COOP_NOP2CAND off. */
         extern int coop_hero_down(int); static int off = -1; if (off < 0) off = getenv("TT_COOP_NOP2CAND") != 0;
-        if (!off && coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_hero_down(1)) {
+        if (!off && coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_hero_down(1) && !coop_hero_down(0)) {
             uint32_t n = MEM32(0x411394u), i; for (i = 0; i < n && i < 32 && MEM32(0x4110C0u + 4 * i) != coop_p2; i++) ;
             if (i == n && n < 32) { MEM32(0x4110C0u + 4 * n) = coop_p2; MEM32(0x411394u) = n + 1; }
         }
@@ -11316,7 +11316,12 @@ void sub_0005A920(void)
                    in2, a2, d2, d2 >= 0x10000u ? MEM8(d2 + 0x11F) : 0); }
     }
     if (getenv("TT_VS_AIMLOG") && tt_vs_on()) { static unsigned k; if (k++ % 600 == 0) tt_dbg("[VSAIM] arbitration: enemies list %u, 411250 list %u, 411140 list %u; player %08X, P2 %08X\n", MEM32(0x411394u), MEM32(0x4114A4u), MEM32(0x4114ACu), MEM32(0x43B15Cu), coop_p2); }
-    sub_0005A920_gen(); r0 = eax; coop_threat_apply(); eax = r0;
+    {   /* player 1 down: the arbitration runs with player 2 as the player: built round player 1, the enemies on player 2 stood off 20-30 units (closing in 29-44 % of the
+         * time; 88 % on player 1 with player 2 down; a playtest). TT_COOP_NOP2ARB: as before */
+        extern int coop_hero_down(int); extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void); int sw = 0;
+        if (coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_depth && coop_hero_down(0) && !coop_hero_down(1) && !tt_vs_on() && !getenv("TT_COOP_NOP2ARB")) sw = tt_coop_enter_ctx();
+        sub_0005A920_gen(); r0 = eax; if (sw) tt_coop_leave(); }
+    coop_threat_apply(); eax = r0;
 }
 /* shared camera: the camera has no target of its own; about 20 camera functions read the player's
  * position [0x43B15C]+0xF0..0xF8. For the length of each camera update (0x68DC0) player 1's position is
