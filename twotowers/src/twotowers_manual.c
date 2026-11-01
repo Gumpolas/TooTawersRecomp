@@ -2788,6 +2788,7 @@ static float coop_hp_scale(void)
     return f[d >= 0 && d < 3 ? d : d == 3 ? 2 : 1];
 }
 static uint32_t coop_p2, coop_p2_ally, coop_p2_t0;
+uint32_t coop_p2_aim_held;   /* (coop_p2_target: the lock he holds while he aims) */
 static unsigned coop_level_n;   /* levels loaded (coop_level_reset): once-a-level code compares it */
 static int coop_depth;
 static int coop_triglog_on(void) { static int tl = -1; if (tl < 0) { tl = getenv("TT_COOP_TRIGLOG") != NULL; } return tl; }   /* (or a file triglog.on in the game folder: a playtest) */
@@ -4124,6 +4125,14 @@ void sub_001697D9(void)
         static uint32_t packet; CoopPad p; uint32_t i;
         coop_pad2(&p);
         { extern int coop_hero_down(int); extern int tt_vs_frozen(void); if (coop_hero_down(1) || tt_vs_frozen()) memset(&p, 0, sizeof p); }   /* no input while down (or in Versus' countdown) */
+        {   /* while he aims with a lock and his stick is at rest, the stick turned gently to it (camera-relative, as the bots' aim), which is what turns
+             * him: he kept his heading, player 1 steers toward his target (a bot run: facing 1.60, his lock at 0.08; written to his forward +0x70
+             * the game put it back; a playtest). His own push wins. TT_COOP_NOP2AIMTURN: off */
+            uint32_t t = coop_p2_aim_held, cm = MEM32(0x43B164u);
+            if (t >= 0x10000u && t < 0x84000000u && coop_p2 >= 0x10000u && cm >= 0x10000u && p.analog[6] > 30 && !tt_vs_on() && (int)p.lx * p.lx + (int)p.ly * p.ly < 36000000 && !getenv("TT_COOP_NOP2AIMTURN")) {
+                float wx = MEMF(t + 0xF0) - MEMF(coop_p2 + 0xF0), wy = MEMF(t + 0xF4) - MEMF(coop_p2 + 0xF4), wn = sqrtf(wx * wx + wy * wy), fx = MEMF(cm + 0x40) - MEMF(cm + 0x50), fy = MEMF(cm + 0x44) - MEMF(cm + 0x54), fn = sqrtf(fx * fx + fy * fy);
+                if (wn > 0.5f && fn > 1e-3f) { wx /= wn; wy /= wn; fx /= fn; fy /= fn; p.ly = (int16_t)((wx * fx + wy * fy) * 8000.0f); p.lx = (int16_t)((wx * fy - wy * fx) * 8000.0f); } }
+        }
         MEM32(st) = ++packet;
         MEM16(st + 4) = p.buttons;
         for (i = 0; i < 8; i++) MEM8(st + 6 + i) = p.analog[i];
@@ -4839,6 +4848,10 @@ static void coop_place(void)
             bh[j].hp = hp; }
     }
     coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); coop_steps_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
+    if (getenv("TT_COOP_AIMHEAD") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero while he aims: his heading and turn fields against the bearing to his lock */
+        static uint32_t lt; int w; if (coop_now() - lt >= 100u) { lt = coop_now(); for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
+            if ((MEM32(r + 0x34u) & 0x4000u) || MEM32(h + 0x408) == 26u || MEM32(h + 0x408) == 27u || MEM32(h + 0x408) == 29u) { int ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u; float dx = ok ? MEMF(t + 0xF0) - MEMF(h + 0xF0) : 0, dy = ok ? MEMF(t + 0xF4) - MEMF(h + 0xF4) : 0, dz = ok ? MEMF(t + 0xF8) - MEMF(h + 0xF8) : 0;
+                tt_dbg("[AIMHEAD] t %u P%d st %u lock %08X d %.1f dz %.1f bearing %.3f | +100 %.3f +104 %.3f +108 %.3f +10C %.3f | +70 %.3f %.3f +80 %.3f %.3f | +D0 %.3f %.3f %.3f | stick %08X %08X\n", coop_now(), w + 1, MEM32(h + 0x408), t, sqrtf(dx * dx + dy * dy), dz, atan2f(dy, dx), MEMF(h + 0x100), MEMF(h + 0x104), MEMF(h + 0x108), MEMF(h + 0x10C), MEMF(h + 0x70), MEMF(h + 0x74), MEMF(h + 0x80), MEMF(h + 0x84), MEMF(h + 0xD0), MEMF(h + 0xD4), MEMF(h + 0xD8), MEM32(r + 0x38), MEM32(r + 0x3C)); } } } }
     if (getenv("TT_COOP_AIMSTATE") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero's state, lock and pad record, 4 times a second */
         static uint32_t lt; if (coop_now() - lt >= 250u) { int w, j; lt = coop_now();
             for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
@@ -5309,7 +5322,8 @@ static void coop_p2_target(void)
             int ok = held >= 0x10000u && held < 0x84000000u && MEM32(held) == 0x1741C0u && MEM32(held + 0x114) == 3u && (int32_t)MEM32(held + 0x2FC) > 0 && dx * dx + dy * dy < 1225.0f;
             if (!ok || (sx * sx + sy * sy >= 0.36f && now - ht >= 400u)) { if (cur != held) ht = now; held = cur; }
             else if (cur != held) MEM32(c + 0x98) = held;
-        } else held = 0;
+            coop_p2_aim_held = held;
+        } else coop_p2_aim_held = held = 0;
     }
     {   /* (1.9.8) nor while player 2 himself aims (LT: bit 0x4000 of his pad record's held buttons, as the aim dot reads it), and
          * a little after: his lock is the game's own pick then -- an explosive barrel too. Before, this put the nearest orc
