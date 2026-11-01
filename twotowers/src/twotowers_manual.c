@@ -9046,6 +9046,11 @@ void sub_0009C380(void)
                 tt_dbg("[COOPEND] test: EndMission(%u), level [1BB2A4] %d\n", code, (int32_t)MEM32(0x1BB2A4u));
                 PUSH32(esp, code); PUSH32(esp, 0x000F1230u); ecx = MEM32(0x8D2484u); sub_000F1230(); esp = sp; eax = r0; ecx = r1; edx = r2; } }
     }
+    {   /* the hero record's stance multipliers (+0x84, +0x88, +0x8C, by the stance +0x80: @SetStanceDamageMultipliers): 0x91920 turns a player's hit on an
+         * object into its damage x this. The hero's script sets them for player 1's hero alone, so player 2's own record has 0: his 90 on a table was 0
+         * (a playtest: 0x92000 called with 0, player 1's with 120). Player 1's are kept here for sub_00091920 */
+        extern float coop_stance[3]; static uint32_t lt; if (!coop_depth && coop_now() - lt > 1000u) { extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t c0 = ecx, e0 = eax, d0 = edx, r; int q; static int said; lt = coop_now(); r = tt_gcall(0x00098EE0u, 0, 0, NULL); ecx = c0; eax = e0; edx = d0;
+            if (r >= 0x10000u && MEMF(r + 0x84) > 0.0f) { for (q = 0; q < 3; q++) coop_stance[q] = MEMF(r + 0x84 + 4 * q); if (!said++) tt_dbg("[COOPDMG] the stance multipliers: %.3f %.3f %.3f\n", coop_stance[0], coop_stance[1], coop_stance[2]); } } }
     if (getenv("TT_COOP_P2DIFF") && coop_p2_t0 && coop_p2 >= 0x10000u && coop_now() - coop_p2_t0 >= (uint32_t)atoi(getenv("TT_COOP_P2DIFF"))) {   /* (research) once a level: the words player 1 and player 2 differ in, and in their components */
         static unsigned lv = ~0u;
         if (lv != coop_level_n) { uint32_t q, a1 = coop_first_char, a2 = coop_p2, c1 = MEM32(a1 + 0x494), c2 = MEM32(a2 + 0x494); lv = coop_level_n;
@@ -9093,6 +9098,10 @@ void sub_0009C380(void)
             if (pr) { fz = MEMF(pr + 0xF8); MEMF(coop_p2 + 0xF0) = MEMF(pr + 0xF0) - fx * 1.5f; MEMF(coop_p2 + 0xF4) = MEMF(pr + 0xF4) - fy * 1.5f; MEMF(coop_p2 + 0xF8) = fz + 0.5f;
                 for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x90 + 4 * q) = MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bdy >= 0x80000000u && bdy < 0x84000000u) MEM32(bdy + 0xE8 + 4 * q) = xyz[q]; }
                 tt_gcall(MEM32(MEM32(coop_p2) + 0x28u), coop_p2, 3, xyz); tt_dbg("[PROPTEST] player 2 put by %08X '%s' at %.1f %.1f %.1f, health %d\n", pr, coop_nm(pr), MEMF(pr + 0xF0), MEMF(pr + 0xF4), MEMF(pr + 0xF8), (int)MEM32(pr + 0x2FC)); } else tt_dbg("[PROPTEST] no breakable prop\n"); }
+        if (pr && getenv("TT_COOP_TESTPROPHIT") && !coop_depth) { static uint32_t mem; static unsigned tv; extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);   /* (bot test) a hit of his on it, as 0x91AC0 hands it on */
+            if (tv != coop_level_n && coop_now() - coop_p2_t0 >= (uint32_t)atoi(v) + 3000u) { uint32_t a1[1], q; tv = coop_level_n; if (!mem) mem = xbox_ContiguousAlloc(0x80u, 16u);
+                for (q = 0; q < 0x80u; q += 4) MEM32(mem + q) = 0; MEM32(mem + 0x14) = 95u; MEM32(mem + 0x1C) = coop_p2; a1[0] = mem;
+                tt_dbg("[PROPTEST] his hit, damage 95, on '%s' health %d\n", coop_nm(pr), (int)MEM32(pr + 0x2FC)); tt_gcall(0x00091920u, pr, 1, a1); tt_dbg("[PROPTEST] after it: health %d +110 %08X\n", (int)MEM32(pr + 0x2FC), MEM32(pr + 0x110)); } }
         if (pr && coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[PROPTEST] '%s' health %d +110 %08X +3F8 %08X +408 %08X +430 %08X | P2 state %u at %.1f %.1f %.1f\n", coop_nm(pr), (int)MEM32(pr + 0x2FC), MEM32(pr + 0x110), MEM32(pr + 0x3F8), MEM32(pr + 0x408), MEM32(pr + 0x430), MEM32(coop_p2 + 0x408), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8)); }
     }
     {   /* bot test: TT_COOP_P2GOTO = "x,y,ms": player 2 put at x,y (on player 1's height) ms after he takes over, once a level */
@@ -13025,10 +13034,11 @@ void sub_000E6AE0(void)
  * it (a playtest: "player 2 still unable to shoot the explosives in the west fold"; player 1's first arrow set one off).
  * His hits on such a prop are taken as player 1's would be: his role's bit added for the call, with him as the player
  * (the player's damage scaling). TT_COOP_NOP2PROPHIT: as before */
+float coop_stance[3];
 extern void sub_00091920_gen(void);
 void sub_00091920(void)
 {
-    uint32_t o = ecx, r = MEM32(esp + 4), at = r >= 0x10000u && r < 0x84000000u ? MEM32(r + 0x1C) : 0, add = 0; int sw = 0;
+    uint32_t o = ecx, r = MEM32(esp + 4), at = r >= 0x10000u && r < 0x84000000u ? MEM32(r + 0x1C) : 0, add = 0, rc = 0, st0 = 0, fx0 = 0; int sw = 0;
     /* (1.9.9) any object player 1 can damage, not only the props: the boxes, Fangorn's log, the Breached Wall's catapult, the enemies'
      * shields (a heavy blow of player 2's never broke one) -- a playtest: "any object that player 1 can break so should 2 be able to".
      * Objects that take player 2's hits already (the enemies) are left as they were. TT_COOP_P2PROPONLY: the props only, as in 1.9.8 */
@@ -13039,11 +13049,16 @@ void sub_00091920(void)
         add = b; MEM32(o + 0x574) |= b;
         if (MEM32(0x43B15Cu) != coop_p2) { extern int tt_coop_enter_ctx(void); sw = tt_coop_enter_ctx(); }
         { static unsigned n; if (n++ < 10) tt_dbg("[COOPPROP] player 2's hit on '%s' (damage %d, kind %u): taken as the player's\n", coop_nm(o), (int32_t)MEM32(r + 0x14), MEM32(r + 0x18)); }
+        {   extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t c0 = ecx; int q; rc = tt_gcall(0x00098EE0u, 0, 0, NULL); ecx = c0;   /* (his record's multipliers: coop_stance; for this hit the stance whose multiplier player 1's hits on objects use) */
+            if (rc >= 0x10000u && !getenv("TT_COOP_NOP2STANCE")) { for (q = 0; q < 3; q++) if (MEMF(rc + 0x84 + 4 * q) <= 0.0f && coop_stance[q] > 0.0f) MEMF(rc + 0x84 + 4 * q) = coop_stance[q];
+                { static int k; if (k++ < 12) tt_dbg("[COOPDMG] player 2's hit on an object: his stance %d, multipliers %.3f %.3f %.3f\n", (int)MEM32(rc + 0x80), MEMF(rc + 0x84), MEMF(rc + 0x88), MEMF(rc + 0x8C)); }
+                st0 = MEM32(rc + 0x80); fx0 = MEM32(rc + 0x88); MEM32(rc + 0x80) = 1u; if (MEMF(rc + 0x88) <= 0.0f) MEMF(rc + 0x88) = 1.0f; } else rc = 0; }
     }
     {   uint32_t m0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x574) : 0, f0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x110) : 0; int32_t h0 = o >= 0x10000u && o < 0x84000000u ? (int32_t)MEM32(o + 0x2FC) : 0;
         sub_00091920_gen();
         if (coop_mode() == 3 && o >= 0x10000u && o < 0x84000000u && (at == coop_p2 || at == coop_first_char) && MEM32(o + 0x114) != 3u) { static int n; if (n++ < 200) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
             at == coop_p2 ? "P2" : "P1", MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x84000000u ? coop_nm(MEM32(r + 4)) : "-", MEM32(0x1B1078u), h0, (int32_t)MEM32(o + 0x2FC), f0, MEM32(o + 0x110)); } }
+    if (rc) { MEM32(rc + 0x80) = st0; MEM32(rc + 0x88) = fx0; }
     if (add) MEM32(o + 0x574) &= ~add;
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
 }
