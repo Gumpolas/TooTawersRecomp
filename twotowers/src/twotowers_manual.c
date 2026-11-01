@@ -3017,9 +3017,15 @@ static void coop_p2_weapon_ids(const char *when)
     int i; if (getenv("TT_COOP_NOWPNID")) return;
     for (i = 0; i < coop_np2w; i++) {
         uint32_t w = coop_p2w[i], id = coop_p2_wid(coop_p2w_slot[i]);
-        if (w < 0x10000u || !id || MEM32(w) != 0x174980u || MEM32(w + 0x2F4) == id) continue;
-        tt_dbg("[COOPWEAPON] player 2's %08X (slot %d) id %X -> %X (%s)\n", w, coop_p2w_slot[i], MEM32(w + 0x2F4), id, when);
-        MEM32(w + 0x2F4) = id;
+        if (w < 0x10000u || !id || MEM32(w) != 0x174980u) continue;
+        {   /* (@SetWeaponID, 0x8CA60, also takes the weapon's numbers from its record: +0x374 its damage, added to what the script gives a
+             * blow, and +0x37C..+0x390. With the id alone he hit with what the copy had: Legolas 11, 16, 21 where player 1 did 160 and more.
+             * It only counts with +0x378 set, @IsDamageOn's) */
+            extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t a1[1] = { id }, r = tt_gcall(0x0006DD70u, 0, 1, a1);
+            if (MEM32(w + 0x2F4) == id && (!r || MEM32(w + 0x374) == MEM32(r + 0x24))) continue;
+            tt_dbg("[COOPWEAPON] player 2's %08X (slot %d) id %X -> %X (%s): damage %d -> %d, +378 %u\n", w, coop_p2w_slot[i], MEM32(w + 0x2F4), id, when, r ? (int32_t)MEM32(w + 0x374) : 0, r ? (int32_t)MEM32(r + 0x24) : 0, MEM32(w + 0x378));
+            MEM32(w + 0x2F4) = id;
+            if (r) { uint32_t q; MEM32(w + 0x2FC) = MEM32(r + 0x28); MEM32(w + 0x300) = MEM32(r + 0x28); MEM32(w + 0x374) = MEM32(r + 0x24); for (q = 0; q < 6; q++) MEM32(w + 0x37C + q * 4) = MEM32(r + 0x2C + q * 4); if (!MEM32(w + 0x378)) MEM32(w + 0x378) = 1u; } }
     }
 }
 static uint32_t coop_now(void) { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); return (uint32_t)GetTickCount(); }
@@ -11520,7 +11526,7 @@ void sub_000C7030(void)
         {   /* while player 1 is down the camera's planes are player 2's: he walks on and the view follows (a playtest). The other triggers stay player 1's */
             extern int coop_hero_down(int); const char *q; int cam = 0; for (q = nm; h && *q && !cam; q++) if (!_strnicmp(q, "camera", 6)) cam = 1;
             if (cam && ac == coop_p2 && coop_hero_down(0) && !getenv("TT_COOP_NOP2DOWNCAM")) { static int n; if (n++ < 12) tt_dbg("[COOPCAM] player 1 down: player 2's event %u on '%s' taken\n", ty, nm); sub_000C7030_gen(); return; } }
-        if (ac == coop_p2 && h && _strnicmp(nm, "camera", 6) && _strnicmp(nm, "dynamicPickup", 13) && !getenv("TT_COOP_P2TRIGGERS")) {   /* (pickups are his to take) */
+        if (ac == coop_p2 && h && _strnicmp(nm, "camera", 6) && _strnicmp(nm, "dynamicPickup", 13) && !strstr(nm, "damage_box") && _strnicmp(nm, "dmgBox", 6) && !getenv("TT_COOP_P2TRIGGERS")) {   /* (pickups are his to take; a damage box, fire and the like, burns him too: a playtest; spawns, event scripts and cutscenes stay player 1's) */
             static int n; if (n++ < 12) tt_dbg("[COOPTRIG] player 2's event %u on '%s' dropped: triggers are player 1's\n", ty, nm);
             eax = 0; esp += 20; return;   /* (thiscall, 4 arguments: ret 16) */
         }
@@ -12329,8 +12335,8 @@ extern void sub_00092000_gen(void); void sub_00092000(void)
     if (MEM32(esp) == 0x00090503u && MEM32(esp + 8) == 0x10u && !fire_due(ecx)) { esp += 4 + 8; eax = 0; return; }
     uint32_t self = ecx, gra = MEM32(esp), g1 = MEM32(esp + 4), g2 = MEM32(esp + 8), g3 = MEM32(esp + 12); int32_t hb = self >= 0x10000u ? (int32_t)MEM32(self + 0x2FC) : 0;
     int sw = tt_coop_enter_weapon2(ecx, 0x00092000u); sub_00092000_gen(); tt_coop_weapon_post(0x00092000u); if (sw) tt_coop_leave();
-    if (getenv("TT_COOP_PROPHITLOG") && self >= 0x10000u && self < 0x84000000u && MEM32(self) == 0x174980u && MEM32(self + 0x114) == 7) { static int n; if (n++ < 100)
-        tt_dbg("[PROP92] t %u %08X '%s' ra %06X args %08X %08X %08X: hp %d -> %d, player %08X\n", coop_now(), self, coop_nm(self), gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC), MEM32(0x43B15Cu)); }
+    if (coop_mode() == 3 && self >= 0x10000u && self < 0x84000000u && MEM32(self) == 0x174980u && MEM32(self + 0x114) == 7) { static int n; if (n++ < 120)
+        tt_dbg("[PROP92] t %u %08X '%s' ra %06X args %08X %08X %08X: hp %d -> %d, +5EC %08X +110 %08X, player %08X\n", coop_now(), self, coop_nm(self), gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC), MEM32(self + 0x5EC), MEM32(self + 0x110), MEM32(0x43B15Cu)); }
     {   static int gl = -1; if (gl < 0) gl = getenv("TT_GATELOG") != NULL;
         if (gl && self >= 0x10000u && self == MEM32(0x4ACBACu) && hb != (int32_t)MEM32(self + 0x2FC)) tt_dbg("[GATEHIT2] t %u ra %08X args %08X %08X %08X: %d -> %d\n", tt_game_ms, gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC)); }
 }
