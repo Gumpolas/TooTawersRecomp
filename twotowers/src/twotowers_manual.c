@@ -5317,7 +5317,7 @@ static void coop_p2_target(void)
          * back every frame, and he could never lock on (or hit) a barrel (the Westfold, a playtest). TT_COOP_P2AIMFILL: as before */
         static uint32_t aim_t;
         if (!getenv("TT_COOP_P2AIMFILL") && (MEM32(COOP_PADREC(1u) + 0x34u) & 0x4000u)) aim_t = coop_now() | 1;
-        if (aim_t && coop_now() - aim_t < 1500u) return;
+        if (aim_t && (int32_t)(coop_now() - aim_t) < 1500) return;   /* (signed: aim_t is now | 1, a millisecond ahead on even ones; unsigned it wrapped, and this ran on every other frame of his aim) */
     }
     { extern uint32_t coop_bot_tgt_hold, coop_bot_tgt_until; if (coop_bot_tgt_hold && coop_now() < coop_bot_tgt_until) { MEM32(c + 0x98) = coop_bot_tgt_hold; return; } }   /* (the P2 Bot's own pick: a stretched tentacle) */
     t = MEM32(c + 0x98);
