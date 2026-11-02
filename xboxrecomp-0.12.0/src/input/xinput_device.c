@@ -1521,6 +1521,9 @@ static int kb_active(const XBOX_INPUT_STATE *s)
 }
 /* the same, -1 before anything is pressed */
 int xbox_InputLastDevice(void) { return s_last_kbm; }
+static volatile int s_last_pad_port;
+/* the port whose controller was used last, for the prompts: a pad on player 2's port with the keyboard on player 1's */
+int xbox_InputLastPadPort(void) { return s_last_pad_port; }
 int xbox_InputLastWasKeyboard(void)
 {
     if (s_last_kbm >= 0) return s_last_kbm;
@@ -1613,6 +1616,11 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
         if (pc > 0) for (t = 6; t < 8; t++) if (pState->Gamepad.bAnalogButtons[t] * 100 < pc * 255) pState->Gamepad.bAnalogButtons[t] = 0;
     }
 
+    /* (a controller used, on any port: only the keyboard's port noted it, below, so with the keyboard as player 1 and the
+     * controller as player 2 the prompts stayed the keyboard's, a playtest) */
+    if ((int)dwPort != xbox_InputKeyboardPort() && (abs(pState->Gamepad.sThumbLX) > 16000 || abs(pState->Gamepad.sThumbLY) > 16000
+        || pState->Gamepad.wButtons || pState->Gamepad.bAnalogButtons[0] > 64 || pState->Gamepad.bAnalogButtons[1] > 64
+        || pState->Gamepad.bAnalogButtons[2] > 64 || pState->Gamepad.bAnalogButtons[3] > 64)) { s_last_kbm = 0; s_last_pad_port = (int)dwPort; }
     /* Merge the keyboard on top rather than only standing in for a missing
      * pad: a real pad keeps working -- its buttons are already in pState and
      * the keyboard only adds to them. (Under Wine XInputGetState reports a
@@ -1626,7 +1634,7 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
         if (kb_active(&kb)) s_last_kbm = 1;
         else if (kb_active(pState) && (abs(pState->Gamepad.sThumbLX) > 16000 || abs(pState->Gamepad.sThumbLY) > 16000
                  || pState->Gamepad.wButtons || pState->Gamepad.bAnalogButtons[0] > 64 || pState->Gamepad.bAnalogButtons[1] > 64
-                 || pState->Gamepad.bAnalogButtons[2] > 64 || pState->Gamepad.bAnalogButtons[3] > 64)) s_last_kbm = 0;
+                 || pState->Gamepad.bAnalogButtons[2] > 64 || pState->Gamepad.bAnalogButtons[3] > 64)) { s_last_kbm = 0; s_last_pad_port = (int)dwPort; }
         pState->Gamepad.wButtons |= kb.Gamepad.wButtons;
         for (i = 0; i < 8; i++)
             if (kb.Gamepad.bAnalogButtons[i] > pState->Gamepad.bAnalogButtons[i])

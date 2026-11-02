@@ -26,6 +26,7 @@ extern int xbox_InputPlayerPadIsPlayStation(DWORD port);
 extern int xbox_InputPlayerPadPlayStationModel(DWORD port);
 extern int xbox_InputAnyPlayStationModel(void);
 extern int xbox_InputLastWasKeyboard(void);
+extern int xbox_InputLastPadPort(void);
 extern int xbox_BindKey(int a, int i);
 extern const char *xbox_BindKeyName(int vk);
 extern volatile long xbox_bind_rev;
@@ -43,7 +44,7 @@ static int prompts_kind(void)
     if (m == 2) return 3;
     if (m == 1) return 0;
     if (xbox_InputLastWasKeyboard()) return 2;
-    return xbox_InputPlayerPadIsPlayStation(0) ? 1 : 0;
+    return xbox_InputPlayerPadIsPlayStation((DWORD)xbox_InputLastPadPort()) ? 1 : 0;   /* (the pad used last, player 1's or player 2's) */
 }
 /* what is drawn now: prompts_kind() latched by prompts_tick, at most one
  * change in three seconds under "automatic" (each change re-decodes the
@@ -471,7 +472,7 @@ static int prompts_model(void)
     int m;
     if (e && (*e == '3' || *e == '4' || *e == '5')) return *e - '0';
     if (e && (e[0] == 'p' || e[0] == 'P') && (e[1] == 's' || e[1] == 'S') && e[2] >= '3' && e[2] <= '5') return e[2] - '0';
-    m = xbox_InputPlayerPadPlayStationModel(0);
+    m = xbox_InputPlayerPadPlayStationModel((DWORD)xbox_InputLastPadPort());
     if (!m) m = xbox_InputAnyPlayStationModel();
     return m ? m : 4;
 }
