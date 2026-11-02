@@ -3319,8 +3319,8 @@ static int coop_bot_shoot(CoopPad *o, uint32_t p2, uint32_t e, int fire)
         if ((shots & 7) == 1) tt_dbg("[P2BOT] shots %u, %u of them with his lock on the enemy\n", shots, onlock); } }
     return locked;
 }
-/* the bot's melee (not always the same attack): a combo picked at random (A fast, Y fierce), its presses 0.28-0.4 s
- * apart, then a 0.35-0.95 s pause before the next one; at Weathertop fierce (Y) only (TT_COOP_BOTALLATK: all). Called every frame it may swing. (X, used before in place of
+/* the bot's melee (not always the same attack): a combo picked at random (A fast, Y fierce), its presses 0.22-0.32 s
+ * apart, then a 0.12-0.42 s pause before the next one (the owner: more often; were 0.28-0.4 and 0.35-0.95); at Weathertop fierce (Y) only (TT_COOP_BOTALLATK: all). Called every frame it may swing. (X, used before in place of
  * A, never makes an attack box -- for player 1 either --, so half the bot's presses did nothing; player 1's A made the
  * hits on the Watcher's tentacles.) */
 static void coop_bot_attack(CoopPad *o, uint32_t now)
@@ -3332,11 +3332,11 @@ static void coop_bot_attack(CoopPad *o, uint32_t now)
     if (now < hold) { o->analog[cur] = 255; return; }
     if (now < next) return;
     seed = seed * 1103515245u + 12345u;
-    if (c && !c[k]) { c = 0; next = now + 350u + (seed >> 16) % 600u; return; }   /* (the combo done: a pause) */
+    if (c && !c[k]) { c = 0; next = now + 120u + (seed >> 16) % 300u; return; }   /* (the combo done: a pause) */
     if (!c) { extern int coop_on_weathertop; static const char *const fierce[] = { "Y", "YY", "Y", "YYY" };   /* (Weathertop: fierce attacks only, a playtest: "he should only perform heavy attack") */
         c = coop_on_weathertop && !getenv("TT_COOP_BOTALLATK") ? fierce[(seed >> 16) % 4u] : combos[(seed >> 16) % (sizeof combos / sizeof combos[0])]; k = 0; }
     cur = c[k] == 'A' ? 0 : c[k] == 'X' ? 2 : 3; k++;
-    hold = now + 120u; next = now + 280u + (seed >> 8) % 120u; o->analog[cur] = 255;
+    hold = now + 120u; next = now + 220u + (seed >> 8) % 100u; o->analog[cur] = 255;
 }
 /* now and then a block (White) instead of a swing when an enemy within 4 units is after player 2 (defending
  * himself now and then): every 1.5 s a 1 in 15 chance of 0.7 s of block. Nonzero while it blocks. */
