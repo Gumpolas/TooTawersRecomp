@@ -426,6 +426,8 @@ static void tt_main_tick(void)
                 }
         }
     }
+    {   /* the pause's Show Upgrades Player 2: back from the shop (tt_coop_p2upg_go), his purchases his, the hero and his slot as they were */
+        extern void coop_p2upg_tick(uint32_t fe); coop_p2upg_tick(MEM32(C)); }
     {   /* co-op, after a level: player 2's mission stats and upgrade shop after player 1's (in this order: P1 stats, P2 stats,
          * P1 upgrades, P2 upgrades, then the save). Each screen object's +4 is the next screen the main loop goes to when it
          * ends (screen 9 the stats, object +0x9474; 10 the shop, +0x9A78; 7 then the save). When player 1 continues, the
@@ -3428,9 +3430,8 @@ static int coop_boss_fight_on(float x, float y)
     return near_w && awake;
 }
 /* ---- the P2 Bot ----
- * Player 2 played by the co-op code through his pad. Co-op Options' "P2 Bot": Off; When Idle (the bot plays, and any
- * real input on player 2's controller hands it to the player for 3 s); Always (the controller is ignored). Each frame:
- *  1. whose pad it is (coop_bot_pad_free);
+ * Player 2 played by the co-op code through his pad. Co-op Options' "P2 Bot": Off; On (the controller is ignored; the When
+ * Idle hand-over is gone, it cut in on the player, a playtest). Each frame:
  *  2. what he sees (BotView: both heroes, the group's circle round player 1 and the companions, the enemy for melee);
  *  3. the first task that applies: player 1 down (roam), the Watcher's fight (its tentacles), ranged, melee, follow;
  *  4. the task presses his pad (coop_bot_go / _steer / _attack / _shoot / _beside / _defend, above).
@@ -3448,23 +3449,6 @@ static CoopSeek s_bk = { 1, 0 };
 static int s_bot_following;
 static const char *s_bot_why;
 static const char *s_bot_how;
-
-/* 1. his pad: the bot's (1) or the player's (0) */
-static int coop_bot_pad_free(CoopPad *o, uint32_t now)
-{
-    static uint32_t human_t;
-    int i, any;
-    if (tt_coop_setting(4) == 2) return 1;   /* Always */
-    {   /* (how far the stick is pushed, any way, past 2000: each axis past 5000 left a gentle push out, a diagonal one above all, and 3 s on the bot wiped it and took him, a playtest. The dead zone has taken a resting stick's drift already) */
-        float l2 = (float)o->lx * o->lx + (float)o->ly * o->ly, r2 = (float)o->rx * o->rx + (float)o->ry * o->ry;
-        any = o->buttons != 0 || l2 > 4000000.0f || r2 > 4000000.0f; }
-    for (i = 0; i < 8; i++) if (o->analog[i] > 30) any = 1;
-    if (any) { if (!human_t || now - human_t > 3000) tt_dbg("[P2BOT] pad 2 used: the player's for 3 s\n"); human_t = now ? now : 1; }   /* (not now | 1: on an even
-        * millisecond that is now + 1, now - human_t wrapped round to over 4 billion and the bot took the frame -- with the stick held, every other
-        * frame was the bot's, which inside its circle stood him still: a playtest, "player 2 constantly stops"; a bot run, 45 of 68 samples) */
-    if (getenv("TT_COOP_PADFREELOG")) { static uint32_t lt; if (now - lt > 500u) { lt = now; tt_dbg("[PADFREE] t %u: pad 2 stick %d %d buttons %04X: %s\n", now - coop_p2_t0, o->lx, o->ly, o->buttons, (human_t && now - human_t < 3000) ? "the player's" : "the bot's"); } }   /* (research) */
-    return !(human_t && now - human_t < 3000);
-}
 
 /* (bot test, Legolas' left weapon) player 2 aims at the Watcher (LT, the stick at it, no shot) 3 s on, 3 s off;
  * TT_COOP_P2AIMTEST=npc: at the furthest companion within 25 units instead (someone up on the rocks) */
@@ -4026,7 +4010,6 @@ void coop_p2bot(CoopPad *o)
     v.now = coop_now(); v.p1 = coop_first_char; v.p2 = coop_p2;
     if (!tt_coop_setting(4) || v.p1 < 0x10000u || v.p2 < 0x10000u || v.p1 == v.p2 || !coop_p2_t0) return;
     if ((getenv("TT_COOP_PAD2SCRIPT") || getenv("TT_COOP_PAD2SEEK")) && !getenv("TT_COOP_P2BOT")) return;
-    if (!coop_bot_pad_free(o, v.now)) return;
     memset(o, 0, sizeof *o);
     coop_bot_drove_t = v.now;
     if (tt_in_scene() || coop_hero_down(1)) return;
@@ -4122,6 +4105,7 @@ void sub_001697D9(void)
     {   /* (1.9.6) the devices: two players' input in a co-op game with a human player 2 (options.c) */
         extern void tt_coop_input_sync(void); uint32_t sa = eax, sc = ecx, sd = edx, sp = esp;
         tt_coop_input_sync(); eax = sa; ecx = sc; edx = sd; esp = sp; }
+    { extern void coop_p2upg_item(void); uint32_t sa = eax, sc = ecx, sd = edx, sp = esp; coop_p2upg_item(); eax = sa; ecx = sc; edx = sd; esp = sp; }
     if (tt_vs_on() && MEM32(0x4AD050u) == 6 && !getenv("TT_VS_KEEPUPGRADES")) {   /* (Versus) the pause list (cursor 0x4B5800, items 0x4B5808: Options, Exit to Menu,
                                                                                    * Show Upgrades) without its last item: every move is anyone's in Versus */
         if (MEM32(0x4B5808u) == 3u) MEM32(0x4B5808u) = 2u;
@@ -5741,6 +5725,40 @@ const char *tt_coop_p2_char(const char *level)
     return r;
 }
 uint32_t coop_p2_actor(void) { return coop_mode() == 3 ? coop_p2 : 0; }
+/* the pause list's fourth item, Show Upgrades Player 2 (list 0x4B5710, play's +0x4830: its items are UTF-16 strings, 0xD0510 adds one, 0xD0560's 2 is the
+ * game's Show Upgrades, screen 10, the shop). A on it (menus.c) puts his record in his hero's slot and his hero in the hero byte, as the shop after a
+ * level does, and moves the cursor to 2, so the same press opens it; back in play his purchases go to his record and the slot and hero byte are as
+ * they were. Only a retail hero who isn't player 1's has a slot of his own. TT_COOP_NOP2UPGITEM: none */
+static int coop_p2upg_on, coop_p2upg_seen, coop_p2upg_hb2; static uint8_t coop_p2upg_hb1; static uint32_t coop_p2upg_t; static uint32_t coop_p2upg_keep[0x348 / 4];
+static int coop_p2upg_hero(void) { extern int tt_heroes_retail_byte(const char *skin); int b = tt_coop_p2_char_now ? tt_heroes_retail_byte(tt_coop_p2_char_now) : 0; return b && b != (int)MEM8(0x4AB69Du) ? b : 0; }
+void coop_p2upg_item(void)
+{
+    extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
+    static const char t[] = "Show Upgrades Player 2"; static uint32_t str; uint32_t a1[1], k;
+    if (coop_mode() != 3 || tt_vs_on() || MEM32(0x4AD050u) != 6 || MEM32(0x4B5808u) != 3u || coop_p2 < 0x10000u || !coop_p2upg_hero() || getenv("TT_COOP_NOP2UPGITEM")) return;
+    if (!str) { str = xbox_ContiguousAlloc(sizeof t * 2, 16); if (!str) return; for (k = 0; k < sizeof t; k++) MEM16(str + 2 * k) = (uint16_t)t[k]; }
+    a1[0] = str; tt_gcall(0x000D0510u, 0x4B5710u, 1, a1);
+}
+void tt_coop_p2upg_go(void)
+{
+    extern uint8_t *coop_p2_state_w(void); uint8_t *s2 = coop_p2_state_w() + 0x400; int b = coop_p2upg_hero(); uint32_t j, sl;
+    if (coop_p2upg_on || !b) return;
+    sl = 0x4AB598u + (uint32_t)b * 0x348u; coop_p2upg_hb1 = MEM8(0x4AB69Du); coop_p2upg_hb2 = b; coop_p2upg_on = 1; coop_p2upg_seen = 0; coop_p2upg_t = coop_now();
+    for (j = 0; j < 0x348u; j += 4) { coop_p2upg_keep[j / 4] = MEM32(sl + j); MEM32(sl + j) = *(uint32_t *)(s2 + j); }
+    MEM8(0x4AB69Du) = (uint8_t)b;
+    tt_dbg("[COOPMENU] Show Upgrades Player 2: hero %d (%s), player 1's %u\n", b, tt_coop_p2_char_now, coop_p2upg_hb1);
+}
+void coop_p2upg_tick(uint32_t fe)
+{
+    extern uint8_t *coop_p2_state_w(void); uint32_t j, sl;
+    if (!coop_p2upg_on) return;
+    if (fe == 10u) { coop_p2upg_seen = 1; return; }
+    if (!coop_p2upg_seen && coop_now() - coop_p2upg_t < 2000u) return;
+    { uint8_t *s2 = coop_p2_state_w() + 0x400; sl = 0x4AB598u + (uint32_t)coop_p2upg_hb2 * 0x348u;
+      for (j = 0; j < 0x348u; j += 4) { *(uint32_t *)(s2 + j) = MEM32(sl + j); MEM32(sl + j) = coop_p2upg_keep[j / 4]; } }
+    MEM8(0x4AB69Du) = coop_p2upg_hb1; coop_p2upg_on = 0;
+    tt_dbg("[COOPMENU] Show Upgrades Player 2 closed (screen %u, shop seen %d): player 1's hero %u back\n", fe, coop_p2upg_seen, coop_p2upg_hb1);
+}
 /* (research, TT_COOP_INPLOG) the state machine's inputs (0x53090, thiscall sm = actor + 0x3D8; input) raised on either
  * hero: which button gives which (INP_SHOOT 38, INP_DRAWBOW 50, INP_BOWCHARGE 51, INP_THROWN 47, INP_ARROWS 37) */
 /* (1.9.7, Versus) blocks can't hold forever: a hero who blocks TT_VS_GUARDN (4) blows in a row (INP_BLOCKREACT 18, each

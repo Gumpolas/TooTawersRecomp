@@ -1488,6 +1488,15 @@ static void coop_pause_tele_pad(unsigned long port, XState *st)
         prevy[port] = y; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevy[port] = st->Gamepad.bAnalogButtons[3] > 30;
 }
+/* the pause list's Show Upgrades Player 2 (twotowers_manual.c): A on it is the game's Show Upgrades with his hero in */
+static void coop_pause_p2upg_pad(unsigned long port, XState *st)
+{
+    extern void tt_coop_p2upg_go(void); static int prev[4]; int a;
+    if (port >= 4) return;
+    a = st->Gamepad.bAnalogButtons[0] > 30;
+    if (a && !prev[port] && coop_paused_now() && G32(0x4B5800u) == 3u && G32(0x4B5808u) == 4u) { tt_coop_p2upg_go(); G32(0x4B5800u) = 2u; }
+    prev[port] = a;
+}
 static void vs_pause_restart_pad(unsigned long port, XState *st)
 {
     static WORD prevb[4];
@@ -1518,6 +1527,7 @@ static void pad_filter(unsigned long port, XState *st)
     if (getenv("TT_P1SCRIPT_INPLAY") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { static int n; if (n++ < 6) tt_dbg("[P1SCRIPT] in play: pad port %lu, primary %u\n", port, prim); }
     if (getenv("TT_P1SCRIPT") && port < 4 && (!(G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8) || (getenv("TT_P1SCRIPT_INPLAY") && (port == 0 || port == G32(0x1CB8B4u))))) p1_script(st);   /* (the menus listen to any pad; in play, co-op's own pads -- TT_P1SCRIPT_INPLAY: player 1's port too) */
     vs_pause_restart_pad(port, st);
+    coop_pause_p2upg_pad(port, st);
     coop_pause_tele_pad(port, st);
     {   /* (test) player 1's stick from twotowers_manual.c's walk-to (TT_VS_WALKTO) */
         extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2];

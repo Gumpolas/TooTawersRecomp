@@ -134,7 +134,7 @@ static int s_np2ctl, s_ret_page = PG_COOP, s_ret_sel;
 enum { CO_DIFF, CO_ICONS, CO_ZOOM, CO_TELE, CO_BOT, CO_PICK, CO_IMP, CO_N };   /* (CO_IMP: the solo game's Impossible, 1.9.7) */
 static const char *const s_coop_key[CO_N] = { "difficulty", "player_icons", "camera_zoom", "p2_teleport", "p2_bot", "double_pickups", "impossible" };
 static const char *const s_coop_env[CO_N] = { "TT_COOP_DIFFICULTY", "TT_COOP_ICONS", "TT_COOP_ZOOMSET", "TT_COOP_TELEPORT", "TT_COOP_P2BOT", "TT_COOP_PICKUPS", "TT_IMPOSSIBLE" };
-static const int s_coop_cnt[CO_N] = { 4, 2, 3, 2, 3, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1, 0 };
+static const int s_coop_cnt[CO_N] = { 4, 2, 3, 2, 2, 2, 2 }, s_coop_def[CO_N] = { 1, 1, 1, 1, 0, 1, 0 };
 static int s_coop_v[CO_N] = { -1, -1, -1, -1, -1, -1, -1 };
 static const Row s_coop[] = {
     { "Difficulty:", GFX_COOP + CO_DIFF, K_CYCLE, { "Easy", "Normal", "Expert", "Impossible" } },
@@ -142,7 +142,7 @@ static const Row s_coop[] = {
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },   /* player 2 put beside player 1 when too far (the co-op code's catch-up) */
     { "P2 Device:", 1, K_DEV, { 0 } },   /* (1.9.6's device choice, in place of 1.9.4's P2 Controller) */
-    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "When Idle", "Always" } },   /* player 2 played by the co-op code (twotowers_manual.c coop_p2bot): when his controller is idle (any input hands it over for 3 s), or always */
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },   /* (When Idle and Always gone: idle cut in on a controller, a playtest) player 2 played by the co-op code (twotowers_manual.c coop_p2bot): (was: when his controller is idle, any input hands it over for 3 s), or always */
     { "P2 Controls", 0, K_PAGE, { 0 } },   /* player 2's own buttons (A: the page) */
 };
 /* (1.9.6) Options > Co-op Options: the co-op settings, the pickups, each player's device and player 2's controls. The
@@ -152,7 +152,7 @@ static const Row s_coop_page[] = {
     { "Player Icons:", GFX_COOP + CO_ICONS, K_COLS, { "Off", "On" } },
     { "Camera Zoom:", GFX_COOP + CO_ZOOM, K_COLS, { "Off", "Normal", "Wide" } },
     { "P2 Teleport:", GFX_COOP + CO_TELE, K_COLS, { "Off", "On" } },
-    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "When Idle", "Always" } },
+    { "P2 Bot:", GFX_COOP + CO_BOT, K_COLS, { "Off", "On" } },
     { "Pickups:", GFX_COOP + CO_PICK, K_COLS, { "Normal", "Double" } },   /* Double: a health or ammo pickup can be taken twice (twotowers_manual.c, sub_0008FC60) */
     { "P1 Device:", 0, K_DEV, { 0 } },
     { "P2 Device:", 1, K_DEV, { 0 } },
@@ -179,6 +179,7 @@ int tt_coop_setting(int i)
         int v;
         coop_ini(ini, sizeof ini);
         v = e ? atoi(e) : (int)GetPrivateProfileIntA("Coop", s_coop_key[i], s_coop_def[i], ini);
+        if (i == CO_BOT && v > 1) v = 1;   /* (an ini's old Always, 2: On) */
         s_coop_v[i] = v < 0 || v >= s_coop_cnt[i] ? s_coop_def[i] : v;
     }
     return s_coop_v[i];
@@ -238,7 +239,7 @@ void tt_coop_input_sync(void)
 {
     int two;
     coop_devices_load();
-    two = tt_coop_active() && tt_coop_setting(CO_BOT) != 2 && !getenv("TT_COOP_PAD2SCRIPT");   /* (P2 Bot Off or When Idle: a person may play player 2) */
+    two = tt_coop_active() && !tt_coop_setting(CO_BOT) && !getenv("TT_COOP_PAD2SCRIPT");   /* (P2 Bot Off: a person plays player 2) */
     if (two != xbox_input_two_players) {
         xbox_input_two_players = two;
         tt_dbg("[COOPDEV] input as %s (devices: player 1 %d, player 2 %d)\n", two ? "two players" : "one player", xbox_input_dev_choice[0], xbox_input_dev_choice[1]);
