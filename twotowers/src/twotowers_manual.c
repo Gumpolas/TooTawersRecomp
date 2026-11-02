@@ -11435,6 +11435,17 @@ void sub_000C1710(void)
     sub_000C1710_gen();
     if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
 }
+/* who may lock whom (thiscall, attacker, target, ...): the target's +0x3A4 (@SetTargetableMask) needs the attacker's team bit. Scripts leave the cave troll at 2, team 1 alone, and
+ * player 2 is team 2 (allies, kept off it): he got it only while it was 0x00800006 (a playtest: "cant lock on the cave troll"). An enemy player 1 may lock, he may. TT_COOP_NOP2MASK: as before */
+extern void sub_000599C0_gen(void);
+void sub_000599C0(void)
+{
+    static int off = -1; uint32_t t = MEM32(esp + 8), m = 0;
+    if (off < 0) off = getenv("TT_COOP_NOP2MASK") != 0;
+    if (!off && coop_mode() == 3 && coop_p2 >= 0x10000u && MEM32(esp + 4) == coop_p2 && t >= 0x10000u && !tt_vs_on() && MEM32(t + 0x114) == 3 && (MEM32(t + 0x3A4) & 6u) == 2u) { m = MEM32(t + 0x3A4); MEM32(t + 0x3A4) = m | 4u; }
+    sub_000599C0_gen();
+    if (m) MEM32(t + 0x3A4) = m;
+}
 /* the other aim pick (thiscall on the arbitration, the actor's index; ret 4; from 0x5A920 for each actor): as 0x5A150, the camera's or aim's heading plus the stick, and the
  * player's lock [0x43B16C] for his marker (0xC14D0). Player 2's turn ran with player 1's aim and stick: his lock jumped (same hero, LT held, 12 lock changes for player 1, 91 for
  * him; a playtest: "no lock on"). In his context. TT_COOP_NOP2AIMCTX: as before */
