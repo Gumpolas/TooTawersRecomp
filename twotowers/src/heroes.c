@@ -219,7 +219,7 @@ static const int s_retail_hero[4] = { 1, 2, 3, 4 };   /* aragorn, legolas, gimli
 /* the keys the player's guest model, texture and moves go in under in a
  * level (not the guest's own: the level's own copy of him keeps those) */
 #define PLAYER_KEY(k) (getenv("TT_SAMEKEYS") ? (uint32_t)(k) : ((uint32_t)(k) ^ 0x3C5A0000u) + 0x00007E57u)
-#define HEROES_BUILD 151u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
+#define HEROES_BUILD 152u     /* bump when the level rebuild changes (1.9.9: Saruman, the troll's throw; the roster without the archer and the Rohan captain) */
 
 /* skin sk's own weapon for script weapon slot (0 bow's hand, 1 sword's), or 0 */
 static int skin_weapon(int sk, int slot, const char **src, uint32_t *mesh, uint32_t *tex)
@@ -2890,6 +2890,13 @@ static int build_file(const char *target, const Add *adds, int nadds, const char
             tt_dbg("[HEROES] %08X: his own version (%u bytes)\n", adds[k].src_key, (unsigned)ovl[k]);
         } else
         memcpy(o + pos, s[k] + a, e2 - a);
+        if (s_coop_skin && adds[k].type == 150 && e2 - a > 0x20 && !memcmp(o + pos, "aniz", 4) && rd16(o + pos, 6) > 200) {
+            /* co-op: player 2 on player 1's machine (Weathertop): its states 56 and 57 play clips 199 and 200 and leave on INP_LOOPED, the
+             * clip's end. The hero's are as long as his 45 and 47 (states 11 and 13, the attack they follow); Legolas has none, so no end
+             * came and he stood in a pose until a hit (playtests, "p2 freeze ... unless he gets hit"). His 45 and 47 in their place */
+            uint32_t tb = rd32(o + pos, 0x10);
+            if (tb + 4 * 201 <= e2 - a) { static const uint8_t al[2][2] = { { 199, 45 }, { 200, 47 } }; int q;
+                for (q = 0; q < 2; q++) if (!rd32(o + pos, tb + 4 * al[q][0]) && rd32(o + pos, tb + 4 * al[q][1])) { wr32(o + pos, tb + 4 * al[q][0], rd32(o + pos, tb + 4 * al[q][1])); tt_dbg("[HEROES] co-op: his clip %u is his %u (he has none, the machine plays it)\n", al[q][0], al[q][1]); } } }
         if (adds[k].map) remap_bones(o + pos, e2 - a, adds[k].map, adds[k].nmap);
         if (adds[k].tint && (adds[k].type == 300 || adds[k].type == 1250) && e2 - a > 0x88 && (rd32(o + pos, 0xC) & 0xFF) == 0x11) {
             /* Sting lit: its bright metal (the blade) a pale, glowing blue

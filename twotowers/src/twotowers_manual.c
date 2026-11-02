@@ -4856,7 +4856,7 @@ static void coop_place(void)
             bh[j].hp = hp; }
     }
     coop_pm_probe(p1); coop_pm_log(p1); coop_trail_frame(p1); coop_steps_frame(p1); { extern void coop_own_machines_x(void); coop_own_machines_x(); } { extern void coop_pdmg_frame_x(void); coop_pdmg_frame_x(); }
-    if (p1 >= 0x10000u && a >= 0x10000u) { static uint32_t ls[2]; static int n; int w; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, st = MEM32(h + 0x408); if (st != ls[w]) { ls[w] = st; if (n++ < 3000) tt_dbg("[STLOG] t %u P%d state %u anim %08X\n", coop_now(), w + 1, st, MEM32(h + 0x3F8)); } } }   /* (research) each hero's state changes, for how long his attacks take */
+    if (p1 >= 0x10000u && a >= 0x10000u) { static uint32_t ls[2]; static int n; int w; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, st = MEM32(h + 0x408); if (st != ls[w]) { ls[w] = st; if (n++ < 3000) tt_dbg("[STLOG] t %u P%d state %u anim %08X\n", coop_now(), w + 1, st, MEM32(h + 0x3F8)); } } { static uint32_t lc[2]; static int nc; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x41C); if (c != lc[w]) { lc[w] = c; if (nc++ < 6000) tt_dbg("[STCUR] t %u P%d now in %u (from %u)\n", coop_now(), w + 1, c, MEM32(h + 0x408)); } } } }   /* (research) each hero's state changes, for how long his attacks take */
     if (getenv("TT_COOP_AIMHEAD") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero while he aims: his heading and turn fields against the bearing to his lock */
         static uint32_t lt; int w; if (coop_now() - lt >= 100u) { lt = coop_now(); for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
             if ((MEM32(r + 0x34u) & 0x4000u) || MEM32(h + 0x408) == 26u || MEM32(h + 0x408) == 27u || MEM32(h + 0x408) == 29u) { int ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u; float dx = ok ? MEMF(t + 0xF0) - MEMF(h + 0xF0) : 0, dy = ok ? MEMF(t + 0xF4) - MEMF(h + 0xF4) : 0, dz = ok ? MEMF(t + 0xF8) - MEMF(h + 0xF8) : 0;
@@ -5696,20 +5696,21 @@ static void coop_hero_state(uint32_t a, uint32_t st)   /* the hero's state machi
  * fierce-attack steps 11, 46 and 49 played a looping animation (INP_LOOPED, 11, every 0.67 s and left pending), the state
  * took only INP_RUN and INP_EXPIRED (its +0x410 0x42000000) and EXPIRED never came: he stood in a pose until a hit (bot runs,
  * 12-25 s; a playtest: "p2 freeze ... he stays in a pose until he gets hits unable to move"). Player 1 never entered those
- * states (11 loops into itself, restarting its time). After 3 s in one of those four, INP_EXPIRED is raised for him (the
- * end of a one-shot animation), and from the third second on INP_TAKEDAMAGE (a hit always freed him).
+ * states (11 loops into itself, restarting its time). The cause was states 56 and 57 with clips he didn't have (heroes.c: his 45 and
+ * 47 there now); this stays as the net. After 2 s in one of them, INP_EXPIRED is raised for him (the end of a one-shot
+ * animation), a second later INP_TAKEDAMAGE (a hit always freed him).
  * TT_COOP_NOP2UNSTICK: as before */
 static void coop_p2_unstick(void)
 {
     static uint32_t lt, st = ~0u, st_t; static int tries; uint32_t a = coop_p2, s;
     if (coop_mode() != 3 || a < 0x10000u || coop_hero_down(1) || coop_depth || getenv("TT_COOP_NOP2UNSTICK")) return;
-    s = MEM32(a + 0x408);
+    s = MEM32(a + 0x41C);   /* (his state now: +0x408, read here before, is the one he came from, so a run after an attack counted and a freeze in 56 or 57 didn't. Weathertop, bot runs: these end in 1.1 s at most, or 57 and 56 not at all) */
     if (s != st) { st = s; st_t = coop_now(); tries = 0; return; }
-    if ((s == 11u || s == 13u || s == 46u || s == 49u) && coop_now() - st_t > 3000u && coop_now() - lt > 1000u) {
-        uint32_t in = tries < 2 ? 30u : 5u;   /* (INP_EXPIRED twice, then INP_TAKEDAMAGE: a hit always freed him) */
+    if ((s == 11u || s == 13u || s == 46u || s == 49u || s == 56u || s == 57u) && coop_now() - st_t > 2000u && coop_now() - lt > 1000u) {
+        uint32_t in = tries < 1 ? 30u : 5u;   /* (INP_EXPIRED, then INP_TAKEDAMAGE: a hit always freed him) */
         lt = coop_now(); tries++;
-        { static int n; if (n++ < 30) tt_dbg("[COOPSTUCK] player 2 %.1f s in state %u (accepts %08X %08X, pending %08X %08X): input %u raised\n",
-            (coop_now() - st_t) / 1000.0f, s, MEM32(a + 0x414), MEM32(a + 0x410), MEM32(a + 0x3E4), MEM32(a + 0x3E0), in); }
+        { static int n; if (n++ < 30) tt_dbg("[COOPSTUCK] player 2 %.1f s since state %u, now in %u time %.2f (inputs at its start %08X %08X, pending %08X %08X): input %u raised\n",
+            (coop_now() - st_t) / 1000.0f, s, MEM32(a + 0x41C), MEMF(a + 0x420), MEM32(a + 0x414), MEM32(a + 0x410), MEM32(a + 0x3E4), MEM32(a + 0x3E0), in); }
         coop_hero_state(a, in);
     }
 }
