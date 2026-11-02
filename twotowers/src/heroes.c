@@ -5480,6 +5480,17 @@ static uint32_t key_type(uint32_t (*t)[2], uint32_t n, uint32_t key)
  * name with "Hero" in it -- and every reference to its keys -> the skin's */
 /* co-op: player 2's pairs (the level's hero keys -> his skin's, for the twin's record and weapons) and his resources in
  * the player's pack. hero: the keys the level's hero has now (the hero's own, or a guest's as player 1 after his swap) */
+static uint32_t s_cast_va[3], s_cast_old[3], s_cast_new[3]; static int s_cast_n;
+/* a level with no player's pack (Westfold, the Deeping Wall, the Gates of Moria and others: their lists are cutscenes' casts, cine_1_Intro,
+ * cine_4_Outro): the list that names player 2's keys for the load goes back once his twin is built, or that cutscene shows him
+ * (a playtest). TT_COOP_NOCASTBACK: as before */
+void tt_coop_cast_back(void)
+{
+    int k;
+    if (s_cast_n && !getenv("TT_COOP_NOCASTBACK")) tt_dbg("[HEROES] co-op: the cutscene's list back to the hero's keys (%d)\n", s_cast_n);
+    if (!getenv("TT_COOP_NOCASTBACK")) for (k = 0; k < s_cast_n; k++) if (G32(s_cast_va[k]) == s_cast_new[k]) G32(s_cast_va[k]) = s_cast_old[k];
+    s_cast_n = 0;
+}
 static void coop_pairs_apply(const uint32_t *hero, const uint32_t *to, int sk)
 {
     uint32_t va, n = G32(s_buf + 4), cnt = G32(s_buf + n);
@@ -5509,14 +5520,17 @@ static void coop_pairs_apply(const uint32_t *hero, const uint32_t *to, int sk)
                 if (!first) first = va;
                 if (want && bkey == want && !pick) pick = va;
             }
-            if (!pick) pick = first;
+            s_cast_n = 0;
+            { int cast = !pick; if (!pick) pick = first;
             for (va = pick; va && va + 0x10 <= s_buf + n && done < lists; va += 4) {
                 if (G32(va) != hero[2] || G32(va - 4) >= 0x100u || G32(va + 4) >= 0x100u || G32(va + 8) != hero[1]) continue;   /* {.., n, tex, n-1, anim, n-2, mesh} */
+                if (cast) { uint32_t q; for (q = 0; q < 3; q++) { s_cast_va[q] = va + q * 8; s_cast_old[q] = G32(va + q * 8); } s_cast_n = 3; }
                 G32(va) = to[2];
                 if (s_native && to[1] != hero[1]) G32(va + 8) = to[1];   /* his own animation set (native: his skeleton, his composed moves) */
                 if ((s_native || getenv("TT_COOP_SKINLISTMESH")) && G32(va + 0x10) == hero[0]) G32(va + 0x10) = to[0];
+                if (cast) { int q; for (q = 0; q < 3; q++) s_cast_new[q] = G32(s_cast_va[q]); }
                 tt_dbg("[HEROES] co-op: resource list at +%X: texture %08X -> %08X%s\n", va - s_buf, hero[2], to[2], s_native ? ", animations and model too (native)" : ""); done++;
-            }
+            } }
         }
 }
 static void skin_apply_one(void);

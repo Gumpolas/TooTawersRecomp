@@ -4517,6 +4517,7 @@ void sub_000F5BC0(void)
             PUSH32(esp, tkey); PUSH32(esp, trec); PUSH32(esp, 0x000F5BC0u); ecx = w;
             sub_000F5BC0_gen();   /* ret 8 */
             while (coop_skin_nsw > 0) { coop_skin_nsw--; MEM32(coop_skin_sw[coop_skin_nsw][0]) = coop_skin_sw[coop_skin_nsw][1]; }   /* player 1's record as it was */
+            { extern void tt_coop_cast_back(void); tt_coop_cast_back(); }
             coop_twin = coop_last_char;
             if (coop_twin >= 0x10000u && MEM32(coop_twin + 0x114) == 1 && !getenv("TT_COOP_TWIN_P1")) MEM32(coop_twin + 0x114) = 2;   /* TT_COOP_TWIN_P1 (testing): leave it, the twin becomes player 1 */   /* so the loader's walk keeps the original as player 1 (it takes the first +114 == 1) */
             tt_dbg("[COOP2] twin built during the load: %08X (vt %08X +114 %u), player 1's record gave %08X; esp %s\n", coop_twin,
