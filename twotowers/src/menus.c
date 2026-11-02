@@ -1488,6 +1488,29 @@ static void coop_pause_tele_pad(unsigned long port, XState *st)
         prevy[port] = y; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevy[port] = st->Gamepad.bAnalogButtons[3] > 30;
 }
+/* (bot test, TT_COOP_TESTPAD=ms:S,ms:D,...) a second controller's presses for the menus' merge, 150 ms each from the launch: S Start, D down, A, B.
+ * With it the merge runs as with a person on player 2 (the test scripts turn that off) */
+static int coop_test_pad(XState *o)
+{
+    static DWORD t0; DWORD now; const char *e = getenv("TT_COOP_TESTPAD"), *p; int got = 0;
+    if (!e) return 0;
+    if (!t0) t0 = GetTickCount();
+    now = GetTickCount() - t0; memset(o, 0, sizeof *o);
+    for (p = e; *p; ) { unsigned long ms = strtoul(p, (char **)&p, 10); char c = *p == ':' ? p[1] : 0; if (c) p += 2; if (*p == ',') p++;
+        if (now >= ms && now < ms + 150u) { got = 1; if (c == 'S') o->Gamepad.wButtons |= PAD_START; else if (c == 'D') o->Gamepad.wButtons |= PAD_DOWN; else if (c == 'A') o->Gamepad.bAnalogButtons[0] = 255; else if (c == 'B') o->Gamepad.bAnalogButtons[1] = 255; }
+        if (!c) break; }
+    o->dwPacketNumber = now / 16u;
+    return 1;
+}
+/* the pause list's Show Upgrades Player 2 (twotowers_manual.c): A on it is the game's Show Upgrades with his hero in */
+static void coop_pause_p2upg_pad(unsigned long port, XState *st)
+{
+    extern void tt_coop_p2upg_go(void); static int prev[4]; int a;
+    if (port >= 4) return;
+    a = st->Gamepad.bAnalogButtons[0] > 30;
+    if (a && !prev[port] && coop_paused_now() && G32(0x4B5800u) == 3u && G32(0x4B5808u) == 4u) { tt_coop_p2upg_go(); G32(0x4B5800u) = 2u; }
+    prev[port] = a;
+}
 static void vs_pause_restart_pad(unsigned long port, XState *st)
 {
     static WORD prevb[4];
@@ -1620,10 +1643,12 @@ static void pad_filter(unsigned long port, XState *st)
         /* (the packet number moves with what is added, or the game sees no change) */
         st->dwPacketNumber += s_inj_serial << 20;
     }
-    if (port == 0 && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too */
+    if (port == (G32(0x1CB8B4u) & 3u) && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too. (On the port the menus read,
+         * the game's primary pad [0x1CB8B4], and the other's merged: on port 0 alone, with the primary on the other, his presses went nowhere: a playtest, his directions dead) */
         extern DWORD xbox_InputGetState(DWORD port, void *state);
-        XState s2; int k;
-        if (xbox_InputGetState(1, &s2) == 0) {
+        XState s2; int k; DWORD other = port ? 0 : 1;
+        { static int n; if (port && n++ < 4) tt_dbg("[P2SELECT] the menus read port %lu: player 2's turn merges port %lu\n", port, other); }
+        if (xbox_InputGetState(other, &s2) == 0) {
             st->Gamepad.wButtons |= s2.Gamepad.wButtons;
             for (k = 0; k < 8; k++) if (s2.Gamepad.bAnalogButtons[k] > st->Gamepad.bAnalogButtons[k]) st->Gamepad.bAnalogButtons[k] = s2.Gamepad.bAnalogButtons[k];
             if (abs(s2.Gamepad.sThumbLX) > abs(st->Gamepad.sThumbLX)) st->Gamepad.sThumbLX = s2.Gamepad.sThumbLX;
@@ -1691,13 +1716,31 @@ static void pad_filter(unsigned long port, XState *st)
         /* (and every other front-end screen while co-op splits the devices: the one controller went to player 2, and the load
          * screen and the main menu then heard only player 1's keyboard -- a playtest: "p2 lose input as soon as he leaves coop
          * menu"; not in play, 6 / 8, nor on the stats and shops, 9 / 10, which are each player's in turn) */
-        if ((tt_opt_coop_page() || (xbox_input_two_players && fe != 6 && fe != 8 && fe != 9 && fe != 10)) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
+        {   /* (who pressed B on a menu, and whether the menus heard it: a playtest, "sometimes" no way back on a menu screen) */
+            static int was[4]; uint32_t pl = G32(0x4AD054u); int paused0 = (fe == 6 || fe == 8) && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0; { extern int coop_is_gameover(void); if ((fe == 6 || fe == 8) && coop_is_gameover()) paused0 = 2; }
+            if (xbox_input_two_players && port == (prim < 4u ? prim : 0u) && ((fe != 6 && fe != 8) || paused0)) { unsigned long q; for (q = 0; q < 4; q++) { XState s3; int down;
+                s_pad_merging = 1; down = xbox_InputGetState((DWORD)q, &s3) == 0 && s3.Gamepad.bAnalogButtons[1] > 30; s_pad_merging = 0;
+                if (down && !was[q]) { static int n; if (n++ < 200) tt_dbg("[MENUBACK] screen %u paused %d: B on port %lu; the menus read port %lu%s\n", fe, paused0, q, port, q == port || paused0 || (fe != 9 && fe != 10) ? "" : " (not heard: this screen hears one pad)"); }
+                was[q] = down; } } }
+        /* (the pause menu too, screen 6 or 8 with the pause list up: only the pad on player 1's port could leave it) */
+        {   uint32_t pl2 = G32(0x4AD054u); int paused = (fe == 6 || fe == 8) && pl2 >= 0x10000u && pl2 < 0x04000000u && (G32(pl2 + 0x4DDCu) & 0xFFu) != 0 && !getenv("TT_COOP_PAUSEONEPAD");
+        {   extern int coop_is_gameover(void); if ((fe == 6 || fe == 8) && coop_is_gameover() && !getenv("TT_COOP_PAUSEONEPAD")) paused = 1; }   /* (the game over menu, Replay / Exit: the screen stays 6, no pause flag; only player 1's pad could answer it: a playtest) */
+        /* (the shop opened from the pause, either player's page: not a turn after a level, so every pad, as the pause; a playtest. Player 2's Start in play pauses
+         * as player 1's: only that button, not in a cutscene, where it would skip the scene) */
+        static uint32_t befshop; extern int tt_vs_on(void); extern int tt_in_scene(void);
+        int two = xbox_input_two_players || getenv("TT_COOP_TESTPAD") != NULL, pshop, p2start;
+        if (fe != 10) befshop = fe;
+        { extern int tt_coop_post_ph; extern int tt_coop_post_on(void); pshop = fe == 10 && (befshop == 6 || befshop == 8 || (tt_coop_post_on() && tt_coop_post_ph == 3)); }   /* (and player 2's shop after a level: his turn, his pad too, a playtest) */
+        p2start = two && (fe == 6 || fe == 8) && !paused && !tt_vs_on() && !tt_in_scene() && !tt_opt_coop_page();
+        if ((tt_opt_coop_page() || (two && ((fe != 6 && fe != 8 && fe != 9 && fe != 10) || paused || pshop)) || p2start) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
             unsigned long q; int k, got;
             for (q = 0; q < 4; q++) { XState s2;
                 if (q == port) continue;
-                s_pad_merging = 1; got = xbox_InputGetState((DWORD)q, &s2) == 0; s_pad_merging = 0;   /* (raw: this filter would run for that port too,
+                if (getenv("TT_COOP_TESTPAD")) { got = q == 1 && coop_test_pad(&s2); }
+                else { s_pad_merging = 1; got = xbox_InputGetState((DWORD)q, &s2) == 0; s_pad_merging = 0; }   /* (raw: this filter would run for that port too,
                                                                                                          * and its idle read took the place of player 1's press -- a bot run) */
                 if (!got) continue;
+                if (p2start) { if (s2.Gamepad.wButtons & PAD_START) { static uint32_t lt; st->Gamepad.wButtons |= PAD_START; st->dwPacketNumber += s2.dwPacketNumber << (8 + 4 * q); if (GetTickCount() - lt > 1000u) { lt = GetTickCount(); tt_dbg("[MENUMERGE] port %lu's Start pauses the game\n", q); } } continue; }
                 if (s2.Gamepad.wButtons && !tt_opt_coop_page()) { static uint32_t lt; if (GetTickCount() - lt > 2000u) { lt = GetTickCount();
                     tt_dbg("[MENUMERGE] screen %u: port %lu's buttons %04X go to the menus (player 1 on port %lu)\n", fe, q, s2.Gamepad.wButtons, port); } }
                 st->Gamepad.wButtons |= s2.Gamepad.wButtons;
@@ -1706,8 +1749,9 @@ static void pad_filter(unsigned long port, XState *st)
                 if (abs(s2.Gamepad.sThumbLY) > abs(st->Gamepad.sThumbLY)) st->Gamepad.sThumbLY = s2.Gamepad.sThumbLY;
                 st->dwPacketNumber += s2.dwPacketNumber << (8 + 4 * q);
             }
-        }
+        } }
     }
+    coop_pause_p2upg_pad(port, st);   /* (after the merge: every pad's A) */
     {   /* the Options pages of ours (options.c) */
         extern void tt_opt_filter(unsigned long port, XState *st);
         tt_opt_filter(port, st);

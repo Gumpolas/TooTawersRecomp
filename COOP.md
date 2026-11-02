@@ -44,7 +44,7 @@ Co-op is built with the port: see the README's [Building from source](README.md#
 | Player Icons | Off, On | "P1" / "P2" over the heroes' heads, dimmed when something is drawn in front of the head (Direct3D 11 only) |
 | Camera Zoom | Off, Normal, Wide | The shared camera zooms out as the heroes part, up to 1.3 (Normal) or 1.5 (Wide). **Recommended: Normal or Wide** in the levels, so both heroes stay in view |
 | P2 Teleport | Off, On | Player 2's hero is put beside player 1's after falling too far behind |
-| P2 Bot | Off, When Idle, Always | The game plays player 2 (a stopgap AI, below). When Idle: any input on player 2's controller hands it to the player for 3 s; Always: the controller is ignored *(1.9.8)* |
+| P2 Bot | Off, On | The game plays player 2 (a stopgap AI, below). On: the controller is ignored. |
 | P2 Controls | (a page) | Player 2's own controller buttons. Co-op menu and Options *(1.9.8)* |
 | Pickups | Normal, Double | Double: a health or ammo pickup can be taken twice, once by each hero (the second at least 1.5 s after the first). Options page only *(1.9.6)* |
 | P1 Device, P2 Device | Automatic, Keyboard & Mouse, a controller | Each player's device (above). Options page only *(1.9.6)* |
