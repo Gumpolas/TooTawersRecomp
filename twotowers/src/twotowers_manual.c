@@ -4214,6 +4214,7 @@ static struct { uint32_t a, n; } coop_blk[] = {
     { 0x43B240u, 8 }, { 0x43B25Cu, 8 }, { 0x43B3DAu, 1 },
     { 0x43B264u, 0x20 }, { 0x43B0FCu, 4 },
     { 0x1B0C38u, 4 }, { 0x1B1074u, 1 },   /* (the aim pick's best so far, 0x5A150, and the lock marker's flag, 0x97B10 / 0x97E60: each player's) */
+    { 0x43BB08u, 0x60 },   /* (the heading controller 0xC1710's own values) */
     { 0x1B107Cu, 4 }, { 0x1B10A4u, 8 }, { 0x43B220u, 4 }, { 0x43B390u, 8 }, { 0x43B3BCu, 8 }, { 0x43B3DCu, 0x14 },   /* (the moves' own timers and flags, each written and read by the step alone: 98D50, 984A0, 9A640, 97E60, 9C380: a scan of what the step reaches outside this list) */
     { 0x43B100u, 0x14 } };   /* (the aim's own direction: [0x43B110] set and the camera's heading kept in [0x43B10C] as a hero starts to aim (0x97E10), read by the pick 0x5A150 and
                            * the control step 0x99140. Shared, the step of the hero not aiming cleared the other's: player 1 could not aim at a thing while player 2 lay down
@@ -11420,6 +11421,18 @@ void sub_0005A150(void)
         if (strip) { uint32_t r0 = eax; for (i = 0; i < n; i++) MEM32(0x411510u + 4 * i) = saved[i]; MEM32(0x411850u) = n; eax = r0;
             if (getenv("TT_COOP_AIMALLYLOG") && cut) { static uint32_t lt; if (coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[COOPAIM] %s's pick: %u of %u left out (allies), lock now %08X\n", h == coop_first_char ? "P1" : "P2", cut, n, MEM32(MEM32(h + 0x494) + 0x98)); } } }
     }
+    if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
+}
+/* the hero's heading controller (a virtual method; ret 4; its argument's +8 the hero; the only caller of the set-heading 0x85E90). For the current player it takes the aim's
+ * lock and turns him to it (from 0xC1CF7); anyone else keeps his heading (from 0xC1F87). It ran in player 1's context, so player 2 aiming never turned: his heading moved in
+ * 1 of 464 samples, player 1's in 109 of 455, from 0.36 rad off his lock to 0.03 (bot runs; the owner: orientation and pitch follow the lock). In his context while he
+ * holds LT; walking stays as it was. TT_COOP_NOP2AIMTURN: as before */
+extern void sub_000C1710_gen(void);
+void sub_000C1710(void)
+{
+    uint32_t o = MEM32(esp + 4), r1 = ecx, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 8) : 0; int sw = 0;
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && h == coop_p2 && !coop_depth && !tt_vs_on() && (MEM32(COOP_PADREC(1u) + 0x34u) & 0x4000u) && !getenv("TT_COOP_NOP2AIMTURN")) { sw = tt_coop_enter_ctx(); ecx = r1; }
+    sub_000C1710_gen();
     if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
 }
 /* the other aim pick (thiscall on the arbitration, the actor's index; ret 4; from 0x5A920 for each actor): as 0x5A150, the camera's or aim's heading plus the stick, and the
