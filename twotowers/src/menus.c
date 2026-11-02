@@ -1517,7 +1517,7 @@ static void coop_pause_tele_pad(unsigned long port, XState *st)
         prevy[port] = y; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevy[port] = st->Gamepad.bAnalogButtons[3] > 30;
 }
-/* (bot test, TT_COOP_TESTPAD=ms:S,ms:D,...) a second controller's presses for the menus' merge, 150 ms each from the launch: S Start, D down, A, B.
+/* (bot test, TT_COOP_TESTPAD=ms:S,ms:D,...) a second controller's presses for the menus' merge, 150 ms each from the launch: S Start, D down, L left, A, B.
  * With it the merge runs as with a person on player 2 (the test scripts turn that off) */
 static int coop_test_pad(XState *o)
 {
@@ -1526,7 +1526,7 @@ static int coop_test_pad(XState *o)
     if (!t0) t0 = GetTickCount();
     now = GetTickCount() - t0; memset(o, 0, sizeof *o);
     for (p = e; *p; ) { unsigned long ms = strtoul(p, (char **)&p, 10); char c = *p == ':' ? p[1] : 0; if (c) p += 2; if (*p == ',') p++;
-        if (now >= ms && now < ms + 150u) { got = 1; if (c == 'S') o->Gamepad.wButtons |= PAD_START; else if (c == 'D') o->Gamepad.wButtons |= PAD_DOWN; else if (c == 'A') o->Gamepad.bAnalogButtons[0] = 255; else if (c == 'B') o->Gamepad.bAnalogButtons[1] = 255; }
+        if (now >= ms && now < ms + 150u) { got = 1; if (c == 'S') o->Gamepad.wButtons |= PAD_START; else if (c == 'D') o->Gamepad.wButtons |= PAD_DOWN; else if (c == 'L') o->Gamepad.wButtons |= PAD_LEFT; else if (c == 'A') o->Gamepad.bAnalogButtons[0] = 255; else if (c == 'B') o->Gamepad.bAnalogButtons[1] = 255; }
         if (!c) break; }
     o->dwPacketNumber = now / 16u;
     return 1;
@@ -1759,7 +1759,7 @@ static void pad_filter(unsigned long port, XState *st)
         static uint32_t befshop; extern int tt_vs_on(void); extern int tt_in_scene(void);
         int two = xbox_input_two_players || getenv("TT_COOP_TESTPAD") != NULL, pshop, p2start;
         if (fe != 10) befshop = fe;
-        { extern int tt_coop_post_ph; extern int tt_coop_post_on(void); pshop = fe == 10 && (befshop == 6 || befshop == 8 || (tt_coop_post_on() && tt_coop_post_ph == 3)); }   /* (and player 2's shop after a level: his turn, his pad too, a playtest) */
+        { extern int tt_coop_post_ph; extern int tt_coop_post_on(void); pshop = (fe == 10 && (befshop == 6 || befshop == 8 || (tt_coop_post_on() && tt_coop_post_ph == 3))) || (fe == 9 && tt_coop_post_on() && tt_coop_post_ph == 1); }   /* (and player 2's stats and shop after a level: his turn, his pad too, a playtest) */
         p2start = two && (fe == 6 || fe == 8) && !paused && !tt_vs_on() && !tt_in_scene() && !tt_opt_coop_page();
         if ((tt_opt_coop_page() || (two && ((fe != 6 && fe != 8 && fe != 9 && fe != 10) || paused || pshop)) || p2start) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
             unsigned long q; int k, got;
@@ -1769,6 +1769,7 @@ static void pad_filter(unsigned long port, XState *st)
                 else { s_pad_merging = 1; got = xbox_InputGetState((DWORD)q, &s2) == 0; s_pad_merging = 0; }   /* (raw: this filter would run for that port too,
                                                                                                          * and its idle read took the place of player 1's press -- a bot run) */
                 if (!got) continue;
+                if (pshop && befshop != 6 && befshop != 8 && (fe == 9 || G32(0x4AD050u + 0xA008u) != 0 || G32(0x4AD050u + 0xA00Cu) == 1)) { s2.Gamepad.wButtons &= (uint16_t)~PAD_LEFT; if (s2.Gamepad.sThumbLX < -8000) s2.Gamepad.sThumbLX = 0; }   /* (his left to the hidden Replay held back too: the check above came before this merge) */
                 if (p2start) { if (s2.Gamepad.wButtons & PAD_START) { static uint32_t lt; st->Gamepad.wButtons |= PAD_START; st->dwPacketNumber += s2.dwPacketNumber << (8 + 4 * q); if (GetTickCount() - lt > 1000u) { lt = GetTickCount(); tt_dbg("[MENUMERGE] port %lu's Start pauses the game\n", q); } } continue; }
                 if (s2.Gamepad.wButtons && !tt_opt_coop_page()) { static uint32_t lt; if (GetTickCount() - lt > 2000u) { lt = GetTickCount();
                     tt_dbg("[MENUMERGE] screen %u: port %lu's buttons %04X go to the menus (player 1 on port %lu)\n", fe, q, s2.Gamepad.wButtons, port); } }
