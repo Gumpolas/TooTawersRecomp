@@ -3455,7 +3455,9 @@ static int coop_bot_pad_free(CoopPad *o, uint32_t now)
     static uint32_t human_t;
     int i, any;
     if (tt_coop_setting(4) == 2) return 1;   /* Always */
-    any = o->buttons != 0 || o->lx > 5000 || o->lx < -5000 || o->ly > 5000 || o->ly < -5000 || o->rx > 5000 || o->rx < -5000 || o->ry > 5000 || o->ry < -5000;   /* (5000: a gentle walk, 6000 in a bot run, was under 8000 and the bot cut in; still above a resting stick's drift) */
+    {   /* (how far the stick is pushed, any way, past 2000: each axis past 5000 left a gentle push out, a diagonal one above all, and 3 s on the bot wiped it and took him, a playtest. The dead zone has taken a resting stick's drift already) */
+        float l2 = (float)o->lx * o->lx + (float)o->ly * o->ly, r2 = (float)o->rx * o->rx + (float)o->ry * o->ry;
+        any = o->buttons != 0 || l2 > 4000000.0f || r2 > 4000000.0f; }
     for (i = 0; i < 8; i++) if (o->analog[i] > 30) any = 1;
     if (any) { if (!human_t || now - human_t > 3000) tt_dbg("[P2BOT] pad 2 used: the player's for 3 s\n"); human_t = now ? now : 1; }   /* (not now | 1: on an even
         * millisecond that is now + 1, now - human_t wrapped round to over 4 billion and the bot took the frame -- with the stick held, every other
@@ -9480,6 +9482,7 @@ void sub_0009C380(void)
     }
     if (getenv("TT_COOP_TURNLOG") && coop_p2 >= 0x10000u && p1 >= 0x10000u) {   /* (research) each hero's facing, state and stick, every frame */
         uint32_t r1 = 0x6B2758u + 0x14Cu * 0u, r2 = 0x6B2758u + 0x14Cu * 1u;
+        tt_dbg("[TURNXY] t %u P1 %.3f %.3f now %u y %u P2 %.3f %.3f now %u y %u\n", coop_now(), MEMF(p1 + 0xF0), MEMF(p1 + 0xF4), MEM32(p1 + 0x41C), MEM8(r1 + 5), MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEM32(coop_p2 + 0x41C), MEM8(r2 + 5));
         tt_dbg("[TURN] t %u dt %.4f | P1 f %.3f %.3f %.3f st %u stick %.2f %.2f ts %.3f %.3f (%08X) | P2 f %.3f %.3f %.3f st %u stick %.2f %.2f ts %.3f %.3f (%08X)\n", coop_now(), *(float *)&(uint32_t){ MEM32(0x1B0C54u) },
                MEMF(p1 + 0x70), MEMF(p1 + 0x74), MEMF(p1 + 0x78), MEM32(p1 + 0x408), MEMF(r1 + 0x14), MEMF(r1 + 0x18), MEM32(p1 + 0x164) >= 0x10000u ? MEMF(MEM32(p1 + 0x164) + 0x34) : 0.0f, MEM32(p1 + 0x164) >= 0x10000u ? MEMF(MEM32(p1 + 0x164) + 0x38) : 0.0f, MEM32(p1 + 0x164),
                MEMF(coop_p2 + 0x70), MEMF(coop_p2 + 0x74), MEMF(coop_p2 + 0x78), MEM32(coop_p2 + 0x408), MEMF(r2 + 0x14), MEMF(r2 + 0x18), MEM32(coop_p2 + 0x164) >= 0x10000u ? MEMF(MEM32(coop_p2 + 0x164) + 0x34) : 0.0f, MEM32(coop_p2 + 0x164) >= 0x10000u ? MEMF(MEM32(coop_p2 + 0x164) + 0x38) : 0.0f, MEM32(coop_p2 + 0x164));
