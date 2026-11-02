@@ -5772,7 +5772,7 @@ void sub_00053090(void)
     sub_00053090_gen();
 }
 uint32_t coop_down_time(void) { return coop_down[1] ? coop_now() - coop_down_t[1] : coop_down[0] ? coop_now() - coop_down_t[0] : 0; }   /* the downed hero's time down (player 2's first) */
-static int coop_gameover; static uint32_t coop_gameover_t; int coop_end_seen; unsigned coop_herohits[2];
+static int coop_gameover, coop_last_p2; static uint32_t coop_gameover_t; int coop_end_seen; unsigned coop_herohits[2];
 int coop_is_gameover(void) { return coop_gameover; }
 int tt_coop_post_on(void) { return coop_mode() == 3 && coop_p2 >= 0x10000u; }
 int tt_coop_post_ph;   /* the post-level screens' phase (the tick above): 0 player 1's stats, 1 player 2's stats, 2 player 1's shop, 3 player 2's shop */   /* (the main-loop tick, above: player 2's post-level screens) */
@@ -5842,6 +5842,12 @@ static void coop_p1_real_death(void)   /* the game's own player death: die metho
         if (cam >= 0x10000u && cam < 0x84000000u && !MEM8(cam + 0x18B) && !getenv("TT_COOP_NODEATHCAMON")) { MEM8(cam + 0x18B) = 1; tt_dbg("[COOPDEATH] game over: the level had the death cam off (camera +18B 0): on\n"); }
     }
     coop_real_death_done = 1;
+    if (coop_last_p2 && coop_p2 >= 0x10000u) {   /* player 2 the last one down: the die method on him, with him the player: the game's own death, its slow motion and the death cam on him (on player 1 it showed the spot where player 1 lay, player 2's death off screen: a playtest) */
+        extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void); int sw = tt_coop_enter_ctx();
+        tt_dbg("[COOPDEATH] game over: player 2's death (die method, death cam, player %08X)\n", MEM32(0x43B15Cu));
+        MEM32(coop_p2 + 0x2FC) = 0; PUSH32(esp, 0x000838E0u); ecx = coop_p2; sub_000838E0_gen();
+        if (sw) tt_coop_leave();
+        esp = sp; eax = r0; ecx = r1; edx = r2; return; }
     tt_dbg("[COOPDEATH] game over: player 1's death (die method, death cam)\n");
     PUSH32(esp, 0x000838E0u); ecx = coop_first_char; sub_000838E0_gen();
     esp = sp; eax = r0; ecx = r1; edx = r2;
@@ -5863,7 +5869,7 @@ void coop_p2_down_now(void)   /* player 2 goes down (health 0 seen in coop_death
     { int k; for (k = 0; k < coop_np2w && k < 16; k++) coop_p2w_vis[k] = coop_p2w[k] >= 0x10000u ? MEM32(coop_p2w[k] + 0x110) & 0x21000u : 0; coop_p2w_vis_n = coop_np2w; }   /* (1.9.9: which of his weapons were drawn, for his respawn) */
     coop_down[1] = 1; coop_down_t[1] = coop_now(); MEM32(coop_p2 + 0x2FC) = getenv("TT_COOP_NOHPGUARD") ? 0 : 1;
     if (tt_vs_on()) return;   /* (Versus: the round ends, vs_frame) */
-    if (coop_down[0]) { tt_dbg("[COOPDEATH] P2 down while P1 is down: game over (player 1's own death)\n"); coop_p1_real_death(); return; }
+    if (coop_down[0]) { tt_dbg("[COOPDEATH] P2 down while P1 is down: game over (player 1's own death)\n"); coop_last_p2 = !getenv("TT_COOP_NOP2LASTCAM"); coop_p1_real_death(); return; }
     tt_dbg("[COOPDEATH] P2 down: respawn in %u ms\n", wait);
 }
 void coop_p1_down_now(void)   /* player 1 goes down while player 2 is up (the health guard: a hit that would take him to 0) */
@@ -7848,6 +7854,11 @@ static void coop_death_frame(void)
     static uint32_t tlog;
     if (coop_mode() != 3 || a < 0x10000u || getenv("TT_COOP_NODEATH")) return;
     if (coop_gameover) {
+        if (coop_down[1] && !coop_last_p2 && !getenv("TT_COOP_NOP2LASTDEATH")) {   /* player 2 the last one down: the game over is player 1's own death, and coop_down_pose stops with it: he stood there (a playtest). His death: INP_DIE, as coop_down_pose raises it, again if a blow's state took it */
+            static uint32_t lt; static int tr; static unsigned lv = ~0u; uint32_t st = MEM32(a + 0x408);
+            if (lv != coop_level_n) { lv = coop_level_n; tr = 0; lt = 0; }
+            if (st != 44 && st != 45 && st != 46 && st != 50 && tr < 8 && (!lt || now - lt > 700u)) { lt = now | 1; tr++; coop_hero_state(a, 1u); tt_dbg("[COOPDEATH] game over: player 2's death (try %d, state %u)\n", tr, st); }
+        }
         if (coop_real_death_pending && !coop_depth && MEM32(0x43B15Cu) == coop_first_char) coop_p1_real_death();
         if (coop_gameover_t && !coop_end_seen && now - coop_gameover_t > (getenv("TT_COOP_GAMEOVERWAIT") ? (uint32_t)atoi(getenv("TT_COOP_GAMEOVERWAIT")) : 20000u)) {   /* the death cam didn't end it: EndMission(5) (0xF1230) */
             uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx; coop_gameover_t = 0; tt_dbg("[COOPDEATH] game over: EndMission(5)\n");
@@ -12641,7 +12652,7 @@ void coop_level_reset(void)
     coop_rec_addr = 0; coop_p2rec_ok = 0; coop_p2pop_until = 0; coop_p2_wpnarg_p1 = 0;   /* (player 1's weapon name: the level's script data) */ { extern uint32_t coop_lurtz_p2_hits; coop_lurtz_p2_hits = 0; }
     if (coop_p2rec_mem) { uint32_t j; for (j = 0; j < 0x400u; j += 4) MEM32(coop_p2rec_mem + j) = 0; }   /* (his gauge's copy, ours: zeroed again, or the next co-op level refused it as in use and showed no gauge) */
     memset(coop_down, 0, sizeof coop_down); memset(coop_down_t, 0, sizeof coop_down_t); memset(coop_upwatch, 0, sizeof coop_upwatch);
-    coop_gameover = 0; coop_gameover_t = 0; coop_end_seen = 0; coop_real_death_pending = 0; coop_real_death_done = 0;
+    coop_gameover = 0; coop_gameover_t = 0; coop_end_seen = 0; coop_real_death_pending = 0; coop_real_death_done = 0; coop_last_p2 = 0;
     coop_persp_obj = 0; coop_cam_zoom = 1.0f; coop_persp_applied = 1.0f;
     coop_place_frames = 0; coop_start_place = 1; coop_attach_child_seen = 0; coop_new_weapon_now = 0; coop_last_obj = 0; coop_attach_child = 0; coop_new_weapon = 0;
     coop_ring_on[0] = coop_ring_on[1] = 0; coop_hud_show = 0;
