@@ -3353,7 +3353,7 @@ static int coop_bot_defend(CoopPad *o, uint32_t p2, uint32_t now)
     if (near && (seed >> 16) % 15 == 0) {   /* (1 in 15: parrying less, then a third less again) */ until = now + 700u; o->analog[5] = 255; if (nb++ < 30) tt_dbg("[P2BOT] blocks (an enemy after him within 4 units)\n"); return 1; }
     return 0;
 }
-/* melee only beside the enemy (no swings at the air): within 2 units, or within 5 with the distance held (within
+/* melee only beside the enemy (no swings at the air): within 6 units (TT_COOP_BOTSTOPR, the melee radius; was 2), or within 5 with the distance held (within
  * 0.12 units for 0.3 s) while the enemy moves (0.2 units or more meanwhile): their bodies touch and push. Bodies stop
  * two characters at the sum of their radii, and there the distance holds while both push and slide round each other
  * (observed, TT_COOP_BESIDELOG: Weathertop, Legolas and a Ringwraith at 4.05 sample after sample, both moving 1-2 units
@@ -3386,7 +3386,7 @@ static int coop_bot_beside(CoopPad *o, uint32_t p2, uint32_t e, float df, uint32
     if (fresh || fabsf(df - hd_d) > 0.12f) { hd_d = df; hd_t = now; hd_ex = ex; hd_ey = ey; }   /* (the distance held since hd_t, and where the enemy was then) */
     if (fresh) was = 0;
     ap_last = now;
-    b = df <= 2.0f || (df <= 5.0f && now - hd_t >= 300u && ((ex - hd_ex) * (ex - hd_ex) + (ey - hd_ey) * (ey - hd_ey) >= 0.04f || df <= mn_d[k] + 0.3f))
+    b = df <= (getenv("TT_COOP_BOTSTOPR") ? (float)atof(getenv("TT_COOP_BOTSTOPR")) : 6.0f) || (df <= 5.0f && now - hd_t >= 300u && ((ex - hd_ex) * (ex - hd_ex) + (ey - hd_ey) * (ey - hd_ey) >= 0.04f || df <= mn_d[k] + 0.3f))
         || (was && df <= cd + 0.6f);
     if (b && !was) cd = df;
     was = b;
@@ -3525,7 +3525,7 @@ static int coop_bot_seen(uint32_t e)
     return any || ((f & 0x1000u) && !(f & 0x200000u));
 }
 
-/* the enemy for melee: his melee radius (TT_COOP_BOTMELEER, 10 units round him; one leaves it 2 units further out) keeps
+/* the enemy for melee: his melee radius (TT_COOP_BOTMELEER, 6 units round him, in it he stops and swings: 10 until a playtest, "its too big for melee hell keep moving", 4.5 tried, then the owner's 6; one leaves it 2 units further out) keeps
  * the enemies in the order they came into it, and he fights the first still in it; with none in it, no melee at all -- he
  * shoots if he can, else follows (a playtest: "a radius to p2 bot that made him attack enemies in order they entered the
  * radius and the bot doesnt do melee when nothing is in the radius"). Until then: the nearest within 6 units, else the
@@ -3535,7 +3535,7 @@ static void coop_bot_pick_melee_old(BotView *v);
 static void coop_bot_pick_melee(BotView *v)
 {
     static uint32_t qe[32], qt[32], ge[32], gt[32]; static int qn, gn; static uint32_t lfoe;
-    float r = getenv("TT_COOP_BOTMELEER") ? (float)atof(getenv("TT_COOP_BOTMELEER")) : 10.0f, ro = r + 2.0f; int i, j;
+    float r = getenv("TT_COOP_BOTMELEER") ? (float)atof(getenv("TT_COOP_BOTMELEER")) : 6.0f, ro = r + 2.0f; int i, j;
     if (getenv("TT_COOP_BOTOLDPICK")) { coop_bot_pick_melee_old(v); return; }
     v->foe = 0; v->bd = 1e18f; v->near = 0;
     for (j = 0; j < qn; ) {   /* out: dead, gone, past the outer edge */
@@ -3553,9 +3553,14 @@ static void coop_bot_pick_melee(BotView *v)
         for (j = 0; j < qn && qe[j] != e; j++) ;
         if (j == qn && qn < 32) { qe[qn] = e; qt[qn] = v->now | 1; qn++; }
     }
-    {   /* the first in, still in */
-        int best = -1;
-        for (j = 0; j < qn; j++) { if (coop_bot_unreach(qe[j], v->now)) continue; if (best < 0 || (int32_t)(qt[j] - qt[best]) < 0) best = j; }
+    {   /* the nearest in it (a playtest: "melee attack the nearest enemy beside the bot"), kept unless another is 1 unit nearer, so he doesn't turn between two side by side. TT_COOP_BOTFIRSTIN: the first in, still in */
+        static uint32_t keep; int best = -1; float bd2 = 1e18f, kd = 1e18f;
+        for (j = 0; j < qn; j++) { float d2; if (coop_bot_unreach(qe[j], v->now)) continue;
+            if (getenv("TT_COOP_BOTFIRSTIN")) { if (best < 0 || (int32_t)(qt[j] - qt[best]) < 0) best = j; continue; }
+            d2 = (MEMF(qe[j] + 0xF0) - v->bx) * (MEMF(qe[j] + 0xF0) - v->bx) + (MEMF(qe[j] + 0xF4) - v->by) * (MEMF(qe[j] + 0xF4) - v->by);
+            if (d2 < bd2) { bd2 = d2; best = j; }
+            if (qe[j] == keep) kd = d2; }
+        if (best >= 0 && !getenv("TT_COOP_BOTFIRSTIN")) { if (kd < 1e18f && sqrtf(kd) <= sqrtf(bd2) + 1.0f) for (j = 0; j < qn; j++) if (qe[j] == keep) best = j; keep = qe[best]; }
         if (best >= 0) { uint32_t e2 = qe[best]; v->foe = e2; v->near = 1;
             v->bd = (MEMF(e2 + 0xF0) - v->bx) * (MEMF(e2 + 0xF0) - v->bx) + (MEMF(e2 + 0xF4) - v->by) * (MEMF(e2 + 0xF4) - v->by); }
     }
@@ -3867,10 +3872,9 @@ static int coop_bot_melee(BotView *v, CoopPad *o)
     if (!v->near && v->dc > v->gr && (int16_t)MEM16(v->p2 + 0x304) > 0 && !v->bossfight && !getenv("TT_COOP_BOTNORANGED")) { v->foe = 0; return 0; }
     s_bot_why = v->near ? "melee: an enemy near him" : "melee: walking up (no shot: no ammo, or nothing to shoot)";
     df = sqrtf(v->bd);
-    coop_bot_go(&s_bk, o, v->p2, MEMF(v->foe + 0xF0), MEMF(v->foe + 0xF4), 1.2f);
     v->mode = 2; s_bot_following = 0;
-    if (coop_bot_beside(o, v->p2, v->foe, df, v->now)) { s_bot_how = ", beside it: swinging"; if (!coop_bot_defend(o, v->p2, v->now)) coop_bot_attack(o, v->now); }
-    else s_bot_how = ", walking to it";
+    if (coop_bot_beside(o, v->p2, v->foe, df, v->now)) { s_bot_how = ", beside it: swinging"; if (!coop_bot_defend(o, v->p2, v->now)) coop_bot_attack(o, v->now); }   /* (he stops walking here: a playtest) */
+    else { coop_bot_go(&s_bk, o, v->p2, MEMF(v->foe + 0xF0), MEMF(v->foe + 0xF4), 1.2f); s_bot_how = ", walking to it"; }
     return 1;
 }
 
