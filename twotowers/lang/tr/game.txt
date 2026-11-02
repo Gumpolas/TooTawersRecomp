@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	KAVGACI: OYUNCU {1}
 P:RELENTLESS: PLAYER {1}	AMANSIZ: OYUNCU {1}
 P:Start Match	Maç Balat
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. TUR   P{2} {3} - {4} P{5}
+P:Borderless	Kenarlksz
+P:Exclusive	Özel
+P:Full Screen Res:	Tam Ekran Çöz.:
+P:Mode:	Mod:
+P:Troll Battle	Trol Sava
+P:Reset P2 Controls	P2 Kontrollerini Sfrla
+P:Berserker	Berserker
+P:Cave Troll	Maara Trolü
+P:Uruk Captain	Uruk Komutan
+P:Saruman	Saruman
+P:Elven Warrior	Elf Savaçs
+P:Ent	Ent
+P:Player 1: choose your hero	Oyuncu 1: kahramannz seçin
+P:Player 2: waiting	Oyuncu 2: bekleniyor
+P:Player 2: choose your hero	Oyuncu 2: kahramannz seçin
+P:Player 1: {1}	Oyuncu 1: {1}
+P:Player 2: {1}	Oyuncu 2: {1}
+P:Player 2: {1} is Player 1's	Oyuncu 2: {1}, Oyuncu 1'in
+P:Player 2: {1} not available	Oyuncu 2: {1} kullanlamaz
+P:Ready. Press Continue to begin	Hazr. Balamak için Devam'a basn
+P:Unavailable	Kullanlamaz
+P:Speed	Hz
+P:Fierce	Sert
+P:Special	Özel
+P:Mixed	Karma
+P:P{1} STAB GUARD: {2} LEFT	P{1} SAPLAMA SAVUNMASI: {2} KALDI
+P:FIND THE SHIELD: {1} AHEAD	KALKANI BUL: {1} LERDE
+P:FIND THE SHIELD: {1} BEHIND	KALKANI BUL: {1} GERDE
+P:FIND THE SHIELD: {1} TO THE LEFT	KALKANI BUL: {1} SOLDA
+P:FIND THE SHIELD: {1} TO THE RIGHT	KALKANI BUL: {1} SADA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	KALKANI BUL   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	OYUNCU {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	EN BÜYÜK DARBE
+P:CLUB BLOWS / SWINGS	SOPA VURUU / SALLAMA
+P:DAMAGE DEALT / TAKEN	VERLEN / ALINAN HASAR
+P:FASTEST KNOCKOUT	EN HIZLI NAKAVT
+P:MOST DAMAGE IN A MATCH	BR MAÇTA EN ÇOK HASAR
+P:ROCKS AND LOGS ON TARGET	SABETL KAYA VE KÜTÜK
+P:SMASHES ({1}+)	DARBELER ({1}+)
+P:TROLL BATTLE RECORDS	TROL SAVAI REKORLARI
+P:TROLL BATTLE RESULTS	TROL SAVAI SONUÇLARI
+P:P{1}	P{1}

@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	喧嘩屋：プレイヤー{1}
 P:RELENTLESS: PLAYER {1}	容赦なし：プレイヤー{1}
 P:Start Match	対戦開始
 P:ROUND {1}   P{2} {3} - {4} P{5}	ラウンド{1}   P{2} {3} - {4} P{5}
+P:Borderless	ボーダーレス
+P:Exclusive	排他的
+P:Full Screen Res:	フルスクリーン解像度：
+P:Mode:	モード：
+P:Troll Battle	トロルバトル
+P:Reset P2 Controls	P2操作をリセット
+P:Berserker	バーサーカー
+P:Cave Troll	洞窟トロル
+P:Uruk Captain	ウルク隊長
+P:Saruman	サルマン
+P:Elven Warrior	エルフの戦士
+P:Ent	エント
+P:Player 1: choose your hero	プレイヤー1：ヒーローを選択
+P:Player 2: waiting	プレイヤー2：待機中
+P:Player 2: choose your hero	プレイヤー2：ヒーローを選択
+P:Player 1: {1}	プレイヤー1：{1}
+P:Player 2: {1}	プレイヤー2：{1}
+P:Player 2: {1} is Player 1's	プレイヤー2：{1}はプレイヤー1が選択中
+P:Player 2: {1} not available	プレイヤー2：{1}は使用不可
+P:Ready. Press Continue to begin	準備完了。続けるを押して開始
+P:Unavailable	使用不可
+P:Speed	スピード
+P:Fierce	猛攻
+P:Special	特殊
+P:Mixed	混合
+P:P{1} STAB GUARD: {2} LEFT	P{1} 刺突ガード：残り{2}
+P:FIND THE SHIELD: {1} AHEAD	盾を探せ：前方{1}
+P:FIND THE SHIELD: {1} BEHIND	盾を探せ：後方{1}
+P:FIND THE SHIELD: {1} TO THE LEFT	盾を探せ：左{1}
+P:FIND THE SHIELD: {1} TO THE RIGHT	盾を探せ：右{1}
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	盾を探せ   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	プレイヤー{1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	最大の一撃
+P:CLUB BLOWS / SWINGS	棍棒ヒット / スイング
+P:DAMAGE DEALT / TAKEN	与ダメージ / 被ダメージ
+P:FASTEST KNOCKOUT	最速ノックアウト
+P:MOST DAMAGE IN A MATCH	1試合の最多ダメージ
+P:ROCKS AND LOGS ON TARGET	岩と丸太の命中数
+P:SMASHES ({1}+)	強打数（{1}以上）
+P:TROLL BATTLE RECORDS	トロルバトル記録
+P:TROLL BATTLE RESULTS	トロルバトル結果
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	試合をやり直す：BACK（Backspace / Tab）またはクリック
+L:Restart Round: Y (the I key) or click this line	ラウンドをやり直す：Y（Iキー）またはこの行をクリック
+L:P2 Teleport: ON	P2テレポート：オン
+L:P2 Teleport: OFF	P2テレポート：オフ
+L:Turn it off: Y (the I key) or click this note	オフにする：Y（Iキー）またはこのメモをクリック
+L:Turn it on: Y (the I key) or click this note	オンにする：Y（Iキー）またはこのメモをクリック
+L:IMPOSSIBLE	インポッシブル
+L:Harder than Expert: any enemy's second blow fells you	エキスパートより過酷：敵の2撃目で倒れる
+L:Achievement earned	実績解除
+L:DIAMOND ACHIEVEMENT EARNED	ダイヤモンド実績解除
+L:The Last Alliance	最後の同盟
+L:Win the prologue on the slopes of Mount Doom.	滅びの山の斜面でプロローグをクリアする。
+L:Fire on Weathertop	風見が丘の炎
+L:Drive the Ringwraiths from Weathertop.	風見が丘から指輪の幽鬼を追い払う。
+L:Speak Friend	友と言え
+L:Escape the Watcher at the Gates of Moria.	モリアの門で水中の監視者から逃れる。
+L:Drums in the Deep	地底の太鼓
+L:Fight your way out of Balin's Tomb.	バーリンの墓から戦いながら脱出する。
+L:Breaking of the Fellowship	旅の仲間の離散
+L:Stand against the Uruk-hai at Amon Hen.	アモン・ヘンでウルク＝ハイに立ち向かう。
+L:Into the Forest	森の中へ
+L:Get through Fangorn Forest.	ファンゴルンの森を抜ける。
+L:Riders of Rohan	ローハンの騎士たち
+L:Win the battle on the Plains of Rohan.	ローハンの平原での戦いに勝利する。
+L:The Burning of the Westfold	西の谷の炎上
+L:Save the villages of the Westfold.	西の谷の村々を救う。
+L:Wolves on the Road	街道の狼
+L:Reach Helm's Deep along the road.	街道を進みヘルム峡谷にたどり着く。
+L:The Deeping Wall	奥出での石垣
+L:Hold the Deeping Wall.	奥出での石垣を守り抜く。
+L:The Wall Is Breached	破られし石垣
+L:Fight on when the wall is breached.	石垣が破られても戦い続ける。
+L:The Hornburg Holds	角笛城は落ちず
+L:Defend the Hornburg's courtyard to the dawn.	夜明けまで角笛城の中庭を守り抜く。
+L:The Two Towers	二つの塔
+L:Win every level of the story.	ストーリーの全レベルをクリアする。
+L:The Tower of Orthanc	オルサンクの塔
+L:Win the secret mission at Orthanc.	オルサンクの秘密ミッションをクリアする。
+L:Ranger of the North	北の野伏
+L:Win a level as Aragorn.	アラゴルンでレベルをクリアする。
+L:Prince of Mirkwood	闇の森の王子
+L:Win a level as Legolas.	レゴラスでレベルをクリアする。
+L:Son of Gloin	グローインの息子
+L:Win a level as Gimli.	ギムリでレベルをクリアする。
+L:Heir of Elendil	エレンディルの世継
+L:Win a level after the prologue as Isildur.	プロローグ以降のレベルをイシルドゥアでクリアする。
+L:The Three Hunters	三人の狩人
+L:Win levels as Aragorn, Legolas and Gimli.	アラゴルン、レゴラス、ギムリでそれぞれレベルをクリアする。
+L:An Unexpected Ally	思わぬ味方
+L:Win a level as one of the extra heroes.	追加ヒーローのいずれかでレベルをクリアする。
+L:A Fellowship Remade	新たなる旅の仲間
+L:Unlock every extra hero.	追加ヒーローをすべて解放する。
+L:Seasoned Warrior	歴戦の戦士
+L:Bring a hero to level 5.	ヒーローをレベル5まで育てる。
+L:Legend of the Third Age	第三紀の伝説
+L:Bring a hero to level 10.	ヒーローをレベル10まで育てる。
+L:Side by Side	肩を並べて
+L:Win a level in co-op.	協力プレイでレベルをクリアする。
+L:Shoulder to Shoulder	背中を預けて
+L:Hold the Deeping Wall in co-op.	協力プレイで奥出での石垣を守り抜く。
+L:First Blood	初陣
+L:Win a round of Versus.	対戦でラウンドに勝利する。
+L:Champion of the Arena	闘技場の覇者
+L:Win a Deathmatch.	デスマッチで勝利する。
+L:Untouched	無傷
+L:Win a round of Versus without taking a blow.	一撃も受けずに対戦のラウンドに勝利する。
+L:Last Breath	最後の息
+L:Win a round of Versus with less than a tenth of your health left.	体力が10分の1未満の状態で対戦のラウンドに勝利する。
+L:Bearer of the Shield	盾の担い手
+L:Win a match of Find the Shield.	盾を探せの試合に勝利する。
+L:The Black Breath	黒の息
+L:Win a Versus match as the Nazgul.	ナズグルで対戦の試合に勝利する。
+L:Iron and Leather	鉄と革
+L:Win a Versus match as the Shield Orc.	盾持ちオークで対戦の試合に勝利する。
+L:Third Marshal of the Riddermark	リダーマークの第三軍団長
+L:Win a Versus match as Eomer.	エオメルで対戦の試合に勝利する。
+L:Shield-breaker	盾砕き
+L:Break the Shield Orc's shield.	盾持ちオークの盾を壊す。
+L:Unbroken Line	途切れぬ戦列
+L:As player 1, win 5 Versus rounds in a row.	プレイヤー1として対戦のラウンドに5連勝する。
+L:The Challenger Rises	挑戦者の逆襲
+L:As player 2, win 5 Versus rounds in a row.	プレイヤー2として対戦のラウンドに5連勝する。
+L:Get Back!	下がれ！
+L:Knock your opponent back 50 times in Versus.	対戦で相手を50回吹き飛ばす。
+L:Eagle Eye	鷹の目
+L:Land 40 locked-on arrows on your opponent in Versus.	対戦でロックオンした矢を相手に40本命中させる。
+L:Scavenger	拾い屋
+L:Take 30 pickups in Versus.	対戦でアイテムを30個取る。
+L:None Shall Pass	誰も通さぬ
+L:Win a Versus match without losing a round.	1ラウンドも落とさずに対戦の試合に勝利する。
+L:Against All Hope	望み絶えても
+L:Win a Versus match after trailing by 3 rounds.	3ラウンド差をつけられてから対戦の試合に勝利する。
+L:Veteran of the Arena	闘技場の古強者
+L:Win 100 Versus rounds in all.	対戦で通算100ラウンド勝利する。
+L:Wanderer	放浪者
+L:Win a Versus match on 8 different arenas.	8つの異なるステージで対戦の試合に勝利する。
+L:Many Faces	千の顔
+L:Win a Versus match as 10 different heroes.	10人の異なるヒーローで対戦の試合に勝利する。
+L:Troll Brawler	トロルの喧嘩屋
+L:Win a Troll Battle match.	トロルバトルの試合に勝利する。
+L:Terror of Moria	モリアの恐怖
+L:Win 3 Troll Battle matches.	トロルバトルの試合に3回勝利する。
+L:Lord of the Deep	地底の王
+L:Win 10 Troll Battle matches.	トロルバトルの試合に10回勝利する。
+L:Thick Hide	分厚い皮
+L:Win a Troll Battle match without losing a round.	1ラウンドも落とさずにトロルバトルの試合に勝利する。
+L:Bone Crusher	骨砕き
+L:Land a single smash of 400 damage or more in Troll Battle.	トロルバトルで1回の強打で400以上のダメージを与える。
+L:Troll Rampage	トロルの暴走
+L:Deal 25,000 damage in Troll Battle, across all your matches.	トロルバトルの全試合で通算25,000ダメージを与える。
+L:Swift Bludgeon	電光の棍棒
+L:Win a Troll Battle round in under 20 seconds.	トロルバトルのラウンドに20秒未満で勝利する。
+L:Rock and Log	岩と丸太
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	トロルバトルで投げた岩か丸太を相手のトロルに25回命中させる。
+L:Orc-Slayer	オーク殺し
+L:Slay 25 orcs and Uruk-hai during Versus matches.	対戦の試合中にオークとウルク＝ハイを25体倒す。
+L:Scourge of Isengard	アイゼンガルドの災い
+L:Slay 150 orcs and Uruk-hai during Versus matches.	対戦の試合中にオークとウルク＝ハイを150体倒す。
+L:War on Two Fronts	二正面の戦い
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	敵が出る5つのステージすべて（アモン・ヘン、ファンゴルン、ローハンの平原、破られた石垣、角笛城）でデスマッチに勝利する。
+L:The White Hand	白の手
+L:Win 3 Versus matches as Saruman.	サルマンで対戦の試合に3回勝利する。
+L:Shepherd of the Trees	木々の牧者
+L:Win 3 Versus matches as the Ent.	エントで対戦の試合に3回勝利する。
+L:Captain of Isengard	アイゼンガルドの隊長
+L:Win 3 Versus matches as the Uruk Captain.	ウルク隊長で対戦の試合に3回勝利する。
+L:The Last Alliance Returns	最後の同盟、再び
+L:Win 3 Versus matches as the Elven Warrior.	エルフの戦士で対戦の試合に3回勝利する。
+L:Hunt Them Down	狩り尽くせ
+L:Win 3 Versus matches as Lurtz.	ラーツで対戦の試合に3回勝利する。
+L:The Dark Lord	冥王
+L:Win 3 Versus matches as Sauron.	サウロンで対戦の試合に3回勝利する。
+L:Servant of the Secret Fire	秘密の火に仕える者
+L:Win 3 Versus matches as Gandalf.	ガンダルフで対戦の試合に3回勝利する。
+L:Lord of Rivendell	裂け谷の領主
+L:Win 3 Versus matches as Elrond.	エルロンドで対戦の試合に3回勝利する。
+L:Captain of Gondor	ゴンドールの大将
+L:Win 3 Versus matches as Boromir.	ボロミアで対戦の試合に3回勝利する。
+L:Ring-bearer	指輪所持者
+L:Win 3 Versus matches as Frodo.	フロドで対戦の試合に3回勝利する。
+L:Blood Frenzy	血の狂乱
+L:Win 3 Versus matches as the Berserker.	バーサーカーで対戦の試合に3回勝利する。
+L:Hurl the Stones	石を投げよ
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	エントで、対戦で投げた岩を相手に20回命中させる。
+L:Mirror Image	鏡像
+L:Win a match of first to 5 or more where both players are the same hero.	両プレイヤーが同じヒーローで、5本先取以上の試合に勝利する。
+L:Defiance	不屈
+L:Win a level on Impossible.	インポッシブルでレベルをクリアする。
+L:Hardened	鍛え抜かれし者
+L:Win 5 different levels on Impossible.	インポッシブルで異なる5つのレベルをクリアする。
+L:DIAMOND: The Unbreakable	ダイヤモンド：不壊の者
+L:Win every level of the story on Impossible. Very few ever will.	インポッシブルでストーリーの全レベルをクリアする。成し遂げる者はごくわずかだろう。

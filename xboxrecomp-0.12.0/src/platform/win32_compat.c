@@ -26,6 +26,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <unistd.h>
+#include <dlfcn.h>
 #include <sched.h>
 #include <fenv.h>
 #include <sys/mman.h>
@@ -796,7 +797,9 @@ HANDLE CreateThread(LPSECURITY_ATTRIBUTES sa, SIZE_T stackSize,
      * size of 0 inherits. Same here (address space only until touched). */
     pthread_attr_setstacksize(&attr, stackSize < 65536 ? (64u << 20) : stackSize);
 
-    if (pthread_create(&o->thread, &attr, thread_trampoline, o) != 0) {
+    if (pthread_create(&o->thread, &attr, thread_trampoline, o) != 0
+        && (pthread_attr_setstacksize(&attr, 8u << 20), pthread_create(&o->thread, &attr, thread_trampoline, o) != 0)) {   /* (1.9.9: a stack too small for
+                                                                                     * the thread-local data fails here: again with 8 MB) */
         pthread_attr_destroy(&attr);
         o->refcount = 1;
         obj_release(o);
@@ -1581,11 +1584,111 @@ BOOL  SetWindowTextA(HWND h, LPCSTR t)    { (void)h; (void)t; return TRUE; }
 int   GetWindowTextA(HWND h, LPSTR t, int n) { (void)h; (void)t; (void)n; return 0; }
 BOOL  EnumWindows(WNDENUMPROC p, LPARAM l) { (void)p; (void)l; return FALSE; }
 
+#if defined(__linux__)
+#define HAVE_X11_BOX 1
+/* (1.9.9) a message in a window of our own, straight on X11 (libX11 looked up when needed, its few types written out
+ * here -- the build's system has no X11 headers): SDL's message box failed on the AppImage catalog's bare X server
+ * (no fonts for it, it seems), so the game quit there without a window. Core font "9x15" or the server's built-in
+ * "fixed"; the text wrapped to the screen, an OK button; Enter, Esc, space, a click on OK or the close button end it.
+ * 0 when there is no X display */
+typedef unsigned long xid_t;
+static int x11_err(void *d, void *e) { (void)d; (void)e; return 0; }
+static int x11_box(const char *title, const char *text)
+{
+    void *x = dlopen("libX11.so.6", RTLD_NOW | RTLD_LOCAL);
+#define XF(ret, name, args) ret (*p##name) args = x ? (ret (*) args)dlsym(x, #name) : NULL;
+    XF(void *, XOpenDisplay, (const char *)) XF(int, XDefaultScreen, (void *)) XF(xid_t, XRootWindow, (void *, int))
+    XF(unsigned long, XBlackPixel, (void *, int)) XF(unsigned long, XWhitePixel, (void *, int))
+    XF(xid_t, XCreateSimpleWindow, (void *, xid_t, int, int, unsigned, unsigned, unsigned, unsigned long, unsigned long))
+    XF(int, XStoreName, (void *, xid_t, const char *)) XF(int, XSelectInput, (void *, xid_t, long)) XF(int, XMapRaised, (void *, xid_t))
+    XF(int, XNextEvent, (void *, void *)) XF(int, XDrawString, (void *, xid_t, void *, int, int, const char *, int))
+    XF(void *, XDefaultGC, (void *, int)) XF(xid_t, XLoadFont, (void *, const char *)) XF(int, XSetFont, (void *, void *, xid_t))
+    XF(int, XCloseDisplay, (void *)) XF(xid_t, XInternAtom, (void *, const char *, int))
+    XF(int, XSetWMProtocols, (void *, xid_t, xid_t *, int)) XF(int, XDrawRectangle, (void *, xid_t, void *, int, int, unsigned, unsigned))
+    XF(int, XDisplayWidth, (void *, int)) XF(int, XDisplayHeight, (void *, int)) XF(xid_t, XLookupKeysym, (void *, int))
+    XF(int, XDestroyWindow, (void *, xid_t)) XF(int, XSetForeground, (void *, void *, unsigned long))
+    XF(void *, XSetErrorHandler, (int (*)(void *, void *))) XF(int, XSync, (void *, int)) XF(char **, XListFonts, (void *, const char *, int, int *))
+    XF(int, XFreeFontNames, (char **)) XF(int, XChangeProperty, (void *, xid_t, xid_t, xid_t, int, int, const unsigned char *, int))
+#undef XF
+    void *d, *gc; int scr, sw, sh, fw = 6, fh = 15, asc = 10, maxc, n = 0, i, w, hgt, bw = 70, bh = 26, bx, by, nf = 0;
+    char lines[40][200]; xid_t win, del; const char *q = text ? text : ""; long ev[24];
+    if (!x || !pXOpenDisplay || !pXNextEvent || !pXDrawString || !pXCreateSimpleWindow || !pXLookupKeysym || !pXSetErrorHandler || !pXListFonts) return 0;
+    if (!(d = pXOpenDisplay(NULL))) return 0;
+    pXSetErrorHandler(x11_err);
+    scr = pXDefaultScreen(d); sw = pXDisplayWidth(d, scr); sh = pXDisplayHeight(d, scr);
+    gc = pXDefaultGC(d, scr);
+    {   /* a font the server has: 9x15 (xfonts-base), else its built-in "fixed" (6x13) */
+        char **fl = pXListFonts(d, "9x15", 1, &nf);
+        if (fl && nf > 0) { pXSetFont(d, gc, pXLoadFont(d, "9x15")); fw = 9; fh = 17; asc = 12; }
+        else { pXSetFont(d, gc, pXLoadFont(d, "fixed")); fw = 6; fh = 15; asc = 10; }
+        if (fl && pXFreeFontNames) pXFreeFontNames(fl);
+    }
+    maxc = (sw - 70) / fw; if (maxc > 100) maxc = 100; if (maxc < 30) maxc = 30;
+    while (*q && n < 40) {   /* lines: the text's own, wrapped at a space before maxc letters */
+        int l = 0, sp = -1;
+        while (q[l] && q[l] != '\n' && l < maxc) { if (q[l] == ' ') sp = l; l++; }
+        if (q[l] && q[l] != '\n' && sp > 0) l = sp;
+        if (l > 199) l = 199;
+        memcpy(lines[n], q, (size_t)l); lines[n][l] = 0; n++;
+        q += l; if (*q == '\n' || *q == ' ') q++;
+    }
+    for (w = 300, i = 0; i < n; i++) { int tw = (int)strlen(lines[i]) * fw; if (tw + 48 > w) w = tw + 48; }
+    if (w > sw - 10) w = sw - 10;
+    hgt = 24 + n * fh + 20 + bh + 16; if (hgt > sh - 10) hgt = sh - 10;
+    bx = (w - bw) / 2; by = hgt - bh - 14;
+    win = pXCreateSimpleWindow(d, pXRootWindow(d, scr), (sw - w) / 2, (sh - hgt) / 2, (unsigned)w, (unsigned)hgt, 1, pXBlackPixel(d, scr), pXWhitePixel(d, scr));
+    pXStoreName(d, win, title ? title : "Message");
+    if (pXChangeProperty) {   /* its class (WM_CLASS: instance and class name) and its UTF-8 title: a window with no class is not counted as one
+                               * by tools that list the windows (xwininfo's '"name": ("class" "Class")' -- the AppImage catalog's test) */
+        static const char cls[] = "twotowers_recomp\0TwoTowersRecompiled";
+        const char *t = title ? title : "Message";
+        pXChangeProperty(d, win, 67 /* XA_WM_CLASS */, 31 /* XA_STRING */, 8, 0 /* PropModeReplace */, (const unsigned char *)cls, (int)sizeof cls);
+        pXChangeProperty(d, win, pXInternAtom(d, "_NET_WM_NAME", 0), pXInternAtom(d, "UTF8_STRING", 0), 8, 0, (const unsigned char *)t, (int)strlen(t));
+    }
+    pXSelectInput(d, win, (1L << 15) | (1L << 0) | (1L << 2));   /* (Exposure, KeyPress, ButtonPress) */
+    del = pXInternAtom(d, "WM_DELETE_WINDOW", 0); pXSetWMProtocols(d, win, &del, 1);
+    pXMapRaised(d, win);
+    for (;;) {   /* (XEvent: 24 longs; type the first int, a button's x/y at bytes 64/68, a client message's data at 56) */
+        int type;
+        memset(ev, 0, sizeof ev); pXNextEvent(d, ev); type = *(int *)ev;
+        if (type == 12) {   /* Expose */
+            pXSetForeground(d, gc, pXBlackPixel(d, scr));
+            for (i = 0; i < n; i++) pXDrawString(d, win, gc, 24, 24 + asc + i * fh, lines[i], (int)strlen(lines[i]));
+            pXDrawRectangle(d, win, gc, bx, by, (unsigned)bw, (unsigned)bh);
+            pXDrawString(d, win, gc, bx + (bw - 2 * fw) / 2, by + (bh + asc) / 2 - 1, "OK", 2);
+        } else if (type == 4) {   /* ButtonPress */
+            int bxp = *(int *)((char *)ev + 64), byp = *(int *)((char *)ev + 68);
+            if (bxp >= bx && bxp <= bx + bw && byp >= by && byp <= by + bh) break;
+        } else if (type == 2) {   /* KeyPress */
+            xid_t k = pXLookupKeysym(ev, 0);
+            if (k == 0xFF0D || k == 0xFF1B || k == 0xFF8D || k == 0x20) break;
+        } else if (type == 33 && (xid_t)*(long *)((char *)ev + 56) == del) break;   /* ClientMessage: the close button */
+    }
+    pXDestroyWindow(d, win); pXSync(d, 0); pXCloseDisplay(d);
+    return 1;
+}
+#endif
+
 int MessageBoxA(HWND h, LPCSTR text, LPCSTR caption, UINT type)
 {
-    (void)h; (void)type;
+    (void)h;
     fprintf(stderr, "[%s] %s\n", caption ? caption : "MessageBox",
                                    text    ? text    : "");
+    /* An error is shown in a window too (SDL's message box, when the program has SDL2 -- looked up, not linked, so this
+     * layer needs no SDL): started from a menu or an AppImage there is no terminal to read it in, and the game seemed to
+     * do nothing at all */
+    if ((type & 0xF0u) == 0x10u) {
+        typedef int (*smb_fn)(unsigned flags, const char *title, const char *msg, void *win);
+        smb_fn f = (smb_fn)dlsym(RTLD_DEFAULT, "SDL_ShowSimpleMessageBox");
+#if !defined(__APPLE__)
+        if (!getenv("DISPLAY") && !getenv("WAYLAND_DISPLAY")) f = NULL;
+#endif
+#if defined(HAVE_X11_BOX)
+        if (getenv("DISPLAY") && !getenv("TT_SDLBOX") && x11_box(caption ? caption : "The Two Towers Recompiled", text)) { f = NULL; fprintf(stderr, "(shown in a window)\n"); }   /* (ours first: SDL's may have no message system, or no font on a bare X server -- the AppImage catalog's test) */
+#endif
+        if (f) { if (f(0x10u /* SDL_MESSAGEBOX_ERROR */, caption ? caption : "The Two Towers Recompiled", text ? text : "", NULL) == 0) fprintf(stderr, "(shown in a window)\n");
+                 else { const char *(*ge)(void) = (const char *(*)(void))dlsym(RTLD_DEFAULT, "SDL_GetError"); fprintf(stderr, "(no window for it: %s)\n", ge ? ge() : "?"); } }
+    }
     return 1;   /* IDOK */
 }
 

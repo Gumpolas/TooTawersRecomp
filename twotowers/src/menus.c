@@ -1022,7 +1022,8 @@ extern int tt_select_guests_open(void); extern int tt_select_unavail;
 static int s_p2t;                 /* 0 player 1 choosing, 1 his pick undone, 2 player 2 choosing, 3 his pick undone, 4 turning back, 5 player 1's pick again, 6 done */
 static int s_p1place = -1, s_p2place = -1, s_p2last = -1, s_p2steps;
 static DWORD s_p2wait;
-static char s_p2msg[80], s_p1msg[80];   /* the two status lines: player 1's, player 2's under it */
+static char s_p2msg[80], s_p1msg[80];
+static char s_p1tmpl[48], s_p2tmpl[48], s_p1name[40], s_p2name[40];   /* (1.9.9) a line with a hero's name: its template and the name, for the translation */   /* the two status lines: player 1's, player 2's under it */
 int tt_coop_p2_turn(void) { return s_p2t == 2; }
 static uint32_t sel_obj(void) { uint32_t o = tt_select_obj; return o >= 0x10000u && GetTickCount() - tt_select_obj_t < 300 ? o : 0; }
 static int sel_place(uint32_t o) { int p = tt_select_place(); return tt_select_places() > 0 && p >= 0 ? p : (int)G32(o + 0x18); }
@@ -1035,11 +1036,11 @@ static void p2_turn_tick(void)
     mode = (int)G32(o + 0x20); p = sel_place(o);
     switch (s_p2t) {
     case 0:
-        snprintf(s_p1msg, sizeof s_p1msg, "Player 1: choose your hero");
-        snprintf(s_p2msg, sizeof s_p2msg, "Player 2: waiting");
+        snprintf(s_p1msg, sizeof s_p1msg, "Player 1: choose your hero"); s_p1tmpl[0] = 0;
+        snprintf(s_p2msg, sizeof s_p2msg, "Player 2: waiting"); s_p2tmpl[0] = 0;
         if (mode == 3) {
             s_p1place = p; tt_coop_p2_selected[0] = 0;
-            snprintf(s_p1msg, sizeof s_p1msg, "Player 1: %s", tt_select_place_title(p));
+            snprintf(s_p1msg, sizeof s_p1msg, "Player 1: %s", tt_select_place_title(p)); snprintf(s_p1tmpl, sizeof s_p1tmpl, "Player 1: {1}"); snprintf(s_p1name, sizeof s_p1name, "%s", tt_select_place_title(p));
             tt_dbg("[P2SELECT] player 1 picked place %d (%s): player 2's turn\n", p, tt_select_place_title(p));
             press(INJ_B); s_p2t = 1; s_p2wait = GetTickCount();
         }
@@ -1049,13 +1050,14 @@ static void p2_turn_tick(void)
         else if (GetTickCount() - s_p2wait > 1500) { press(INJ_B); s_p2wait = GetTickCount(); }   /* not taken: again */
         break;
     case 2:
-        if (!strcmp(s_p2msg, "Player 2: waiting") || (p != s_p2last && s_p2last >= 0)) snprintf(s_p2msg, sizeof s_p2msg, "Player 2: choose your hero");   /* (a refusal's words go once the ring turns) */
+        if (!strcmp(s_p2msg, "Player 2: waiting") || (p != s_p2last && s_p2last >= 0)) { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: choose your hero"); s_p2tmpl[0] = 0; }   /* (a refusal's words go once the ring turns) */
         s_p2last = p;
         if (mode == 3) {
             const char *sk = tt_select_place_skin(p);
             if (!sk || p == s_p1place) {   /* not player 1's hero */
-                if (p == s_p1place) snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s is Player 1's", tt_select_place_title(p));
-                else snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s not available", tt_select_place_title(p));
+                if (p == s_p1place) { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s is Player 1's", tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1} is Player 1's"); }
+                else { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s not available", tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1} not available"); }
+                snprintf(s_p2name, sizeof s_p2name, "%s", tt_select_place_title(p));
                 tt_dbg("[P2SELECT] player 2 picked place %d (%s): not his to have, again\n", p, tt_select_place_title(p));
                 press(INJ_B); s_p2t = 1; s_p2wait = GetTickCount();
                 break;
@@ -1076,7 +1078,7 @@ static void p2_turn_tick(void)
     case 5:
         if (mode == 3) {
             const char *t2 = s_p2place >= 0 ? tt_select_place_title(s_p2place) : "Frodo";
-            snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s", t2);
+            snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s", t2); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1}"); snprintf(s_p2name, sizeof s_p2name, "%s", t2);
             tt_dbg("[P2SELECT] done: player 1 %s, player 2 %s (\"%s\")\n", tt_select_place_title(s_p1place), t2, tt_coop_p2_selected);
             s_p2t = 6;
         } else if (GetTickCount() - s_p2wait > 1500) { press(PAD_START); s_p2wait = GetTickCount(); }
@@ -1117,12 +1119,13 @@ static void ready_line(uint32_t mem, int on)
         else { uint32_t a[1] = { 0x1A }; tt_gcall(0x000CB4C0u, MM_SWOOSH, 1, a); tt_dbg("[P2SELECT] ready: off\n"); }
     }
     if (!on) return;
-    if (!tried) { tried = 1; s_rd_ok = !getenv("TT_COOP_READYEL") && ready_image(s_ready_msg); }
+    if (!tried) { extern int tt_lang_on(void); tried = 1; s_rd_ok = !getenv("TT_COOP_READYEL") && !tt_lang_on() && ready_image(s_ready_msg); }   /* (1.9.9: a language: the element, its words translated -- the picture is drawn from the menu font's own letters) */
     if (s_rd_ok) { s_rd_show_t = GetTickCount(); return; }
     if (mem) {   /* (fallback: behind the heroes) */
         uint32_t e = mem + 0x400, tx = mem + 0x4E0, i; int n;
         for (i = 0; i < 0xDC; i += 4) G32(e + i) = G32(MM_TABLE + 8 * EL_SIZE + i);
-        for (n = 0; s_ready_msg[n]; n++) G16(tx + 2 * n) = (uint8_t)s_ready_msg[n];
+        { extern int tt_tr16(const char *en, uint16_t *out, int max); uint16_t u[80]; int k; n = tt_tr16(s_ready_msg, u, 80);
+          for (k = 0; k < n; k++) G16(tx + 2 * k) = u[k]; }
         G16(tx + 2 * n) = 0;
         G32(e + 8) = 20; G32(e + 0x10) = 600; G32(e + 0xC) = READY_Y; G32(e + 0x20) = COL_ON; G32(e + 0x34) = tx; G8(e + 0x24) = 1;
         tt_gcall(0x000C8940u, e, 0, NULL);
@@ -1145,8 +1148,14 @@ void tt_coop_select_draw(void)
             if (!msg[0]) continue;
             e = mem + (uint32_t)w * 0x100;
             for (i = 0; i < 0xDC; i += 4) G32(e + i) = G32(tmpl + i);
-            for (n = 0; msg[n] && n < 79; n++) G16(t + 2 * n) = (uint8_t)msg[n];
-            G16(t + 2 * n) = 0;
+            {   /* (1.9.9) in the chosen language: "Player 2: <hero> not available" as its template ("Player 2: {1} not available")
+                 * and the hero's name; the rest whole */
+                extern int tt_tr16(const char *en, uint16_t *out, int max); extern int tt_tr16s(const char *tmpl, const char *a1, uint16_t *out, int max);
+                uint16_t u[120]; const char *nm = w ? s_p2name : s_p1name; const char *tp = w ? s_p2tmpl : s_p1tmpl; int k;
+                if (tp[0] && nm[0]) n = tt_tr16s(tp, nm, u, 79); else n = tt_tr16(msg, u, 79);
+                for (k = 0; k < n; k++) G16(t + 2 * k) = u[k];
+                G16(t + 2 * n) = 0;
+            }
             G32(e + 8) = 40; G32(e + 0xC) = 84 + 26 * w; G32(e + 0x10) = 400; G32(e + 0x14) = 30;
             G32(e + 0x20) = w ? (on ? 0xFF30C0FFu : 0xA030C0FFu) : (on ? 0xFFFFA040u : 0xA0FFA040u);
             G32(e + 0x34) = t; G8(e + 0x24) = 1;

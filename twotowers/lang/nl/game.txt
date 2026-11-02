@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	VECHTERSBAAS: SPELER {1}
 P:RELENTLESS: PLAYER {1}	MEEDOGENLOOS: SPELER {1}
 P:Start Match	Start gevecht
 P:ROUND {1}   P{2} {3} - {4} P{5}	RONDE {1}   P{2} {3} - {4} P{5}
+P:Borderless	Randloos
+P:Exclusive	Exclusief
+P:Full Screen Res:	Res. volledig scherm:
+P:Mode:	Modus:
+P:Troll Battle	Trollengevecht
+P:Reset P2 Controls	Besturing S2 herstellen
+P:Berserker	Berserker
+P:Cave Troll	Grottrol
+P:Uruk Captain	Uruk-kapitein
+P:Saruman	Saruman
+P:Elven Warrior	Elfenkrijger
+P:Ent	Ent
+P:Player 1: choose your hero	Speler 1: kies je held
+P:Player 2: waiting	Speler 2: wacht
+P:Player 2: choose your hero	Speler 2: kies je held
+P:Player 1: {1}	Speler 1: {1}
+P:Player 2: {1}	Speler 2: {1}
+P:Player 2: {1} is Player 1's	Speler 2: {1} is van Speler 1
+P:Player 2: {1} not available	Speler 2: {1} niet beschikbaar
+P:Ready. Press Continue to begin	Klaar. Druk op Doorgaan om te beginnen
+P:Unavailable	Niet beschikbaar
+P:Speed	Snel
+P:Fierce	Woest
+P:Special	Speciaal
+P:Mixed	Gemengd
+P:P{1} STAB GUARD: {2} LEFT	S{1} STEEKDEKKING: NOG {2}
+P:FIND THE SHIELD: {1} AHEAD	VIND HET SCHILD: {1} VOORUIT
+P:FIND THE SHIELD: {1} BEHIND	VIND HET SCHILD: {1} ACHTER JE
+P:FIND THE SHIELD: {1} TO THE LEFT	VIND HET SCHILD: {1} NAAR LINKS
+P:FIND THE SHIELD: {1} TO THE RIGHT	VIND HET SCHILD: {1} NAAR RECHTS
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	VIND HET SCHILD   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPELER {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HARDSTE DREUN
+P:CLUB BLOWS / SWINGS	KNOTSLAGEN / ZWAAIEN
+P:DAMAGE DEALT / TAKEN	SCHADE GEDAAN / GEKREGEN
+P:FASTEST KNOCKOUT	SNELSTE KNOCK-OUT
+P:MOST DAMAGE IN A MATCH	MEESTE SCHADE IN EEN WEDSTRIJD
+P:ROCKS AND LOGS ON TARGET	STENEN EN STAMMEN RAAK
+P:SMASHES ({1}+)	DREUNEN ({1}+)
+P:TROLL BATTLE RECORDS	TROLLENGEVECHT-RECORDS
+P:TROLL BATTLE RESULTS	TROLLENGEVECHT-UITSLAG
+P:P{1}	S{1}

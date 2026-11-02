@@ -392,7 +392,38 @@ def sample_for(fname, text):
     return 'H', 1.0
 
 
+def rune_cell(text, slot, scale=1):
+    """(1.9.9) a rune of the futhorc drawn from its strokes (runes.STROKES) to the
+    slot's measures: from the capitals' top to the baseline"""
+    from runes import STROKES
+    wf, lines = STROKES[text]
+    q = 4 * scale                       # drawn 4 times bigger, then scaled down (smooth edges)
+    lh = slot['lh']
+    top, bot = slot['cap'], slot['bl']
+    hgt = (bot - top) * q
+    pen = max(1.5 * scale, (bot - top + 1) * 0.13 * scale) * 4
+    gap = max(1, round((bot - top + 1) * 0.28))           # the space after it
+    w = round(wf * hgt + pen)
+    W = w + 2 * round(pen)
+    im = Image.new('L', (W, lh * q), 0)
+    d = ImageDraw.Draw(im)
+    ox, oy = round(pen), top * q
+    for pl in lines:
+        pts = [(ox + x * hgt, oy + y * hgt) for x, y in pl]
+        d.line(pts, fill=255, width=max(1, round(pen)), joint='curve')
+        r = pen / 2
+        for (x, y) in (pts[0], pts[-1]):
+            d.ellipse((x - r, y - r, x + r, y + r), fill=255)
+    cw = (W + q - 1) // q
+    im = im.crop((0, 0, cw * q, lh * q)).resize((cw * scale, lh * scale), Image.LANCZOS)
+    return cw + gap - 1, im
+
+
 def drawn(pack, text, slot, scale=1):
+    if pack.script == 'runic':
+        from runes import STROKES
+        if text in STROKES:
+            return rune_cell(text, slot, scale)
     fname = script_font(pack, text)
     t = text.lstrip('\u0001')
     sample, k = sample_for(fname, t)

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	SLAGSKÄMPE: SPELARE {1}
 P:RELENTLESS: PLAYER {1}	OBEVEKLIG: SPELARE {1}
 P:Start Match	Starta matchen
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROND {1}   P{2} {3} - {4} P{5}
+P:Borderless	Kantlös
+P:Exclusive	Exklusiv
+P:Full Screen Res:	Helskärmsuppl.:
+P:Mode:	Läge:
+P:Troll Battle	Trollstrid
+P:Reset P2 Controls	Återställ P2-kontroller
+P:Berserker	Bärsärk
+P:Cave Troll	Grottroll
+P:Uruk Captain	Uruk-kapten
+P:Saruman	Saruman
+P:Elven Warrior	Alvkrigare
+P:Ent	Ent
+P:Player 1: choose your hero	Spelare 1: välj din hjälte
+P:Player 2: waiting	Spelare 2: väntar
+P:Player 2: choose your hero	Spelare 2: välj din hjälte
+P:Player 1: {1}	Spelare 1: {1}
+P:Player 2: {1}	Spelare 2: {1}
+P:Player 2: {1} is Player 1's	Spelare 2: {1} tillhör Spelare 1
+P:Player 2: {1} not available	Spelare 2: {1} inte tillgänglig
+P:Ready. Press Continue to begin	Klart. Tryck på Fortsätt för att börja
+P:Unavailable	Ej tillgänglig
+P:Speed	Snabb
+P:Fierce	Våldsam
+P:Special	Special
+P:Mixed	Blandad
+P:P{1} STAB GUARD: {2} LEFT	P{1} STICKGARDE: {2} KVAR
+P:FIND THE SHIELD: {1} AHEAD	HITTA SKÖLDEN: {1} FRAMÅT
+P:FIND THE SHIELD: {1} BEHIND	HITTA SKÖLDEN: {1} BAKOM
+P:FIND THE SHIELD: {1} TO THE LEFT	HITTA SKÖLDEN: {1} TILL VÄNSTER
+P:FIND THE SHIELD: {1} TO THE RIGHT	HITTA SKÖLDEN: {1} TILL HÖGER
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	HITTA SKÖLDEN   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	SPELARE {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	HÅRDASTE SMÄLL
+P:CLUB BLOWS / SWINGS	KLUBBSLAG / SVINGAR
+P:DAMAGE DEALT / TAKEN	UTDELAD / MOTTAGEN SKADA
+P:FASTEST KNOCKOUT	SNABBASTE KNOCKOUT
+P:MOST DAMAGE IN A MATCH	MEST SKADA I EN MATCH
+P:ROCKS AND LOGS ON TARGET	STENAR OCH STOCKAR I MÅL
+P:SMASHES ({1}+)	SMÄLLAR ({1}+)
+P:TROLL BATTLE RECORDS	TROLLSTRIDSREKORD
+P:TROLL BATTLE RESULTS	TROLLSTRIDSRESULTAT
+P:P{1}	P{1}

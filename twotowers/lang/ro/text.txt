@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	BĂTĂUȘ: JUCĂTORUL {1}
 P:RELENTLESS: PLAYER {1}	NEÎNDURĂTOR: JUCĂTORUL {1}
 P:Start Match	Începe meciul
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Fără margini
+P:Exclusive	Exclusiv
+P:Full Screen Res:	Rez. ecran complet:
+P:Mode:	Mod:
+P:Troll Battle	Lupta trolilor
+P:Reset P2 Controls	Resetează comenzile P2
+P:Berserker	Berserker
+P:Cave Troll	Trol de peșteră
+P:Uruk Captain	Căpitan Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Războinic elf
+P:Ent	Ent
+P:Player 1: choose your hero	Jucătorul 1: alege-ți eroul
+P:Player 2: waiting	Jucătorul 2: așteaptă
+P:Player 2: choose your hero	Jucătorul 2: alege-ți eroul
+P:Player 1: {1}	Jucătorul 1: {1}
+P:Player 2: {1}	Jucătorul 2: {1}
+P:Player 2: {1} is Player 1's	Jucătorul 2: {1} e al jucătorului 1
+P:Player 2: {1} not available	Jucătorul 2: {1} indisponibil
+P:Ready. Press Continue to begin	Gata. Apasă Continuă pentru a începe
+P:Unavailable	Indisponibil
+P:Speed	Rapid
+P:Fierce	Feroce
+P:Special	Special
+P:Mixed	Mixt
+P:P{1} STAB GUARD: {2} LEFT	P{1} GARDĂ ÎMPUNSĂTURI: {2} RĂMASE
+P:FIND THE SHIELD: {1} AHEAD	GĂSEȘTE SCUTUL: {1} ÎN FAȚĂ
+P:FIND THE SHIELD: {1} BEHIND	GĂSEȘTE SCUTUL: {1} ÎN SPATE
+P:FIND THE SHIELD: {1} TO THE LEFT	GĂSEȘTE SCUTUL: {1} LA STÂNGA
+P:FIND THE SHIELD: {1} TO THE RIGHT	GĂSEȘTE SCUTUL: {1} LA DREAPTA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	GĂSEȘTE SCUTUL   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	JUCĂTORUL {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	CEA MAI TARE LOVITURĂ
+P:CLUB BLOWS / SWINGS	LOVITURI / ROTIRI DE BÂTĂ
+P:DAMAGE DEALT / TAKEN	DAUNE DATE / PRIMITE
+P:FASTEST KNOCKOUT	CEL MAI RAPID KNOCKOUT
+P:MOST DAMAGE IN A MATCH	CELE MAI MULTE DAUNE ÎNTR-UN MECI
+P:ROCKS AND LOGS ON TARGET	PIETRE ȘI BUȘTENI LA ȚINTĂ
+P:SMASHES ({1}+)	ZDROBIRI ({1}+)
+P:TROLL BATTLE RECORDS	RECORDURI LUPTA TROLILOR
+P:TROLL BATTLE RESULTS	REZULTATE LUPTA TROLILOR
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Repornește meciul: BACK (Backspace / Tab) sau clic
+L:Restart Round: Y (the I key) or click this line	Repornește runda: Y (tasta I) sau clic pe acest rând
+L:P2 Teleport: ON	Teleportare P2: ACTIVATĂ
+L:P2 Teleport: OFF	Teleportare P2: DEZACTIVATĂ
+L:Turn it off: Y (the I key) or click this note	Dezactivează: Y (tasta I) sau clic pe această notă
+L:Turn it on: Y (the I key) or click this note	Activează: Y (tasta I) sau clic pe această notă
+L:IMPOSSIBLE	IMPOSIBIL
+L:Harder than Expert: any enemy's second blow fells you	Mai greu decât Expert: a doua lovitură a oricărui inamic te doboară
+L:Achievement earned	Realizare obținută
+L:DIAMOND ACHIEVEMENT EARNED	REALIZARE DE DIAMANT OBȚINUTĂ
+L:The Last Alliance	Ultima Alianță
+L:Win the prologue on the slopes of Mount Doom.	Câștigă prologul pe pantele Muntelui Osândei.
+L:Fire on Weathertop	Foc pe Vârful Vremii
+L:Drive the Ringwraiths from Weathertop.	Alungă Duhurile Inelului de pe Vârful Vremii.
+L:Speak Friend	Spune „prieten”
+L:Escape the Watcher at the Gates of Moria.	Scapă de Paznicul din apă la Porțile Moriei.
+L:Drums in the Deep	Tobe în adâncuri
+L:Fight your way out of Balin's Tomb.	Croiește-ți drum afară din Mormântul lui Balin.
+L:Breaking of the Fellowship	Destrămarea Frăției
+L:Stand against the Uruk-hai at Amon Hen.	Înfruntă Uruk-hai la Amon Hen.
+L:Into the Forest	În pădure
+L:Get through Fangorn Forest.	Treci prin Pădurea Fangorn.
+L:Riders of Rohan	Călăreții Rohanului
+L:Win the battle on the Plains of Rohan.	Câștigă bătălia de pe Câmpiile Rohanului.
+L:The Burning of the Westfold	Arderea Ținutului de Apus
+L:Save the villages of the Westfold.	Salvează satele din Ținutul de Apus.
+L:Wolves on the Road	Lupi pe drum
+L:Reach Helm's Deep along the road.	Ajunge pe drum la Trecătoarea lui Helm.
+L:The Deeping Wall	Zidul Trecătorii
+L:Hold the Deeping Wall.	Apără Zidul Trecătorii.
+L:The Wall Is Breached	Zidul e spart
+L:Fight on when the wall is breached.	Luptă mai departe când zidul e spart.
+L:The Hornburg Holds	Hornburgul rezistă
+L:Defend the Hornburg's courtyard to the dawn.	Apără curtea Hornburgului până în zori.
+L:The Two Towers	Cele două turnuri
+L:Win every level of the story.	Câștigă fiecare nivel al poveștii.
+L:The Tower of Orthanc	Turnul Orthanc
+L:Win the secret mission at Orthanc.	Câștigă misiunea secretă de la Orthanc.
+L:Ranger of the North	Străjer din Nord
+L:Win a level as Aragorn.	Câștigă un nivel cu Aragorn.
+L:Prince of Mirkwood	Prinț al Codrului Întunecat
+L:Win a level as Legolas.	Câștigă un nivel cu Legolas.
+L:Son of Gloin	Fiul lui Glóin
+L:Win a level as Gimli.	Câștigă un nivel cu Gimli.
+L:Heir of Elendil	Moștenitorul lui Elendil
+L:Win a level after the prologue as Isildur.	Câștigă un nivel de după prolog cu Isildur.
+L:The Three Hunters	Cei trei vânători
+L:Win levels as Aragorn, Legolas and Gimli.	Câștigă niveluri cu Aragorn, Legolas și Gimli.
+L:An Unexpected Ally	Un aliat neașteptat
+L:Win a level as one of the extra heroes.	Câștigă un nivel cu unul dintre eroii suplimentari.
+L:A Fellowship Remade	Frăția refăcută
+L:Unlock every extra hero.	Deblochează toți eroii suplimentari.
+L:Seasoned Warrior	Războinic călit
+L:Bring a hero to level 5.	Adu un erou la nivelul 5.
+L:Legend of the Third Age	Legenda Epocii a Treia
+L:Bring a hero to level 10.	Adu un erou la nivelul 10.
+L:Side by Side	Unul lângă altul
+L:Win a level in co-op.	Câștigă un nivel în cooperativ.
+L:Shoulder to Shoulder	Umăr la umăr
+L:Hold the Deeping Wall in co-op.	Apără Zidul Trecătorii în cooperativ.
+L:First Blood	Primul sânge
+L:Win a round of Versus.	Câștigă o rundă de Versus.
+L:Champion of the Arena	Campionul arenei
+L:Win a Deathmatch.	Câștigă un Deathmatch.
+L:Untouched	Neatins
+L:Win a round of Versus without taking a blow.	Câștigă o rundă de Versus fără să încasezi vreo lovitură.
+L:Last Breath	Ultima suflare
+L:Win a round of Versus with less than a tenth of your health left.	Câștigă o rundă de Versus cu mai puțin de o zecime din viață.
+L:Bearer of the Shield	Purtătorul scutului
+L:Win a match of Find the Shield.	Câștigă un meci de Găsește scutul.
+L:The Black Breath	Suflarea Neagră
+L:Win a Versus match as the Nazgul.	Câștigă un meci Versus cu Nazgûlul.
+L:Iron and Leather	Fier și piele
+L:Win a Versus match as the Shield Orc.	Câștigă un meci Versus cu Orcul cu scut.
+L:Third Marshal of the Riddermark	Al treilea mareșal al Riddermarkului
+L:Win a Versus match as Eomer.	Câștigă un meci Versus cu Éomer.
+L:Shield-breaker	Spărgător de scuturi
+L:Break the Shield Orc's shield.	Sparge scutul Orcului cu scut.
+L:Unbroken Line	Linie neclintită
+L:As player 1, win 5 Versus rounds in a row.	Ca jucătorul 1, câștigă 5 runde Versus la rând.
+L:The Challenger Rises	Provocatorul se ridică
+L:As player 2, win 5 Versus rounds in a row.	Ca jucătorul 2, câștigă 5 runde Versus la rând.
+L:Get Back!	Înapoi!
+L:Knock your opponent back 50 times in Versus.	Împinge-ți adversarul înapoi de 50 de ori în Versus.
+L:Eagle Eye	Ochi de vultur
+L:Land 40 locked-on arrows on your opponent in Versus.	Lovește-ți adversarul cu 40 de săgeți țintite în Versus.
+L:Scavenger	Culegător
+L:Take 30 pickups in Versus.	Ia 30 de obiecte în Versus.
+L:None Shall Pass	Nimeni nu va trece
+L:Win a Versus match without losing a round.	Câștigă un meci Versus fără să pierzi vreo rundă.
+L:Against All Hope	Împotriva oricărei speranțe
+L:Win a Versus match after trailing by 3 rounds.	Câștigă un meci Versus după ce ai fost condus cu 3 runde.
+L:Veteran of the Arena	Veteranul arenei
+L:Win 100 Versus rounds in all.	Câștigă 100 de runde Versus în total.
+L:Wanderer	Rătăcitor
+L:Win a Versus match on 8 different arenas.	Câștigă un meci Versus pe 8 arene diferite.
+L:Many Faces	Multe chipuri
+L:Win a Versus match as 10 different heroes.	Câștigă un meci Versus cu 10 eroi diferiți.
+L:Troll Brawler	Bătăuș de trol
+L:Win a Troll Battle match.	Câștigă un meci de Lupta trolilor.
+L:Terror of Moria	Groaza Moriei
+L:Win 3 Troll Battle matches.	Câștigă 3 meciuri de Lupta trolilor.
+L:Lord of the Deep	Stăpânul adâncurilor
+L:Win 10 Troll Battle matches.	Câștigă 10 meciuri de Lupta trolilor.
+L:Thick Hide	Piele groasă
+L:Win a Troll Battle match without losing a round.	Câștigă un meci de Lupta trolilor fără să pierzi vreo rundă.
+L:Bone Crusher	Zdrobitor de oase
+L:Land a single smash of 400 damage or more in Troll Battle.	Dă o singură lovitură de 400 de daune sau mai mult în Lupta trolilor.
+L:Troll Rampage	Furia trolului
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Provoacă 25.000 de daune în Lupta trolilor, în toate meciurile tale.
+L:Swift Bludgeon	Bâta iute
+L:Win a Troll Battle round in under 20 seconds.	Câștigă o rundă de Lupta trolilor în mai puțin de 20 de secunde.
+L:Rock and Log	Piatră și buștean
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Lovește celălalt trol cu 25 de pietre sau bușteni aruncați în Lupta trolilor.
+L:Orc-Slayer	Ucigaș de orci
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Ucide 25 de orci și Uruk-hai în meciurile Versus.
+L:Scourge of Isengard	Flagelul Isengardului
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Ucide 150 de orci și Uruk-hai în meciurile Versus.
+L:War on Two Fronts	Război pe două fronturi
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Câștigă un Deathmatch pe toate cele cinci arene cu inamici (Amon Hen, Fangorn, Câmpiile Rohanului, Zidul spart, Hornburg).
+L:The White Hand	Mâna Albă
+L:Win 3 Versus matches as Saruman.	Câștigă 3 meciuri Versus cu Saruman.
+L:Shepherd of the Trees	Păstorul copacilor
+L:Win 3 Versus matches as the Ent.	Câștigă 3 meciuri Versus cu Entul.
+L:Captain of Isengard	Căpitanul Isengardului
+L:Win 3 Versus matches as the Uruk Captain.	Câștigă 3 meciuri Versus cu Căpitanul Uruk.
+L:The Last Alliance Returns	Întoarcerea Ultimei Alianțe
+L:Win 3 Versus matches as the Elven Warrior.	Câștigă 3 meciuri Versus cu Războinicul elf.
+L:Hunt Them Down	Vânați-i
+L:Win 3 Versus matches as Lurtz.	Câștigă 3 meciuri Versus cu Lurtz.
+L:The Dark Lord	Stăpânul Întunericului
+L:Win 3 Versus matches as Sauron.	Câștigă 3 meciuri Versus cu Sauron.
+L:Servant of the Secret Fire	Slujitorul Focului Tainic
+L:Win 3 Versus matches as Gandalf.	Câștigă 3 meciuri Versus cu Gandalf.
+L:Lord of Rivendell	Stăpânul din Rivendell
+L:Win 3 Versus matches as Elrond.	Câștigă 3 meciuri Versus cu Elrond.
+L:Captain of Gondor	Căpitan al Gondorului
+L:Win 3 Versus matches as Boromir.	Câștigă 3 meciuri Versus cu Boromir.
+L:Ring-bearer	Purtătorul Inelului
+L:Win 3 Versus matches as Frodo.	Câștigă 3 meciuri Versus cu Frodo.
+L:Blood Frenzy	Frenezia sângelui
+L:Win 3 Versus matches as the Berserker.	Câștigă 3 meciuri Versus cu Berserkerul.
+L:Hurl the Stones	Aruncă pietrele
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Cu Entul, lovește-ți adversarul cu 20 de pietre aruncate în Versus.
+L:Mirror Image	Imagine în oglindă
+L:Win a match of first to 5 or more where both players are the same hero.	Câștigă un meci până la 5 sau mai multe victorii în care ambii jucători au același erou.
+L:Defiance	Sfidare
+L:Win a level on Impossible.	Câștigă un nivel pe Imposibil.
+L:Hardened	Călit
+L:Win 5 different levels on Impossible.	Câștigă 5 niveluri diferite pe Imposibil.
+L:DIAMOND: The Unbreakable	DIAMANT: Cel de neînfrânt
+L:Win every level of the story on Impossible. Very few ever will.	Câștigă fiecare nivel al poveștii pe Imposibil. Foarte puțini vor reuși vreodată.

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	TAPPELUPUKARI: PELAAJA {1}
 P:RELENTLESS: PLAYER {1}	ARMOTON: PELAAJA {1}
 P:Start Match	Aloita ottelu
 P:ROUND {1}   P{2} {3} - {4} P{5}	ERÄ {1}   P{2} {3} - {4} P{5}
+P:Borderless	Reunaton
+P:Exclusive	Yksinomainen
+P:Full Screen Res:	Koko näytön res.:
+P:Mode:	Tila:
+P:Troll Battle	Peikkotaistelu
+P:Reset P2 Controls	Palauta P2:n ohjaimet
+P:Berserker	Berserkki
+P:Cave Troll	Luolapeikko
+P:Uruk Captain	Uruk-päällikkö
+P:Saruman	Saruman
+P:Elven Warrior	Haltiasoturi
+P:Ent	Entti
+P:Player 1: choose your hero	Pelaaja 1: valitse sankarisi
+P:Player 2: waiting	Pelaaja 2: odottaa
+P:Player 2: choose your hero	Pelaaja 2: valitse sankarisi
+P:Player 1: {1}	Pelaaja 1: {1}
+P:Player 2: {1}	Pelaaja 2: {1}
+P:Player 2: {1} is Player 1's	Pelaaja 2: {1} on Pelaaja 1:n
+P:Player 2: {1} not available	Pelaaja 2: {1} ei saatavilla
+P:Ready. Press Continue to begin	Valmista. Aloita valitsemalla Jatka
+P:Unavailable	Ei saatavilla
+P:Speed	Nopeus
+P:Fierce	Raju
+P:Special	Erikois
+P:Mixed	Sekoitus
+P:P{1} STAB GUARD: {2} LEFT	P{1} PISTOTORJUNTA: {2} JÄLJELLÄ
+P:FIND THE SHIELD: {1} AHEAD	LÖYDÄ KILPI: {1} EDESSÄ
+P:FIND THE SHIELD: {1} BEHIND	LÖYDÄ KILPI: {1} TAKANA
+P:FIND THE SHIELD: {1} TO THE LEFT	LÖYDÄ KILPI: {1} VASEMMALLA
+P:FIND THE SHIELD: {1} TO THE RIGHT	LÖYDÄ KILPI: {1} OIKEALLA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	LÖYDÄ KILPI   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	PELAAJA {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	KOVIN MURSKAUS
+P:CLUB BLOWS / SWINGS	NUIJANISKUT / HUITAISUT
+P:DAMAGE DEALT / TAKEN	AIHEUTETTU / SAATU VAHINKO
+P:FASTEST KNOCKOUT	NOPEIN TYRMÄYS
+P:MOST DAMAGE IN A MATCH	ENITEN VAHINKOA OTTELUSSA
+P:ROCKS AND LOGS ON TARGET	OSUNEET KIVET JA TUKIT
+P:SMASHES ({1}+)	MURSKAUKSET ({1}+)
+P:TROLL BATTLE RECORDS	PEIKKOTAISTELUN ENNÄTYKSET
+P:TROLL BATTLE RESULTS	PEIKKOTAISTELUN TULOKSET
+P:P{1}	P{1}

@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	BORAC: IGRAČ {1}
 P:RELENTLESS: PLAYER {1}	NEUMOLJIV: IGRAČ {1}
 P:Start Match	Pokreni meč
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. RUNDA   P{2} {3} - {4} P{5}
+P:Borderless	Bez obruba
+P:Exclusive	Ekskluzivno
+P:Full Screen Res:	Razluč. cijelog zasl.:
+P:Mode:	Način:
+P:Troll Battle	Bitka trolova
+P:Reset P2 Controls	Vrati zadane kontrole P2
+P:Berserker	Berserker
+P:Cave Troll	Špiljski trol
+P:Uruk Captain	Kapetan Uruka
+P:Saruman	Saruman
+P:Elven Warrior	Vilenjački ratnik
+P:Ent	Ent
+P:Player 1: choose your hero	Igrač 1: odaberite junaka
+P:Player 2: waiting	Igrač 2: čeka
+P:Player 2: choose your hero	Igrač 2: odaberite junaka
+P:Player 1: {1}	Igrač 1: {1}
+P:Player 2: {1}	Igrač 2: {1}
+P:Player 2: {1} is Player 1's	Igrač 2: {1} je igrača 1
+P:Player 2: {1} not available	Igrač 2: {1} nije dostupan
+P:Ready. Press Continue to begin	Spremno. Pritisnite Nastavi za početak
+P:Unavailable	Nedostupno
+P:Speed	Brzi
+P:Fierce	Žestoki
+P:Special	Posebni
+P:Mixed	Mješoviti
+P:P{1} STAB GUARD: {2} LEFT	P{1} OBRANA OD UBODA: JOŠ {2}
+P:FIND THE SHIELD: {1} AHEAD	PRONAĐI ŠTIT: {1} ISPRED
+P:FIND THE SHIELD: {1} BEHIND	PRONAĐI ŠTIT: {1} IZA
+P:FIND THE SHIELD: {1} TO THE LEFT	PRONAĐI ŠTIT: {1} LIJEVO
+P:FIND THE SHIELD: {1} TO THE RIGHT	PRONAĐI ŠTIT: {1} DESNO
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	PRONAĐI ŠTIT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	IGRAČ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NAJJAČI UDARAC
+P:CLUB BLOWS / SWINGS	UDARCI / ZAMASI TOLJAGOM
+P:DAMAGE DEALT / TAKEN	NANESENA / PRIMLJENA ŠTETA
+P:FASTEST KNOCKOUT	NAJBRŽI NOKAUT
+P:MOST DAMAGE IN A MATCH	NAJVIŠE ŠTETE U MEČU
+P:ROCKS AND LOGS ON TARGET	POGOĐENO KAMENJEM I DEBLIMA
+P:SMASHES ({1}+)	TEŠKI UDARCI ({1}+)
+P:TROLL BATTLE RECORDS	REKORDI BITKE TROLOVA
+P:TROLL BATTLE RESULTS	REZULTATI BITKE TROLOVA
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Ponovi meč: BACK (Backspace / Tab) ili kliknite
+L:Restart Round: Y (the I key) or click this line	Ponovi rundu: Y (tipka I) ili kliknite ovaj redak
+L:P2 Teleport: ON	Teleport P2: UKLJ.
+L:P2 Teleport: OFF	Teleport P2: ISKLJ.
+L:Turn it off: Y (the I key) or click this note	Isključite: Y (tipka I) ili kliknite ovu bilješku
+L:Turn it on: Y (the I key) or click this note	Uključite: Y (tipka I) ili kliknite ovu bilješku
+L:IMPOSSIBLE	NEMOGUĆE
+L:Harder than Expert: any enemy's second blow fells you	Teže od Stručnjaka: drugi udarac bilo kojeg neprijatelja vas obara
+L:Achievement earned	Postignuće ostvareno
+L:DIAMOND ACHIEVEMENT EARNED	DIJAMANTNO POSTIGNUĆE OSTVARENO
+L:The Last Alliance	Posljednji savez
+L:Win the prologue on the slopes of Mount Doom.	Pobijedite u prologu na obroncima Kobne gore.
+L:Fire on Weathertop	Vatra na Vjetrovrhu
+L:Drive the Ringwraiths from Weathertop.	Otjerajte Utvare Prstena s Vjetrovrha.
+L:Speak Friend	Reci „prijatelj”
+L:Escape the Watcher at the Gates of Moria.	Pobjegnite Čuvaru u vodi kod Vrata Morije.
+L:Drums in the Deep	Bubnjevi u dubini
+L:Fight your way out of Balin's Tomb.	Izborite se iz Balinove grobnice.
+L:Breaking of the Fellowship	Raspad Družine
+L:Stand against the Uruk-hai at Amon Hen.	Suprotstavite se Uruk-haima na Amon Henu.
+L:Into the Forest	U šumu
+L:Get through Fangorn Forest.	Probijte se kroz Šumu Fangorn.
+L:Riders of Rohan	Jahači Rohana
+L:Win the battle on the Plains of Rohan.	Pobijedite u bitci na Rohanskim ravnicama.
+L:The Burning of the Westfold	Paljenje Zapadnog dola
+L:Save the villages of the Westfold.	Spasite sela Zapadnog dola.
+L:Wolves on the Road	Vukovi na cesti
+L:Reach Helm's Deep along the road.	Stignite cestom do Helmove klisure.
+L:The Deeping Wall	Zid Klisure
+L:Hold the Deeping Wall.	Obranite Zid Klisure.
+L:The Wall Is Breached	Zid je probijen
+L:Fight on when the wall is breached.	Borite se dalje kad zid bude probijen.
+L:The Hornburg Holds	Hornburg odolijeva
+L:Defend the Hornburg's courtyard to the dawn.	Branite dvorište Hornburga do zore.
+L:The Two Towers	Dvije kule
+L:Win every level of the story.	Prijeđite svaku razinu priče.
+L:The Tower of Orthanc	Kula Orthanc
+L:Win the secret mission at Orthanc.	Prijeđite tajnu misiju u Orthancu.
+L:Ranger of the North	Hodač sa Sjevera
+L:Win a level as Aragorn.	Prijeđite razinu kao Aragorn.
+L:Prince of Mirkwood	Princ Mrke šume
+L:Win a level as Legolas.	Prijeđite razinu kao Legolas.
+L:Son of Gloin	Glóinov sin
+L:Win a level as Gimli.	Prijeđite razinu kao Gimli.
+L:Heir of Elendil	Elendilov nasljednik
+L:Win a level after the prologue as Isildur.	Prijeđite razinu nakon prologa kao Isildur.
+L:The Three Hunters	Tri lovca
+L:Win levels as Aragorn, Legolas and Gimli.	Prijeđite razine kao Aragorn, Legolas i Gimli.
+L:An Unexpected Ally	Neočekivani saveznik
+L:Win a level as one of the extra heroes.	Prijeđite razinu kao jedan od dodatnih junaka.
+L:A Fellowship Remade	Obnovljena Družina
+L:Unlock every extra hero.	Otključajte sve dodatne junake.
+L:Seasoned Warrior	Iskusni ratnik
+L:Bring a hero to level 5.	Dovedite junaka do razine 5.
+L:Legend of the Third Age	Legenda Trećeg doba
+L:Bring a hero to level 10.	Dovedite junaka do razine 10.
+L:Side by Side	Jedan uz drugoga
+L:Win a level in co-op.	Prijeđite razinu u kooperaciji.
+L:Shoulder to Shoulder	Rame uz rame
+L:Hold the Deeping Wall in co-op.	Obranite Zid Klisure u kooperaciji.
+L:First Blood	Prva krv
+L:Win a round of Versus.	Pobijedite u rundi Versusa.
+L:Champion of the Arena	Prvak arene
+L:Win a Deathmatch.	Pobijedite u Deathmatchu.
+L:Untouched	Nedirnut
+L:Win a round of Versus without taking a blow.	Pobijedite u rundi Versusa bez ijednog primljenog udarca.
+L:Last Breath	Posljednji dah
+L:Win a round of Versus with less than a tenth of your health left.	Pobijedite u rundi Versusa s manje od desetine zdravlja.
+L:Bearer of the Shield	Nositelj štita
+L:Win a match of Find the Shield.	Pobijedite u meču Pronađi štit.
+L:The Black Breath	Crni dah
+L:Win a Versus match as the Nazgul.	Pobijedite u meču Versusa kao Nazgûl.
+L:Iron and Leather	Željezo i koža
+L:Win a Versus match as the Shield Orc.	Pobijedite u meču Versusa kao Ork sa štitom.
+L:Third Marshal of the Riddermark	Treći maršal Riddermarka
+L:Win a Versus match as Eomer.	Pobijedite u meču Versusa kao Éomer.
+L:Shield-breaker	Lomitelj štitova
+L:Break the Shield Orc's shield.	Razbijte štit Orka sa štitom.
+L:Unbroken Line	Neprekinuta linija
+L:As player 1, win 5 Versus rounds in a row.	Kao igrač 1 pobijedite u 5 rundi Versusa zaredom.
+L:The Challenger Rises	Izazivač se uzdiže
+L:As player 2, win 5 Versus rounds in a row.	Kao igrač 2 pobijedite u 5 rundi Versusa zaredom.
+L:Get Back!	Natrag!
+L:Knock your opponent back 50 times in Versus.	Odbacite protivnika 50 puta u Versusu.
+L:Eagle Eye	Orlovo oko
+L:Land 40 locked-on arrows on your opponent in Versus.	Pogodite protivnika s 40 navođenih strijela u Versusu.
+L:Scavenger	Skupljač
+L:Take 30 pickups in Versus.	Pokupite 30 predmeta u Versusu.
+L:None Shall Pass	Nitko neće proći
+L:Win a Versus match without losing a round.	Pobijedite u meču Versusa bez izgubljene runde.
+L:Against All Hope	Unatoč svakoj nadi
+L:Win a Versus match after trailing by 3 rounds.	Pobijedite u meču Versusa nakon zaostatka od 3 runde.
+L:Veteran of the Arena	Veteran arene
+L:Win 100 Versus rounds in all.	Pobijedite u ukupno 100 rundi Versusa.
+L:Wanderer	Lutalica
+L:Win a Versus match on 8 different arenas.	Pobijedite u meču Versusa na 8 različitih arena.
+L:Many Faces	Mnogo lica
+L:Win a Versus match as 10 different heroes.	Pobijedite u meču Versusa s 10 različitih junaka.
+L:Troll Brawler	Trolovski kavgadžija
+L:Win a Troll Battle match.	Pobijedite u meču Bitke trolova.
+L:Terror of Moria	Strah i trepet Morije
+L:Win 3 Troll Battle matches.	Pobijedite u 3 meča Bitke trolova.
+L:Lord of the Deep	Gospodar dubina
+L:Win 10 Troll Battle matches.	Pobijedite u 10 mečeva Bitke trolova.
+L:Thick Hide	Debela koža
+L:Win a Troll Battle match without losing a round.	Pobijedite u meču Bitke trolova bez izgubljene runde.
+L:Bone Crusher	Lomitelj kostiju
+L:Land a single smash of 400 damage or more in Troll Battle.	Zadajte u Bitci trolova jedan udarac od 400 ili više štete.
+L:Troll Rampage	Trolovsko divljanje
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Nanesite 25.000 štete u Bitci trolova, u svim svojim mečevima.
+L:Swift Bludgeon	Brza toljaga
+L:Win a Troll Battle round in under 20 seconds.	Pobijedite u rundi Bitke trolova za manje od 20 sekundi.
+L:Rock and Log	Kamen i deblo
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Pogodite drugog trola s 25 bačenih kamena ili debala u Bitci trolova.
+L:Orc-Slayer	Ubojica orka
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Ubijte 25 orka i Uruk-haija tijekom mečeva Versusa.
+L:Scourge of Isengard	Bič Isengarda
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Ubijte 150 orka i Uruk-haija tijekom mečeva Versusa.
+L:War on Two Fronts	Rat na dva fronta
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Pobijedite u Deathmatchu na svih pet arena s neprijateljima (Amon Hen, Fangorn, Rohanske ravnice, Probijeni zid, Hornburg).
+L:The White Hand	Bijela ruka
+L:Win 3 Versus matches as Saruman.	Pobijedite u 3 meča Versusa kao Saruman.
+L:Shepherd of the Trees	Pastir drveća
+L:Win 3 Versus matches as the Ent.	Pobijedite u 3 meča Versusa kao Ent.
+L:Captain of Isengard	Kapetan Isengarda
+L:Win 3 Versus matches as the Uruk Captain.	Pobijedite u 3 meča Versusa kao Kapetan Uruka.
+L:The Last Alliance Returns	Povratak Posljednjeg saveza
+L:Win 3 Versus matches as the Elven Warrior.	Pobijedite u 3 meča Versusa kao Vilenjački ratnik.
+L:Hunt Them Down	Ulovite ih
+L:Win 3 Versus matches as Lurtz.	Pobijedite u 3 meča Versusa kao Lurtz.
+L:The Dark Lord	Gospodar tame
+L:Win 3 Versus matches as Sauron.	Pobijedite u 3 meča Versusa kao Sauron.
+L:Servant of the Secret Fire	Sluga Tajne vatre
+L:Win 3 Versus matches as Gandalf.	Pobijedite u 3 meča Versusa kao Gandalf.
+L:Lord of Rivendell	Gospodar Rivendella
+L:Win 3 Versus matches as Elrond.	Pobijedite u 3 meča Versusa kao Elrond.
+L:Captain of Gondor	Kapetan Gondora
+L:Win 3 Versus matches as Boromir.	Pobijedite u 3 meča Versusa kao Boromir.
+L:Ring-bearer	Prstenonoša
+L:Win 3 Versus matches as Frodo.	Pobijedite u 3 meča Versusa kao Frodo.
+L:Blood Frenzy	Krvavi bijes
+L:Win 3 Versus matches as the Berserker.	Pobijedite u 3 meča Versusa kao Berserker.
+L:Hurl the Stones	Bacanje kamenja
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Kao Ent pogodite protivnika s 20 bačenih kamena u Versusu.
+L:Mirror Image	Zrcalna slika
+L:Win a match of first to 5 or more where both players are the same hero.	Pobijedite u meču do 5 ili više pobjeda u kojem oba igrača imaju istog junaka.
+L:Defiance	Prkos
+L:Win a level on Impossible.	Prijeđite razinu na težini Nemoguće.
+L:Hardened	Prekaljen
+L:Win 5 different levels on Impossible.	Prijeđite 5 različitih razina na težini Nemoguće.
+L:DIAMOND: The Unbreakable	DIJAMANT: Neslomljivi
+L:Win every level of the story on Impossible. Very few ever will.	Prijeđite svaku razinu priče na težini Nemoguće. Rijetkima će to ikad uspjeti.

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	RVÁ: HRÁ {1}
 P:RELENTLESS: PLAYER {1}	NEÚPROSNÝ: HRÁ {1}
 P:Start Match	Spustit zápas
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. KOLO   P{2} {3} - {4} P{5}
+P:Borderless	Bez okraj
+P:Exclusive	Exkluzivní
+P:Full Screen Res:	Rozli. celé obr.:
+P:Mode:	Reim:
+P:Troll Battle	Bitva troll
+P:Reset P2 Controls	Obnovit ovládání P2
+P:Berserker	Berserkr
+P:Cave Troll	Jeskynní troll
+P:Uruk Captain	Skurutí kapitán
+P:Saruman	Saruman
+P:Elven Warrior	Elfí váleník
+P:Ent	Ent
+P:Player 1: choose your hero	Hrá 1: vyber hrdinu
+P:Player 2: waiting	Hrá 2: eká
+P:Player 2: choose your hero	Hrá 2: vyber hrdinu
+P:Player 1: {1}	Hrá 1: {1}
+P:Player 2: {1}	Hrá 2: {1}
+P:Player 2: {1} is Player 1's	Hrá 2: {1} má hrá 1
+P:Player 2: {1} not available	Hrá 2: {1} není k dispozici
+P:Ready. Press Continue to begin	Pipraveno. Zani stiskem Pokraovat
+P:Unavailable	Nedostupné
+P:Speed	Rychlý
+P:Fierce	Prudký
+P:Special	Zvlátní
+P:Mixed	Smíený
+P:P{1} STAB GUARD: {2} LEFT	P{1} KRYT PROTI BODNUTÍ: ZBÝVÁ {2}
+P:FIND THE SHIELD: {1} AHEAD	NAJDI TÍT: {1} PED TEBOU
+P:FIND THE SHIELD: {1} BEHIND	NAJDI TÍT: {1} ZA TEBOU
+P:FIND THE SHIELD: {1} TO THE LEFT	NAJDI TÍT: {1} VLEVO
+P:FIND THE SHIELD: {1} TO THE RIGHT	NAJDI TÍT: {1} VPRAVO
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	NAJDI TÍT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	HRÁ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NEJSILNJÍ ÚDER
+P:CLUB BLOWS / SWINGS	ZÁSAHY / ROZMACHY KYJEM
+P:DAMAGE DEALT / TAKEN	ZPSOBENÉ / UTRENÉ POKOZENÍ
+P:FASTEST KNOCKOUT	NEJRYCHLEJÍ KNOCKOUT
+P:MOST DAMAGE IN A MATCH	NEJVÍC POKOZENÍ V ZÁPASE
+P:ROCKS AND LOGS ON TARGET	ZÁSAHY KAMENY A KLÁDAMI
+P:SMASHES ({1}+)	DRTIVÉ ÚDERY ({1}+)
+P:TROLL BATTLE RECORDS	REKORDY BITVY TROLL
+P:TROLL BATTLE RESULTS	VÝSLEDKY BITVY TROLL
+P:P{1}	P{1}

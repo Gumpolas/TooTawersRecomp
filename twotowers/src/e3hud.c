@@ -261,8 +261,9 @@ extern const char *tt_heroes_guest_name(int g);
 /* ---- game-drawn text ---- */
 static void el_text(uint32_t el, const char *t)
 {
-    int i;
-    for (i = 0; t[i] && i < 40; i++) G16(el + 0x38 + 2 * i) = (uint8_t)t[i];
+    extern int tt_tr16(const char *en, uint16_t *out, int max);
+    uint16_t u[41]; int i, n = tt_tr16(t, u, 41);   /* (1.9.9: in the chosen language -- Speed, Fierce, Special, Mixed) */
+    for (i = 0; i < n; i++) G16(el + 0x38 + 2 * i) = u[i];
     G16(el + 0x38 + 2 * i) = 0;
 }
 static void el_setup(uint32_t el, uint32_t tmpl, int x, int y, int w, int h)

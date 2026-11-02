@@ -22,7 +22,13 @@ else
     fi
 fi
 mkdir -p "$DATA" || { echo "Cannot create $DATA" >&2; exit 1; }
-cp -Rpu "$PAYLOAD/." "$DATA/" || { echo "Cannot write to $DATA" >&2; exit 1; }
+# (1.9.9: modes not kept -- files made read-only on another system stayed read-only here, and the next update could not
+# replace them; a copy that fails part way goes on when the program itself is there)
+if ! cp -Ru "$PAYLOAD/." "$DATA/"; then
+    echo "Some files could not be copied to $DATA" >&2
+    [ -x "$DATA/TwoTowers.sh" ] && [ -x "$DATA/twotowers_recomp" ] || { echo "Cannot write to $DATA" >&2; exit 1; }
+fi
+chmod u+w -R "$DATA" 2>/dev/null
 
 # SDL2: the system's when it has one (it knows the desktop best: Wayland,
 # PipeWire), else the copy in the AppImage (X11 / XWayland, PulseAudio, ALSA)

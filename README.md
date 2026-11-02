@@ -40,7 +40,7 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 
 ### The128ReBits' improvements
 Made possible by [The128ReBits](https://github.com/The128ReBits).
-- **More versus exclusive hero's:** the **Elven Warrior**, the **Uruk Captain** the **Cave Troll**, the **Ent** and **Saruman**, each with his own moves and weapons.
+- **More versus exclusive heroes:** the **Elven Warrior**, the **Uruk Captain** the **Cave Troll**, the **Ent** and **Saruman**, each with his own moves and weapons.
 - **Animation improvements** for all the extra heroes. 
 
 ### Versus: new heroes and a new mode

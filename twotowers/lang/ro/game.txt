@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	BTU: JUCTORUL {1}
 P:RELENTLESS: PLAYER {1}	NEÎNDURTOR: JUCTORUL {1}
 P:Start Match	Începe meciul
 P:ROUND {1}   P{2} {3} - {4} P{5}	RUNDA {1}   P{2} {3} - {4} P{5}
+P:Borderless	Fr margini
+P:Exclusive	Exclusiv
+P:Full Screen Res:	Rez. ecran complet:
+P:Mode:	Mod:
+P:Troll Battle	Lupta trolilor
+P:Reset P2 Controls	Reseteaz comenzile P2
+P:Berserker	Berserker
+P:Cave Troll	Trol de peter
+P:Uruk Captain	Cpitan Uruk
+P:Saruman	Saruman
+P:Elven Warrior	Rzboinic elf
+P:Ent	Ent
+P:Player 1: choose your hero	Juctorul 1: alege-i eroul
+P:Player 2: waiting	Juctorul 2: ateapt
+P:Player 2: choose your hero	Juctorul 2: alege-i eroul
+P:Player 1: {1}	Juctorul 1: {1}
+P:Player 2: {1}	Juctorul 2: {1}
+P:Player 2: {1} is Player 1's	Juctorul 2: {1} e al juctorului 1
+P:Player 2: {1} not available	Juctorul 2: {1} indisponibil
+P:Ready. Press Continue to begin	Gata. Apas Continu pentru a începe
+P:Unavailable	Indisponibil
+P:Speed	Rapid
+P:Fierce	Feroce
+P:Special	Special
+P:Mixed	Mixt
+P:P{1} STAB GUARD: {2} LEFT	P{1} GARD ÎMPUNSTURI: {2} RMASE
+P:FIND THE SHIELD: {1} AHEAD	GSETE SCUTUL: {1} ÎN FA
+P:FIND THE SHIELD: {1} BEHIND	GSETE SCUTUL: {1} ÎN SPATE
+P:FIND THE SHIELD: {1} TO THE LEFT	GSETE SCUTUL: {1} LA STÂNGA
+P:FIND THE SHIELD: {1} TO THE RIGHT	GSETE SCUTUL: {1} LA DREAPTA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	GSETE SCUTUL   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	JUCTORUL {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	CEA MAI TARE LOVITUR
+P:CLUB BLOWS / SWINGS	LOVITURI / ROTIRI DE BÂT
+P:DAMAGE DEALT / TAKEN	DAUNE DATE / PRIMITE
+P:FASTEST KNOCKOUT	CEL MAI RAPID KNOCKOUT
+P:MOST DAMAGE IN A MATCH	CELE MAI MULTE DAUNE ÎNTR-UN MECI
+P:ROCKS AND LOGS ON TARGET	PIETRE I BUTENI LA INT
+P:SMASHES ({1}+)	ZDROBIRI ({1}+)
+P:TROLL BATTLE RECORDS	RECORDURI LUPTA TROLILOR
+P:TROLL BATTLE RESULTS	REZULTATE LUPTA TROLILOR
+P:P{1}	P{1}

@@ -1747,6 +1747,9 @@ L:The GLOS69 texture pack is not in the game's folder.	O pacote de texturas GLOS
 L:Could not write textures_ultra/index.bin.	Não foi possível gravar textures_ultra/index.bin.
 L:On (hold W: he runs the way the mouse pushes; Walk walks)	Ligado (segure W: ele corre para onde o mouse empurra; Andar anda)
 L:Hold W: he runs the way the mouse pushes (Walk walks)	Segure W: ele corre para onde o mouse empurra (Andar anda)
+L:Films:	Filmes:
+L:Voices:	Vozes:
+L:(as the text)	(como o texto)
 P:Co-op	Cooperativo
 P:Versus	Versus
 P:Co-op Options	Opções do cooperativo
@@ -1834,6 +1837,198 @@ P:BRAWLER: PLAYER {1}	BRIGÃO: JOGADOR {1}
 P:RELENTLESS: PLAYER {1}	IMPLACÁVEL: JOGADOR {1}
 P:Start Match	Iniciar luta
 P:ROUND {1}   P{2} {3} - {4} P{5}	ROUND {1}   P{2} {3} - {4} P{5}
-L:Films:	Filmes:
-L:Voices:	Vozes:
-L:(as the text)	(como o texto)
+P:Borderless	Sem bordas
+P:Exclusive	Exclusiva
+P:Full Screen Res:	Res. tela cheia:
+P:Mode:	Modo:
+P:Troll Battle	Batalha de trolls
+P:Reset P2 Controls	Restaurar controles J2
+P:Berserker	Berserker
+P:Cave Troll	Troll das cavernas
+P:Uruk Captain	Capitão uruk
+P:Saruman	Saruman
+P:Elven Warrior	Guerreiro élfico
+P:Ent	Ent
+P:Player 1: choose your hero	Jogador 1: escolha seu herói
+P:Player 2: waiting	Jogador 2: aguardando
+P:Player 2: choose your hero	Jogador 2: escolha seu herói
+P:Player 1: {1}	Jogador 1: {1}
+P:Player 2: {1}	Jogador 2: {1}
+P:Player 2: {1} is Player 1's	Jogador 2: {1} é do jogador 1
+P:Player 2: {1} not available	Jogador 2: {1} indisponível
+P:Ready. Press Continue to begin	Pronto. Pressione Continuar para começar
+P:Unavailable	Indisponível
+P:Speed	Velocidade
+P:Fierce	Feroz
+P:Special	Especial
+P:Mixed	Misto
+P:P{1} STAB GUARD: {2} LEFT	J{1} DEFESA ANTIESTOCADA: RESTAM {2}
+P:FIND THE SHIELD: {1} AHEAD	ENCONTRE O ESCUDO: {1} À FRENTE
+P:FIND THE SHIELD: {1} BEHIND	ENCONTRE O ESCUDO: {1} ATRÁS
+P:FIND THE SHIELD: {1} TO THE LEFT	ENCONTRE O ESCUDO: {1} À ESQUERDA
+P:FIND THE SHIELD: {1} TO THE RIGHT	ENCONTRE O ESCUDO: {1} À DIREITA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	ENCONTRE O ESCUDO   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	JOGADOR {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	MAIOR PANCADA
+P:CLUB BLOWS / SWINGS	GOLPES DE CLAVA / TENTATIVAS
+P:DAMAGE DEALT / TAKEN	DANO CAUSADO / SOFRIDO
+P:FASTEST KNOCKOUT	NOCAUTE MAIS RÁPIDO
+P:MOST DAMAGE IN A MATCH	MAIS DANO EM UMA PARTIDA
+P:ROCKS AND LOGS ON TARGET	PEDRAS E TRONCOS NO ALVO
+P:SMASHES ({1}+)	PANCADAS ({1}+)
+P:TROLL BATTLE RECORDS	RECORDES DA BATALHA DE TROLLS
+P:TROLL BATTLE RESULTS	RESULTADOS DA BATALHA DE TROLLS
+P:P{1}	J{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Reiniciar partida: BACK (Backspace / Tab) ou clique
+L:Restart Round: Y (the I key) or click this line	Reiniciar round: Y (a tecla I) ou clique nesta linha
+L:P2 Teleport: ON	Teleporte J2: LIGADO
+L:P2 Teleport: OFF	Teleporte J2: DESLIGADO
+L:Turn it off: Y (the I key) or click this note	Para desligar: Y (a tecla I) ou clique nesta nota
+L:Turn it on: Y (the I key) or click this note	Para ligar: Y (a tecla I) ou clique nesta nota
+L:IMPOSSIBLE	IMPOSSÍVEL
+L:Harder than Expert: any enemy's second blow fells you	Mais difícil que Expert: o segundo golpe de qualquer inimigo te abate
+L:Achievement earned	Conquista obtida
+L:DIAMOND ACHIEVEMENT EARNED	CONQUISTA DE DIAMANTE OBTIDA
+L:The Last Alliance	A Última Aliança
+L:Win the prologue on the slopes of Mount Doom.	Vença o prólogo nas encostas da Montanha da Perdição.
+L:Fire on Weathertop	Fogo no Topo do Vento
+L:Drive the Ringwraiths from Weathertop.	Expulse os Espectros do Anel do Topo do Vento.
+L:Speak Friend	Diga, amigo
+L:Escape the Watcher at the Gates of Moria.	Escape do Vigia nos Portões de Moria.
+L:Drums in the Deep	Tambores nas profundezas
+L:Fight your way out of Balin's Tomb.	Abra caminho para fora do Túmulo de Balin.
+L:Breaking of the Fellowship	A ruptura da Sociedade
+L:Stand against the Uruk-hai at Amon Hen.	Resista aos Uruk-hai em Amon Hen.
+L:Into the Forest	Rumo à floresta
+L:Get through Fangorn Forest.	Atravesse a Floresta de Fangorn.
+L:Riders of Rohan	Os Cavaleiros de Rohan
+L:Win the battle on the Plains of Rohan.	Vença a batalha nas Planícies de Rohan.
+L:The Burning of the Westfold	O incêndio do Westfolde
+L:Save the villages of the Westfold.	Salve as aldeias do Westfolde.
+L:Wolves on the Road	Lobos na estrada
+L:Reach Helm's Deep along the road.	Chegue ao Abismo de Helm pela estrada.
+L:The Deeping Wall	A Muralha do Abismo
+L:Hold the Deeping Wall.	Defenda a Muralha do Abismo.
+L:The Wall Is Breached	A muralha foi rompida
+L:Fight on when the wall is breached.	Continue lutando quando a muralha for rompida.
+L:The Hornburg Holds	O Forte da Trombeta resiste
+L:Defend the Hornburg's courtyard to the dawn.	Defenda o pátio do Forte da Trombeta até o amanhecer.
+L:The Two Towers	As Duas Torres
+L:Win every level of the story.	Vença todas as fases da história.
+L:The Tower of Orthanc	A Torre de Orthanc
+L:Win the secret mission at Orthanc.	Vença a missão secreta em Orthanc.
+L:Ranger of the North	Guardião do Norte
+L:Win a level as Aragorn.	Vença uma fase como Aragorn.
+L:Prince of Mirkwood	Príncipe da Floresta das Trevas
+L:Win a level as Legolas.	Vença uma fase como Legolas.
+L:Son of Gloin	Filho de Glóin
+L:Win a level as Gimli.	Vença uma fase como Gimli.
+L:Heir of Elendil	Herdeiro de Elendil
+L:Win a level after the prologue as Isildur.	Vença uma fase depois do prólogo como Isildur.
+L:The Three Hunters	Os Três Caçadores
+L:Win levels as Aragorn, Legolas and Gimli.	Vença fases como Aragorn, Legolas e Gimli.
+L:An Unexpected Ally	Um aliado inesperado
+L:Win a level as one of the extra heroes.	Vença uma fase como um dos heróis extras.
+L:A Fellowship Remade	Uma Sociedade refeita
+L:Unlock every extra hero.	Desbloqueie todos os heróis extras.
+L:Seasoned Warrior	Guerreiro experiente
+L:Bring a hero to level 5.	Leve um herói ao nível 5.
+L:Legend of the Third Age	Lenda da Terceira Era
+L:Bring a hero to level 10.	Leve um herói ao nível 10.
+L:Side by Side	Lado a lado
+L:Win a level in co-op.	Vença uma fase no cooperativo.
+L:Shoulder to Shoulder	Ombro a ombro
+L:Hold the Deeping Wall in co-op.	Defenda a Muralha do Abismo no cooperativo.
+L:First Blood	Primeiro sangue
+L:Win a round of Versus.	Vença um round do Versus.
+L:Champion of the Arena	Campeão da arena
+L:Win a Deathmatch.	Vença um Mata-mata.
+L:Untouched	Intocado
+L:Win a round of Versus without taking a blow.	Vença um round do Versus sem levar nenhum golpe.
+L:Last Breath	Último suspiro
+L:Win a round of Versus with less than a tenth of your health left.	Vença um round do Versus com menos de um décimo da sua vida.
+L:Bearer of the Shield	Portador do escudo
+L:Win a match of Find the Shield.	Vença uma partida de Encontre o escudo.
+L:The Black Breath	O Sopro Negro
+L:Win a Versus match as the Nazgul.	Vença uma partida do Versus como o Nazgûl.
+L:Iron and Leather	Ferro e couro
+L:Win a Versus match as the Shield Orc.	Vença uma partida do Versus como o Orc com escudo.
+L:Third Marshal of the Riddermark	Terceiro Marechal da Marca
+L:Win a Versus match as Eomer.	Vença uma partida do Versus como Éomer.
+L:Shield-breaker	Quebra-escudos
+L:Break the Shield Orc's shield.	Quebre o escudo do Orc com escudo.
+L:Unbroken Line	Linha inquebrável
+L:As player 1, win 5 Versus rounds in a row.	Como jogador 1, vença 5 rounds do Versus seguidos.
+L:The Challenger Rises	O desafiante se ergue
+L:As player 2, win 5 Versus rounds in a row.	Como jogador 2, vença 5 rounds do Versus seguidos.
+L:Get Back!	Para trás!
+L:Knock your opponent back 50 times in Versus.	Empurre seu oponente para trás 50 vezes no Versus.
+L:Eagle Eye	Olho de águia
+L:Land 40 locked-on arrows on your opponent in Versus.	Acerte 40 flechas travadas no seu oponente no Versus.
+L:Scavenger	Catador
+L:Take 30 pickups in Versus.	Pegue 30 itens no Versus.
+L:None Shall Pass	Ninguém passará
+L:Win a Versus match without losing a round.	Vença uma partida do Versus sem perder nenhum round.
+L:Against All Hope	Contra toda esperança
+L:Win a Versus match after trailing by 3 rounds.	Vença uma partida do Versus depois de estar 3 rounds atrás.
+L:Veteran of the Arena	Veterano da arena
+L:Win 100 Versus rounds in all.	Vença 100 rounds do Versus no total.
+L:Wanderer	Andarilho
+L:Win a Versus match on 8 different arenas.	Vença uma partida do Versus em 8 arenas diferentes.
+L:Many Faces	Muitas faces
+L:Win a Versus match as 10 different heroes.	Vença uma partida do Versus com 10 heróis diferentes.
+L:Troll Brawler	Troll brigão
+L:Win a Troll Battle match.	Vença uma partida da Batalha de trolls.
+L:Terror of Moria	Terror de Moria
+L:Win 3 Troll Battle matches.	Vença 3 partidas da Batalha de trolls.
+L:Lord of the Deep	Senhor das profundezas
+L:Win 10 Troll Battle matches.	Vença 10 partidas da Batalha de trolls.
+L:Thick Hide	Couro grosso
+L:Win a Troll Battle match without losing a round.	Vença uma partida da Batalha de trolls sem perder nenhum round.
+L:Bone Crusher	Esmaga-ossos
+L:Land a single smash of 400 damage or more in Troll Battle.	Acerte uma única pancada de 400 de dano ou mais na Batalha de trolls.
+L:Troll Rampage	Fúria de troll
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Cause 25.000 de dano na Batalha de trolls, somando todas as suas partidas.
+L:Swift Bludgeon	Porrete veloz
+L:Win a Troll Battle round in under 20 seconds.	Vença um round da Batalha de trolls em menos de 20 segundos.
+L:Rock and Log	Pedra e tronco
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Acerte 25 pedras ou troncos arremessados no outro troll na Batalha de trolls.
+L:Orc-Slayer	Matador de orcs
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Mate 25 orcs e Uruk-hai durante partidas do Versus.
+L:Scourge of Isengard	Flagelo de Isengard
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Mate 150 orcs e Uruk-hai durante partidas do Versus.
+L:War on Two Fronts	Guerra em duas frentes
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Vença um Mata-mata nas cinco arenas com inimigos (Amon Hen, Fangorn, Planícies de Rohan, Muralha rompida, Forte da Trombeta).
+L:The White Hand	A Mão Branca
+L:Win 3 Versus matches as Saruman.	Vença 3 partidas do Versus como Saruman.
+L:Shepherd of the Trees	Pastor das Árvores
+L:Win 3 Versus matches as the Ent.	Vença 3 partidas do Versus como o Ent.
+L:Captain of Isengard	Capitão de Isengard
+L:Win 3 Versus matches as the Uruk Captain.	Vença 3 partidas do Versus como o Capitão uruk.
+L:The Last Alliance Returns	O retorno da Última Aliança
+L:Win 3 Versus matches as the Elven Warrior.	Vença 3 partidas do Versus como o Guerreiro élfico.
+L:Hunt Them Down	Cacem-nos
+L:Win 3 Versus matches as Lurtz.	Vença 3 partidas do Versus como Lurtz.
+L:The Dark Lord	O Senhor do Escuro
+L:Win 3 Versus matches as Sauron.	Vença 3 partidas do Versus como Sauron.
+L:Servant of the Secret Fire	Servidor do Fogo Secreto
+L:Win 3 Versus matches as Gandalf.	Vença 3 partidas do Versus como Gandalf.
+L:Lord of Rivendell	Senhor de Valfenda
+L:Win 3 Versus matches as Elrond.	Vença 3 partidas do Versus como Elrond.
+L:Captain of Gondor	Capitão de Gondor
+L:Win 3 Versus matches as Boromir.	Vença 3 partidas do Versus como Boromir.
+L:Ring-bearer	Portador do Anel
+L:Win 3 Versus matches as Frodo.	Vença 3 partidas do Versus como Frodo.
+L:Blood Frenzy	Frenesi sanguinário
+L:Win 3 Versus matches as the Berserker.	Vença 3 partidas do Versus como o Berserker.
+L:Hurl the Stones	Arremesse as pedras
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Como o Ent, acerte 20 pedras arremessadas no seu oponente no Versus.
+L:Mirror Image	Imagem espelhada
+L:Win a match of first to 5 or more where both players are the same hero.	Vença uma partida de 5 vitórias ou mais em que os dois jogadores usem o mesmo herói.
+L:Defiance	Desafio
+L:Win a level on Impossible.	Vença uma fase no Impossível.
+L:Hardened	Calejado
+L:Win 5 different levels on Impossible.	Vença 5 fases diferentes no Impossível.
+L:DIAMOND: The Unbreakable	DIAMANTE: O Inquebrável
+L:Win every level of the story on Impossible. Very few ever will.	Vença todas as fases da história no Impossível. Pouquíssimos conseguirão.

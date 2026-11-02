@@ -1834,3 +1834,198 @@ P:BRAWLER: PLAYER {1}	RVÁČ: HRÁČ {1}
 P:RELENTLESS: PLAYER {1}	NEÚPROSNÝ: HRÁČ {1}
 P:Start Match	Spustit zápas
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. KOLO   P{2} {3} - {4} P{5}
+P:Borderless	Bez okrajů
+P:Exclusive	Exkluzivní
+P:Full Screen Res:	Rozliš. celé obr.:
+P:Mode:	Režim:
+P:Troll Battle	Bitva trollů
+P:Reset P2 Controls	Obnovit ovládání P2
+P:Berserker	Berserkr
+P:Cave Troll	Jeskynní troll
+P:Uruk Captain	Skurutí kapitán
+P:Saruman	Saruman
+P:Elven Warrior	Elfí válečník
+P:Ent	Ent
+P:Player 1: choose your hero	Hráč 1: vyber hrdinu
+P:Player 2: waiting	Hráč 2: čeká
+P:Player 2: choose your hero	Hráč 2: vyber hrdinu
+P:Player 1: {1}	Hráč 1: {1}
+P:Player 2: {1}	Hráč 2: {1}
+P:Player 2: {1} is Player 1's	Hráč 2: {1} má hráč 1
+P:Player 2: {1} not available	Hráč 2: {1} není k dispozici
+P:Ready. Press Continue to begin	Připraveno. Začni stiskem Pokračovat
+P:Unavailable	Nedostupné
+P:Speed	Rychlý
+P:Fierce	Prudký
+P:Special	Zvláštní
+P:Mixed	Smíšený
+P:P{1} STAB GUARD: {2} LEFT	P{1} KRYT PROTI BODNUTÍ: ZBÝVÁ {2}
+P:FIND THE SHIELD: {1} AHEAD	NAJDI ŠTÍT: {1} PŘED TEBOU
+P:FIND THE SHIELD: {1} BEHIND	NAJDI ŠTÍT: {1} ZA TEBOU
+P:FIND THE SHIELD: {1} TO THE LEFT	NAJDI ŠTÍT: {1} VLEVO
+P:FIND THE SHIELD: {1} TO THE RIGHT	NAJDI ŠTÍT: {1} VPRAVO
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	NAJDI ŠTÍT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	HRÁČ {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	NEJSILNĚJŠÍ ÚDER
+P:CLUB BLOWS / SWINGS	ZÁSAHY / ROZMACHY KYJEM
+P:DAMAGE DEALT / TAKEN	ZPŮSOBENÉ / UTRŽENÉ POŠKOZENÍ
+P:FASTEST KNOCKOUT	NEJRYCHLEJŠÍ KNOCKOUT
+P:MOST DAMAGE IN A MATCH	NEJVÍC POŠKOZENÍ V ZÁPASE
+P:ROCKS AND LOGS ON TARGET	ZÁSAHY KAMENY A KLÁDAMI
+P:SMASHES ({1}+)	DRTIVÉ ÚDERY ({1}+)
+P:TROLL BATTLE RECORDS	REKORDY BITVY TROLLŮ
+P:TROLL BATTLE RESULTS	VÝSLEDKY BITVY TROLLŮ
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Restart zápasu: BACK (Backspace / Tab) nebo klikni
+L:Restart Round: Y (the I key) or click this line	Restart kola: Y (klávesa I) nebo klikni na tento řádek
+L:P2 Teleport: ON	Teleport P2: ZAPNUTO
+L:P2 Teleport: OFF	Teleport P2: VYPNUTO
+L:Turn it off: Y (the I key) or click this note	Vypnout: Y (klávesa I) nebo klikni na tuto poznámku
+L:Turn it on: Y (the I key) or click this note	Zapnout: Y (klávesa I) nebo klikni na tuto poznámku
+L:IMPOSSIBLE	NEMOŽNÁ
+L:Harder than Expert: any enemy's second blow fells you	Těžší než Expert: druhá rána kteréhokoli nepřítele tě skolí
+L:Achievement earned	Získán úspěch
+L:DIAMOND ACHIEVEMENT EARNED	ZÍSKÁN DIAMANTOVÝ ÚSPĚCH
+L:The Last Alliance	Poslední spojenectví
+L:Win the prologue on the slopes of Mount Doom.	Vyhraj prolog na úbočí Hory osudu.
+L:Fire on Weathertop	Oheň na Větrově
+L:Drive the Ringwraiths from Weathertop.	Zažeň Prstenové přízraky z Větrova.
+L:Speak Friend	Řekni „příteli“
+L:Escape the Watcher at the Gates of Moria.	Unikni Hlídači ve vodě u Bran Morie.
+L:Drums in the Deep	Bubny v hlubinách
+L:Fight your way out of Balin's Tomb.	Probij se ven z Balinovy hrobky.
+L:Breaking of the Fellowship	Rozbití Společenstva
+L:Stand against the Uruk-hai at Amon Hen.	Postav se Skurut-hai na Amon Hen.
+L:Into the Forest	Do lesa
+L:Get through Fangorn Forest.	Projdi Fangornským lesem.
+L:Riders of Rohan	Jezdci Rohanu
+L:Win the battle on the Plains of Rohan.	Vyhraj bitvu na Rohanských pláních.
+L:The Burning of the Westfold	Vypálení Západního dolu
+L:Save the villages of the Westfold.	Zachraň vesnice Západního dolu.
+L:Wolves on the Road	Vlci na cestě
+L:Reach Helm's Deep along the road.	Dojdi po cestě k Helmovu žlebu.
+L:The Deeping Wall	Hlubinná zeď
+L:Hold the Deeping Wall.	Ubraň Hlubinnou zeď.
+L:The Wall Is Breached	Zeď je prolomena
+L:Fight on when the wall is breached.	Bojuj dál, když je zeď prolomena.
+L:The Hornburg Holds	Rohatý hrad vydrží
+L:Defend the Hornburg's courtyard to the dawn.	Braň nádvoří Rohatého hradu až do úsvitu.
+L:The Two Towers	Dvě věže
+L:Win every level of the story.	Vyhraj všechny úrovně příběhu.
+L:The Tower of Orthanc	Věž Orthanku
+L:Win the secret mission at Orthanc.	Vyhraj tajnou misi v Orthanku.
+L:Ranger of the North	Hraničář ze Severu
+L:Win a level as Aragorn.	Vyhraj úroveň za Aragorna.
+L:Prince of Mirkwood	Princ z Temného hvozdu
+L:Win a level as Legolas.	Vyhraj úroveň za Legolase.
+L:Son of Gloin	Syn Glóinův
+L:Win a level as Gimli.	Vyhraj úroveň za Gimliho.
+L:Heir of Elendil	Dědic Elendilův
+L:Win a level after the prologue as Isildur.	Vyhraj úroveň po prologu za Isildura.
+L:The Three Hunters	Tři lovci
+L:Win levels as Aragorn, Legolas and Gimli.	Vyhraj úrovně za Aragorna, Legolase a Gimliho.
+L:An Unexpected Ally	Nečekaný spojenec
+L:Win a level as one of the extra heroes.	Vyhraj úroveň za jednoho z dalších hrdinů.
+L:A Fellowship Remade	Společenstvo obnovené
+L:Unlock every extra hero.	Odemkni všechny další hrdiny.
+L:Seasoned Warrior	Ostřílený válečník
+L:Bring a hero to level 5.	Dostaň hrdinu na úroveň 5.
+L:Legend of the Third Age	Legenda Třetího věku
+L:Bring a hero to level 10.	Dostaň hrdinu na úroveň 10.
+L:Side by Side	Bok po boku
+L:Win a level in co-op.	Vyhraj úroveň v kooperaci.
+L:Shoulder to Shoulder	Rameno na rameni
+L:Hold the Deeping Wall in co-op.	Ubraň Hlubinnou zeď v kooperaci.
+L:First Blood	První krev
+L:Win a round of Versus.	Vyhraj kolo ve Versus.
+L:Champion of the Arena	Šampion arény
+L:Win a Deathmatch.	Vyhraj Deathmatch.
+L:Untouched	Nedotčený
+L:Win a round of Versus without taking a blow.	Vyhraj kolo ve Versus, aniž bys utržil ránu.
+L:Last Breath	Poslední dech
+L:Win a round of Versus with less than a tenth of your health left.	Vyhraj kolo ve Versus s méně než desetinou zdraví.
+L:Bearer of the Shield	Nositel štítu
+L:Win a match of Find the Shield.	Vyhraj zápas v Najdi štít.
+L:The Black Breath	Černý dech
+L:Win a Versus match as the Nazgul.	Vyhraj zápas ve Versus za Nazgûla.
+L:Iron and Leather	Železo a kůže
+L:Win a Versus match as the Shield Orc.	Vyhraj zápas ve Versus za Skřeta se štítem.
+L:Third Marshal of the Riddermark	Třetí maršál Jezdecké marky
+L:Win a Versus match as Eomer.	Vyhraj zápas ve Versus za Éomera.
+L:Shield-breaker	Lamač štítů
+L:Break the Shield Orc's shield.	Rozbij štít Skřeta se štítem.
+L:Unbroken Line	Nezlomená linie
+L:As player 1, win 5 Versus rounds in a row.	Jako hráč 1 vyhraj 5 kol ve Versus za sebou.
+L:The Challenger Rises	Vyzyvatel povstává
+L:As player 2, win 5 Versus rounds in a row.	Jako hráč 2 vyhraj 5 kol ve Versus za sebou.
+L:Get Back!	Zpátky!
+L:Knock your opponent back 50 times in Versus.	Odhoď soupeře 50krát ve Versus.
+L:Eagle Eye	Orlí zrak
+L:Land 40 locked-on arrows on your opponent in Versus.	Zasáhni soupeře 40 zaměřenými šípy ve Versus.
+L:Scavenger	Sběrač
+L:Take 30 pickups in Versus.	Seber 30 předmětů ve Versus.
+L:None Shall Pass	Nikdo neprojde
+L:Win a Versus match without losing a round.	Vyhraj zápas ve Versus bez ztráty jediného kola.
+L:Against All Hope	Proti vší naději
+L:Win a Versus match after trailing by 3 rounds.	Vyhraj zápas ve Versus poté, co jsi prohrával o 3 kola.
+L:Veteran of the Arena	Veterán arény
+L:Win 100 Versus rounds in all.	Vyhraj celkem 100 kol ve Versus.
+L:Wanderer	Poutník
+L:Win a Versus match on 8 different arenas.	Vyhraj zápas ve Versus na 8 různých arénách.
+L:Many Faces	Mnoho tváří
+L:Win a Versus match as 10 different heroes.	Vyhraj zápas ve Versus za 10 různých hrdinů.
+L:Troll Brawler	Trollí rváč
+L:Win a Troll Battle match.	Vyhraj zápas v Bitvě trollů.
+L:Terror of Moria	Postrach Morie
+L:Win 3 Troll Battle matches.	Vyhraj 3 zápasy v Bitvě trollů.
+L:Lord of the Deep	Pán hlubin
+L:Win 10 Troll Battle matches.	Vyhraj 10 zápasů v Bitvě trollů.
+L:Thick Hide	Tlustá kůže
+L:Win a Troll Battle match without losing a round.	Vyhraj zápas v Bitvě trollů bez ztráty jediného kola.
+L:Bone Crusher	Drtič kostí
+L:Land a single smash of 400 damage or more in Troll Battle.	Zasaď v Bitvě trollů jediný úder za 400 a více poškození.
+L:Troll Rampage	Řádění trolla
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Způsob v Bitvě trollů celkem 25 000 poškození ve všech zápasech.
+L:Swift Bludgeon	Rychlý kyj
+L:Win a Troll Battle round in under 20 seconds.	Vyhraj kolo v Bitvě trollů za méně než 20 sekund.
+L:Rock and Log	Kámen a kláda
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Zasáhni v Bitvě trollů druhého trolla 25 hozenými kameny či kládami.
+L:Orc-Slayer	Zabiják skřetů
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Zabij 25 skřetů a Skurut-hai během zápasů ve Versus.
+L:Scourge of Isengard	Metla Železného pasu
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Zabij 150 skřetů a Skurut-hai během zápasů ve Versus.
+L:War on Two Fronts	Válka na dvou frontách
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Vyhraj Deathmatch na všech pěti arénách s nepřáteli (Amon Hen, Fangorn, Rohanské pláně, Proražená zeď, Rohatý hrad).
+L:The White Hand	Bílá ruka
+L:Win 3 Versus matches as Saruman.	Vyhraj 3 zápasy ve Versus za Sarumana.
+L:Shepherd of the Trees	Pastýř stromů
+L:Win 3 Versus matches as the Ent.	Vyhraj 3 zápasy ve Versus za Enta.
+L:Captain of Isengard	Kapitán Železného pasu
+L:Win 3 Versus matches as the Uruk Captain.	Vyhraj 3 zápasy ve Versus za Skurutího kapitána.
+L:The Last Alliance Returns	Návrat Posledního spojenectví
+L:Win 3 Versus matches as the Elven Warrior.	Vyhraj 3 zápasy ve Versus za Elfího válečníka.
+L:Hunt Them Down	Uštvěte je
+L:Win 3 Versus matches as Lurtz.	Vyhraj 3 zápasy ve Versus za Lurtze.
+L:The Dark Lord	Temný pán
+L:Win 3 Versus matches as Sauron.	Vyhraj 3 zápasy ve Versus za Saurona.
+L:Servant of the Secret Fire	Služebník Tajného ohně
+L:Win 3 Versus matches as Gandalf.	Vyhraj 3 zápasy ve Versus za Gandalfa.
+L:Lord of Rivendell	Pán Roklinky
+L:Win 3 Versus matches as Elrond.	Vyhraj 3 zápasy ve Versus za Elronda.
+L:Captain of Gondor	Gondorský kapitán
+L:Win 3 Versus matches as Boromir.	Vyhraj 3 zápasy ve Versus za Boromira.
+L:Ring-bearer	Nositel Prstenu
+L:Win 3 Versus matches as Frodo.	Vyhraj 3 zápasy ve Versus za Froda.
+L:Blood Frenzy	Krvavé šílenství
+L:Win 3 Versus matches as the Berserker.	Vyhraj 3 zápasy ve Versus za Berserkra.
+L:Hurl the Stones	Vrhání kamenů
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Jako Ent zasáhni soupeře ve Versus 20 hozenými kameny.
+L:Mirror Image	Zrcadlový obraz
+L:Win a match of first to 5 or more where both players are the same hero.	Vyhraj zápas na 5 a více vítězství, kde oba hráči hrají za stejného hrdinu.
+L:Defiance	Vzdor
+L:Win a level on Impossible.	Vyhraj úroveň na obtížnost Nemožná.
+L:Hardened	Zocelený
+L:Win 5 different levels on Impossible.	Vyhraj 5 různých úrovní na obtížnost Nemožná.
+L:DIAMOND: The Unbreakable	DIAMANT: Nezlomný
+L:Win every level of the story on Impossible. Very few ever will.	Vyhraj všechny úrovně příběhu na obtížnost Nemožná. Málokomu se to kdy podaří.

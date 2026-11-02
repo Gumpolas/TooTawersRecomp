@@ -8,15 +8,30 @@
 
 cd "$(dirname "$(readlink -f "$0")")" || exit 1
 TITLE="The Two Towers Recompiled"
+export TT_LAUNCHED=1   # (the game: started from here, so it does not start this script again when its files are missing)
 
 have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2>&1; }
+# a message in a window without zenity: KDE's kdialog, else the game's own (SDL's message box)
+win_msg() {
+    [ -n "$DISPLAY$WAYLAND_DISPLAY" ] || return 1
+    if command -v kdialog >/dev/null 2>&1 && kdialog --title "$TITLE" --error "$1" 2>/dev/null; then return 0; fi
+    # the game's own box (straight on X11, else SDL's); xmessage (x11-utils) when that could not open one
+    if [ -x ./twotowers_recomp ]; then
+        out=$(TT_MSGBOX="$1" ./twotowers_recomp 2>&1 >/dev/null | grep '^(')
+        [ -n "$out" ] && printf '%s\n' "$out" >&2
+        case "$out" in *"shown in a window"*) return 0;; esac
+    fi
+    if command -v xmessage >/dev/null 2>&1; then printf '%s\n' "$1" | xmessage -center -title "$TITLE" -buttons OK:0 -file - 2>/dev/null; return 0; fi
+    echo "(no window could be opened for this message)" >&2
+    return 0
+}
 say() {
     if have_gui; then zenity --info --title="$TITLE" --width=420 --text="$1" 2>/dev/null
     else printf '%s\n' "$1" >&2; fi
 }
 fail() {
     if have_gui; then zenity --error --title="$TITLE" --width=460 --text="$1" 2>/dev/null
-    else printf '%s\n' "$1" >&2; fi
+    else printf '%s\n' "$1" >&2; [ -t 2 ] || win_msg "$1"; fi
     exit 1
 }
 
@@ -56,8 +71,15 @@ ${msg:-Extraction was cancelled.}"
     elif command -v x-terminal-emulator >/dev/null 2>&1; then
         exec x-terminal-emulator -e "$0" "$@"
     else
-        fail "The game files are not installed. Open a terminal in this folder and run:
-  ./twotowers-setup install /path/to/TheTwoTowers.iso"
+        # (1.9.9: worded as the welcome it is -- the AppImage catalog's test reads the screen and takes "not installed" for an error)
+        fail "Welcome to The Two Towers Recompiled!
+
+Before the first game, the game's files are copied from your own disc image (The Two Towers, USA, Xbox ISO). Open a terminal in this folder:
+  $(pwd)
+and run:
+  ./twotowers-setup install /path/to/TheTwoTowers.iso
+
+Tip: with zenity on your system (sudo apt install zenity), the game asks for your disc image in a window of its own."
     fi
 fi
 

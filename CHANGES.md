@@ -2822,8 +2822,9 @@ twotowers/src/twotowers_manual.c
     the last 1.5 s, TT_VS_TGTMS) and within 7 units (TT_VS_TGTR): held from
     anywhere it kept him in the engage stance's loop at rest and steered
     his moves round the other (TT_VS_OLDTGT: as before).
-  - The heroes take more hits: full health 125% in the campaign and co-op
-    (TT_HPPCT), Versus 2000 (was 1500).
+  - The heroes take more hits: full health 125% in co-op (TT_HPPCT),
+    Versus 2000 (was 1500). The single-player campaign keeps the game's own
+    health on every difficulty (TT_HPSOLO: 125% there too).
   - The cave troll's club ends each swing with Balin's Tomb's slam (930)
     in every mode (TT_TROLLSLAM_MS, TT_NOTROLLSLAM).
 twotowers/src/heroes.c
@@ -3309,3 +3310,75 @@ twotowers/src/twotowers_manual.c
     is moved under player 2's bar whole -- half of it stayed on his bar. A
     top-right list's top pieces move together (TT_COOP_ALLYRIGHTONLY: as
     before).
+  - Versus, Orthanc's summit: every round now starts from the match's two
+    spots. The next round used to set the loser 42 units from the winner,
+    past the summit's walls, where he fell forever. A hero who still ends
+    up off the summit (below it, or past its walls) is put straight back on
+    his spot (a kick off still wins the round), and a push can't carry him
+    through its walls. Restart Round keeps the summit's spots too. The lower
+    Orthanc arena gets a wall at its parapet and the same put-back; the
+    pathmap a hero is placed on is picked by his height too (that level's
+    five lie one over another). If the level's own scene keeps the HUD
+    hidden, the match begins anyway after 10 s instead of leaving both
+    players unable to move (TT_VS_WAITSCENE: wait for it).
+    TT_VS_ORTHNOWALL: none of this.
+  - Versus: the Nazgul has his own move and upgrade names (Morgul Blade
+    Fury, Witch-king's Will, Black Rider Charge, ...; his throws are
+    Morgul Darts) -- he showed Isildur's. Picking Aragorn, Legolas, Gimli
+    or Isildur in Versus puts the game's own upgrade names back (a hero
+    picked before could leave his on Aragorn's).
+  - Linux: a DualShock 3 is also read straight from the kernel's joystick
+    device (/dev/input/jsN, the one jstest reads), put together with what
+    SDL gives: a playtest's pad (Linux Mint 22.1, kernel 6.8, USB and
+    Bluetooth) was found and opened through SDL but no button or stick ever
+    reached the game (GitHub issue 14, again). A pad SDL does not list at
+    all gets a slot of its own. RECOMP_NO_JSDEV=1: SDL alone;
+    RECOMP_PADLOG=1 logs each pad's state as it changes.
+  - Linux AppImage: every file inside it readable (a few dozen came from a
+    Windows disk as owner-only, root's inside the image, so the start's
+    copy failed with "Permission denied" and the game never opened -- the
+    AppImage catalog's test, appimage.github.io PR 10821). AppRun goes on
+    when the program itself was copied; the tar.gz's files the same.
+  - Linux / macOS: an error the game stops on (no game files, ...) is shown
+    in a window too (SDL's message box), and TwoTowers.sh without zenity
+    says how to install the game files in one (kdialog, or the game's own
+    box) instead of only in a terminal no one sees.
+  - Linux: the error window drawn straight on X11 (libX11, looked up when
+    needed; the core font 9x15 or the server's built-in "fixed") before
+    SDL's message box is tried (TT_SDLBOX=1: SDL's first), and xmessage
+    after both: on the AppImage catalog's bare X server SDL's box never
+    opened and the game quit there without a window. The message wraps to
+    the screen.
+  - Linux: the message window has a class (WM_CLASS) and a UTF-8 title:
+    the AppImage catalog's test lists windows by name and class
+    (xwininfo), and one with no class was not counted -- "Could not find a
+    single window on screen" with the message on it.
+  - Linux: the first start without the game files says so as a welcome
+    (what to do, and the zenity tip) instead of "not installed yet": the
+    AppImage catalog's test reads the screen and took that for an error.
+  - Linux / macOS: controllers reach the game. The thread that finds the
+    connected controllers and gives player 1 one was made with a 64 KB
+    stack, less than Linux needs for the program's thread-local data, so it
+    was never started: player 1 had no controller, the keyboard stood in,
+    and a DualShock 3 read fine ([PADLOG]) was ignored (GitHub issue 14).
+    1 MB now, and any thread whose stack is too small is made again with
+    8 MB.
+  - Linux / macOS: the game started directly (a Steam shortcut to
+    twotowers_recomp, on a Steam Deck say) with no game files starts
+    TwoTowers.sh beside it, which asks for the disc image and installs --
+    it stopped at "Failed to load default.xbe. Run The Two Towers
+    Recompiled.exe" (a Windows program). default.xbe is found whatever
+    its case (DEFAULT.XBE from a copy made elsewhere), and the message, if
+    it still comes, names the folder looked in and how to install there.
+  - Languages: Welsh (Cymraeg), Old English (Ænglisc), Old English in the
+    Anglo-Saxon runes (Ænglisc (runstafas): each rune drawn from its
+    strokes to the game font's measures, made from the Old English by
+    tools/lang/runes.py), Old Norse (Norrœnt mál) and Latin (Latina).
+  - Every language: the newer words translated -- the Versus menu (Mode,
+    Troll Battle, the newer heroes), the Troll Battle results and records,
+    Find the Shield's notes, the co-op hero select's status lines, the
+    Restart Round and P2 Teleport notes, the ECTS HUD's labels, the hero
+    select's "Unavailable", and the achievements (their names and what they
+    were for). The notes and the achievements' pop-ups, the ECTS labels,
+    "Unavailable" and the hero select's lines now go through the
+    translation (they were always English).

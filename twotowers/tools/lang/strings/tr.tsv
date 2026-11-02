@@ -1833,3 +1833,198 @@ P:BRAWLER: PLAYER {1}	KAVGACI: OYUNCU {1}
 P:RELENTLESS: PLAYER {1}	AMANSIZ: OYUNCU {1}
 P:Start Match	Maçı Başlat
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. TUR   P{2} {3} - {4} P{5}
+P:Borderless	Kenarlıksız
+P:Exclusive	Özel
+P:Full Screen Res:	Tam Ekran Çöz.:
+P:Mode:	Mod:
+P:Troll Battle	Trol Savaşı
+P:Reset P2 Controls	P2 Kontrollerini Sıfırla
+P:Berserker	Berserker
+P:Cave Troll	Mağara Trolü
+P:Uruk Captain	Uruk Komutanı
+P:Saruman	Saruman
+P:Elven Warrior	Elf Savaşçısı
+P:Ent	Ent
+P:Player 1: choose your hero	Oyuncu 1: kahramanınızı seçin
+P:Player 2: waiting	Oyuncu 2: bekleniyor
+P:Player 2: choose your hero	Oyuncu 2: kahramanınızı seçin
+P:Player 1: {1}	Oyuncu 1: {1}
+P:Player 2: {1}	Oyuncu 2: {1}
+P:Player 2: {1} is Player 1's	Oyuncu 2: {1}, Oyuncu 1'in
+P:Player 2: {1} not available	Oyuncu 2: {1} kullanılamaz
+P:Ready. Press Continue to begin	Hazır. Başlamak için Devam'a basın
+P:Unavailable	Kullanılamaz
+P:Speed	Hız
+P:Fierce	Sert
+P:Special	Özel
+P:Mixed	Karma
+P:P{1} STAB GUARD: {2} LEFT	P{1} SAPLAMA SAVUNMASI: {2} KALDI
+P:FIND THE SHIELD: {1} AHEAD	KALKANI BUL: {1} İLERİDE
+P:FIND THE SHIELD: {1} BEHIND	KALKANI BUL: {1} GERİDE
+P:FIND THE SHIELD: {1} TO THE LEFT	KALKANI BUL: {1} SOLDA
+P:FIND THE SHIELD: {1} TO THE RIGHT	KALKANI BUL: {1} SAĞDA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	KALKANI BUL   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	OYUNCU {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	EN BÜYÜK DARBE
+P:CLUB BLOWS / SWINGS	SOPA VURUŞU / SALLAMA
+P:DAMAGE DEALT / TAKEN	VERİLEN / ALINAN HASAR
+P:FASTEST KNOCKOUT	EN HIZLI NAKAVT
+P:MOST DAMAGE IN A MATCH	BİR MAÇTA EN ÇOK HASAR
+P:ROCKS AND LOGS ON TARGET	İSABETLİ KAYA VE KÜTÜK
+P:SMASHES ({1}+)	DARBELER ({1}+)
+P:TROLL BATTLE RECORDS	TROL SAVAŞI REKORLARI
+P:TROLL BATTLE RESULTS	TROL SAVAŞI SONUÇLARI
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Maçı yeniden başlat: BACK (Backspace / Tab) veya tıklayın
+L:Restart Round: Y (the I key) or click this line	Turu yeniden başlat: Y (I tuşu) veya bu satıra tıklayın
+L:P2 Teleport: ON	P2 Işınlanma: AÇIK
+L:P2 Teleport: OFF	P2 Işınlanma: KAPALI
+L:Turn it off: Y (the I key) or click this note	Kapatmak için: Y (I tuşu) veya bu nota tıklayın
+L:Turn it on: Y (the I key) or click this note	Açmak için: Y (I tuşu) veya bu nota tıklayın
+L:IMPOSSIBLE	İMKÂNSIZ
+L:Harder than Expert: any enemy's second blow fells you	Uzman'dan zor: herhangi bir düşmanın ikinci darbesi sizi yere serer
+L:Achievement earned	Başarım kazanıldı
+L:DIAMOND ACHIEVEMENT EARNED	ELMAS BAŞARIM KAZANILDI
+L:The Last Alliance	Son İttifak
+L:Win the prologue on the slopes of Mount Doom.	Hüküm Dağı'nın yamaçlarındaki önsözü kazanın.
+L:Fire on Weathertop	Hava Tepesi'nde Ateş
+L:Drive the Ringwraiths from Weathertop.	Yüzük Tayflarını Hava Tepesi'nden kovun.
+L:Speak Friend	Söyle Dostum
+L:Escape the Watcher at the Gates of Moria.	Moria Kapıları'ndaki Gözcü'den kaçın.
+L:Drums in the Deep	Derinlerde Davullar
+L:Fight your way out of Balin's Tomb.	Balin'in Mezarı'ndan savaşarak çıkın.
+L:Breaking of the Fellowship	Kardeşliğin Dağılışı
+L:Stand against the Uruk-hai at Amon Hen.	Amon Hen'de Uruk-hai'ye karşı direnin.
+L:Into the Forest	Ormana Doğru
+L:Get through Fangorn Forest.	Fangorn Ormanı'nı geçin.
+L:Riders of Rohan	Rohan Süvarileri
+L:Win the battle on the Plains of Rohan.	Rohan Ovaları'ndaki savaşı kazanın.
+L:The Burning of the Westfold	Batıağıl'ın Yakılışı
+L:Save the villages of the Westfold.	Batıağıl'ın köylerini kurtarın.
+L:Wolves on the Road	Yoldaki Kurtlar
+L:Reach Helm's Deep along the road.	Yol boyunca ilerleyip Miğfer Dibi'ne ulaşın.
+L:The Deeping Wall	Dip Duvarı
+L:Hold the Deeping Wall.	Dip Duvarı'nı tutun.
+L:The Wall Is Breached	Duvar Yıkıldı
+L:Fight on when the wall is breached.	Duvar yıkıldığında savaşmaya devam edin.
+L:The Hornburg Holds	Hornburg Direniyor
+L:Defend the Hornburg's courtyard to the dawn.	Hornburg'un avlusunu şafağa dek savunun.
+L:The Two Towers	İki Kule
+L:Win every level of the story.	Hikâyenin tüm bölümlerini kazanın.
+L:The Tower of Orthanc	Orthanc Kulesi
+L:Win the secret mission at Orthanc.	Orthanc'taki gizli görevi kazanın.
+L:Ranger of the North	Kuzey Kolcusu
+L:Win a level as Aragorn.	Aragorn ile bir bölüm kazanın.
+L:Prince of Mirkwood	Kuyutorman Prensi
+L:Win a level as Legolas.	Legolas ile bir bölüm kazanın.
+L:Son of Gloin	Glóin'in Oğlu
+L:Win a level as Gimli.	Gimli ile bir bölüm kazanın.
+L:Heir of Elendil	Elendil'in Varisi
+L:Win a level after the prologue as Isildur.	Önsözden sonraki bir bölümü Isildur ile kazanın.
+L:The Three Hunters	Üç Avcı
+L:Win levels as Aragorn, Legolas and Gimli.	Aragorn, Legolas ve Gimli ile bölümler kazanın.
+L:An Unexpected Ally	Beklenmedik Bir Müttefik
+L:Win a level as one of the extra heroes.	Ek kahramanlardan biriyle bir bölüm kazanın.
+L:A Fellowship Remade	Yeniden Kurulan Kardeşlik
+L:Unlock every extra hero.	Tüm ek kahramanların kilidini açın.
+L:Seasoned Warrior	Deneyimli Savaşçı
+L:Bring a hero to level 5.	Bir kahramanı 5. seviyeye çıkarın.
+L:Legend of the Third Age	Üçüncü Çağ'ın Efsanesi
+L:Bring a hero to level 10.	Bir kahramanı 10. seviyeye çıkarın.
+L:Side by Side	Yan Yana
+L:Win a level in co-op.	Ortak Oyun'da bir bölüm kazanın.
+L:Shoulder to Shoulder	Omuz Omuza
+L:Hold the Deeping Wall in co-op.	Ortak Oyun'da Dip Duvarı'nı tutun.
+L:First Blood	İlk Kan
+L:Win a round of Versus.	Bir Karşılaşma turu kazanın.
+L:Champion of the Arena	Arenanın Şampiyonu
+L:Win a Deathmatch.	Bir Ölüm Maçı kazanın.
+L:Untouched	Dokunulmaz
+L:Win a round of Versus without taking a blow.	Hiç darbe almadan bir Karşılaşma turu kazanın.
+L:Last Breath	Son Nefes
+L:Win a round of Versus with less than a tenth of your health left.	Sağlığınızın onda birinden azı kalmışken bir Karşılaşma turu kazanın.
+L:Bearer of the Shield	Kalkanın Taşıyıcısı
+L:Win a match of Find the Shield.	Bir Kalkanı Bul maçı kazanın.
+L:The Black Breath	Kara Nefes
+L:Win a Versus match as the Nazgul.	Nazgûl olarak bir Karşılaşma maçı kazanın.
+L:Iron and Leather	Demir ve Deri
+L:Win a Versus match as the Shield Orc.	Kalkanlı Ork olarak bir Karşılaşma maçı kazanın.
+L:Third Marshal of the Riddermark	Riddermark'ın Üçüncü Mareşali
+L:Win a Versus match as Eomer.	Éomer olarak bir Karşılaşma maçı kazanın.
+L:Shield-breaker	Kalkan Kıran
+L:Break the Shield Orc's shield.	Kalkanlı Ork'un kalkanını kırın.
+L:Unbroken Line	Kırılmaz Saf
+L:As player 1, win 5 Versus rounds in a row.	Oyuncu 1 olarak art arda 5 Karşılaşma turu kazanın.
+L:The Challenger Rises	Meydan Okuyan Yükseliyor
+L:As player 2, win 5 Versus rounds in a row.	Oyuncu 2 olarak art arda 5 Karşılaşma turu kazanın.
+L:Get Back!	Geri Çekil!
+L:Knock your opponent back 50 times in Versus.	Karşılaşma'da rakibinizi 50 kez geri savurun.
+L:Eagle Eye	Kartal Gözü
+L:Land 40 locked-on arrows on your opponent in Versus.	Karşılaşma'da rakibinize kilitlenerek 40 ok isabet ettirin.
+L:Scavenger	Yağmacı
+L:Take 30 pickups in Versus.	Karşılaşma'da 30 eşya toplayın.
+L:None Shall Pass	Kimse Geçemez
+L:Win a Versus match without losing a round.	Hiç tur kaybetmeden bir Karşılaşma maçı kazanın.
+L:Against All Hope	Tüm Umutlara Karşı
+L:Win a Versus match after trailing by 3 rounds.	3 tur gerideyken bir Karşılaşma maçını kazanın.
+L:Veteran of the Arena	Arenanın Kıdemlisi
+L:Win 100 Versus rounds in all.	Toplam 100 Karşılaşma turu kazanın.
+L:Wanderer	Gezgin
+L:Win a Versus match on 8 different arenas.	8 farklı arenada Karşılaşma maçı kazanın.
+L:Many Faces	Pek Çok Yüz
+L:Win a Versus match as 10 different heroes.	10 farklı kahramanla Karşılaşma maçı kazanın.
+L:Troll Brawler	Trol Kavgacısı
+L:Win a Troll Battle match.	Bir Trol Savaşı maçı kazanın.
+L:Terror of Moria	Moria'nın Dehşeti
+L:Win 3 Troll Battle matches.	3 Trol Savaşı maçı kazanın.
+L:Lord of the Deep	Derinlerin Efendisi
+L:Win 10 Troll Battle matches.	10 Trol Savaşı maçı kazanın.
+L:Thick Hide	Kalın Post
+L:Win a Troll Battle match without losing a round.	Hiç tur kaybetmeden bir Trol Savaşı maçı kazanın.
+L:Bone Crusher	Kemik Kıran
+L:Land a single smash of 400 damage or more in Troll Battle.	Trol Savaşı'nda tek darbede 400 veya daha fazla hasar verin.
+L:Troll Rampage	Azgın Trol
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Trol Savaşı'nda tüm maçlarınızda toplam 25.000 hasar verin.
+L:Swift Bludgeon	Hızlı Topuz
+L:Win a Troll Battle round in under 20 seconds.	Bir Trol Savaşı turunu 20 saniyeden kısa sürede kazanın.
+L:Rock and Log	Kaya ve Kütük
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Trol Savaşı'nda diğer trole 25 kaya veya kütük fırlatıp isabet ettirin.
+L:Orc-Slayer	Ork Avcısı
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Karşılaşma maçlarında 25 ork ve Uruk-hai öldürün.
+L:Scourge of Isengard	Isengard'ın Belası
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Karşılaşma maçlarında 150 ork ve Uruk-hai öldürün.
+L:War on Two Fronts	İki Cephede Savaş
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Düşmanlı beş arenanın hepsinde bir Ölüm Maçı kazanın (Amon Hen, Fangorn, Rohan Ovaları, Yıkılan Duvar, Hornburg).
+L:The White Hand	Ak El
+L:Win 3 Versus matches as Saruman.	Saruman olarak 3 Karşılaşma maçı kazanın.
+L:Shepherd of the Trees	Ağaçların Çobanı
+L:Win 3 Versus matches as the Ent.	Ent olarak 3 Karşılaşma maçı kazanın.
+L:Captain of Isengard	Isengard Komutanı
+L:Win 3 Versus matches as the Uruk Captain.	Uruk Komutanı olarak 3 Karşılaşma maçı kazanın.
+L:The Last Alliance Returns	Son İttifak Geri Dönüyor
+L:Win 3 Versus matches as the Elven Warrior.	Elf Savaşçısı olarak 3 Karşılaşma maçı kazanın.
+L:Hunt Them Down	Avlayın Onları
+L:Win 3 Versus matches as Lurtz.	Lurtz olarak 3 Karşılaşma maçı kazanın.
+L:The Dark Lord	Kara Lord
+L:Win 3 Versus matches as Sauron.	Sauron olarak 3 Karşılaşma maçı kazanın.
+L:Servant of the Secret Fire	Gizli Ateşin Hizmetkârı
+L:Win 3 Versus matches as Gandalf.	Gandalf olarak 3 Karşılaşma maçı kazanın.
+L:Lord of Rivendell	Ayrıkvadi Efendisi
+L:Win 3 Versus matches as Elrond.	Elrond olarak 3 Karşılaşma maçı kazanın.
+L:Captain of Gondor	Gondor Komutanı
+L:Win 3 Versus matches as Boromir.	Boromir olarak 3 Karşılaşma maçı kazanın.
+L:Ring-bearer	Yüzük Taşıyıcısı
+L:Win 3 Versus matches as Frodo.	Frodo olarak 3 Karşılaşma maçı kazanın.
+L:Blood Frenzy	Kan Çılgınlığı
+L:Win 3 Versus matches as the Berserker.	Berserker olarak 3 Karşılaşma maçı kazanın.
+L:Hurl the Stones	Taşları Fırlat
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Ent olarak, Karşılaşma'da rakibinize 20 kaya fırlatıp isabet ettirin.
+L:Mirror Image	Ayna Görüntüsü
+L:Win a match of first to 5 or more where both players are the same hero.	İki oyuncunun da aynı kahraman olduğu, en az 5 tur kazananın galip geldiği bir maçı kazanın.
+L:Defiance	Meydan Okuma
+L:Win a level on Impossible.	İmkânsız zorlukta bir bölüm kazanın.
+L:Hardened	Çelikleşmiş
+L:Win 5 different levels on Impossible.	İmkânsız zorlukta 5 farklı bölüm kazanın.
+L:DIAMOND: The Unbreakable	ELMAS: Kırılmaz
+L:Win every level of the story on Impossible. Very few ever will.	Hikâyenin tüm bölümlerini İmkânsız zorlukta kazanın. Bunu çok az kişi başaracak.

@@ -1833,3 +1833,198 @@ P:BRAWLER: PLAYER {1}	TAPPELUPUKARI: PELAAJA {1}
 P:RELENTLESS: PLAYER {1}	ARMOTON: PELAAJA {1}
 P:Start Match	Aloita ottelu
 P:ROUND {1}   P{2} {3} - {4} P{5}	ERÄ {1}   P{2} {3} - {4} P{5}
+P:Borderless	Reunaton
+P:Exclusive	Yksinomainen
+P:Full Screen Res:	Koko näytön res.:
+P:Mode:	Tila:
+P:Troll Battle	Peikkotaistelu
+P:Reset P2 Controls	Palauta P2:n ohjaimet
+P:Berserker	Berserkki
+P:Cave Troll	Luolapeikko
+P:Uruk Captain	Uruk-päällikkö
+P:Saruman	Saruman
+P:Elven Warrior	Haltiasoturi
+P:Ent	Entti
+P:Player 1: choose your hero	Pelaaja 1: valitse sankarisi
+P:Player 2: waiting	Pelaaja 2: odottaa
+P:Player 2: choose your hero	Pelaaja 2: valitse sankarisi
+P:Player 1: {1}	Pelaaja 1: {1}
+P:Player 2: {1}	Pelaaja 2: {1}
+P:Player 2: {1} is Player 1's	Pelaaja 2: {1} on Pelaaja 1:n
+P:Player 2: {1} not available	Pelaaja 2: {1} ei saatavilla
+P:Ready. Press Continue to begin	Valmista. Aloita valitsemalla Jatka
+P:Unavailable	Ei saatavilla
+P:Speed	Nopeus
+P:Fierce	Raju
+P:Special	Erikois
+P:Mixed	Sekoitus
+P:P{1} STAB GUARD: {2} LEFT	P{1} PISTOTORJUNTA: {2} JÄLJELLÄ
+P:FIND THE SHIELD: {1} AHEAD	LÖYDÄ KILPI: {1} EDESSÄ
+P:FIND THE SHIELD: {1} BEHIND	LÖYDÄ KILPI: {1} TAKANA
+P:FIND THE SHIELD: {1} TO THE LEFT	LÖYDÄ KILPI: {1} VASEMMALLA
+P:FIND THE SHIELD: {1} TO THE RIGHT	LÖYDÄ KILPI: {1} OIKEALLA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	LÖYDÄ KILPI   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	PELAAJA {1} +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	KOVIN MURSKAUS
+P:CLUB BLOWS / SWINGS	NUIJANISKUT / HUITAISUT
+P:DAMAGE DEALT / TAKEN	AIHEUTETTU / SAATU VAHINKO
+P:FASTEST KNOCKOUT	NOPEIN TYRMÄYS
+P:MOST DAMAGE IN A MATCH	ENITEN VAHINKOA OTTELUSSA
+P:ROCKS AND LOGS ON TARGET	OSUNEET KIVET JA TUKIT
+P:SMASHES ({1}+)	MURSKAUKSET ({1}+)
+P:TROLL BATTLE RECORDS	PEIKKOTAISTELUN ENNÄTYKSET
+P:TROLL BATTLE RESULTS	PEIKKOTAISTELUN TULOKSET
+P:P{1}	P{1}
+L:Restart Match: BACK (Backspace / Tab) or click	Aloita ottelu alusta: BACK (Backspace / Tab) tai napsauta
+L:Restart Round: Y (the I key) or click this line	Aloita erä alusta: Y (I-näppäin) tai napsauta tätä riviä
+L:P2 Teleport: ON	P2:n siirto: PÄÄLLÄ
+L:P2 Teleport: OFF	P2:n siirto: POIS
+L:Turn it off: Y (the I key) or click this note	Poista käytöstä: Y (I-näppäin) tai napsauta tätä ilmoitusta
+L:Turn it on: Y (the I key) or click this note	Ota käyttöön: Y (I-näppäin) tai napsauta tätä ilmoitusta
+L:IMPOSSIBLE	MAHDOTON
+L:Harder than Expert: any enemy's second blow fells you	Vaikeampi kuin Asiantuntija: minkä tahansa vihollisen toinen isku kaataa sinut
+L:Achievement earned	Saavutus ansaittu
+L:DIAMOND ACHIEVEMENT EARNED	TIMANTTISAAVUTUS ANSAITTU
+L:The Last Alliance	Viimeinen liitto
+L:Win the prologue on the slopes of Mount Doom.	Läpäise prologi Tuomiovuoren rinteillä.
+L:Fire on Weathertop	Tulta Viimapäällä
+L:Drive the Ringwraiths from Weathertop.	Aja sormusaaveet pois Viimapäältä.
+L:Speak Friend	Sano ystävä
+L:Escape the Watcher at the Gates of Moria.	Pakene Vartijaa Morian porteilla.
+L:Drums in the Deep	Rumpuja syvyyksissä
+L:Fight your way out of Balin's Tomb.	Taistele tiesi ulos Balinin haudasta.
+L:Breaking of the Fellowship	Saattueen hajoaminen
+L:Stand against the Uruk-hai at Amon Hen.	Pidä pintasi uruk-haita vastaan Amon Henillä.
+L:Into the Forest	Metsään
+L:Get through Fangorn Forest.	Selviydy Fangornin metsän läpi.
+L:Riders of Rohan	Rohanin ratsastajat
+L:Win the battle on the Plains of Rohan.	Voita taistelu Rohanin tasangoilla.
+L:The Burning of the Westfold	Länsiankasen palo
+L:Save the villages of the Westfold.	Pelasta Länsiankasen kylät.
+L:Wolves on the Road	Susia tiellä
+L:Reach Helm's Deep along the road.	Saavu Helmin syvänteelle tietä pitkin.
+L:The Deeping Wall	Ankanmuuri
+L:Hold the Deeping Wall.	Pidä Ankanmuuri.
+L:The Wall Is Breached	Muuri on murrettu
+L:Fight on when the wall is breached.	Taistele edelleen, kun muuri on murrettu.
+L:The Hornburg Holds	Ämyrilinna kestää
+L:Defend the Hornburg's courtyard to the dawn.	Puolusta Ämyrilinnan pihaa aamunkoittoon asti.
+L:The Two Towers	Kaksi tornia
+L:Win every level of the story.	Läpäise kaikki tarinan tasot.
+L:The Tower of Orthanc	Orthancin torni
+L:Win the secret mission at Orthanc.	Läpäise Orthancin salainen tehtävä.
+L:Ranger of the North	Pohjoisen samooja
+L:Win a level as Aragorn.	Läpäise taso Aragornilla.
+L:Prince of Mirkwood	Synkmetsän prinssi
+L:Win a level as Legolas.	Läpäise taso Legolasilla.
+L:Son of Gloin	Glóinin poika
+L:Win a level as Gimli.	Läpäise taso Gimlillä.
+L:Heir of Elendil	Elendilin perijä
+L:Win a level after the prologue as Isildur.	Läpäise prologin jälkeinen taso Isildurilla.
+L:The Three Hunters	Kolme metsästäjää
+L:Win levels as Aragorn, Legolas and Gimli.	Läpäise tasoja Aragornilla, Legolasilla ja Gimlillä.
+L:An Unexpected Ally	Odottamaton liittolainen
+L:Win a level as one of the extra heroes.	Läpäise taso jollakin lisäsankareista.
+L:A Fellowship Remade	Uusi saattue
+L:Unlock every extra hero.	Avaa kaikki lisäsankarit.
+L:Seasoned Warrior	Kokenut soturi
+L:Bring a hero to level 5.	Nosta sankari tasolle 5.
+L:Legend of the Third Age	Kolmannen ajan legenda
+L:Bring a hero to level 10.	Nosta sankari tasolle 10.
+L:Side by Side	Rinta rinnan
+L:Win a level in co-op.	Läpäise taso yhteispelissä.
+L:Shoulder to Shoulder	Olka olkaa vasten
+L:Hold the Deeping Wall in co-op.	Pidä Ankanmuuri yhteispelissä.
+L:First Blood	Ensimmäinen veri
+L:Win a round of Versus.	Voita erä Vastakkain-tilassa.
+L:Champion of the Arena	Areenan mestari
+L:Win a Deathmatch.	Voita kuolonottelu.
+L:Untouched	Koskematon
+L:Win a round of Versus without taking a blow.	Voita Vastakkain-erä ottamatta yhtään iskua.
+L:Last Breath	Viimeinen henkäys
+L:Win a round of Versus with less than a tenth of your health left.	Voita Vastakkain-erä alle kymmenesosa terveydestä jäljellä.
+L:Bearer of the Shield	Kilvenkantaja
+L:Win a match of Find the Shield.	Voita Löydä kilpi -ottelu.
+L:The Black Breath	Musta henkäys
+L:Win a Versus match as the Nazgul.	Voita Vastakkain-ottelu Nazgûlilla.
+L:Iron and Leather	Rautaa ja nahkaa
+L:Win a Versus match as the Shield Orc.	Voita Vastakkain-ottelu Kilpiörkillä.
+L:Third Marshal of the Riddermark	Markin kolmas marsalkka
+L:Win a Versus match as Eomer.	Voita Vastakkain-ottelu Éomerilla.
+L:Shield-breaker	Kilvenmurtaja
+L:Break the Shield Orc's shield.	Riko Kilpiörkin kilpi.
+L:Unbroken Line	Murtumaton rintama
+L:As player 1, win 5 Versus rounds in a row.	Voita 5 Vastakkain-erää peräkkäin pelaajana 1.
+L:The Challenger Rises	Haastaja nousee
+L:As player 2, win 5 Versus rounds in a row.	Voita 5 Vastakkain-erää peräkkäin pelaajana 2.
+L:Get Back!	Takaisin!
+L:Knock your opponent back 50 times in Versus.	Työnnä vastustajaa taakse 50 kertaa Vastakkain-tilassa.
+L:Eagle Eye	Kotkansilmä
+L:Land 40 locked-on arrows on your opponent in Versus.	Osu vastustajaan 40 lukitulla nuolella Vastakkain-tilassa.
+L:Scavenger	Haaskansyöjä
+L:Take 30 pickups in Versus.	Kerää 30 esinettä Vastakkain-tilassa.
+L:None Shall Pass	Kukaan ei pääse ohi
+L:Win a Versus match without losing a round.	Voita Vastakkain-ottelu häviämättä yhtään erää.
+L:Against All Hope	Vastoin kaikkea toivoa
+L:Win a Versus match after trailing by 3 rounds.	Voita Vastakkain-ottelu oltuasi 3 erää jäljessä.
+L:Veteran of the Arena	Areenan veteraani
+L:Win 100 Versus rounds in all.	Voita yhteensä 100 Vastakkain-erää.
+L:Wanderer	Vaeltaja
+L:Win a Versus match on 8 different arenas.	Voita Vastakkain-ottelu 8 eri areenalla.
+L:Many Faces	Monet kasvot
+L:Win a Versus match as 10 different heroes.	Voita Vastakkain-ottelu 10 eri sankarilla.
+L:Troll Brawler	Peikkotappelija
+L:Win a Troll Battle match.	Voita Peikkotaistelu-ottelu.
+L:Terror of Moria	Morian kauhu
+L:Win 3 Troll Battle matches.	Voita 3 Peikkotaistelu-ottelua.
+L:Lord of the Deep	Syvyyksien herra
+L:Win 10 Troll Battle matches.	Voita 10 Peikkotaistelu-ottelua.
+L:Thick Hide	Paksu nahka
+L:Win a Troll Battle match without losing a round.	Voita Peikkotaistelu-ottelu häviämättä yhtään erää.
+L:Bone Crusher	Luunmurskaaja
+L:Land a single smash of 400 damage or more in Troll Battle.	Tee yksi vähintään 400 vahingon murskaus Peikkotaistelussa.
+L:Troll Rampage	Peikon riehunta
+L:Deal 25,000 damage in Troll Battle, across all your matches.	Aiheuta Peikkotaistelussa yhteensä 25 000 vahinkoa kaikissa otteluissasi.
+L:Swift Bludgeon	Nopea nuija
+L:Win a Troll Battle round in under 20 seconds.	Voita Peikkotaistelun erä alle 20 sekunnissa.
+L:Rock and Log	Kivi ja tukki
+L:Land 25 thrown rocks or logs on the other troll in Troll Battle.	Osu toiseen peikkoon 25 heitetyllä kivellä tai tukilla Peikkotaistelussa.
+L:Orc-Slayer	Örkintappaja
+L:Slay 25 orcs and Uruk-hai during Versus matches.	Surmaa 25 örkkiä ja uruk-haita Vastakkain-otteluissa.
+L:Scourge of Isengard	Rautapihan vitsaus
+L:Slay 150 orcs and Uruk-hai during Versus matches.	Surmaa 150 örkkiä ja uruk-haita Vastakkain-otteluissa.
+L:War on Two Fronts	Sota kahdella rintamalla
+L:Win a Deathmatch on all five arenas with enemies (Amon Hen, Fangorn, Plains of Rohan, Breached Wall, Hornburg).	Voita kuolonottelu kaikilla viidellä vihollisia sisältävällä areenalla (Amon Hen, Fangorn, Rohanin tasangot, Murrettu muuri, Ämyrilinna).
+L:The White Hand	Valkoinen käsi
+L:Win 3 Versus matches as Saruman.	Voita 3 Vastakkain-ottelua Sarumanilla.
+L:Shepherd of the Trees	Puiden paimen
+L:Win 3 Versus matches as the Ent.	Voita 3 Vastakkain-ottelua Entillä.
+L:Captain of Isengard	Rautapihan päällikkö
+L:Win 3 Versus matches as the Uruk Captain.	Voita 3 Vastakkain-ottelua Uruk-päälliköllä.
+L:The Last Alliance Returns	Viimeinen liitto palaa
+L:Win 3 Versus matches as the Elven Warrior.	Voita 3 Vastakkain-ottelua Haltiasoturilla.
+L:Hunt Them Down	Jahdatkaa heidät
+L:Win 3 Versus matches as Lurtz.	Voita 3 Vastakkain-ottelua Lurtzilla.
+L:The Dark Lord	Musta ruhtinas
+L:Win 3 Versus matches as Sauron.	Voita 3 Vastakkain-ottelua Sauronilla.
+L:Servant of the Secret Fire	Salaisen tulen palvelija
+L:Win 3 Versus matches as Gandalf.	Voita 3 Vastakkain-ottelua Gandalfilla.
+L:Lord of Rivendell	Rivendellin herra
+L:Win 3 Versus matches as Elrond.	Voita 3 Vastakkain-ottelua Elrondilla.
+L:Captain of Gondor	Gondorin päällikkö
+L:Win 3 Versus matches as Boromir.	Voita 3 Vastakkain-ottelua Boromirilla.
+L:Ring-bearer	Sormuksen viejä
+L:Win 3 Versus matches as Frodo.	Voita 3 Vastakkain-ottelua Frodolla.
+L:Blood Frenzy	Verihurmos
+L:Win 3 Versus matches as the Berserker.	Voita 3 Vastakkain-ottelua Berserkillä.
+L:Hurl the Stones	Heitä kivet
+L:As the Ent, land 20 thrown rocks on your opponent in Versus.	Osu Entillä vastustajaan 20 heitetyllä kivellä Vastakkain-tilassa.
+L:Mirror Image	Peilikuva
+L:Win a match of first to 5 or more where both players are the same hero.	Voita vähintään 5 voiton ottelu, jossa molemmat pelaajat pelaavat samalla sankarilla.
+L:Defiance	Uhma
+L:Win a level on Impossible.	Läpäise taso Mahdoton-vaikeustasolla.
+L:Hardened	Karaistunut
+L:Win 5 different levels on Impossible.	Läpäise 5 eri tasoa Mahdoton-vaikeustasolla.
+L:DIAMOND: The Unbreakable	TIMANTTI: Murtumaton
+L:Win every level of the story on Impossible. Very few ever will.	Läpäise kaikki tarinan tasot Mahdoton-vaikeustasolla. Harva siihen koskaan pystyy.

@@ -1539,3 +1539,46 @@ P:BRAWLER: PLAYER {1}	VEREKED: {1}. JÁTÉKOS
 P:RELENTLESS: PLAYER {1}	KÖNYÖRTELEN: {1}. JÁTÉKOS
 P:Start Match	Meccs indítása
 P:ROUND {1}   P{2} {3} - {4} P{5}	{1}. KÖR   P{2} {3} - {4} P{5}
+P:Borderless	Keret nélküli
+P:Exclusive	Kizárólagos
+P:Full Screen Res:	Teljes kép. felb.:
+P:Mode:	Mód:
+P:Troll Battle	Trollcsata
+P:Reset P2 Controls	P2 irányítás visszaállítása
+P:Berserker	Berzerker
+P:Cave Troll	Barlangi troll
+P:Uruk Captain	Uruk kapitány
+P:Saruman	Szarumán
+P:Elven Warrior	Tünde harcos
+P:Ent	Ent
+P:Player 1: choose your hero	1. játékos: válassz hst
+P:Player 2: waiting	2. játékos: várakozik
+P:Player 2: choose your hero	2. játékos: válassz hst
+P:Player 1: {1}	1. játékos: {1}
+P:Player 2: {1}	2. játékos: {1}
+P:Player 2: {1} is Player 1's	2. játékos: {1} az 1. játékosé
+P:Player 2: {1} not available	2. játékos: {1} nem elérhet
+P:Ready. Press Continue to begin	Kész. Indításhoz: Folytatás
+P:Unavailable	Nem elérhet
+P:Speed	Gyors
+P:Fierce	Heves
+P:Special	Különleges
+P:Mixed	Vegyes
+P:P{1} STAB GUARD: {2} LEFT	P{1} SZÚRÁSVÉDELEM: MÉG {2}
+P:FIND THE SHIELD: {1} AHEAD	KERESD A PAJZSOT: {1} ELTTED
+P:FIND THE SHIELD: {1} BEHIND	KERESD A PAJZSOT: {1} MÖGÖTTED
+P:FIND THE SHIELD: {1} TO THE LEFT	KERESD A PAJZSOT: {1} BALRA
+P:FIND THE SHIELD: {1} TO THE RIGHT	KERESD A PAJZSOT: {1} JOBBRA
+P:FIND THE SHIELD   P{1} {2} - {3} P{4}	KERESD A PAJZSOT   P{1} {2} - {3} P{4}
+P:P{1} {2} - {3} P{4}	P{1} {2} - {3} P{4}
+P:PLAYER {1} +{2}   P{3} {4} - {5} P{6}	{1}. JÁTÉKOS +{2}   P{3} {4} - {5} P{6}
+P:BIGGEST SMASH	LEGNAGYOBB CSAPÁS
+P:CLUB BLOWS / SWINGS	BUZOGÁNYTALÁLAT / LENDÍTÉS
+P:DAMAGE DEALT / TAKEN	OKOZOTT / KAPOTT SEBZÉS
+P:FASTEST KNOCKOUT	LEGGYORSABB KIÜTÉS
+P:MOST DAMAGE IN A MATCH	LEGTÖBB SEBZÉS EGY MECCSEN
+P:ROCKS AND LOGS ON TARGET	TALÁLT SZIKLÁK ÉS RÖNKÖK
+P:SMASHES ({1}+)	CSAPÁSOK ({1}+)
+P:TROLL BATTLE RECORDS	TROLLCSATA REKORDOK
+P:TROLL BATTLE RESULTS	TROLLCSATA EREDMÉNYEK
+P:P{1}	P{1}
