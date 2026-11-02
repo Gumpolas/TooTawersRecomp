@@ -2028,9 +2028,12 @@ void sub_000FF13D(void)
 uint32_t coop_fm, coop_fm_l;   /* (coop_machine_from_file) */
 extern void sub_0009E9D0_gen(void);
 extern void tt_cbev(uint32_t obj, uint32_t ev);
+static const char *coop_nm(uint32_t a);
 void sub_0009E9D0(void)
 {
     tt_cbev(MEM32(esp + 4), MEM16(esp + 8));
+    if (getenv("TT_COOP_SHIELDLOG")) { uint32_t ob = MEM32(esp + 4); uint32_t ev = MEM16(esp + 8); static int n; const char *nm = ob >= 0x10000u && ob < 0x84000000u ? coop_nm(ob) : "?";
+        if (strstr(nm, "Shield") || strstr(nm, "weaponObj") || ev == 24u) if (n++ < 600 && ev != 7u) tt_dbg("[SHEV] t %u %08X '%s' event %u hp %d +16C %08X player %08X from %06X\n", tt_game_ms, ob, nm, ev, ob >= 0x10000u && ob < 0x84000000u ? (int32_t)MEM32(ob + 0x2FC) : 0, ob >= 0x10000u && ob < 0x84000000u ? MEM32(ob + 0x16C) : 0, MEM32(0x43B15Cu), MEM32(esp)); }
     if (coop_fm && MEM32(esp + 4) == coop_fm && MEM32(0x43B438u) != coop_fm_l) { uint32_t l1 = MEM32(0x43B438u); MEM32(0x43B438u) = coop_fm_l; sub_0009E9D0_gen(); MEM32(0x43B438u) = l1; return; }   /* (a machine built from another variant's script state: its own events there) */
     sub_0009E9D0_gen();
 }
@@ -4210,6 +4213,7 @@ static struct { uint32_t a, n; } coop_blk[] = {
     { 0x43B22Cu, 0x14 }, { 0x43B248u, 0x14 },
     { 0x43B240u, 8 }, { 0x43B25Cu, 8 }, { 0x43B3DAu, 1 },
     { 0x43B264u, 0x20 }, { 0x43B0FCu, 4 },
+    { 0x1B0C38u, 4 }, { 0x1B1074u, 1 },   /* (the aim pick's best so far, 0x5A150, and the lock marker's flag, 0x97B10 / 0x97E60: each player's) */
     { 0x1B107Cu, 4 }, { 0x1B10A4u, 8 }, { 0x43B220u, 4 }, { 0x43B390u, 8 }, { 0x43B3BCu, 8 }, { 0x43B3DCu, 0x14 },   /* (the moves' own timers and flags, each written and read by the step alone: 98D50, 984A0, 9A640, 97E60, 9C380: a scan of what the step reaches outside this list) */
     { 0x43B100u, 0x14 } };   /* (the aim's own direction: [0x43B110] set and the camera's heading kept in [0x43B10C] as a hero starts to aim (0x97E10), read by the pick 0x5A150 and
                            * the control step 0x99140. Shared, the step of the hero not aiming cleared the other's: player 1 could not aim at a thing while player 2 lay down
@@ -11311,6 +11315,7 @@ void sub_000849F0(void)
             src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, p2hit ? "player 2's" : "not his", coop_depth, coop_p2, coop_rec_addr ? MEMF(coop_rec_addr + 4) : -1.0f);
     }
     { extern int coop_is_lurtz(uint32_t e); if (p2hit && coop_is_lurtz(v)) { static int n; if (n++ < 4) tt_dbg("[COOPLURTZ] player 2's hit on %s: handled as player 1's\n", coop_nm(v)); p2hit = 0; coop_lurtz_hit = v; coop_lurtz_p2_hits++; } }
+    if (p2hit && v >= 0x10000u) { extern void coop_p2hit_note(uint32_t v); coop_p2hit_note(v); }
     if (!off && coop_mode() == 3 && coop_p2 && !coop_depth && v >= 0x10000u && v != coop_p2 && p2hit) {
         sw = tt_coop_enter_ctx(); { static unsigned n; if ((n++ & 63) == 0) tt_dbg("[COOPEXP] hits by player 2 handled in his context: %u (victim %08X hp %d)\n", n, v, (int32_t)MEM32(v + 0x2FC)); } }
     if (getenv("TT_VS_FARHITLOG") && tt_vs_on() && (v == coop_first_char || v == coop_p2) && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u) {
@@ -11415,6 +11420,17 @@ void sub_0005A150(void)
         if (strip) { uint32_t r0 = eax; for (i = 0; i < n; i++) MEM32(0x411510u + 4 * i) = saved[i]; MEM32(0x411850u) = n; eax = r0;
             if (getenv("TT_COOP_AIMALLYLOG") && cut) { static uint32_t lt; if (coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[COOPAIM] %s's pick: %u of %u left out (allies), lock now %08X\n", h == coop_first_char ? "P1" : "P2", cut, n, MEM32(MEM32(h + 0x494) + 0x98)); } } }
     }
+    if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
+}
+/* the other aim pick (thiscall on the arbitration, the actor's index; ret 4; from 0x5A920 for each actor): as 0x5A150, the camera's or aim's heading plus the stick, and the
+ * player's lock [0x43B16C] for his marker (0xC14D0). Player 2's turn ran with player 1's aim and stick: his lock jumped (same hero, LT held, 12 lock changes for player 1, 91 for
+ * him; a playtest: "no lock on"). In his context. TT_COOP_NOP2AIMCTX: as before */
+extern void sub_00059EE0_gen(void);
+void sub_00059EE0(void)
+{
+    uint32_t i = MEM32(esp + 4), h = i < 0xC0u ? MEM32(0x411510u + 4 * i) : 0; int sw = 0;
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && h == coop_p2 && !coop_depth && !tt_vs_on() && !getenv("TT_COOP_NOP2AIMCTX")) { uint32_t r1 = ecx; sw = tt_coop_enter_ctx(); ecx = r1; }
+    sub_00059EE0_gen();
     if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
 }
 /* the game's target arbitration (cdecl, from 0x5AAC0 in the world update): threat retargeting right after it */
@@ -12490,7 +12506,7 @@ extern void sub_00092000_gen(void); void sub_00092000(void)
     if (MEM32(esp) == 0x00090503u && MEM32(esp + 8) == 0x10u && !fire_due(ecx)) { esp += 4 + 8; eax = 0; return; }
     uint32_t self = ecx, gra = MEM32(esp), g1 = MEM32(esp + 4), g2 = MEM32(esp + 8), g3 = MEM32(esp + 12); int32_t hb = self >= 0x10000u ? (int32_t)MEM32(self + 0x2FC) : 0;
     int sw = tt_coop_enter_weapon2(ecx, 0x00092000u); sub_00092000_gen(); tt_coop_weapon_post(0x00092000u); if (sw) tt_coop_leave();
-    if (coop_mode() == 3 && self >= 0x10000u && self < 0x84000000u && MEM32(self) == 0x174980u && MEM32(self + 0x114) == 7) { static int n; if (n++ < 120)
+    if (coop_mode() == 3 && self >= 0x10000u && self < 0x84000000u && MEM32(self) == 0x174980u && (MEM32(self + 0x114) == 7 || getenv("TT_COOP_SHIELDLOG"))) { static int n; if (n++ < 400)
         tt_dbg("[PROP92] t %u %08X '%s' ra %06X args %08X %08X %08X: hp %d -> %d, +5EC %08X +110 %08X, player %08X\n", coop_now(), self, coop_nm(self), gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC), MEM32(self + 0x5EC), MEM32(self + 0x110), MEM32(0x43B15Cu)); }
     {   static int gl = -1; if (gl < 0) gl = getenv("TT_GATELOG") != NULL;
         if (gl && self >= 0x10000u && self == MEM32(0x4ACBACu) && hb != (int32_t)MEM32(self + 0x2FC)) tt_dbg("[GATEHIT2] t %u ra %08X args %08X %08X %08X: %d -> %d\n", tt_game_ms, gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC)); }
@@ -13175,6 +13191,27 @@ void sub_000E6AE0(void)
  * His hits on such a prop are taken as player 1's would be: his role's bit added for the call, with him as the player
  * (the player's damage scaling). TT_COOP_NOP2PROPHIT: as before */
 float coop_stance[3];
+/* the stance multiplier 0x9D490 (thiscall hero record: +0x84..+0x8C by the stance +0x80; 0.1, 1, 0.1: a fierce blow's the full one) is what a shield takes of a blow:
+ * the enemy's script runs @GetCurStanceDamageMultiplier in whoever's context is current. In player 1's, player 2's blow got player 1's stance, 0.1: 135 -> 13
+ * (bot runs); in his own, his record's multipliers, which from a save are empty: 0 (23 of a playtest's hits, shield 40 -> 40; "p2 cant break shield"). A fresh
+ * record's 1, 1, 1 hid it from the bots. For player 2, or a blow he landed on the current object in the last 300 ms: his stance, the game's multipliers
+ * (coop_stance, player 1's). TT_COOP_NOP2STANCE: as before */
+static struct { uint32_t e, t; } coop_p2hits[16]; static unsigned coop_p2hit_i;
+void coop_p2hit_note(uint32_t v) { coop_p2hits[coop_p2hit_i & 15].e = v; coop_p2hits[coop_p2hit_i & 15].t = coop_now() | 1u; coop_p2hit_i++; }
+extern void sub_0009D490_gen(void);
+void sub_0009D490(void)
+{
+    uint32_t rec = ecx, self = MEM32(0x43B4A4u), own = self >= 0x10000u && self < 0x84000000u ? MEM32(self + 0x11C) : 0, sv[4]; int mine, hit = 0, q;
+    if (coop_mode() != 3 || tt_vs_on() || coop_p2 < 0x10000u || rec < 0x10000u || coop_stance[1] <= 0.0f || getenv("TT_COOP_NOP2STANCE")) { sub_0009D490_gen(); return; }
+    mine = MEM32(0x43B15Cu) == coop_p2;
+    if (!mine) for (q = 0; q < 16 && !hit; q++) if (coop_p2hits[q].e && (coop_p2hits[q].e == self || coop_p2hits[q].e == own) && coop_now() - coop_p2hits[q].t < 300u) hit = 1;
+    if (!mine && !hit) { sub_0009D490_gen(); return; }
+    for (q = 0; q < 4; q++) sv[q] = MEM32(rec + 0x80 + 4 * q);
+    if (hit) { uint32_t st = *(uint32_t *)(coop_s2 + 0x400 + 0x80); if (st < 3u) MEM32(rec + 0x80) = st; }
+    for (q = 0; q < 3; q++) MEMF(rec + 0x84 + 4 * q) = coop_stance[q];
+    sub_0009D490_gen();
+    for (q = 0; q < 4; q++) MEM32(rec + 0x80 + 4 * q) = sv[q];
+}
 extern void sub_00091920_gen(void);
 void sub_00091920(void)
 {
