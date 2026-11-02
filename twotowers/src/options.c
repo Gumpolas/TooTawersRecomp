@@ -756,6 +756,8 @@ void tt_opt_filter(unsigned long port, XState *st)
         return;
     }
     if (s_page == PG_HUB && (h & B_B) && !s_b_block) {   /* B on the first page: the game leaves Options (Back as B) */
+        /* (with two players the game often missed that B, after a change of devices: a playtest, six presses to leave; left as the Back leaf does) */
+        if (xbox_input_two_players && !s_leave_pending && !getenv("TT_OPT_BACKONEPORT")) { tt_dbg("[OPTIONS] B on the first page: leaving\n"); back_activate(); }
         if (p->wButtons & 0x20) { p->wButtons &= (uint16_t)~0x20u; p->bAnalogButtons[1] = 255; }
         return;
     }
