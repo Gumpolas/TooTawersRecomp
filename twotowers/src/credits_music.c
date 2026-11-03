@@ -43,7 +43,8 @@ static volatile unsigned long s_switch_at, s_session_t;
 static int16_t *s_pcm;                         /* ours: stereo, 48 kHz */
 static size_t s_frames, s_pos;
 static int s_load_tried;
-static volatile int s_ready;                   /* ours loaded (on a thread of its own) */
+static volatile int s_ready;
+static volatile unsigned s_nreads, s_nmix;     /* (what was seen while the credits were on: for the log) */                   /* ours loaded (on a thread of its own) */
 static double s_sumsq; static unsigned long long s_cnt;
 static float s_gain = 1.0f;
 static int s_log = -1;
@@ -76,7 +77,7 @@ static void bank_load(void)
 static int wav_add(const char *p)
 {
     FILE *f; long n; uint8_t *b; uint32_t o = 12, ch = 0, rate = 0, bits = 0, fmt = 0, dlen = 0; const uint8_t *data = NULL;
-    if (!(f = fopen(p, "rb"))) { if (lg()) tt_dbg("[CREDITS2] no %s\n", p); return 0; }
+    if (!(f = fopen(p, "rb"))) { tt_dbg("[CREDITS2] no %s\n", p); return 0; }
     fseek(f, 0, SEEK_END); n = ftell(f); fseek(f, 0, SEEK_SET);
     b = (uint8_t *)malloc((size_t)(n > 0 ? n : 1));
     if (!b || n < 44 || fread(b, 1, (size_t)n, f) != (size_t)n) { fclose(f); free(b); return 0; }
@@ -129,8 +130,8 @@ static void song_load(void)
         if (e && *e) snprintf(p, sizeof p, "%s", e); else snprintf(p, sizeof p, "%s/music/credits%d.wav", dir, k);
         wav_add(p);
     }
-    if (!s_frames) { free(s_pcm); s_pcm = NULL; if (lg()) tt_dbg("[CREDITS2] no songs of ours: the credits' song goes round as it did\n"); }
-    else s_ready = 1;
+    if (!s_frames) { free(s_pcm); s_pcm = NULL; tt_dbg("[CREDITS2] no songs of ours (%s/music/credits2.wav, credits3.wav): the credits' song goes round as it did\n", dir); }
+    else { s_ready = 1; tt_dbg("[CREDITS2] ready: %.1f s of our songs\n", s_frames / 48000.0); }
 }
 #if defined(_WIN32)
 static DWORD WINAPI loader(LPVOID a) { (void)a; song_load(); return 0; }
@@ -149,13 +150,14 @@ static void observe(uint32_t caller, long long off, uint32_t length)
     if (s_nent <= 0) return;
     for (i = 0; i < s_nent; i++) if (off >= s_ent[i].start && off < (long long)s_ent[i].start + s_ent[i].len) break;
     if (i == s_nent) return;
+    if (on_now(now)) s_nreads++;
     top = off < (long long)s_ent[i].start + 0x10000;   /* (its first buffers) */
     if (i != s_entry) { s_entry = i; s_t0 = top ? now : 0; s_deep = 0; }   /* (another song: from its top, playing from now) */
     else if (top && s_deep) {
         /* back to its top after reading well into it: the song went round (its end not seen coming) -- ours now */
         if (on_now(now) && s_phase == 0 && s_ready) {
             s_switch_at = now; s_phase = 1;
-            if (lg()) tt_dbg("[CREDITS2] song %d went round (%.1f s after its start): ours now\n", i, s_t0 ? (now - s_t0) / 1000.0 : -1.0);
+            tt_dbg("[CREDITS2] song %d went round (%.1f s after its start): ours now\n", i, s_t0 ? (now - s_t0) / 1000.0 : -1.0);
         }
         s_t0 = now; s_deep = 0;
     }
@@ -165,7 +167,7 @@ static void observe(uint32_t caller, long long off, uint32_t length)
          * moments, about to start over -- ours from here, before its top is heard again. Until now the song played
          * just as the game plays it */
         s_switch_at = now + 600u; s_phase = 1;   /* (its top is heard again about a second after this read) */
-        if (lg()) tt_dbg("[CREDITS2] song %d: its last buffers read (%.1f s after its start): ours now\n", i, s_t0 ? (now - s_t0) / 1000.0 : -1.0);
+        tt_dbg("[CREDITS2] song %d: its last buffers read (%.1f s after its start): ours now\n", i, s_t0 ? (now - s_t0) / 1000.0 : -1.0);
     }
     if (off > (long long)s_ent[i].start + 0x100000) s_deep = 1;
     s_lastoff = off;
@@ -177,13 +179,18 @@ static void post_mix(int16_t *buf, int n)
     int i;
     if (lg()) { static unsigned long tl; if (now - tl > 20000u) { tl = now; tt_dbg("[CREDITS2] mix: on %d phase %d\n", on_now(now), s_phase); } }
     if (!on_now(now)) {
-        if (s_phase) { s_phase = 0; if (lg()) tt_dbg("[CREDITS2] the credits ended: the game's sound again\n"); }
+        if (s_phase) { s_phase = 0; tt_dbg("[CREDITS2] the credits ended: the game's sound again\n"); }
         return;
     }
+    s_nmix++;
     if (!s_ready) return;
     if (s_phase == 0) {   /* the game's song as it comes out (the music volume): how loud ours is to be */
         if (now - s_session_t > 3000u) for (i = 0; i < 2 * n; i++) { s_sumsq += (double)buf[i] * buf[i]; s_cnt++; }
-        return;
+        /* (a backstop: the song seen neither ending nor going round -- it goes round about 161 s after its start) */
+        if (s_t0 && now - s_t0 > 163500u && now - s_session_t > 163500u) {
+            s_phase = 1; s_switch_at = now;
+            tt_dbg("[CREDITS2] backstop: %.1f s since the song's start, no end seen (%u reads seen in the credits): ours now\n", (now - s_t0) / 1000.0, s_nreads);
+        } else return;
     }
     if (s_phase == 1) {
         if ((long)(now - s_switch_at) < 0) return;
@@ -192,7 +199,7 @@ static void post_mix(int16_t *buf, int n)
         s_gain = s_cnt > 48000 ? (float)(sqrt(s_sumsq / (double)s_cnt) / 3162.0) : 1.0f;
         if (s_gain > 1.5f) s_gain = 1.5f;
         if (s_gain < 0.0f) s_gain = 0.0f;
-        if (lg()) tt_dbg("[CREDITS2] ours now (as loud as the game's song came out: %.2f)\n", s_gain);
+        tt_dbg("[CREDITS2] ours now (as loud as the game's song came out: %.2f)\n", s_gain);
     }
     for (i = 0; i < n; i++) {
         float f = s_pos < 2400 ? (float)s_pos / 2400.0f : 1.0f;   /* (a 50 ms fade over the game's last) */
@@ -213,10 +220,12 @@ void tt_credits_music_tick(void)
     unsigned long now = GetTickCount();
     if (getenv("TT_NOCREDITS2")) return;
     if (!s_last || now - s_last > 1500u) {   /* (the credits opened) */
-        s_session_t = now; s_phase = 0; s_sumsq = 0; s_cnt = 0;
+        s_session_t = now; s_phase = 0; s_sumsq = 0; s_cnt = 0; s_nreads = 0; s_nmix = 0;
+        if (!s_ready && !s_load_tried) song_load();   /* (the front end's load not started: now) */
+        tt_dbg("[CREDITS2] the credits opened: our songs %s, song %d streaming, watching %s\n", s_ready ? "ready" : s_load_tried ? "loading or missing" : "not loaded", s_entry, xbox_read_observer == observe && xbox_apu_post_mix == post_mix ? "yes" : "NO");
         if (getenv("TT_CREDITS2_AFTER") && s_ready) { s_switch_at = now + (unsigned long)atoi(getenv("TT_CREDITS2_AFTER")); s_phase = 1; }   /* (testing: ours that long after the credits open) */
-        if (lg()) tt_dbg("[CREDITS2] the credits opened (song %d streaming)\n", s_entry);
     }
+    if (s_last && now - s_session_t > 30000u) { static unsigned long tl; if (now - tl > 30000u) { tl = now; tt_dbg("[CREDITS2] %.0f s into the credits: phase %d, %u reads of the bank, %u mixes, our songs %s\n", (now - s_session_t) / 1000.0, s_phase, s_nreads, s_nmix, s_ready ? "ready" : "not ready"); } }
     s_last = now;
 }
 /* from the front end: the game's reads and its mix watched from before the credits open (their song starts with them) */
