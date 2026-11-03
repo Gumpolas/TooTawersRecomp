@@ -3426,7 +3426,10 @@ twotowers/src/twotowers_manual.c
     sound is not held back (2.0.0: holding it back broke the credits'
     song's start): ours takes over when the song's last buffers are read,
     in its quiet last moments, before its top is heard again; the songs
-    are read on a thread of their own when the front end opens.
+    are read on a thread of their own when the front end opens. (2.0.0:
+    on Windows the song went round as before -- the clock's 15.6 ms steps
+    made "now" a step behind the credits' last frame, and the unsigned age
+    took the credits for ended: the times are compared signed.)
     Without the file, the credits are as they were. TT_CREDITS2=<file>:
     another file; TT_NOCREDITS2: off.
   - (2.0.0) A third song for the credits: music/credits3.wav plays after
