@@ -3423,7 +3423,10 @@ twotowers/src/twotowers_manual.c
     the music volume holds), round again if the credits still go on, and
     the game's sound is its own again when the credits end. The song's
     going round is seen in the game's reads of its wave bank; the credits'
-    sound is held back half a second so that its top is never heard.
+    sound is not held back (2.0.0: holding it back broke the credits'
+    song's start): ours takes over when the song's last buffers are read,
+    in its quiet last moments, before its top is heard again; the songs
+    are read on a thread of their own when the front end opens.
     Without the file, the credits are as they were. TT_CREDITS2=<file>:
     another file; TT_NOCREDITS2: off.
   - (2.0.0) A third song for the credits: music/credits3.wav plays after
