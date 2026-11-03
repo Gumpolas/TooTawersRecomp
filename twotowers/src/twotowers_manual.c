@@ -11088,6 +11088,9 @@ static void coop_pool_frame(void)
                 if (coop_oc[i].wclone2 >= 0x10000u) tt_gcall(MEM32(MEM32(coop_oc[i].wclone2) + 0x30u), coop_oc[i].wclone2, 1, &one);
                 coop_oc[i].out = 1;
                 { static int nl; if (nl++ < 120) tt_dbg("[COOPCLONE] %08X comes with '%s' at %.1f %.1f %.1f (pathmap %d)\n", c, coop_nm(o), xyzf[0], xyzf[1], xyzf[2], (int)MEM32(c + 0x2EC)); }
+            } else if (!coop_oc[i].out && !on && (MEM32(c + 0x110) & 0x1000u) && (int32_t)MEM32(c + 0x2FC) > 0) {   /* waiting for its original but awake: hidden, in a zone nobody has reached, it walked and fought there, and "comes with" snapped it back when the original woke (a playtest: "the clones get teleported back to their spawns"; villagers lost out of reach; +110 00227F70 in a log) */
+                tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &zero); MEM32(c + 0x110) = (MEM32(c + 0x110) | 0x200000u) & ~0x1000u;
+                { static unsigned nl; nl++; if (nl <= 10 || nl % 200 == 0) tt_dbg("[COOPCLONE] %08X awake before its original '%s': asleep again (%u so far), it was at %.1f %.1f\n", c, coop_nm(o), nl, MEMF(c + 0xF0), MEMF(c + 0xF4)); }
             } else if (coop_oc[i].out && !on && (int32_t)MEM32(o + 0x2FC) > 0 && (int32_t)MEM32(c + 0x2FC) > 0) {
                 tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &zero); MEM32(c + 0x110) |= 0x200000u; coop_oc[i].out = 0;
                 { static int nl; if (nl++ < 60) tt_dbg("[COOPCLONE] %08X put away with '%s'\n", c, coop_nm(o)); }
@@ -11297,6 +11300,14 @@ void sub_000849F0(void)
     static int off = -1; int sw = 0; extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void);
     uint32_t v = ecx;
     if (off < 0) off = getenv("TT_COOP_NOHITSWAP") != 0;
+    {   /* an enemy copy's hit on a civilian (team 23): dropped. Copies are there for the heroes; since their weapons took real damage (f3fdd0b) three enemies stood where the level has one,
+         * and villagers it gives time to save were gone first (Plains of Rohan, a playtest: wiped by 190 s with 10 copies, 3 left at 343 s with none). TT_COOP_COPYHURTSVILLAGERS: as before */
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
+        if (coop_mode() == 3 && !tt_vs_on() && src >= 0x10000u && src < 0x84000000u && v >= 0x10000u && MEM32(v + 0x114) == 23u && (coop_oc_find(src) >= 0 || coop_oc_find(MEM32(src + 0x11Cu)) >= 0) && !getenv("TT_COOP_COPYHURTSVILLAGERS")) {
+            static unsigned n; n++; if (n <= 10 || n % 50 == 0) tt_dbg("[COOPCLONE] copy's hit on '%s' dropped (%u so far)\n", coop_nm(v), n);
+            eax = 0; esp += 8; return;
+        }
+    }
     {   /* (1.9.8) a hero's own weapon hitting him (Versus, player 1 as Frodo: his knife's blows landed on him while player 2's
          * knocked him about -- 20 and 30 units from player 2, a playtest: "Aragorn hits Frodo from anywhere"). Dropped.
          * TT_SELFHIT: as before */
