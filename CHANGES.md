@@ -3426,3 +3426,50 @@ twotowers/src/twotowers_manual.c
     sound is held back half a second so that its top is never heard.
     Without the file, the credits are as they were. TT_CREDITS2=<file>:
     another file; TT_NOCREDITS2: off.
+2.0.0
+=====
+
+Co-op, by Volverine-Dude (pull request 16, "Co-op changes since 1.9.9"):
+  - Player 2's own character: his own machine, weapon stats, damage, prop
+    hits and turning; his own combo meter and Perfect; his health
+    upgrades, sword segments and upgraded arrows count.
+  - Enemies: their aggro shared between the two players, and the copies
+    some levels add in co-op.
+  - Expert in co-op.
+  - The P2 Bot: Off or On (When Idle is gone -- it cut in on a controller;
+    an old Always or When Idle reads as On); a gentle or diagonal stick
+    push counts as player 2 using his pad.
+  - The pause list's fourth item, Show Upgrades Player 2: the game's shop
+    with player 2's hero and record, player 1's put back after.
+  - Player 2's pad on both Show Upgrades pages and on his shop after a
+    level (player 1's shop stays player 1's); his Start pauses in play,
+    not in cutscenes.
+  - Button prompts follow the controller used last, on any port (with the
+    keyboard as player 1 and a controller as player 2 they stayed the
+    keyboard's); PlayStation or Xbox from that pad too.
+  - Player 2's heavy blows break shields (a blow of his used player 1's
+    stance multiplier, or his own empty ones from a save: no damage), and
+    his aim lock holds; he turns to his lock while aiming.
+  - Fixes: the Weathertop freeze, the cutscenes' casts, the max health's
+    scaling; the 125% health in co-op only.
+
+Co-op, by Volverine-Dude (pull request 17, "Co-op fixes after #16"):
+  - Player 2's lock no longer blinks while he aims (the target filler's
+    timer ran about every other frame).
+  - Player 2 can lock the cave troll, and other enemies the scripts leave
+    to player 1 (TT_COOP_NOP2MASK: as before).
+  - Player 2's pad on his stats screen after a level; his left press kept
+    off the hidden Replay there and on his shop.
+  - Gimli as player 2 holds his throwing axe in his left hand while
+    aiming (TT_COOP_NOP2AXEHAND: as before).
+  - Player 2 hidden at a cutscene's very start, with the HUD.
+  - Enemy copies (Plains of Rohan) stay asleep until their originals come,
+    and their hits spare the villagers (TT_COOP_COPYHURTSVILLAGERS: as
+    before).
+  - Known (untested): both players as Gimli, a later cutscene in a level,
+    the copies fix on Westfold.
+
+Co-op, known from 16:
+  - Known: no death animation for player 2 when he goes down last; levels
+    with copies are harder; a weapon switch at Weathertop reported, not
+    reproduced.
