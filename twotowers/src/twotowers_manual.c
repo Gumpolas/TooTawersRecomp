@@ -5317,7 +5317,7 @@ static void coop_p2_target(void)
          * back every frame, and he could never lock on (or hit) a barrel (the Westfold, a playtest). TT_COOP_P2AIMFILL: as before */
         static uint32_t aim_t;
         if (!getenv("TT_COOP_P2AIMFILL") && (MEM32(COOP_PADREC(1u) + 0x34u) & 0x4000u)) aim_t = coop_now() | 1;
-        if (aim_t && coop_now() - aim_t < 1500u) return;
+        if (aim_t && (int32_t)(coop_now() - aim_t) < 1500) return;   /* (signed: aim_t is now | 1, a millisecond ahead on even ones; unsigned it wrapped, and this ran on every other frame of his aim) */
     }
     { extern uint32_t coop_bot_tgt_hold, coop_bot_tgt_until; if (coop_bot_tgt_hold && coop_now() < coop_bot_tgt_until) { MEM32(c + 0x98) = coop_bot_tgt_hold; return; } }   /* (the P2 Bot's own pick: a stretched tentacle) */
     t = MEM32(c + 0x98);
@@ -9096,6 +9096,14 @@ void tt_coop_hud_post(void)
     MEM8(COOP_HUD_ON + coop_sw_slot) = 0; coop_sw_slot = -1;
 }
 /* (cdecl, called once a frame from the world update 0x000F2FF0) */
+/* a camera playing a cutscene: 0x175B0, the test that keeps the HUD from drawing, on its four cameras from 0x1D9984 (0x3100 each) */
+int coop_scene_cam(void)
+{
+    uint32_t e;
+    if (MEM32(0x4AD050u) != 6u) return 0;
+    for (e = 0x1D9984u; e < 0x1E5D84u; e += 0x3100u) { uint32_t c = MEM32(e); if (MEM32(e + 0xC) == 3u && c >= 0x10000u && MEM8(c + 0x18) && MEM8(c + 0x19)) return 1; }
+    return 0;
+}
 extern void sub_0009C380_gen(void);
 void sub_0009C380(void)
 {
@@ -9113,12 +9121,12 @@ void sub_0009C380(void)
             coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF0) : 0.0f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF4) : 0.0f); lv = v; }
     }
     {   /* player 2 not drawn in an in-game cutscene (a playtest: "he appears sometimes beside p1 and create funny scenarios"):
-         * after 0.4 s of one (tt_in_scene), his and his weapons' draw bit (+0x110 0x20000) kept clear, each put back as it was
-         * after. TT_COOP_P2INSCENE: drawn as before */
+         * at once by the game's own test for one, coop_scene_cam (or after 0.4 s of tt_in_scene: that alone left him seen 0.7 s, a playtest), his and his weapons' draw bit
+         * (+0x110 0x20000) kept clear, each put back as it was after. TT_COOP_P2INSCENE: drawn as before */
         static uint32_t obj[48], bit[48], t_in; static int n_obj, hidden;
-        int sc = coop_p2 >= 0x10000u && coop_mode() == 3 && tt_in_scene() && !tt_vs_on() && !getenv("TT_COOP_P2INSCENE"); int i;
+        int cam = coop_scene_cam(), sc = coop_p2 >= 0x10000u && coop_mode() == 3 && (tt_in_scene() || cam) && !tt_vs_on() && !getenv("TT_COOP_P2INSCENE"); int i;
         if (sc) { if (!t_in) t_in = coop_now() | 1; } else t_in = 0;
-        if (sc && !hidden && coop_now() - t_in >= 400u) {
+        if (sc && !hidden && (cam || coop_now() - t_in >= 400u)) {
             extern uint32_t coop_wobjs[]; extern int coop_nwobjs; n_obj = 0;
             obj[n_obj] = coop_p2; bit[n_obj++] = MEM32(coop_p2 + 0x110) & 0x20000u;
             for (i = 0; i < coop_nwobjs && n_obj < 48; i++) { uint32_t q = coop_wobjs[i]; if (q >= 0x10000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == coop_p2) { obj[n_obj] = q; bit[n_obj++] = MEM32(q + 0x110) & 0x20000u; } }
@@ -9149,6 +9157,7 @@ void sub_0009C380(void)
     coop_place();
     coop_sync_listeners();
     coop_p2_target();
+    { extern void coop_p2_axe_hand(void); coop_p2_axe_hand(); }
     coop_threat_track(); coop_threat_apply(); { extern void coop_pool_frame_x(void); coop_pool_frame_x(); } coop_diff_health(); coop_death_frame(); coop_hud_frame(); coop_exp_frame(); coop_ring_frame();
     if (getenv("TT_COOP_WPNSCAN") && coop_first_char >= 0x10000u && coop_p2 >= 0x10000u) {   /* (research) each hero's pointers to weapon objects (vtable 0x174980), every 5 s */
         static uint32_t lt; int i;
@@ -11079,6 +11088,9 @@ static void coop_pool_frame(void)
                 if (coop_oc[i].wclone2 >= 0x10000u) tt_gcall(MEM32(MEM32(coop_oc[i].wclone2) + 0x30u), coop_oc[i].wclone2, 1, &one);
                 coop_oc[i].out = 1;
                 { static int nl; if (nl++ < 120) tt_dbg("[COOPCLONE] %08X comes with '%s' at %.1f %.1f %.1f (pathmap %d)\n", c, coop_nm(o), xyzf[0], xyzf[1], xyzf[2], (int)MEM32(c + 0x2EC)); }
+            } else if (!coop_oc[i].out && !on && (MEM32(c + 0x110) & 0x1000u) && (int32_t)MEM32(c + 0x2FC) > 0) {   /* waiting for its original but awake: hidden, in a zone nobody has reached, it walked and fought there, and "comes with" snapped it back when the original woke (a playtest: "the clones get teleported back to their spawns"; villagers lost out of reach; +110 00227F70 in a log) */
+                tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &zero); MEM32(c + 0x110) = (MEM32(c + 0x110) | 0x200000u) & ~0x1000u;
+                { static unsigned nl; nl++; if (nl <= 10 || nl % 200 == 0) tt_dbg("[COOPCLONE] %08X awake before its original '%s': asleep again (%u so far), it was at %.1f %.1f\n", c, coop_nm(o), nl, MEMF(c + 0xF0), MEMF(c + 0xF4)); }
             } else if (coop_oc[i].out && !on && (int32_t)MEM32(o + 0x2FC) > 0 && (int32_t)MEM32(c + 0x2FC) > 0) {
                 tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &zero); MEM32(c + 0x110) |= 0x200000u; coop_oc[i].out = 0;
                 { static int nl; if (nl++ < 60) tt_dbg("[COOPCLONE] %08X put away with '%s'\n", c, coop_nm(o)); }
@@ -11288,6 +11300,14 @@ void sub_000849F0(void)
     static int off = -1; int sw = 0; extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void);
     uint32_t v = ecx;
     if (off < 0) off = getenv("TT_COOP_NOHITSWAP") != 0;
+    {   /* an enemy copy's hit on a civilian (team 23): dropped. Copies are there for the heroes; since their weapons took real damage (f3fdd0b) three enemies stood where the level has one,
+         * and villagers it gives time to save were gone first (Plains of Rohan, a playtest: wiped by 190 s with 10 copies, 3 left at 343 s with none). TT_COOP_COPYHURTSVILLAGERS: as before */
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
+        if (coop_mode() == 3 && !tt_vs_on() && src >= 0x10000u && src < 0x84000000u && v >= 0x10000u && MEM32(v + 0x114) == 23u && (coop_oc_find(src) >= 0 || coop_oc_find(MEM32(src + 0x11Cu)) >= 0) && !getenv("TT_COOP_COPYHURTSVILLAGERS")) {
+            static unsigned n; n++; if (n <= 10 || n % 50 == 0) tt_dbg("[COOPCLONE] copy's hit on '%s' dropped (%u so far)\n", coop_nm(v), n);
+            eax = 0; esp += 8; return;
+        }
+    }
     {   /* (1.9.8) a hero's own weapon hitting him (Versus, player 1 as Frodo: his knife's blows landed on him while player 2's
          * knocked him about -- 20 and 30 units from player 2, a playtest: "Aragorn hits Frodo from anywhere"). Dropped.
          * TT_SELFHIT: as before */
@@ -11434,6 +11454,17 @@ void sub_000C1710(void)
     if (coop_mode() == 3 && coop_p2 >= 0x10000u && h == coop_p2 && !coop_depth && !tt_vs_on() && (MEM32(COOP_PADREC(1u) + 0x34u) & 0x4000u) && !getenv("TT_COOP_NOP2AIMTURN")) { sw = tt_coop_enter_ctx(); ecx = r1; }
     sub_000C1710_gen();
     if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
+}
+/* who may lock whom (thiscall, attacker, target, ...): the target's +0x3A4 (@SetTargetableMask) needs the attacker's team bit. Scripts leave the cave troll at 2, team 1 alone, and
+ * player 2 is team 2 (allies, kept off it): he got it only while it was 0x00800006 (a playtest: "cant lock on the cave troll"). An enemy player 1 may lock, he may. TT_COOP_NOP2MASK: as before */
+extern void sub_000599C0_gen(void);
+void sub_000599C0(void)
+{
+    static int off = -1; uint32_t t = MEM32(esp + 8), m = 0;
+    if (off < 0) off = getenv("TT_COOP_NOP2MASK") != 0;
+    if (!off && coop_mode() == 3 && coop_p2 >= 0x10000u && MEM32(esp + 4) == coop_p2 && t >= 0x10000u && !tt_vs_on() && MEM32(t + 0x114) == 3 && (MEM32(t + 0x3A4) & 6u) == 2u) { m = MEM32(t + 0x3A4); MEM32(t + 0x3A4) = m | 4u; }
+    sub_000599C0_gen();
+    if (m) MEM32(t + 0x3A4) = m;
 }
 /* the other aim pick (thiscall on the arbitration, the actor's index; ret 4; from 0x5A920 for each actor): as 0x5A150, the camera's or aim's heading plus the stick, and the
  * player's lock [0x43B16C] for his marker (0xC14D0). Player 2's turn ran with player 1's aim and stick: his lock jumped (same hero, LT held, 12 lock changes for player 1, 91 for
@@ -12559,6 +12590,34 @@ static void coop_p2_render_offset(uint32_t w, uint32_t sl)
     for (q = 0; q < 16; q++) MEMF(w + 0x20 + 4 * q) = m[q];
 }
 int coop_p2_skip_offset(void) { return !getenv("TT_COOP_NOP2OFFSET") && coop_p2_draw_on() && MEM32(0x43B15Cu) == coop_p2; }
+/* player 2 Gimli's throwing axe. Player 1 Gimli's aim (TT_COOP_WPNCMDLOG): the axe @Activate'd and into slot 1, the left hand; @Deactivate'd after. With another hero's level list
+ * player 2's moves name no object for it, both commands run with nothing, so his copy stayed on bone 8, not drawn (a playtest: left hand raised and empty). A take can't move it: 0x26140 refuses a weapon on the list, and player 1's comes fresh. While he holds LT: his
+ * copy on the left hand's bone (22, player 1's there), drawn; after, back. TT_COOP_NOP2AXEHAND: as before */
+void coop_p2_axe_hand(void)
+{
+    extern const char *tt_coop_p2_char_now; extern uint32_t coop_p2_bow(void); extern int tt_in_scene(void); extern int coop_hero_down(int); extern int coop_scene_cam(void);
+    static int held, shown; static unsigned lv; static uint32_t bit; static uint16_t bone; uint32_t w; int on;
+    if (lv != coop_level_n) { lv = coop_level_n; held = shown = 0; }
+    if (coop_mode() != 3 || coop_p2 < 0x10000u || !tt_coop_p2_char_now || strcmp(tt_coop_p2_char_now, "gimli") || tt_vs_on() || getenv("TT_COOP_NOP2AXEHAND")) return;
+    w = coop_p2_bow(); if (w < 0x10000u || MEM32(w) != 0x174980u || MEM32(w + 0x11C) != coop_p2) return;
+    on = (MEM32(COOP_PADREC(1u) + 0x34u) & 0x4000u) && !tt_in_scene() && !coop_scene_cam() && !coop_hero_down(1);
+    if (on != held) {
+        uint32_t inst = MEM32(coop_p2 + 0x3D0), n = inst >= 0x10000u ? MEM32(inst + 0x174) : 0, j;
+        if (n > 32u) n = 0;
+        for (j = 0; j < n; j++) if (MEM32(inst + 0x74 + 8 * j) == w) { if (on) { bone = MEM16(inst + 0x78 + 8 * j); MEM16(inst + 0x78 + 8 * j) = 22; } else MEM16(inst + 0x78 + 8 * j) = bone; }
+        if (on) { bit = MEM32(w + 0x110) & 0x20000u; coop_p2_render_offset(w, 1u); } else MEM32(w + 0x110) = (MEM32(w + 0x110) & ~0x20000u) | bit;
+        held = on; { static int n; if (n++ < 12) tt_dbg("[COOPWEAPON] player 2's axe %08X: %s, +110 %08X +118 %08X\n", w, on ? "in his left hand" : "put away", MEM32(w + 0x110), MEM32(w + 0x118)); } }
+    if (on) { static uint32_t off_t; uint32_t inst = MEM32(coop_p2 + 0x3D0), n = inst >= 0x10000u ? MEM32(inst + 0x174) : 0, k; int listed = 0;
+        MEM32(w + 0x110) |= 0x20000u; shown = 1;
+        if (n <= 32u) for (k = 0; k < n; k++) if (MEM32(inst + 0x74 + 8 * k) == w) listed = 1;
+        if ((MEM32(w + 0x110) & 0x1000u) && listed) off_t = 0;   /* (a throw deactivates it, 0x8C550, and it leaves the list; player 1's moves @Activate and attach his again, his name nothing: both here, after the throw, or he held nothing from his first on) */
+        else if (!off_t) off_t = coop_now() | 1;
+        else if ((int32_t)(coop_now() - off_t) >= 400) { uint32_t one = 1, a[2]; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
+            if (!(MEM32(w + 0x110) & 0x1000u)) tt_gcall(0x0008C550u, w, 1, &one);
+            if (!listed) { a[0] = w; a[1] = 1u; coop_take_nested = 1; tt_gcall(0x00085FB0u, coop_p2, 2, a); coop_take_nested = 0; coop_p2_render_offset(w, 1u); }
+            MEM32(w + 0x110) |= 0x20000u; off_t = 0; { static int c; if (c++ < 6) { uint32_t nn = MEM32(inst + 0x174); tt_dbg("[COOPWEAPON] player 2's axe back in his hand after a throw, was on the list %d, now %u attached, last bone %u, +110 %08X\n", listed, nn, nn ? MEM16(inst + 0x78 + 8 * (nn - 1)) : 0, MEM32(w + 0x110)); } } } }
+    else if (shown && !bit) MEM32(w + 0x110) &= ~0x20000u;   /* (a cutscene's put-back: the bit as it was during his aim) */
+}
 void sub_00085FB0(void)
 {
     uint32_t w = MEM32(esp + 4); int nested = coop_take_nested, after_bow_back = 0;
