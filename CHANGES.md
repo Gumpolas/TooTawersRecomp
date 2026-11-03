@@ -3426,6 +3426,9 @@ twotowers/src/twotowers_manual.c
     sound is held back half a second so that its top is never heard.
     Without the file, the credits are as they were. TT_CREDITS2=<file>:
     another file; TT_NOCREDITS2: off.
+  - (2.0.0) A third song for the credits: music/credits3.wav plays after
+    credits2.wav, should the credits outlast it; the two go round
+    together. TT_CREDITS3=<file>: another file.
 2.0.0
 =====
 

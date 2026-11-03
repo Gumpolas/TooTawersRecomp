@@ -1,6 +1,7 @@
 /* credits_music.c -- (1.9.9) the credits' second song. The credits play one song (streamed from the interface's
  * streaming wave bank, sound\S_WB_INTRFACE.xwb) and outlast it, so the game started it again from the top until the
  * credits ended. With music\credits2.wav beside the game (16-bit PCM, mono or stereo, any rate), that plays instead
+ * (and music\credits3.wav after it, if there is one)
  * once the first song has ended -- on, round again if the credits still go on -- until the credits end.
  *
  * How:
@@ -71,26 +72,16 @@ static void bank_load(void)
     if (lg()) for (i = 0; i < (uint32_t)s_nent; i++) tt_dbg("[CREDITS2] bank song %u: %08X + %08X, %u ms\n", i, s_ent[i].start, s_ent[i].len, s_ent[i].dur_ms);
 }
 
-/* ours, from the file: 16-bit PCM WAV, made stereo at 48 kHz */
-static void song_load(void)
+/* a song from its file: 16-bit PCM WAV, made stereo at 48 kHz and put after what is there */
+static int wav_add(const char *p)
 {
-    char p[900], *sl; const char *e = getenv("TT_CREDITS2");
     FILE *f; long n; uint8_t *b; uint32_t o = 12, ch = 0, rate = 0, bits = 0, fmt = 0, dlen = 0; const uint8_t *data = NULL;
-    if (s_load_tried) return;
-    s_load_tried = 1;
-    if (e && *e) snprintf(p, sizeof p, "%s", e);
-    else {
-        GetModuleFileNameA(NULL, p, sizeof p);
-        sl = strrchr(p, '\\'); if (!sl || strrchr(p, '/') > sl) sl = strrchr(p, '/');
-        if (sl) *sl = 0;
-        strncat(p, "/music/credits2.wav", sizeof p - strlen(p) - 1);
-    }
-    if (!(f = fopen(p, "rb"))) { if (lg()) tt_dbg("[CREDITS2] no %s: the song goes round as it did\n", p); return; }
+    if (!(f = fopen(p, "rb"))) { if (lg()) tt_dbg("[CREDITS2] no %s\n", p); return 0; }
     fseek(f, 0, SEEK_END); n = ftell(f); fseek(f, 0, SEEK_SET);
     b = (uint8_t *)malloc((size_t)(n > 0 ? n : 1));
-    if (!b || n < 44 || fread(b, 1, (size_t)n, f) != (size_t)n) { fclose(f); free(b); return; }
+    if (!b || n < 44 || fread(b, 1, (size_t)n, f) != (size_t)n) { fclose(f); free(b); return 0; }
     fclose(f);
-    if (memcmp(b, "RIFF", 4) || memcmp(b + 8, "WAVE", 4)) { tt_dbg("[CREDITS2] %s: not a WAV file\n", p); free(b); return; }
+    if (memcmp(b, "RIFF", 4) || memcmp(b + 8, "WAVE", 4)) { tt_dbg("[CREDITS2] %s: not a WAV file\n", p); free(b); return 0; }
     while (o + 8 <= (uint32_t)n) {
         uint32_t cl = rd32(b + o + 4);
         if (!memcmp(b + o, "fmt ", 4) && cl >= 16) { fmt = b[o + 8] | b[o + 9] << 8; ch = b[o + 10] | b[o + 11] << 8; rate = rd32(b + o + 12); bits = b[o + 22] | b[o + 23] << 8; }
@@ -98,26 +89,46 @@ static void song_load(void)
         o += 8 + cl + (cl & 1);
     }
     if (!data || (fmt != 1 && fmt != 0xFFFE) || bits != 16 || (ch != 1 && ch != 2) || rate < 8000 || rate > 192000) {
-        tt_dbg("[CREDITS2] %s: not 16-bit PCM, mono or stereo (format %u, %u bits, %u channels)\n", p, fmt, bits, ch); free(b); return;
+        tt_dbg("[CREDITS2] %s: not 16-bit PCM, mono or stereo (format %u, %u bits, %u channels)\n", p, fmt, bits, ch); free(b); return 0;
     }
     {
         size_t in = dlen / (2 * ch), out = (size_t)((double)in * 48000.0 / rate), i;
         const int16_t *s = (const int16_t *)data;
-        s_pcm = (int16_t *)malloc(out * 4 + 4);
-        if (!s_pcm) { free(b); return; }
+        int16_t *np = (int16_t *)realloc(s_pcm, (s_frames + out) * 4 + 4), *d;
+        if (!np) { free(b); return 0; }
+        s_pcm = np; d = s_pcm + s_frames * 2;
         for (i = 0; i < out; i++) {
             double t = (double)i * rate / 48000.0; size_t k = (size_t)t; double fr = t - (double)k; int c;
             if (k + 1 >= in) { k = in ? in - 1 : 0; fr = 0; }
             for (c = 0; c < 2; c++) {
                 int cc = ch == 2 ? c : 0;
                 double v = s[k * ch + cc] * (1.0 - fr) + (k + 1 < in ? s[(k + 1) * ch + cc] : 0) * fr;
-                s_pcm[i * 2 + c] = (int16_t)(v > 32767 ? 32767 : v < -32768 ? -32768 : v);
+                d[i * 2 + c] = (int16_t)(v > 32767 ? 32767 : v < -32768 ? -32768 : v);
             }
         }
-        s_frames = out;
+        s_frames += out;
+        tt_dbg("[CREDITS2] a song for the credits: %s (%.1f s)\n", p, out / 48000.0);
     }
     free(b);
-    tt_dbg("[CREDITS2] the credits' second song: %s (%.1f s)\n", p, s_frames / 48000.0);
+    return 1;
+}
+/* ours: music\credits2.wav, then music\credits3.wav after it (the credits still on when the second ends), the two round
+ * again if the credits outlast them both. TT_CREDITS2 / TT_CREDITS3: other files */
+static void song_load(void)
+{
+    char dir[900], p[1000], *sl; const char *e;
+    int k;
+    if (s_load_tried) return;
+    s_load_tried = 1;
+    GetModuleFileNameA(NULL, dir, sizeof dir);
+    sl = strrchr(dir, '\\'); if (!sl || strrchr(dir, '/') > sl) sl = strrchr(dir, '/');
+    if (sl) *sl = 0;
+    for (k = 2; k <= 3; k++) {
+        e = getenv(k == 2 ? "TT_CREDITS2" : "TT_CREDITS3");
+        if (e && *e) snprintf(p, sizeof p, "%s", e); else snprintf(p, sizeof p, "%s/music/credits%d.wav", dir, k);
+        wav_add(p);
+    }
+    if (!s_frames) { free(s_pcm); s_pcm = NULL; if (lg()) tt_dbg("[CREDITS2] no songs of ours: the credits' song goes round as it did\n"); }
 }
 
 static int on_now(unsigned long now) { return s_last && now - s_last < 500u; }
