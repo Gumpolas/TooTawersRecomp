@@ -17,6 +17,17 @@ LAUNCHER=0
 [ "$1" = "--launcher" ] && { LAUNCHER=1; shift; }
 export TT_LAUNCHED=1   # (the game: started from here, so it does not start this script again when its files are missing)
 
+# (2.0.0) laptops with an NVIDIA card beside the built-in graphics (Optimus / PRIME): Linux runs programs on the built-in
+# chip unless they ask for the NVIDIA one, and the game ran slowly there. With NVIDIA's driver loaded, ask for its card
+# (harmless where it is the only one). TT_NO_PRIME=1: leave it to the system.
+if [ -z "$TT_NO_PRIME" ] && [ -e /proc/driver/nvidia/version ] && [ -z "$__NV_PRIME_RENDER_OFFLOAD" ]; then
+    export __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only
+fi
+# (AMD / Intel pairs with Mesa's drivers: DRI_PRIME picks the other card)
+if [ -z "$TT_NO_PRIME" ] && [ ! -e /proc/driver/nvidia/version ] && [ -z "$DRI_PRIME" ] && [ "$(ls -d /sys/class/drm/card[0-9] 2>/dev/null | wc -l)" -gt 1 ]; then
+    export DRI_PRIME=1
+fi
+
 have_gui() { [ -n "$DISPLAY$WAYLAND_DISPLAY" ] && command -v zenity >/dev/null 2>&1; }
 # a message in a window without zenity: KDE's kdialog, else the game's own (SDL's message box)
 win_msg() {

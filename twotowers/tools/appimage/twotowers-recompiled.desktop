@@ -6,6 +6,7 @@ Exec=AppRun %F
 Icon=twotowers
 Categories=Game;ActionGame;
 Terminal=false
+PrefersNonDefaultGPU=true
 Actions=Launcher;
 
 [Desktop Action Launcher]
