@@ -163,8 +163,10 @@ static void tt_thread_start_pin(void)
 static int launcher_cmd(char *out, size_t n)
 {
 #if defined(_WIN32)
-    snprintf(out, n, "%s\\The Two Towers Recompiled.exe", g_exe_dir);
-    return GetFileAttributesA(out) != INVALID_FILE_ATTRIBUTES;
+    /* (2.0.0) not on Windows: its launcher is the program players start the game with; F5 and its prompt are for Linux
+     * and macOS, where the AppImage and TwoTowers.sh go straight to the game */
+    (void)out; (void)n;
+    return 0;
 #else
     const char *ai = getenv("APPIMAGE");
     if (ai && *ai && getenv("TT_APPIMAGE_HOME") && access(ai, X_OK) == 0) { snprintf(out, n, "%s", ai); return 1; }

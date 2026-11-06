@@ -3386,9 +3386,10 @@ twotowers/src/twotowers_manual.c
     left as "F5 Launcher"): the game closes and the launcher opens, for
     those who start the game without it -- the AppImage and TwoTowers.sh
     go straight to the game, so the Extra Heroes mod and the other
-    settings were out of reach. Windows: The Two Towers Recompiled.exe;
-    Linux: TwoTowers.sh --launcher (from the AppImage, the AppImage
-    itself); macOS: twotowers-setup's menu in the game's terminal.
+    settings were out of reach. Linux: TwoTowers.sh --launcher (from the
+    AppImage, the AppImage itself); macOS: twotowers-setup's menu in the
+    game's terminal. Not on Windows (2.0.0): players start the game there
+    from its launcher.
   - Linux: a launcher in a window (zenity, or KDE's kdialog; else
     twotowers-setup's menu in a terminal): the Extra Heroes mod, the ECTS
     2002 HUD, the orange health pickups, the language, full screen, the
@@ -3416,25 +3417,6 @@ twotowers/src/twotowers_manual.c
     screen, the full-screen resolution, the 13 extra heroes mod and its
     choices; Voices / Films / (as the text) in 22 languages), and the
     Linux launcher's window, which uses the launcher's own words.
-  - The credits' second song: the credits outlast their song, which the
-    game started again until they ended. With music/credits2.wav beside
-    the game (16-bit PCM WAV, mono or stereo, any rate) that plays once
-    the first song has ended, as loud as the game's music came out (so
-    the music volume holds), round again if the credits still go on, and
-    the game's sound is its own again when the credits end. The song's
-    going round is seen in the game's reads of its wave bank; the credits'
-    sound is not held back (2.0.0: holding it back broke the credits'
-    song's start): ours takes over when the song's last buffers are read,
-    in its quiet last moments, before its top is heard again; the songs
-    are read on a thread of their own when the front end opens. (2.0.0:
-    on Windows the song went round as before -- the clock's 15.6 ms steps
-    made "now" a step behind the credits' last frame, and the unsigned age
-    took the credits for ended: the times are compared signed.)
-    Without the file, the credits are as they were. TT_CREDITS2=<file>:
-    another file; TT_NOCREDITS2: off.
-  - (2.0.0) A third song for the credits: music/credits3.wav plays after
-    credits2.wav, should the credits outlast it; the two go round
-    together. TT_CREDITS3=<file>: another file.
 2.0.0
 =====
 
