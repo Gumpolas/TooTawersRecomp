@@ -92,11 +92,11 @@ static uint32_t s_unav_saved; static int s_unav_on;
 /* co-op: the story's levels play once. On the mission select (screen 1; place n is level n, 0-13), a level any hero
  * has completed (0x000D2420's bytes: 0x4AB68F + hero * 15 + level) is "Already Beaten" in a co-op game: its hero lines
  * (elements 0x42D590, 0x42D66C, 0x42D748, 0x42D824, filled by 0x00075250) give way to those words, and A / Start on it
- * do nothing. Once the game is cleared (a hero has completed level 13, the test the map's own Isildur line makes) the
- * levels are open again, with whatever else the game opens then. TT_COOP_NOLEVELLOCK: off */
+ * do nothing. Once the game is finished (a hero has completed level 11, Hornburg Courtyard, or 13, the secret mission) the
+ * levels are open again. Only 13 counted before, so a finished game kept them locked (a playtest). TT_COOP_NOLEVELLOCK: off */
 extern volatile int tt_coop_menu_on;
 static int coop_game_cleared(void) { int h; if (getenv("TT_COOP_TESTCLEARED")) return 1;   /* (test: as cleared) */
-    for (h = 1; h <= 3; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + 13u) == 1) return 1; return 0; }
+    for (h = 1; h <= 4; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + 11u) == 1 || G8(0x4AB68Fu + (uint32_t)h * 15u + 13u) == 1) return 1; return 0; }
 int tt_coop_level_locked(int lv)
 {
     int h;
