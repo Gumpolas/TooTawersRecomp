@@ -122,6 +122,7 @@ extern void xbox_FramebufferSetGpuOwned(int on);
     X(GLint, GetUniformLocation, (GLuint, const GLchar *)) \
     X(void, Uniform1i, (GLint, GLint)) \
     X(void, Uniform1f, (GLint, GLfloat)) \
+    X(void, Uniform4f, (GLint, GLfloat, GLfloat, GLfloat, GLfloat)) \
     X(void, DrawArrays, (GLenum, GLint, GLsizei)) \
     X(void, DrawElementsBaseVertex, (GLenum, GLsizei, GLenum, const void *, GLint)) \
     X(void, GenRenderbuffers, (GLsizei, GLuint *)) \
@@ -215,6 +216,7 @@ static void (APIENTRY *p_glMaxShaderCompilerThreadsKHR)(GLuint);
 #define glGetUniformLocation p_glGetUniformLocation
 #define glUniform1i p_glUniform1i
 #define glUniform1f p_glUniform1f
+#define glUniform4f p_glUniform4f
 #define glDrawArrays p_glDrawArrays
 #define glDrawElementsBaseVertex p_glDrawElementsBaseVertex
 #define glGenRenderbuffers p_glGenRenderbuffers
@@ -1437,6 +1439,18 @@ static int gpu_shader_done(GLuint *s, const char *what, uint32_t id)
 /* ---------------- init ---------------- */
 
 static void gpu_apply_settings(void);
+static void APIENTRY gl_debug_cb(GLenum src, GLenum type, GLuint id, GLenum sev, GLsizei len, const GLchar *msg, const void *u)
+{
+    static GLuint seen[256]; static unsigned nseen, total;
+    unsigned i;
+    (void)src; (void)len; (void)u;
+    if (sev == 0x826B /* NOTIFICATION */ || total >= 400) return;
+    for (i = 0; i < nseen; i++) if (seen[i] == id) return;
+    if (nseen < 256) seen[nseen++] = id;
+    total++;
+    fprintf(stderr, "  [GLDEBUG] type 0x%X id %u severity 0x%X: %s\n", type, id, sev, msg ? msg : "");
+}
+
 static int gpu_init(void)
 {
     const char *e = getenv("RECOMP_RENDERER");
@@ -1457,6 +1471,18 @@ static int gpu_init(void)
     glGetIntegerv(GL_MINOR_VERSION, &mnr);
     fprintf(stderr, "  [GL] %s / %s / OpenGL %s\n", (const char *)glGetString(GL_VENDOR),
             (const char *)glGetString(GL_RENDERER), (const char *)glGetString(GL_VERSION));
+    {   /* (2.0.0) TT_GLDEBUG=1: the driver's own errors and warnings in the log, as [GLDEBUG] lines */
+        typedef void (APIENTRY *dbgcb_t)(GLenum, GLenum, GLuint, GLenum, GLsizei, const GLchar *, const void *);
+        typedef void (APIENTRY *dbgset_t)(dbgcb_t, const void *);
+        dbgset_t set = getenv("TT_GLDEBUG") ? (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallback") : NULL;
+        if (!set && getenv("TT_GLDEBUG")) set = (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallbackARB");
+        if (set) {
+            glEnable(0x92E0 /* GL_DEBUG_OUTPUT */);
+            glEnable(0x8242 /* GL_DEBUG_OUTPUT_SYNCHRONOUS */);
+            set(gl_debug_cb, NULL);
+            fprintf(stderr, "  [GLDEBUG] on\n");
+        }
+    }
     if (maj < 3 || (maj == 3 && mnr < 3)) {
         fprintf(stderr, "  [GL] OpenGL 3.3 is needed; using the software renderer\n");
         SDL_GL_MakeCurrent(g_win, NULL);
@@ -2528,6 +2554,201 @@ static void gpu_use(GLuint prog)
     if (g_sh.prog != prog) { glUseProgram(prog); g_sh.prog = prog; }
 }
 
+/* ---------------- (2.0.0) character shadow repair ---------------- */
+
+/* The D3D11 renderer's shadow repair (1.9.3, nv2a_d3d11.inc), brought to
+ * OpenGL: the game draws the character shadows as stencil volumes, then two
+ * full-screen passes darken where the stencil count is not zero. Its
+ * CPU-built volume is not closed everywhere, so thin lines inside a shadow
+ * keep a count of 0 and stay lit -- at a high internal resolution grey
+ * speckles and streaks over the ground that flicker as the shadows move
+ * (a playtest on Linux, an NVIDIA card at 6x). Just before the first
+ * darkening pass the stencil's "passes the darkening's test" is made a mask,
+ * reduced to 1/d of the size (each pixel the largest of its d x d), closed
+ * there (dilated, then eroded, one axis at a time), and where the closed mask
+ * covers a pixel the shadow missed the stencil is set (and the shadow's
+ * strength put in the alpha). The game's passes then darken as before.
+ * Not with MSAA (the targets are multisampled renderbuffers then: left as
+ * drawn). RECOMP_SHADOW_R=0: as the game draws them; TT_SHLOG: the repairs. */
+static GLuint g_shm_tex[3], g_shm_w, g_shm_h, g_shm_d;
+static GLuint g_pr_sh[5];          /* one, down, dilate, erode, fill */
+static GLint g_loc_sh_ys[5], g_loc_sh_p[5];
+static int g_sh_pending, g_sh_skipping, g_sh_bad;
+static int gl_is_sop_count(uint32_t op) { return op == 0x1E02 || op == 0x1E03 || op == 0x8507 || op == 0x8508; }
+static GLuint shm_tex(GLuint w, GLuint h)
+{
+    GLuint t = 0;
+    glGenTextures(1, &t);
+    glBindTexture(GL_TEXTURE_2D, t);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, (GLsizei)w, (GLsizei)h, 0, GL_RED, GL_UNSIGNED_BYTE, NULL);
+    g_sh.tex_ok = 0;
+    return t;
+}
+static int shm_make(GLuint w, GLuint h, GLuint dd)
+{
+    int i;
+    if (g_shm_tex[0] && g_shm_w == w && g_shm_h == h && g_shm_d == dd) return 1;
+    for (i = 0; i < 3; i++) if (g_shm_tex[i]) { gpu_fbo_forget(g_shm_tex[i]); glDeleteTextures(1, &g_shm_tex[i]); g_shm_tex[i] = 0; }
+    for (i = 0; i < 3; i++) {
+        g_shm_tex[i] = shm_tex(i ? (w + dd - 1) / dd : w, i ? (h + dd - 1) / dd : h);
+        if (!g_shm_tex[i]) return 0;
+    }
+    g_shm_w = w; g_shm_h = h; g_shm_d = dd;
+    return 1;
+}
+static int shm_programs(void)
+{
+    static const char *body[5] = {
+        /* one: the picture's alpha (the shadow's strength) where the stencil passes the darkening's test */
+        "void main() { o_color = vec4(max(texelFetch(tx2, ivec2(gl_FragCoord.xy), 0).a, 1.0 / 255.0)); }\n",
+        /* down: each pixel the largest of its d x d */
+        "void main() { int d = max(int(u_p.z), 1); ivec2 b = ivec2(gl_FragCoord.xy) * d; ivec2 sz = textureSize(tx0, 0); float m = 0.0;\n"
+        "  for (int y = 0; y < d; y++) for (int x = 0; x < d; x++) m = max(m, texelFetch(tx0, min(b + ivec2(x, y), sz - 1), 0).r);\n"
+        "  o_color = vec4(m); }\n",
+        /* dilate along u_p.y's axis by u_p.x */
+        "void main() { ivec2 q = ivec2(gl_FragCoord.xy), d = u_p.y > 0.5 ? ivec2(0, 1) : ivec2(1, 0), sz = textureSize(tx0, 0);\n"
+        "  int r = int(u_p.x); float m = 0.0;\n"
+        "  for (int i = -r; i <= r; i++) m = max(m, texelFetch(tx0, clamp(q + d * i, ivec2(0), sz - 1), 0).r);\n"
+        "  o_color = vec4(m); }\n",
+        /* erode */
+        "void main() { ivec2 q = ivec2(gl_FragCoord.xy), d = u_p.y > 0.5 ? ivec2(0, 1) : ivec2(1, 0), sz = textureSize(tx0, 0);\n"
+        "  int r = int(u_p.x); float m = 1.0;\n"
+        "  for (int i = -r; i <= r; i++) m = min(m, texelFetch(tx0, clamp(q + d * i, ivec2(0), sz - 1), 0).r);\n"
+        "  o_color = vec4(m); }\n",
+        /* fill: the closed mask's strength into the alpha, the stencil set (by the draw's state) */
+        "void main() { ivec2 sz = textureSize(tx1, 0);\n"
+        "  float c = texelFetch(tx1, min(ivec2(gl_FragCoord.xy) / max(int(u_p.z), 1), sz - 1), 0).r;\n"
+        "  if (c < 0.5 / 255.0) discard;\n"
+        "  o_color = vec4(0.0, 0.0, 0.0, c); }\n" };
+    static const char *head =
+        "uniform sampler2D tx0; uniform sampler2D tx1; uniform sampler2D tx2;\n"
+        "uniform vec4 u_p;\n"
+        "layout(location = 0) out vec4 o_color;\n";
+    int i;
+    if (g_pr_sh[0]) return 1;
+    if (g_sh_bad) return 0;
+    for (i = 0; i < 5; i++) {
+        const char *vsrc[3], *fsrc[3];
+        GLuint vs, fs;
+        vsrc[0] = "#version 330 core\n"; vsrc[1] = ""; vsrc[2] = s_glsl_vs_tri + strlen("#version 330 core\n");
+        fsrc[0] = "#version 330 core\n"; fsrc[1] = head; fsrc[2] = body[i];
+        vs = gpu_shader_now(GL_VERTEX_SHADER, vsrc, 3, "the shadow repair's vertex shader");
+        fs = vs ? gpu_shader_now(GL_FRAGMENT_SHADER, fsrc, 3, "a shadow repair shader") : 0;
+        if (!vs || !fs) { if (vs) glDeleteShader(vs); g_sh_bad = 1; return 0; }
+        g_pr_sh[i] = gpu_link_now(vs, fs, "a shadow repair program");
+        glDeleteShader(vs); glDeleteShader(fs);
+        if (!g_pr_sh[i]) { g_sh_bad = 1; return 0; }
+        g_loc_sh_ys[i] = glGetUniformLocation(g_pr_sh[i], "u_ys");
+        g_loc_sh_p[i] = glGetUniformLocation(g_pr_sh[i], "u_p");
+    }
+    g_sh.prog = 0;
+    return 1;
+}
+static void shm_pass(int k, GLuint fbo, GLuint w, GLuint h)
+{
+    gpu_set_fbo(fbo);
+    glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+    glUseProgram(g_pr_sh[k]); g_sh.prog = g_pr_sh[k];
+    if (g_loc_sh_ys[k] >= 0) glUniform1f(g_loc_sh_ys[k], 1.0f);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+static void shadow_repair_gl(int radius, GLuint dd)
+{
+    GLuint w, h, sw, sh_, fbo_mask, f1, f2;
+    int i;
+    if (!g_cur_rt || !g_cur_ds || g_cur_rt->mrb || g_cur_ds->mrb || !g_cur_rt->tex || !g_cur_ds->tex) return;
+    if (!shm_programs()) return;
+    w = g_cur_rt->pw; h = g_cur_rt->ph;
+    if (dd < 1) dd = 1;
+    if (!shm_make(w, h, dd)) return;
+    sw = (w + dd - 1) / dd; sh_ = (h + dd - 1) / dd;
+    glBindVertexArray(g_vao_empty); g_sh.vao = 3;
+    glDisable(GL_SCISSOR_TEST); glDisable(GL_CULL_FACE); glDisable(GL_DEPTH_TEST); glDepthMask(GL_FALSE);
+    glDisable(GL_BLEND); glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    for (i = 0; i < 3; i++) { glActiveTexture(GL_TEXTURE0 + i); glBindSampler((GLuint)i, 0); glBindTexture(GL_TEXTURE_2D, 0); }
+    /* 1: the mask -- where the stencil passes the darkening pass's own test */
+    fbo_mask = gpu_fbo(g_shm_tex[0], g_cur_ds->tex);
+    gpu_set_fbo(fbo_mask);
+    glClearColor(0, 0, 0, 0); glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_STENCIL_TEST);
+    glStencilFuncSeparate(GL_FRONT_AND_BACK, 0x0200 | (s_3d.st_func & 0xF), (GLint)(s_3d.st_ref & 0xFF), s_3d.st_mask & 0xFF);
+    glStencilOpSeparate(GL_FRONT_AND_BACK, GL_KEEP, GL_KEEP, GL_KEEP);
+    glStencilMask(0);
+    glActiveTexture(GL_TEXTURE2); glBindTexture(GL_TEXTURE_2D, g_cur_rt->tex);
+    shm_pass(0, fbo_mask, w, h);
+    glActiveTexture(GL_TEXTURE2); glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_STENCIL_TEST);
+    /* 2: at 1/dd of the size, closed: dilated (1 -> 2 -> 1), eroded (1 -> 2 -> 1) */
+    f1 = gpu_fbo(g_shm_tex[1], 0); f2 = gpu_fbo(g_shm_tex[2], 0);
+    glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_2D, g_shm_tex[0]);
+    glUseProgram(g_pr_sh[1]); if (g_loc_sh_p[1] >= 0) glUniform4f(g_loc_sh_p[1], (float)radius, 0.0f, (float)dd, 0.0f);
+    shm_pass(1, f1, sw, sh_);
+    for (i = 0; i < 4; i++) {
+        static const int src[4] = { 1, 2, 1, 2 };
+        int k = i < 2 ? 2 : 3;
+        glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_2D, g_shm_tex[src[i]]);
+        glUseProgram(g_pr_sh[k]); if (g_loc_sh_p[k] >= 0) glUniform4f(g_loc_sh_p[k], (float)radius, (float)(i & 1), (float)dd, 0.0f);
+        shm_pass(k, src[i] == 1 ? f2 : f1, sw, sh_);
+    }
+    /* 3: where the closed mask has the shadow: its strength into the picture's alpha (the larger of the two), the
+     * stencil set to a value the darkening's test passes (the reference with its lowest compared bit flipped) */
+    glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_2D, 0);
+    glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, g_shm_tex[1]);
+    {
+        GLuint m = s_3d.st_mask & 0xFF, low = m & (0u - m), ref = (s_3d.st_ref & 0xFF) ^ (low ? low : 1u);
+        glEnable(GL_STENCIL_TEST);
+        glStencilFuncSeparate(GL_FRONT_AND_BACK, GL_ALWAYS, (GLint)ref, 0xFF);
+        glStencilOpSeparate(GL_FRONT_AND_BACK, GL_KEEP, GL_KEEP, GL_REPLACE);
+        glStencilMask(0xFF);
+    }
+    glEnable(GL_BLEND);
+    glBlendFuncSeparate(GL_ONE, GL_ONE, GL_ONE, GL_ONE);
+    glBlendEquationSeparate(GL_MAX, GL_MAX);
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
+    glUseProgram(g_pr_sh[4]); if (g_loc_sh_p[4] >= 0) glUniform4f(g_loc_sh_p[4], 0.0f, 0.0f, (float)dd, 0.0f);
+    shm_pass(4, gsurf_draw_fbo(g_cur_rt, g_cur_ds), w, h);
+    glActiveTexture(GL_TEXTURE1); glBindTexture(GL_TEXTURE_2D, 0);
+    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+    glDisable(GL_BLEND); glDisable(GL_STENCIL_TEST); glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    glActiveTexture(GL_TEXTURE0);
+    /* the game's draw goes on: everything bound again by the draw path */
+    gpu_sh_reset();
+}
+/* Before each draw: 0 as it is, 2 repaired (the draw's targets and states are to be bound again) */
+static int shadow_hook_gl(void)
+{
+    static int rbase = -2;
+    int vol, dark;
+    if (rbase == -2) { const char *e = getenv("RECOMP_SHADOW_R"); rbase = e ? atoi(e) : -1; }
+    if (!s_3d.stencil_test) { g_sh_skipping = 0; return 0; }
+    vol = s_3d.color_mask == 0x01000000u && (gl_is_sop_count(s_3d.st_zpass) || gl_is_sop_count(s_3d.st_zfail));
+    dark = !vol && s_3d.st_func == 0x205 /* NOTEQUAL */ && (g_sh_pending || g_sh_skipping);
+    if (vol) { g_sh_pending = 1; return 0; }
+    if (!dark) { g_sh_skipping = 0; return 0; }
+    if (g_sh_pending) {
+        int r = rbase >= 0 ? rbase : 2;   /* (the D3D11 renderer's High: gaps up to 4 pixels wide at 640x480 closed) */
+        g_sh_pending = 0;
+        if (r > 0) {
+            float k = g_rsy > g_rsx ? g_rsy : g_rsx;
+            GLuint dd = k >= 4.0f ? (GLuint)(k / 2.0f) : 1;
+            int rr = (int)(r * k / (float)dd + 0.99f);
+            if (rr > 24) rr = 24;
+            if (rr < 1) rr = 1;
+            shadow_repair_gl(rr, dd);
+            {
+                static int lg = -1; static unsigned nrep; static Uint32 t0;
+                if (lg < 0) lg = getenv("TT_SHLOG") != NULL;
+                if (lg) { nrep++; if (SDL_GetTicks() - t0 > 1000) { fprintf(stderr, "  [SHADOW] %u repairs (radius %d at 1/%u)\n", nrep, rr, dd); nrep = 0; t0 = SDL_GetTicks(); } }
+            }
+            return 2;
+        }
+    }
+    return 0;
+}
+
 /* ---------------- batches ---------------- */
 
 /* Draw the assembled batch with the program's GPU vertex shader; 0 when its
@@ -2603,6 +2824,10 @@ static void gpu_batch(void)
     }
     if (!gpu_bind_targets(need_depth)) return;
     if (!gpu_set_raster()) return;
+    if (shadow_hook_gl() == 2) {   /* (the shadow repair drew: the draw's targets and states again) */
+        if (!gpu_bind_targets(need_depth)) return;
+        if (!gpu_set_raster()) return;
+    }
     g_gen++; if (!g_gen) g_gen = 1;
     g_nidx = 0;
     switch (s_gpu.prim) {

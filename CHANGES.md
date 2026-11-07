@@ -3464,3 +3464,12 @@ Co-op, known from 16:
   - Known: no death animation for player 2 when he goes down last; levels
     with copies are harder; a weapon switch at Weathertop reported, not
     reproduced.
+
+kernel/nv2a_gl.inc (2.0.0, the OpenGL renderer: Linux; macOS from its next build)
+  - The character shadow repair of the Direct3D 11 renderer (1.9.3), in the
+    OpenGL renderer too: the shadows' stencil volumes leave thin gaps that
+    showed as grey specks and streaks flickering over the ground at a high
+    internal resolution (reported on Linux with an NVIDIA card). With MSAA
+    too. RECOMP_SHADOW_R=0: as the game draws them; TT_SHLOG: the repairs.
+  - The driver's own GL errors and warnings in the log as [GLDEBUG] lines
+    (TT_GLDEBUG=0: off, 2: synchronous).
