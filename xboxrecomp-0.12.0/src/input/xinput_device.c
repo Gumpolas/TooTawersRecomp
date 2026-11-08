@@ -521,8 +521,19 @@ static void js_scan(void)
         for (j = 0; j < TT_JS_MAX; j++) { if (s_js[j].fd >= 0 && !strcmp(s_js[j].path, path)) break; if (s_js[j].fd < 0 && free_j < 0) free_j = j; }
         if (j < TT_JS_MAX || free_j < 0) continue;
         fd = open(path, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
-        if (fd < 0) continue;
-        if (ioctl(fd, JSIOCGNAME(sizeof nm - 1), nm) < 0 || !js_is_ps3(nm)) { close(fd); continue; }
+        {   /* (2.0.0) why a joystick device is not used, once each: the log said nothing when a pad was not found */
+            static unsigned said_open, said_name;
+            if (fd < 0) {
+                if (errno != ENOENT && !(said_open & (1u << i))) { said_open |= 1u << i;
+                    fprintf(stderr, "  [INPUT] %s: cannot be opened (%s)\n", path, strerror(errno)); fflush(stderr); }
+                continue;
+            }
+            if (ioctl(fd, JSIOCGNAME(sizeof nm - 1), nm) < 0 || !js_is_ps3(nm)) {
+                if (!(said_name & (1u << i))) { said_name |= 1u << i;
+                    fprintf(stderr, "  [INPUT] %s: %s -- not a PlayStation 3 pad, left to SDL\n", path, nm[0] ? nm : "(no name)"); fflush(stderr); }
+                close(fd); continue;
+            }
+        }
         ioctl(fd, JSIOCGBUTTONS, &nb); ioctl(fd, JSIOCGAXES, &na);
         memset(&s_js[free_j], 0, sizeof s_js[free_j]);
         s_js[free_j].slot = -1;
@@ -707,6 +718,8 @@ static DWORD WINAPI sp_thread(LPVOID arg)
     p_SDL_JoystickEventState(SDL_IGNORE);
     p_SDL_GameControllerEventState(SDL_IGNORE);
     InterlockedExchange(&s_sp_state, 1);
+    fprintf(stderr, "  [INPUT] SDL game controllers on (%d joystick(s) now)\n", p_SDL_NumJoysticks());   /* (2.0.0) */
+    fflush(stderr);
     for (;;) {
         DWORD now = GetTickCount();
         p_SDL_GameControllerUpdate();

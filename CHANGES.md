@@ -3481,3 +3481,18 @@ kernel/nv2a_gl.inc (2.0.0, the OpenGL renderer: Linux; macOS from its next build
     and broke into flat patches, most when paused. Every block bound before
     is now sent again into the fresh store. RECOMP_GL_RINGTEST=1: small
     rings filled with garbage when renewed (=2: without the fix), to test.
+  - The colour grading ("Colour grading", "Grading amount"), "Movie
+    sharpness" and "Distant texture detail" of the More page, in the OpenGL
+    renderer too (the Direct3D 11 renderer's alone before: on Linux and
+    macOS they did nothing).
+
+prompts_kb.inc (2.0.0)
+  The search of the game's memory for the hints' words (keyboard prompts)
+  runs on a thread of its own: it went through 64 MB on the game's thread
+  once a second while a hint was not found -- a 50 ms frame every second,
+  a stutter (Linux playtest, Gates of Moria). The places found are checked
+  again on the game's thread before anything is written.
+
+input/xinput_device.c (2.0.0, Linux)
+  The log names each /dev/input/jsN not used and why (cannot be opened, or
+  not a PlayStation 3 pad), and says when SDL's game controllers are on.

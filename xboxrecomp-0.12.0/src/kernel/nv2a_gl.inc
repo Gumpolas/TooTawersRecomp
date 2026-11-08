@@ -333,7 +333,30 @@ static void gpu_filter_opts(void)
     }
 }
 
-static float g_post[4] = { 1, 0, 1, 0 };   /* brightness (gamma), sharpening, saturation */
+static float g_post[20] = { 1, 0, 1, 0 };   /* brightness (gamma), sharpening, saturation; (2.0.0) the colour look */
+/* (2.0.0) the picture's adjustments from the settings, as the Direct3D 11 renderer's post_fill (1.9.7): brightness,
+ * sharpening (a movie's own while one plays: "Movie sharpness") and saturation, and the More page's colour grading
+ * (Athelas' four looks, MIT) -- the OpenGL renderer had only the first three, so "Colour grading" did nothing on
+ * Linux and macOS. (No HDR here.) */
+static void post_fill(void)
+{
+    static const float looks[4][11] = {   /* contrast, pivot, sat, vibrance, gamma, shadow rgb, light rgb */
+        { 1.00f, 0.30f, 1.00f, 0.00f, 1.00f,  0.000f, 0.000f,  0.000f,  0.000f, 0.000f,  0.000f },
+        { 1.12f, 0.30f, 1.06f, 0.15f, 0.97f, -0.012f, 0.006f,  0.028f,  0.045f, 0.018f, -0.030f },
+        { 1.08f, 0.30f, 1.30f, 0.35f, 0.93f,  0.000f, 0.000f,  0.000f,  0.010f, 0.005f,  0.000f },
+        { 1.15f, 0.30f, 0.72f, 0.00f, 1.05f, -0.020f, 0.000f,  0.025f,  0.012f, 0.006f, -0.006f } };
+    extern int xbox_MoviePlaying(void);
+    int lk = xbox_GfxGet(GFX_LOOK); float st = xbox_GfxGetF(GFX_LOOKSTR), ms = xbox_GfxGetF(GFX_MOVIESHARP);
+    if (lk < 0 || lk > 3) lk = 0;
+    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR); g_post[3] = 0;
+    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
+    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    if (ms > 0 && xbox_MoviePlaying()) g_post[1] = ms;
+    g_post[4] = looks[lk][0]; g_post[5] = looks[lk][1]; g_post[6] = looks[lk][2]; g_post[7] = looks[lk][3];
+    g_post[8] = looks[lk][4]; g_post[9] = lk ? st : 0.0f; g_post[10] = g_post[11] = 0;
+    g_post[12] = looks[lk][5]; g_post[13] = looks[lk][6]; g_post[14] = looks[lk][7]; g_post[15] = 0;
+    g_post[16] = looks[lk][8]; g_post[17] = looks[lk][9]; g_post[18] = looks[lk][10]; g_post[19] = 0;
+}
 
 /* Uniform blocks: every program uses the same binding points. */
 enum { UB_VSC = 0, UB_PSC = 1, UB_CLC = 2, UB_POST = 3, UB_VPC = 4 };
@@ -992,6 +1015,7 @@ static GLuint gtex_get(const Texture *t)
 typedef struct { uint64_t key; GLuint obj; } GSmp;
 #define GSMP_MAX 128
 static GSmp g_smp_c[GSMP_MAX];
+static float g_lod_bias = -99.0f;   /* (2.0.0) the More page's "Distant texture detail" (negative: sharper), as the D3D11 renderer's */
 static GLuint gpu_sampler_ex(uint32_t au, uint32_t av, int linear, int mip)
 {
     uint64_t k;
@@ -1016,6 +1040,8 @@ static GLuint gpu_sampler_ex(uint32_t au, uint32_t av, int linear, int mip)
                                                               : (mip ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST));
         glSamplerParameterf(s, GL_TEXTURE_MIN_LOD, 0.0f);
         glSamplerParameterf(s, GL_TEXTURE_MAX_LOD, mip ? 1000.0f : 0.0f);
+        if (g_lod_bias == -99.0f) g_lod_bias = xbox_GfxGetF(GFX_LOD);
+        if (mip && g_lod_bias != 0.0f) glSamplerParameterf(s, 0x8501 /* GL_TEXTURE_LOD_BIAS */, g_lod_bias);
         if (linear && mip && g_aniso > 1 && g_max_aniso > 1.0f)
             glSamplerParameterf(s, GL_TEXTURE_MAX_ANISOTROPY_EXT, (float)g_aniso < g_max_aniso ? (float)g_aniso : g_max_aniso);
     }
@@ -1226,7 +1252,7 @@ static const char s_glsl_vs_tri[] =
 static const char s_glsl_ps_tri[] =
 "#version 330 core\n"
 "layout(std140) uniform CLC { vec4 clear_color; };\n"
-"layout(std140) uniform POSTC { vec4 post; };\n"
+"layout(std140) uniform POSTC { vec4 post; vec4 look; vec4 look2; vec4 shade; vec4 light; };\n"
 "uniform sampler2D tx0;\n"
 "in vec2 v_uv;\n"
 "layout(location = 0) out vec4 o_color;\n"
@@ -1262,10 +1288,25 @@ static const char s_glsl_ps_tri[] =
 "  }\n"
 "  return c;\n"
 "}\n"
+/* (2.0.0) the colour looks (nv2a_d3d11_shaders.h's post_look): look = contrast, pivot, saturation, vibrance;
+ * look2 = gamma, strength; a tint over the shadows and one over the lights */
+"vec3 post_look(vec3 c) {\n"
+"  if (look2.y <= 0.0) return c;\n"
+"  vec3 in0 = clamp(c, 0.0, 1.0);\n"
+"  vec3 x = look.y + (pow(in0, vec3(look2.x)) - look.y) * look.x;\n"
+"  x = max(x, vec3(0.0));\n"
+"  x = mix(x, 0.9 + 0.1 * (1.0 - 2.0 / (exp(min((x - 0.9) / 0.05, vec3(60.0))) + 1.0)), step(vec3(0.9), x));\n"
+"  float l = dot(x, vec3(0.2126, 0.7152, 0.0722));\n"
+"  float mx = max(x.r, max(x.g, x.b)), mn = min(x.r, min(x.g, x.b));\n"
+"  float sat = look.z * (1.0 + look.w * (1.0 - (mx - mn) / (mx + 1e-4)));\n"
+"  float ws = (1.0 - l) * min(l * 6.0, 1.0);\n"
+"  vec3 v = l + (x - l) * sat + ws * shade.rgb + l * light.rgb;\n"
+"  return mix(in0, clamp(v, 0.0, 1.0), look2.y);\n"
+"}\n"
 "vec3 post_grade(vec3 c) {\n"
 "  c = pow(clamp(c, 0.0, 1.0), vec3(1.0 / post.x));\n"
 "  float l = dot(c, vec3(0.299, 0.587, 0.114));\n"
-"  return clamp(mix(vec3(l), c, post.z), 0.0, 1.0);\n"
+"  return post_look(clamp(mix(vec3(l), c, post.z), 0.0, 1.0));\n"
 "}\n"
 "float fx_luma(vec3 c) { return dot(c, vec3(0.299, 0.587, 0.114)); }\n"
 "void main() {\n"
@@ -1603,9 +1644,7 @@ static int gpu_init(void)
         const char *v = getenv("RECOMP_HW_VP");
         g_hwvp_user = !(v && v[0] == '0');
     }
-    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR);
-    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
-    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    post_fill();
     g_present_smp = gpu_sampler(3, 3, 1);
     g_copy_smp = g_present_smp;
     glPixelStorei(GL_PACK_ALIGNMENT, 4);
@@ -3194,13 +3233,12 @@ static void gpu_apply_settings(void)
     g_vsync_on = xbox_GfxGet(GFX_VSYNC);
     g_stretch_on = xbox_GfxGet(GFX_STRETCH);
     g_hwvp_user = xbox_GfxGet(GFX_VP);
-    g_post[0] = xbox_GfxGetF(GFX_BRIGHT); g_post[1] = xbox_GfxGetF(GFX_SHARP); g_post[2] = xbox_GfxGetF(GFX_COLOR);
-    if (g_post[0] < 0.5f) g_post[0] = 1.0f;
-    if (g_post[2] <= 0.0f) g_post[2] = 1.0f;
+    post_fill();
     gpu_filter_opts();
     aniso = xbox_GfxGet(GFX_ANISO);
     mips = xbox_GfxGet(GFX_MIPS);
-    if (aniso != g_aniso || mips != g_mips) {
+    if (aniso != g_aniso || mips != g_mips || xbox_GfxGetF(GFX_LOD) != g_lod_bias) {
+        g_lod_bias = xbox_GfxGetF(GFX_LOD);
         gpu_samplers_drop();
         if (mips != g_mips)
             for (i = 0; i < GTEX_MAX; i++) {
@@ -3399,7 +3437,8 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         uvs[0] = 640.0f / (float)s->w; uvs[1] = 480.0f / (float)s->h;
         uvs[2] = 1.0f / (float)s->pw; uvs[3] = 1.0f / (float)s->ph;
         gpu_ub(UB_CLC, uvs, 16);
-        gpu_ub(UB_POST, g_post, 16);
+        post_fill();   /* (each frame: a movie's sharpness while one plays) */
+        gpu_ub(UB_POST, g_post, sizeof g_post);
     }
     glBindVertexArray(g_vao_empty);
     if (g_aa_on < 0) g_aa_on = xbox_GfxFxaa();

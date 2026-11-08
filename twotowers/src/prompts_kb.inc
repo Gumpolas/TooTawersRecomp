@@ -568,6 +568,37 @@ static struct { uint16_t u[KB_U]; int n; } s_kb_orig[KB_TXT_N];
 static int s_kb_orig_ok;
 static uint16_t s_kb_last[KB_TXT_MAX][KB_U];
 static int s_kb_last_n[KB_TXT_MAX];
+/* (2.0.0) the search for the hints' words runs on a thread of its own. It went through the whole 64 MB of the game's
+ * memory on the game's thread, once a second while some hint was not found -- which, with the keyboard's prompts (and
+ * no hint on screen), was always: a frame of 50 ms and more every second, a stutter (Linux playtest, Gates of Moria).
+ * The thread only reads; what it found is taken on the game's thread, each place checked again before it is written. */
+static struct { uint32_t at; int which; } s_kb_found[KB_TXT_MAX];
+static volatile LONG s_kb_scan_busy, s_kb_scan_done;
+static int s_kb_found_n;
+static DWORD WINAPI kb_scan_thread(LPVOID arg)
+{
+    const uint8_t *m = (const uint8_t *)xbox_GetMemoryOffset();
+    uint32_t a;
+    int i, n = 0;
+    static uint8_t first[65536 / 8];   /* the hints' first characters, for a quick no */
+    (void)arg;
+    memset(first, 0, sizeof first);
+    for (i = 0; i < KB_TXT_N; i++) if (s_kb_orig[i].n) first[s_kb_orig[i].u[0] >> 3] |= (uint8_t)(1u << (s_kb_orig[i].u[0] & 7));
+    for (a = 0x80010000u; a < 0x83FFFF00u && n < KB_TXT_MAX; a += 2) {   /* (the heap: 0x80000000 on) */
+        uint16_t c0 = (uint16_t)(m[a] | m[a + 1] << 8), c1;
+        if (!(first[c0 >> 3] & (1u << (c0 & 7)))) continue;
+        c1 = (uint16_t)(m[a + 2] | m[a + 3] << 8);
+        for (i = 0; i < KB_TXT_N; i++)
+            if (c0 == s_kb_orig[i].u[0] && c1 == s_kb_orig[i].u[1] && kb_txt_is(a, s_kb_orig[i].u, s_kb_orig[i].n)) {
+                s_kb_found[n].at = a; s_kb_found[n].which = i; n++;
+                break;
+            }
+    }
+    s_kb_found_n = n;
+    InterlockedExchange(&s_kb_scan_done, 1);
+    InterlockedExchange(&s_kb_scan_busy, 0);
+    return 0;
+}
 static void kb_txt_apply(int keys)   /* 0 the game's words, 1 the keys', 2 the controller's buttons as bound */
 {
     static DWORD scanned;
@@ -581,21 +612,24 @@ static void kb_txt_apply(int keys)   /* 0 the game's words, 1 the keys', 2 the c
         if (kb_txt_is(at, s_kb_orig[w].u, s_kb_orig[w].n) || (s_kb_last_n[i] && kb_txt_is(at, s_kb_last[i], s_kb_last_n[i]))) ok++;
         else s_kb_txt_at[i].at = 0;   /* (not the game's words any more: never written to) */
     }
-    if ((!s_kb_txt_n || ok < s_kb_txt_n) && keys && GetTickCount() - scanned > 1000u) {
-        /* find them: the game's memory, for each one's words */
-        const uint8_t *m = (const uint8_t *)xbox_GetMemoryOffset();
-        uint32_t a;
-        scanned = GetTickCount();
-        s_kb_txt_n = 0;
-        for (a = 0x80010000u; a < 0x83FFFF00u && s_kb_txt_n < KB_TXT_MAX; a += 2) {   /* (the heap: 0x80000000 on) */
-            uint16_t c0 = (uint16_t)(m[a] | m[a + 1] << 8), c1 = (uint16_t)(m[a + 2] | m[a + 3] << 8);
-            for (i = 0; i < KB_TXT_N; i++)
-                if (c0 == s_kb_orig[i].u[0] && c1 == s_kb_orig[i].u[1] && kb_txt_is(a, s_kb_orig[i].u, s_kb_orig[i].n)) {
-                    s_kb_txt_at[s_kb_txt_n].at = a; s_kb_txt_at[s_kb_txt_n].which = i; s_kb_last_n[s_kb_txt_n] = 0; s_kb_txt_n++;
-                    break;
-                }
+    if (s_kb_scan_done) {   /* a search finished: its places, each still holding a hint's words */
+        int k, nn = 0;
+        InterlockedExchange(&s_kb_scan_done, 0);
+        for (k = 0; k < s_kb_found_n; k++) {
+            uint32_t at = s_kb_found[k].at; int w = s_kb_found[k].which;
+            if (!kb_txt_is(at, s_kb_orig[w].u, s_kb_orig[w].n)) continue;
+            s_kb_txt_at[nn].at = at; s_kb_txt_at[nn].which = w; s_kb_last_n[nn] = 0; nn++;
         }
-        tt_dbg("[PROMPTS] the hints naming the pad's buttons: %d found in memory\n", s_kb_txt_n);
+        s_kb_txt_n = nn;
+        {   static int said = -1; if (nn != said) { said = nn; tt_dbg("[PROMPTS] the hints naming the pad's buttons: %d found in memory\n", s_kb_txt_n); } }
+    }
+    if ((!s_kb_txt_n || ok < s_kb_txt_n) && keys && GetTickCount() - scanned > 1000u && !s_kb_scan_busy) {
+        HANDLE h;
+        scanned = GetTickCount();
+        InterlockedExchange(&s_kb_scan_busy, 1);
+        h = CreateThread(NULL, 256 * 1024, kb_scan_thread, NULL, 0, NULL);
+        if (h) { SetThreadPriority(h, THREAD_PRIORITY_BELOW_NORMAL); CloseHandle(h); }
+        else InterlockedExchange(&s_kb_scan_busy, 0);
     }
     for (i = 0; i < s_kb_txt_n; i++) {
         uint32_t at = s_kb_txt_at[i].at;
