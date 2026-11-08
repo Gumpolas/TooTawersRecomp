@@ -160,12 +160,12 @@ Known issues
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
-      - Widescreen is experimental: a few full-screen effects may not line up at the edges.
+      - Widescreen/exclusive fullscreen is experimental: a few full-screen effects may not line up at the edges, and when using exclusive fullscreen it's recommended to keep the HUD at 4:3 for its aspect ratio setting.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.
      - FMV's can sometimes appear slow after alt-tabbing out of the game then back in. A temporary fix for this is to open the f10 menu or press start + back on controller and changing from borderless to fullscreen and back, or vice versa.
      - Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start".
-- In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
+ - In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
 
 Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game.
 
