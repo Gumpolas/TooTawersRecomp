@@ -26,6 +26,28 @@ For copyright reasons these are not included with 2.0.0 or any earlier or later 
 
 Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
+## Linux: the AppImage and a PlayStation 3 controller
+
+**If clicking the AppImage does nothing**, start it from a terminal in the folder it is in:
+
+```
+chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+```
+
+- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
+- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
+- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
+
+**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
+
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Load the joystick driver: `sudo modprobe joydev`. To have it load at every start: `echo joydev | sudo tee /etc/modules-load.d/joydev.conf`
+3. Plug the controller in by USB (for Bluetooth, pair it first) and press its **PS button**.
+4. Test it: `jstest /dev/input/js0`. Press buttons and move the sticks: the numbers should change (Ctrl+C to stop). If there is no `js0`, look with `ls /dev/input/js*` and use the number shown.
+5. If it says "Permission denied": `sudo usermod -aG input $USER`, then log out and back in.
+6. Start the game with the controller already connected and switched on.
+
 ## What the port adds
 
 - **Runs natively** on Windows, Linux and macOS (experimental), from your own disc.
