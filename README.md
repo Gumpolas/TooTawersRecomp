@@ -66,7 +66,7 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Enemy sounds in Versus:** their grunts, cries, blows and deaths, and the sound of being hit, play as in the campaign (they were silent).
 - **Orthanc Summit:** players no longer get stuck running on the spot at their starts (it happened after playing another arena first; only restarting the game cleared it). A player pushing the stick who still cannot move for 2.5 s is released, and put back on his last safe ground if need be.
 
-### Other fixes/Linux fixes
+### Other/Linux fixes
 - **Load Game with no saves:** Enter on "No saved games" takes you back to the main menu (it kept showing the message again).
 - The **level 5 and level 10 achievements** require a real level-up (finishing the prologue as Isildur earned both).
 - **Linux, laptops with a dedicated graphics card** beside the built-in graphics: the game runs on the dedicated graphics card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
