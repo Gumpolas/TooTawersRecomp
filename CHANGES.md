@@ -3568,3 +3568,10 @@ menus.c (2.0.0)
     game until it is let go, and on that screen Enter also leaves it (B):
     back to the main menu. TT_NOMSGLATCH: as before. (test) TT_SCRLOG: the
     front end's screen and message as they change.
+  - The Ent's blows on the enemies judged here as well: the game's contact
+    test still found an enemy before him seldom (a playtest, both players
+    as Ents: blow after blow on an Uruk an arm's length off, nothing). Each
+    of his attack boxes (once in 0.35 s) hits every living enemy within
+    TT_VS_ENTR (6.5) units before him (about 80 degrees, 4 units of
+    height) with the box's damage (at least 60): the hit reaction, a knock
+    down for a fierce blow, felled at 0. TT_VS_NOENTJUDGE: as before.

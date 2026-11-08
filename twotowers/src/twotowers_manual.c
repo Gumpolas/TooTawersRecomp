@@ -7660,6 +7660,31 @@ static void vs_ent_hide(void)
  * level's origin: his blows' tests ran there and found no orc and nothing to break, a playtest). Placed here at his
  * hands -- swept across the front of him while he swings, chest high, turned as he is */
 static uint32_t vs_ent_bw[2][4];
+/* (2.0.0) the Ent's blows on the enemies judged here: even with his hands at his reach and the strays at the map's origin out
+ * of the way, the game's contact test found the enemies before him seldom (a playtest with both players as Ents: blow after blow
+ * on an Uruk an arm's length off, nothing). Each of his attack boxes (once in 0.35 s) hits every living enemy within TT_VS_ENTR
+ * (6.5) units before him (within about 80 degrees of his facing, 4 units of his height) with the box's damage (85-105, at least
+ * 60): health off, the hit reaction (a knock down for a fierce one), felled at 0. TT_VS_NOENTJUDGE: the game's test alone */
+void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind)
+{
+    static uint32_t last[2]; uint32_t now = coop_now(), h; float R = getenv("TT_VS_ENTR") ? (float)atof(getenv("TT_VS_ENTR")) : 6.5f, fx, fy, fn; int i, n = 0;
+    if (w < 0 || w > 1 || !tt_vs_on() || getenv("TT_VS_NOENTJUDGE") || strcmp(vs_skin_name(w), "ent") || vs_state != 0) return;
+    h = w ? coop_p2 : coop_first_char; if (h < 0x10000u || coop_down[w]) return;
+    if (last[w] && (int32_t)(now - last[w]) < 350) return;
+    last[w] = now | 1u;
+    if (dmg < 60) dmg = 60; if (dmg > 400) dmg = 400;
+    fx = MEMF(h + 0x70); fy = MEMF(h + 0x74); fn = sqrtf(fx * fx + fy * fy); if (fn > 1e-3f) { fx /= fn; fy /= fn; } else { fx = 0; fy = 1; }
+    for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; float ex, ey, d; int32_t hp;
+        if (e == coop_first_char || e == coop_p2 || e == coop_twin || MEM32(e + 0x114) != 3u || (hp = (int32_t)MEM32(e + 0x2FC)) <= 0) continue;
+        ex = MEMF(e + 0xF0) - MEMF(h + 0xF0); ey = MEMF(e + 0xF4) - MEMF(h + 0xF4); d = sqrtf(ex * ex + ey * ey);
+        if (d > R || fabsf(MEMF(e + 0xF8) - MEMF(h + 0xF8)) > 4.0f) continue;
+        if (d > 1.0f && (ex * fx + ey * fy) < 0.17f * d) continue;
+        hp -= dmg; n++;
+        if (hp <= 0) { MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); }
+        else { MEM32(e + 0x2FC) = (uint32_t)hp; coop_hero_state(e, kind == 9u ? 2u : 5u); }
+        { static int k; if (k++ < 40) tt_dbg("[VS] P%d the Ent's blow on %s, %.1f away: %d, health %d\n", w + 1, coop_nm(e), d, dmg, hp); } }
+    (void)n;
+}
 void tt_vs_ent_box_weapon(int w, uint32_t wo)   /* (the weapons his attack boxes are made on) */
 {
     int i; if (w < 0 || w > 1 || strcmp(vs_skin_name(w), "ent")) return;
@@ -10533,7 +10558,7 @@ void sub_000BA020(void)
             if (pick) { static int n; if (n++ < 6) tt_dbg("[COOPWEAPON] player 2's attack box: his %08X in place of player 1's %08X '%s'\n", pick, a[1], coop_nm(a[1])); MEM32(esp + 8) = pick; a[1] = pick; }
         }
     }
-    if (tt_vs_on() && a[1] >= 0x10000u && a[1] < 0x84000000u && (a[0] == coop_first_char || (a[0] == coop_twin && a[0]))) { extern void tt_vs_ent_box_weapon(int w, uint32_t wo); tt_vs_ent_box_weapon(a[0] == coop_first_char ? 0 : 1, a[1]); }
+    if (tt_vs_on() && a[1] >= 0x10000u && a[1] < 0x84000000u && (a[0] == coop_first_char || (a[0] == coop_twin && a[0]))) { extern void tt_vs_ent_box_weapon(int w, uint32_t wo); extern void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind); tt_vs_ent_box_weapon(a[0] == coop_first_char ? 0 : 1, a[1]); tt_vs_ent_blow(a[0] == coop_first_char ? 0 : 1, (int32_t)a[2], a[3]); }
     sub_000BA020_gen();
     if (getenv("TT_COOP_BOXLOG") && eax >= 0x10000u && a[0] >= 0x10000u && (a[0] == coop_first_char || a[0] == coop_twin || a[0] == coop_p2)) { static int n; if (n++ < 40) tt_dbg("[COOPBOX] box %08X by %s (%08X) weapon %08X: mask %08X, +48 %08X +50 %08X\n", eax, a[0] == coop_first_char ? "P1" : "P2", a[0], a[1], MEM32(eax + 0x4C), MEM32(eax + 0x48), MEM32(eax + 0x50)); }   /* (research) */
     if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && a[0] < 0x84000000u && MEM32(a[0] + 0x114) == 3u) { extern void tt_vs_foe_box(uint32_t e); extern int tt_vs_round_live(void);
