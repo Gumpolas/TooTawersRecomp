@@ -17,7 +17,7 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-**Credits music:** for copyright reasons, the new credits songs the author recommends are not included in this release. There is a new `music` folder where two extra .wav files can be added for the credits, so the credits don't just loop one song ("Concerning Hobbits"). The two files must be named `credits2.wav` and `credits3.wav`, in lowercase (Linux and macOS go by case), as 16-bit PCM .wav. The author designed them to work best with two songs composed by Howard Shore:
+**2.0.0 Credits music:** for copyright reasons, the new credits songs the author recommends are not included in this release. There is a new `music` folder where two extra .wav files can be added for the credits, so the credits don't just loop one song ("Concerning Hobbits"). The two files must be named `credits2.wav` and `credits3.wav`, in lowercase (Linux and macOS go by case), as 16-bit PCM .wav. The author designed them to work best with two songs composed by Howard Shore:
 
 - `credits2.wav`: "The Road Goes Ever On..., Pt. 2 / In Dreams" (feat. Edward Ross), the last 3 minutes 11 seconds (skipping the first 30 seconds)
 - `credits3.wav`: "Rivendell", the first 1 minute 45 seconds
