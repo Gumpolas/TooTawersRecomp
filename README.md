@@ -162,24 +162,6 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 - Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
 - Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again. 
 
-## Linux: AppImage and PlayStation 3 controller install
-
-**If clicking the AppImage does nothing**, start it from a terminal in the folder that it is located in:
-
-```
-chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-```
-
-- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
-- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
-- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
-
-**PlayStation 3 controller (DualShock 3)**: the game requires and reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
-
-1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
-2. Start the game with the controller already connected and switched on.
-
 
 Known issues
 
@@ -266,6 +248,26 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 
 <img width="3840" height="2160" alt="Screenshot 2026-10-16 12-00-37" src="https://github.com/user-attachments/assets/11b96e05-570a-4d35-ad20-39f3a484b7af" />
 
+
+## Linux: AppImage and PlayStation 3 controller install
+
+**If clicking the AppImage does nothing**, start it from a terminal in the folder that it is located in:
+
+```
+chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+```
+
+- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
+- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
+- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
+
+**PlayStation 3 controller (DualShock 3)**: the game requires and reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
+
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Start the game with the controller already connected and switched on.
+
+
 ## Building from source
 
 The game's code is not included. You translate it from **your own copy** of the game, then compile it. Nothing leaves your machine.
@@ -301,3 +303,5 @@ The game's code is not included. You translate it from **your own copy** of the 
   It builds into `build-macos/TwoTowers-Recompiled`, with SDL2 copied into `lib`. Double-click `TwoTowers.command` there.
 
 **3. Play:** on first start the game asks for your disc image, or copy your extracted game into `game_files` beside the program.
+
+
