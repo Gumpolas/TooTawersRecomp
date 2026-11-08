@@ -3591,3 +3591,11 @@ menus.c (2.0.0)
     reaction, or by the die method 0x838E0, he stood in state 6 at 0
     health and nothing could hit him (a playtest). TT_VS_FOEDIEOLD: the
     die method.
+
+-- 2.0.1 ------------------------------------------------------------------------
+menus.c (2.0.1)
+  - Co-op (Volverine-Dude, pull request 18): the story's levels open again
+    once the game is finished -- a hero's completed level 11 (Hornburg
+    Courtyard) counts as well as 13 (the secret mission), for all heroes
+    1-4. Only 13 counted, so a game finished at the Courtyard kept every
+    level Already Beaten.

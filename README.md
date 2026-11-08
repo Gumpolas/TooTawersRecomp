@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v2.0.0
+# The Two Towers Recompiled v2.0.1
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,11 +8,11 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v2.0.0-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v2.0.0-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v2.0.0-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
+| `TwoTowers-Recompiled-v2.0.1-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v2.0.1-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
 | `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v2.0.0-source.zip` | Source code |
+| `TwoTowers-Recompiled-v2.0.1-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
@@ -34,6 +34,11 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
+
+## What's new in 2.0.1
+
+### Co-op fix, by [Volverine-Dude](https://github.com/Volverine-Dude) (PR #18)
+- **The story's levels open again once the game is finished:** completing the Hornburg Courtyard (level 11) now counts, as the secret mission did, by any hero. A finished game kept every level "Already Beaten" in co-op.
 
 ## What's new in 2.0.0
 
@@ -244,12 +249,12 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 **If clicking the AppImage does nothing**, start it from a terminal in the folder that it is located in:
 
 ```
-chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+chmod +x TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
 ```
 
-- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
-- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
+- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run`
+- `./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
 - Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
 
 **PlayStation 3 controller (DualShock 3)**: the game requires and reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
