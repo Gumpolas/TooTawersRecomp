@@ -22,7 +22,7 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - `credits2.wav`: "The Road Goes Ever On..., Pt. 2 / In Dreams" (feat. Edward Ross), the last 3 minutes 11 seconds (skipping the first 30 seconds)
 - `credits3.wav`: "Rivendell", the first 1 minute 45 seconds
 
-For copyright reasons, these are not included with 2.0.0 or any earlier or later release. For the complete experience, the author recommends buying copies of these two songs and editing them into `credits2.wav` and `credits3.wav`. Without them, the original credits song plays and loops as it always did.
+For copyright reasons, these are not included with 2.0.0 or any earlier or later release. For the complete experience, It is recommended to purchase copies of these two songs and edit them into`credits2.wav` and `credits3.wav`. Without them, the original credits song plays and loops as it always did.
 
 Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
