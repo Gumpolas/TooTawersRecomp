@@ -3537,3 +3537,14 @@ twotowers_manual.c, versus.c, options.c (2.0.0, Versus)
     his safe ground is where he is set (the camera looked at the last
     one's height, 40 units over him on Westfold). The safe ground counts
     under 35 frames a second too (its samples' window 1 s).
+  - Fix: the Versus map's edge (a step off the walkable ground undone)
+    kept its "was on walkable ground" from the last arena: on the Orthanc
+    Summit, which has no walkable-ground maps at all, every step was then
+    undone -- both heroes ran on the spot at their starts until the game
+    was restarted (a playtest log: a Westfold match, then the Summit). It
+    starts afresh with each arena and each round now.
+  - Fix: the stuck-hero net's times (now | 1, a millisecond ahead on even
+    milliseconds) were compared unsigned: they wrapped, and its three steps
+    ran at once on any hero pushing the stick -- a flinch out of nowhere
+    while walking (a playtest: "invisible damage ... they flinch as if they
+    just walked through fire"). Signed now; likewise the bomb hits' times.

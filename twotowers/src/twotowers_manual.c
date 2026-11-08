@@ -6402,7 +6402,7 @@ void tt_vs_bomb_hit(uint32_t o, int who) { unsigned k = vs_bomb_hit_i++ & 15u; v
 static int vs_bomb_by(uint32_t o)   /* who set it off: the last hero's hit on it, within 3 s; else a blast's that reached it */
 {
     int k, by = -1; uint32_t bt = 0, now = coop_now();
-    for (k = 0; k < 16; k++) if (vs_bomb_hits[k].o == o && vs_bomb_hits[k].t && now - vs_bomb_hits[k].t < 3000u && vs_bomb_hits[k].t >= bt) { bt = vs_bomb_hits[k].t; by = vs_bomb_hits[k].who; }
+    for (k = 0; k < 16; k++) if (vs_bomb_hits[k].o == o && vs_bomb_hits[k].t && (int32_t)(now - vs_bomb_hits[k].t) < 3000 && vs_bomb_hits[k].t >= bt) { bt = vs_bomb_hits[k].t; by = vs_bomb_hits[k].who; }
     return by;
 }
 static void vs_blast(int k, uint32_t now)
@@ -7523,10 +7523,12 @@ static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(g
  * them further apart is undone for whoever made it (both, if both did) */
 static void vs_leash(void)
 {
-    static float px[2], py[2]; static unsigned lvl = ~0u; float R = getenv("TT_VS_LEASH") ? (float)atof(getenv("TT_VS_LEASH")) : 48.0f, s1, s0;   /* (1.9.9: 48, the heroes start 42 apart; 1.9.7: 36) */
+    static float px[2], py[2]; static unsigned lvl = ~0u; static int was_walk[2]; float R = getenv("TT_VS_LEASH") ? (float)atof(getenv("TT_VS_LEASH")) : 48.0f, s1, s0;   /* (1.9.9: 48, the heroes start 42 apart; 1.9.7: 36) */
     uint32_t h[2] = { coop_first_char, coop_p2 }; int w;
     if (h[0] < 0x10000u || h[1] < 0x10000u) return;
-    if (lvl != coop_level_n || vs_state == 3) { lvl = coop_level_n; for (w = 0; w < 2; w++) { px[w] = MEMF(h[w] + 0xF0); py[w] = MEMF(h[w] + 0xF4); } return; }
+    if (lvl != coop_level_n || vs_state == 3) { lvl = coop_level_n; for (w = 0; w < 2; w++) { px[w] = MEMF(h[w] + 0xF0); py[w] = MEMF(h[w] + 0xF4); was_walk[w] = 0; } return; }   /* (2.0.0: was_walk too -- left at 1 from
+        * the last arena, on the Orthanc Summit (no pathmaps: never walkable) every step was undone: both heroes ran on the spot at their starts, a
+        * playtest: "players still getting stuck while spawning in Orthanc Summit ... only restarting the game fixes it") */
     if (getenv("TT_VS_POSLOG")) { static uint32_t tp; if (coop_now() - tp > 300u) { tp = coop_now(); tt_dbg("[POS] P1 %.1f %.1f %.1f st %u | P2 %.1f %.1f %.1f\n", MEMF(h[0] + 0xF0), MEMF(h[0] + 0xF4), MEMF(h[0] + 0xF8), MEM32(h[0] + 0x408), MEMF(h[1] + 0xF0), MEMF(h[1] + 0xF4), MEMF(h[1] + 0xF8)); } }
     s1 = sqrtf((MEMF(h[0] + 0xF0) - MEMF(h[1] + 0xF0)) * (MEMF(h[0] + 0xF0) - MEMF(h[1] + 0xF0)) + (MEMF(h[0] + 0xF4) - MEMF(h[1] + 0xF4)) * (MEMF(h[0] + 0xF4) - MEMF(h[1] + 0xF4)));
     s0 = sqrtf((px[0] - px[1]) * (px[0] - px[1]) + (py[0] - py[1]) * (py[0] - py[1]));
@@ -7537,7 +7539,6 @@ static void vs_leash(void)
     {   /* (1.9.7) the map's edge: a hero stepping off the level's walkable ground (its pathmap: no cell, or one that is not
          * walkable, after a walkable one) is stopped there -- the campaign keeps its heroes in with gates and scripts; past
          * them the ground stops at a brown wall the heroes walked into and were lost in (Amon Hen). TT_VS_NOMAPWALL */
-        static int was_walk[2];
         if (vs_have) for (w = 0; w < 2; w++) {   /* (1.9.9: by every pathmap over the spot -- the hero's own alone held player 1 where two met --, for both
             * heroes: player 2 is not held by the pathmaps at all and walked off the map, a playtest: "don't allow a player to just walk out of
             * the boundaries of the map") */
@@ -7866,14 +7867,15 @@ static void vs_frame(void)
                 for (i = 0; i < coop_nchars && !busy; i++) { uint32_t e = coop_chars[i]; float ex, ey;
                     if (e == h || e == o2 || MEM32(e + 0x114) != 3u || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
                     ex = MEMF(e + 0xF0) - MEMF(h + 0xF0); ey = MEMF(e + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < 25.0f) busy = 1; }
-                if (o2 >= 0x10000u && vs_atk_t[w2 ^ 1] && now - vs_atk_t[w2 ^ 1] < 2000u) { float ex = MEMF(o2 + 0xF0) - MEMF(h + 0xF0), ey = MEMF(o2 + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < 16.0f) busy = 1; }
-                if (vs_atk_t[w2] && now - vs_atk_t[w2] < 2000u) busy = 1;
+                if (o2 >= 0x10000u && vs_atk_t[w2 ^ 1] && (int32_t)(now - vs_atk_t[w2 ^ 1]) < 2000) { float ex = MEMF(o2 + 0xF0) - MEMF(h + 0xF0), ey = MEMF(o2 + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < 16.0f) busy = 1; }
+                if (vs_atk_t[w2] && (int32_t)(now - vs_atk_t[w2]) < 2000) busy = 1;
                 if (t0[w2] && MEM32(h + 0x408) != st0[w2]) busy = 1;
             }
-            if (rest[w2] && now - rest[w2] < 15000u) busy = 1;   /* (after the three steps: 15 s before it may try again -- pushing into a wall is no fault) */
+            if (rest[w2] && (int32_t)(now - rest[w2]) < 15000) busy = 1;   /* (after the three steps: 15 s before it may try again -- pushing into a wall is no fault) */
             if (h < 0x10000u || !vs_have || vs_state != 0 || coop_down[w2] || !push || busy || dx * dx + dy * dy > 0.04f) { t0[w2] = 0; step[w2] = 0; lx[w2] = MEMF(h + 0xF0); ly[w2] = MEMF(h + 0xF4); continue; }
             if (!t0[w2]) { t0[w2] = now | 1u; st0[w2] = MEM32(h + 0x408); continue; }
-            if (now - t0[w2] > 2500u + 1000u * step[w2] && step[w2] < 3) {
+            if ((int32_t)(now - t0[w2]) > 2500 + 1000 * (int32_t)step[w2] && step[w2] < 3) {   /* (2.0.0: signed -- t0 is now | 1, a millisecond ahead on even ones: unsigned it wrapped and all
+                * three steps ran at once, a flinch out of nowhere, a playtest: "taking some invisible damage while walking ... they flinch") */
                 uint32_t b = MEM32(h + 0x494), st = MEM32(h + 0x408); int k;
                 for (k = 0; k < 3; k++) { uint32_t v = MEM32(h + 0xF0 + 4 * k); MEM32(h + 0x90 + 4 * k) = MEM32(h + 0x130 + 4 * k) = MEM32(h + 0x140 + 4 * k) = MEM32(h + 0x628 + 4 * k) = v; if (b >= 0x80000000u && b < 0x84000000u) MEM32(b + 0xE8 + 4 * k) = v; }
                 {   uint32_t hp0 = MEM32(h + 0x2FC);   /* (INP_TAKEDAMAGE takes its health as a blow would: kept) */
