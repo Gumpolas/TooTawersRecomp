@@ -1,7 +1,5 @@
 # Couch co-op/Versus modes for The Two Towers Recompiled
 
-** Co-op is not fully playable with the extra heroes mod. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's. Some HUD elements might not show correctly with the extra heros as well (Sauron as player 2 shows his ammo hud for both players)
-
 ** Cave troll battles and Versus only/exclusive modes and hero's require the extra hero's mod to be enabled. Some crashes may occur during a versus match after playing multiple versus matches in a row. 
 
 ** Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the co op save screen or the correct versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start". **
@@ -157,21 +155,8 @@ with addresses and evidence:
 The `TT_COOP_*` environment variables set up test situations (each one is described where the code reads it).
 
 ## Known issues
-
-- Head markers are dimmed, not hidden, behind walls (the depth test can't tell a wall from an orc in front of the
-  head), and only in the Direct3D 11 renderer (OpenGL, Vulkan, Linux and macOS: never dimmed).
-- The P2 Bot's attacks don't land on the Watcher's tentacles in bot runs (neither do player 1's there), so how the
-  bot should win that fight is still open.
-- An arrow that would kill an enemy whose state ignores the hit leaves it at 1 health with the blow still pending: it
-  dies by the game's own death when its state takes the blow, or at the next hit *(1.9.8; before, it was set to 0 and
-  could stand up again, unkillable)*.
-- Player 2 as Aragorn, Legolas or Gimli moves with the animation machine of a companion of his hero when the level has
-  one, else with player 1's: in a level without one (Fangorn Forest, the Westfold) his attacks and shots keep player 1's
-  hero's pace.
-- Player 2's controller doesn't rumble yet.
-- A hobbit guest's marker height is a guess; 4:3 screens are unchecked.
-- The bot tests drive player 2 with scripted pads; a second physical controller is not covered by them.
-- Co-op is not fully playable with the extra heroes mod. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's. Some HUD elements might not show correctly with the extra heros as well (Sauron as player 2 shows his ammo hud for both players)
+- The ECTS 2002 mod is not currently compatible/does not show properly in co-op. 
+- Some HUD elements might not show correctly with the extra heros (Sauron as player 2 shows his ammo hud for both players)
 - Singleplayer/Co-op: Singleplayer is entirely unaffected by co op or versus mode except for the co op setting for double pickups. If the setting is enabled in the co op setting, it also applies in singleplayer. It is recommended to disable the setting while playing the base game, unless you prefer to have more health pickups.
 - Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
 - Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again.
