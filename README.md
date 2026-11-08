@@ -162,9 +162,9 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 - Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
 - Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again. 
 
-## Linux: the AppImage and a PlayStation 3 controller
+## Linux: AppImage and PlayStation 3 controller install
 
-**If clicking the AppImage does nothing**, start it from a terminal in the folder it is in:
+**If clicking the AppImage does nothing**, start it from a terminal in the folder that it is located in:
 
 ```
 chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
