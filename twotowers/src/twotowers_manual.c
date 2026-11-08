@@ -6315,6 +6315,18 @@ void tt_vs_swing(int who, int dmg)
 }
 /* (1.9.7) a blow judged here (or an arrow of ours) lands with the game's own sound of a hit at the victim: the last
  * flesh hit the game played this session (0x000C3B90 from 0x85340, kept by its hook), else TT_VS_HITSND (default 0x35) */
+/* (2.0.0) an enemy felled by a blow or a blast judged here: health 0 and the character's own die method (vtable slot 36, 0x838E0),
+ * as the game's hits end him -- his death, his fall, his sounds, out of the fight */
+static void vs_foe_die(uint32_t e)   /* (2.0.0) an enemy felled by our own blow: health 0 and INP_DIE (1), the game's death as a hit
+                                      * of a hero's gives it (6, then the dead state with its +0x110 0x20 off, out of the fight); the die
+                                      * method 0x838E0 left them in 6, standing, a playtest */
+{
+    uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx;
+    if (e < 0x10000u || e >= 0x84000000u) return;
+    MEM32(e + 0x2FC) = 0;
+    if (getenv("TT_VS_FOEDIEOLD")) tt_gcall(0x000838E0u, e, 0, NULL); else coop_hero_state(e, 1u);
+    esp = sp; eax = r0; ecx = r1; edx = r2;
+}
 static uint32_t vs_imp_v[8], vs_imp_t[8]; static unsigned vs_imp_i;
 static int vs_impact_recent(uint32_t v) { int k; for (k = 0; k < 8; k++) if (vs_imp_v[k] == v && vs_imp_t[k] && (int32_t)(coop_now() - vs_imp_t[k]) < 300) return 1; return 0; }
 static void vs_impact(uint32_t victim)
@@ -6451,7 +6463,7 @@ static void vs_blast(int k, uint32_t now)
         if (dx * dx + dy * dy + dz * dz * 0.5f >= R * R) continue;
         mx = (int32_t)MEM32(e + 0x300); if (mx < hp) mx = hp;
         hp -= mx * 6 / 10 + 1;
-        if (hp <= 0) { MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); } else { MEM32(e + 0x2FC) = (uint32_t)hp; coop_hero_state(e, 2u); }
+        if (hp <= 0) vs_foe_die(e); else { MEM32(e + 0x2FC) = (uint32_t)hp; coop_hero_state(e, 2u); }
         tt_dbg("[VSBOMB]   enemy %s: health %d\n", coop_nm(e), hp);
     }
 }
@@ -7695,7 +7707,7 @@ void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind)
         }
         hp -= dmg; n++;
         vs_impact(e);
-        if (hp <= 0) { MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); }
+        if (hp <= 0) vs_foe_die(e);   /* (2.0.0: the game's own death -- set to 0 with a hit reaction he stood on, unharmed by anything after, a playtest) */
         else { MEM32(e + 0x2FC) = (uint32_t)hp; coop_hero_state(e, kind == 9u ? 2u : 5u); }
         { static int k; if (k++ < 40) tt_dbg("[VS] P%d the Ent's blow on %s, %.1f away: %d, health %d\n", w + 1, coop_nm(e), d, dmg, hp); } }
     (void)n;
@@ -8266,6 +8278,12 @@ static void vs_frame(void)
     vs_shots_due(now);
     vs_swings_due(now);
     vs_bombs(now);
+    if (getenv("TT_VS_FOEDIETEST") && atoi(getenv("TT_VS_FOEDIETEST")) == 1 && vs_state == 0 && now - vs_round_t0 > 3000u) { static int done; int i; if (!done) { done = 1;   /* (test: vs_foe_die on the two nearest player 1) */
+            for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; float dx, dy; if (e == coop_first_char || e == coop_p2 || MEM32(e + 0x114) != 3u || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
+                dx = MEMF(e + 0xF0) - MEMF(coop_first_char + 0xF0); dy = MEMF(e + 0xF4) - MEMF(coop_first_char + 0xF4); if (dx * dx + dy * dy > 400.0f) continue;
+                vs_foe_die(e); tt_dbg("[VS] test: %s felled, state %u\n", coop_nm(e), MEM32(e + 0x408)); } } }
+    if (getenv("TT_VS_FOEHP1") && vs_state == 0 && now - vs_round_t0 > 2000u) { static int done; int i; if (!done) { done = 1; for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e != coop_first_char && e != coop_p2 && MEM32(e + 0x114) == 3u && (int32_t)MEM32(e + 0x2FC) > 0) MEM32(e + 0x2FC) = 1; } } }   /* (test) */
+    if (getenv("TT_VS_FOEDIETEST")) { static uint32_t tl; int i; if (now - tl > 1500u) { tl = now; for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e != coop_first_char && e != coop_p2 && MEM32(e + 0x114) == 3u && (int32_t)MEM32(e + 0x2FC) <= 0) tt_dbg("[VS] test: %s hp %d state %u +110 %08X\n", coop_nm(e), (int)MEM32(e + 0x2FC), MEM32(e + 0x408), MEM32(e + 0x110)); } } }
     if (!getenv("TT_VS_NOFOEHITSND")) {   /* (2.0.0) an enemy's health dropping (any blow, any shot): the hit's sound at him, through the port's
          * mixer -- in Versus none was heard (a playtest: "no sounds when you hit them"). Not twice for one blow (vs_impact_recent) */
         static uint32_t fe[64]; static int32_t fh[64]; static unsigned flv = ~0u; int i, k;

@@ -3585,3 +3585,9 @@ menus.c (2.0.0)
   - The Ent's judged blow on an enemy holding a shield (his weapon that
     breaks, +0x5EC bit 1) is the game's own hit on the shield (0x91920):
     it breaks as in the campaign, the blow taken by it, with the clang.
+  - An enemy felled by the Ent's judged blow (or a barrel's blast) dies as
+    by a hero's hit: health 0 and INP_DIE (1), the game's death states
+    (6, then the dead state, +0x110 0x20 off). Set to 0 with a hit
+    reaction, or by the die method 0x838E0, he stood in state 6 at 0
+    health and nothing could hit him (a playtest). TT_VS_FOEDIEOLD: the
+    die method.
