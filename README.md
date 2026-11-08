@@ -26,27 +26,6 @@ For copyright reasons, these are not included with 2.0.0 or any earlier or later
 
 Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
-## Linux: the AppImage and a PlayStation 3 controller
-
-**If clicking the AppImage does nothing**, start it from a terminal in the folder it is in:
-
-```
-chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-```
-
-- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
-- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
-- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
-
-**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
-
-1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
-2. Load the joystick driver: `sudo modprobe joydev`. To have it load at every start: `echo joydev | sudo tee /etc/modules-load.d/joydev.conf`
-3. Plug the controller in by USB (for Bluetooth, pair it first) and press its **PS button**.
-4. Test it: `jstest /dev/input/js0`. Press buttons and move the sticks: the numbers should change (Ctrl+C to stop). If there is no `js0`, look with `ls /dev/input/js*` and use the number shown.
-5. If it says "Permission denied": `sudo usermod -aG input $USER`, then log out and back in.
-6. Start the game with the controller already connected and switched on.
 
 ## What the port adds
 
@@ -67,7 +46,7 @@ chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
 
 ## What's new in 2.0.0
 
-### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
+### Co-op fixes, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
 
 - **Player 2's own character:** his own stats, damage and turning, his own combo meter and Perfect; his health upgrades, sword segments and upgraded arrows count. His heavy blows break shields.
 - **Player 2's aim:** his lock holds and no longer blinks, he turns to it while aiming, and he can lock the **cave troll**.
@@ -113,7 +92,7 @@ chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
 ## Known issues (2.0.0)
 - In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
 
-## What's new in 1.9.9
+## What 1.9.9 added
 
 ### The128ReBits' improvements
 Made possible by [The128ReBits](https://github.com/The128ReBits).
@@ -184,91 +163,27 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 - Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
 - Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again. 
 
-## What's new in 1.9.8
+## Linux: the AppImage and a PlayStation 3 controller
 
-### Co-op fixes
+**If clicking the AppImage does nothing**, start it from a terminal in the folder it is in:
 
-- **Player 2's own buttons:** Options > Co-op Options > **P2 Controls**.
-- **Aiming:** while a player holds LT, a dot over the enemy his lock is on (player 1 blue, player 2 amber). Arrows and thrown axes fly through allies and every hit counts.
-- **P2 bot improvements:** it follows the levels' paths, keeps with the group and takes enemies in order.
-- **Menus:** every controller works in the front-end menus;
-- **Extra heroes as player 2** are built and drawn in every level (before, certain extra heros would be missing in Fangorn Forest, and certain things would be unbreakable. Extra hero's (Sauron) would also sometimes be missing in the Westfold and with player 1 as Legolas), and their ranged blows wouldn't land. 
-- **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts properly.
+```
+chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
+```
 
-### Fixes
-- **Sound after a long session:** music, cut scene voices and some effects no longer go silent some forty minutes in.
-- **Language support for co op and Versus menus
-- **Ultra textures** no longer drop off the menus' text at times.
+- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
+- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
+- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
 
-### Known issues (1.9.8)
-- Legolas can sometimes be unable to attack or gather fire on his torch during the Weathertop level in Co-Op
-- Player 2's controller doesn't rumble yet.
+**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
 
-## Tested (1.9.8)
-- Linux (OpenGL): co-op bot runs in the Westfold, Fangorn Forest and Balin's Tomb with extra and retail heroes as player 2.
-- Windows: Played by hand on the author's PC.
-- Windows, Linux and macOS builds compile.
-- Not tested: the macOS build on a Mac.
-
-## What 1.9.7 added
-
-### Versus mode
-Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
-
-- **Arenas:** every level: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, Westfold (its bomb stacks and carts explode, hit by a blow or a shot, and hurt whoever stands near), the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
-- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only exclusive hero's added: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. 
-- **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
-- **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
-- **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
-- **Devices:** as for co-op (Options > Co-op Options > P1 Device / P2 Device). With P2 Bot on, the game fights player 1.
-- **Its own menu background, results screen and sounds** in the `versus` folder (`menu_bg.bmp`, `results_bg.bmp`, `fight.wav`, `match_win.wav`); add `round_win.wav` for a round won, or replace any of them with your own.
-
-See `COOP.md` for the details.
-
-### Also new
-- **Achievements:** 47, for the story and for Versus, noted in the corner as you earn them and listed on the F10 panel's **Achievements** page. They're kept in `achievements.txt`, only on your PC.
-- **Impossible difficulty:** past Expert, any enemy's second blow fells you. It's right of Expert on the New Game's difficulty screen, or in Options > General Options, and works in co-op too.
-- **F10 > More:** colour grading (Cinema, Rich, Shadow) and its amount, movie sharpness, pause or mute while the window is in the background, and achievements on or off.
-- **F9** hides the HUD; **F8** (or F12, Print Screen) saves a screenshot in the `Screenshots` folder beside the game.
-
-### Co-op
-- **Camera:** playing the levels with Camera Zoom (Options > Co-op Options) on **Normal** or **Wide** is recommended, so both heroes stay in view.
-
-### Fixes
-- **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 60 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
-- **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
-  
-## Tested (1.9.7)
-- Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left.
-- Windows: Versus played by hand on the author's PC.
-- Windows, Linux and macOS builds compile.
-- Not tested: the macOS build on a Mac.
-
-## What 1.9.6 added
-
-### Couch co-op (alpha)
-Co-op was in development for the main port when [Volverine-Dude](https://github.com/Volverine-Dude) published their own implementation in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork. 1.9.6 brings the two efforts together on top of 1.9.5, and this release is thanks in large part to their work. Thank you!
-
-- **Two players on one PC** play the story levels together on one shared camera. Each has their own hero, controller, weapons, health, ammo, experience and upgrades.
-- **Starting:** Main menu > **Co-op** > New Game or Load Game; then each player picks a hero (player 2 can't take player 1's).
-- **A hero who goes down** comes back beside the other after a wait. Both down is a game over.
-- **After a level:** each player's stats and shop in turn, then the save. Player 2's experience and purchases are saved with his hero.
-- **Co-op Options** (Options, and the pause menu in a co-op game): Difficulty (Easy, Normal, Expert), Player Icons ("P1" / "P2" over the heroes), Camera Zoom (the camera zooms out as the heroes part), P2 Teleport, and P2 Bot (the game plays player 2).
-- **New in this release, on top of the fork:**
-  - **Each player's device** (Options > Co-op Options > P1 Device / P2 Device): Automatic, Keyboard & Mouse, or any controller connected. With one controller, player 1 takes the keyboard and mouse and player 2 the controller; with two, one each. The mouse steers and aims only for the keyboard's player.
-  - **Pickups: Double** (default): each hero can take a health or ammo pickup once.
-  - Co-op support for Linux and macOS (experimental) (settings for those platforms were not read there).
-
-See `COOP.md` for the details.
-
-### Fixes
-- **Upgrade screen at high frame rates:** the points count down at the same speed at any frame rate. Above 60 fps the count, and the purchase sound playing with it, were cut short.
-
-## Tested (1.9.6)
- Windows: couch co-op played/tested through the first seven levels and Tower of Orthanc.
-- Linux (OpenGL): co-op in Weathertop and Balin's Tomb with the P2 Bot and with scripted input for player 2 -- both heroes, the P1/P2 markers and the two-player HUD; player 2 on the keyboard (port 2) while player 1 stays still; Double pickups (player 2 refilled twice from one pickup); the Co-op Options page with the new rows.
-- Windows, Linux and macOS builds compile.
-- Not tested by hand: a second physical controller, Windows play, the macOS build on a Mac.
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Load the joystick driver: `sudo modprobe joydev`. To have it load at every start: `echo joydev | sudo tee /etc/modules-load.d/joydev.conf`
+3. Plug the controller in by USB (for Bluetooth, pair it first) and press its **PS button**.
+4. Test it: `jstest /dev/input/js0`. Press buttons and move the sticks: the numbers should change (Ctrl+C to stop). If there is no `js0`, look with `ls /dev/input/js*` and use the number shown.
+5. If it says "Permission denied": `sudo usermod -aG input $USER`, then log out and back in.
+6. Start the game with the controller already connected and switched on.
 
 
 Known issues
