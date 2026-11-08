@@ -3473,3 +3473,11 @@ kernel/nv2a_gl.inc (2.0.0, the OpenGL renderer: Linux; macOS from its next build
     too. RECOMP_SHADOW_R=0: as the game draws them; TT_SHLOG: the repairs.
   - The driver's own GL errors and warnings in the log as [GLDEBUG] lines
     (TT_GLDEBUG=0: off, 2: synchronous).
+  - The uniform ring (shader constants) given a fresh store when it fills:
+    the blocks bound in the old store -- sent only when they change (the
+    vertex program's and the combiner's constants) -- were then read from
+    the fresh one, whose contents are undefined. Mesa kept the old data
+    there; NVIDIA's driver does not, and on Linux surfaces flickered grey
+    and broke into flat patches, most when paused. Every block bound before
+    is now sent again into the fresh store. RECOMP_GL_RINGTEST=1: small
+    rings filled with garbage when renewed (=2: without the fix), to test.

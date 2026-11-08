@@ -126,6 +126,7 @@ extern void xbox_FramebufferSetGpuOwned(int on);
     X(void, DrawArrays, (GLenum, GLint, GLsizei)) \
     X(void, DrawElementsBaseVertex, (GLenum, GLsizei, GLenum, const void *, GLint)) \
     X(void, GenRenderbuffers, (GLsizei, GLuint *)) \
+    X(void, GetRenderbufferParameteriv, (GLenum, GLenum, GLint *)) \
     X(void, DeleteRenderbuffers, (GLsizei, const GLuint *)) \
     X(void, BindRenderbuffer, (GLenum, GLuint)) \
     X(void, RenderbufferStorageMultisample, (GLenum, GLsizei, GLenum, GLsizei, GLsizei)) \
@@ -220,6 +221,7 @@ static void (APIENTRY *p_glMaxShaderCompilerThreadsKHR)(GLuint);
 #define glDrawArrays p_glDrawArrays
 #define glDrawElementsBaseVertex p_glDrawElementsBaseVertex
 #define glGenRenderbuffers p_glGenRenderbuffers
+#define glGetRenderbufferParameteriv p_glGetRenderbufferParameteriv
 #define glDeleteRenderbuffers p_glDeleteRenderbuffers
 #define glBindRenderbuffer p_glBindRenderbuffer
 #define glRenderbufferStorageMultisample p_glRenderbufferStorageMultisample
@@ -345,21 +347,37 @@ typedef struct { GLuint buf; GLenum target; uint32_t cap, pos; } GRing;
 static GRing g_rvb = { 0, GL_ARRAY_BUFFER, 0, 0 }, g_rvbx = { 0, GL_ARRAY_BUFFER, 0, 0 };
 static GRing g_rib = { 0, GL_ELEMENT_ARRAY_BUFFER, 0, 0 }, g_rub = { 0, GL_UNIFORM_BUFFER, 0, 0 };
 static GLint g_ubo_align = 256;
+static int g_rub_fresh;   /* (2.0.0) the uniform ring was given a fresh store: the blocks bound in the old one sent again */
+/* (2.0.0) testing: RECOMP_GL_RINGTEST=1 -- small rings, and a fresh store filled with garbage (as a driver may give
+ * it), so a draw that still reads what was in the old store shows it at once; =2: also as before 2.0.0 (the blocks not
+ * sent again), to see the difference */
+static int g_ringtest = -1;
+static void gpu_ring_fresh(GRing *r)
+{
+    glBufferData(r->target, r->cap, NULL, GL_STREAM_DRAW);
+    if (r == &g_rub) g_rub_fresh = 1;
+    if (g_ringtest > 0) {
+        void *p = glMapBufferRange(r->target, 0, r->cap, GL_MAP_WRITE_BIT);
+        if (p) { memset(p, 0x7B, r->cap); glUnmapBuffer(r->target); }
+    }
+}
 static uint32_t gpu_ring(GRing *r, const void *data, uint32_t bytes, uint32_t align)
 {
     uint32_t at;
     void *p;
+    if (g_ringtest < 0) { const char *e = getenv("RECOMP_GL_RINGTEST"); g_ringtest = e ? (atoi(e) == 2 ? 2 : 1) : 0; }
     if (!r->buf || r->cap < bytes) {
+        uint32_t min = g_ringtest > 0 ? (64u << 10) : (8u << 20);
         if (!r->buf) glGenBuffers(1, &r->buf);
-        r->cap = bytes < (8u << 20) ? (8u << 20) : bytes * 2;
+        r->cap = bytes < min ? min : bytes * 2;
         glBindBuffer(r->target, r->buf);
-        glBufferData(r->target, r->cap, NULL, GL_STREAM_DRAW);
+        gpu_ring_fresh(r);
         r->pos = r->cap;
     } else glBindBuffer(r->target, r->buf);
     if (!align) align = 1;
     at = (r->pos + align - 1) / align * align;
     if (at + bytes > r->cap) {
-        glBufferData(r->target, r->cap, NULL, GL_STREAM_DRAW);   /* a fresh store */
+        gpu_ring_fresh(r);   /* a fresh store */
         at = 0;
     }
     p = glMapBufferRange(r->target, at, bytes, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT);
@@ -370,11 +388,39 @@ static uint32_t gpu_ring(GRing *r, const void *data, uint32_t bytes, uint32_t al
     return at;
 }
 
-/* a uniform block's data, bound at its binding point */
+/* a uniform block's data, bound at its binding point.
+ * (2.0.0) Each binding's last data is kept: the blocks are bound by range in the ring, and when the ring is given a
+ * fresh store (glBufferData) a binding made before still names the buffer -- but its range now holds whatever the new
+ * store holds. The draw paths send a block only when its data changed (the vertex program's and the combiner's
+ * constants, the viewport's), so a block bound before the ring wrapped was read from the fresh store: undefined. Mesa
+ * happened to keep the old contents there; NVIDIA's driver does not, and surfaces flickered grey and jumped, most
+ * when paused (the constants unchanged the longest). Now every block bound before is sent again into the fresh store. */
+#define UB_N 5
+#define UB_KEEP (192 * 16)
+static unsigned char g_ub_last[UB_N][UB_KEEP];
+static uint32_t g_ub_len[UB_N];
 static void gpu_ub(int binding, const void *data, uint32_t bytes)
 {
     uint32_t at = gpu_ring(&g_rub, data, bytes, (uint32_t)g_ubo_align);
     if (at != 0xFFFFFFFFu) glBindBufferRange(GL_UNIFORM_BUFFER, (GLuint)binding, g_rub.buf, at, bytes);
+    if (binding >= 0 && binding < UB_N) {
+        if (bytes <= UB_KEEP) { memcpy(g_ub_last[binding], data, bytes); g_ub_len[binding] = bytes; }
+        else g_ub_len[binding] = 0;
+    }
+    {
+        int skip = binding, b;   /* (this one is in the fresh store already) */
+        if (g_ringtest == 2) g_rub_fresh = 0;
+        while (g_rub_fresh) {
+            g_rub_fresh = 0;
+            for (b = 0; b < UB_N; b++) {
+                uint32_t a2;
+                if (b == skip || !g_ub_len[b]) continue;
+                a2 = gpu_ring(&g_rub, g_ub_last[b], g_ub_len[b], (uint32_t)g_ubo_align);
+                if (a2 != 0xFFFFFFFFu) glBindBufferRange(GL_UNIFORM_BUFFER, (GLuint)b, g_rub.buf, a2, g_ub_len[b]);
+                if (g_rub_fresh) { skip = b; break; }   /* (wrapped again: every other one again) */
+            }
+        }
+    }
 }
 
 /* ---------------- surfaces ---------------- */
@@ -1444,7 +1490,7 @@ static void APIENTRY gl_debug_cb(GLenum src, GLenum type, GLuint id, GLenum sev,
     static GLuint seen[256]; static unsigned nseen, total;
     unsigned i;
     (void)src; (void)len; (void)u;
-    if (sev == 0x826B /* NOTIFICATION */ || total >= 400) return;
+    if (sev == 0x826B /* NOTIFICATION */ || (sev == 0x9148 /* LOW */ && type != 0x824C /* ERROR */) || total >= 400) return;
     for (i = 0; i < nseen; i++) if (seen[i] == id) return;
     if (nseen < 256) seen[nseen++] = id;
     total++;
@@ -1471,14 +1517,17 @@ static int gpu_init(void)
     glGetIntegerv(GL_MINOR_VERSION, &mnr);
     fprintf(stderr, "  [GL] %s / %s / OpenGL %s\n", (const char *)glGetString(GL_VENDOR),
             (const char *)glGetString(GL_RENDERER), (const char *)glGetString(GL_VERSION));
-    {   /* (2.0.0) TT_GLDEBUG=1: the driver's own errors and warnings in the log, as [GLDEBUG] lines */
+    {   /* (2.0.0) the driver's own errors and warnings in the log, as [GLDEBUG] lines */
         typedef void (APIENTRY *dbgcb_t)(GLenum, GLenum, GLuint, GLenum, GLsizei, const GLchar *, const void *);
         typedef void (APIENTRY *dbgset_t)(dbgcb_t, const void *);
-        dbgset_t set = getenv("TT_GLDEBUG") ? (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallback") : NULL;
-        if (!set && getenv("TT_GLDEBUG")) set = (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallbackARB");
+        /* on by default (the driver's errors cost nothing when there are none); TT_GLDEBUG=0: off, =2: synchronous */
+        const char *dv = getenv("TT_GLDEBUG");
+        int dm = dv ? atoi(dv) : 1;
+        dbgset_t set = dm ? (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallback") : NULL;
+        if (!set && dm) set = (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallbackARB");
         if (set) {
             glEnable(0x92E0 /* GL_DEBUG_OUTPUT */);
-            glEnable(0x8242 /* GL_DEBUG_OUTPUT_SYNCHRONOUS */);
+            if (dm >= 2) glEnable(0x8242 /* GL_DEBUG_OUTPUT_SYNCHRONOUS */);
             set(gl_debug_cb, NULL);
             fprintf(stderr, "  [GLDEBUG] on\n");
         }
@@ -2568,9 +2617,8 @@ static void gpu_use(GLuint prog)
  * there (dilated, then eroded, one axis at a time), and where the closed mask
  * covers a pixel the shadow missed the stencil is set (and the shadow's
  * strength put in the alpha). The game's passes then darken as before.
- * Not with MSAA (the targets are multisampled renderbuffers then: left as
- * drawn). RECOMP_SHADOW_R=0: as the game draws them; TT_SHLOG: the repairs. */
-static GLuint g_shm_tex[3], g_shm_w, g_shm_h, g_shm_d;
+ * With MSAA the mask is made at the targets' samples and resolved. RECOMP_SHADOW_R=0: as the game draws them; TT_SHLOG: the repairs. */
+static GLuint g_shm_tex[3], g_shm_w, g_shm_h, g_shm_d, g_shm_mrb, g_shm_mw, g_shm_mh; static GLint g_shm_mn;
 static GLuint g_pr_sh[5];          /* one, down, dilate, erode, fill */
 static GLint g_loc_sh_ys[5], g_loc_sh_p[5];
 static int g_sh_pending, g_sh_skipping, g_sh_bad;
@@ -2655,22 +2703,46 @@ static void shm_pass(int k, GLuint fbo, GLuint w, GLuint h)
     if (g_loc_sh_ys[k] >= 0) glUniform1f(g_loc_sh_ys[k], 1.0f);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+/* (MSAA) the mask's multisampled renderbuffer, as many samples as the picture's */
+static int shm_make_ms(GLuint w, GLuint h, GLint n)
+{
+    if (g_shm_mrb && g_shm_mw == w && g_shm_mh == h && g_shm_mn == n) return 1;
+    if (g_shm_mrb) { gpu_fbo_ms_forget(g_shm_mrb); glDeleteRenderbuffers(1, &g_shm_mrb); g_shm_mrb = 0; }
+    while (glGetError() != GL_NO_ERROR) {}
+    glGenRenderbuffers(1, &g_shm_mrb);
+    glBindRenderbuffer(GL_RENDERBUFFER, g_shm_mrb);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, n, GL_R8, (GLsizei)w, (GLsizei)h);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    if (glGetError() != GL_NO_ERROR) { glDeleteRenderbuffers(1, &g_shm_mrb); g_shm_mrb = 0; return 0; }
+    g_shm_mw = w; g_shm_mh = h; g_shm_mn = n;
+    return 1;
+}
 static void shadow_repair_gl(int radius, GLuint dd)
 {
     GLuint w, h, sw, sh_, fbo_mask, f1, f2;
-    int i;
-    if (!g_cur_rt || !g_cur_ds || g_cur_rt->mrb || g_cur_ds->mrb || !g_cur_rt->tex || !g_cur_ds->tex) return;
+    int i, ms;
+    if (!g_cur_rt || !g_cur_ds || !g_cur_rt->tex || !g_cur_ds->tex) return;
+    ms = g_cur_rt->mrb != 0;
+    if (ms != (g_cur_ds->mrb != 0)) return;
     if (!shm_programs()) return;
     w = g_cur_rt->pw; h = g_cur_rt->ph;
     if (dd < 1) dd = 1;
     if (!shm_make(w, h, dd)) return;
+    if (ms) {
+        GLint n = 0;
+        glBindRenderbuffer(GL_RENDERBUFFER, g_cur_rt->mrb);
+        glGetRenderbufferParameteriv(GL_RENDERBUFFER, 0x8CAB /* GL_RENDERBUFFER_SAMPLES */, &n);
+        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+        if (n < 1 || !shm_make_ms(w, h, n)) return;
+        gsurf_resolve(g_cur_rt);   /* (the picture's alpha from its samples) */
+    }
     sw = (w + dd - 1) / dd; sh_ = (h + dd - 1) / dd;
     glBindVertexArray(g_vao_empty); g_sh.vao = 3;
     glDisable(GL_SCISSOR_TEST); glDisable(GL_CULL_FACE); glDisable(GL_DEPTH_TEST); glDepthMask(GL_FALSE);
     glDisable(GL_BLEND); glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     for (i = 0; i < 3; i++) { glActiveTexture(GL_TEXTURE0 + i); glBindSampler((GLuint)i, 0); glBindTexture(GL_TEXTURE_2D, 0); }
     /* 1: the mask -- where the stencil passes the darkening pass's own test */
-    fbo_mask = gpu_fbo(g_shm_tex[0], g_cur_ds->tex);
+    fbo_mask = ms ? gpu_fbo_ms(g_shm_mrb, g_cur_ds->mrb) : gpu_fbo(g_shm_tex[0], g_cur_ds->tex);
     gpu_set_fbo(fbo_mask);
     glClearColor(0, 0, 0, 0); glClear(GL_COLOR_BUFFER_BIT);
     glEnable(GL_STENCIL_TEST);
@@ -2681,6 +2753,13 @@ static void shadow_repair_gl(int radius, GLuint dd)
     shm_pass(0, fbo_mask, w, h);
     glActiveTexture(GL_TEXTURE2); glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_STENCIL_TEST);
+    if (ms) {   /* (resolved: a pixel some of whose samples have the shadow is in the mask) */
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo_mask);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, gpu_fbo(g_shm_tex[0], 0));
+        glBlitFramebuffer(0, 0, (GLint)w, (GLint)h, 0, 0, (GLint)w, (GLint)h, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        g_sh.tg = 0;
+    }
     /* 2: at 1/dd of the size, closed: dilated (1 -> 2 -> 1), eroded (1 -> 2 -> 1) */
     f1 = gpu_fbo(g_shm_tex[1], 0); f2 = gpu_fbo(g_shm_tex[2], 0);
     glActiveTexture(GL_TEXTURE0); glBindTexture(GL_TEXTURE_2D, g_shm_tex[0]);
