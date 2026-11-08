@@ -354,6 +354,23 @@ play:
     { static int n; if (n++ < 30) tt_dbg("[VS] %s's sound %u from %s (%.2f s)\n", skin, id, lvl[li], (double)x->n / x->rate); }
     return 1;
 }
+/* (2.0.0) Versus: the level's enemies' own sounds (their motions' grunts, cries, blows, falls; 0xC3B90 from 0x85B90) through the
+ * software mixer, from the arena's bank -- placed at them by the game, they were not heard at all (a playtest: "they don't have
+ * any sounds when you hit them or they die or their grunts"). 0: not in the bank (the game's own call goes on) */
+int tt_vs_foe_sound(uint32_t id, float vol)
+{
+    static const char *lvl[14] = { "00ISUL1", "01WEAT1", "02GATE2", "04BALIN1", "13AMON1", "14FANG2", "16ROHAN2", "16ROHAN1", "16ROHAN3", "17TOP1", "18HOLE1", "20YARD1", "21ORTH1", "21ORTH2" };
+    static int slots[6] = { -1, -1, -1, -1, -1, -1 }, next; extern uint32_t tt_vs_level_index(void); uint32_t li = tt_vs_level_index(); VsVox *x; APUMixerVoice *v; int s;
+    if (li > 13 || getenv("TT_VS_GAMEFOESOUNDS") || !(x = vox_get(lvl[li], id))) return 0;
+    s = next++ % 6;
+    if (slots[s] < 0) slots[s] = apu_mixer_alloc_voice();
+    if (slots[s] < 0 || !(v = apu_mixer_get_voice(slots[s]))) return 0;
+    apu_mixer_stop(slots[s]);
+    v->pcm_data = x->pcm; v->pcm_bytes = x->n * 2; v->num_channels = 1; v->sample_rate = x->rate;
+    v->volume = vol * (getenv("TT_VS_FOESFX") ? (float)atof(getenv("TT_VS_FOESFX")) : 1.0f);
+    apu_mixer_set_position(slots[s], 0); apu_mixer_play(slots[s], 0);
+    return 1;
+}
 /* (2.0.0) a sound of a level's bank by its id (sound\<bank>.tbl, WB_<bank>.xwb), through the software mixer: Westfold's
  * explosive props' blast in Versus (twotowers_manual.c, vs_blast) */
 int tt_vs_bank_sound(const char *bank, uint32_t id, float vol)

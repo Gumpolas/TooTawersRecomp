@@ -6315,8 +6315,11 @@ void tt_vs_swing(int who, int dmg)
 }
 /* (1.9.7) a blow judged here (or an arrow of ours) lands with the game's own sound of a hit at the victim: the last
  * flesh hit the game played this session (0x000C3B90 from 0x85340, kept by its hook), else TT_VS_HITSND (default 0x35) */
+static uint32_t vs_imp_v[8], vs_imp_t[8]; static unsigned vs_imp_i;
+static int vs_impact_recent(uint32_t v) { int k; for (k = 0; k < 8; k++) if (vs_imp_v[k] == v && vs_imp_t[k] && (int32_t)(coop_now() - vs_imp_t[k]) < 300) return 1; return 0; }
 static void vs_impact(uint32_t victim)
 {
+    vs_imp_v[vs_imp_i & 7] = victim; vs_imp_t[vs_imp_i & 7] = coop_now() | 1u; vs_imp_i++;
     extern uint32_t tt_snd3d_hit_id, tt_snd3d_hit_vol, tt_snd3d_hit_pitch; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);
     uint32_t a[10], sp = esp, r0 = eax, r1 = ecx, r2 = edx; float one = 1.0f, m1 = -1.0f, vol = 1.0f;
     if (victim < 0x10000u || getenv("TT_VS_NOHITSND")) return;
@@ -7679,7 +7682,19 @@ void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind)
         ex = MEMF(e + 0xF0) - MEMF(h + 0xF0); ey = MEMF(e + 0xF4) - MEMF(h + 0xF4); d = sqrtf(ex * ex + ey * ey);
         if (d > R || fabsf(MEMF(e + 0xF8) - MEMF(h + 0xF8)) > 4.0f) continue;
         if (d > 1.0f && (ex * fx + ey * fy) < 0.17f * d) continue;
+        {   /* a shield he still holds takes the blow, as in the campaign: the game's own hit on it (0x91920; its break, its sound) */
+            extern uint32_t coop_wobjs[]; extern int coop_nwobjs; uint32_t sh = 0; int j;
+            for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j]; if (q >= 0x10000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == e && (MEM32(q + 0x5EC) & 1u) && (int32_t)MEM32(q + 0x2FC) > 0 && (!sh || (int32_t)MEM32(q + 0x2FC) > (int32_t)MEM32(sh + 0x2FC))) sh = q; }   /* (his shield: the weapon of his that breaks, +0x5EC bit 1) */
+            if (getenv("TT_VS_ENTSHIELDLOG")) { static int k; if (k++ < 20) for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j]; if (q >= 0x10000u && MEM32(q + 0x11C) == e) tt_dbg("[VSENT] %s's %s: vt %08X hp %d +5EC %08X\n", coop_nm(e), coop_nm(q), MEM32(q), (int32_t)MEM32(q + 0x2FC), MEM32(q + 0x5EC)); } }
+            if (sh && !getenv("TT_VS_ENTNOSHIELD")) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); static uint32_t hr; uint32_t a1[1], sp = esp, r0 = eax, r1 = ecx, r2 = edx; int q; int32_t s0 = (int32_t)MEM32(sh + 0x2FC);
+                if (!hr) hr = xbox_ContiguousAlloc(0x80u, 16u);
+                if (hr) { for (q = 0; q < 0x80; q += 4) MEM32(hr + q) = 0; MEM32(hr + 0x14) = (uint32_t)dmg; MEM32(hr + 0x18) = kind; MEM32(hr + 0x1C) = h; a1[0] = hr; tt_gcall(0x00091920u, sh, 1, a1); esp = sp; eax = r0; ecx = r1; edx = r2; }
+                vs_clang(e);
+                { static int k; if (k++ < 30) tt_dbg("[VS] P%d the Ent's blow on %s's shield: %d -> %d\n", w + 1, coop_nm(e), s0, (int32_t)MEM32(sh + 0x2FC)); }
+                if ((int32_t)MEM32(sh + 0x2FC) > 0 || s0 > 0) continue; }
+        }
         hp -= dmg; n++;
+        vs_impact(e);
         if (hp <= 0) { MEM32(e + 0x2FC) = 0; MEM32(e + 0x3F0) = 5000u; coop_hero_state(e, 5u); }
         else { MEM32(e + 0x2FC) = (uint32_t)hp; coop_hero_state(e, kind == 9u ? 2u : 5u); }
         { static int k; if (k++ < 40) tt_dbg("[VS] P%d the Ent's blow on %s, %.1f away: %d, health %d\n", w + 1, coop_nm(e), d, dmg, hp); } }
@@ -8251,6 +8266,14 @@ static void vs_frame(void)
     vs_shots_due(now);
     vs_swings_due(now);
     vs_bombs(now);
+    if (!getenv("TT_VS_NOFOEHITSND")) {   /* (2.0.0) an enemy's health dropping (any blow, any shot): the hit's sound at him, through the port's
+         * mixer -- in Versus none was heard (a playtest: "no sounds when you hit them"). Not twice for one blow (vs_impact_recent) */
+        static uint32_t fe[64]; static int32_t fh[64]; static unsigned flv = ~0u; int i, k;
+        if (flv != coop_level_n) { flv = coop_level_n; memset(fe, 0, sizeof fe); }
+        for (i = 0; i < coop_nchars && i < 64; i++) { uint32_t e = coop_chars[i]; int32_t hp; if (e == coop_first_char || e == coop_p2 || MEM32(e + 0x114) != 3u) continue; hp = (int32_t)MEM32(e + 0x2FC);
+            for (k = 0; k < 64 && fe[k] && fe[k] != e; k++) ; if (k == 64) continue; if (!fe[k]) { fe[k] = e; fh[k] = hp; continue; }
+            if (hp < fh[k] && vs_state == 0 && !vs_impact_recent(e)) vs_impact(e);
+            fh[k] = hp; } }
     if (getenv("TT_VS_FOEHPLOG")) { static uint32_t ee[64]; static int32_t eh[64]; int i, k;   /* (research) the enemies' health as it drops, and who stood by */
         for (i = 0; i < coop_nchars && i < 64; i++) { uint32_t e = coop_chars[i]; int32_t hp; if (MEM32(e + 0x114) != 3u) continue; hp = (int32_t)MEM32(e + 0x2FC);
             for (k = 0; k < 64 && ee[k] && ee[k] != e; k++) ; if (k == 64) continue; if (!ee[k]) { ee[k] = e; eh[k] = hp; continue; }
@@ -13483,6 +13506,16 @@ void sub_000C3B90(void)
         if (MEM32(esp) == 0x00085B90u && tt_vs_on() && (esi == coop_first_char || esi == coop_p2) && esi >= 0x10000u) {
             int w = esi == coop_p2; float vol = MEMF(esp + 8);
             if (tt_vs_hero_sound(vs_skin_name(w), MEM32(esp + 4), vol)) { if (on) tt_dbg("[SNDRET] id %u: ours (P%d)\n", MEM32(esp + 4), w + 1); eax = 0; esp += 4; return; }
+        }
+    }
+    {   /* (2.0.0, Versus) the enemies' own: through the port's mixer (versus.c, tt_vs_foe_sound), loud by how near the heroes are */
+        extern int tt_vs_on(void); extern int tt_vs_foe_sound(uint32_t id, float vol);
+        if (MEM32(esp) == 0x00085B90u && tt_vs_on() && esi >= 0x10000u && esi < 0x84000000u && esi != coop_first_char && esi != coop_p2 && esi != coop_twin && MEM32(esi + 0x114) == 3u) {
+            float vol = MEMF(esp + 8), x = MEMF(esp + 16), y = MEMF(esp + 20), d = 1e9f; int w;
+            for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char; float dx, dy, dd; if (h < 0x10000u) continue; dx = MEMF(h + 0xF0) - x; dy = MEMF(h + 0xF4) - y; dd = sqrtf(dx * dx + dy * dy); if (dd < d) d = dd; }
+            if (!(vol > 0.0f) || vol > 1.0f) vol = 1.0f;
+            vol = fmaxf(vol, 0.6f) * (d < 15.0f ? 1.0f : d > 45.0f ? 0.3f : 1.0f - 0.7f * (d - 15.0f) / 30.0f);
+            if (tt_vs_foe_sound(MEM32(esp + 4), vol)) { if (on) tt_dbg("[SNDRET] id %u: ours (an enemy's)\n", MEM32(esp + 4)); eax = 0; esp += 4; return; }
         }
     }
     if (MEM32(esp) == 0x00085B90u) { tt_snd3d_hit_id = MEM32(esp + 4); tt_snd3d_hit_vol = MEM32(esp + 8); tt_snd3d_hit_pitch = MEM32(esp + 12); }

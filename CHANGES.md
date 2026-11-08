@@ -3575,3 +3575,13 @@ menus.c (2.0.0)
     TT_VS_ENTR (6.5) units before him (about 80 degrees, 4 units of
     height) with the box's damage (at least 60): the hit reaction, a knock
     down for a fierce blow, felled at 0. TT_VS_NOENTJUDGE: as before.
+  - Versus: the level's enemies' own sounds (their motions' grunts, cries,
+    blows and falls: 0xC3B90 from 0x85B90) through the port's mixer, from
+    the arena's bank, loud by how near the heroes are (full within 15
+    units) -- placed at them by the game, none was heard (a playtest).
+    TT_VS_GAMEFOESOUNDS: the game's; TT_VS_FOESFX: their volume. And an
+    enemy's health dropping, by any blow or shot, plays the hit's sound at
+    him (once a blow; TT_VS_NOFOEHITSND).
+  - The Ent's judged blow on an enemy holding a shield (his weapon that
+    breaks, +0x5EC bit 1) is the game's own hit on the shield (0x91920):
+    it breaks as in the campaign, the blow taken by it, with the clang.
