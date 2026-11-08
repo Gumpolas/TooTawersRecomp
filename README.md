@@ -59,7 +59,7 @@ Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one a
 - Fixes: the Weathertop freeze, the cutscenes' casts, the max health's scaling.
 
 ### Languages
-- **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina): 38 languages besides English.
+- Adds **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina):
 - Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated.
 - **Ultra textures:** every language's text is upscaled, all session long. It used to go blurry later in a session, or stay blurry in a language first played before the pack was made ready.
 
