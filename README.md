@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v1.9.9
+# The Two Towers Recompiled v2.0.0
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,21 +8,28 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v1.9.9-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v1.9.9-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v1.9.9-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
-| `TwoTowers-Recompiled-v1.9.9-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v1.9.9-source.zip` | Source code |
+| `TwoTowers-Recompiled-v2.0.0-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v2.0.0-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v2.0.0-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
+| `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
+| `TwoTowers-Recompiled-v2.0.0-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
-Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one and copy your `game_files` folder. Your saves, settings and achievements carry over.
+**Credits music:** for copyright reasons, the new credits songs the author recommends are not included in this release. There is a new `music` folder where two extra .wav files can be added for the credits, so the credits don't just loop one song ("Concerning Hobbits"). The two files must be named `credits2.wav` and `credits3.wav`, in lowercase (Linux and macOS go by case), as 16-bit PCM .wav. The author designed them to work best with two songs composed by Howard Shore:
+
+- `credits2.wav`: "The Road Goes Ever On..., Pt. 2 / In Dreams" (feat. Edward Ross), the last 3 minutes 11 seconds (skipping the first 30 seconds)
+- `credits3.wav`: "Rivendell", the first 1 minute 45 seconds
+
+For copyright reasons these are not included with 2.0.0 or any earlier or later release. For the complete experience the author intended, buy copies of these two songs and edit them yourself into `credits2.wav` and `credits3.wav`. Without them, the original credits song plays and loops as it always did.
+
+Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
 ## What the port adds
 
 - **Runs natively** on Windows, Linux and macOS (experimental), from your own disc.
-- **Languages** *(new)*: 33 languages besides English for every text in the game, subtitles included, plus the launcher and the F10 menu.
+- **Languages** *(new)*: 38 languages besides English for every text in the game, subtitles included, plus the launcher and the F10 menu.
 - **Resolution and widescreen**: internal resolution 1x–12x, 4:3 to 32:9 with the HUD at the screen's edges, widescreen cutscenes, menus that fill the screen.
 - **Picture**: Direct3D 11, Vulkan (DXVK) or OpenGL; MSAA and FXAA, anisotropic filtering, brightness, sharpening and color.
 - **Ultra textures**: sharper menus, text and HUD, and every texture with the GameCube pack.
@@ -35,6 +42,57 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
+
+## What's new in 2.0.0
+
+### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
+Thank you!
+- **Player 2's own character:** his own stats, damage and turning, his own combo meter and Perfect; his health upgrades, sword segments and upgraded arrows count. His heavy blows break shields.
+- **Player 2's aim:** his lock holds and no longer blinks, he turns to it while aiming, and he can lock the **cave troll**.
+- **Enemies** share their attention between both players. The extra enemy copies on some levels stay asleep until their originals come, and their blows spare the villagers (Plains of Rohan).
+- **Expert** in co-op.
+- **P2 Bot: Off or On** (When Idle is gone; it cut in on a controller). A gentle stick push counts as player 2 playing.
+- **Show Upgrades Player 2** on the pause menu. Player 2's controller works on both upgrade pages, his shop and his stats screen after a level, and his Start pauses the game.
+- **Button prompts** follow whichever controller was used last, on any port.
+- Gimli as player 2 holds his throwing axe in his left hand while aiming; player 2 is hidden at a cutscene's very start.
+- Fixes: the Weathertop freeze, the cutscenes' casts, the max health's scaling.
+
+### Languages
+- **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina): 38 languages besides English.
+- Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated, and so is the launcher.
+- **Ultra textures:** every language's text is upscaled, all session long. It used to go blurry later in a session, or stay blurry in a language first played before the pack was made ready.
+
+### Launcher (Linux and macOS)
+- **F5 on the main menu** opens the launcher (mods, language, settings): on Linux the AppImage and `TwoTowers.sh` go straight to the game, so the mods were out of reach. (Windows has its own launcher, which starts the game.)
+- **Linux launcher window** (zenity or kdialog, else the terminal menu): `TwoTowers.sh --launcher`, the AppImage with `--launcher`, or the menu entry's right-click **Launcher** action. It also opens once after the first install.
+
+### Versus
+- **Westfold is a Versus arena:** the whole map to fight over, with random starts, some of its orcs and Uruk-hai about, their own sounds and the level's own music, and the health and ammo pickups.
+- **Exploding bomb stacks and carts on Westfold:** a few of them (not every one the level has), set off by either player with a blow or a shot (aim at one and the bow locks onto it). The blast hurts whoever stands near, the enemies too, and sets off the ones beside it. A blast you set off that catches the other player counts as your hit.
+- **Plains of Rohan:** the players are drawn at their starts (their markers showed, but not them).
+- **The Ent** now hurts the enemies on the Versus maps, light and heavy blows too, and breaks their shields; the enemies he fells fall and die as by any other blow (his blows hit nothing before).
+- **Enemy sounds in Versus:** their grunts, cries, blows and deaths, and the sound of being hit, play as in the campaign (they were silent).
+- **Orthanc Summit:** players no longer get stuck running on the spot at their starts (it happened after playing another arena first; only restarting the game cleared it). A player pushing the stick who still cannot move for 2.5 s is released, and put back on his last safe ground if need be.
+
+### Other
+- **Load Game with no saves:** Enter on "No saved games" takes you back to the main menu (it kept showing the message again).
+- The **level 5 and level 10 achievements** need a real level-up (finishing the prologue earned both).
+- **Linux, laptops with an NVIDIA card** beside the built-in graphics: the game runs on the NVIDIA card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
+- **Linux with an NVIDIA card: no more flickering.** Surfaces flickered grey and broke into flat patches, in the menus and in game and most when paused: the OpenGL renderer kept reading shader settings from graphics memory the NVIDIA driver had already handed back. Also: the characters' shadows repaired as on Windows, and graphics driver errors, if any, written to the log.
+- **Linux: no more stutter every second** with the keyboard's button prompts (a search for the hints' words ran on the game's own thread).
+- **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work (they did only on Windows).
+
+## Tested (2.0.0)
+- Linux: Versus bot runs on Westfold (the arena, the bomb stacks by blows and shots from both players), the Plains of Rohan and the Orthanc Summit (Restart Match); co-op bot runs on Balin's Tomb and the Plains of Rohan; the F5 launcher and the Linux launcher window; every language's upscaled fonts at the main menu.
+- Windows: the co-op changes were tested by their author with bots.
+- Windows, Linux and macOS builds compile.
+- Not tested: co-op with two real controllers; the macOS build on a Mac; both co-op players as Gimli.
+
+## Known issues (2.0.0)
+- Co-op is still an **alpha**. Player 2 has no death animation when he goes down last; levels with extra enemy copies are harder.
+- In Versus, an enemy that fells a player gives the round to the other player.
+- In Versus, a player can still show without his body for about a second as a round starts.
+- Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
 
 ## What's new in 1.9.9
 
