@@ -46,7 +46,7 @@ Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 2.0.0
 
 ### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
-Thank you!
+
 - **Player 2's own character:** his own stats, damage and turning, his own combo meter and Perfect; his health upgrades, sword segments and upgraded arrows count. His heavy blows break shields.
 - **Player 2's aim:** his lock holds and no longer blinks, he turns to it while aiming, and he can lock the **cave troll**.
 - **Enemies** share their attention between both players. The extra enemy copies on some levels stay asleep until their originals come, and their blows spare the villagers (Plains of Rohan).
@@ -59,7 +59,7 @@ Thank you!
 
 ### Languages
 - **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina): 38 languages besides English.
-- Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated, and so is the launcher.
+- Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated.
 - **Ultra textures:** every language's text is upscaled, all session long. It used to go blurry later in a session, or stay blurry in a language first played before the pack was made ready.
 
 ### Launcher (Linux and macOS)
@@ -74,25 +74,22 @@ Thank you!
 - **Enemy sounds in Versus:** their grunts, cries, blows and deaths, and the sound of being hit, play as in the campaign (they were silent).
 - **Orthanc Summit:** players no longer get stuck running on the spot at their starts (it happened after playing another arena first; only restarting the game cleared it). A player pushing the stick who still cannot move for 2.5 s is released, and put back on his last safe ground if need be.
 
-### Other
+### Other fixes/Linux fixes
 - **Load Game with no saves:** Enter on "No saved games" takes you back to the main menu (it kept showing the message again).
-- The **level 5 and level 10 achievements** need a real level-up (finishing the prologue earned both).
+- The **level 5 and level 10 achievements** require a real level-up (finishing the prologue as Isildur earned both).
 - **Linux, laptops with an NVIDIA card** beside the built-in graphics: the game runs on the NVIDIA card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
 - **Linux with an NVIDIA card: no more flickering.** Surfaces flickered grey and broke into flat patches, in the menus and in game and most when paused: the OpenGL renderer kept reading shader settings from graphics memory the NVIDIA driver had already handed back. Also: the characters' shadows repaired as on Windows, and graphics driver errors, if any, written to the log.
 - **Linux: no more stutter every second** with the keyboard's button prompts (a search for the hints' words ran on the game's own thread).
-- **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work (they did only on Windows).
+- **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work properly (they did only on Windows).
 
 ## Tested (2.0.0)
-- Linux: Versus bot runs on Westfold (the arena, the bomb stacks by blows and shots from both players), the Plains of Rohan and the Orthanc Summit (Restart Match); co-op bot runs on Balin's Tomb and the Plains of Rohan; the F5 launcher and the Linux launcher window; every language's upscaled fonts at the main menu.
+- Linux: Campaign coop and Versus modes. Versus bot runs on Westfold (the arena, the bomb stacks by blows and shots from both players), the Plains of Rohan and the Orthanc Summit (Restart Match); co-op bot runs on Balin's Tomb and the Plains of Rohan; the F5 launcher and the Linux launcher window; every language's upscaled fonts at the main menu.
 - Windows: the co-op changes were tested by their author with bots.
 - Windows, Linux and macOS builds compile.
 - Not tested: co-op with two real controllers; the macOS build on a Mac; both co-op players as Gimli.
 
 ## Known issues (2.0.0)
-- Co-op is still an **alpha**. Player 2 has no death animation when he goes down last; levels with extra enemy copies are harder.
-- In Versus, an enemy that fells a player gives the round to the other player.
-- In Versus, a player can still show without his body for about a second as a round starts.
-- Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
+- In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
 
 ## What's new in 1.9.9
 
