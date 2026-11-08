@@ -178,11 +178,7 @@ chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
 **PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
 
 1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
-2. Load the joystick driver: `sudo modprobe joydev`. To have it load at every start: `echo joydev | sudo tee /etc/modules-load.d/joydev.conf`
-3. Plug the controller in by USB (for Bluetooth, pair it first) and press its **PS button**.
-4. Test it: `jstest /dev/input/js0`. Press buttons and move the sticks: the numbers should change (Ctrl+C to stop). If there is no `js0`, look with `ls /dev/input/js*` and use the number shown.
-5. If it says "Permission denied": `sudo usermod -aG input $USER`, then log out and back in.
-6. Start the game with the controller already connected and switched on.
+2. Start the game with the controller already connected and switched on.
 
 
 Known issues
