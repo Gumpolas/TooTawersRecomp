@@ -3496,3 +3496,44 @@ prompts_kb.inc (2.0.0)
 input/xinput_device.c (2.0.0, Linux)
   The log names each /dev/input/jsN not used and why (cannot be opened, or
   not a PlayStation 3 pad), and says when SDL's game controllers are on.
+
+twotowers_manual.c, versus.c, options.c (2.0.0, Versus)
+  - Westfold is an arena: random starts over the whole map (every sector
+    drawn there now -- the lost ground and player 1 of an earlier playtest
+    were the heroes set under the ground, below), the level's camera
+    replaced by ours with a sight test (in its valley of cliffs and banks
+    the eye behind one saw rock: it turns to a clear heading and comes in
+    until clear), a few of its orcs and Uruk-hai about the map (no
+    bombers, no archers; its Rohan warriors not made) with its own sound
+    banks and music (16R1ALT1).
+  - Its explosive props (the bomb stacks and carts): a few of them only
+    (each kept by chance, 8 at most -- some 45 in all), set off by either
+    hero, by a blow or a shot (player 2's hits on them count as the
+    player's, as in co-op; aimed at, the bow locks onto one before the
+    other hero unless he stands well before it). Their blast is judged
+    here (in the campaign the story's objects did that, left out of the
+    arena): the level's own explosion sound, the level's camera shake by
+    it, 10-40 per cent of a hero's most health within 7 units by his
+    distance (knocked down within 4.5), the enemies' too, and the props
+    within 4.5 units go off a quarter of a second later. The other's blast
+    counts as his hit, one's own as no one's. TT_VS_NOBLAST, TT_VS_BOMBR,
+    TT_VS_NBOMB, TT_VS_ALLBOMBS.
+  - Heroes not drawn at their starts -- the marker and the weapon shown,
+    the body not (the Plains of Rohan, a playtest: "their player icons show
+    up, but not them"). The view's own eye and look-at (+0xA00, +0xA10 of
+    the camera's view) stayed the level camera's while ours was in use, and
+    the characters are culled by them: set to ours. And a hero set down and
+    standing still could stay undrawn until he first moved: for 1.5 s after
+    he is set down, and whenever he has stood still half a second, his place
+    is moved 0.03 units to and fro each frame (TT_VS_NOJIGGLE). The starts
+    are found on the ground from just over the spot (from 12 over it a
+    palisade's top was taken for the ground), set 1.2 units over it.
+  - A hero who cannot move (the Orthanc Summit, a playtest: "both players
+    get stuck in their spawns and can't move", after a Restart Match):
+    the stick pushed, no button, not moved in 2.5 s, no enemy near, his
+    state unchanged -- INP_EXPIRED, then INP_TAKEDAMAGE (his health kept),
+    then back on his last safe ground; 15 s before it may try again
+    (TT_VS_NOFREE). A hero set down has his place's copies set too, and
+    his safe ground is where he is set (the camera looked at the last
+    one's height, 40 units over him on Westfold). The safe ground counts
+    under 35 frames a second too (its samples' window 1 s).

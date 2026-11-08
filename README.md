@@ -31,7 +31,7 @@ Updating from 1.9.8 or earlier: unpack over your old folder, or into a new one a
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
 - **Couch co-op** *(alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
-- **Versus** *(alpha)*: player 1 against player 2, one on one, on every level but Westfold, with any hero, enemies in some arenas, and Troll Battle; see [COOP.md](COOP.md). More modes, characters and maps to come in future updates.
+- **Versus** *(alpha)*: player 1 against player 2, one on one, on every level, with any hero, enemies in some arenas, and Troll Battle; see [COOP.md](COOP.md). More modes, characters and maps to come in future updates.
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
@@ -138,7 +138,7 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 ### Versus mode
 Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
 
-- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
+- **Arenas:** every level: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, Westfold (its bomb stacks and carts explode, hit by a blow or a shot, and hurt whoever stands near), the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
 - **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only exclusive hero's added: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. 
 - **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
 - **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.

@@ -148,7 +148,7 @@ extern int tt_vs_on(void);
 static const struct { const char *arena, *donor, *track; } s_music[] = {
     { "00ISUL1", "20YARD1", "20Y1ALT1_L" }, { "01WEAT1", "13AMON1", "13AMALT1_L" }, { "02GATE2", "14FANG2", "14F2ALT1_L" },
     { "04BALIN1", "18HOLE1", "18H1ALT2_L" }, { "13AMON1", "04BALIN1", "04B1ALT1_L" }, { "14FANG2", "17TOP1", "17T1BASE_L" },
-    { "16ROHAN2", "02GATE2", "02G2GAL1_L" }, { "16ROHAN3", "16ROHAN1", "16R1ALT1_L" }, { "17TOP1", "16ROHAN3", "16R3ALT2_L" },
+    { "16ROHAN2", "02GATE2", "02G2GAL1_L" }, { "16ROHAN1", "16ROHAN3", "16R3ALT2_L" }, { "16ROHAN3", "16ROHAN1", "16R1ALT1_L" }, { "17TOP1", "16ROHAN3", "16R3ALT2_L" },
     { "18HOLE1", "00ISUL1", "00I1BASE_L" }, { "20YARD1", "16ROHAN2", "16R2ALT2_L" }, { "21ORTH1", "01WEAT1", "01WEALT1_L" },
     { "21ORTH2", "16ROHAN2", "16R2ALT5_L" } };
 /* (1.9.9) a track picked at random for each match (any level's but the arena's own; TT_VS_FIXEDMUSIC: the arena's pairing
@@ -178,7 +178,7 @@ static int s_music_off(void) { return getenv("TT_VS_NOMUSIC") != NULL; }
  * playtest, Amon Hen). Its own music, then */
 static const char *vs_own_music(const char *level)
 {
-    static const struct { const char *lv, *track; } own[] = { { "13AMON1", "13AMALT1_L" }, { "14FANG2", "14F2ALT1_L" }, { "16ROHAN2", "16R2ALT2_L" }, { "18HOLE1", "18H1ALT2_L" }, { "20YARD1", "20Y1ALT1_L" } };
+    static const struct { const char *lv, *track; } own[] = { { "13AMON1", "13AMALT1_L" }, { "14FANG2", "14F2ALT1_L" }, { "16ROHAN2", "16R2ALT2_L" }, { "16ROHAN1", "16R1ALT1_L" }, { "18HOLE1", "18H1ALT2_L" }, { "20YARD1", "20Y1ALT1_L" } };
     extern int tt_vs_troll_mode(void); size_t i;
     if (!level || getenv("TT_VS_NOENEMIES") || getenv("TT_VS_SWAPMUSIC") || tt_vs_troll_mode()) return NULL;
     for (i = 0; i < sizeof own / sizeof own[0]; i++) if (!strncasecmp_vs(level, own[i].lv)) return own[i].track;
@@ -352,6 +352,21 @@ play:
     v->volume = (getenv("TT_VS_HEROSFX") ? (float)atof(getenv("TT_VS_HEROSFX")) : 1.0f) * vol * (id == 3000u ? 0.75f : 1.0f);   /* (3000: his steps, a little softer; 1.9.9: 0.75, was 0.4 -- "way too quiet") */
     apu_mixer_set_position(slots[s], 0); apu_mixer_play(slots[s], 0);
     { static int n; if (n++ < 30) tt_dbg("[VS] %s's sound %u from %s (%.2f s)\n", skin, id, lvl[li], (double)x->n / x->rate); }
+    return 1;
+}
+/* (2.0.0) a sound of a level's bank by its id (sound\<bank>.tbl, WB_<bank>.xwb), through the software mixer: Westfold's
+ * explosive props' blast in Versus (twotowers_manual.c, vs_blast) */
+int tt_vs_bank_sound(const char *bank, uint32_t id, float vol)
+{
+    static int slots[2] = { -1, -1 }, next; VsVox *x; APUMixerVoice *v; int s;
+    if (!bank || !(x = vox_get(bank, id))) return 0;
+    s = next++ & 1;
+    if (slots[s] < 0) slots[s] = apu_mixer_alloc_voice();
+    if (slots[s] < 0 || !(v = apu_mixer_get_voice(slots[s]))) return 0;
+    apu_mixer_stop(slots[s]);
+    v->pcm_data = x->pcm; v->pcm_bytes = x->n * 2; v->num_channels = 1; v->sample_rate = x->rate;
+    v->volume = vol * (getenv("TT_VS_BLASTVOL") ? (float)atof(getenv("TT_VS_BLASTVOL")) : 1.0f);
+    apu_mixer_set_position(slots[s], 0); apu_mixer_play(slots[s], 0);
     return 1;
 }
 /* (1.9.9) a wave of a streaming bank by its name (sound\S_WB_<level>.xwb, XWB v2: the bank's segment at +0x08, entries at

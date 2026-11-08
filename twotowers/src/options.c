@@ -325,10 +325,10 @@ int tt_vs_goal_pick(void) { return 3 + 2 * s_vs_goal_i; }
 static int s_vs_hero[2] = { 0, 1 }, s_vs_arena, s_vs_mode;   /* mode 0 Deathmatch (the smaller arenas), 1 Find the Shield (the bigger) */
 static const char *const s_vs_modes[2] = { "Deathmatch", "Troll Battle" };   /* (1.9.9: mode 1, both players the cave troll) */
 #define VS_TROLL_HERO 11   /* (s_vs_heroes: the cave troll -- Troll Battle's only hero, in no other mode) */
-/* the arenas: every level but Westfold (the game's level index, its name) */
+/* the arenas: every level (the game's level index, its name; 2.0.0: Westfold too) */
 static const struct { int level; const char *name; } s_vs_arenas[] = {
     { 1, "Weathertop" }, { 3, "Balin's Tomb" }, { 4, "Amon Hen" }, { 5, "Fangorn Forest" }, { 2, "Gates of Moria" },
-    { 6, "Plains of Rohan" }, { 8, "Road to Helm's Deep" }, { 9, "The Deeping Wall" }, { 10, "The Breached Wall" },
+    { 6, "Plains of Rohan" }, { 7, "Westfold" }, { 8, "Road to Helm's Deep" }, { 9, "The Deeping Wall" }, { 10, "The Breached Wall" },
     { 11, "Hornburg Courtyard" }, { 12, "Orthanc" }, { 13, "Orthanc Summit" }, { 0, "Mount Doom" } };
 /* which mode each arena is for: the smaller ones Deathmatch, the bigger (room to run, the shield to find) Find the Shield */
 /* (1.9.7) Find the Shield dropped for now: every arena is a Deathmatch arena */

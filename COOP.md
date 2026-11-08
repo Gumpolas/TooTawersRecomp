@@ -97,8 +97,8 @@ Player 1 against player 2, one on one, on the co-op's two heroes.
 - **Blocking:** a guard breaks after 4 blocks in a row, and that blow lands. Kicks knock back but do almost no damage.
 - **Progress:** Versus doesn't touch the campaign. Both players are at the top level with every move for the match
   only; your saves, levels and the extra heroes' records are put back as they were when you leave Versus.
-- **Arenas:** every level but Westfold: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, Gates of Moria, Plains
-  of Rohan, Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit
+- **Arenas:** every level: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, Gates of Moria, Plains
+  of Rohan, Westfold (with its exploding bomb stacks), Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit
   and the prologue (Mount Doom).
 - **The arena:** the level without its story: no other characters, triggers or cut-scenes (the opening one too: the
   match starts as the level loads). The scenery stays.
