@@ -89,8 +89,7 @@ Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one a
 - Windows, Linux and macOS builds compile.
 - Not tested: co-op with two real controllers; the macOS build on a Mac; both co-op players as Gimli.
 
-## Known issues (2.0.0)
-- In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
+
 
 ## What 1.9.9 added
 
@@ -179,7 +178,7 @@ Known issues
      - Versus: Most of the bigger maps in Versus mode can end up being cut off or not render properly after a certain point. It's recommended to keep fights in the playable area until the rest of the map can be used for future game modes.
      - FMV's can sometimes appear slow after alt-tabbing out of the game then back in. A temporary fix for this is to open the f10 menu or press start + back on controller and changing from borderless to fullscreen and back, or vice versa.
      - Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start".
-
+- In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
 
 Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game.
 
