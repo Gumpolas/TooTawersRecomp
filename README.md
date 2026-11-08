@@ -78,7 +78,7 @@ Updating from 1.9.9 or earlier: unpack over your old folder, or into a new one a
 ### Other fixes/Linux fixes
 - **Load Game with no saves:** Enter on "No saved games" takes you back to the main menu (it kept showing the message again).
 - The **level 5 and level 10 achievements** require a real level-up (finishing the prologue as Isildur earned both).
-- **Linux, laptops with an NVIDIA card** beside the built-in graphics: the game runs on the NVIDIA card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
+- **Linux, laptops with a dedicated graphics card** beside the built-in graphics: the game runs on the dedicated graphics card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
 - **Linux with an NVIDIA card: no more flickering.** Surfaces flickered grey and broke into flat patches, in the menus and in game and most when paused: the OpenGL renderer kept reading shader settings from graphics memory the NVIDIA driver had already handed back. Also: the characters' shadows repaired as on Windows, and graphics driver errors, if any, written to the log.
 - **Linux: no more stutter every second** with the keyboard's button prompts (a search for the hints' words ran on the game's own thread).
 - **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work properly (they did only on Windows).
