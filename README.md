@@ -59,7 +59,7 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Linux launcher window** (zenity or kdialog, else the terminal menu): `TwoTowers.sh --launcher`, the AppImage with `--launcher`, or the menu entry's right-click **Launcher** action. It also opens once after the first install.
 
 ### Versus
-- **Westfold is a Versus arena:** the entire map, with random spawns, some of its orcs and Uruk-hai about, their own sounds and the level's own music, and the health and ammo pickups.
+- **Westfold is a Versus arena:** the entire map, with random spawns and enemies, their own sounds and the level's own music, and health and ammo pickups.
 - **Exploding bomb stacks and carts on Westfold:** a few of them (not every one the level has), set off by either player with a blow or a shot (aim at one and the bow locks onto it). The blast hurts whoever stands near, the enemies too, and sets off the ones beside it. A blast you set off that catches the other player counts as your hit.
 - **Plains of Rohan:** the players are drawn at their starts (their markers showed, but not them).
 - **The Ent** now hurts the enemies on the Versus maps, light and heavy blows too, and breaks their shields; the enemies he fells fall and die as by any other blow (his blows hit nothing before).
