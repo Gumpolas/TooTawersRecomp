@@ -3599,3 +3599,14 @@ menus.c (2.0.1)
     Courtyard) counts as well as 13 (the secret mission), for all heroes
     1-4. Only 13 counted, so a game finished at the Courtyard kept every
     level Already Beaten.
+main.c (2.0.1, Linux and macOS)
+  - The launcher F5 opens from the main menu starts with the environment
+    the game itself was started with: the settings the game puts into its
+    own environment from the ini (TT_E3HUD, TT_E3PICKUPS, TT_FPS,
+    RECOMP_..., each only when not set already) went on to the launcher
+    and from it to the game it started again, which kept the old values
+    over the ini's new ones -- the ECTS HUD and orange health pickups mods
+    could not be turned on from the Linux launcher (a playtest; the extra
+    heroes mod, read from the ini itself, could). The TT_ and RECOMP_
+    variables the game added are taken out first (45 in a test run).
+    TT_LAUNCHER_KEEPENV: as before. TT_F5TEST: F5 4 s into the main menu.

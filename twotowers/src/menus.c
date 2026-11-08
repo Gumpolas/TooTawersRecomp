@@ -545,6 +545,7 @@ static void launcher_prompt(void)
     G8(s_ln_el + 0x24) = 1;
     tt_gcall(0x000C8940u, s_ln_el, 0, NULL);
     down = xbox_InputKeyDown(VK_F5);
+    if (getenv("TT_F5TEST")) { static DWORD t0; if (!t0) t0 = GetTickCount() | 1u; if (GetTickCount() - t0 > 4000u) down = 1; }   /* (test: F5 after 4 s on the main menu) */
     if (down && !was && !tt_opt_up()) { tt_dbg("[MENU] F5: the launcher\n"); if (tt_launcher_open()) gone = 1; }
     was = down;
 }

@@ -160,6 +160,33 @@ static void tt_thread_start_pin(void)
  * the game again. Windows: "The Two Towers Recompiled.exe"; Linux: TwoTowers.sh --launcher (the AppImage itself when the
  * game runs from one: its mount, and the SDL2 in it, go with this game); macOS: twotowers-setup's menu in the terminal
  * the game was started from. */
+#if !defined(_WIN32)
+/* (2.0.1) the environment the game was started with: the settings it puts into its own environment from the ini
+ * (TT_E3HUD, TT_E3PICKUPS, RECOMP_..., each set only when not set already) went on to the launcher F5 starts and from
+ * it to the game it starts again, which then kept the old values over the ini's new ones -- the ECTS HUD and orange
+ * pickups mods could not be turned on from the Linux launcher (the extra heroes mod, read from the ini itself, could;
+ * a playtest). The variables the game added are taken out before the launcher starts. */
+extern char **environ;
+static char **s_env0; static int s_nenv0;
+static void env0_save(void)
+{
+    int i, n = 0; if (s_env0) return;
+    while (environ && environ[n]) n++;
+    s_env0 = (char **)calloc((size_t)n + 1, sizeof *s_env0); if (!s_env0) return;
+    for (i = 0; i < n; i++) { const char *e = environ[i], *q = strchr(e, '='); size_t l = q ? (size_t)(q - e) : strlen(e); char *k = (char *)malloc(l + 1); if (!k) continue; memcpy(k, e, l); k[l] = 0; s_env0[s_nenv0++] = k; }
+}
+static void env0_restore(void)
+{
+    int again = 1;
+    if (!s_env0 || getenv("TT_LAUNCHER_KEEPENV")) return;
+    while (again) { int i, j; again = 0;
+        for (i = 0; environ && environ[i]; i++) { const char *e = environ[i], *q = strchr(e, '='); size_t l = q ? (size_t)(q - e) : strlen(e); char k[256]; int had = 0;
+            if (l == 0 || l >= sizeof k) continue; memcpy(k, e, l); k[l] = 0;
+            if (strncmp(k, "TT_", 3) && strncmp(k, "RECOMP_", 7)) continue;
+            for (j = 0; j < s_nenv0; j++) if (!strcmp(s_env0[j], k)) { had = 1; break; }
+            if (!had) { unsetenv(k); again = 1; break; } } }
+}
+#endif
 static int launcher_cmd(char *out, size_t n)
 {
 #if defined(_WIN32)
@@ -201,7 +228,7 @@ int tt_launcher_open(void)
         int setup = strstr(c, "twotowers-setup") != NULL;
         pid_t p;
         if (setup) {   /* (macOS: its menu, in this terminal, in the game's place -- 9 plays again) */
-            fflush(stdout); fflush(stderr);
+            fflush(stdout); fflush(stderr); env0_restore();
             if (chdir(g_exe_dir) == 0) execl(c, c, (char *)NULL);
             return 0;
         }
@@ -212,6 +239,7 @@ int tt_launcher_open(void)
             setsid();
             for (fd = 3; fd < 1024; fd++) close(fd);   /* (the window, sound: the game's alone) */
             if (chdir(g_exe_dir) != 0) _exit(1);
+            env0_restore();
             if (strstr(c, "TwoTowers.sh")) { unsetenv("TT_LAUNCHED"); execl(c, c, "--launcher", (char *)NULL); }
             else { unsetenv("LD_LIBRARY_PATH"); unsetenv("TT_APPIMAGE_HOME"); execl(c, c, "--launcher", (char *)NULL); }
             _exit(127);
@@ -1360,6 +1388,7 @@ int main(int argc, char **argv)
 #if defined(_WIN32)
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOW);
 #else
+    env0_save();
     if (getenv("TT_MSGBOX")) {   /* (1.9.9) TwoTowers.sh's message in a window, when the system has no zenity (an AppImage on a bare desktop) */
         MessageBoxA(NULL, getenv("TT_MSGBOX"), "The Two Towers Recompiled", MB_ICONERROR);
         return 1;
