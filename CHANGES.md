@@ -3548,3 +3548,23 @@ twotowers_manual.c, versus.c, options.c (2.0.0, Versus)
     ran at once on any hero pushing the stick -- a flinch out of nowhere
     while walking (a playtest: "invisible damage ... they flinch as if they
     just walked through fire"). Signed now; likewise the bomb hits' times.
+  - The Ent's blows reach the enemies: the level's props never placed
+    (left at its origin, 0, 0, 0 -- 38 on Westfold) are taken out of the
+    collision world in Versus. His blow's sweep runs from the origin and
+    its five contacts were all on them: no enemy was ever hit (a playtest:
+    "the Ents ... seem unable to do any damage ... to the enemies"). For
+    each test of his attack box his other hands are put out of the way too,
+    and with an enemy before him (75 degrees, 7 units) his hands sweep
+    across that enemy -- the enemies keep 4.5 units off his bulk, past the
+    3 his sweep reached. TT_VS_KEEPORIGINPROPS, TT_VS_NOENTHIDE,
+    TT_VS_NOENTREACH: as before.
+  - A hero record's empty stance multipliers (0) are taken as 1 in Versus
+    (TT_VS_NOSTANCEFIX).
+menus.c (2.0.0)
+  - Load Game with no saves: "No saved games. Press Enter to continue."
+    looped -- Enter closed it (Start as A), and the Start still held was a
+    fresh press to the Load Game screen under it, "load" again, the same
+    message again (a playtest, at any frame rate). Start is kept from the
+    game until it is let go, and on that screen Enter also leaves it (B):
+    back to the main menu. TT_NOMSGLATCH: as before. (test) TT_SCRLOG: the
+    front end's screen and message as they change.

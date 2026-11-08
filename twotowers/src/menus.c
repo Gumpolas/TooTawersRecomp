@@ -1594,9 +1594,21 @@ static void pad_filter(unsigned long port, XState *st)
         if (used && memcmp(&last, p, sizeof last)) s_pad_used = 1;
         last = *p;
         if (p->bAnalogButtons[6] > 30) s_lt_tick = GetTickCount() | 1;   /* the ranged button */
-        if (s_msg_up && (p->wButtons & 0x0010)) {   /* a message's "Press Enter to continue": Start as A */
-            p->wButtons &= (uint16_t)~0x0010u;
-            p->bAnalogButtons[0] = 255;
+        {   /* a message's "Press Enter to continue": Start as A. (2.0.0) And Start kept from the game until it is let go: the moment the
+             * message closed, the Start still held was a fresh press to the screen under it -- on Load Game with no saves (screen 3) that
+             * was "load" again, the same message again, over and over (a playtest: "pressing Enter and it just loops", at any frame rate).
+             * There, closed by Enter, the screen is left too (B, 0.15 s): back to the main menu, as asked. TT_NOMSGLATCH: as before */
+            static int latch, back; static DWORD back_t0;
+            int nolatch = getenv("TT_NOMSGLATCH") != NULL;
+            if (s_msg_up && (p->wButtons & 0x0010)) {
+                p->wButtons &= (uint16_t)~0x0010u;
+                p->bAnalogButtons[0] = 255;
+                if (!latch && !nolatch) { latch = 1; if (G32(FE_SCREEN) == 3) { back = 1; back_t0 = 0; } }
+            } else if (latch) { if (p->wButtons & 0x0010) p->wButtons &= (uint16_t)~0x0010u; else latch = 0; }
+            if (back && (G32(FE_SCREEN) != 3 || nolatch)) back = 0;
+            if (back && !s_msg_up && !latch) { DWORD now = GetTickCount();
+                if (!back_t0) { back_t0 = now | 1; tt_dbg("[MENU] Load Game's message closed with Enter: back to the main menu\n"); }
+                if (now - back_t0 < 150) { p->bAnalogButtons[1] = 255; st->dwPacketNumber += 0x10000u; } else if (now - back_t0 > 400) back = 0; }
         }
         {   /* for Sauron's sprint (heroes.c): the left stick's click and push,
              * over every pad read since heroes.c last took them (a controller
@@ -2634,6 +2646,8 @@ void tt_menus_tick(void)
             if (done && dir[0] && k < 12 && GetTickCount() - tl > 1000) { extern void xbox_PresentDumpRequest(const char *path); char pth[300]; tl = GetTickCount(); snprintf(pth, sizeof pth, "%s/tp_%02d.bmp", dir, k++); xbox_PresentDumpRequest(pth); }
         }
     }
+    if (getenv("TT_SCRLOG")) { static uint32_t ls = ~0u, lm = ~0u; static int lmsg = -1; if (G32(FE_SCREEN) != ls || G32(MM_OBJ + 0x10) != lm || s_msg_up != lmsg) { ls = G32(FE_SCREEN); lm = G32(MM_OBJ + 0x10); lmsg = s_msg_up;   /* (research) */
+            tt_dbg("[SCR] screen %u, menu state %u, message %d at %lu\n", ls, lm, lmsg, (unsigned long)GetTickCount()); } }
     {   /* testing: TT_MMSEL -- the main menu's choice as it changes */
         static int on = -1; static uint32_t last = 0xFFFFFFFFu;
         if (on < 0) on = getenv("TT_MMSEL") != NULL;
