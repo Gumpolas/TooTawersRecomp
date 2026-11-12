@@ -62,8 +62,8 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Westfold is a Versus arena:** the entire map, with random spawns and enemies, their own sounds and the level's own music, and health and ammo pickups.
 - **Exploding bomb stacks and carts on Westfold:** a few of them (not every one the level has), set off by either player with a blow or a shot (aim at one and the bow locks onto it). The blast hurts whoever stands near, the enemies too, and sets off the ones beside it. A blast you set off that catches the other player counts as your hit.
 - **Plains of Rohan:** the players are drawn at their starts (their markers showed, but not them).
-- **The Ent** now hurts the enemies on the Versus maps, light and heavy blows too, and breaks their shields; the enemies he fells fall and die as by any other blow (his blows hit nothing before).
-- **Enemy sounds in Versus:** their grunts, cries, blows and deaths, and the sound of being hit, play as in the campaign (they were silent).
+- **The Ent** can now do damage to the enemies on Versus maps, light and heavy blows, and breaks their shields;
+- **Enemy sounds in Versus:** Play as they do in the campaign (they were silent).
 - **Orthanc Summit:** players no longer get stuck running on the spot at their starts (it happened after playing another arena first; only restarting the game cleared it). A player pushing the stick who still cannot move for 2.5 s is released, and put back on his last safe ground if need be.
 
 ### Other/Linux fixes
