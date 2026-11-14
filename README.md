@@ -313,7 +313,10 @@ The libfuse2 package is called libfuse2 (or libfuse2t64) on Ubuntu/Mint, fuse-li
 
 To launch the regular Linux version (tar.gz)
 
-sh tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz cd TwoTowers-Recompiled-v2.0.1-linux-x86_64 chmod +x TwoTowers.sh twotowers_recomp twotowers-setup ./TwoTowers.sh
+sh tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz 
+cd TwoTowers-Recompiled-v2.0.1-linux-x86_64 
+chmod +x TwoTowers.sh twotowers_recomp twotowers-setup 
+./TwoTowers.sh
 
 
 ## Building from source
