@@ -41,13 +41,10 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 2.0.1
 
 ### Co-op for up to four players
-- **Players: 2, 3 or 4** in Options > Co-op Options. Players 3 and 4 play the whole story alongside players 1 and 2, with more enemies to match.
 - **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels -- exactly as if that hero were played by player 1. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
 - **Every player's own HUD:** health, experience, Perfect meter and markers for players 3 and 4 too, with the Fair / Good / Excellent / Perfect rating and special move names on each player's side of the screen (players 1 and 3 on the left, players 2 and 4 on the right).
-- **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; in the menus every device works.
+- **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; 
 - **Each player's controls and rumble:** players 3 and 4 have their own controller layouts, and their controllers vibrate.
-- **The character wheel:** player 1 picks, then players 2, 3 and 4 in turn, each on his own controller. Each player takes a different hero, except on the prologue and Weathertop. Extra heroes can be picked by any player.
-- **Bots:** P2 Bot, P3 Bot and P4 Bot fill in for a missing player.
 - **Weathertop:** every player has a torch for the fire, so all of them can fight the Nazgul.
 - **The story's levels stay open once the game is finished** (completing the Hornburg Courtyard counts). By [Volverine-Dude](https://github.com/Volverine-Dude) (PR #18). Thank you!
 
@@ -60,23 +57,22 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **A fallen player stays down** with his death animation until the next round, then gets up.
 - **Health pickups:** 3 to 5 about each map, taken only when hurt.
 - **Kicks off ledges count:** a player kicked off a ledge or off the map is out, a kill for the kicker. Walking or falling off on your own just puts you back on the ground.
-- **Fairer fights:** blows and kicks land only in front of the attacker, shots hit only the player you aim at, and the Ent and the trolls reach as far as their size.
 - **No leash:** every player can go anywhere on the map.
 
-### New achievements
+### Achievements
 - **Free-for-all:** win a match; win 5 matches; win a match as player 1, 2, 3 and 4.
 - **Team Deathmatch:** win a match; win 5 matches; win as the orange team (players 1 and 3) and as the red team (players 2 and 4); win a match as player 1, 2, 3 and 4.
 - **Troll Battle:** win with four trolls.
 - **Co-op:** win a level with three players and with four, 5 different levels with three or four, the Tower of Orthanc with four.
 
-### Linux
-- **The dedicated graphics card, however the game is started:** with NVIDIA's driver the NVIDIA card is used; on a PC with a second AMD card beside the built-in graphics, the AMD card is used. `TT_NO_PRIME=1` leaves it to the system.
+### Linux Fixes
+- **The dedicated graphics card, however the game is started:** with NVIDIA's driver the NVIDIA card is used/selected first; on a PC with a second AMD card beside built-in graphics, the AMD card is used/selected first. `TT_NO_PRIME=1` leaves it to the system.
 - **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA on.
-- **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again (It could switch to previous settings) with the new settings, mods included.
+- **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again (It could switch to previous settings before) with the new settings, mods included.
 
 ### Other Fixes 
-- **Launcher settings apply from the first start**, on a fresh install too (Windows and Linux). Graphics settings changed in the launcher now stay upon first launching the game. 
-- **The game closes completely** when you quit the game or it is shut down: no process left running in the background.
+- **Launcher settings apply from the first start**, on a fresh install too (Windows and Linux). Graphics settings set in the launcher now stay applied upon first launching the game. 
+- **The game closes completely** when you quit the game or it is shut down no process is left running in the background.
 
 ## Tested (2.0.1)
 - Linux: playtests of co-op with four players and Versus with four players. Versus bot runs of Team Deathmatch, Free-for-all and Troll Battle with four players; co-op runs with three and four players (the character wheel, Load Game, the opening scenes, Weathertop, the Tower of Orthanc, players 3 and 4's attacks, bows, combos and rating words).
