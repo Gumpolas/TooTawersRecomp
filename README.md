@@ -298,7 +298,7 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 
 <img width="3840" height="2160" alt="Screenshot 2026-10-16 12-00-37" src="https://github.com/user-attachments/assets/11b96e05-570a-4d35-ad20-39f3a484b7af" />
 
-## Linux: AppImage and a PlayStation 3 controller
+## Linux: AppImage and PlayStation 3 controller
 If clicking the AppImage does nothing, start it from a terminal in the folder it is located in:
 
 ```
