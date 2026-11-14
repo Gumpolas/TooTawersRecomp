@@ -301,26 +301,30 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 ## Linux: AppImage and a PlayStation 3 controller
 If clicking the AppImage does nothing, start it from a terminal in the folder it is located in:
 
-sh
+```
 chmod +x TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
 ./TwoTowers-Recompiled-v2.0.1-x86_64.AppImag
+```
 
 If that fails with an error about FUSE or libfuse.so.2, either install libfuse2 or skip FUSE entirely:
-
+```
 sh ./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run
-
+```
 The libfuse2 package is called libfuse2 (or libfuse2t64) on Ubuntu/Mint, fuse-libs on Fedora and fuse2 on Arch. The AppImage keeps the game files, saves and settings in a TwoTowers-Recompiled folder next to it.
 
 To launch the regular Linux version (tar.gz)
-
+```
 sh tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz 
-
+```
+```
 cd TwoTowers-Recompiled-v2.0.1-linux-x86_64 
-
+```
+```
 chmod +x TwoTowers.sh twotowers_recomp twotowers-setup 
-
+```
+```
 ./TwoTowers.sh
-
+```
 **PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
 
 1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
