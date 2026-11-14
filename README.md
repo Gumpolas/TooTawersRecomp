@@ -37,16 +37,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
-
-## 2.0.1 hotfix
-
-Same version, new downloads: if you got 2.0.1 before the hotfix, download it again (or just replace `twotowers_recomp.exe` / `twotowers_recomp`).
-
-- **Sound and music no longer cut out.** After a co-op level, or after playing several levels in a row, the music in the level select and the voices and other sounds in the next level could go silent. The memory the sound uses was being used up and left in pieces too small to reuse; it now stays available.
-- **Player icons always show** in co-op (they sometimes didn't appear until a game was reloaded, for the same reason).
-- **Fire stops hurting players 2 to 4 once they leave it** (the burning buildings on the Plains of Rohan hurt them wherever they went, even after a respawn).
-- **The character wheel's names:** after a co-op game with an extra hero as player 1, every extra hero on the wheel no longer takes his name.
-- **Players 3 and 4's ranged attacks hurt the Watcher** at the Gates of Moria, and so do the stones and rocks thrown by Frodo, the Uruk-hai and the other throwing heroes as players 2 to 4.
+other throwing heroes as players 2 to 4.
 
 ## What's new in 2.0.1
 
