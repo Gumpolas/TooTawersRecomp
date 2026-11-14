@@ -55,7 +55,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **The match's board:** hold F7 (player 1) for the round, the rounds left, and each player's rounds, kills and deaths.
 - **Results for every mode:** every player's rounds, kills, deaths, kills per death and most kills, for Team Deathmatch, Free-for-all and Troll Battle.
 - **A fallen player stays down** with his death animation until the next round, then gets up.
-- **Health pickups:** 3 to 5 about each map, taken only when hurt.
+- **Health pickups:** About 3 to 5 for each map, can only be picked up when damaged.
 - **Kicks off ledges count:** a player kicked off a ledge or off the map is out, a kill for the kicker. Walking or falling off on your own just puts you back on the ground.
 - **No leash:** every player can go anywhere on the map.
 
