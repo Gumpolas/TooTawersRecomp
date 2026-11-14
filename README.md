@@ -41,7 +41,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 2.0.1
 
 ### Co-op for up to four players
-- **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels -- exactly as if that hero were played by player 1. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
+- **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
 - **Every player's own HUD:** health, experience, Perfect meter and markers for players 3 and 4 too, with the Fair / Good / Excellent / Perfect rating and special move names on each player's side of the screen (players 1 and 3 on the left, players 2 and 4 on the right).
 - **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; 
 - **Each player's controls and rumble:** players 3 and 4 have their own controller layouts, and their controllers vibrate.
