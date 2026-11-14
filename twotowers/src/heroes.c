@@ -5080,7 +5080,7 @@ static const char *redirect(const char *xp)
  * on "Isildur" -- the fourth hero's, shown on the character select, the
  * mission map and the upgrade screen. Found once, rewritten as hero 4
  * changes hands. */
-static uint32_t s_name_at[8];
+static uint32_t s_name_at[16];
 static int s_nname = -1;
 static char s_name_cur[8] = "Isildur";   /* what the tables say now */
 static int u16_is(uint32_t va, const char *t, int term)
@@ -5090,6 +5090,19 @@ static int u16_is(uint32_t va, const char *t, int term)
     return !term || G16(va + 2 * i) == 0;
 }
 static void name_long_prep(int k, uint32_t q);
+/* (2.0.1) a name slot of ours: Isildur's, the one we put there last, or any hero's title (7 letters at most, as it stands there).
+ * A slot left holding another hero's name -- after a co-op game with player 1 the Berserker, the menus' copy kept "Berserk" while
+ * the name moved on -- was passed over for good, and its entry still read the long "Berserker": every extra hero on the
+ * character wheel was named the Berserker (a playtest). TT_NAMESTRICT: as before */
+static int name_is_ours(uint32_t q)
+{
+    int g; char t[8];
+    if (u16_is(q, "Isildur", 1) || u16_is(q, s_name_cur, 1)) return 1;
+    if (getenv("TT_NAMESTRICT")) return 0;
+    for (g = 0; g < N_SKINS; g++) if (s_skins[g].title && strcmp(s_skins[g].title, "Aragorn") && strcmp(s_skins[g].title, "Legolas") && strcmp(s_skins[g].title, "Gimli")) {   /* (not the three's own names) */
+        snprintf(t, sizeof t, "%.7s", s_skins[g].title); if (t[0] && u16_is(q, t, 1)) return 1; }
+    return 0;
+}
 static void name_find(void)
 {
     uint32_t va;
@@ -5097,11 +5110,11 @@ static void name_find(void)
     /* after "Gimli": "Isildur" (the hero lists) or "Play as Isildur" (the
      * level map's line for Isildur's level) -- only the name is changed */
     const volatile uint16_t *m = (const volatile uint16_t *)xbox_GetMemoryOffset();
-    for (va = 0x10000u; va < 0x84000000u - 64 && s_nname < 8; va += 2) {
+    for (va = 0x10000u; va < 0x84000000u - 64 && s_nname < 16; va += 2) {
         if (va == 0x03FF0000u) va = 0x80000000u;
         if (m[va / 2] != 'G' || m[va / 2 + 1] != 'i' || !u16_is(va, "Gimli", 1)) continue;
-        if (u16_is(va + 12, "Isildur", 1) || u16_is(va + 12, s_name_cur, 1)) s_name_at[s_nname++] = va + 12;
-        else if (u16_is(va + 12, "Play as ", 0) && (u16_is(va + 28, "Isildur", 1) || u16_is(va + 28, s_name_cur, 1))) s_name_at[s_nname++] = va + 28;
+        if (name_is_ours(va + 12)) s_name_at[s_nname++] = va + 12;
+        else if (u16_is(va + 12, "Play as ", 0) && name_is_ours(va + 28)) s_name_at[s_nname++] = va + 28;
     }
     tt_dbg("[HEROES] %d name tables\n", s_nname);
     { int k; for (k = 0; k < s_nname; k++) name_long_prep(k, s_name_at[k]); }
@@ -5388,7 +5401,7 @@ static void upn_set(int g)
  * {id, byte offset from the header}) is pointed at a longer slot -- the room
  * of a string the table holds twice ("Unable to save game. ..."), whose
  * second entry is pointed at the first copy. The 7 letters stay in place. */
-static struct { uint32_t base, ent, orig, slot, slotlen, dent, dto; } s_nl[8];
+static struct { uint32_t base, ent, orig, slot, slotlen, dent, dto; } s_nl[16];
 static uint32_t u16_len(uint32_t va) { uint32_t n = 0; while (n < 400 && G16(va + 2 * n)) n++; return n; }
 static int u16_same(uint32_t a, uint32_t b) { uint32_t i; for (i = 0; i < 400; i++) { if (G16(a + 2 * i) != G16(b + 2 * i)) return 0; if (!G16(a + 2 * i)) return 1; } return 0; }
 static void name_long_prep(int k, uint32_t q)
@@ -5398,20 +5411,35 @@ static void name_long_prep(int k, uint32_t q)
     if (getenv("TT_NAMESHORT")) return;
     for (B = q & ~3u; B > q - 0x20000u && B >= 0x10000u; B -= 4) if (G32(B) == 0x5353424Fu) break;
     if (G32(B) != 0x5353424Fu || (n = G32(B + 12)) == 0 || n > 4000) return;
+    {   /* (2.0.1) a copy of a table made while a long name was set (the menus' copy, made as they load with player 1's guest the
+         * Berserker): the name's entry reads the long slot, not its own place. That entry found by what it reads, and taken back
+         * as it would have been: the wheel's names otherwise stayed "Berserker" until the game was started again (a playtest) */
+        uint32_t p8 = u16_is(q - 16, "Play as ", 0) ? 8u : 0u, eo2 = q - B - 2u * p8; int has = 0, g;
+        for (j = 0; j < n && !has; j++) if (G32(B + 20 + 8 * j) == eo2) has = 1;
+        if (!has && !getenv("TT_NAMESTRICT")) for (g = 0; g < N_SKINS; g++) { const char *t = s_skins[g].title; char want[64];
+            if (!t || strlen(t) <= 7) continue;
+            snprintf(want, sizeof want, "%s%s", p8 ? "Play as " : "", t);
+            for (j = 0; j < n; j++) { uint32_t oj = G32(B + 20 + 8 * j); if (oj != eo2 && u16_is(B + oj, want, 1)) {
+                s_nl[k].base = B; s_nl[k].ent = B + 20 + 8 * j; s_nl[k].orig = eo2; s_nl[k].slot = B + oj; s_nl[k].slotlen = u16_len(B + oj) + 1;   /* (its room: the string it holds) */
+                s_nl[k].dent = 0; s_nl[k].dto = 0;
+                G32(s_nl[k].ent) = eo2;   /* (its own place again: the short name, which name_set writes next) */
+                tt_dbg("[HEROES] name %08X: a copy reading \"%s\" from %08X -- its entry %08X back to its own place\n", q, want, B + oj, s_nl[k].ent);
+                return; } } }
+    }
     for (j = 0; j < n; j++) { uint32_t o = G32(B + 20 + 8 * j); if (o <= q - B && o >= eo) { eo = o; e = B + 20 + 8 * j; } }
     if (!e) return;
     pre = (q - B - eo) / 2;
     for (j = 0; j < n; j++) {
         uint32_t oj = G32(B + 20 + 8 * j), L = u16_len(B + oj), m, shared = 0;
         if (L < pre + 12) continue;
-        for (m = 0; m < 8; m++) if (s_nl[m].base == B && s_nl[m].slot == B + oj) shared = 1;
+        for (m = 0; m < 16; m++) if (s_nl[m].base == B && s_nl[m].slot == B + oj) shared = 1;
         for (m = 0; m < n && !shared; m++) if (m != j && G32(B + 20 + 8 * m) == oj) shared = 1;   /* (another entry reads it) */
         if (shared) continue;
         for (i = 0, used = 0; i < n; i++) {
             uint32_t oi = G32(B + 20 + 8 * i);
             if (i == j || oi == oj || !u16_same(B + oi, B + oj)) continue;
-            for (m = 0; m < 8; m++) if (s_nl[m].base == B && (s_nl[m].slot == B + oi || s_nl[m].dto == oj || s_nl[m].dto == oi)) break;
-            if (m < 8) continue;   /* (a pair another name took) */
+            for (m = 0; m < 16; m++) if (s_nl[m].base == B && (s_nl[m].slot == B + oi || s_nl[m].dto == oj || s_nl[m].dto == oi)) break;
+            if (m < 16) continue;   /* (a pair another name took) */
             s_nl[k].base = B; s_nl[k].ent = e; s_nl[k].orig = eo; s_nl[k].slot = B + oj; s_nl[k].slotlen = L;
             s_nl[k].dent = B + 20 + 8 * j; s_nl[k].dto = oi; used = 1; break;
         }
@@ -5427,7 +5455,7 @@ static void name_long_set(int k, uint32_t q, const char *title)
     if (L <= 7) { G32(s_nl[k].ent) = s_nl[k].orig; return; }
     pre = (q - B - s_nl[k].orig) / 2;
     if (pre + L >= s_nl[k].slotlen) return;
-    G32(s_nl[k].dent) = s_nl[k].dto;   /* the twin reads the first copy */
+    if (s_nl[k].dent) G32(s_nl[k].dent) = s_nl[k].dto;   /* the twin reads the first copy */
     for (i = 0; i < pre; i++) G16(s_nl[k].slot + 2 * i) = G16(B + s_nl[k].orig + 2 * i);
     for (i = 0; i <= L; i++) G16(s_nl[k].slot + 2 * (pre + i)) = i < L ? (uint16_t)(unsigned char)title[i] : 0;
     G32(s_nl[k].ent) = s_nl[k].slot - B;
@@ -5438,11 +5466,14 @@ static void name_set(const char *title)
 {
     int k, i, end;
     if (tt_lang_on()) { snprintf(s_name_cur, sizeof s_name_cur, "%.7s", title); return; }   /* (a language: hl_set) */
-    if (s_nname < 0) name_find();
+    {   /* (2.0.1) looked for again now and then: the menus make copies of the names' tables as they load (one made while the
+         * Berserker's name was set kept it on the wheel for every hero, a playtest) */
+        static DWORD scan_t; if (s_nname >= 0 && GetTickCount() - scan_t > 4000u && !getenv("TT_NAMEONCE")) s_nname = -1;
+        if (s_nname < 0) { scan_t = GetTickCount(); name_find(); } }
     for (k = 0; k < s_nname; k++) {
         uint32_t q = s_name_at[k];
         /* still ours? (a menu file reloaded since puts other data there) */
-        if (!u16_is(q, "Isildur", 1) && !u16_is(q, s_name_cur, 1)) continue;
+        if (!name_is_ours(q)) continue;
         for (i = 0, end = 0; i < 8; i++) {   /* 7 letters at most, then the end */
             if (i == 7 || !title[i]) end = 1;
             G16(q + 2 * i) = end ? 0 : (uint16_t)title[i];

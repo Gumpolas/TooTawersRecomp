@@ -3711,6 +3711,16 @@ twotowers/src/twotowers_manual.c (2.0.1)
     or four players: only when a level's pool is spent, and given back on the main menu and mission
     select (tt_pool_spill_release). Held all session it left the sound's streams no room (voices, menu
     music) and the player markers' element unmade. TT_POOL_SPILLEARLY, TT_POOL_SPILLKEEP: as before.
+twotowers/src/heroes.c (2.0.1)
+  - Hero 4's name tables looked for again every 4 s as names are set (the menus copy them as they load), any
+    hero's title in place counts as ours, and a copy whose entry reads a long name's slot ("Berserker") is
+    put back to its own place: the wheel kept the Berserker's name for every hero after a co-op game with
+    him as player 1. TT_NAMEONCE, TT_NAMESTRICT: as before.
+twotowers/src/twotowers_manual.c (2.0.1)
+  - Fire damage boxes (prop_damage_box*): players 2-4 get the box's coming-in event but never its going-out,
+    so its script's hurt (0xB8A78, kind 7) went on wherever they went. Each box a player 2-4 came into is
+    kept with his distance from it; its hurt on him counts only within that distance + 4 (coop_fire_skip).
+    TT_COOP_FIREKEEP: as before.
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 
