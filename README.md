@@ -83,7 +83,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 ## Known issues (2.0.1)
 - Some players' starts in a four-player versus match can spawn close together.
 
-## What's new in 2.0.0
+## What 2.0.0 added
 
 ### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
 Thank you!
