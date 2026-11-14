@@ -321,6 +321,13 @@ chmod +x TwoTowers.sh twotowers_recomp twotowers-setup
 
 ./TwoTowers.sh
 
+**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
+
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Start the game with the controller already connected and switched on.
+
+
+
 
 ## Building from source
 
