@@ -46,7 +46,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; 
 - **Each player's controls and rumble:** players 3 and 4 have their own controller layouts, and their controllers vibrate.
 - **Weathertop:** every player has a torch for the fire, so all of them can fight the Nazgul.
-- **The story's levels stay open once the game is finished** (completing the Hornburg Courtyard counts). By [Volverine-Dude](https://github.com/Volverine-Dude) (PR #18). Thank you!
+- **The story's levels stay open once the game is finished** (completing the Hornburg Courtyard counts). Credit to [Volverine-Dude](https://github.com/Volverine-Dude) (PR #18). 
 
 ### Versus for up to four players
 - **Team Deathmatch:** players 1 and 3 against players 2 and 4.
