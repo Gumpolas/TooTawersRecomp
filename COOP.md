@@ -5,6 +5,8 @@
 
 ** Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the co op save screen or the correct versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start". **
 
+** Versus spawns: The original levels weren’t designed for Versus, so random spawns can overlap walls and other scenery or land outside the playable area. Restarting the round, sometimes a few times, gives new start points.
+
 ** It is recommended to set the aspect ratio setting to 4:3 for co-op, so that the hud doesn't move around. This only affects the HUD(regardless of the hud in widescreen option).
 
 
