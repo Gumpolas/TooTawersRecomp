@@ -1,22 +1,52 @@
-# The Two Towers Recompiled v2.0.0
+# The Two Towers Recompiled v2.0.1
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co op and Versus are still in alpha (see co-op.md for how these modes work). See known issues at the bottom.
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co-op and Versus are still in alpha (see [COOP.md](COOP.md) for how these modes work). See known issues at the bottom.
 
 ## Downloads
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v2.0.0-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v2.0.0-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v2.0.0-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
-| `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v2.0.0-source.zip` | Source code |
+| `TwoTowers-Recompiled-v2.0.1-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v2.0.1-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
+| `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); still the 2.0.0 build, not yet tested on a Mac |
+| `TwoTowers-Recompiled-v2.0.1-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
+**Credits music:** for copyright reasons, the new credits songs the author recommends are not included in this release. There is a new `music` folder where two extra .wav files can be added for the credits, so the credits don't just loop one song ("Concerning Hobbits"). The two files must be named `credits2.wav` and `credits3.wav`, in lowercase (Linux and macOS go by case), as 16-bit PCM .wav. The author designed them to work best with two songs composed by Howard Shore:
+
+- `credits2.wav`: "The Road Goes Ever On..., Pt. 2 / In Dreams" (feat. Edward Ross), the last 3 minutes 11 seconds (skipping the first 30 seconds)
+- `credits3.wav`: "Rivendell", the first 1 minute 45 seconds
+
+For copyright reasons these are not included with 2.0.0 or any earlier or later release. For the complete experience the author intended, buy copies of these two songs and edit them yourself into `credits2.wav` and `credits3.wav`. Without them, the original credits song plays and loops as it always did.
+
+Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
+
+## Linux: the AppImage and a PlayStation 3 controller
+
+**If clicking the AppImage does nothing**, start it from a terminal in the folder it is in:
+
+```
+chmod +x TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
+```
+
+- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run`
+- `./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
+- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
+
+**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
+
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Load the joystick driver: `sudo modprobe joydev`. To have it load at every start: `echo joydev | sudo tee /etc/modules-load.d/joydev.conf`
+3. Plug the controller in by USB (for Bluetooth, pair it first) and press its **PS button**.
+4. Test it: `jstest /dev/input/js0`. Press buttons and move the sticks: the numbers should change (Ctrl+C to stop). If there is no `js0`, look with `ls /dev/input/js*` and use the number shown.
+5. If it says "Permission denied": `sudo usermod -aG input $USER`, then log out and back in.
+6. Start the game with the controller already connected and switched on.
 
 ## What the port adds
 
@@ -29,16 +59,78 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Keyboard and mouse**: every action rebindable, a Walk key, a mouse pointer in every menu, mouse aiming and mouse steering.
 - **Controllers**: Xbox, PlayStation, Switch Pro and others with rumble; prompts that match what you play with.
 - **Menus**: Display and Controls options pages in game, the F10 settings panel, an Exit item.
-- **Couch co-op** *(alpha)*: two players on one PC, each with their own hero, controller, weapons, health, ammo, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
-- **Versus** *(alpha)*: player 1 against player 2, one on one, on every level, with any hero, enemies in some arenas, and Troll Battle; see [COOP.md](COOP.md). More modes, characters and maps to come in future updates.
+- **Couch co-op** *(alpha)*: two to four players on one PC, each with their own hero, controller, weapons, health, ammo, combos, experience and upgrades. With thanks in part to [Volverine-Dude](https://github.com/Volverine-Dude); see [COOP.md](COOP.md).
+- **Versus** *(alpha)*: one on one, Team Deathmatch (two against two) and Free-for-all for up to four players, on every level, with any hero, enemies in some arenas, and Troll Battle for up to four; see [COOP.md](COOP.md). More modes, characters and maps to come in future updates.
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
+## What's new in 2.0.1
+
+### Co-op for up to four players
+- **Players: 2, 3 or 4** in Options > Co-op Options. Players 3 and 4 play the whole story alongside players 1 and 2, with more enemies to match.
+- **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels -- exactly as if that hero were played by player 1. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
+- **Every player's own HUD:** health, experience, Perfect meter and markers for players 3 and 4 too, with the Fair / Good / Excellent / Perfect rating and special move names on each player's side of the screen (players 1 and 3 on the left, players 2 and 4 on the right).
+- **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; in the menus every device works.
+- **Each player's controls and rumble:** players 3 and 4 have their own controller layouts, and their controllers vibrate.
+- **The character wheel:** player 1 picks, then players 2, 3 and 4 in turn, each on his own controller. Each player takes a different hero, except on the prologue and Weathertop. Extra heroes can be picked by any player.
+- **Bots:** P2 Bot, P3 Bot and P4 Bot fill in for a missing player.
+- **Replace Companions** (Co-op Options, on by default): a player playing a hero who is also one of the level's companions takes that companion's place in play.
+- **P2, P3, P4 Teleport** (Co-op Options and the pause menu), and **Show Upgrades** for players 2 to 4 on the pause menu.
+- **Weathertop:** every player has a torch for the fire, so all of them can fight the Nazgul.
+- **The Tower of Orthanc** with up to four players: everyone goes up with the tower to its next level.
+- **The story's levels stay open once the game is finished** (completing the Hornburg Courtyard counts). By [Volverine-Dude](https://github.com/Volverine-Dude) (PR #18). Thank you!
+
+### Versus for up to four players
+- **Team Deathmatch:** players 1 and 3 against players 2 and 4.
+- **Free-for-all:** three or four players, each for himself (Player 4 Plays: Yes / No).
+- **Troll Battle for up to four:** Player 3 Plays and Player 4 Plays. Players 1 and 3 are the black cave troll, players 2 and 4 the grey one.
+- **The match's board:** hold F7 (player 1) for the round, the rounds left, and each player's rounds, kills and deaths.
+- **Results for every mode:** every player's rounds, kills, deaths, kills per death and most kills, for Team Deathmatch, Free-for-all and Troll Battle.
+- **A fallen player stays down** with his death animation until the next round, then gets up.
+- **Health pickups:** 3 to 5 about each map, taken only when hurt.
+- **Kicks off ledges count:** a player kicked off a ledge or off the map is out, a kill for the kicker. Walking or falling off on your own just puts you back on the ground.
+- **Fairer fights:** blows and kicks land only in front of the attacker, shots hit only the player you aim at, and the Ent and the trolls reach as far as their size.
+- **No leash:** every player can go anywhere on the map.
+
+### Achievements
+- **Free-for-all:** win a match; win 5 matches; win a match as player 1, 2, 3 and 4.
+- **Team Deathmatch:** win a match; win 5 matches; win as the orange team (players 1 and 3) and as the red team (players 2 and 4); win a match as player 1, 2, 3 and 4.
+- **Troll Battle:** win with four trolls.
+- **Co-op:** win a level with three players and with four, 5 different levels with three or four, the Tower of Orthanc with four.
+
+### Languages
+- Everything new is in every language: the new Co-op Options and Versus rows, the character wheel for players 3 and 4, Show Upgrades for players 2 to 4, the Versus banners, results screens and F7 board, and the new achievements.
+
+### Controllers
+- **PlayStation 4 and 5 controllers and Nintendo Switch controllers** (Pro Controller, Joy-Cons as a pair or one alone) are supported natively, with rumble, on Windows, Linux and macOS.
+
+### Linux
+- **The dedicated graphics card, however the game is started:** with NVIDIA's driver the NVIDIA card is used; on a PC with a second AMD card beside the built-in graphics, the AMD card. `TT_NO_PRIME=1` leaves it to the system.
+- **Much faster on NVIDIA cards:** the OpenGL renderer does far less work per frame (frame rates well over 100 on an RTX 3050 laptop, from under 40).
+- **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA on.
+- **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again with the new settings, mods included.
+
+### Everywhere
+- **Launcher settings apply from the first start**, on a fresh install too (Windows and Linux).
+- **The game closes completely** when you quit it or it is shut down: no process left running in the background.
+- **Single player stays the original game:** co-op, Versus and the extra heroes only share the saves with it. In-level cutscenes play through as in the original game.
+
+## Tested (2.0.1)
+- Linux: Versus bot runs of Team Deathmatch, Free-for-all and Troll Battle with four players; co-op runs with three and four players (the character wheel, Load Game, the opening scenes, Weathertop, the Tower of Orthanc, players 3 and 4's attacks, bows, combos and rating words).
+- Windows: playtests of co-op with four players and Versus with four players.
+- Windows and Linux builds compile.
+- Not tested: the macOS build on a Mac.
+
+## Known issues (2.0.1)
+- Co-op is still an **alpha**; three and four players are new. The Gates of Moria with three players can sometimes start with the players falling through the map; restart the level if it happens.
+- Some players' starts in a four-player match can be close together.
+- Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
+
 ## What's new in 2.0.0
 
-### Co-op fixes, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
-
+### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
+Thank you!
 - **Player 2's own character:** his own stats, damage and turning, his own combo meter and Perfect; his health upgrades, sword segments and upgraded arrows count. His heavy blows break shields.
 - **Player 2's aim:** his lock holds and no longer blinks, he turns to it while aiming, and he can lock the **cave troll**.
 - **Enemies** share their attention between both players. The extra enemy copies on some levels stay asleep until their originals come, and their blows spare the villagers (Plains of Rohan).
@@ -50,8 +142,8 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - Fixes: the Weathertop freeze, the cutscenes' casts, the max health's scaling.
 
 ### Languages
-- Adds **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina):
-- Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated.
+- **Welsh** (Cymraeg), **Old English** (Ænglisc), **Old English in the Anglo-Saxon runes**, **Old Norse** (Norrœnt mál) and **Latin** (Latina): 38 languages besides English.
+- Every language: the Versus and co-op menus, the notes, the ECTS HUD's labels and the achievements are translated, and so is the launcher.
 - **Ultra textures:** every language's text is upscaled, all session long. It used to go blurry later in a session, or stay blurry in a language first played before the pack was made ready.
 
 ### Launcher (Linux and macOS)
@@ -59,30 +151,34 @@ https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two
 - **Linux launcher window** (zenity or kdialog, else the terminal menu): `TwoTowers.sh --launcher`, the AppImage with `--launcher`, or the menu entry's right-click **Launcher** action. It also opens once after the first install.
 
 ### Versus
-- **Westfold is a Versus arena:** the entire map, with random spawns and enemies, their own sounds and the level's own music, and health and ammo pickups.
+- **Westfold is a Versus arena:** the whole map to fight over, with random starts, some of its orcs and Uruk-hai about, their own sounds and the level's own music, and the health and ammo pickups.
 - **Exploding bomb stacks and carts on Westfold:** a few of them (not every one the level has), set off by either player with a blow or a shot (aim at one and the bow locks onto it). The blast hurts whoever stands near, the enemies too, and sets off the ones beside it. A blast you set off that catches the other player counts as your hit.
 - **Plains of Rohan:** the players are drawn at their starts (their markers showed, but not them).
-- **The Ent** can now do damage to the enemies on Versus maps, light and heavy blows, and breaks their shields;
-- **Enemy sounds in Versus:** Play as they do in the campaign (they were silent).
+- **The Ent** now hurts the enemies on the Versus maps, light and heavy blows too, and breaks their shields; the enemies he fells fall and die as by any other blow (his blows hit nothing before).
+- **Enemy sounds in Versus:** their grunts, cries, blows and deaths, and the sound of being hit, play as in the campaign (they were silent).
 - **Orthanc Summit:** players no longer get stuck running on the spot at their starts (it happened after playing another arena first; only restarting the game cleared it). A player pushing the stick who still cannot move for 2.5 s is released, and put back on his last safe ground if need be.
 
-### Other/Linux fixes
+### Other
 - **Load Game with no saves:** Enter on "No saved games" takes you back to the main menu (it kept showing the message again).
-- The **level 5 and level 10 achievements** require a real level-up (finishing the prologue as Isildur earned both).
-- **Linux, laptops with a dedicated graphics card** beside the built-in graphics: the game runs on the dedicated graphics card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
+- The **level 5 and level 10 achievements** need a real level-up (finishing the prologue earned both).
+- **Linux, laptops with an NVIDIA card** beside the built-in graphics: the game runs on the NVIDIA card (it ran slowly on the built-in chip). `TT_NO_PRIME=1` leaves the choice to the system.
 - **Linux with an NVIDIA card: no more flickering.** Surfaces flickered grey and broke into flat patches, in the menus and in game and most when paused: the OpenGL renderer kept reading shader settings from graphics memory the NVIDIA driver had already handed back. Also: the characters' shadows repaired as on Windows, and graphics driver errors, if any, written to the log.
 - **Linux: no more stutter every second** with the keyboard's button prompts (a search for the hints' words ran on the game's own thread).
-- **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work properly (they did only on Windows).
+- **Linux: the More page's Colour grading, Grading amount, Movie sharpness and Distant texture detail** now work (they did only on Windows).
 
 ## Tested (2.0.0)
-- Linux: Campaign coop and Versus modes. Versus bot runs on Westfold (the arena, the bomb stacks by blows and shots from both players), the Plains of Rohan and the Orthanc Summit (Restart Match); co-op bot runs on Balin's Tomb and the Plains of Rohan; the F5 launcher and the Linux launcher window; every language's upscaled fonts at the main menu.
+- Linux: Versus bot runs on Westfold (the arena, the bomb stacks by blows and shots from both players), the Plains of Rohan and the Orthanc Summit (Restart Match); co-op bot runs on Balin's Tomb and the Plains of Rohan; the F5 launcher and the Linux launcher window; every language's upscaled fonts at the main menu.
 - Windows: the co-op changes were tested by their author with bots.
 - Windows, Linux and macOS builds compile.
 - Not tested: co-op with two real controllers; the macOS build on a Mac; both co-op players as Gimli.
 
+## Known issues (2.0.0)
+- Co-op is still an **alpha**. Player 2 has no death animation when he goes down last; levels with extra enemy copies are harder.
+- In Versus, an enemy that fells a player gives the round to the other player.
+- In Versus, a player can still show without his body for about a second as a round starts.
+- Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
 
-
-## What 1.9.9 added
+## What's new in 1.9.9
 
 ### The128ReBits' improvements
 Made possible by [The128ReBits](https://github.com/The128ReBits).
@@ -147,25 +243,116 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 - Not tested: the macOS build on a Mac; the PlayStation 3 controller fix on the reporter's Linux system; the trolls breaking props.
 
 ## Known issues (1.9.9)
+- Co-op is not fully playable with the extra heroes mod. It is recommended to play co op with only the four main heroes. The extra characters are playable, but they do not show up in cut scenes properly yet. Even with player 1 as a main hero and player 2 as an extra hero, the in game cut scenes don't show the proper animations for both hero's. Some HUD elements might not show correctly with the extra heros as well (Sauron as player 2 shows his ammo hud for both players)
 - Singleplayer/Co-op: Singleplayer is entirely unaffected by co op or versus mode except for the co op setting for double pickups. If the setting is enabled in the co op setting, it also applies in singleplayer. It is recommended to disable the setting while playing the base game, unless you prefer to have more health pickups. 
 - macOS (OpenGL) is still experimental
 - Versus spawns are made random for each map, but sometimes a player can still get stuck in a spawn. A "reset game/round" setting has been added to the pause menu for when this occurs. It resets the entire match or the specific round while also putting both players in different spawns/locations.
 - Enemies/random NPC's around versus maps don't respawn entirely if a match is reset. If they were killed off during one of the rounds, they will stay that way until returning to the main menu and starting the match again. 
+
+## What's new in 1.9.8
+
+### Co-op fixes
+
+- **Player 2's own buttons:** Options > Co-op Options > **P2 Controls**.
+- **Aiming:** while a player holds LT, a dot over the enemy his lock is on (player 1 blue, player 2 amber). Arrows and thrown axes fly through allies and every hit counts.
+- **P2 bot improvements:** it follows the levels' paths, keeps with the group and takes enemies in order.
+- **Menus:** every controller works in the front-end menus;
+- **Extra heroes as player 2** are built and drawn in every level (before, certain extra heros would be missing in Fangorn Forest, and certain things would be unbreakable. Extra hero's (Sauron) would also sometimes be missing in the Westfold and with player 1 as Legolas), and their ranged blows wouldn't land. 
+- **Explosives:** player 2's shots set off the Westfold's bomb stacks and carts properly.
+
+### Fixes
+- **Sound after a long session:** music, cut scene voices and some effects no longer go silent some forty minutes in.
+- **Language support for co op and Versus menus
+- **Ultra textures** no longer drop off the menus' text at times.
+
+### Known issues (1.9.8)
+- Legolas can sometimes be unable to attack or gather fire on his torch during the Weathertop level in Co-Op
+- Player 2's controller doesn't rumble yet.
+
+## Tested (1.9.8)
+- Linux (OpenGL): co-op bot runs in the Westfold, Fangorn Forest and Balin's Tomb with extra and retail heroes as player 2.
+- Windows: Played by hand on the author's PC.
+- Windows, Linux and macOS builds compile.
+- Not tested: the macOS build on a Mac.
+
+## What 1.9.7 added
+
+### Versus mode
+Player 1 against player 2, one on one, on one PC. Main menu > **Versus**.
+
+- **Arenas:** every level: Weathertop, Balin's Tomb, Amon Hen, Fangorn Forest, the Gates of Moria, the Plains of Rohan, Westfold (its bomb stacks and carts explode, hit by a blow or a shot, and hurt whoever stands near), the Road to Helm's Deep, the Deeping Wall, the Breached Wall, Hornburg Courtyard, Orthanc, Orthanc's summit and the prologue. 
+- **Heroes:** Aragorn, Legolas, Gimli and Isildur; with the Extra heroes mod also the seven extra heroes and three Versus-only exclusive hero's added: the **Nazgul**, a **Shield Orc** (his shield halves every blow until it breaks) and **Eomer**. 
+- **Rounds:** choose 3, 5 or 7 rounds to win. A countdown starts each round; the first to the rounds chosen wins, then a results screen (hits, damage, biggest hit, arrows on target, fastest round, awards).
+- **Fair fights:** both heroes have the same health and every move. A guard breaks after four blocks in a row, kicks knock back but do almost no damage, ranged attacks lock on to the other (a step aside dodges them), and health and ammo pickups appear each round.
+- **Your saves stay yours:** both players are at the top level for the match only. Your heroes' levels, experience and upgrades, and the extra heroes' records, are put back as they were when you leave Versus.
+- **Devices:** as for co-op (Options > Co-op Options > P1 Device / P2 Device). With P2 Bot on, the game fights player 1.
+- **Its own menu background, results screen and sounds** in the `versus` folder (`menu_bg.bmp`, `results_bg.bmp`, `fight.wav`, `match_win.wav`); add `round_win.wav` for a round won, or replace any of them with your own.
+
+See `COOP.md` for the details.
+
+### Also new
+- **Achievements:** 47, for the story and for Versus, noted in the corner as you earn them and listed on the F10 panel's **Achievements** page. They're kept in `achievements.txt`, only on your PC.
+- **Impossible difficulty:** past Expert, any enemy's second blow fells you. It's right of Expert on the New Game's difficulty screen, or in Options > General Options, and works in co-op too.
+- **F10 > More:** colour grading (Cinema, Rich, Shadow) and its amount, movie sharpness, pause or mute while the window is in the background, and achievements on or off.
+- **F9** hides the HUD; **F8** (or F12, Print Screen) saves a screenshot in the `Screenshots` folder beside the game.
+
+### Co-op
+- **Camera:** playing the levels with Camera Zoom (Options > Co-op Options) on **Normal** or **Wide** is recommended, so both heroes stay in view.
+
+### Fixes
+- **The Breached Wall at high frame rates:** fire and blasts did their damage every frame, so above 60 fps the catapults broke the gate far too fast (at 500 fps within a minute). Their damage now adds up the same at any frame rate.
+- **Credits** scroll at the same speed at any frame rate (above 30 fps they ran too fast).
+  
+## Tested (1.9.7)
+- Linux (OpenGL): Versus matches on the arenas with the P2 Bot and scripted input; the main menu's Co-op and Versus with the keyboard, the mouse and a lost press; the campaign's progress kept when the Versus menu opens and put back when it's left.
+- Windows: Versus played by hand on the author's PC.
+- Windows, Linux and macOS builds compile.
+- Not tested: the macOS build on a Mac.
+
+## What 1.9.6 added
+
+### Couch co-op (alpha)
+Co-op was in development for the main port when [Volverine-Dude](https://github.com/Volverine-Dude) published their own implementation in the [TooTawersRecomp-coop](https://github.com/Volverine-Dude/TooTawersRecomp-coop) fork. 1.9.6 brings the two efforts together on top of 1.9.5, and this release is thanks in large part to their work. Thank you!
+
+- **Two players on one PC** play the story levels together on one shared camera. Each has their own hero, controller, weapons, health, ammo, experience and upgrades.
+- **Starting:** Main menu > **Co-op** > New Game or Load Game; then each player picks a hero (player 2 can't take player 1's).
+- **A hero who goes down** comes back beside the other after a wait. Both down is a game over.
+- **After a level:** each player's stats and shop in turn, then the save. Player 2's experience and purchases are saved with his hero.
+- **Co-op Options** (Options, and the pause menu in a co-op game): Difficulty (Easy, Normal, Expert), Player Icons ("P1" / "P2" over the heroes), Camera Zoom (the camera zooms out as the heroes part), P2 Teleport, and P2 Bot (the game plays player 2).
+- **New in this release, on top of the fork:**
+  - **Each player's device** (Options > Co-op Options > P1 Device / P2 Device): Automatic, Keyboard & Mouse, or any controller connected. With one controller, player 1 takes the keyboard and mouse and player 2 the controller; with two, one each. The mouse steers and aims only for the keyboard's player.
+  - **Pickups: Double** (default): each hero can take a health or ammo pickup once.
+  - Co-op support for Linux and macOS (experimental) (settings for those platforms were not read there).
+
+See `COOP.md` for the details.
+
+### Fixes
+- **Upgrade screen at high frame rates:** the points count down at the same speed at any frame rate. Above 60 fps the count, and the purchase sound playing with it, were cut short.
+
+## Tested (1.9.6)
+ Windows: couch co-op played/tested through the first seven levels and Tower of Orthanc.
+- Linux (OpenGL): co-op in Weathertop and Balin's Tomb with the P2 Bot and with scripted input for player 2 -- both heroes, the P1/P2 markers and the two-player HUD; player 2 on the keyboard (port 2) while player 1 stays still; Double pickups (player 2 refilled twice from one pickup); the Co-op Options page with the new rows.
+- Windows, Linux and macOS builds compile.
+- Not tested by hand: a second physical controller, Windows play, the macOS build on a Mac.
 
 
 Known issues
 
     - Visual bugs: Character shadow bug. Sometimes the character shadows can appear stretched out or stringy, especially for larger NPC's. Some visual bugs with lighting as well. With the extra heros mod enabled, replaying the second level can sometimes show an odd texture covering the top of the upgrades screen after completing the level. This can be fixed temporarily by turning the mod off.
         - Vulkan: If you get any black screens when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable.
+    - Extra Heroes: Kicking animations and their range during the Deepening level can be off. Kicking works fine against enemies, but some of the new characters have to be angled to the side to kick down the ladders. Again kicking works fine against enemies but not the ladders during this level. NPC's like Sauron, Frodo, and Lurtz can kick them just fine, but Elrond, Boromir, the Uruk and Gandalf may have some trouble and need to be angled to the side.
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
     - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
-      - Widescreen/exclusive fullscreen is experimental: a few full-screen effects may not line up at the edges, and when using exclusive fullscreen it's recommended to keep the HUD at 4:3 for its aspect ratio setting.
+    - Versus (1.9.7) is new: the arenas are the story levels without their enemies, so parts of the bigger maps can't be reached yet, and Amon Hen's arena ends 50 units from the start.
+    - Co-op is an alpha: play the levels with Camera Zoom on Normal or Wide. Head markers are dimmed, not hidden, behind walls (Direct3D 11 only); the P2 Bot can get stuck (the lake before the Gates of Moria's boss) and has trouble with the Watcher's tentacles.
+    - Widescreen is experimental: a few full-screen effects may not line up at the edges.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.
+     - Versus: Most of the bigger maps in Versus mode can end up being cut off or not render properly after a certain point. It's recommended to keep fights in the playable area until the rest of the map can be used for future game modes.
      - FMV's can sometimes appear slow after alt-tabbing out of the game then back in. A temporary fix for this is to open the f10 menu or press start + back on controller and changing from borderless to fullscreen and back, or vice versa.
      - Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start".
- - In Versus, in the Plains of Rohan map, a player can still show without his body for about a second as a round starts.
+
 
 Bug reports are welcome, especially for Mac and Linux users. Please include twotowers_log.txt, which is next to the game.
 
@@ -234,26 +421,6 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 
 <img width="3840" height="2160" alt="Screenshot 2026-10-16 12-00-37" src="https://github.com/user-attachments/assets/11b96e05-570a-4d35-ad20-39f3a484b7af" />
 
-
-## Linux: AppImage and PlayStation 3 controller install
-
-**If clicking the AppImage does nothing**, start it from a terminal in the folder that it is located in:
-
-```
-chmod +x TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage
-```
-
-- If it says something about **FUSE** (`libfuse.so.2` not found, "AppImages require FUSE to run"), install FUSE 2: `sudo apt install libfuse2` (Ubuntu 24.04 and newer, Linux Mint 22: `sudo apt install libfuse2t64`; Fedora: `sudo dnf install fuse-libs`; Arch: `sudo pacman -S fuse2`). Or run it without FUSE: `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --appimage-extract-and-run`
-- `./TwoTowers-Recompiled-v2.0.0-x86_64.AppImage --launcher` opens the launcher (mods, language, settings) first.
-- Any error is also written to the terminal, and to `twotowers_log.txt` in the game's folder.
-
-**PlayStation 3 controller (DualShock 3)**: the game requires and reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
-
-1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
-2. Start the game with the controller already connected and switched on.
-
-
 ## Building from source
 
 The game's code is not included. You translate it from **your own copy** of the game, then compile it. Nothing leaves your machine.
@@ -289,5 +456,3 @@ The game's code is not included. You translate it from **your own copy** of the 
   It builds into `build-macos/TwoTowers-Recompiled`, with SDL2 copied into `lib`. Double-click `TwoTowers.command` there.
 
 **3. Play:** on first start the game asks for your disc image, or copy your extracted game into `game_files` beside the program.
-
-
