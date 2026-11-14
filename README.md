@@ -51,7 +51,7 @@ Same version, new downloads: if you got 2.0.1 before the hotfix, download it aga
 ## What's new in 2.0.1
 
 ### Co-op for up to four players
-- **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels -- exactly as if that hero were played by player 1. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
+- **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
 - **Every player's own HUD:** health, experience, Perfect meter and markers for players 3 and 4 too, with the Fair / Good / Excellent / Perfect rating and special move names on each player's side of the screen (players 1 and 3 on the left, players 2 and 4 on the right).
 - **Each player's device:** P1 Device to P4 Device (the keyboard and mouse, or a controller). In play each hero answers only to his own device; 
 - **Each player's controls and rumble:** players 3 and 4 have their own controller layouts, and their controllers vibrate.
@@ -65,7 +65,7 @@ Same version, new downloads: if you got 2.0.1 before the hotfix, download it aga
 - **The match's board:** hold F7 (player 1) for the round, the rounds left, and each player's rounds, kills and deaths.
 - **Results for every mode:** every player's rounds, kills, deaths, kills per death and most kills, for Team Deathmatch, Free-for-all and Troll Battle.
 - **A fallen player stays down** with his death animation until the next round, then gets up.
-- **Health pickups:** 3 to 5 about each map, taken only when hurt.
+- **Health pickups:** About 3 to 5 for each map, can only be picked up when damaged.
 - **Kicks off ledges count:** a player kicked off a ledge or off the map is out, a kill for the kicker. Walking or falling off on your own just puts you back on the ground.
 - **No leash:** every player can go anywhere on the map.
 
@@ -77,12 +77,12 @@ Same version, new downloads: if you got 2.0.1 before the hotfix, download it aga
 
 ### Linux Fixes
 - **The dedicated graphics card, however the game is started:** with NVIDIA's driver the NVIDIA card is used/selected first; on a PC with a second AMD card beside built-in graphics, the AMD card is used/selected first. `TT_NO_PRIME=1` leaves it to the system.
-- **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA on.
+- **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA enabled.
 - **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again (It could switch to previous settings before) with the new settings, mods included.
 
 ### Other Fixes 
-- **Launcher settings apply from the first start**, on a fresh install too (Windows and Linux). Graphics settings set in the launcher now stay applied upon first launching the game. 
-- **The game closes completely** when you quit the game or it is shut down no process is left running in the background.
+- **Launcher settings apply from the first start**, on a fresh install (Windows and Linux). Graphics settings set in the launcher now stay applied upon first launching the game. 
+- **The game closes completely** when you quit the game or it is shut down, no process is left running in the background.
 
 ## Tested (2.0.1)
 - Linux: playtests of co-op with four players and Versus with four players. Versus bot runs of Team Deathmatch, Free-for-all and Troll Battle with four players; co-op runs with three and four players (the character wheel, Load Game, the opening scenes, Weathertop, the Tower of Orthanc, players 3 and 4's attacks, bows, combos and rating words).
@@ -93,7 +93,7 @@ Same version, new downloads: if you got 2.0.1 before the hotfix, download it aga
 ## Known issues (2.0.1)
 - Some players' starts in a four-player versus match can spawn close together.
 
-## What's new in 2.0.0
+## What 2.0.0 added
 
 ### Co-op, by [Volverine-Dude](https://github.com/Volverine-Dude) (PRs #16 and #17)
 Thank you!
@@ -151,7 +151,7 @@ For copyright reasons, these songs are not included with 2.0.0 or any earlier or
 - In Versus, a player can still show without his body for about a second as a round starts.
 - Frame rates above 30 are experimental. Use 30 if something seems off, and please report it.
 
-## What's new in 1.9.9
+## What 1.9.9 added
 
 ### The128ReBits' improvements
 Made possible by [The128ReBits](https://github.com/The128ReBits).
@@ -229,15 +229,13 @@ Known issues
         - Vulkan: If you get any black screens when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable.
     - Extra Heroes: Kicking animations and their range during the Deepening level can be off. Kicking works fine against enemies, but some of the new characters have to be angled to the side to kick down the ladders. Again kicking works fine against enemies but not the ladders during this level. NPC's like Sauron, Frodo, and Lurtz can kick them just fine, but Elrond, Boromir, the Uruk and Gandalf may have some trouble and need to be angled to the side.
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
-    - Extra heroes: your hero takes Aragorn's place in the cutscenes; where his own character also appears (Boromir, Gandalf and Frodo in Balin's Tomb), such a scene shows him twice. Also when playing as characters that have new weapons and ranged attacks, some of those weapons may show up on other NPC's. This doesn't happen with the mod turned off.
     - Extra heroes: Currently the models used for the upgrade menu in the in game pause menu show up mangled. The models in the actual upgrade screen after a level is completed appear normal and play their animations.
-    - Versus (1.9.7) is new: the arenas are the story levels without their enemies, so parts of the bigger maps can't be reached yet, and Amon Hen's arena ends 50 units from the start.
-    - Co-op is in beta: play the levels with Camera Zoom on Normal or Wide. Head markers are dimmed, not hidden, behind walls (Direct3D 11 only); the P2 Bot can get stuck (the lake before the Gates of Moria's boss) and has trouble with the Watcher's tentacles.
+    - Co-op is in beta: play the levels with Camera Zoom on Normal or Wide. 
     - Widescreen is experimental: a few full-screen effects may not line up at the edges.
      - Chinese, Japanese and Korean use about 5–6 MB more of the game's memory for their letters; the largest levels load, but report anything that fails to load in those languages.
      - The "Loading..." picture and other text drawn into pictures stay English.
      - Versus: Most of the bigger maps in Versus mode can end up being cut off or not render properly after a certain point. It's recommended to keep fights in the playable area until the rest of the map can be used for future game modes.
-     - FMV's can sometimes appear slow after alt-tabbing out of the game then back in. A temporary fix for this is to open the f10 menu or press start + back on controller and changing from borderless to fullscreen and back, or vice versa.
+     - FMV's can sometimes appear slow after alt-tabbing out of the game then back in. A temporary fix for this is to open the f10 menu or press start + back on controller and change the display from borderless to fullscreen and back, or vice versa.
      - Versus/co op black screen: If you ever experience a black screen when clicking on co op from the main menu or starting a game in versus mode, wait a few seconds and then press select on keyboard/A on controller, then wait another second and press select or A again, and it will load you into the versus map. Press it too fast/soon and it will load the first level and its cutscene and you won't be able to skip it, so be careful. Once loaded into a versus game, backing out to the versus menu will not cause this problem to happen again when pressing "start".
 
 
@@ -308,30 +306,39 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 
 <img width="3840" height="2160" alt="Screenshot 2026-10-16 12-00-37" src="https://github.com/user-attachments/assets/11b96e05-570a-4d35-ad20-39f3a484b7af" />
 
-## Linux: AppImage and a PlayStation 3 controller
+## Linux: AppImage and PlayStation 3 controller
+If clicking the AppImage does nothing, start it from a terminal in the folder it is located in:
 
-If clicking the AppImage does nothing, start it from a terminal in the folder it is in:
-
-AppImage
-
-sh
+```
 chmod +x TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.1-x86_64.AppImag
+```
 
 If that fails with an error about FUSE or libfuse.so.2, either install libfuse2 or skip FUSE entirely:
-
-sh
-./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run
-
+```
+sh ./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run
+```
 The libfuse2 package is called libfuse2 (or libfuse2t64) on Ubuntu/Mint, fuse-libs on Fedora and fuse2 on Arch. The AppImage keeps the game files, saves and settings in a TwoTowers-Recompiled folder next to it.
 
 To launch the regular Linux version (tar.gz)
-
-sh
-tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz
-cd TwoTowers-Recompiled-v2.0.1-linux-x86_64
-chmod +x TwoTowers.sh twotowers_recomp twotowers-setup
+```
+sh tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz 
+```
+```
+cd TwoTowers-Recompiled-v2.0.1-linux-x86_64 
+```
+```
+chmod +x TwoTowers.sh twotowers_recomp twotowers-setup 
+```
+```
 ./TwoTowers.sh
+```
+**PlayStation 3 controller (DualShock 3)**: the game also reads it through the system's joystick device (`/dev/input/js0`), for when it shows up but its buttons do nothing. To set that up and check it:
+
+1. Install the joystick tools: `sudo apt install joystick` (Fedora: `sudo dnf install linuxconsoletools`; Arch: `sudo pacman -S joyutils`).
+2. Start the game with the controller already connected and switched on.
+
+
 
 
 ## Building from source
