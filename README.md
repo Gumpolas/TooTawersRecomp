@@ -67,7 +67,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 
 ### Linux Fixes
 - **The dedicated graphics card, however the game is started:** with NVIDIA's driver the NVIDIA card is used/selected first; on a PC with a second AMD card beside built-in graphics, the AMD card is used/selected first. `TT_NO_PRIME=1` leaves it to the system.
-- **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA on.
+- **MSAA with fog and snow:** the Gates of Moria's fog and snow show with MSAA enabled.
 - **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again (It could switch to previous settings before) with the new settings, mods included.
 
 ### Other Fixes 
