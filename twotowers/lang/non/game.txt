@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	MET TROLLABARDAGA
 P:TROLL BATTLE RESULTS	ÚRSLIT TROLLABARDAGA
 P:P{1}	P{1}
 P:Launcher	Ræsir
+P:Players:	Leikmenn:
+P:P3 Bot:	P3 Vélmaðr:
+P:P4 Bot:	P4 Vélmaðr:
+P:Auto	Sjálfvirkt
+P:P3 Device:	P3 Tæki:
+P:P4 Device:	P4 Tæki:
+P:P3 Controls	P3 Stjórn
+P:P4 Controls	P4 Stjórn
+P:Reset P3 Controls	Endrstilla P3 stjórn
+P:Reset P4 Controls	Endrstilla P4 stjórn
+P:P2, P3, P4 Teleport:	P2, P3, P4 Fjarflutningr:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Fjarflutningr: Á
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Fjarflutningr: AF
+P:Replace Companions:	Skipta förunautum:
+P:Show Upgrades Player {1}	Endrbætr leikmanns {1}
+P:Team Deathmatch	Sveitarbardagi til bana
+P:Free-for-all	Hverr gegn öllum
+P:Player 3:	Leikmaðr 3:
+P:Player 4:	Leikmaðr 4:
+P:Player 3 Plays:	Leikmaðr 3 leikr:
+P:Player 4 Plays:	Leikmaðr 4 leikr:
+P:Team 1 - P1:	Sveit 1 - P1:
+P:Team 2 - P2:	Sveit 2 - P2:
+P:Team 1 - P3:	Sveit 1 - P3:
+P:Team 2 - P4:	Sveit 2 - P4:
+P:Yes	Já
+P:No	Nei
+P:No (three players)	Nei (þrír leikmenn)
+P:Player 3: choose your hero	Leikmaðr 3: vel kappa þinn
+P:Player 4: choose your hero	Leikmaðr 4: vel kappa þinn
+P:Player 2: {1} is taken	Leikmaðr 2: {1} er tekinn
+P:Player 3: {1} is taken	Leikmaðr 3: {1} er tekinn
+P:Player 4: {1} is taken	Leikmaðr 4: {1} er tekinn
+P:Player 3: {1} not available	Leikmaðr 3: {1} eigi tiltækr
+P:Player 4: {1} not available	Leikmaðr 4: {1} eigi tiltækr
+P:PLAYER {1} WINS THE MATCH  ({2})	LEIKMAÐR {1} VINNR LEIKINN  ({2})
+P:TEAM {1} WINS ROUND {2}	SVEIT {1} VINNR LOTU {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	SVEIT {1} VINNR LEIKINN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	SVEIT {1} VINNR  {2} - {3}
+P:PLAYER {1} WINS  {2}	LEIKMAÐR {1} VINNR  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	LOTA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	LOTA {1}   SVEIT {2} {3} - {4} SVEIT {5}
+P:FREE-FOR-ALL RESULTS	ÚRSLIT HVERR GEGN ÖLLUM
+P:TEAM DEATHMATCH RESULTS	ÚRSLIT SVEITARBARDAGA
+P:KILLS	VÍG
+P:DEATHS	DAUÐAR
+P:KILLS PER DEATH	VÍG Á HVERN DAUÐA
+P:TEAM	SVEIT
+P:TEAM ROUNDS WON	LOTUR SVEITAR
+P:MOST KILLS: PLAYER {1} ({2})	FLEST VÍG: LEIKMAÐR {1} ({2})

@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	Valitse muutettava asetus ja sitten 
 L:Voices:	Äänet:
 L:Films:	Elokuvat:
 L:(as the text)	(kuten teksti)
+L:Last One Standing	Viimeinen pystyssä
+L:Win a Free-for-all match.	Voita kaikki vastaan kaikki -ottelu.
+L:King of the Arena	Areenan kuningas
+L:Win 5 Free-for-all matches.	Voita 5 kaikki vastaan kaikki -ottelua.
+L:Brothers in Arms	Aseveljet
+L:Win a Team Deathmatch match.	Voita joukkueiden kuolonottelu.
+L:Shield Brothers	Kilpiveljet
+L:Win 5 Team Deathmatch matches.	Voita 5 joukkueiden kuolonottelua.
+L:Four Trolls Enter	Neljä peikkoa astuu esiin
+L:Win a Troll Battle with four trolls.	Voita peikkotaistelu neljällä peikolla.
+L:A Company of Three	Kolmen joukko
+L:Win a level in co-op with three players.	Läpäise taso yhteispelissä kolmella pelaajalla.
+L:The Fellowship of Four	Neljän saattue
+L:Win a level in co-op with four players.	Läpäise taso yhteispelissä neljällä pelaajalla.
+L:Many Hands	Monta kättä
+L:Win 5 different levels in co-op with three or four players.	Läpäise 5 eri tasoa yhteispelissä kolmella tai neljällä pelaajalla.
+L:Storming Orthanc	Orthancin rynnäkkö
+L:Win the secret mission at Orthanc in co-op with four players.	Läpäise Orthancin salainen tehtävä yhteispelissä neljällä pelaajalla.
+P:Players:	Pelaajat:
+P:P3 Bot:	P3-botti:
+P:P4 Bot:	P4-botti:
+P:Auto	Auto
+P:P3 Device:	P3:n laite:
+P:P4 Device:	P4:n laite:
+P:P3 Controls	P3:n ohjaimet
+P:P4 Controls	P4:n ohjaimet
+P:Reset P3 Controls	Palauta P3:n ohjaimet
+P:Reset P4 Controls	Palauta P4:n ohjaimet
+P:P2, P3, P4 Teleport:	P2:n, P3:n, P4:n siirto:
+P:P2, P3, P4 Teleport: ON	P2:n, P3:n, P4:n siirto: PÄÄLLÄ
+P:P2, P3, P4 Teleport: OFF	P2:n, P3:n, P4:n siirto: POIS
+P:Replace Companions:	Korvaa seuralaiset:
+P:Show Upgrades Player {1}	Pelaajan {1} päivitykset
+P:Team Deathmatch	Joukkueiden kuolonottelu
+P:Free-for-all	Kaikki vastaan kaikki
+P:Player 3:	Pelaaja 3:
+P:Player 4:	Pelaaja 4:
+P:Player 3 Plays:	Pelaaja 3 pelaa:
+P:Player 4 Plays:	Pelaaja 4 pelaa:
+P:Team 1 - P1:	Joukkue 1 - P1:
+P:Team 2 - P2:	Joukkue 2 - P2:
+P:Team 1 - P3:	Joukkue 1 - P3:
+P:Team 2 - P4:	Joukkue 2 - P4:
+P:Yes	Kyllä
+P:No	Ei
+P:No (three players)	Ei (kolme pelaajaa)
+P:Player 3: choose your hero	Pelaaja 3: valitse sankarisi
+P:Player 4: choose your hero	Pelaaja 4: valitse sankarisi
+P:Player 2: {1} is taken	Pelaaja 2: {1} on jo valittu
+P:Player 3: {1} is taken	Pelaaja 3: {1} on jo valittu
+P:Player 4: {1} is taken	Pelaaja 4: {1} on jo valittu
+P:Player 3: {1} not available	Pelaaja 3: {1} ei saatavilla
+P:Player 4: {1} not available	Pelaaja 4: {1} ei saatavilla
+P:PLAYER {1} WINS THE MATCH  ({2})	PELAAJA {1} VOITTAA OTTELUN  ({2})
+P:TEAM {1} WINS ROUND {2}	JOUKKUE {1} VOITTAA ERÄN {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	JOUKKUE {1} VOITTAA OTTELUN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	JOUKKUE {1} VOITTAA  {2} - {3}
+P:PLAYER {1} WINS  {2}	PELAAJA {1} VOITTAA  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ERÄ {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ERÄ {1}   JOUKKUE {2} {3} - {4} JOUKKUE {5}
+P:FREE-FOR-ALL RESULTS	KAIKKI VASTAAN KAIKKI -TULOKSET
+P:TEAM DEATHMATCH RESULTS	JOUKKUEOTTELUN TULOKSET
+P:KILLS	TAPOT
+P:DEATHS	KUOLEMAT
+P:KILLS PER DEATH	TAPPOJA KUOLEMAA KOHDEN
+P:TEAM	JOUKKUE
+P:TEAM ROUNDS WON	JOUKKUEEN VOITTAMAT ERÄT
+P:MOST KILLS: PLAYER {1} ({2})	ENITEN TAPPOJA: PELAAJA {1} ({2})
+L:DOWN	KAATUNUT
+L:TROLL BATTLE	PEIKKOTAISTELU
+L:FREE-FOR-ALL	KAIKKI VASTAAN KAIKKI
+L:TEAM DEATHMATCH	JOUKKUEIDEN KUOLONOTTELU
+L:DEATHMATCH	KUOLONOTTELU
+L:ROUND {1}  (FIRST TO {2})	ERÄ {1}  (ENSIMMÄISENÄ {2})
+L:The leader needs {1} more round to win	Johtaja tarvitsee vielä {1} erän voittaakseen
+L:The leader needs {1} more rounds to win	Johtaja tarvitsee vielä {1} erää voittaakseen
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	JOUKKUE 1 {1} - {2} JOUKKUE 2   ({3} / {4} jäljellä)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	PELAAJA 1 {1} - {2} PELAAJA 2   ({3} / {4} jäljellä)
+L:PLAYER	PELAAJA
+L:HERO	SANKARI
+L:TEAM	JOUKKUE
+L:ROUNDS	ERÄT
+L:KILLS	TAPOT
+L:DEATHS	KUOLEMAT
+L:down	kaatunut
+L:FPS counter	FPS-laskuri
+L:Frames a second, in the top-left corner	Kuvaa sekunnissa, vasemmassa yläkulmassa
+L:Last One Standing - Player 1	Viimeinen pystyssä - Pelaaja 1
+L:Win a Free-for-all match as player 1.	Voita kaikki vastaan kaikki -ottelu pelaajana 1.
+L:Brothers in Arms - Player 1	Aseveljet - Pelaaja 1
+L:Win a Team Deathmatch match as player 1.	Voita joukkueiden kuolonottelu pelaajana 1.
+L:Last One Standing - Player 2	Viimeinen pystyssä - Pelaaja 2
+L:Win a Free-for-all match as player 2.	Voita kaikki vastaan kaikki -ottelu pelaajana 2.
+L:Brothers in Arms - Player 2	Aseveljet - Pelaaja 2
+L:Win a Team Deathmatch match as player 2.	Voita joukkueiden kuolonottelu pelaajana 2.
+L:Last One Standing - Player 3	Viimeinen pystyssä - Pelaaja 3
+L:Win a Free-for-all match as player 3.	Voita kaikki vastaan kaikki -ottelu pelaajana 3.
+L:Brothers in Arms - Player 3	Aseveljet - Pelaaja 3
+L:Win a Team Deathmatch match as player 3.	Voita joukkueiden kuolonottelu pelaajana 3.
+L:Last One Standing - Player 4	Viimeinen pystyssä - Pelaaja 4
+L:Win a Free-for-all match as player 4.	Voita kaikki vastaan kaikki -ottelu pelaajana 4.
+L:Brothers in Arms - Player 4	Aseveljet - Pelaaja 4
+L:Win a Team Deathmatch match as player 4.	Voita joukkueiden kuolonottelu pelaajana 4.
+L:The Orange Banner	Oranssi viiri
+L:Win a Team Deathmatch match as the orange team.	Voita joukkueiden kuolonottelu oranssina joukkueena.
+L:The Red Banner	Punainen viiri
+L:Win a Team Deathmatch match as the red team.	Voita joukkueiden kuolonottelu punaisena joukkueena.

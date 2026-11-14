@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	ÞYRSA WIGES GEMYND
 P:TROLL BATTLE RESULTS	ÞYRSA WIGES ENDUNGA
 P:P{1}	P{1}
 P:Launcher	Onginnere
+P:Players:	Plegeras:
+P:P3 Bot:	P3 Selfgenga:
+P:P4 Bot:	P4 Selfgenga:
+P:Auto	Self
+P:P3 Device:	P3 Tol:
+P:P4 Device:	P4 Tol:
+P:P3 Controls	P3 Wealdas
+P:P4 Controls	P4 Wealdas
+P:Reset P3 Controls	P3 Wealdas Edniwian
+P:Reset P4 Controls	P4 Wealdas Edniwian
+P:P2, P3, P4 Teleport:	P2, P3, P4 Feorrfær:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Feorrfær: ON
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Feorrfær: OF
+P:Replace Companions:	Geferan wrixlian:
+P:Show Upgrades Player {1}	Plegeres {1} eacan
+P:Team Deathmatch	Werodes Deaþgecamp
+P:Free-for-all	Ælc wiþ ealle
+P:Player 3:	Plegere 3:
+P:Player 4:	Plegere 4:
+P:Player 3 Plays:	Plegere 3 plegaþ:
+P:Player 4 Plays:	Plegere 4 plegaþ:
+P:Team 1 - P1:	Werod 1 - P1:
+P:Team 2 - P2:	Werod 2 - P2:
+P:Team 1 - P3:	Werod 1 - P3:
+P:Team 2 - P4:	Werod 2 - P4:
+P:Yes	Gea
+P:No	Nese
+P:No (three players)	Nese (þrie plegeras)
+P:Player 3: choose your hero	Plegere 3: ceos þinne hæleþ
+P:Player 4: choose your hero	Plegere 4: ceos þinne hæleþ
+P:Player 2: {1} is taken	Plegere 2: {1} is genumen
+P:Player 3: {1} is taken	Plegere 3: {1} is genumen
+P:Player 4: {1} is taken	Plegere 4: {1} is genumen
+P:Player 3: {1} not available	Plegere 3: {1} nis gearu
+P:Player 4: {1} not available	Plegere 4: {1} nis gearu
+P:PLAYER {1} WINS THE MATCH  ({2})	PLEGERE {1} WINÞ ÞONE CAMP  ({2})
+P:TEAM {1} WINS ROUND {2}	WEROD {1} WINÞ GEFEOHT {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	WEROD {1} WINÞ ÞONE CAMP  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	WEROD {1} WINÞ  {2} - {3}
+P:PLAYER {1} WINS  {2}	PLEGERE {1} WINÞ  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	GEFEOHT {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	GEFEOHT {1}   WEROD {2} {3} - {4} WEROD {5}
+P:FREE-FOR-ALL RESULTS	ÆLC WIÞ EALLE ENDUNGA
+P:TEAM DEATHMATCH RESULTS	WERODES DEAÞGECAMPES ENDUNGA
+P:KILLS	SLEGAS
+P:DEATHS	DEAÞAS
+P:KILLS PER DEATH	SLEGAS ÆT DEAÞE
+P:TEAM	WEROD
+P:TEAM ROUNDS WON	WERODES GEFEOHTAS
+P:MOST KILLS: PLAYER {1} ({2})	MÆST SLEGA: PLEGERE {1} ({2})

@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	바꿀 설정을 고른 다음 플�
 L:Voices:	음성:
 L:Films:	영상:
 L:(as the text)	(텍스트와 동일)
+L:Last One Standing	최후의 생존자
+L:Win a Free-for-all match.	개인전 경기에서 승리하세요.
+L:King of the Arena	아레나의 왕
+L:Win 5 Free-for-all matches.	개인전 경기에서 5번 승리하세요.
+L:Brothers in Arms	전우
+L:Win a Team Deathmatch match.	팀 데스매치 경기에서 승리하세요.
+L:Shield Brothers	방패 형제
+L:Win 5 Team Deathmatch matches.	팀 데스매치 경기에서 5번 승리하세요.
+L:Four Trolls Enter	트롤 넷의 등장
+L:Win a Troll Battle with four trolls.	트롤 넷으로 트롤 대전에서 승리하세요.
+L:A Company of Three	셋의 무리
+L:Win a level in co-op with three players.	3인 협동으로 레벨에서 승리하세요.
+L:The Fellowship of Four	넷의 반지원정대
+L:Win a level in co-op with four players.	4인 협동으로 레벨에서 승리하세요.
+L:Many Hands	많은 손
+L:Win 5 different levels in co-op with three or four players.	3인 또는 4인 협동으로 서로 다른 레벨 5개에서 승리하세요.
+L:Storming Orthanc	오르상크 습격
+L:Win the secret mission at Orthanc in co-op with four players.	4인 협동으로 오르상크 비밀 임무에서 승리하세요.
+P:Players:	플레이어 수:
+P:P3 Bot:	P3 봇:
+P:P4 Bot:	P4 봇:
+P:Auto	자동
+P:P3 Device:	P3 입력 장치:
+P:P4 Device:	P4 입력 장치:
+P:P3 Controls	P3 조작
+P:P4 Controls	P4 조작
+P:Reset P3 Controls	P3 조작 초기화
+P:Reset P4 Controls	P4 조작 초기화
+P:P2, P3, P4 Teleport:	P2, P3, P4 순간이동:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 순간이동: 켜기
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 순간이동: 끄기
+P:Replace Companions:	동료 교체:
+P:Show Upgrades Player {1}	플레이어 {1} 강화
+P:Team Deathmatch	팀 데스매치
+P:Free-for-all	개인전
+P:Player 3:	플레이어 3:
+P:Player 4:	플레이어 4:
+P:Player 3 Plays:	플레이어 3 참가:
+P:Player 4 Plays:	플레이어 4 참가:
+P:Team 1 - P1:	팀 1 - P1:
+P:Team 2 - P2:	팀 2 - P2:
+P:Team 1 - P3:	팀 1 - P3:
+P:Team 2 - P4:	팀 2 - P4:
+P:Yes	예
+P:No	아니요
+P:No (three players)	아니요 (3인)
+P:Player 3: choose your hero	플레이어 3: 영웅을 선택하세요
+P:Player 4: choose your hero	플레이어 4: 영웅을 선택하세요
+P:Player 2: {1} is taken	플레이어 2: {1} 이미 선택됨
+P:Player 3: {1} is taken	플레이어 3: {1} 이미 선택됨
+P:Player 4: {1} is taken	플레이어 4: {1} 이미 선택됨
+P:Player 3: {1} not available	플레이어 3: {1} 사용 불가
+P:Player 4: {1} not available	플레이어 4: {1} 사용 불가
+P:PLAYER {1} WINS THE MATCH  ({2})	플레이어 {1} 경기 승리  ({2})
+P:TEAM {1} WINS ROUND {2}	팀 {1} 라운드 {2} 승리
+P:TEAM {1} WINS THE MATCH  {2} - {3}	팀 {1} 경기 승리  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	팀 {1} 승리  {2} - {3}
+P:PLAYER {1} WINS  {2}	플레이어 {1} 승리  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	라운드 {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	라운드 {1}   팀 {2} {3} - {4} 팀 {5}
+P:FREE-FOR-ALL RESULTS	개인전 결과
+P:TEAM DEATHMATCH RESULTS	팀 데스매치 결과
+P:KILLS	킬
+P:DEATHS	데스
+P:KILLS PER DEATH	데스당 킬
+P:TEAM	팀
+P:TEAM ROUNDS WON	팀 승리 라운드
+P:MOST KILLS: PLAYER {1} ({2})	최다 킬: 플레이어 {1} ({2})
+L:DOWN	쓰러짐
+L:TROLL BATTLE	트롤 대전
+L:FREE-FOR-ALL	개인전
+L:TEAM DEATHMATCH	팀 데스매치
+L:DEATHMATCH	데스매치
+L:ROUND {1}  (FIRST TO {2})	라운드 {1}  ({2}승 선취)
+L:The leader needs {1} more round to win	선두가 이기려면 {1}라운드가 더 필요합니다
+L:The leader needs {1} more rounds to win	선두가 이기려면 {1}라운드가 더 필요합니다
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	팀 1 {1} - {2} 팀 2   (남은 승리 {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	플레이어 1 {1} - {2} 플레이어 2   (남은 승리 {3} / {4})
+L:PLAYER	플레이어
+L:HERO	영웅
+L:TEAM	팀
+L:ROUNDS	라운드
+L:KILLS	킬
+L:DEATHS	데스
+L:down	쓰러짐
+L:FPS counter	FPS 표시
+L:Frames a second, in the top-left corner	초당 프레임 수, 왼쪽 위
+L:Last One Standing - Player 1	최후의 생존자 - 플레이어 1
+L:Win a Free-for-all match as player 1.	플레이어 1(으)로 개인전 경기에서 승리하세요.
+L:Brothers in Arms - Player 1	전우 - 플레이어 1
+L:Win a Team Deathmatch match as player 1.	플레이어 1(으)로 팀 데스매치 경기에서 승리하세요.
+L:Last One Standing - Player 2	최후의 생존자 - 플레이어 2
+L:Win a Free-for-all match as player 2.	플레이어 2(으)로 개인전 경기에서 승리하세요.
+L:Brothers in Arms - Player 2	전우 - 플레이어 2
+L:Win a Team Deathmatch match as player 2.	플레이어 2(으)로 팀 데스매치 경기에서 승리하세요.
+L:Last One Standing - Player 3	최후의 생존자 - 플레이어 3
+L:Win a Free-for-all match as player 3.	플레이어 3(으)로 개인전 경기에서 승리하세요.
+L:Brothers in Arms - Player 3	전우 - 플레이어 3
+L:Win a Team Deathmatch match as player 3.	플레이어 3(으)로 팀 데스매치 경기에서 승리하세요.
+L:Last One Standing - Player 4	최후의 생존자 - 플레이어 4
+L:Win a Free-for-all match as player 4.	플레이어 4(으)로 개인전 경기에서 승리하세요.
+L:Brothers in Arms - Player 4	전우 - 플레이어 4
+L:Win a Team Deathmatch match as player 4.	플레이어 4(으)로 팀 데스매치 경기에서 승리하세요.
+L:The Orange Banner	주황 깃발
+L:Win a Team Deathmatch match as the orange team.	주황 팀으로 팀 데스매치 경기에서 승리하세요.
+L:The Red Banner	붉은 깃발
+L:Win a Team Deathmatch match as the red team.	빨강 팀으로 팀 데스매치 경기에서 승리하세요.

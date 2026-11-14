@@ -3592,21 +3592,115 @@ menus.c (2.0.0)
     health and nothing could hit him (a playtest). TT_VS_FOEDIEOLD: the
     die method.
 
--- 2.0.1 ------------------------------------------------------------------------
-menus.c (2.0.1)
-  - Co-op (Volverine-Dude, pull request 18): the story's levels open again
-    once the game is finished -- a hero's completed level 11 (Hornburg
-    Courtyard) counts as well as 13 (the secret mission), for all heroes
-    1-4. Only 13 counted, so a game finished at the Courtyard kept every
-    level Already Beaten.
-main.c (2.0.1, Linux and macOS)
-  - The launcher F5 opens from the main menu starts with the environment
-    the game itself was started with: the settings the game puts into its
-    own environment from the ini (TT_E3HUD, TT_E3PICKUPS, TT_FPS,
-    RECOMP_..., each only when not set already) went on to the launcher
-    and from it to the game it started again, which kept the old values
-    over the ini's new ones -- the ECTS HUD and orange health pickups mods
-    could not be turned on from the Linux launcher (a playtest; the extra
-    heroes mod, read from the ini itself, could). The TT_ and RECOMP_
-    variables the game added are taken out first (45 in a test run).
-    TT_LAUNCHER_KEEPENV: as before. TT_F5TEST: F5 4 s into the main menu.
+2.0.1
+=====
+
+src/twotowers_manual.c, src/options.c, src/menus.c, src/heroes.c, src/coopslot.h
+  - Co-op for three and four players (Co-op Options: Players 2-4, P3 Bot,
+    P4 Bot, P3 Device, P4 Device): players 3 and 4 are extra slots, each
+    with its own copy of the per-player state (coopslot.h, COOP_PS), their
+    own heroes, HUD, upgrades, shops and stats, and their own controller
+    layouts and rumble (ports 2 and 3).
+  - The character select: players 2, 3 and 4 pick in turn, each on his own
+    port merged with player 1's (as 2.0.0 did for player 2). One hero to a
+    player, but on the prologue and Weathertop. Extra heroes on a save with
+    the mod's "unlocked from the start": the game's own Isildur test answered
+    for them (they could not be picked), and hero 4's level row no longer
+    read while it holds an extra hero's records ("Already Beaten").
+  - The menus: every device drives them, as in 2.0.0 (TT_COOP_P1MENUS:
+    player 1's only). Start and Back are held back in a level's own scene.
+  - Versus: Team Deathmatch, Free-for-all (3-4) and Troll Battle for up to
+    four; every player's blows, shots, kicks and kills judged; the F7 board
+    and each mode's results; the death held until the next round (INP_DIE,
+    then a get-up by turns: 47 and INP_RESSURECT, else INP_TAKEDAMAGE);
+    health pickups about the map, taken only when hurt; kicks off ledges
+    and Orthanc's rim for every player; blows and kicks within 100 degrees
+    of the attacker's facing, shots within 35; each hero's own reach with
+    four players; no leash.
+  - 0x000C6150 (@PassBrain): skipped for an actor with no body (+0x494 not
+    a pointer) -- a crash on the Westfold in four-player co-op.
+  - The co-op level lock: Hornburg Courtyard (level 11) counts as finishing
+    the game (Volverine-Dude, PR #18).
+  - Weathertop: players 2 to 4 each carry a torch the fire lights (their
+    torch's effects in their own slot, 0x91AC0 / 0xB2930).
+  - Players 3 and 4's Perfect meter: their HUD's own ring geometry, scaled.
+  - Bots rest outside play (front-end screens other than 6 / 8): a crash
+    after the Hornburg's upgrade screens with four players.
+  - The message queue (0x000C6F10): when its 1536 slots are taken, a slot
+    of ours (2048 more) instead of none -- the caller wrote its message at
+    0 and linked "0" into that type's list, losing every earlier one (the
+    Tower of Orthanc with four players: no machines, all in a T-pose).
+  - A hero command in an extra player's own moves naming an id that is no
+    handle: himself (the Tower of Orthanc as Isildur, four players: a
+    particle effect named, a crash).
+  - The Tower of Orthanc: no player put further than 33 units from its
+    middle (a respawn beside one at the rim fell through the floor), and
+    its circling camera framing the players' mean direction and distance.
+  - The Tower of Orthanc: no enemy multiplier (each floor's script waits on
+    the orcs its spawners sent out; the extras and revivals left a floor
+    that never ended), as in Fangorn Forest.
+  - An extra player moved more than 50 units up or down in one frame by
+    the level (its script run in his context: the Tower of Orthanc's move
+    to its next level after his kill): player 1 put there too, the others
+    following him.
+
+src/achieve.c, src/lang.c, tools/lang/strings
+  - Achievements for Free-for-all (a win; 5 wins; a win as each of players
+    1-4), Team Deathmatch (a win; 5 wins; as the orange team, as the red
+    team; as each of players 1-4), a Troll Battle with four trolls, and
+    co-op with three and four players.
+  - Every text new since 2.0.0 in every language: the menus' new rows, the
+    character wheel for players 3 and 4, the Versus banners, results
+    screens and F7 board, the new achievements; tt_tr16n takes nine
+    numbers (the four players' scores).
+
+input/xinput_device.c, input/input_bind.c
+  - Four players' devices and controller layouts; PlayStation 4 / 5 and
+    Nintendo Switch controllers through SDL's own drivers (hints).
+
+kernel/nv2a_gl.inc, platform/win32_compat.c, src/main.c (Linux)
+  - Persistent mapped vertex and index rings (RECOMP_GL_PERSIST=0: off),
+    event-driven waits in WaitForMultipleObjects (RECOMP_WFMO_POLL: as
+    before), NVIDIA's threaded driver and PRIME offload by default.
+  - MSAA: the draw framebuffer restored after a resolve (the Gates of
+    Moria's fog and snow were gone with MSAA on).
+  - The F5 launcher starts the same build again (TT_GAME_EXE).
+  - The dedicated card asked for by the program itself: NVIDIA's (PRIME render
+    offload) with its driver loaded, else a second AMD card that is not the
+    boot display (DRI_PRIME=pci-...). TT_NO_PRIME=1: off.
+
+src/twotowers_manual.c, src/heroes.c (players 3 and 4, 2.0.1)
+  - A single-player game no longer read co-op's Players setting (3 or 4):
+    its levels were rebuilt with a player 2 (the prologue's ending showed
+    Legolas for Isildur).
+  - Players 3 and 4's attack boxes tested with their own slot in place
+    (their blows and the kill move on a fallen enemy hardly landed).
+  - An extra player's animation machine built from his hero's level file,
+    its script state and arena his own (players 2 and 3 shared one), and
+    his hero's table found under another number (21ORTH1.bfg's Gimli).
+  - Player 3 or 4 as the last guest hero played: his model and moves added
+    to the level (he was invisible).
+  - 0x43B3D8-9 (the attack buttons' state last frame), 0x43B388 and
+    0x43B3D0 swapped with each player's context: shared, a press by player
+    3 or 4 was read against the player before him and made nothing (Gimli
+    as player 3 or 4 attacked rarely and stood in poses for seconds). Player
+    1's weapon name for a swing that names none kept one for all slots.
+  - Players 3 and 4's rating word after a kill drawn at full size on their
+    side (the box clipped it away); their special moves' names in their own
+    hero's words, on their side, in co-op and Versus.
+  - Players 3 and 4's upgrade checks (0x9CAB0) answer from their own character's record
+    (tt_heroes_upg_of), so their combos match what they bought.
+  - A cutscene's put-back of an extra player's weapons keeps what @SetRenderable asked during
+    the cutscene: player 1's bow copy no longer stays drawn on player 3 or 4.
+  - The results screen's extra-hero picture is chosen only in co-op/Versus: in single player
+    coop_nx() is 1 and the last co-op game's player 2 was still picked (Isildur's prologue
+    results showed Gandalf); heroes.c also drops a co-op pick when single player reads endlvl.BFF.
+  - In-game cutscenes can no longer be skipped: the Start/Back skip (sub_0001B580) is off unless
+    TT_SCENESKIP is set, and Back is held back while a cinematic plays (menus.c, tt_cine_active).
+
+src/twotowers_host.h, src/linux_setup.cpp, linux/TwoTowers.sh
+  - An ini with no template yet (the launcher's first settings on a fresh
+    install): every setting in it carried into the template, not just a
+    few (the graphics settings and mods were lost on the first start).
+  - F5's Play: the build that opened the launcher given back its execute
+    bit when it had lost it, rather than starting the older one beside it.

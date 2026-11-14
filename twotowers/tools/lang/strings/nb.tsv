@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Velg en innstilling for å endre den
 L:Voices:	Stemmer:
 L:Films:	Filmer:
 L:(as the text)	(som teksten)
+L:Last One Standing	Den siste som står
+L:Win a Free-for-all match.	Vinn en alle-mot-alle-kamp.
+L:King of the Arena	Arenaens konge
+L:Win 5 Free-for-all matches.	Vinn 5 alle-mot-alle-kamper.
+L:Brothers in Arms	Våpenbrødre
+L:Win a Team Deathmatch match.	Vinn en lag-deathmatch.
+L:Shield Brothers	Skjoldbrødre
+L:Win 5 Team Deathmatch matches.	Vinn 5 lag-deathmatcher.
+L:Four Trolls Enter	Fire troll trer inn
+L:Win a Troll Battle with four trolls.	Vinn en trollkamp med fire troll.
+L:A Company of Three	Et følge på tre
+L:Win a level in co-op with three players.	Fullfør en bane i samarbeid med tre spillere.
+L:The Fellowship of Four	Brorskapet av fire
+L:Win a level in co-op with four players.	Fullfør en bane i samarbeid med fire spillere.
+L:Many Hands	Mange hender
+L:Win 5 different levels in co-op with three or four players.	Fullfør 5 ulike baner i samarbeid med tre eller fire spillere.
+L:Storming Orthanc	Stormen på Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Fullfør det hemmelige oppdraget i Orthanc i samarbeid med fire spillere.
+P:Players:	Spillere:
+P:P3 Bot:	P3-bot:
+P:P4 Bot:	P4-bot:
+P:Auto	Auto
+P:P3 Device:	P3-enhet:
+P:P4 Device:	P4-enhet:
+P:P3 Controls	P3-kontroller
+P:P4 Controls	P4-kontroller
+P:Reset P3 Controls	Tilbakestill P3-kontroller
+P:Reset P4 Controls	Tilbakestill P4-kontroller
+P:P2, P3, P4 Teleport:	P2-, P3-, P4-teleport:
+P:P2, P3, P4 Teleport: ON	P2-, P3-, P4-teleport: PÅ
+P:P2, P3, P4 Teleport: OFF	P2-, P3-, P4-teleport: AV
+P:Replace Companions:	Erstatt følgesvenner:
+P:Show Upgrades Player {1}	Oppgraderinger for spiller {1}
+P:Team Deathmatch	Lag-deathmatch
+P:Free-for-all	Alle mot alle
+P:Player 3:	Spiller 3:
+P:Player 4:	Spiller 4:
+P:Player 3 Plays:	Spiller 3 spiller:
+P:Player 4 Plays:	Spiller 4 spiller:
+P:Team 1 - P1:	Lag 1 - P1:
+P:Team 2 - P2:	Lag 2 - P2:
+P:Team 1 - P3:	Lag 1 - P3:
+P:Team 2 - P4:	Lag 2 - P4:
+P:Yes	Ja
+P:No	Nei
+P:No (three players)	Nei (tre spillere)
+P:Player 3: choose your hero	Spiller 3: velg din helt
+P:Player 4: choose your hero	Spiller 4: velg din helt
+P:Player 2: {1} is taken	Spiller 2: {1} er tatt
+P:Player 3: {1} is taken	Spiller 3: {1} er tatt
+P:Player 4: {1} is taken	Spiller 4: {1} er tatt
+P:Player 3: {1} not available	Spiller 3: {1} ikke tilgjengelig
+P:Player 4: {1} not available	Spiller 4: {1} ikke tilgjengelig
+P:PLAYER {1} WINS THE MATCH  ({2})	SPILLER {1} VINNER KAMPEN  ({2})
+P:TEAM {1} WINS ROUND {2}	LAG {1} VINNER RUNDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	LAG {1} VINNER KAMPEN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	LAG {1} VINNER  {2} - {3}
+P:PLAYER {1} WINS  {2}	SPILLER {1} VINNER  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDE {1}   LAG {2} {3} - {4} LAG {5}
+P:FREE-FOR-ALL RESULTS	ALLE-MOT-ALLE-RESULTATER
+P:TEAM DEATHMATCH RESULTS	LAG-DEATHMATCH-RESULTATER
+P:KILLS	DRAP
+P:DEATHS	DØDSFALL
+P:KILLS PER DEATH	DRAP PER DØD
+P:TEAM	LAG
+P:TEAM ROUNDS WON	LAGETS VUNNEDE RUNDER
+P:MOST KILLS: PLAYER {1} ({2})	FLEST DRAP: SPILLER {1} ({2})
+L:DOWN	NEDE
+L:TROLL BATTLE	TROLLKAMP
+L:FREE-FOR-ALL	ALLE MOT ALLE
+L:TEAM DEATHMATCH	LAG-DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	RUNDE {1}  (FØRST TIL {2})
+L:The leader needs {1} more round to win	Lederen mangler {1} runde for å vinne
+L:The leader needs {1} more rounds to win	Lederen mangler {1} runder for å vinne
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	LAG 1 {1} - {2} LAG 2   ({3} / {4} gjenstår)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	SPILLER 1 {1} - {2} SPILLER 2   ({3} / {4} gjenstår)
+L:PLAYER	SPILLER
+L:HERO	HELT
+L:TEAM	LAG
+L:ROUNDS	RUNDER
+L:KILLS	DRAP
+L:DEATHS	DØDSFALL
+L:down	nede
+L:FPS counter	FPS-teller
+L:Frames a second, in the top-left corner	Bilder per sekund, øverst til venstre
+L:Last One Standing - Player 1	Den siste som står - Spiller 1
+L:Win a Free-for-all match as player 1.	Vinn en alle-mot-alle-kamp som spiller 1.
+L:Brothers in Arms - Player 1	Våpenbrødre - Spiller 1
+L:Win a Team Deathmatch match as player 1.	Vinn en lag-deathmatch som spiller 1.
+L:Last One Standing - Player 2	Den siste som står - Spiller 2
+L:Win a Free-for-all match as player 2.	Vinn en alle-mot-alle-kamp som spiller 2.
+L:Brothers in Arms - Player 2	Våpenbrødre - Spiller 2
+L:Win a Team Deathmatch match as player 2.	Vinn en lag-deathmatch som spiller 2.
+L:Last One Standing - Player 3	Den siste som står - Spiller 3
+L:Win a Free-for-all match as player 3.	Vinn en alle-mot-alle-kamp som spiller 3.
+L:Brothers in Arms - Player 3	Våpenbrødre - Spiller 3
+L:Win a Team Deathmatch match as player 3.	Vinn en lag-deathmatch som spiller 3.
+L:Last One Standing - Player 4	Den siste som står - Spiller 4
+L:Win a Free-for-all match as player 4.	Vinn en alle-mot-alle-kamp som spiller 4.
+L:Brothers in Arms - Player 4	Våpenbrødre - Spiller 4
+L:Win a Team Deathmatch match as player 4.	Vinn en lag-deathmatch som spiller 4.
+L:The Orange Banner	Det oransje banneret
+L:Win a Team Deathmatch match as the orange team.	Vinn en lag-deathmatch som det oransje laget.
+L:The Red Banner	Det røde banneret
+L:Win a Team Deathmatch match as the red team.	Vinn en lag-deathmatch som det røde laget.

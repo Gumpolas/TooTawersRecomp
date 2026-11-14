@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Vælg en indstilling for at ændre d
 L:Voices:	Stemmer:
 L:Films:	Film:
 L:(as the text)	(som teksten)
+L:Last One Standing	Den sidste, der står
+L:Win a Free-for-all match.	Vind en alle-mod-alle-kamp.
+L:King of the Arena	Arenaens konge
+L:Win 5 Free-for-all matches.	Vind 5 alle-mod-alle-kampe.
+L:Brothers in Arms	Våbenbrødre
+L:Win a Team Deathmatch match.	Vind en hold-deathmatch.
+L:Shield Brothers	Skjoldbrødre
+L:Win 5 Team Deathmatch matches.	Vind 5 hold-deathmatches.
+L:Four Trolls Enter	Fire trolde træder ind
+L:Win a Troll Battle with four trolls.	Vind en troldekamp med fire trolde.
+L:A Company of Three	Et selskab på tre
+L:Win a level in co-op with three players.	Gennemfør en bane i co-op med tre spillere.
+L:The Fellowship of Four	Broderskabet af fire
+L:Win a level in co-op with four players.	Gennemfør en bane i co-op med fire spillere.
+L:Many Hands	Mange hænder
+L:Win 5 different levels in co-op with three or four players.	Gennemfør 5 forskellige baner i co-op med tre eller fire spillere.
+L:Storming Orthanc	Stormen på Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Gennemfør den hemmelige mission i Orthanc i co-op med fire spillere.
+P:Players:	Spillere:
+P:P3 Bot:	P3-bot:
+P:P4 Bot:	P4-bot:
+P:Auto	Auto
+P:P3 Device:	P3-enhed:
+P:P4 Device:	P4-enhed:
+P:P3 Controls	P3-styring
+P:P4 Controls	P4-styring
+P:Reset P3 Controls	Nulstil P3-styring
+P:Reset P4 Controls	Nulstil P4-styring
+P:P2, P3, P4 Teleport:	P2-, P3-, P4-teleport:
+P:P2, P3, P4 Teleport: ON	P2-, P3-, P4-teleport: TIL
+P:P2, P3, P4 Teleport: OFF	P2-, P3-, P4-teleport: FRA
+P:Replace Companions:	Erstat følgesvende:
+P:Show Upgrades Player {1}	Opgraderinger for spiller {1}
+P:Team Deathmatch	Hold-deathmatch
+P:Free-for-all	Alle mod alle
+P:Player 3:	Spiller 3:
+P:Player 4:	Spiller 4:
+P:Player 3 Plays:	Spiller 3 spiller:
+P:Player 4 Plays:	Spiller 4 spiller:
+P:Team 1 - P1:	Hold 1 - P1:
+P:Team 2 - P2:	Hold 2 - P2:
+P:Team 1 - P3:	Hold 1 - P3:
+P:Team 2 - P4:	Hold 2 - P4:
+P:Yes	Ja
+P:No	Nej
+P:No (three players)	Nej (tre spillere)
+P:Player 3: choose your hero	Spiller 3: vælg din helt
+P:Player 4: choose your hero	Spiller 4: vælg din helt
+P:Player 2: {1} is taken	Spiller 2: {1} er taget
+P:Player 3: {1} is taken	Spiller 3: {1} er taget
+P:Player 4: {1} is taken	Spiller 4: {1} er taget
+P:Player 3: {1} not available	Spiller 3: {1} ikke tilgængelig
+P:Player 4: {1} not available	Spiller 4: {1} ikke tilgængelig
+P:PLAYER {1} WINS THE MATCH  ({2})	SPILLER {1} VINDER KAMPEN  ({2})
+P:TEAM {1} WINS ROUND {2}	HOLD {1} VINDER RUNDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	HOLD {1} VINDER KAMPEN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	HOLD {1} VINDER  {2} - {3}
+P:PLAYER {1} WINS  {2}	SPILLER {1} VINDER  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDE {1}   HOLD {2} {3} - {4} HOLD {5}
+P:FREE-FOR-ALL RESULTS	ALLE-MOD-ALLE-RESULTATER
+P:TEAM DEATHMATCH RESULTS	HOLD-DEATHMATCH-RESULTATER
+P:KILLS	DRAB
+P:DEATHS	DØDSFALD
+P:KILLS PER DEATH	DRAB PR. DØD
+P:TEAM	HOLD
+P:TEAM ROUNDS WON	HOLDETS VUNDNE RUNDER
+P:MOST KILLS: PLAYER {1} ({2})	FLEST DRAB: SPILLER {1} ({2})
+L:DOWN	NEDE
+L:TROLL BATTLE	TROLDEKAMP
+L:FREE-FOR-ALL	ALLE MOD ALLE
+L:TEAM DEATHMATCH	HOLD-DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	RUNDE {1}  (FØRST TIL {2})
+L:The leader needs {1} more round to win	Føreren mangler {1} runde for at vinde
+L:The leader needs {1} more rounds to win	Føreren mangler {1} runder for at vinde
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	HOLD 1 {1} - {2} HOLD 2   ({3} / {4} mangler)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	SPILLER 1 {1} - {2} SPILLER 2   ({3} / {4} mangler)
+L:PLAYER	SPILLER
+L:HERO	HELT
+L:TEAM	HOLD
+L:ROUNDS	RUNDER
+L:KILLS	DRAB
+L:DEATHS	DØDSFALD
+L:down	nede
+L:FPS counter	FPS-tæller
+L:Frames a second, in the top-left corner	Billeder pr. sekund, øverst til venstre
+L:Last One Standing - Player 1	Den sidste, der står - Spiller 1
+L:Win a Free-for-all match as player 1.	Vind en alle-mod-alle-kamp som spiller 1.
+L:Brothers in Arms - Player 1	Våbenbrødre - Spiller 1
+L:Win a Team Deathmatch match as player 1.	Vind en hold-deathmatch som spiller 1.
+L:Last One Standing - Player 2	Den sidste, der står - Spiller 2
+L:Win a Free-for-all match as player 2.	Vind en alle-mod-alle-kamp som spiller 2.
+L:Brothers in Arms - Player 2	Våbenbrødre - Spiller 2
+L:Win a Team Deathmatch match as player 2.	Vind en hold-deathmatch som spiller 2.
+L:Last One Standing - Player 3	Den sidste, der står - Spiller 3
+L:Win a Free-for-all match as player 3.	Vind en alle-mod-alle-kamp som spiller 3.
+L:Brothers in Arms - Player 3	Våbenbrødre - Spiller 3
+L:Win a Team Deathmatch match as player 3.	Vind en hold-deathmatch som spiller 3.
+L:Last One Standing - Player 4	Den sidste, der står - Spiller 4
+L:Win a Free-for-all match as player 4.	Vind en alle-mod-alle-kamp som spiller 4.
+L:Brothers in Arms - Player 4	Våbenbrødre - Spiller 4
+L:Win a Team Deathmatch match as player 4.	Vind en hold-deathmatch som spiller 4.
+L:The Orange Banner	Det orange banner
+L:Win a Team Deathmatch match as the orange team.	Vind en hold-deathmatch som det orange hold.
+L:The Red Banner	Det røde banner
+L:Win a Team Deathmatch match as the red team.	Vind en hold-deathmatch som det røde hold.

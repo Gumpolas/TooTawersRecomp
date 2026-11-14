@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	    �
 P:TROLL BATTLE RESULTS	    
 P:P{1}	P{1}
 P:Launcher	
+P:Players:	:
+P:P3 Bot:	 P3:
+P:P4 Bot:	 P4:
+P:Auto	
+P:P3 Device:	 P3:
+P:P4 Device:	 P4:
+P:P3 Controls	 P3
+P:P4 Controls	 P4
+P:Reset P3 Controls	   P3
+P:Reset P4 Controls	   P4
+P:P2, P3, P4 Teleport:	 P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	 P2, P3, P4: .
+P:P2, P3, P4 Teleport: OFF	 P2, P3, P4: .
+P:Replace Companions:	  :
+P:Show Upgrades Player {1}	   {1}
+P:Team Deathmatch	  
+P:Free-for-all	  
+P:Player 3:	 3:
+P:Player 4:	 4:
+P:Player 3 Plays:	 3 :
+P:Player 4 Plays:	 4 :
+P:Team 1 - P1:	 1 - P1:
+P:Team 2 - P2:	 2 - P2:
+P:Team 1 - P3:	 1 - P3:
+P:Team 2 - P4:	 2 - P4:
+P:Yes	
+P:No	
+P:No (three players)	 ( )
+P:Player 3: choose your hero	 3:  
+P:Player 4: choose your hero	 4:  
+P:Player 2: {1} is taken	 2: {1}  
+P:Player 3: {1} is taken	 3: {1}  
+P:Player 4: {1} is taken	 4: {1}  
+P:Player 3: {1} not available	 3: {1}   
+P:Player 4: {1} not available	 4: {1}   
+P:PLAYER {1} WINS THE MATCH  ({2})	 {1}    ({2})
+P:TEAM {1} WINS ROUND {2}	 {1}   {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	 {1}    {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	  {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	  {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	 {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	 {1}    {2} {3} - {4}  {5}
+P:FREE-FOR-ALL RESULTS	   
+P:TEAM DEATHMATCH RESULTS	   
+P:KILLS	
+P:DEATHS	
+P:KILLS PER DEATH	  
+P:TEAM	
+P:TEAM ROUNDS WON	  
+P:MOST KILLS: PLAYER {1} ({2})	- :  {1} ({2})

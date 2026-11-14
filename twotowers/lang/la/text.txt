@@ -2043,3 +2043,110 @@ L:Quit	Exire
 L:Select	Eligere
 L:Launcher	Inceptor
 L:Choose a setting to change it, then Play.	Elige optionem mutandam, deinde Ludere.
+L:Last One Standing	Ultimus stans
+L:Win a Free-for-all match.	Pugnam omnium contra omnes vince.
+L:King of the Arena	Rex harenae
+L:Win 5 Free-for-all matches.	Quinque pugnas omnium contra omnes vince.
+L:Brothers in Arms	Fratres armorum
+L:Win a Team Deathmatch match.	Pugnam ad mortem turmarum vince.
+L:Shield Brothers	Fratres scuti
+L:Win 5 Team Deathmatch matches.	Quinque pugnas ad mortem turmarum vince.
+L:Four Trolls Enter	Quattuor trolli intrant
+L:Win a Troll Battle with four trolls.	Proelium Trollorum quattuor trollis vince.
+L:A Company of Three	Comitatus trium
+L:Win a level in co-op with three players.	Gradum in Societate tribus lusoribus vince.
+L:The Fellowship of Four	Societas quattuor
+L:Win a level in co-op with four players.	Gradum in Societate quattuor lusoribus vince.
+L:Many Hands	Multae manus
+L:Win 5 different levels in co-op with three or four players.	Quinque gradus diversos in Societate tribus aut quattuor lusoribus vince.
+L:Storming Orthanc	Impetus in Orthancum
+L:Win the secret mission at Orthanc in co-op with four players.	Missionem arcanam Orthanci in Societate quattuor lusoribus vince.
+P:Players:	Lusores:
+P:P3 Bot:	P3 Automaton:
+P:P4 Bot:	P4 Automaton:
+P:Auto	Sponte
+P:P3 Device:	P3 Instrumentum:
+P:P4 Device:	P4 Instrumentum:
+P:P3 Controls	P3 Moderamina
+P:P4 Controls	P4 Moderamina
+P:Reset P3 Controls	P3 Moderamina reficere
+P:Reset P4 Controls	P4 Moderamina reficere
+P:P2, P3, P4 Teleport:	P2, P3, P4 Transvectio:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Transvectio: ACCENSA
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Transvectio: EXSTINCTA
+P:Replace Companions:	Comites substituere:
+P:Show Upgrades Player {1}	Lusoris {1} incrementa
+P:Team Deathmatch	Pugna ad mortem turmarum
+P:Free-for-all	Omnes contra omnes
+P:Player 3:	Lusor 3:
+P:Player 4:	Lusor 4:
+P:Player 3 Plays:	Lusor 3 ludit:
+P:Player 4 Plays:	Lusor 4 ludit:
+P:Team 1 - P1:	Turma 1 - P1:
+P:Team 2 - P2:	Turma 2 - P2:
+P:Team 1 - P3:	Turma 1 - P3:
+P:Team 2 - P4:	Turma 2 - P4:
+P:Yes	Ita
+P:No	Non
+P:No (three players)	Non (tres lusores)
+P:Player 3: choose your hero	Lusor 3: heroem elige
+P:Player 4: choose your hero	Lusor 4: heroem elige
+P:Player 2: {1} is taken	Lusor 2: {1} iam captus est
+P:Player 3: {1} is taken	Lusor 3: {1} iam captus est
+P:Player 4: {1} is taken	Lusor 4: {1} iam captus est
+P:Player 3: {1} not available	Lusor 3: {1} non praesto est
+P:Player 4: {1} not available	Lusor 4: {1} non praesto est
+P:PLAYER {1} WINS THE MATCH  ({2})	LUSOR {1} PUGNAM VINCIT  ({2})
+P:TEAM {1} WINS ROUND {2}	TURMA {1} CERTAMEN {2} VINCIT
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TURMA {1} PUGNAM VINCIT  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TURMA {1} VINCIT  {2} - {3}
+P:PLAYER {1} WINS  {2}	LUSOR {1} VINCIT  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	CERTAMEN {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	CERTAMEN {1}   TURMA {2} {3} - {4} TURMA {5}
+P:FREE-FOR-ALL RESULTS	EXITUS OMNIUM CONTRA OMNES
+P:TEAM DEATHMATCH RESULTS	EXITUS PUGNAE TURMARUM
+P:KILLS	CAEDES
+P:DEATHS	MORTES
+P:KILLS PER DEATH	CAEDES PER MORTEM
+P:TEAM	TURMA
+P:TEAM ROUNDS WON	CERTAMINA TURMAE
+P:MOST KILLS: PLAYER {1} ({2})	PLURIMAE CAEDES: LUSOR {1} ({2})
+L:DOWN	PROSTRATUS
+L:TROLL BATTLE	PROELIUM TROLLORUM
+L:FREE-FOR-ALL	OMNES CONTRA OMNES
+L:TEAM DEATHMATCH	PUGNA AD MORTEM TURMARUM
+L:DEATHMATCH	PUGNA AD MORTEM
+L:ROUND {1}  (FIRST TO {2})	CERTAMEN {1}  (QUI PRIMUS AD {2})
+L:The leader needs {1} more round to win	Duci adhuc {1} certamen ad victoriam deest
+L:The leader needs {1} more rounds to win	Duci adhuc {1} certamina ad victoriam desunt
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	TURMA 1 {1} - {2} TURMA 2   (desunt {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	LUSOR 1 {1} - {2} LUSOR 2   (desunt {3} / {4})
+L:PLAYER	LUSOR
+L:HERO	HEROS
+L:TEAM	TURMA
+L:ROUNDS	CERTAMINA
+L:KILLS	CAEDES
+L:DEATHS	MORTES
+L:down	prostratus
+L:FPS counter	Numerator FPS
+L:Frames a second, in the top-left corner	Imagines per secundum, sursum ad sinistram
+L:Last One Standing - Player 1	Ultimus stans - Lusor 1
+L:Win a Free-for-all match as player 1.	Pugnam omnium contra omnes ut lusor 1 vince.
+L:Brothers in Arms - Player 1	Fratres armorum - Lusor 1
+L:Win a Team Deathmatch match as player 1.	Pugnam ad mortem turmarum ut lusor 1 vince.
+L:Last One Standing - Player 2	Ultimus stans - Lusor 2
+L:Win a Free-for-all match as player 2.	Pugnam omnium contra omnes ut lusor 2 vince.
+L:Brothers in Arms - Player 2	Fratres armorum - Lusor 2
+L:Win a Team Deathmatch match as player 2.	Pugnam ad mortem turmarum ut lusor 2 vince.
+L:Last One Standing - Player 3	Ultimus stans - Lusor 3
+L:Win a Free-for-all match as player 3.	Pugnam omnium contra omnes ut lusor 3 vince.
+L:Brothers in Arms - Player 3	Fratres armorum - Lusor 3
+L:Win a Team Deathmatch match as player 3.	Pugnam ad mortem turmarum ut lusor 3 vince.
+L:Last One Standing - Player 4	Ultimus stans - Lusor 4
+L:Win a Free-for-all match as player 4.	Pugnam omnium contra omnes ut lusor 4 vince.
+L:Brothers in Arms - Player 4	Fratres armorum - Lusor 4
+L:Win a Team Deathmatch match as player 4.	Pugnam ad mortem turmarum ut lusor 4 vince.
+L:The Orange Banner	Vexillum aurantium
+L:Win a Team Deathmatch match as the orange team.	Pugnam ad mortem turmarum cum turma aurantia vince.
+L:The Red Banner	Vexillum rubrum
+L:Win a Team Deathmatch match as the red team.	Pugnam ad mortem turmarum cum turma rubra vince.

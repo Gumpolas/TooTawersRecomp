@@ -2042,3 +2042,110 @@ L:Quit	Hætta
 L:Select	Velja
 L:Launcher	Ræsir
 L:Choose a setting to change it, then Play.	Vel stilling at breyta, síðan Leika.
+L:Last One Standing	Sá síðasti er stendr
+L:Win a Free-for-all match.	Vinn leik hverr gegn öllum.
+L:King of the Arena	Konungr leikvangsins
+L:Win 5 Free-for-all matches.	Vinn fimm leiki hverr gegn öllum.
+L:Brothers in Arms	Vápnbræðr
+L:Win a Team Deathmatch match.	Vinn sveitarbardaga til bana.
+L:Shield Brothers	Skjaldbræðr
+L:Win 5 Team Deathmatch matches.	Vinn fimm sveitarbardaga til bana.
+L:Four Trolls Enter	Fjögur troll ganga inn
+L:Win a Troll Battle with four trolls.	Vinn trollabardaga með fjórum trollum.
+L:A Company of Three	Föruneyti þriggja
+L:Win a level in co-op with three players.	Vinn stig í samleik með þrimr leikmönnum.
+L:The Fellowship of Four	Föruneyti fjögurra
+L:Win a level in co-op with four players.	Vinn stig í samleik með fjórum leikmönnum.
+L:Many Hands	Margar hendr
+L:Win 5 different levels in co-op with three or four players.	Vinn fimm ólík stig í samleik með þrimr eða fjórum leikmönnum.
+L:Storming Orthanc	Atlaga at Orþanki
+L:Win the secret mission at Orthanc in co-op with four players.	Vinn leyniförina í Orþanki í samleik með fjórum leikmönnum.
+P:Players:	Leikmenn:
+P:P3 Bot:	P3 Vélmaðr:
+P:P4 Bot:	P4 Vélmaðr:
+P:Auto	Sjálfvirkt
+P:P3 Device:	P3 Tæki:
+P:P4 Device:	P4 Tæki:
+P:P3 Controls	P3 Stjórn
+P:P4 Controls	P4 Stjórn
+P:Reset P3 Controls	Endrstilla P3 stjórn
+P:Reset P4 Controls	Endrstilla P4 stjórn
+P:P2, P3, P4 Teleport:	P2, P3, P4 Fjarflutningr:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Fjarflutningr: Á
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Fjarflutningr: AF
+P:Replace Companions:	Skipta förunautum:
+P:Show Upgrades Player {1}	Endrbætr leikmanns {1}
+P:Team Deathmatch	Sveitarbardagi til bana
+P:Free-for-all	Hverr gegn öllum
+P:Player 3:	Leikmaðr 3:
+P:Player 4:	Leikmaðr 4:
+P:Player 3 Plays:	Leikmaðr 3 leikr:
+P:Player 4 Plays:	Leikmaðr 4 leikr:
+P:Team 1 - P1:	Sveit 1 - P1:
+P:Team 2 - P2:	Sveit 2 - P2:
+P:Team 1 - P3:	Sveit 1 - P3:
+P:Team 2 - P4:	Sveit 2 - P4:
+P:Yes	Já
+P:No	Nei
+P:No (three players)	Nei (þrír leikmenn)
+P:Player 3: choose your hero	Leikmaðr 3: vel kappa þinn
+P:Player 4: choose your hero	Leikmaðr 4: vel kappa þinn
+P:Player 2: {1} is taken	Leikmaðr 2: {1} er tekinn
+P:Player 3: {1} is taken	Leikmaðr 3: {1} er tekinn
+P:Player 4: {1} is taken	Leikmaðr 4: {1} er tekinn
+P:Player 3: {1} not available	Leikmaðr 3: {1} eigi tiltækr
+P:Player 4: {1} not available	Leikmaðr 4: {1} eigi tiltækr
+P:PLAYER {1} WINS THE MATCH  ({2})	LEIKMAÐR {1} VINNR LEIKINN  ({2})
+P:TEAM {1} WINS ROUND {2}	SVEIT {1} VINNR LOTU {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	SVEIT {1} VINNR LEIKINN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	SVEIT {1} VINNR  {2} - {3}
+P:PLAYER {1} WINS  {2}	LEIKMAÐR {1} VINNR  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	LOTA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	LOTA {1}   SVEIT {2} {3} - {4} SVEIT {5}
+P:FREE-FOR-ALL RESULTS	ÚRSLIT HVERR GEGN ÖLLUM
+P:TEAM DEATHMATCH RESULTS	ÚRSLIT SVEITARBARDAGA
+P:KILLS	VÍG
+P:DEATHS	DAUÐAR
+P:KILLS PER DEATH	VÍG Á HVERN DAUÐA
+P:TEAM	SVEIT
+P:TEAM ROUNDS WON	LOTUR SVEITAR
+P:MOST KILLS: PLAYER {1} ({2})	FLEST VÍG: LEIKMAÐR {1} ({2})
+L:DOWN	FALLINN
+L:TROLL BATTLE	TROLLABARDAGI
+L:FREE-FOR-ALL	HVERR GEGN ÖLLUM
+L:TEAM DEATHMATCH	SVEITARBARDAGI TIL BANA
+L:DEATHMATCH	BARDAGI TIL BANA
+L:ROUND {1}  (FIRST TO {2})	LOTA {1}  (FYRSTR TIL {2})
+L:The leader needs {1} more round to win	Forystumaðr þarf enn {1} lotu til sigrs
+L:The leader needs {1} more rounds to win	Forystumaðr þarf enn {1} lotur til sigrs
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	SVEIT 1 {1} - {2} SVEIT 2   ({3} / {4} eptir)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	LEIKMAÐR 1 {1} - {2} LEIKMAÐR 2   ({3} / {4} eptir)
+L:PLAYER	LEIKMAÐR
+L:HERO	KAPPI
+L:TEAM	SVEIT
+L:ROUNDS	LOTUR
+L:KILLS	VÍG
+L:DEATHS	DAUÐAR
+L:down	fallinn
+L:FPS counter	FPS-teljari
+L:Frames a second, in the top-left corner	Myndir á sekúndu, efst til vinstri
+L:Last One Standing - Player 1	Sá síðasti er stendr - Leikmaðr 1
+L:Win a Free-for-all match as player 1.	Vinn leik hverr gegn öllum sem leikmaðr 1.
+L:Brothers in Arms - Player 1	Vápnbræðr - Leikmaðr 1
+L:Win a Team Deathmatch match as player 1.	Vinn sveitarbardaga til bana sem leikmaðr 1.
+L:Last One Standing - Player 2	Sá síðasti er stendr - Leikmaðr 2
+L:Win a Free-for-all match as player 2.	Vinn leik hverr gegn öllum sem leikmaðr 2.
+L:Brothers in Arms - Player 2	Vápnbræðr - Leikmaðr 2
+L:Win a Team Deathmatch match as player 2.	Vinn sveitarbardaga til bana sem leikmaðr 2.
+L:Last One Standing - Player 3	Sá síðasti er stendr - Leikmaðr 3
+L:Win a Free-for-all match as player 3.	Vinn leik hverr gegn öllum sem leikmaðr 3.
+L:Brothers in Arms - Player 3	Vápnbræðr - Leikmaðr 3
+L:Win a Team Deathmatch match as player 3.	Vinn sveitarbardaga til bana sem leikmaðr 3.
+L:Last One Standing - Player 4	Sá síðasti er stendr - Leikmaðr 4
+L:Win a Free-for-all match as player 4.	Vinn leik hverr gegn öllum sem leikmaðr 4.
+L:Brothers in Arms - Player 4	Vápnbræðr - Leikmaðr 4
+L:Win a Team Deathmatch match as player 4.	Vinn sveitarbardaga til bana sem leikmaðr 4.
+L:The Orange Banner	Rauðgula merkit
+L:Win a Team Deathmatch match as the orange team.	Vinn sveitarbardaga til bana með rauðgulu sveitinni.
+L:The Red Banner	Rauða merkit
+L:Win a Team Deathmatch match as the red team.	Vinn sveitarbardaga til bana með rauðu sveitinni.

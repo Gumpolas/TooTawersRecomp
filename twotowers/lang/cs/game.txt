@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	REKORDY BITVY TROLL
 P:TROLL BATTLE RESULTS	VÝSLEDKY BITVY TROLL
 P:P{1}	P{1}
 P:Launcher	Spout
+P:Players:	Hrái:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Zaízení P3:
+P:P4 Device:	Zaízení P4:
+P:P3 Controls	Ovládání P3
+P:P4 Controls	Ovládání P4
+P:Reset P3 Controls	Obnovit ovládání P3
+P:Reset P4 Controls	Obnovit ovládání P4
+P:P2, P3, P4 Teleport:	Teleport P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleport P2, P3, P4: ZAP.
+P:P2, P3, P4 Teleport: OFF	Teleport P2, P3, P4: VYP.
+P:Replace Companions:	Nahradit spoleníky:
+P:Show Upgrades Player {1}	Vylepení hráe {1}
+P:Team Deathmatch	Týmový deathmatch
+P:Free-for-all	Kadý proti kadému
+P:Player 3:	Hrá 3:
+P:Player 4:	Hrá 4:
+P:Player 3 Plays:	Hrá 3 hraje:
+P:Player 4 Plays:	Hrá 4 hraje:
+P:Team 1 - P1:	Tým 1 - P1:
+P:Team 2 - P2:	Tým 2 - P2:
+P:Team 1 - P3:	Tým 1 - P3:
+P:Team 2 - P4:	Tým 2 - P4:
+P:Yes	Ano
+P:No	Ne
+P:No (three players)	Ne (ti hrái)
+P:Player 3: choose your hero	Hrá 3: vyber hrdinu
+P:Player 4: choose your hero	Hrá 4: vyber hrdinu
+P:Player 2: {1} is taken	Hrá 2: {1} je obsazen
+P:Player 3: {1} is taken	Hrá 3: {1} je obsazen
+P:Player 4: {1} is taken	Hrá 4: {1} je obsazen
+P:Player 3: {1} not available	Hrá 3: {1} není k dispozici
+P:Player 4: {1} not available	Hrá 4: {1} není k dispozici
+P:PLAYER {1} WINS THE MATCH  ({2})	HRÁ {1} VYHRÁVÁ ZÁPAS  ({2})
+P:TEAM {1} WINS ROUND {2}	TÝM {1} VYHRÁVÁ {2}. KOLO
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TÝM {1} VYHRÁVÁ ZÁPAS  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	VÍTZÍ TÝM {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	VÍTZÍ HRÁ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. KOLO   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. KOLO   TÝM {2} {3} - {4} TÝM {5}
+P:FREE-FOR-ALL RESULTS	VÝSLEDKY KADÝ PROTI KADÉMU
+P:TEAM DEATHMATCH RESULTS	VÝSLEDKY TÝMOVÉHO DEATHMATCHE
+P:KILLS	ZABITÍ
+P:DEATHS	SMRTI
+P:KILLS PER DEATH	ZABITÍ NA SMRT
+P:TEAM	TÝM
+P:TEAM ROUNDS WON	KOLA TÝMU
+P:MOST KILLS: PLAYER {1} ({2})	NEJVÍCE ZABITÍ: HRÁ {1} ({2})

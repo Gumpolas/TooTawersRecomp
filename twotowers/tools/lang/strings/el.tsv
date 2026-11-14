@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Επιλέξτε μια ρύθμισ
 L:Voices:	Φωνές:
 L:Films:	Ταινίες:
 L:(as the text)	(όπως το κείμενο)
+L:Last One Standing	Ο τελευταίος όρθιος
+L:Win a Free-for-all match.	Κέρδισε έναν αγώνα όλοι εναντίον όλων.
+L:King of the Arena	Βασιλιάς της αρένας
+L:Win 5 Free-for-all matches.	Κέρδισε 5 αγώνες όλοι εναντίον όλων.
+L:Brothers in Arms	Αδέρφια στα όπλα
+L:Win a Team Deathmatch match.	Κέρδισε ένα ομαδικό deathmatch.
+L:Shield Brothers	Αδέρφια της ασπίδας
+L:Win 5 Team Deathmatch matches.	Κέρδισε 5 ομαδικά deathmatch.
+L:Four Trolls Enter	Μπαίνουν τέσσερα τρολ
+L:Win a Troll Battle with four trolls.	Κέρδισε μια Μάχη Τρολ με τέσσερα τρολ.
+L:A Company of Three	Μια συντροφιά τριών
+L:Win a level in co-op with three players.	Νίκησε σε μια πίστα σε Συνεργασία με τρεις παίκτες.
+L:The Fellowship of Four	Η Συντροφιά των τεσσάρων
+L:Win a level in co-op with four players.	Νίκησε σε μια πίστα σε Συνεργασία με τέσσερις παίκτες.
+L:Many Hands	Πολλά χέρια
+L:Win 5 different levels in co-op with three or four players.	Νίκησε σε 5 διαφορετικές πίστες σε Συνεργασία με τρεις ή τέσσερις παίκτες.
+L:Storming Orthanc	Η έφοδος στο Όρθανκ
+L:Win the secret mission at Orthanc in co-op with four players.	Νίκησε στη μυστική αποστολή του Όρθανκ σε Συνεργασία με τέσσερις παίκτες.
+P:Players:	Παίκτες:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Αυτόματο
+P:P3 Device:	Συσκευή P3:
+P:P4 Device:	Συσκευή P4:
+P:P3 Controls	Χειρισμός P3
+P:P4 Controls	Χειρισμός P4
+P:Reset P3 Controls	Επαναφορά χειρισμού P3
+P:Reset P4 Controls	Επαναφορά χειρισμού P4
+P:P2, P3, P4 Teleport:	Τηλεμεταφορά P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Τηλεμεταφορά P2, P3, P4: ΝΑΙ
+P:P2, P3, P4 Teleport: OFF	Τηλεμεταφορά P2, P3, P4: ΟΧΙ
+P:Replace Companions:	Αντικατάσταση συντρόφων:
+P:Show Upgrades Player {1}	Αναβαθμίσεις παίκτη {1}
+P:Team Deathmatch	Ομαδικό deathmatch
+P:Free-for-all	Όλοι εναντίον όλων
+P:Player 3:	Παίκτης 3:
+P:Player 4:	Παίκτης 4:
+P:Player 3 Plays:	Παίζει ο παίκτης 3:
+P:Player 4 Plays:	Παίζει ο παίκτης 4:
+P:Team 1 - P1:	Ομάδα 1 - P1:
+P:Team 2 - P2:	Ομάδα 2 - P2:
+P:Team 1 - P3:	Ομάδα 1 - P3:
+P:Team 2 - P4:	Ομάδα 2 - P4:
+P:Yes	Ναι
+P:No	Όχι
+P:No (three players)	Όχι (τρεις παίκτες)
+P:Player 3: choose your hero	Παίκτης 3: διάλεξε ήρωα
+P:Player 4: choose your hero	Παίκτης 4: διάλεξε ήρωα
+P:Player 2: {1} is taken	Παίκτης 2: ο/η {1} είναι πιασμένος
+P:Player 3: {1} is taken	Παίκτης 3: ο/η {1} είναι πιασμένος
+P:Player 4: {1} is taken	Παίκτης 4: ο/η {1} είναι πιασμένος
+P:Player 3: {1} not available	Παίκτης 3: {1} – μη διαθέσιμος
+P:Player 4: {1} not available	Παίκτης 4: {1} – μη διαθέσιμος
+P:PLAYER {1} WINS THE MATCH  ({2})	Ο ΠΑΙΚΤΗΣ {1} ΚΕΡΔΙΖΕΙ ΤΟΝ ΑΓΩΝΑ  ({2})
+P:TEAM {1} WINS ROUND {2}	Η ΟΜΑΔΑ {1} ΚΕΡΔΙΖΕΙ ΤΟΝ ΓΥΡΟ {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	Η ΟΜΑΔΑ {1} ΚΕΡΔΙΖΕΙ ΤΟΝ ΑΓΩΝΑ  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	ΝΙΚΗΤΡΙΑ Η ΟΜΑΔΑ {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	ΝΙΚΗΤΗΣ Ο ΠΑΙΚΤΗΣ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ΓΥΡΟΣ {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ΓΥΡΟΣ {1}   ΟΜΑΔΑ {2} {3} - {4} ΟΜΑΔΑ {5}
+P:FREE-FOR-ALL RESULTS	ΑΠΟΤΕΛΕΣΜΑΤΑ ΟΛΟΙ ΕΝΑΝΤΙΟΝ ΟΛΩΝ
+P:TEAM DEATHMATCH RESULTS	ΑΠΟΤΕΛΕΣΜΑΤΑ ΟΜΑΔΙΚΟΥ DEATHMATCH
+P:KILLS	ΦΟΝΟΙ
+P:DEATHS	ΘΑΝΑΤΟΙ
+P:KILLS PER DEATH	ΦΟΝΟΙ ΑΝΑ ΘΑΝΑΤΟ
+P:TEAM	ΟΜΑΔΑ
+P:TEAM ROUNDS WON	ΓΥΡΟΙ ΟΜΑΔΑΣ
+P:MOST KILLS: PLAYER {1} ({2})	ΠΕΡΙΣΣΟΤΕΡΟΙ ΦΟΝΟΙ: ΠΑΙΚΤΗΣ {1} ({2})
+L:DOWN	ΕΠΕΣΕΣ
+L:TROLL BATTLE	ΜΑΧΗ ΤΡΟΛ
+L:FREE-FOR-ALL	ΟΛΟΙ ΕΝΑΝΤΙΟΝ ΟΛΩΝ
+L:TEAM DEATHMATCH	ΟΜΑΔΙΚΟ DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	ΓΥΡΟΣ {1}  (ΟΠΟΙΟΣ ΦΤΑΣΕΙ ΠΡΩΤΟΣ ΤΙΣ {2})
+L:The leader needs {1} more round to win	Ο πρώτος χρειάζεται ακόμη {1} γύρο για τη νίκη
+L:The leader needs {1} more rounds to win	Ο πρώτος χρειάζεται ακόμη {1} γύρους για τη νίκη
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	ΟΜΑΔΑ 1 {1} - {2} ΟΜΑΔΑ 2   (απομένουν {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	ΠΑΙΚΤΗΣ 1 {1} - {2} ΠΑΙΚΤΗΣ 2   (απομένουν {3} / {4})
+L:PLAYER	ΠΑΙΚΤΗΣ
+L:HERO	ΗΡΩΑΣ
+L:TEAM	ΟΜΑΔΑ
+L:ROUNDS	ΓΥΡΟΙ
+L:KILLS	ΦΟΝΟΙ
+L:DEATHS	ΘΑΝΑΤΟΙ
+L:down	έπεσε
+L:FPS counter	Μετρητής FPS
+L:Frames a second, in the top-left corner	Καρέ ανά δευτερόλεπτο, πάνω αριστερά
+L:Last One Standing - Player 1	Ο τελευταίος όρθιος - Παίκτης 1
+L:Win a Free-for-all match as player 1.	Κέρδισε έναν αγώνα όλοι εναντίον όλων ως παίκτης 1.
+L:Brothers in Arms - Player 1	Αδέρφια στα όπλα - Παίκτης 1
+L:Win a Team Deathmatch match as player 1.	Κέρδισε ένα ομαδικό deathmatch ως παίκτης 1.
+L:Last One Standing - Player 2	Ο τελευταίος όρθιος - Παίκτης 2
+L:Win a Free-for-all match as player 2.	Κέρδισε έναν αγώνα όλοι εναντίον όλων ως παίκτης 2.
+L:Brothers in Arms - Player 2	Αδέρφια στα όπλα - Παίκτης 2
+L:Win a Team Deathmatch match as player 2.	Κέρδισε ένα ομαδικό deathmatch ως παίκτης 2.
+L:Last One Standing - Player 3	Ο τελευταίος όρθιος - Παίκτης 3
+L:Win a Free-for-all match as player 3.	Κέρδισε έναν αγώνα όλοι εναντίον όλων ως παίκτης 3.
+L:Brothers in Arms - Player 3	Αδέρφια στα όπλα - Παίκτης 3
+L:Win a Team Deathmatch match as player 3.	Κέρδισε ένα ομαδικό deathmatch ως παίκτης 3.
+L:Last One Standing - Player 4	Ο τελευταίος όρθιος - Παίκτης 4
+L:Win a Free-for-all match as player 4.	Κέρδισε έναν αγώνα όλοι εναντίον όλων ως παίκτης 4.
+L:Brothers in Arms - Player 4	Αδέρφια στα όπλα - Παίκτης 4
+L:Win a Team Deathmatch match as player 4.	Κέρδισε ένα ομαδικό deathmatch ως παίκτης 4.
+L:The Orange Banner	Το πορτοκαλί λάβαρο
+L:Win a Team Deathmatch match as the orange team.	Κέρδισε ένα ομαδικό deathmatch με την πορτοκαλί ομάδα.
+L:The Red Banner	Το κόκκινο λάβαρο
+L:Win a Team Deathmatch match as the red team.	Κέρδισε ένα ομαδικό deathmatch με την κόκκινη ομάδα.

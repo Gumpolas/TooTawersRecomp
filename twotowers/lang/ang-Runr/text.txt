@@ -2043,3 +2043,110 @@ L:Quit	Forlǣtan
 L:Select	Ceosan
 L:Launcher	Onginnere
 L:Choose a setting to change it, then Play.	Ceos setnesse to wendenne, þonne Plega.
+L:Last One Standing	Se niehsta standende
+L:Win a Free-for-all match.	Gewinn ælc-wiþ-ealle camp.
+L:King of the Arena	Cyning þæs campstedes
+L:Win 5 Free-for-all matches.	Gewinn fif ælc-wiþ-ealle campas.
+L:Brothers in Arms	Wæpengeferan
+L:Win a Team Deathmatch match.	Gewinn werodes deaþgecamp.
+L:Shield Brothers	Bordgebroþru
+L:Win 5 Team Deathmatch matches.	Gewinn fif werodes deaþgecampas.
+L:Four Trolls Enter	Feower þyrsas gaþ in
+L:Win a Troll Battle with four trolls.	Gewinn Þyrsa Wig mid feower þyrsum.
+L:A Company of Three	Geferscipe þreora
+L:Win a level in co-op with three players.	Gewinn stæpe samod mid þrim plegerum.
+L:The Fellowship of Four	Geferscipe feowera
+L:Win a level in co-op with four players.	Gewinn stæpe samod mid feower plegerum.
+L:Many Hands	Manige handa
+L:Win 5 different levels in co-op with three or four players.	Gewinn fif ungelice stæpas samod mid þrim oþþe feower plegerum.
+L:Storming Orthanc	Orþances onræs
+L:Win the secret mission at Orthanc in co-op with four players.	Gewinn þone diglan ærend æt Orþance samod mid feower plegerum.
+P:Players:	ᛈᛚᛖᚷᛖᚱᚪᛋ:
+P:P3 Bot:	P3 ᛋᛖᛚᚠᚷᛖᛝᚪ:
+P:P4 Bot:	P4 ᛋᛖᛚᚠᚷᛖᛝᚪ:
+P:Auto	ᛋᛖᛚᚠ
+P:P3 Device:	P3 ᛏᚩᛚ:
+P:P4 Device:	P4 ᛏᚩᛚ:
+P:P3 Controls	P3 ᚹᛠᛚᛞᚪᛋ
+P:P4 Controls	P4 ᚹᛠᛚᛞᚪᛋ
+P:Reset P3 Controls	P3 ᚹᛠᛚᛞᚪᛋ ᛖᛞᚾᛁᚹᛁᚪᚾ
+P:Reset P4 Controls	P4 ᚹᛠᛚᛞᚪᛋ ᛖᛞᚾᛁᚹᛁᚪᚾ
+P:P2, P3, P4 Teleport:	P2, P3, P4 ᚠᛇᚱᚱᚠᚫᚱ:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 ᚠᛇᚱᚱᚠᚫᚱ: ON
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 ᚠᛇᚱᚱᚠᚫᚱ: OF
+P:Replace Companions:	ᚷᛖᚠᛖᚱᚪᚾ ᚹᚱᛁᛉᛚᛁᚪᚾ:
+P:Show Upgrades Player {1}	ᛈᛚᛖᚷᛖᚱᛖᛋ {1} ᛠᚳᚪᚾ
+P:Team Deathmatch	ᚹᛖᚱᚩᛞᛖᛋ ᛞᛠᚦᚷᛖᚳᚪᛗᛈ
+P:Free-for-all	ᚫᛚᚳ ᚹᛁᚦ ᛠᛚᛚᛖ
+P:Player 3:	ᛈᛚᛖᚷᛖᚱᛖ 3:
+P:Player 4:	ᛈᛚᛖᚷᛖᚱᛖ 4:
+P:Player 3 Plays:	ᛈᛚᛖᚷᛖᚱᛖ 3 ᛈᛚᛖᚷᚪᚦ:
+P:Player 4 Plays:	ᛈᛚᛖᚷᛖᚱᛖ 4 ᛈᛚᛖᚷᚪᚦ:
+P:Team 1 - P1:	ᚹᛖᚱᚩᛞ 1 - P1:
+P:Team 2 - P2:	ᚹᛖᚱᚩᛞ 2 - P2:
+P:Team 1 - P3:	ᚹᛖᚱᚩᛞ 1 - P3:
+P:Team 2 - P4:	ᚹᛖᚱᚩᛞ 2 - P4:
+P:Yes	ᚷᛠ
+P:No	ᚾᛖᛋᛖ
+P:No (three players)	ᚾᛖᛋᛖ (ᚦᚱᛁᛖ ᛈᛚᛖᚷᛖᚱᚪᛋ)
+P:Player 3: choose your hero	ᛈᛚᛖᚷᛖᚱᛖ 3: ᚳᛇᛋ ᚦᛁᚾᚾᛖ ᚻᚫᛚᛖᚦ
+P:Player 4: choose your hero	ᛈᛚᛖᚷᛖᚱᛖ 4: ᚳᛇᛋ ᚦᛁᚾᚾᛖ ᚻᚫᛚᛖᚦ
+P:Player 2: {1} is taken	ᛈᛚᛖᚷᛖᚱᛖ 2: {1} ᛁᛋ ᚷᛖᚾᚢᛗᛖᚾ
+P:Player 3: {1} is taken	ᛈᛚᛖᚷᛖᚱᛖ 3: {1} ᛁᛋ ᚷᛖᚾᚢᛗᛖᚾ
+P:Player 4: {1} is taken	ᛈᛚᛖᚷᛖᚱᛖ 4: {1} ᛁᛋ ᚷᛖᚾᚢᛗᛖᚾ
+P:Player 3: {1} not available	ᛈᛚᛖᚷᛖᚱᛖ 3: {1} ᚾᛁᛋ ᚷᛠᚱᚢ
+P:Player 4: {1} not available	ᛈᛚᛖᚷᛖᚱᛖ 4: {1} ᚾᛁᛋ ᚷᛠᚱᚢ
+P:PLAYER {1} WINS THE MATCH  ({2})	ᛈᛚᛖᚷᛖᚱᛖ {1} ᚹᛁᚾᚦ ᚦᚩᚾᛖ CAMP  ({2})
+P:TEAM {1} WINS ROUND {2}	WEROD {1} ᚹᛁᚾᚦ ᚷᛖᚠᛇᚻᛏ {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	WEROD {1} ᚹᛁᚾᚦ ᚦᚩᚾᛖ CAMP  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	WEROD {1} ᚹᛁᚾᚦ  {2} - {3}
+P:PLAYER {1} WINS  {2}	ᛈᛚᛖᚷᛖᚱᛖ {1} ᚹᛁᚾᚦ  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ᚷᛖᚠᛇᚻᛏ {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ᚷᛖᚠᛇᚻᛏ {1}   WEROD {2} {3} - {4} WEROD {5}
+P:FREE-FOR-ALL RESULTS	ᚫᛚᚳ ᚹᛁᚦ EALLE ᛖᚾᛞᚢᛝᚪ
+P:TEAM DEATHMATCH RESULTS	ᚹᛖᚱᚩᛞᛖᛋ ᛞᛠᚦᚷᛖᚳᚪᛗᛈᛖᛋ ᛖᚾᛞᚢᛝᚪ
+P:KILLS	ᛋᛚᛖᚷᚪᛋ
+P:DEATHS	ᛞᛠᚦᚪᛋ
+P:KILLS PER DEATH	ᛋᛚᛖᚷᚪᛋ ᚫᛏ ᛞᛠᚦᛖ
+P:TEAM	WEROD
+P:TEAM ROUNDS WON	ᚹᛖᚱᚩᛞᛖᛋ ᚷᛖᚠᛇᚻᛏᚪᛋ
+P:MOST KILLS: PLAYER {1} ({2})	ᛗᚫᛋᛏ SLEGA: ᛈᛚᛖᚷᛖᚱᛖ {1} ({2})
+L:DOWN	FEALLEN
+L:TROLL BATTLE	ÞYRSA WIG
+L:FREE-FOR-ALL	ÆLC WIÞ EALLE
+L:TEAM DEATHMATCH	WERODES DEAÞGECAMP
+L:DEATHMATCH	DEAÞGECAMP
+L:ROUND {1}  (FIRST TO {2})	GEFEOHT {1}  (SE FORMA TO {2})
+L:The leader needs {1} more round to win	Se foregenga behofaþ giet {1} gefeohtes to sige
+L:The leader needs {1} more rounds to win	Se foregenga behofaþ giet {1} gefeohta to sige
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	WEROD 1 {1} - {2} WEROD 2   ({3} / {4} to lafe)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	PLEGERE 1 {1} - {2} PLEGERE 2   ({3} / {4} to lafe)
+L:PLAYER	PLEGERE
+L:HERO	HÆLEÞ
+L:TEAM	WEROD
+L:ROUNDS	GEFEOHTAS
+L:KILLS	SLEGAS
+L:DEATHS	DEAÞAS
+L:down	feallen
+L:FPS counter	FPS Getæl
+L:Frames a second, in the top-left corner	Ansiena on ælcre æþunge, ufan on wynstran healfe
+L:Last One Standing - Player 1	Se niehsta standende - Plegere 1
+L:Win a Free-for-all match as player 1.	Gewinn aelc-wiþ-ealle camp swa plegere 1.
+L:Brothers in Arms - Player 1	Wæpengeferan - Plegere 1
+L:Win a Team Deathmatch match as player 1.	Gewinn werodes deaþgecamp swa plegere 1.
+L:Last One Standing - Player 2	Se niehsta standende - Plegere 2
+L:Win a Free-for-all match as player 2.	Gewinn aelc-wiþ-ealle camp swa plegere 2.
+L:Brothers in Arms - Player 2	Wæpengeferan - Plegere 2
+L:Win a Team Deathmatch match as player 2.	Gewinn werodes deaþgecamp swa plegere 2.
+L:Last One Standing - Player 3	Se niehsta standende - Plegere 3
+L:Win a Free-for-all match as player 3.	Gewinn aelc-wiþ-ealle camp swa plegere 3.
+L:Brothers in Arms - Player 3	Wæpengeferan - Plegere 3
+L:Win a Team Deathmatch match as player 3.	Gewinn werodes deaþgecamp swa plegere 3.
+L:Last One Standing - Player 4	Se niehsta standende - Plegere 4
+L:Win a Free-for-all match as player 4.	Gewinn aelc-wiþ-ealle camp swa plegere 4.
+L:Brothers in Arms - Player 4	Wæpengeferan - Plegere 4
+L:Win a Team Deathmatch match as player 4.	Gewinn werodes deaþgecamp swa plegere 4.
+L:The Orange Banner	Se geolureada segn
+L:Win a Team Deathmatch match as the orange team.	Gewinn werodes deaþgecamp mid þam geolureadan werode.
+L:The Red Banner	Se reada segn
+L:Win a Team Deathmatch match as the red team.	Gewinn werodes deaþgecamp mid þam readan werode.

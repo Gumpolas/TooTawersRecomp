@@ -180,4 +180,9 @@ if [ "$(./twotowers-setup get Display ultra_textures)" = "1" ] && ./twotowers-se
     fi
 fi
 
-exec ./twotowers_recomp "$@"
+# (2.0.1) the game that opened the launcher (F5) started again -- not always ./twotowers_recomp (a test build beside it)
+GAME_EXE=./twotowers_recomp
+# (it is running, so it is the right one even when copied over without its execute bit: given it back)
+if [ -n "$TT_GAME_EXE" ] && [ -f "$TT_GAME_EXE" ]; then [ -x "$TT_GAME_EXE" ] || chmod u+x "$TT_GAME_EXE" 2>/dev/null; [ -x "$TT_GAME_EXE" ] && GAME_EXE=$TT_GAME_EXE; fi
+unset TT_GAME_EXE
+exec "$GAME_EXE" "$@"

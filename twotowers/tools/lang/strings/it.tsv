@@ -2042,3 +2042,110 @@ L:Quit	Esci
 L:Select	Seleziona
 L:Launcher	Launcher
 L:Choose a setting to change it, then Play.	Scegli un'impostazione per cambiarla, poi Gioca.
+L:Last One Standing	L'ultimo in piedi
+L:Win a Free-for-all match.	Vinci un incontro tutti contro tutti.
+L:King of the Arena	Re dell'arena
+L:Win 5 Free-for-all matches.	Vinci 5 incontri tutti contro tutti.
+L:Brothers in Arms	Fratelli d'armi
+L:Win a Team Deathmatch match.	Vinci un incontro di deathmatch a squadre.
+L:Shield Brothers	Fratelli di scudo
+L:Win 5 Team Deathmatch matches.	Vinci 5 incontri di deathmatch a squadre.
+L:Four Trolls Enter	Entrano quattro troll
+L:Win a Troll Battle with four trolls.	Vinci una battaglia di troll con quattro troll.
+L:A Company of Three	Una compagnia di tre
+L:Win a level in co-op with three players.	Vinci un livello in cooperativa con tre giocatori.
+L:The Fellowship of Four	La Compagnia dei quattro
+L:Win a level in co-op with four players.	Vinci un livello in cooperativa con quattro giocatori.
+L:Many Hands	Molte mani
+L:Win 5 different levels in co-op with three or four players.	Vinci 5 livelli diversi in cooperativa con tre o quattro giocatori.
+L:Storming Orthanc	Assalto a Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Vinci la missione segreta di Orthanc in cooperativa con quattro giocatori.
+P:Players:	Giocatori:
+P:P3 Bot:	Bot G3:
+P:P4 Bot:	Bot G4:
+P:Auto	Auto
+P:P3 Device:	Dispositivo G3:
+P:P4 Device:	Dispositivo G4:
+P:P3 Controls	Comandi G3
+P:P4 Controls	Comandi G4
+P:Reset P3 Controls	Ripristina comandi G3
+P:Reset P4 Controls	Ripristina comandi G4
+P:P2, P3, P4 Teleport:	Teletrasporto G2, G3, G4:
+P:P2, P3, P4 Teleport: ON	Teletrasporto G2, G3, G4: SÌ
+P:P2, P3, P4 Teleport: OFF	Teletrasporto G2, G3, G4: NO
+P:Replace Companions:	Sostituisci compagni:
+P:Show Upgrades Player {1}	Potenziamenti giocatore {1}
+P:Team Deathmatch	Deathmatch a squadre
+P:Free-for-all	Tutti contro tutti
+P:Player 3:	Giocatore 3:
+P:Player 4:	Giocatore 4:
+P:Player 3 Plays:	Gioca il giocatore 3:
+P:Player 4 Plays:	Gioca il giocatore 4:
+P:Team 1 - P1:	Squadra 1 - G1:
+P:Team 2 - P2:	Squadra 2 - G2:
+P:Team 1 - P3:	Squadra 1 - G3:
+P:Team 2 - P4:	Squadra 2 - G4:
+P:Yes	Sì
+P:No	No
+P:No (three players)	No (tre giocatori)
+P:Player 3: choose your hero	Giocatore 3: scegli il tuo eroe
+P:Player 4: choose your hero	Giocatore 4: scegli il tuo eroe
+P:Player 2: {1} is taken	Giocatore 2: {1} è già preso
+P:Player 3: {1} is taken	Giocatore 3: {1} è già preso
+P:Player 4: {1} is taken	Giocatore 4: {1} è già preso
+P:Player 3: {1} not available	Giocatore 3: {1} non disponibile
+P:Player 4: {1} not available	Giocatore 4: {1} non disponibile
+P:PLAYER {1} WINS THE MATCH  ({2})	GIOCATORE {1} VINCE L'INCONTRO  ({2})
+P:TEAM {1} WINS ROUND {2}	SQUADRA {1} VINCE IL ROUND {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	SQUADRA {1} VINCE L'INCONTRO  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	SQUADRA {1} VINCE  {2} - {3}
+P:PLAYER {1} WINS  {2}	GIOCATORE {1} VINCE  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ROUND {1}   SQUADRA {2} {3} - {4} SQUADRA {5}
+P:FREE-FOR-ALL RESULTS	RISULTATI TUTTI CONTRO TUTTI
+P:TEAM DEATHMATCH RESULTS	RISULTATI DEATHMATCH A SQUADRE
+P:KILLS	UCCISIONI
+P:DEATHS	MORTI
+P:KILLS PER DEATH	UCCISIONI PER MORTE
+P:TEAM	SQUADRA
+P:TEAM ROUNDS WON	ROUND VINTI DALLA SQUADRA
+P:MOST KILLS: PLAYER {1} ({2})	PIÙ UCCISIONI: GIOCATORE {1} ({2})
+L:DOWN	A TERRA
+L:TROLL BATTLE	BATTAGLIA DI TROLL
+L:FREE-FOR-ALL	TUTTI CONTRO TUTTI
+L:TEAM DEATHMATCH	DEATHMATCH A SQUADRE
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	ROUND {1}  (VINCE CHI ARRIVA A {2})
+L:The leader needs {1} more round to win	Al primo manca {1} round per vincere
+L:The leader needs {1} more rounds to win	Al primo mancano {1} round per vincere
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	SQUADRA 1 {1} - {2} SQUADRA 2   (ne mancano {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	GIOCATORE 1 {1} - {2} GIOCATORE 2   (ne mancano {3} / {4})
+L:PLAYER	GIOCATORE
+L:HERO	EROE
+L:TEAM	SQUADRA
+L:ROUNDS	ROUND
+L:KILLS	UCCISIONI
+L:DEATHS	MORTI
+L:down	a terra
+L:FPS counter	Contatore FPS
+L:Frames a second, in the top-left corner	Fotogrammi al secondo, in alto a sinistra
+L:Last One Standing - Player 1	L'ultimo in piedi - Giocatore 1
+L:Win a Free-for-all match as player 1.	Vinci un incontro tutti contro tutti come giocatore 1.
+L:Brothers in Arms - Player 1	Fratelli d'armi - Giocatore 1
+L:Win a Team Deathmatch match as player 1.	Vinci un deathmatch a squadre come giocatore 1.
+L:Last One Standing - Player 2	L'ultimo in piedi - Giocatore 2
+L:Win a Free-for-all match as player 2.	Vinci un incontro tutti contro tutti come giocatore 2.
+L:Brothers in Arms - Player 2	Fratelli d'armi - Giocatore 2
+L:Win a Team Deathmatch match as player 2.	Vinci un deathmatch a squadre come giocatore 2.
+L:Last One Standing - Player 3	L'ultimo in piedi - Giocatore 3
+L:Win a Free-for-all match as player 3.	Vinci un incontro tutti contro tutti come giocatore 3.
+L:Brothers in Arms - Player 3	Fratelli d'armi - Giocatore 3
+L:Win a Team Deathmatch match as player 3.	Vinci un deathmatch a squadre come giocatore 3.
+L:Last One Standing - Player 4	L'ultimo in piedi - Giocatore 4
+L:Win a Free-for-all match as player 4.	Vinci un incontro tutti contro tutti come giocatore 4.
+L:Brothers in Arms - Player 4	Fratelli d'armi - Giocatore 4
+L:Win a Team Deathmatch match as player 4.	Vinci un deathmatch a squadre come giocatore 4.
+L:The Orange Banner	Lo stendardo arancione
+L:Win a Team Deathmatch match as the orange team.	Vinci un deathmatch a squadre con la squadra arancione.
+L:The Red Banner	Lo stendardo rosso
+L:Win a Team Deathmatch match as the red team.	Vinci un deathmatch a squadre con la squadra rossa.

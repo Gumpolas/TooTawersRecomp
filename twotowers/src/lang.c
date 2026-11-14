@@ -416,6 +416,18 @@ int tt_lang_on(void)
 const char *tt_lang_code(void) { tt_lang_on(); return s_code; }
 int tt_lang_rtl(void) { return tt_lang_on() && s_rtl; }
 
+/* (research) TT_LANGMISS=file: each key the pack has no text for, once, in that file (what is left to translate) */
+static int s_miss_off;
+static void lang_miss(const char *key)
+{
+    static char **seen; static int n, cap; static const char *f = (const char *)1; int i; FILE *o;
+    if (f == (const char *)1) f = getenv("TT_LANGMISS");
+    if (!f || s_miss_off || !key || !key[2]) return;
+    for (i = 0; i < n; i++) if (!strcmp(seen[i], key)) return;
+    if (n == cap) { cap = cap ? cap * 2 : 256; seen = (char **)realloc(seen, sizeof *seen * (size_t)cap); if (!seen) { n = cap = 0; return; } }
+    seen[n++] = dupstr(key);
+    if ((o = fopen(f, "a"))) { fprintf(o, "%s\n", key); fclose(o); }
+}
 /* the port's own words, plain Unicode (UTF-8): for its own fonts */
 const char *tt_tr(const char *en)
 {
@@ -425,6 +437,7 @@ const char *tt_tr(const char *en)
     snprintf(k, sizeof k, "P:%s", en);
     q.key = k;
     r = (Str8 *)bsearch(&q, s_t, (size_t)s_nt, sizeof *s_t, cmp_t);
+    if (!r) lang_miss(k);
     return r ? r->v : en;
 }
 /* ...and in the game's own characters (for the game's fonts): the units, 0-ended,
@@ -437,7 +450,7 @@ int tt_tr16(const char *en, uint16_t *out, int max)
     if (max <= 0) return 0;
     if (en && tt_lang_on()) { snprintf(k, sizeof k, "P:%s", en); r = find_g(k); }
     if (r) { n = r->n < max - 1 ? r->n : max - 1; memcpy(out, r->v, 2 * (size_t)n); }
-    else if (en) for (; en[n] && n < max - 1; n++) out[n] = (uint8_t)en[n];
+    else if (en) { if (tt_lang_on()) lang_miss(k); for (; en[n] && n < max - 1; n++) out[n] = (uint8_t)en[n]; }
     out[n] = 0;
     return n;
 }
@@ -460,14 +473,14 @@ static int put_tmpl(const uint16_t *v, int vn, const char args[][48], int na, ui
 }
 int tt_tr16n(const char *en, uint16_t *out, int max)
 {
-    char k[600], args[6][48];
+    char k[600], args[9][48];   /* (2.0.1: nine, the four players' scores) */
     int na = 0, o = 2, i;
     const Str16 *r;
     if (max <= 0) return 0;
     if (!en || !tt_lang_on()) return tt_tr16(en, out, max);
     k[0] = 'P'; k[1] = ':';
     for (i = 0; en[i] && o < (int)sizeof k - 4; ) {
-        if (en[i] >= '0' && en[i] <= '9' && na < 6) {
+        if (en[i] >= '0' && en[i] <= '9' && na < 9) {
             int j = 0;
             while (en[i] >= '0' && en[i] <= '9' && j < 47) args[na][j++] = en[i++];
             args[na][j] = 0;
@@ -477,7 +490,8 @@ int tt_tr16n(const char *en, uint16_t *out, int max)
         k[o++] = en[i++];
     }
     k[o] = 0;
-    if (!na || !(r = find_g(k))) return tt_tr16(en, out, max);
+    if (!na) return tt_tr16(en, out, max);
+    if (!(r = find_g(k))) { { char k2[600]; snprintf(k2, sizeof k2, "P:%s", en); if (!find_g(k2)) lang_miss(k); } s_miss_off++; { int rr = tt_tr16(en, out, max); s_miss_off--; return rr; } }
     return put_tmpl(r->v, r->n, (const char (*)[48])args, na, out, max);
 }
 /* ...and a text with a name in it: tmpl's {1} the name (a device's: Latin-1 as it is) */
@@ -491,6 +505,7 @@ int tt_tr16s(const char *tmpl, const char *a1, uint16_t *out, int max)
     snprintf(args[0], sizeof args[0], "%s", a1 ? a1 : "");
     if (tmpl && tt_lang_on()) { snprintf(k, sizeof k, "P:%s", tmpl); r = find_g(k); }
     if (r) return put_tmpl(r->v, r->n, (const char (*)[48])args, 1, out, max);
+    if (tmpl && tt_lang_on()) lang_miss(k);
     for (n = 0; tmpl && tmpl[n] && n < 299; n++) u[n] = (uint8_t)tmpl[n];
     return put_tmpl(u, n, (const char (*)[48])args, 1, out, max);
 }
@@ -1158,7 +1173,8 @@ const char *tt_trL(const char *en)
     snprintf(k, sizeof k, "L:%s", en);
     q.key = k;
     r = (Str8 *)bsearch(&q, s_t, (size_t)s_nt, sizeof *s_t, cmp_t);
-    return r ? r->v : tt_tr(en);
+    if (!r) { const char *t; s_miss_off++; t = tt_tr(en); s_miss_off--; if (t == en) lang_miss(k); return t; }
+    return r->v;
 }
 /* a Windows font with the language's letters, for that text (NULL: the usual) */
 const char *tt_lang_face(void)

@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Odaberite postavku da je promijenite
 L:Voices:	Glasovi:
 L:Films:	Filmovi:
 L:(as the text)	(kao tekst)
+L:Last One Standing	Posljednji na nogama
+L:Win a Free-for-all match.	Osvojite meč svatko protiv svakoga.
+L:King of the Arena	Kralj arene
+L:Win 5 Free-for-all matches.	Osvojite 5 mečeva svatko protiv svakoga.
+L:Brothers in Arms	Braća po oružju
+L:Win a Team Deathmatch match.	Osvojite timski deathmatch.
+L:Shield Brothers	Braća po štitu
+L:Win 5 Team Deathmatch matches.	Osvojite 5 timskih deathmatcheva.
+L:Four Trolls Enter	Ulaze četiri trola
+L:Win a Troll Battle with four trolls.	Osvojite bitku trolova s četiri trola.
+L:A Company of Three	Družina od troje
+L:Win a level in co-op with three players.	Prijeđite razinu u kooperaciji s tri igrača.
+L:The Fellowship of Four	Družina od četvero
+L:Win a level in co-op with four players.	Prijeđite razinu u kooperaciji s četiri igrača.
+L:Many Hands	Mnogo ruku
+L:Win 5 different levels in co-op with three or four players.	Prijeđite 5 različitih razina u kooperaciji s tri ili četiri igrača.
+L:Storming Orthanc	Juriš na Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Prijeđite tajnu misiju u Orthancu u kooperaciji s četiri igrača.
+P:Players:	Igrači:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Uređaj P3:
+P:P4 Device:	Uređaj P4:
+P:P3 Controls	Kontrole P3
+P:P4 Controls	Kontrole P4
+P:Reset P3 Controls	Vrati zadane kontrole P3
+P:Reset P4 Controls	Vrati zadane kontrole P4
+P:P2, P3, P4 Teleport:	Teleport P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleport P2, P3, P4: UKLJ.
+P:P2, P3, P4 Teleport: OFF	Teleport P2, P3, P4: ISKLJ.
+P:Replace Companions:	Zamijeni pratioce:
+P:Show Upgrades Player {1}	Poboljšanja igrača {1}
+P:Team Deathmatch	Timski deathmatch
+P:Free-for-all	Svatko protiv svakoga
+P:Player 3:	Igrač 3:
+P:Player 4:	Igrač 4:
+P:Player 3 Plays:	Igrač 3 igra:
+P:Player 4 Plays:	Igrač 4 igra:
+P:Team 1 - P1:	Tim 1 - P1:
+P:Team 2 - P2:	Tim 2 - P2:
+P:Team 1 - P3:	Tim 1 - P3:
+P:Team 2 - P4:	Tim 2 - P4:
+P:Yes	Da
+P:No	Ne
+P:No (three players)	Ne (tri igrača)
+P:Player 3: choose your hero	Igrač 3: odaberite junaka
+P:Player 4: choose your hero	Igrač 4: odaberite junaka
+P:Player 2: {1} is taken	Igrač 2: {1} je zauzet
+P:Player 3: {1} is taken	Igrač 3: {1} je zauzet
+P:Player 4: {1} is taken	Igrač 4: {1} je zauzet
+P:Player 3: {1} not available	Igrač 3: {1} nije dostupan
+P:Player 4: {1} not available	Igrač 4: {1} nije dostupan
+P:PLAYER {1} WINS THE MATCH  ({2})	IGRAČ {1} OSVAJA MEČ  ({2})
+P:TEAM {1} WINS ROUND {2}	TIM {1} OSVAJA {2}. RUNDU
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TIM {1} OSVAJA MEČ  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	POBJEĐUJE TIM {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	POBJEĐUJE IGRAČ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. RUNDA   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. RUNDA   TIM {2} {3} - {4} TIM {5}
+P:FREE-FOR-ALL RESULTS	REZULTATI SVATKO PROTIV SVAKOGA
+P:TEAM DEATHMATCH RESULTS	REZULTATI TIMSKOG DEATHMATCHA
+P:KILLS	UBOJSTVA
+P:DEATHS	SMRTI
+P:KILLS PER DEATH	UBOJSTVA PO SMRTI
+P:TEAM	TIM
+P:TEAM ROUNDS WON	RUNDE TIMA
+P:MOST KILLS: PLAYER {1} ({2})	NAJVIŠE UBOJSTAVA: IGRAČ {1} ({2})
+L:DOWN	NA TLU
+L:TROLL BATTLE	BITKA TROLOVA
+L:FREE-FOR-ALL	SVATKO PROTIV SVAKOGA
+L:TEAM DEATHMATCH	TIMSKI DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	{1}. RUNDA  (DO {2} POBJEDA)
+L:The leader needs {1} more round to win	Vodećem nedostaje {1} runda do pobjede
+L:The leader needs {1} more rounds to win	Vodećem nedostaje {1} rundi do pobjede
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	TIM 1 {1} - {2} TIM 2   (nedostaje {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	IGRAČ 1 {1} - {2} IGRAČ 2   (nedostaje {3} / {4})
+L:PLAYER	IGRAČ
+L:HERO	JUNAK
+L:TEAM	TIM
+L:ROUNDS	RUNDE
+L:KILLS	UBOJSTVA
+L:DEATHS	SMRTI
+L:down	na tlu
+L:FPS counter	Brojač FPS-a
+L:Frames a second, in the top-left corner	Sličice u sekundi, gore lijevo
+L:Last One Standing - Player 1	Posljednji na nogama - Igrač 1
+L:Win a Free-for-all match as player 1.	Osvojite meč svatko protiv svakoga kao igrač 1.
+L:Brothers in Arms - Player 1	Braća po oružju - Igrač 1
+L:Win a Team Deathmatch match as player 1.	Osvojite timski deathmatch kao igrač 1.
+L:Last One Standing - Player 2	Posljednji na nogama - Igrač 2
+L:Win a Free-for-all match as player 2.	Osvojite meč svatko protiv svakoga kao igrač 2.
+L:Brothers in Arms - Player 2	Braća po oružju - Igrač 2
+L:Win a Team Deathmatch match as player 2.	Osvojite timski deathmatch kao igrač 2.
+L:Last One Standing - Player 3	Posljednji na nogama - Igrač 3
+L:Win a Free-for-all match as player 3.	Osvojite meč svatko protiv svakoga kao igrač 3.
+L:Brothers in Arms - Player 3	Braća po oružju - Igrač 3
+L:Win a Team Deathmatch match as player 3.	Osvojite timski deathmatch kao igrač 3.
+L:Last One Standing - Player 4	Posljednji na nogama - Igrač 4
+L:Win a Free-for-all match as player 4.	Osvojite meč svatko protiv svakoga kao igrač 4.
+L:Brothers in Arms - Player 4	Braća po oružju - Igrač 4
+L:Win a Team Deathmatch match as player 4.	Osvojite timski deathmatch kao igrač 4.
+L:The Orange Banner	Narančasti stijeg
+L:Win a Team Deathmatch match as the orange team.	Osvojite timski deathmatch kao narančasti tim.
+L:The Red Banner	Crveni stijeg
+L:Win a Team Deathmatch match as the red team.	Osvojite timski deathmatch kao crveni tim.

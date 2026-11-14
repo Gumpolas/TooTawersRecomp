@@ -2403,6 +2403,7 @@ static void gpu_mb_flush(void)
     g_mb_sent++;
     PT_ADD(PT_FLUSH, pt_f0);
 }
+
 static int gpu_batch_raw(HwVp *hv)
 {
     static const uint8_t *mem;
@@ -2995,19 +2996,19 @@ static void gpu_readback(uint32_t base, uint32_t pitch)
  * centred, at one texel per screen pixel. */
 /* (1.9.7) two overlays: 0 the F10 panel, 1 the toast (each its own texture) */
 static int g_ov;
-static ID3D11Texture2D *g_menu_tex_a[3];
-static ID3D11ShaderResourceView *g_menu_srv_a[3];
+static ID3D11Texture2D *g_menu_tex_a[5];
+static ID3D11ShaderResourceView *g_menu_srv_a[5];
 #define g_menu_tex g_menu_tex_a[g_ov]
 #define g_menu_srv g_menu_srv_a[g_ov]
 static ID3D11BlendState *g_menu_bs;
-static int g_menu_w_a[3], g_menu_h_a[3];
-static unsigned g_menu_ver_a[3];
+static int g_menu_w_a[5], g_menu_h_a[5];
+static unsigned g_menu_ver_a[5];
 #define g_menu_w g_menu_w_a[g_ov]
 #define g_menu_h g_menu_h_a[g_ov]
 #define g_menu_ver g_menu_ver_a[g_ov]
 static void gpu_draw_menu_at(int slot, const uint32_t *px, int w, int h, unsigned ver, int ox, int oy)
 {
-    g_ov = slot % 3;
+    g_ov = slot % 5;   /* (2.1: 3 the FPS counter) */
     D3D11_VIEWPORT vp;
     float cb[4] = { 1, 1, 0, 0 };
     if (!g_menu_tex || g_menu_w != w || g_menu_h != h) {
@@ -3543,6 +3544,8 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         if (xbox_GfxMenuRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu_at(0, mpx, mw, mh, mver, -1, -1);
         { int tx, ty; if (xbox_ToastRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(1, mpx, mw, mh, mver, tx, ty); }
         { int tx, ty; if (xbox_BannerRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(2, mpx, mw, mh, mver, tx, ty); }
+        { int tx, ty; if (xbox_FpsRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(3, mpx, mw, mh, mver, tx, ty); }   /* (2.1) the FPS counter */
+        { int tx, ty; extern int xbox_PanelRender(int, int, const uint32_t **, int *, int *, unsigned *, int *, int *); if (xbox_PanelRender((int)g_sc_w, (int)g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(4, mpx, mw, mh, mver, tx, ty); }   /* (2.0.1) a title's panel (Versus' scores, F7) */
     }
     {
         HRESULT hr;

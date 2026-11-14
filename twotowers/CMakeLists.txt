@@ -101,6 +101,7 @@ set(GAME_SOURCES
     src/versus.c
     src/achieve.c
     src/credits_music.c
+    src/net.c
     # Add game-specific sources here, e.g.:
     # src/asset_loader.c
     # src/custom_renderer.c
@@ -120,8 +121,9 @@ add_executable(${PROJECT_NAME} WIN32
     ${RECOMP_GEN_SOURCES}
 )
 # (1.9.5) the game code's sin/cos/tan: our own (src/rc_fastmath.h), four
-# times as fast as the C library's x87 versions and as accurate
-set_property(SOURCE ${RECOMP_GEN_SOURCES} src/heroes.c APPEND PROPERTY COMPILE_OPTIONS
+# times as fast as the C library's x87 versions and as accurate (2.1: and all
+# of its math -- the same results on every machine, for online play)
+set_property(SOURCE ${RECOMP_GEN_SOURCES} src/heroes.c src/twotowers_manual.c src/versus.c APPEND PROPERTY COMPILE_OPTIONS
     "-include" "${CMAKE_CURRENT_SOURCE_DIR}/src/rc_fastmath.h")
 
 # Link against the xboxrecomp umbrella target (all 6 runtime libraries)
@@ -146,6 +148,7 @@ if(WIN32)
         # function's symbol, i.e. to the guest function that faulted.
         dbghelp
         bcrypt
+        ws2_32
     )
 else()
     # Linux: SDL2 (window, OpenGL context, sound, controllers); OpenGL itself

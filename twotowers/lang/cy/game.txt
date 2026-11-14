@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	RECORDIAU BRWYDR TROLIAID
 P:TROLL BATTLE RESULTS	CANLYNIADAU BRWYDR TROLIAID
 P:P{1}	P{1}
 P:Launcher	Lansiwr
+P:Players:	Chwaraewyr:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Awtomatig
+P:P3 Device:	Dyfais P3:
+P:P4 Device:	Dyfais P4:
+P:P3 Controls	Rheolaethau P3
+P:P4 Controls	Rheolaethau P4
+P:Reset P3 Controls	Ailosod Rheolaethau P3
+P:Reset P4 Controls	Ailosod Rheolaethau P4
+P:P2, P3, P4 Teleport:	Teleportio P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleportio P2, P3, P4: YMLAEN
+P:P2, P3, P4 Teleport: OFF	Teleportio P2, P3, P4: I FFWRDD
+P:Replace Companions:	Disodli cymdeithion:
+P:Show Upgrades Player {1}	Uwchraddiadau chwaraewr {1}
+P:Team Deathmatch	Gornest angau timau
+P:Free-for-all	Pawb yn erbyn pawb
+P:Player 3:	Chwaraewr 3:
+P:Player 4:	Chwaraewr 4:
+P:Player 3 Plays:	Chwaraewr 3 yn chwarae:
+P:Player 4 Plays:	Chwaraewr 4 yn chwarae:
+P:Team 1 - P1:	Tîm 1 - P1:
+P:Team 2 - P2:	Tîm 2 - P2:
+P:Team 1 - P3:	Tîm 1 - P3:
+P:Team 2 - P4:	Tîm 2 - P4:
+P:Yes	Ie
+P:No	Na
+P:No (three players)	Na (tri chwaraewr)
+P:Player 3: choose your hero	Chwaraewr 3: dewiswch eich arwr
+P:Player 4: choose your hero	Chwaraewr 4: dewiswch eich arwr
+P:Player 2: {1} is taken	Chwaraewr 2: mae {1} wedi'i gymryd
+P:Player 3: {1} is taken	Chwaraewr 3: mae {1} wedi'i gymryd
+P:Player 4: {1} is taken	Chwaraewr 4: mae {1} wedi'i gymryd
+P:Player 3: {1} not available	Chwaraewr 3: {1} ddim ar gael
+P:Player 4: {1} not available	Chwaraewr 4: {1} ddim ar gael
+P:PLAYER {1} WINS THE MATCH  ({2})	CHWARAEWR {1} YN ENNILL Y GORNEST  ({2})
+P:TEAM {1} WINS ROUND {2}	TÎM {1} YN ENNILL ROWND {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TÎM {1} YN ENNILL Y GORNEST  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TÎM {1} YN ENNILL  {2} - {3}
+P:PLAYER {1} WINS  {2}	CHWARAEWR {1} YN ENNILL  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ROWND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ROWND {1}   TÎM {2} {3} - {4} TÎM {5}
+P:FREE-FOR-ALL RESULTS	CANLYNIADAU PAWB YN ERBYN PAWB
+P:TEAM DEATHMATCH RESULTS	CANLYNIADAU GORNEST ANGAU TIMAU
+P:KILLS	LLADDEDIGION
+P:DEATHS	MARWOLAETHAU
+P:KILLS PER DEATH	LLADD FESUL MARWOLAETH
+P:TEAM	TÎM
+P:TEAM ROUNDS WON	ROWNDIAU'R TÎM
+P:MOST KILLS: PLAYER {1} ({2})	Y MWYAF O LADD: CHWARAEWR {1} ({2})

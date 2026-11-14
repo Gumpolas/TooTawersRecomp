@@ -81,6 +81,80 @@ static inline double rc_ldexp(double x, int n)
 }
 static inline float rc_sinf(float x) { return (float)rc_sin(x); }
 static inline float rc_cosf(float x) { return (float)rc_cos(x); }
+/* (2.1, online play) the rest of the game's math our own as well: atan2, log2 and exp2 (the x87's fpatan, fyl2x and f2xm1)
+ * and the float versions the hand-written code uses. Online, every machine must compute the very same game -- Windows'
+ * and Linux's C libraries round these differently in the last bit. Plain double arithmetic only (no FMA: x86-64's baseline);
+ * the special values (infinities, NaN, 0) go to the library, where the C standard fixes the results. */
+static inline double rc_atan(double x)
+{
+    double a = fabs(x), off = 0.0, z, r; int inv = 0;
+    if (!(a < 1.0e300)) return atan(x);   /* (infinity, NaN) */
+    if (a > 1.0) { a = 1.0 / a; inv = 1; }
+    if (a > 0.2679491924311227) { off = 0.5235987755982988; a = (a * 1.7320508075688772 - 1.0) / (a + 1.7320508075688772); }
+    z = a * a;
+    { int k; r = 1.0 / 29; for (k = 27; k >= 1; k -= 2) r = ((k & 2) ? -1.0 : 1.0) / k + z * r; r *= a; }   /* (a - a^3/3 + a^5/5 ...: |a| < 0.268) */
+    r += off;
+    if (inv) r = 1.5707963267948966 - r;
+    return x < 0.0 ? -r : r;
+}
+static inline double rc_atan2(double y, double x)
+{
+    double r;
+    if (!(fabs(x) < 1.0e300) || !(fabs(y) < 1.0e300) || (x == 0.0 && y == 0.0)) return atan2(y, x);   /* (the standard's cases) */
+    if (x == 0.0) return y > 0.0 ? 1.5707963267948966 : -1.5707963267948966;
+    if (fabs(y) > fabs(x)) { r = 1.5707963267948966 - rc_atan(fabs(x / y)); r = x > 0.0 ? r : 3.141592653589793 - r; }
+    else { r = rc_atan(fabs(y / x)); if (x < 0.0) r = 3.141592653589793 - r; }
+    return signbit(y) ? -r : r;
+}
+static inline double rc_log2(double x)
+{
+    double m, s, z, l; int e;
+    if (!(x > 0.0) || !(x < 1.0e308)) return log2(x);
+    m = frexp(x, &e);
+    if (m < 0.7071067811865476) { m *= 2.0; e--; }
+    s = (m - 1.0) / (m + 1.0); z = s * s;
+    { int k; l = 1.0 / 25; for (k = 23; k >= 1; k -= 2) l = 1.0 / k + z * l; l *= 2.0 * s; }   /* (2(s + s^3/3 + s^5/5 ...): ln m) */
+    return (double)e + l * 1.4426950408889634;
+}
+static inline double rc_exp2(double x)
+{
+    double n, t, p;
+    if (!(fabs(x) < 1000.0)) return exp2(x);
+    n = (x + 6755399441055744.0) - 6755399441055744.0;
+    t = (x - n) * 0.6931471805599453;
+    { int k; double c[16]; c[0] = 1.0; for (k = 1; k < 16; k++) c[k] = c[k - 1] / k; p = c[15]; for (k = 14; k >= 0; k--) p = c[k] + t * p; }   /* (e^t, |t| < 0.35) */
+    return ldexp(p, (int)n);
+}
+static inline double rc_exp(double x) { return (fabs(x) < 700.0) ? rc_exp2(x * 1.4426950408889634) : exp(x); }
+static inline double rc_log(double x) { return (x > 0.0 && x < 1.0e308) ? rc_log2(x) * 0.6931471805599453 : log(x); }
+static inline double rc_pow(double x, double y)
+{
+    if (!(fabs(x) < 1.0e300) || !(fabs(y) < 1.0e300) || x == 0.0 || y == 0.0) return pow(x, y);
+    if (x > 0.0) return rc_exp2(y * rc_log2(x));
+    if (y == floor(y)) { double r = rc_exp2(y * rc_log2(-x)); return fmod(y, 2.0) != 0.0 ? -r : r; }
+    return pow(x, y);   /* (NaN) */
+}
+static inline double rc_asin(double x) { return (fabs(x) <= 1.0) ? rc_atan2(x, sqrt((1.0 - x) * (1.0 + x))) : asin(x); }
+static inline double rc_acos(double x) { return (fabs(x) <= 1.0) ? rc_atan2(sqrt((1.0 - x) * (1.0 + x)), x) : acos(x); }
+#define atan2(y, x) rc_atan2((y), (x))
+#define atan(x) rc_atan(x)
+#define log2(x) rc_log2(x)
+#define exp2(x) rc_exp2(x)
+#define exp(x) rc_exp(x)
+#define log(x) rc_log(x)
+#define pow(x, y) rc_pow((x), (y))
+#define asin(x) rc_asin(x)
+#define acos(x) rc_acos(x)
+#define tanf(x) ((float)rc_tan(x))
+#define atan2f(y, x) ((float)rc_atan2((y), (x)))
+#define atanf(x) ((float)rc_atan(x))
+#define asinf(x) ((float)rc_asin(x))
+#define acosf(x) ((float)rc_acos(x))
+#define expf(x) ((float)rc_exp(x))
+#define logf(x) ((float)rc_log(x))
+#define powf(x, y) ((float)rc_pow((x), (y)))
+#define log2f(x) ((float)rc_log2(x))
+#define exp2f(x) ((float)rc_exp2(x))
 #define ldexp(x, n) rc_ldexp((x), (n))
 #define sinf(x) rc_sinf(x)
 #define cosf(x) rc_cosf(x)

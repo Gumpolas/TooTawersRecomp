@@ -409,7 +409,8 @@ static void sp_scan(void)
         LeaveCriticalSection(&s_sp_lock);
         fprintf(stderr, "  [INPUT] controller connected: %s (%s, rumble %s)\n", s_sp[slot].name,
                 t == SDL_CONTROLLER_TYPE_PS3 ? "PlayStation 3" : t == SDL_CONTROLLER_TYPE_PS4 ? "PlayStation 4"
-                : t == SDL_CONTROLLER_TYPE_PS5 ? "PlayStation 5" : sp_is_xinput_type(t) ? "Xbox" : "SDL",
+                : t == SDL_CONTROLLER_TYPE_PS5 ? "PlayStation 5" : sp_is_xinput_type(t) ? "Xbox"
+                : t == SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO ? "Nintendo Switch" : "SDL",
                 p_SDL_GameControllerHasRumble(gc) ? "yes" : "no");
         fflush(stderr);
         /* the light bar of a DualShock 4 / DualSense in the colour of the
@@ -699,6 +700,16 @@ static DWORD WINAPI sp_thread(LPVOID arg)
     p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS3", getenv("TT_PS3_HIDAPI") ? getenv("TT_PS3_HIDAPI") : "0");
 #endif
     p_SDL_SetHint("SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS", "1");
+    /* (2.0.1) Nintendo's: the Switch Pro Controller and the Joy-Cons (a pair as one pad, either on its own sideways),
+     * through SDL's own drivers with rumble, as the PlayStation pads; the Home light on */
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_SWITCH", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_JOY_CONS", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_COMBINE_JOY_CONS", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_SWITCH_PLAYER_LED", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS4", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS5", "1");
+    p_SDL_SetHint("SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED", "1");
 #if defined(_WIN32)
     /* Xbox pads are XInput's; SDL must not report them a second time */
     p_SDL_SetHint("SDL_JOYSTICK_RAWINPUT", "0");
@@ -776,7 +787,9 @@ volatile int xbox_input_two_players;
 static volatile LONG s_pads_found;
 /* (two players) each player's device: -1 automatic, 0 keyboard and mouse
  * (player 1; for player 2: none), n the n-th controller connected */
-volatile int xbox_input_dev_choice[2] = { -1, -1 };
+volatile int xbox_input_dev_choice[4] = { -1, -1, -1, -1 };
+/* (2.1) how many players the title's multi-player mode has (2 to 4; xbox_input_two_players on) */
+volatile int xbox_input_players = 2;
 static DWORD s_dev_list[8];
 static volatile int s_dev_n;
 static void pad_name(DWORD p, char *out, int n);
@@ -791,8 +804,11 @@ void xbox_InputDeviceName(int i, char *out, int n)
  * when player 1 has a controller and player 2 none) */
 int xbox_InputKeyboardPort(void)
 {
+    { extern int (*volatile xbox_pad_net)(DWORD port, XBOX_INPUT_STATE *st); if (xbox_pad_net) return 0; }   /* (2.1, online: this machine's one player, port 0) */
     if (!xbox_input_two_players || xbox_input_dev_choice[0] == 0) return 0;
     if (xbox_input_dev_choice[1] == 0) return 1;
+    if (xbox_input_players > 2) { int p; for (p = 2; p < 4 && p < xbox_input_players; p++) if (xbox_input_dev_choice[p] == 0) return p;   /* (2.1) */
+        return s_player_pad[0] != PAD_NONE && s_player_pad[1] == PAD_NONE ? 1 : 0; }
     return s_player_pad[0] != PAD_NONE && s_player_pad[1] == PAD_NONE ? 1 : 0;
 }
 /* the device player n (0-1) has now: 0 keyboard / none, k the k-th controller */
@@ -808,10 +824,12 @@ int xbox_InputPlayerDevice(int port)
 int xbox_InputPadsConnected(void) { return (int)s_pads_found; }
 /* the pad player n reads (XInput slot 0-3, SDL pad 8+k, 255 none) */
 int xbox_InputPlayerPad(int port) { return port >= 0 && port < XBOX_MAX_CONTROLLERS ? (int)s_player_pad[port] : 255; }
+extern int (*volatile xbox_pad_net)(DWORD port, XBOX_INPUT_STATE *st);
 /* has player n (0-3) a device: a controller, or for player 1 the keyboard */
 int xbox_InputPlayerHasDevice(int port)
 {
     if (port < 0 || port >= XBOX_MAX_CONTROLLERS) return 0;
+    if (xbox_pad_net) { int nr = xbox_pad_net((DWORD)port, NULL); if (nr >= 0) return nr; }   /* (2.1: online, a player there) */
     if (s_player_pad[port] != PAD_NONE) return 1;
     return port == xbox_InputKeyboardPort();
 }
@@ -839,6 +857,15 @@ static void pads_scan_once(void)
         for (c = 0; c < nf && c < 8; c++) s_dev_list[c] = found[c];
         s_dev_n = nf < 8 ? (int)nf : 8;
     }
+    if (xbox_input_two_players && xbox_input_players > 2) {
+        /* (2.1) three or four players: each chosen device first, then the controllers left over in order to the players on
+         * automatic (player 1 first: without one he has the keyboard and mouse) */
+        DWORD pad[4] = { PAD_NONE, PAD_NONE, PAD_NONE, PAD_NONE }, used = 0, p, np = (DWORD)(xbox_input_players > 4 ? 4 : xbox_input_players);
+        for (p = 0; p < np; p++) { int c = xbox_input_dev_choice[p]; if (c >= 1 && (DWORD)c <= nf && !(used & (1u << (c - 1)))) { pad[p] = found[c - 1]; used |= 1u << (c - 1); } }
+        for (p = 0; p < np; p++) { DWORD f; if (xbox_input_dev_choice[p] >= 0) continue;
+            for (f = 0; f < nf; f++) if (!(used & (1u << f))) { pad[p] = found[f]; used |= 1u << f; break; } }
+        for (k = 0; k < XBOX_MAX_CONTROLLERS; k++) InterlockedExchange(&s_player_pad[k], (LONG)(k < np ? pad[k] : PAD_NONE));
+    } else
     if (xbox_input_two_players && (xbox_input_dev_choice[0] >= 0 || xbox_input_dev_choice[1] >= 0)) {
         /* two players, devices chosen: -1 automatic, 0 the keyboard and mouse
          * (player 1) / none, n the n-th controller found */
@@ -871,8 +898,9 @@ static void pads_scan_once(void)
     for (k = 0; k < nf && k < XBOX_MAX_CONTROLLERS + 8; k++) InterlockedExchange(&s_found[k], (LONG)found[k]);
     InterlockedExchange(&s_found_n, (LONG)nf);
     {   /* each player's device, logged as it changes */
-        static LONG said0 = -2, said1 = -2, said_two = -1, said_kb = -1;
-        LONG p0 = s_player_pad[0], p1 = s_player_pad[1], kb = xbox_InputKeyboardPort();
+        static LONG said0 = -2, said1 = -2, said_two = -1, said_kb = -1, said23 = -2;
+        LONG p0 = s_player_pad[0], p1 = s_player_pad[1], kb = xbox_InputKeyboardPort(), p23 = (LONG)(s_player_pad[2] & 0xFF) | (LONG)(s_player_pad[3] & 0xFF) << 8 | (LONG)xbox_input_players << 16;
+        if (p23 != said23 && xbox_input_two_players && xbox_input_players > 2) { said23 = p23; fprintf(stderr, "  [INPUT] %d players: player 3 pad %ld, player 4 pad %ld (255: none; choices %d / %d)\n", xbox_input_players, (long)s_player_pad[2], (long)s_player_pad[3], xbox_input_dev_choice[2], xbox_input_dev_choice[3]); fflush(stderr); }
         if (p0 != said0 || p1 != said1 || said_two != xbox_input_two_players || said_kb != kb) {
             said0 = p0; said1 = p1; said_two = xbox_input_two_players; said_kb = kb;
             fprintf(stderr, "  [INPUT] %s: player 1 %s%ld, player 2 %s%ld, keyboard and mouse player %ld (choices %d / %d, %lu connected)\n",
@@ -1138,6 +1166,7 @@ extern int xbox_FramebufferKeyDown(int vk);
  * Under Wine it reads nothing, which is why the window's own record stays. */
 extern void *xbox_FramebufferHwnd(void);
 extern void xbox_FramebufferKeyClear(int vk);
+static int s_is_wine;
 static BOOL key_down(int vk)
 {
     HWND fg;
@@ -1150,7 +1179,8 @@ static BOOL key_down(int vk)
                               * playtest; only an Alt press, which proved the keyboard readable, let it go). Under Wine,
                               * GetAsyncKeyState reads nothing: there only after it has shown a key, as before */
         HMODULE nt = GetModuleHandleA("ntdll.dll");
-        async_works = (nt && GetProcAddress(nt, "wine_get_version")) ? 0 : 1;
+        s_is_wine = nt && GetProcAddress(nt, "wine_get_version") ? 1 : 0;
+        async_works = s_is_wine ? 0 : 1;
     }
     /* Alt+Enter toggles full screen; it is not Start. */
     if (vk == VK_RETURN && (GetAsyncKeyState(VK_MENU) & 0x8000)) return FALSE;
@@ -1168,6 +1198,17 @@ static BOOL key_down(int vk)
         async_works = 1;
         if ((unsigned)vk < 256) stale_since[vk] = 0;
         return TRUE;
+    }
+    if (async_works && !s_is_wine && (unsigned)vk < 256 && xbox_FramebufferKeyDown(vk)
+        && (!ours || vk == VK_LBUTTON || vk == VK_RBUTTON || vk == VK_MBUTTON || vk == VK_XBUTTON1 || vk == VK_XBUTTON2)) {
+        /* (2.1) on Windows itself: a mouse button the window still has down while the mouse says it is up (its release lost
+         * as a screen changed under a click -- the Co-op menu's Load Game by the mouse, then left click = A held: the save
+         * chosen, the map's levels pressed, the save question answered Yes, all on their own, a playtest), or any key while
+         * another program is in front: let go at once */
+        xbox_FramebufferKeyClear(vk);
+        stale_since[vk] = 0;
+        { static int n; if (n++ < 20) { fprintf(stderr, "  [INPUT] %s 0x%02X held with no release: let go\n", ours ? "mouse button" : "key (another window in front)", vk); fflush(stderr); } }
+        return FALSE;
     }
     if (xbox_FramebufferKeyDown(vk)) {
         /* Held by the window's messages, but the keyboard says it is up: a
@@ -1605,7 +1646,7 @@ static DWORD input_get_raw(DWORD dwPort, XBOX_INPUT_STATE *pState)
             XBOX_GAMEPAD_LEFT_THUMB, XBOX_GAMEPAD_RIGHT_THUMB };
         int act;
         for (act = 0; act < BIND_MOVE_UP; act++) {
-            int src = dwPort == 1 ? xbox_BindPad2(act) : xbox_BindPad(act);   /* (player 2's controller: its own buttons) */
+            int src = dwPort >= 1 && dwPort <= 3 ? xbox_BindPadP((int)dwPort + 1, act) : xbox_BindPad(act);   /* (player 2's controller: its own buttons; 2.1: players 3 and 4's, ports 2 and 3) */
             BYTE v;
             if (src == 7) v = hp.lt;
             else if (src == 8) v = hp.rt;
@@ -1701,27 +1742,42 @@ static void bg_pause_mute(void)
     int front = window_in_front(), mute = !front && (xbox_GfxGet(GFX_BGMUTE) || xbox_GfxGet(GFX_BGPAUSE));
     if (mute && !muted_by_us) { muted_by_us = 1; g_audio_muted = 1; }
     else if (!mute && muted_by_us) { muted_by_us = 0; g_audio_muted = 0; }
-    if (!front && xbox_GfxGet(GFX_BGPAUSE)) {   /* the game held here (its pad poll, on its own thread) until the window is back in front */
+    if (!front && xbox_GfxGet(GFX_BGPAUSE) && !xbox_pad_net) {   /* (2.1: never in an online game -- every machine would wait) */   /* the game held here (its pad poll, on its own thread) until the window is back in front */
         fprintf(stderr, "  [INPUT] paused: the window is in the background\n"); fflush(stderr);
         while (!window_in_front() && xbox_GfxGet(GFX_BGPAUSE)) Sleep(30);
         fprintf(stderr, "  [INPUT] back in front: the game goes on\n"); fflush(stderr);
         if (muted_by_us && !xbox_GfxGet(GFX_BGMUTE)) { muted_by_us = 0; g_audio_muted = 0; }
     }
 }
-DWORD xbox_InputGetState(DWORD dwPort, XBOX_INPUT_STATE *pState)
+/* (2.1, online play) a title's lockstep input: when set and it answers (>= 0), a port's state for the game's current step
+ * is the one every machine has -- the title's net code fills it from each machine's own player (xbox_InputGetStateLocal).
+ * Called with st NULL it says whether the port has a player (1) or not (0). */
+int (*volatile xbox_pad_net)(DWORD port, XBOX_INPUT_STATE *st);
+/* this machine's own reading of a port: the device, at rest in the background, the settings overlay's */
+volatile int xbox_pad_blocked;   /* (2.1) a title's text box has the keyboard (the online chat): every pad at rest */
+DWORD xbox_InputGetStateLocal(DWORD dwPort, XBOX_INPUT_STATE *pState)
 {
-    DWORD r;
-    if (dwPort == 0) bg_pause_mute();
-    r = input_get_raw(dwPort, pState);
-    if (r == ERROR_SUCCESS && !game_in_front()) {
+    DWORD r = input_get_raw(dwPort, pState);
+    if (r == ERROR_SUCCESS && (!game_in_front() || xbox_pad_blocked)) {
         /* in the background: a controller at rest (the packet number still
          * moves, so the release of anything held is seen) */
         static DWORD bgpacket;
         memset(&pState->Gamepad, 0, sizeof pState->Gamepad);
         pState->dwPacketNumber = ++bgpacket | 0x40000000u;
     }
-    if (r == ERROR_SUCCESS) vib_apply(dwPort);   /* rumble follows the focus */
     if (dwPort == 0 && r == ERROR_SUCCESS) xbox_GfxMenuPad(pState);
+    return r;
+}
+DWORD xbox_InputGetState(DWORD dwPort, XBOX_INPUT_STATE *pState)
+{
+    DWORD r; int nr = -1;
+    if (dwPort == 0) bg_pause_mute();
+    if (xbox_pad_net) nr = xbox_pad_net(dwPort, pState);
+    if (nr >= 0) r = nr ? ERROR_SUCCESS : ERROR_DEVICE_NOT_CONNECTED;
+    else {
+        r = xbox_InputGetStateLocal(dwPort, pState);
+        if (r == ERROR_SUCCESS) vib_apply(dwPort);   /* rumble follows the focus */
+    }
     if (dwPort == 0 && s_start_down) {   /* the first presses of the controller's Start in the log: did the game get it? */
         static int n;
         s_start_down = 0;
@@ -1733,7 +1789,8 @@ DWORD xbox_InputGetState(DWORD dwPort, XBOX_INPUT_STATE *pState)
         }
     }
     /* a title's changes (its mouse pointer in the menus: the presses it stands for) */
-    if (r == ERROR_SUCCESS && xbox_pad_filter) xbox_pad_filter(dwPort, pState);   /* (1.9.7: in the background too -- the title's own presses (the menus' scripted steps under a black cover) were lost while another window had the focus, and the screen stayed black; the player's own input is already at rest here) */
+    if (r == ERROR_SUCCESS && xbox_pad_filter && nr >= 0) { XBOX_INPUT_STATE c = *pState; xbox_pad_filter(dwPort, &c); }   /* (2.1, online: a pad from the network -- already the title's (net.c made its changes before sending); its bookkeeping only, the same on every machine) */
+    else if (r == ERROR_SUCCESS && xbox_pad_filter) xbox_pad_filter(dwPort, pState);   /* (1.9.7: in the background too -- the title's own presses (the menus' scripted steps under a black cover) were lost while another window had the focus, and the screen stayed black; the player's own input is already at rest here) */
     /* what the game is about to see (title mods watch the buttons) */
     if (r == ERROR_SUCCESS && xbox_pad_observer) xbox_pad_observer(dwPort, pState);
     return r;
@@ -1800,6 +1857,7 @@ void xbox_InputStopRumble(void)
 BOOL xbox_InputIsConnected(DWORD dwPort)
 {
     if (dwPort >= XBOX_MAX_CONTROLLERS) return FALSE;
+    if (xbox_pad_net) { int nr = xbox_pad_net(dwPort, NULL); if (nr >= 0) return nr ? TRUE : FALSE; }   /* (2.1: online, the players) */
     return g_controller_connected[dwPort];
 }
 
@@ -1810,6 +1868,8 @@ DWORD xbox_InputGetCapabilities(DWORD dwPort, DWORD dwFlags, XBOX_INPUT_CAPABILI
     (void)dwFlags;
     if (dwPort >= XBOX_MAX_CONTROLLERS || !pCaps)
         return ERROR_DEVICE_NOT_CONNECTED;
+    if (xbox_pad_net) { int nr = xbox_pad_net(dwPort, NULL); if (nr == 0) return ERROR_DEVICE_NOT_CONNECTED;
+        if (nr > 0) { memset(pCaps, 0, sizeof(XBOX_INPUT_CAPABILITIES)); pCaps->Type = 1; pCaps->SubType = 1; return ERROR_SUCCESS; } }
     p = pad_for(dwPort);
     if (p == PAD_NONE || pad_read(p, &hp) != ERROR_SUCCESS) return ERROR_DEVICE_NOT_CONNECTED;
     /* every pad is presented as a standard gamepad */

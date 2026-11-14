@@ -20,6 +20,7 @@
 #include <setjmp.h>
 #if !defined(_WIN32)
 #include <unistd.h>   /* _exit */
+#include <time.h>   /* nanosleep */
 #endif
 
 /* XBE header field offsets (per xboxdevwiki.net/Xbe) */
@@ -1124,7 +1125,13 @@ static DWORD WINAPI nv2a_ack_thread(LPVOID param)
         *(volatile uint32_t *)((uintptr_t)(XBOX_KERNEL_DATA_BASE + KDATA_TICK_COUNT)
                                + g_memory_offset) = GetTickCount();
 
-        Sleep(0);  /* yield; the waiter is spinning on another core */
+        {   /* (testing, RECOMP_ACK_SLEEPUS=n: a short sleep instead of the yield) */
+            static int us = -1; if (us < 0) { const char *e = getenv("RECOMP_ACK_SLEEPUS"); us = e ? atoi(e) : 0; }
+#if !defined(_WIN32)
+            if (us > 0) { struct timespec q = { 0, us * 1000L }; nanosleep(&q, NULL); } else
+#endif
+            Sleep(0);  /* yield; the waiter is spinning on another core */
+        }
     }
     return 0;
 }
@@ -1297,6 +1304,11 @@ int recomp_guest_longjmp(uint32_t buf_va, uint32_t value)
     const uint8_t *mem = (const uint8_t *)g_memory_offset;
     int i;
 
+    if (getenv("TT_LJLOG")) {   /* (research) each guest longjmp: the value and the code addresses on the guest stack */
+        static int n; uint32_t sp = g_esp, k; if (n++ < 200) {
+            fprintf(stderr, "[LONGJMP] buf %08X value %u, stack:", buf_va, value);
+            for (k = 0; k < 64; k++) { uint32_t v = *(const uint32_t *)(mem + sp + 4 * k); if (v >= 0x11000u && v < 0x170000u) fprintf(stderr, " %X", v); }
+            fprintf(stderr, "\n"); } }
     for (i = s_jmp_used - 1; i >= 0; i--) {
         if (s_jmp[i].buf_va != buf_va)
             continue;

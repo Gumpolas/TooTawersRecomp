@@ -2042,3 +2042,110 @@ L:Quit	Sair
 L:Select	Selecionar
 L:Launcher	Inicializador
 L:Choose a setting to change it, then Play.	Escolha uma opção para alterá-la e depois Jogar.
+L:Last One Standing	O último de pé
+L:Win a Free-for-all match.	Vença uma partida de todos contra todos.
+L:King of the Arena	Rei da arena
+L:Win 5 Free-for-all matches.	Vença 5 partidas de todos contra todos.
+L:Brothers in Arms	Irmãos de armas
+L:Win a Team Deathmatch match.	Vença uma partida de mata-mata em equipe.
+L:Shield Brothers	Irmãos de escudo
+L:Win 5 Team Deathmatch matches.	Vença 5 partidas de mata-mata em equipe.
+L:Four Trolls Enter	Entram quatro trolls
+L:Win a Troll Battle with four trolls.	Vença uma batalha de trolls com quatro trolls.
+L:A Company of Three	Uma companhia de três
+L:Win a level in co-op with three players.	Vença uma fase no cooperativo com três jogadores.
+L:The Fellowship of Four	A Sociedade dos quatro
+L:Win a level in co-op with four players.	Vença uma fase no cooperativo com quatro jogadores.
+L:Many Hands	Muitas mãos
+L:Win 5 different levels in co-op with three or four players.	Vença 5 fases diferentes no cooperativo com três ou quatro jogadores.
+L:Storming Orthanc	Ataque a Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Vença a missão secreta de Orthanc no cooperativo com quatro jogadores.
+P:Players:	Jogadores:
+P:P3 Bot:	Bot J3:
+P:P4 Bot:	Bot J4:
+P:Auto	Auto
+P:P3 Device:	Dispositivo J3:
+P:P4 Device:	Dispositivo J4:
+P:P3 Controls	Controles J3
+P:P4 Controls	Controles J4
+P:Reset P3 Controls	Restaurar controles J3
+P:Reset P4 Controls	Restaurar controles J4
+P:P2, P3, P4 Teleport:	Teleporte J2, J3, J4:
+P:P2, P3, P4 Teleport: ON	Teleporte J2, J3, J4: SIM
+P:P2, P3, P4 Teleport: OFF	Teleporte J2, J3, J4: NÃO
+P:Replace Companions:	Substituir companheiros:
+P:Show Upgrades Player {1}	Melhorias do jogador {1}
+P:Team Deathmatch	Mata-mata em equipe
+P:Free-for-all	Todos contra todos
+P:Player 3:	Jogador 3:
+P:Player 4:	Jogador 4:
+P:Player 3 Plays:	Jogador 3 joga:
+P:Player 4 Plays:	Jogador 4 joga:
+P:Team 1 - P1:	Equipe 1 - J1:
+P:Team 2 - P2:	Equipe 2 - J2:
+P:Team 1 - P3:	Equipe 1 - J3:
+P:Team 2 - P4:	Equipe 2 - J4:
+P:Yes	Sim
+P:No	Não
+P:No (three players)	Não (três jogadores)
+P:Player 3: choose your hero	Jogador 3: escolha seu herói
+P:Player 4: choose your hero	Jogador 4: escolha seu herói
+P:Player 2: {1} is taken	Jogador 2: {1} já foi escolhido
+P:Player 3: {1} is taken	Jogador 3: {1} já foi escolhido
+P:Player 4: {1} is taken	Jogador 4: {1} já foi escolhido
+P:Player 3: {1} not available	Jogador 3: {1} indisponível
+P:Player 4: {1} not available	Jogador 4: {1} indisponível
+P:PLAYER {1} WINS THE MATCH  ({2})	JOGADOR {1} VENCE A PARTIDA  ({2})
+P:TEAM {1} WINS ROUND {2}	EQUIPE {1} VENCE O ROUND {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	EQUIPE {1} VENCE A PARTIDA  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	EQUIPE {1} VENCE  {2} - {3}
+P:PLAYER {1} WINS  {2}	JOGADOR {1} VENCE  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ROUND {1}   EQUIPE {2} {3} - {4} EQUIPE {5}
+P:FREE-FOR-ALL RESULTS	RESULTADOS DE TODOS CONTRA TODOS
+P:TEAM DEATHMATCH RESULTS	RESULTADOS DO MATA-MATA EM EQUIPE
+P:KILLS	ABATES
+P:DEATHS	MORTES
+P:KILLS PER DEATH	ABATES POR MORTE
+P:TEAM	EQUIPE
+P:TEAM ROUNDS WON	ROUNDS DA EQUIPE
+P:MOST KILLS: PLAYER {1} ({2})	MAIS ABATES: JOGADOR {1} ({2})
+L:DOWN	CAÍDO
+L:TROLL BATTLE	BATALHA DE TROLLS
+L:FREE-FOR-ALL	TODOS CONTRA TODOS
+L:TEAM DEATHMATCH	MATA-MATA EM EQUIPE
+L:DEATHMATCH	MATA-MATA
+L:ROUND {1}  (FIRST TO {2})	ROUND {1}  (VENCE QUEM FIZER {2})
+L:The leader needs {1} more round to win	Falta {1} round para o líder vencer
+L:The leader needs {1} more rounds to win	Faltam {1} rounds para o líder vencer
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	EQUIPE 1 {1} - {2} EQUIPE 2   (faltam {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	JOGADOR 1 {1} - {2} JOGADOR 2   (faltam {3} / {4})
+L:PLAYER	JOGADOR
+L:HERO	HERÓI
+L:TEAM	EQUIPE
+L:ROUNDS	ROUNDS
+L:KILLS	ABATES
+L:DEATHS	MORTES
+L:down	caído
+L:FPS counter	Contador de FPS
+L:Frames a second, in the top-left corner	Quadros por segundo, no canto superior esquerdo
+L:Last One Standing - Player 1	O último de pé - Jogador 1
+L:Win a Free-for-all match as player 1.	Vença uma partida de todos contra todos como jogador 1.
+L:Brothers in Arms - Player 1	Irmãos de armas - Jogador 1
+L:Win a Team Deathmatch match as player 1.	Vença uma partida de mata-mata em equipe como jogador 1.
+L:Last One Standing - Player 2	O último de pé - Jogador 2
+L:Win a Free-for-all match as player 2.	Vença uma partida de todos contra todos como jogador 2.
+L:Brothers in Arms - Player 2	Irmãos de armas - Jogador 2
+L:Win a Team Deathmatch match as player 2.	Vença uma partida de mata-mata em equipe como jogador 2.
+L:Last One Standing - Player 3	O último de pé - Jogador 3
+L:Win a Free-for-all match as player 3.	Vença uma partida de todos contra todos como jogador 3.
+L:Brothers in Arms - Player 3	Irmãos de armas - Jogador 3
+L:Win a Team Deathmatch match as player 3.	Vença uma partida de mata-mata em equipe como jogador 3.
+L:Last One Standing - Player 4	O último de pé - Jogador 4
+L:Win a Free-for-all match as player 4.	Vença uma partida de todos contra todos como jogador 4.
+L:Brothers in Arms - Player 4	Irmãos de armas - Jogador 4
+L:Win a Team Deathmatch match as player 4.	Vença uma partida de mata-mata em equipe como jogador 4.
+L:The Orange Banner	O estandarte laranja
+L:Win a Team Deathmatch match as the orange team.	Vença uma partida de mata-mata em equipe com a equipe laranja.
+L:The Red Banner	O estandarte vermelho
+L:Win a Team Deathmatch match as the red team.	Vença uma partida de mata-mata em equipe com a equipe vermelha.

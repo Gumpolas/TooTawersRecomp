@@ -12,10 +12,10 @@
 #else
 extern unsigned long GetModuleFileNameA(void *m, char *p, unsigned long n);
 #include <time.h>
-static unsigned long vs_ticks(void) { struct timespec t; clock_gettime(CLOCK_MONOTONIC, &t); return (unsigned long)t.tv_sec * 1000ul + (unsigned long)(t.tv_nsec / 1000000); }
+static unsigned long vs_ticks(void) { extern uint32_t tt_sim_tick(void); return tt_sim_tick(); }   /* (2.1: online, the game's clock) */
 #endif
 #if defined(_WIN32)
-static unsigned long vs_ticks(void) { return GetTickCount(); }
+static unsigned long vs_ticks(void) { extern uint32_t tt_sim_tick(void); return tt_sim_tick(); }   /* (2.1: online, the game's clock) */
 #endif
 extern void tt_dbg(const char *fmt, ...);
 static int strncasecmp_vs(const char *a, const char *b) { while (*b) { int x = *a++, y = *b++; if (x >= 'a' && x <= 'z') x -= 32; if (y >= 'a' && y <= 'z') y -= 32; if (x != y) return 1; } return 0; }
@@ -444,3 +444,4 @@ have:
     { static int n; if (n++ < 20) tt_dbg("[VS] voice: %s slot %d (%s %u, %.2f s)\n", who, slot, bank, id, (double)x->n / x->rate); }
     return 1;
 }
+

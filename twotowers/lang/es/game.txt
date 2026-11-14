@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	RÉCORDS DE BATALLA DE TROLLS
 P:TROLL BATTLE RESULTS	RESULTADOS DE BATALLA DE TROLLS
 P:P{1}	J{1}
 P:Launcher	Lanzador
+P:Players:	Jugadores:
+P:P3 Bot:	Bot J3:
+P:P4 Bot:	Bot J4:
+P:Auto	Auto
+P:P3 Device:	Dispositivo J3:
+P:P4 Device:	Dispositivo J4:
+P:P3 Controls	Controles J3
+P:P4 Controls	Controles J4
+P:Reset P3 Controls	Restablecer controles J3
+P:Reset P4 Controls	Restablecer controles J4
+P:P2, P3, P4 Teleport:	Teletransporte J2, J3, J4:
+P:P2, P3, P4 Teleport: ON	Teletransporte J2, J3, J4: SÍ
+P:P2, P3, P4 Teleport: OFF	Teletransporte J2, J3, J4: NO
+P:Replace Companions:	Sustituir compañeros:
+P:Show Upgrades Player {1}	Mejoras del jugador {1}
+P:Team Deathmatch	Combate a muerte por equipos
+P:Free-for-all	Todos contra todos
+P:Player 3:	Jugador 3:
+P:Player 4:	Jugador 4:
+P:Player 3 Plays:	Juega el jugador 3:
+P:Player 4 Plays:	Juega el jugador 4:
+P:Team 1 - P1:	Equipo 1 - J1:
+P:Team 2 - P2:	Equipo 2 - J2:
+P:Team 1 - P3:	Equipo 1 - J3:
+P:Team 2 - P4:	Equipo 2 - J4:
+P:Yes	Sí
+P:No	No
+P:No (three players)	No (tres jugadores)
+P:Player 3: choose your hero	Jugador 3: elige tu héroe
+P:Player 4: choose your hero	Jugador 4: elige tu héroe
+P:Player 2: {1} is taken	Jugador 2: {1} ya está elegido
+P:Player 3: {1} is taken	Jugador 3: {1} ya está elegido
+P:Player 4: {1} is taken	Jugador 4: {1} ya está elegido
+P:Player 3: {1} not available	Jugador 3: {1} no disponible
+P:Player 4: {1} not available	Jugador 4: {1} no disponible
+P:PLAYER {1} WINS THE MATCH  ({2})	EL JUGADOR {1} GANA EL COMBATE  ({2})
+P:TEAM {1} WINS ROUND {2}	EL EQUIPO {1} GANA LA RONDA {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	EL EQUIPO {1} GANA EL COMBATE  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	GANA EL EQUIPO {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	GANA EL JUGADOR {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RONDA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RONDA {1}   EQUIPO {2} {3} - {4} EQUIPO {5}
+P:FREE-FOR-ALL RESULTS	RESULTADOS DE TODOS CONTRA TODOS
+P:TEAM DEATHMATCH RESULTS	RESULTADOS DE COMBATE POR EQUIPOS
+P:KILLS	BAJAS
+P:DEATHS	MUERTES
+P:KILLS PER DEATH	BAJAS POR MUERTE
+P:TEAM	EQUIPO
+P:TEAM ROUNDS WON	RONDAS DEL EQUIPO
+P:MOST KILLS: PLAYER {1} ({2})	MÁS BAJAS: JUGADOR {1} ({2})

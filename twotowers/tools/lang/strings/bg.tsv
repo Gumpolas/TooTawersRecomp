@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Изберете настройка,
 L:Voices:	Гласове:
 L:Films:	Филми:
 L:(as the text)	(като текста)
+L:Last One Standing	Последният прав
+L:Win a Free-for-all match.	Спечелете мач „всеки срещу всеки“.
+L:King of the Arena	Цар на арената
+L:Win 5 Free-for-all matches.	Спечелете 5 мача „всеки срещу всеки“.
+L:Brothers in Arms	Братя по оръжие
+L:Win a Team Deathmatch match.	Спечелете отборен смъртен мач.
+L:Shield Brothers	Братя по щит
+L:Win 5 Team Deathmatch matches.	Спечелете 5 отборни смъртни мача.
+L:Four Trolls Enter	Влизат четири трола
+L:Win a Troll Battle with four trolls.	Спечелете битка на тролове с четири трола.
+L:A Company of Three	Дружина от трима
+L:Win a level in co-op with three players.	Завършете ниво в кооперация с трима играчи.
+L:The Fellowship of Four	Задругата на четиримата
+L:Win a level in co-op with four players.	Завършете ниво в кооперация с четирима играчи.
+L:Many Hands	Много ръце
+L:Win 5 different levels in co-op with three or four players.	Завършете 5 различни нива в кооперация с трима или четирима играчи.
+L:Storming Orthanc	Щурмът на Ортанк
+L:Win the secret mission at Orthanc in co-op with four players.	Завършете тайната мисия в Ортанк в кооперация с четирима играчи.
+P:Players:	Играчи:
+P:P3 Bot:	Бот P3:
+P:P4 Bot:	Бот P4:
+P:Auto	Авто
+P:P3 Device:	Устройство P3:
+P:P4 Device:	Устройство P4:
+P:P3 Controls	Управление P3
+P:P4 Controls	Управление P4
+P:Reset P3 Controls	Нулирай управлението на P3
+P:Reset P4 Controls	Нулирай управлението на P4
+P:P2, P3, P4 Teleport:	Телепорт P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Телепорт P2, P3, P4: ВКЛ.
+P:P2, P3, P4 Teleport: OFF	Телепорт P2, P3, P4: ИЗКЛ.
+P:Replace Companions:	Замяна на спътниците:
+P:Show Upgrades Player {1}	Подобрения на играч {1}
+P:Team Deathmatch	Отборен смъртен мач
+P:Free-for-all	Всеки срещу всеки
+P:Player 3:	Играч 3:
+P:Player 4:	Играч 4:
+P:Player 3 Plays:	Играч 3 играе:
+P:Player 4 Plays:	Играч 4 играе:
+P:Team 1 - P1:	Отбор 1 - P1:
+P:Team 2 - P2:	Отбор 2 - P2:
+P:Team 1 - P3:	Отбор 1 - P3:
+P:Team 2 - P4:	Отбор 2 - P4:
+P:Yes	Да
+P:No	Не
+P:No (three players)	Не (трима играчи)
+P:Player 3: choose your hero	Играч 3: изберете герой
+P:Player 4: choose your hero	Играч 4: изберете герой
+P:Player 2: {1} is taken	Играч 2: {1} е зает
+P:Player 3: {1} is taken	Играч 3: {1} е зает
+P:Player 4: {1} is taken	Играч 4: {1} е зает
+P:Player 3: {1} not available	Играч 3: {1} не е достъпен
+P:Player 4: {1} not available	Играч 4: {1} не е достъпен
+P:PLAYER {1} WINS THE MATCH  ({2})	ИГРАЧ {1} ПЕЧЕЛИ МАЧА  ({2})
+P:TEAM {1} WINS ROUND {2}	ОТБОР {1} ПЕЧЕЛИ РУНД {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	ОТБОР {1} ПЕЧЕЛИ МАЧА  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	ПЕЧЕЛИ ОТБОР {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	ПЕЧЕЛИ ИГРАЧ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	РУНД {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	РУНД {1}   ОТБОР {2} {3} - {4} ОТБОР {5}
+P:FREE-FOR-ALL RESULTS	РЕЗУЛТАТИ „ВСЕКИ СРЕЩУ ВСЕКИ“
+P:TEAM DEATHMATCH RESULTS	РЕЗУЛТАТИ ОТ ОТБОРНИЯ МАЧ
+P:KILLS	УБИЙСТВА
+P:DEATHS	СМЪРТИ
+P:KILLS PER DEATH	УБИЙСТВА НА СМЪРТ
+P:TEAM	ОТБОР
+P:TEAM ROUNDS WON	РУНДОВЕ НА ОТБОРА
+P:MOST KILLS: PLAYER {1} ({2})	НАЙ-МНОГО УБИЙСТВА: ИГРАЧ {1} ({2})
+L:DOWN	НА ЗЕМЯТА
+L:TROLL BATTLE	БИТКА НА ТРОЛОВЕ
+L:FREE-FOR-ALL	ВСЕКИ СРЕЩУ ВСЕКИ
+L:TEAM DEATHMATCH	ОТБОРЕН СМЪРТЕН МАЧ
+L:DEATHMATCH	СМЪРТЕН МАЧ
+L:ROUND {1}  (FIRST TO {2})	РУНД {1}  (ДО {2} ПОБЕДИ)
+L:The leader needs {1} more round to win	На водача му трябва още {1} рунд за победа
+L:The leader needs {1} more rounds to win	На водача му трябват още {1} рунда за победа
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	ОТБОР 1 {1} - {2} ОТБОР 2   (остават {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	ИГРАЧ 1 {1} - {2} ИГРАЧ 2   (остават {3} / {4})
+L:PLAYER	ИГРАЧ
+L:HERO	ГЕРОЙ
+L:TEAM	ОТБОР
+L:ROUNDS	РУНДОВЕ
+L:KILLS	УБИЙСТВА
+L:DEATHS	СМЪРТИ
+L:down	на земята
+L:FPS counter	Брояч на FPS
+L:Frames a second, in the top-left corner	Кадри в секунда, горе вляво
+L:Last One Standing - Player 1	Последният прав - Играч 1
+L:Win a Free-for-all match as player 1.	Спечелете мач „всеки срещу всеки“ като играч 1.
+L:Brothers in Arms - Player 1	Братя по оръжие - Играч 1
+L:Win a Team Deathmatch match as player 1.	Спечелете отборен смъртен мач като играч 1.
+L:Last One Standing - Player 2	Последният прав - Играч 2
+L:Win a Free-for-all match as player 2.	Спечелете мач „всеки срещу всеки“ като играч 2.
+L:Brothers in Arms - Player 2	Братя по оръжие - Играч 2
+L:Win a Team Deathmatch match as player 2.	Спечелете отборен смъртен мач като играч 2.
+L:Last One Standing - Player 3	Последният прав - Играч 3
+L:Win a Free-for-all match as player 3.	Спечелете мач „всеки срещу всеки“ като играч 3.
+L:Brothers in Arms - Player 3	Братя по оръжие - Играч 3
+L:Win a Team Deathmatch match as player 3.	Спечелете отборен смъртен мач като играч 3.
+L:Last One Standing - Player 4	Последният прав - Играч 4
+L:Win a Free-for-all match as player 4.	Спечелете мач „всеки срещу всеки“ като играч 4.
+L:Brothers in Arms - Player 4	Братя по оръжие - Играч 4
+L:Win a Team Deathmatch match as player 4.	Спечелете отборен смъртен мач като играч 4.
+L:The Orange Banner	Оранжевото знаме
+L:Win a Team Deathmatch match as the orange team.	Спечелете отборен смъртен мач с оранжевия отбор.
+L:The Red Banner	Червеното знаме
+L:Win a Team Deathmatch match as the red team.	Спечелете отборен смъртен мач с червения отбор.

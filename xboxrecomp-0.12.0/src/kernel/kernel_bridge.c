@@ -3301,6 +3301,12 @@ static void bridge_NtCreateFile(void)
     {
         extern uint32_t xbox_LastFileError(void);
         uint32_t _e = g_eax ? xbox_LastFileError() : 0u;
+        if (g_eax && _e == 2u) {   /* (2.1) a game file missing from the install: named, for the title (a banner) */
+            extern void (*volatile xbox_on_missing_file)(const char *path);
+            const wchar_t *w = xbox_LastHostPath(); char h[300]; size_t i = 0;
+            while (w && w[i] && i < sizeof h - 1) { h[i] = (char)w[i]; i++; } h[i] = 0;
+            if (xbox_on_missing_file && i) xbox_on_missing_file(h);
+        }
         if (g_eax)
             fprintf(stderr, "  [FILE] -> 0x%08X FAILED (win32 err=%u%s)\n",
                     g_eax, _e,
@@ -9887,3 +9893,6 @@ void xbox_kernel_bridge_init(void)
             KERNEL_VA_BASE, KERNEL_VA_BASE + (resolved - 1) * 4);
 
 }
+
+/* (2.1) a title told of a game file missing from the install */
+void (*volatile xbox_on_missing_file)(const char *path);

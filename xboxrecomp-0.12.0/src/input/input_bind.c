@@ -45,7 +45,8 @@ static const char *const k_pad[BIND_PAD_N] = {
 
 static int s_kb[BIND_N][BIND_KEYS];
 static int s_pad[BIND_N];
-static int s_pad2[BIND_N];   /* player 2's controller (port 1): its own buttons */
+static int s_padx[3][BIND_N];   /* players 2, 3 and 4's controllers (ports 1-3): their own buttons (2.1: 3 and 4 too) */
+#define s_pad2 s_padx[0]
 static int s_inited;
 static void (*s_save)(const char *key, const char *value);
 volatile long xbox_bind_rev = 1;
@@ -117,7 +118,7 @@ void xbox_BindDefaults(int which)
     s_pad[BIND_BLACK] = 5; s_pad[BIND_WHITE] = 6; s_pad[BIND_LT] = 7; s_pad[BIND_RT] = 8;
     s_pad[BIND_START] = 9; s_pad[BIND_BACK] = 10; s_pad[BIND_DUP] = 11; s_pad[BIND_DDOWN] = 12;
     s_pad[BIND_DLEFT] = 13; s_pad[BIND_DRIGHT] = 14; s_pad[BIND_LTHUMB] = 15; s_pad[BIND_RTHUMB] = 16;
-    if (!s_inited) memcpy(s_pad2, s_pad, sizeof s_pad2);   /* (player 2's: the same, until changed; reset on its own) */
+    if (!s_inited) { int q; for (q = 0; q < 3; q++) memcpy(s_padx[q], s_pad, sizeof s_padx[q]); }   /* (players 2-4's: the same, until changed; reset on their own) */
     set_kb(BIND_WALK, 'B', 0, 0);   /* (both layouts: B is free in each) */
     set_kb(BIND_DUP, VK_UP, 0, 0); set_kb(BIND_DDOWN, VK_DOWN, 0, 0);
     set_kb(BIND_DLEFT, VK_LEFT, 0, 0); set_kb(BIND_DRIGHT, VK_RIGHT, 0, 0);
@@ -153,6 +154,7 @@ static void bind_init(void) { if (!s_inited) xbox_BindDefaults(-1); }
 int xbox_BindKey(int a, int i) { bind_init(); return (a >= 0 && a < BIND_N && i >= 0 && i < BIND_KEYS) ? s_kb[a][i] : 0; }
 int xbox_BindPad(int a) { bind_init(); return (a >= 0 && a < BIND_N) ? s_pad[a] : 0; }
 int xbox_BindPad2(int a) { bind_init(); return (a >= 0 && a < BIND_N) ? s_pad2[a] : 0; }
+int xbox_BindPadP(int p, int a) { bind_init(); return (p >= 2 && p <= 4 && a >= 0 && a < BIND_N) ? s_padx[p - 2][a] : 0; }   /* (2.1) player p's (2-4) controller */
 const char *xbox_BindActionName(int a) { return (a >= 0 && a < BIND_N) ? k_act[a].name : ""; }
 const char *xbox_BindActionKey(int a) { return (a >= 0 && a < BIND_N) ? k_act[a].key : ""; }
 int xbox_BindIsButton(int a) { return a >= 0 && a < BIND_N && k_act[a].is_button; }
@@ -177,9 +179,9 @@ static void save(int a, int pad)
 {
     char key[32], val[96];
     if (!s_save) return;
-    if (pad == 2) {   /* player 2's controller */
-        snprintf(key, sizeof key, "p2pad_%s", k_act[a].key);
-        snprintf(val, sizeof val, "%s", k_pad[s_pad2[a]]);
+    if (pad >= 2 && pad <= 4) {   /* player 2's (3's, 4's) controller */
+        snprintf(key, sizeof key, "p%dpad_%s", pad, k_act[a].key);
+        snprintf(val, sizeof val, "%s", k_pad[s_padx[pad - 2][a]]);
     } else if (pad) {
         snprintf(key, sizeof key, "pad_%s", k_act[a].key);
         snprintf(val, sizeof val, "%s", k_pad[s_pad[a]]);
@@ -246,31 +248,35 @@ void xbox_BindResetAll(void)
     for (a = 0; a < BIND_N; a++) { save(a, 0); if (k_act[a].is_button) save(a, 1); }
 }
 
-/* player 2's controller: the same swap as player 1's (xbox_BindAssignPad) */
-void xbox_BindAssignPad2(int a, int src)
+/* player p's (2-4) controller: the same swap as player 1's (xbox_BindAssignPad) */
+void xbox_BindAssignPadP(int p, int a, int src)
 {
-    int b, old;
+    int b, old, *t;
     bind_init();
-    if (a < 0 || a >= BIND_N || !k_act[a].is_button || src < 0 || src >= BIND_PAD_N) return;
-    old = s_pad2[a];
+    if (p < 2 || p > 4 || a < 0 || a >= BIND_N || !k_act[a].is_button || src < 0 || src >= BIND_PAD_N) return;
+    t = s_padx[p - 2];
+    old = t[a];
     if (src)
         for (b = 0; b < BIND_N; b++)
-            if (b != a && s_pad2[b] == src) { s_pad2[b] = old; save(b, 2); }
-    s_pad2[a] = src;
-    save(a, 2);
+            if (b != a && t[b] == src) { t[b] = old; save(b, p); }
+    t[a] = src;
+    save(a, p);
     InterlockedIncrement((volatile LONG *)&xbox_bind_rev);
 }
+void xbox_BindAssignPad2(int a, int src) { xbox_BindAssignPadP(2, a, src); }
 
-/* player 2's controller back to its buttons as labelled */
-void xbox_BindResetPad2(void)
+/* player p's controller back to its buttons as labelled */
+void xbox_BindResetPadP(int p)
 {
     static const int def[16] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };   /* A B X Y Black White LT RT Start Back Up Down Left Right LS RS */
     int a;
     bind_init();
-    for (a = 0; a < BIND_N; a++) s_pad2[a] = a < 16 ? def[a] : 0;
-    for (a = 0; a < BIND_N; a++) if (k_act[a].is_button) save(a, 2);
+    if (p < 2 || p > 4) return;
+    for (a = 0; a < BIND_N; a++) s_padx[p - 2][a] = a < 16 ? def[a] : 0;
+    for (a = 0; a < BIND_N; a++) if (k_act[a].is_button) save(a, p);
     InterlockedIncrement((volatile LONG *)&xbox_bind_rev);
 }
+void xbox_BindResetPad2(void) { xbox_BindResetPadP(2); }
 
 /* From the settings file: "kb_<action>" = "K, Mouse Left" or
  * "pad_<action>" = "A". Unknown names are ignored. */
@@ -281,7 +287,7 @@ int xbox_BindSet(const char *key, const char *value)
     bind_init();
     if (!_strnicmp(key, "kb_", 3)) { pad = 0; name = key + 3; }
     else if (!_strnicmp(key, "pad_", 4)) { pad = 1; name = key + 4; }
-    else if (!_strnicmp(key, "p2pad_", 6)) { pad = 2; name = key + 6; }
+    else if ((key[0] == 'p' || key[0] == 'P') && key[1] >= '2' && key[1] <= '4' && !_strnicmp(key + 2, "pad_", 4)) { pad = key[1] - '0'; name = key + 6; }   /* p2pad_ / p3pad_ / p4pad_ */
     else return 0;
     for (a = 0; a < BIND_N; a++)
         if (!_stricmp(k_act[a].key, name)) break;
@@ -290,7 +296,7 @@ int xbox_BindSet(const char *key, const char *value)
         int s;
         if (!k_act[a].is_button) return 0;
         for (s = 0; s < BIND_PAD_N; s++)
-            if (!_stricmp(k_pad[s], value)) { if (pad == 2) s_pad2[a] = s; else s_pad[a] = s; break; }
+            if (!_stricmp(k_pad[s], value)) { if (pad >= 2) s_padx[pad - 2][a] = s; else s_pad[a] = s; break; }
     } else {
         char buf[128], *p, *tok;
         int i = 0;

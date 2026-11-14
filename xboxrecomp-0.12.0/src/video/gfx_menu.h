@@ -8,13 +8,15 @@ enum { GFX_FPS, GFX_FULLSCREEN, GFX_ASPECT, GFX_SCALE, GFX_ANISO, GFX_MIPS, GFX_
        GFX_PROMPTS, GFX_HUDPOS, GFX_MENUFILL, GFX_MOVIEFILL, GFX_MOUSE, GFX_MOUSE_SENS, GFX_CURSOR_SIZE, GFX_MOUSE_AIM, GFX_MOUSE_INVERT, GFX_SPRINT, GFX_MOUSE_STEER, GFX_WINSIZE, GFX_ULTRA, GFX_WIDE_SCENES, GFX_FS_RES, GFX_E3HUD, GFX_E3PICKUPS,
        /* (1.9.7) the More page (after Athelas' settings): picture, gameplay, controller, window */
        GFX_LOOK, GFX_LOOKSTR, GFX_HDR, GFX_HDRPAPER, GFX_LOD, GFX_MOVIESHARP, GFX_DMGTAKEN, GFX_DMGENEMY,
-       GFX_VIB, GFX_DEADZONE, GFX_TRIGGER, GFX_BGPAUSE, GFX_BGMUTE, GFX_ACHON, GFX_N };
+       GFX_VIB, GFX_DEADZONE, GFX_TRIGGER, GFX_BGPAUSE, GFX_BGMUTE, GFX_ACHON, GFX_FPSSHOW, GFX_N };   /* (2.1: GFX_FPSSHOW, the frames-a-second counter) */
 #define GFX_MORE0 GFX_LOOK
 /* the in-game menu shows the options before the mods; the title's mods are
  * set in its launcher, before the game starts */
 #define GFX_MENU_N GFX_E3HUD
 /* value of a float option (brightness, sharpening, colour) */
 float xbox_GfxGetF(int id);
+/* (2.1) the frames-a-second counter (More: FPS counter), top left, while on; call once a presented frame */
+int   xbox_FpsRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y);
 
 /* Bumped on every change; the renderer re-reads its options when it moves. */
 #if defined(_WIN32)
@@ -29,6 +31,7 @@ void  xbox_ToastShow3(const char *title, const char *line, const char *desc);
 int   xbox_ToastRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y);
 /* (1.9.7) a banner at the top of the screen while set (NULL / "" clears) */
 void  xbox_BannerSet(const char *title, const char *line);
+void  xbox_PanelSet(const char *text);   /* (2.0.1) */
 int   xbox_BannerRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y);
 #endif
 float xbox_GfxScaleF(void);        /* the internal resolution: 1 to 12, or 4.5 (2160 lines) */

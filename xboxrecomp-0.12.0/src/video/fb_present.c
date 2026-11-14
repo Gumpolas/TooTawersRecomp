@@ -202,6 +202,7 @@ void xbox_FramebufferWindowPresent(uint32_t fb_va, uint32_t pitch)
 static volatile unsigned char s_key_down[256];
 static volatile int s_swallow_click;
 
+void xbox_KeyScriptArm(void) { }   /* (the key script is the SDL build's, for tests) */
 int xbox_FramebufferKeyDown(int vk)
 {
     if ((unsigned)vk > 255)
@@ -450,11 +451,17 @@ static LRESULT CALLBACK fb_wndproc(HWND h, UINT m, WPARAM w, LPARAM l)
         /* Igual que Salir en el menu: detener ESTE proceso. Dejar solo la
          * ventana detenida permitia que el invitado siguiera enviando frames
          * al HWND destruido (y redimensionase el swapchain con datos invalidos). */
-        if (m == WM_CLOSE) {
-            fflush(stdout); fflush(stderr);
-            TerminateProcess(GetCurrentProcess(), 0);
-        }
+        /* (2.1) the window destroyed any other way too (not only its close button): no game left running without its window */
+        fflush(stdout); fflush(stderr);
+        TerminateProcess(GetCurrentProcess(), 0);
         return 0;
+
+    case WM_QUERYENDSESSION:
+    case WM_ENDSESSION:   /* (2.1) Windows signing out or shutting down: gone at once, not waited for */
+        if (m == WM_ENDSESSION && !w) break;
+        fprintf(stderr, "[EXIT] Windows is ending the session\n"); fflush(stdout); fflush(stderr);
+        TerminateProcess(GetCurrentProcess(), 0);
+        return TRUE;
 
     case WM_SETFOCUS:
     case WM_ACTIVATE: {
@@ -818,6 +825,10 @@ static DWORD WINAPI fb_thread(LPVOID unused)
     }
 
     ReleaseDC(hwnd, hdc);
+    /* (2.1) the window's loop has ended: the window is gone, so the game is too -- left alone, the rest of the game ran on
+     * with no window, still in the background (a playtest) */
+    fprintf(stderr, "[EXIT] the game window's loop ended: the game ends with it\n"); fflush(stdout); fflush(stderr);
+    TerminateProcess(GetCurrentProcess(), 0);
     DestroyWindow(hwnd);
     free(s_rgb);
     s_rgb = NULL;
@@ -960,7 +971,20 @@ void xbox_FramebufferWindowPresent(uint32_t fb_va, uint32_t pitch)
 
 /* Keys held, by Windows virtual-key code (see fb_present's Windows half). */
 static volatile unsigned char s_key_down[256];
-int xbox_FramebufferKeyDown(int vk) { return (unsigned)vk <= 255 && s_key_down[vk] != 0; }
+/* (2.1, testing) RECOMP_KEY_SCRIPT=file: lines "ms vk held_ms" (vk in hex) -- that key down for that long, ms after the first key read */
+static volatile DWORD s_ks_t0;
+void xbox_KeyScriptArm(void) { if (getenv("RECOMP_KEY_SCRIPT_ARM") && !s_ks_t0) s_ks_t0 = GetTickCount(); }   /* (testing: times from the game's mark) */
+static int fb_key_script(int vk)
+{
+    static int loaded, n; static struct { unsigned t, d; int vk; } ev[256]; int i; DWORD now, t0;
+    if (!loaded) { const char *f = getenv("RECOMP_KEY_SCRIPT"); FILE *fp = f ? fopen(f, "r") : NULL; char ln[64]; loaded = 1;
+        if (fp) { while (n < 256 && fgets(ln, sizeof ln, fp)) { unsigned t, d; int k; if (sscanf(ln, "%u %x %u", &t, &k, &d) == 3) { ev[n].t = t; ev[n].vk = k; ev[n].d = d; n++; } } fclose(fp); } }
+    if (!n) return 0;
+    now = GetTickCount(); if (!s_ks_t0) { if (getenv("RECOMP_KEY_SCRIPT_ARM")) return 0; s_ks_t0 = now; } t0 = s_ks_t0;
+    for (i = 0; i < n; i++) if (ev[i].vk == vk && now - t0 >= ev[i].t && now - t0 < ev[i].t + ev[i].d) return 1;
+    return 0;
+}
+int xbox_FramebufferKeyDown(int vk) { return (unsigned)vk <= 255 && (s_key_down[vk] != 0 || fb_key_script(vk)); }
 void xbox_FramebufferKeyClear(int vk) { if ((unsigned)vk <= 255) s_key_down[vk] = 0; }
 
 static int vk_from_sdl(SDL_Scancode sc)

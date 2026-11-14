@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	TROLDEKAMPREKORDER
 P:TROLL BATTLE RESULTS	TROLDEKAMPRESULTATER
 P:P{1}	P{1}
 P:Launcher	Startprogram
+P:Players:	Spillere:
+P:P3 Bot:	P3-bot:
+P:P4 Bot:	P4-bot:
+P:Auto	Auto
+P:P3 Device:	P3-enhed:
+P:P4 Device:	P4-enhed:
+P:P3 Controls	P3-styring
+P:P4 Controls	P4-styring
+P:Reset P3 Controls	Nulstil P3-styring
+P:Reset P4 Controls	Nulstil P4-styring
+P:P2, P3, P4 Teleport:	P2-, P3-, P4-teleport:
+P:P2, P3, P4 Teleport: ON	P2-, P3-, P4-teleport: TIL
+P:P2, P3, P4 Teleport: OFF	P2-, P3-, P4-teleport: FRA
+P:Replace Companions:	Erstat følgesvende:
+P:Show Upgrades Player {1}	Opgraderinger for spiller {1}
+P:Team Deathmatch	Hold-deathmatch
+P:Free-for-all	Alle mod alle
+P:Player 3:	Spiller 3:
+P:Player 4:	Spiller 4:
+P:Player 3 Plays:	Spiller 3 spiller:
+P:Player 4 Plays:	Spiller 4 spiller:
+P:Team 1 - P1:	Hold 1 - P1:
+P:Team 2 - P2:	Hold 2 - P2:
+P:Team 1 - P3:	Hold 1 - P3:
+P:Team 2 - P4:	Hold 2 - P4:
+P:Yes	Ja
+P:No	Nej
+P:No (three players)	Nej (tre spillere)
+P:Player 3: choose your hero	Spiller 3: vælg din helt
+P:Player 4: choose your hero	Spiller 4: vælg din helt
+P:Player 2: {1} is taken	Spiller 2: {1} er taget
+P:Player 3: {1} is taken	Spiller 3: {1} er taget
+P:Player 4: {1} is taken	Spiller 4: {1} er taget
+P:Player 3: {1} not available	Spiller 3: {1} ikke tilgængelig
+P:Player 4: {1} not available	Spiller 4: {1} ikke tilgængelig
+P:PLAYER {1} WINS THE MATCH  ({2})	SPILLER {1} VINDER KAMPEN  ({2})
+P:TEAM {1} WINS ROUND {2}	HOLD {1} VINDER RUNDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	HOLD {1} VINDER KAMPEN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	HOLD {1} VINDER  {2} - {3}
+P:PLAYER {1} WINS  {2}	SPILLER {1} VINDER  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDE {1}   HOLD {2} {3} - {4} HOLD {5}
+P:FREE-FOR-ALL RESULTS	ALLE-MOD-ALLE-RESULTATER
+P:TEAM DEATHMATCH RESULTS	HOLD-DEATHMATCH-RESULTATER
+P:KILLS	DRAB
+P:DEATHS	DØDSFALD
+P:KILLS PER DEATH	DRAB PR. DØD
+P:TEAM	HOLD
+P:TEAM ROUNDS WON	HOLDETS VUNDNE RUNDER
+P:MOST KILLS: PLAYER {1} ({2})	FLEST DRAB: SPILLER {1} ({2})

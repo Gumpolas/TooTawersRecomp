@@ -112,6 +112,27 @@ static const Ach s_ach[] = {
     { "vs3_uruk", "Blood Frenzy", "Win 3 Versus matches as the Berserker." },
     { "vs_ent_rocks", "Hurl the Stones", "As the Ent, land 20 thrown rocks on your opponent in Versus." },
     { "vs_mirror", "Mirror Image", "Win a match of first to 5 or more where both players are the same hero." },
+    /* (2.0.1) Free-for-all, Team Deathmatch, four trolls */
+    { "ffa_win", "Last One Standing", "Win a Free-for-all match." },
+    { "ffa_win5", "King of the Arena", "Win 5 Free-for-all matches." },
+    { "tdm_win", "Brothers in Arms", "Win a Team Deathmatch match." },
+    { "tdm_win5", "Shield Brothers", "Win 5 Team Deathmatch matches." },
+    { "ffa_p1", "Last One Standing - Player 1", "Win a Free-for-all match as player 1." },
+    { "ffa_p2", "Last One Standing - Player 2", "Win a Free-for-all match as player 2." },
+    { "ffa_p3", "Last One Standing - Player 3", "Win a Free-for-all match as player 3." },
+    { "ffa_p4", "Last One Standing - Player 4", "Win a Free-for-all match as player 4." },
+    { "tdm_orange", "The Orange Banner", "Win a Team Deathmatch match as the orange team." },
+    { "tdm_red", "The Red Banner", "Win a Team Deathmatch match as the red team." },
+    { "tdm_p1", "Brothers in Arms - Player 1", "Win a Team Deathmatch match as player 1." },
+    { "tdm_p2", "Brothers in Arms - Player 2", "Win a Team Deathmatch match as player 2." },
+    { "tdm_p3", "Brothers in Arms - Player 3", "Win a Team Deathmatch match as player 3." },
+    { "tdm_p4", "Brothers in Arms - Player 4", "Win a Team Deathmatch match as player 4." },
+    { "troll_four", "Four Trolls Enter", "Win a Troll Battle with four trolls." },
+    /* (2.0.1) co-op with three and four players */
+    { "coop3_level", "A Company of Three", "Win a level in co-op with three players." },
+    { "coop4_level", "The Fellowship of Four", "Win a level in co-op with four players." },
+    { "coop4_five", "Many Hands", "Win 5 different levels in co-op with three or four players." },
+    { "coop4_secret", "Storming Orthanc", "Win the secret mission at Orthanc in co-op with four players." },
     /* Impossible */
     { "imp_level", "Defiance", "Win a level on Impossible." },
     { "imp_five", "Hardened", "Win 5 different levels on Impossible." },
@@ -223,6 +244,11 @@ static void level_won(int lv, int hb, int guest, int coop)
     else if (hb == 3) tt_ach_unlock("hero_gimli");
     else if (hb == 4 && lv != 0) tt_ach_unlock("hero_isildur");
     if (coop) { tt_ach_unlock("coop_level"); if (lv == 9) tt_ach_unlock("coop_wall"); }
+    if (coop) {   /* (2.0.1) three and four players */
+        extern int tt_coop_players_n(void); int np = tt_coop_players_n();
+        if (np >= 3) { tt_ach_unlock("coop3_level"); if (ach_on() && set_add("coop34", s_lv[lv].code) >= 5) tt_ach_unlock("coop4_five"); }
+        if (np >= 4) { tt_ach_unlock("coop4_level"); if (lv >= 12) tt_ach_unlock("coop4_secret"); }
+    }
     {   /* (1.9.7) Impossible: each level won on it counted once */
         extern int tt_impossible(void);
         if (tt_impossible() && lv < N_STORY && ach_on()) {
@@ -394,3 +420,24 @@ void tt_ach_vs_hit(int who, int dmg, int ranged, const char *skin, int troll)
 void tt_ach_vs_foe_kill(int who) { long n; if (!ach_on() || who < 0 || who > 1) return; n = cnt_add("vs_foes", 1); if (n >= 25) tt_ach_unlock("vs_foes25"); if (n >= 150) tt_ach_unlock("vs_foes150"); }
 /* (1.9.7) the deficit before a round: the trailing player's (called with the scores before each round) */
 void tt_ach_vs_scores(int s1, int s2) { if (s2 - s1 > s_vs_deficit[0]) s_vs_deficit[0] = s2 - s1; if (s1 - s2 > s_vs_deficit[1]) s_vs_deficit[1] = s1 - s2; }
+/* (2.0.1) a Free-for-all match won (the winner, the rounds the others won, his kills in it, Troll Battle, the players) and a
+ * Team Deathmatch match won (the team, the rounds the other team won) */
+void tt_ach_ffa_match(int who, int lost, int kills, int troll, int players)
+{
+    long n;
+    if (!ach_on() || who < 0 || who > 3) return;
+    if (troll) { if (players >= 4) tt_ach_unlock("troll_four"); return; }
+    n = cnt_add("ffa_wins", 1);
+    tt_ach_unlock("ffa_win"); if (n >= 5) tt_ach_unlock("ffa_win5");
+    { char id[16]; snprintf(id, sizeof id, "ffa_p%d", who + 1); tt_ach_unlock(id); }   /* (as player 1-4) */
+    (void)lost; (void)kills;
+}
+void tt_ach_tdm_match(int team, int lost)
+{
+    long n;
+    if (!ach_on() || team < 0 || team > 1) return;
+    n = cnt_add("tdm_wins", 1);
+    tt_ach_unlock("tdm_win"); if (n >= 5) tt_ach_unlock("tdm_win5");
+    tt_ach_unlock(team ? "tdm_red" : "tdm_orange");   /* (team 1, players 1 and 3: orange; team 2, players 2 and 4: red -- their markers) */
+    { char id[16]; snprintf(id, sizeof id, "tdm_p%d", team + 1); tt_ach_unlock(id); if (lost) { snprintf(id, sizeof id, "tdm_p%d", team + 3); tt_ach_unlock(id); } }   /* (both of the team: its second player, when he plays -- "lost" carries that) */
+}

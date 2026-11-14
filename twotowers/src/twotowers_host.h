@@ -171,7 +171,7 @@ static const char *tt_more_section(const char *key)
     return "Display";
 }
 static const char *const tt_more_keys[] = { "colour_look", "look_strength", "movie_sharpening",
-    "vibration", "stick_deadzone", "pause_unfocused", "mute_unfocused", "achievements" };   /* (1.9.7 release: HDR, texture distance, damage and trigger pull taken off) */
+    "vibration", "stick_deadzone", "pause_unfocused", "mute_unfocused", "achievements", "fps_counter" };   /* (2.1: the FPS counter, [Display]) (1.9.7 release: HDR, texture distance, damage and trigger pull taken off) */
 static void tt_gfx_save(const char *key, const char *value)
 {
     {   int k; for (k = 0; k < (int)(sizeof tt_more_keys / sizeof tt_more_keys[0]); k++) if (!strcmp(key, tt_more_keys[k])) {
@@ -203,21 +203,34 @@ static void twotowers_setup_paths_and_log(void)
          * template, carrying the user's settings over. */
         if (GetFileAttributesA(g_ini_path) != INVALID_FILE_ATTRIBUTES
             && GetPrivateProfileIntA("Developer", "ini_version", 0, g_ini_path) < 2) {
-            static const char *keep[][2] = {
-                {"Paths","game_dir"}, {"Display","window"}, {"Display","renderer"}, {"Display","fps"},
-                {"Display","vertex_programs"}, {"Input","keyboard"}, {"Input","layout"}, {"Input","usb"},
-                {"Audio","output"}, {"Compat","single_cpu"}, {"Developer","logging"} };
-            enum { NKEEP = sizeof keep / sizeof keep[0] };
-            char vals[NKEEP][MAX_PATH], old[MAX_PATH + 8];
-            int have[NKEEP], k;
-            for (k = 0; k < NKEEP; k++)
-                have[k] = GetPrivateProfileStringA(keep[k][0], keep[k][1], "\x01", vals[k], MAX_PATH, g_ini_path)
-                          && vals[k][0] != 1;
+            /* (2.0.1) every setting in it carried over, not a short list: on a fresh install the launcher writes its settings
+             * into an ini that has no template yet (no ini_version), and the game took it for an older build's -- only the
+             * window, renderer and frame rate came across, and the graphics settings and mods chosen in the launcher were
+             * lost until they were set again (a playtest: "the first time the game launches the settings usually don't
+             * stay"). Its [Developer] ini_version is the template's own */
+            enum { NMAX = 256 };
+            static char sec[NMAX][48], key[NMAX][64], val[NMAX][MAX_PATH];
+            int n = 0, k; char old[MAX_PATH + 8], cur[48] = "", ln[MAX_PATH + 160];
+            FILE *f = fopen(g_ini_path, "r");
+            if (f) {
+                while (n < NMAX && fgets(ln, sizeof ln, f)) {
+                    char *a = ln, *e, *eq; size_t L;
+                    while (*a == ' ' || *a == '\t') a++;
+                    L = strlen(a); while (L && (a[L - 1] == '\n' || a[L - 1] == '\r' || a[L - 1] == ' ' || a[L - 1] == '\t')) a[--L] = 0;
+                    if (!*a || *a == ';' || *a == '#') continue;
+                    if (*a == '[') { e = strchr(a, ']'); if (e) { *e = 0; snprintf(cur, sizeof cur, "%s", a + 1); } continue; }
+                    eq = strchr(a, '='); if (!eq || !cur[0]) continue;
+                    *eq = 0; e = eq; while (e > a && (e[-1] == ' ' || e[-1] == '\t')) *--e = 0;
+                    eq++; while (*eq == ' ' || *eq == '\t') eq++;
+                    if (!*a || (!_stricmp(cur, "Developer") && !_stricmp(a, "ini_version"))) continue;
+                    snprintf(sec[n], sizeof sec[n], "%s", cur); snprintf(key[n], sizeof key[n], "%s", a); snprintf(val[n], sizeof val[n], "%s", eq); n++;
+                }
+                fclose(f);
+            }
             snprintf(old, sizeof(old), "%s.old", g_ini_path);
             if (MoveFileExA(g_ini_path, old, MOVEFILE_REPLACE_EXISTING)) {
                 twotowers_write_default_ini();
-                for (k = 0; k < NKEEP; k++)
-                    if (have[k]) WritePrivateProfileStringA(keep[k][0], keep[k][1], vals[k], g_ini_path);
+                for (k = 0; k < n; k++) WritePrivateProfileStringA(sec[k], key[k], val[k], g_ini_path);
             }
         }
     }

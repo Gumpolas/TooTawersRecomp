@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	اختر إعداداً لتغيير
 L:Voices:	الأصوات:
 L:Films:	الأفلام:
 L:(as the text)	(مثل النص)
+L:Last One Standing	آخر الصامدين
+L:Win a Free-for-all match.	فز بمباراة الكل ضد الكل.
+L:King of the Arena	ملك الحلبة
+L:Win 5 Free-for-all matches.	فز بـ 5 مباريات الكل ضد الكل.
+L:Brothers in Arms	إخوة السلاح
+L:Win a Team Deathmatch match.	فز بمباراة قتال الفرق حتى الموت.
+L:Shield Brothers	إخوة الدرع
+L:Win 5 Team Deathmatch matches.	فز بـ 5 مباريات قتال الفرق حتى الموت.
+L:Four Trolls Enter	أربعة ترول
+L:Win a Troll Battle with four trolls.	فز بمعركة الترول بأربعة ترول.
+L:A Company of Three	رفقة من ثلاثة
+L:Win a level in co-op with three players.	فز بمرحلة في اللعب التعاوني مع ثلاثة لاعبين.
+L:The Fellowship of Four	رفقة الأربعة
+L:Win a level in co-op with four players.	فز بمرحلة في اللعب التعاوني مع أربعة لاعبين.
+L:Many Hands	أيادٍ كثيرة
+L:Win 5 different levels in co-op with three or four players.	فز بـ 5 مراحل مختلفة في اللعب التعاوني مع ثلاثة أو أربعة لاعبين.
+L:Storming Orthanc	اقتحام أورثانك
+L:Win the secret mission at Orthanc in co-op with four players.	فز بالمهمة السرية في أورثانك في اللعب التعاوني مع أربعة لاعبين.
+P:Players:	اللاعبون:
+P:P3 Bot:	بوت P3:
+P:P4 Bot:	بوت P4:
+P:Auto	تلقائي
+P:P3 Device:	جهاز P3:
+P:P4 Device:	جهاز P4:
+P:P3 Controls	تحكم P3
+P:P4 Controls	تحكم P4
+P:Reset P3 Controls	إعادة ضبط تحكم P3
+P:Reset P4 Controls	إعادة ضبط تحكم P4
+P:P2, P3, P4 Teleport:	انتقال P2 و P3 و P4:
+P:P2, P3, P4 Teleport: ON	انتقال P2 و P3 و P4: تشغيل
+P:P2, P3, P4 Teleport: OFF	انتقال P2 و P3 و P4: إيقاف
+P:Replace Companions:	استبدال الرفاق:
+P:Show Upgrades Player {1}	ترقيات اللاعب {1}
+P:Team Deathmatch	قتال الفرق حتى الموت
+P:Free-for-all	الكل ضد الكل
+P:Player 3:	اللاعب 3:
+P:Player 4:	اللاعب 4:
+P:Player 3 Plays:	يلعب اللاعب 3:
+P:Player 4 Plays:	يلعب اللاعب 4:
+P:Team 1 - P1:	الفريق 1 - P1:
+P:Team 2 - P2:	الفريق 2 - P2:
+P:Team 1 - P3:	الفريق 1 - P3:
+P:Team 2 - P4:	الفريق 2 - P4:
+P:Yes	نعم
+P:No	لا
+P:No (three players)	لا (ثلاثة لاعبين)
+P:Player 3: choose your hero	اللاعب 3: اختر بطلك
+P:Player 4: choose your hero	اللاعب 4: اختر بطلك
+P:Player 2: {1} is taken	اللاعب 2: {1} مأخوذ
+P:Player 3: {1} is taken	اللاعب 3: {1} مأخوذ
+P:Player 4: {1} is taken	اللاعب 4: {1} مأخوذ
+P:Player 3: {1} not available	اللاعب 3: {1} غير متاح
+P:Player 4: {1} not available	اللاعب 4: {1} غير متاح
+P:PLAYER {1} WINS THE MATCH  ({2})	اللاعب {1} يفوز بالمباراة  ({2})
+P:TEAM {1} WINS ROUND {2}	الفريق {1} يفوز بالجولة {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	الفريق {1} يفوز بالمباراة  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	الفريق {1} يفوز  {2} - {3}
+P:PLAYER {1} WINS  {2}	اللاعب {1} يفوز  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	الجولة {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	الجولة {1}   الفريق {2} {3} - {4} الفريق {5}
+P:FREE-FOR-ALL RESULTS	نتائج الكل ضد الكل
+P:TEAM DEATHMATCH RESULTS	نتائج قتال الفرق
+P:KILLS	القتلات
+P:DEATHS	الوفيات
+P:KILLS PER DEATH	القتلات لكل وفاة
+P:TEAM	الفريق
+P:TEAM ROUNDS WON	جولات الفريق
+P:MOST KILLS: PLAYER {1} ({2})	أكثر القتلات: اللاعب {1} ({2})
+L:DOWN	سقطت
+L:TROLL BATTLE	معركة الترول
+L:FREE-FOR-ALL	الكل ضد الكل
+L:TEAM DEATHMATCH	قتال الفرق حتى الموت
+L:DEATHMATCH	قتال حتى الموت
+L:ROUND {1}  (FIRST TO {2})	الجولة {1}  (الأول إلى {2})
+L:The leader needs {1} more round to win	يحتاج المتصدر إلى {1} جولة أخرى للفوز
+L:The leader needs {1} more rounds to win	يحتاج المتصدر إلى {1} جولات أخرى للفوز
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	الفريق 1 {1} - {2} الفريق 2   (متبقٍ {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	اللاعب 1 {1} - {2} اللاعب 2   (متبقٍ {3} / {4})
+L:PLAYER	اللاعب
+L:HERO	البطل
+L:TEAM	الفريق
+L:ROUNDS	الجولات
+L:KILLS	القتلات
+L:DEATHS	الوفيات
+L:down	ساقط
+L:FPS counter	عداد الإطارات
+L:Frames a second, in the top-left corner	الإطارات في الثانية، أعلى اليسار
+L:Last One Standing - Player 1	آخر الصامدين - اللاعب 1
+L:Win a Free-for-all match as player 1.	فز بمباراة الكل ضد الكل بصفتك اللاعب 1.
+L:Brothers in Arms - Player 1	إخوة السلاح - اللاعب 1
+L:Win a Team Deathmatch match as player 1.	فز بقتال الفرق حتى الموت بصفتك اللاعب 1.
+L:Last One Standing - Player 2	آخر الصامدين - اللاعب 2
+L:Win a Free-for-all match as player 2.	فز بمباراة الكل ضد الكل بصفتك اللاعب 2.
+L:Brothers in Arms - Player 2	إخوة السلاح - اللاعب 2
+L:Win a Team Deathmatch match as player 2.	فز بقتال الفرق حتى الموت بصفتك اللاعب 2.
+L:Last One Standing - Player 3	آخر الصامدين - اللاعب 3
+L:Win a Free-for-all match as player 3.	فز بمباراة الكل ضد الكل بصفتك اللاعب 3.
+L:Brothers in Arms - Player 3	إخوة السلاح - اللاعب 3
+L:Win a Team Deathmatch match as player 3.	فز بقتال الفرق حتى الموت بصفتك اللاعب 3.
+L:Last One Standing - Player 4	آخر الصامدين - اللاعب 4
+L:Win a Free-for-all match as player 4.	فز بمباراة الكل ضد الكل بصفتك اللاعب 4.
+L:Brothers in Arms - Player 4	إخوة السلاح - اللاعب 4
+L:Win a Team Deathmatch match as player 4.	فز بقتال الفرق حتى الموت بصفتك اللاعب 4.
+L:The Orange Banner	الراية البرتقالية
+L:Win a Team Deathmatch match as the orange team.	فز بقتال الفرق حتى الموت مع الفريق البرتقالي.
+L:The Red Banner	الراية الحمراء
+L:Win a Team Deathmatch match as the red team.	فز بقتال الفرق حتى الموت مع الفريق الأحمر.

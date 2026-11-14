@@ -124,9 +124,10 @@ static GfxItem s_items[GFX_N] = {
     { "Pause when unfocused", "pause_unfocused", 2, { "Off", "On" }, { "0", "1" }, "The game stops while another window is in front" },
     { "Mute when unfocused", "mute_unfocused", 2, { "Off", "On" }, { "0", "1" }, "No sound while another window is in front" },
     { "Achievements", "achievements", 2, { "Off", "On" }, { "0", "1" }, "Off: none are earned and no notes appear (the list is kept)" },
+    { "FPS counter", "fps_counter", 2, { "Off", "On" }, { "0", "1" }, "Frames a second, in the top-left corner" },   /* (2.1) */
 };
 /* the More page's defaults (index into each item's values) */
-static const int s_more_def[GFX_N - GFX_MORE0] = { 0, 3, 0, 1, 0, 0, 3, 3, 4, 2, 0, 0, 0, 1 };
+static const int s_more_def[GFX_N - GFX_MORE0] = { 0, 3, 0, 1, 0, 0, 3, 3, 4, 2, 0, 0, 0, 1, 0 };
 /* (1.9.7 release) settings taken off the More page: kept at their defaults (HDR off, original texture distance, original
  * damage both ways, the game's own trigger pull), whatever an ini says */
 static int more_forced(int k) { return k == GFX_HDR || k == GFX_HDRPAPER || k == GFX_LOD || k == GFX_DMGTAKEN || k == GFX_DMGENEMY || k == GFX_TRIGGER; }
@@ -425,9 +426,11 @@ void xbox_GfxSetIndex(int id, int v)
     LeaveCriticalSection(&s_lock);
 }
 
+volatile int xbox_gfxmenu_locked;   /* (2.1) a title's online game: the settings menu not opened (set before the game) */
 void xbox_GfxMenuToggle(void)
 {
     gfx_init();
+    if (xbox_gfxmenu_locked && !s_open) { static int said; if (!said++) { fprintf(stderr, "  [GFXMENU] not during an online game\n"); fflush(stderr); } return; }
     if (!s_open && !s_avail) {
         static int said;
         if (!said++) { fprintf(stderr, "  [GFXMENU] needs the Direct3D 11 renderer\n"); fflush(stderr); }
@@ -678,8 +681,8 @@ static void box(int x, int y, int w, int h, COLORREF c)
 
 /* (1.9.7) a second surface for the toast (an achievement's note): drawn with the same txt() and box(), the panel's
  * globals pointed at it for the while */
-static HDC s_tdc[2]; static HBITMAP s_tbmp[2]; static uint32_t *s_tpxa[2]; static int s_twa[2], s_tha[2], s_tfpx[2];
-static HFONT s_tf[2], s_tfb[2];
+static HDC s_tdc[4]; static HBITMAP s_tbmp[4]; static uint32_t *s_tpxa[4]; static int s_twa[4], s_tha[4], s_tfpx[4];   /* (2.1: [2] the FPS counter) */
+static HFONT s_tf[4], s_tfb[4];
 static HDC s_sv_dc; static uint32_t *s_sv_px; static int s_sv_pw, s_sv_ph;
 static int toast_begin(int k, int w, int h, int fp, HFONT *f, HFONT *fb)
 {
@@ -827,8 +830,8 @@ static void txt(const char *str, int x, int y, int w, int h, UINT fmt, COLORREF 
     }
     free(cov);
 }
-static uint32_t *s_tpxa[2]; static int s_twa[2], s_tha[2];
-static TFont s_tfv[2][2];
+static uint32_t *s_tpxa[4]; static int s_twa[4], s_tha[4];   /* (2.1: [2] the FPS counter) */
+static TFont s_tfv[4][2];
 static uint32_t *s_sv_px; static int s_sv_pw, s_sv_ph;
 static int toast_begin(int k, int w, int h, int fp, HFONT *f, HFONT *fb)
 {
@@ -1082,6 +1085,76 @@ void xbox_BannerSet(const char *title, const char *line)
     if (*title) title = TR(title); if (*line) line = TR(line);   /* (1.9.9: in the chosen language -- Restart Round, P2 Teleport) */
     if (strcmp(s_ban_t, title) || strcmp(s_ban_l, line)) { snprintf(s_ban_t, sizeof s_ban_t, "%s", title); snprintf(s_ban_l, sizeof s_ban_l, "%s", line); s_ban_ver++; }
     LeaveCriticalSection(&s_lock);
+}
+/* (2.1) the FPS counter: the frames presented in the last half second, as a rate, in a small dark box in the top-left corner */
+int xbox_FpsRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y)
+{
+    static DWORD t0; static unsigned frames, shown = ~0u, drawn_ver; static int fps = -1;
+    DWORD now = GetTickCount(); int fp, tw, th;
+    (void)scw;
+    if (!s_inited || !s_cur[GFX_FPSSHOW]) { t0 = 0; frames = 0; fps = -1; return 0; }
+    frames++;
+    if (!t0) t0 = now;
+    if (now - t0 >= 500u) { fps = (int)((frames * 1000u + (now - t0) / 2) / (now - t0)); frames = 0; t0 = now; }
+    EnterCriticalSection(&s_lock);
+    fp = sch / 45; if (fp < 12) fp = 12;
+    tw = fp * 6; th = fp * 3 / 2 + fp / 3;
+    if ((unsigned)fps != shown || s_twa[2] != tw || s_tha[2] != th || !s_tpxa[2]) { HFONT f, fb; char t[32]; int i;
+        if (toast_begin(2, tw, th, fp, &f, &fb)) {
+            if (fps >= 0) snprintf(t, sizeof t, "%d FPS", fps); else snprintf(t, sizeof t, "-- FPS");
+            box(0, 0, tw, th, RGB(10, 9, 7));
+            txt(t, fp / 3, fp / 6, tw - fp / 3, th - fp / 6, DT_LEFT | DT_END_ELLIPSIS, RGB(150, 230, 120), fb);
+            for (i = 0; i < tw * th; i++) s_tpxa[2][i] = (s_tpxa[2][i] & 0x00FFFFFFu) | 0xC8000000u;
+            toast_end(); shown = (unsigned)fps; drawn_ver++; } }
+    *px = s_tpxa[2]; *w = s_twa[2]; *h = s_tha[2]; *ver = drawn_ver; *x = fp / 2; *y = fp / 2;
+    LeaveCriticalSection(&s_lock);
+    return s_tpxa[2] != NULL;
+}
+/* (2.0.1) a title's panel: lines of text ('\n' between; a line starting '#' a heading, '|' splits it into columns), centred on
+ * the screen while set; "" or NULL takes it away (Versus' scores, held on F7) */
+static char s_pan_t[2048]; static unsigned s_pan_ver, s_pan_drawn;
+void xbox_PanelSet(const char *text)
+{
+    if (!s_inited) return;
+    EnterCriticalSection(&s_lock);
+    if (strcmp(s_pan_t, text ? text : "")) { snprintf(s_pan_t, sizeof s_pan_t, "%s", text ? text : ""); s_pan_ver++; }
+    LeaveCriticalSection(&s_lock);
+}
+int xbox_PanelRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y)
+{
+    int fp, tw, th, lh, nl = 0, i;
+    if (!s_inited || !s_pan_t[0]) return 0;
+    EnterCriticalSection(&s_lock);
+    if (!s_pan_t[0]) { LeaveCriticalSection(&s_lock); return 0; }
+    for (i = 0; s_pan_t[i]; i++) if (s_pan_t[i] == '\n') nl++;
+    nl++;
+    fp = sch / 36; if (fp < 12) fp = 12;
+    lh = fp * 3 / 2;
+    tw = fp * 34; th = lh * nl + fp * 2;
+    if (tw > scw - 16) tw = scw - 16;
+    if (th > sch - 16) th = sch - 16;
+    if (s_pan_drawn != s_pan_ver || s_twa[3] != tw || s_tha[3] != th || !s_tpxa[3]) { HFONT f, fb;
+        if (toast_begin(3, tw, th, fp, &f, &fb)) {
+            const char *p = s_pan_t; int row = 0;
+            box(0, 0, tw, th, RGB(12, 10, 8));
+            box(0, 0, tw, 2, RGB(170, 130, 60)); box(0, th - 2, tw, 2, RGB(170, 130, 60));
+            while (*p) { char ln[256]; int n = 0, col = 0, head = 0, yy = fp + row * lh;
+                while (*p && *p != '\n' && n < 255) ln[n++] = *p++; ln[n] = 0; if (*p == '\n') p++;
+                if (ln[0] == '#') { head = 1; memmove(ln, ln + 1, strlen(ln)); }
+                {   char *c = ln, *bar; int ncol = 1, cw; for (bar = ln; *bar; bar++) if (*bar == '|') ncol++;
+                    cw = ncol > 1 ? (tw - 2 * fp - fp * 9) / (ncol - 1) : tw - 2 * fp;
+                    while (c) { bar = strchr(c, '|'); if (bar) *bar = 0;
+                        if (ncol == 1) txt(c, fp, yy, tw - 2 * fp, lh, DT_CENTER | DT_END_ELLIPSIS, head ? RGB(240, 200, 110) : RGB(225, 220, 205), head ? fb : f);
+                        else if (col == 0) txt(c, fp, yy, fp * 9, lh, DT_LEFT | DT_END_ELLIPSIS, head ? RGB(240, 200, 110) : RGB(225, 220, 205), head ? fb : f);
+                        else txt(c, fp + fp * 9 + (col - 1) * cw, yy, cw, lh, DT_CENTER | DT_END_ELLIPSIS, head ? RGB(240, 200, 110) : RGB(225, 220, 205), head ? fb : f);
+                        col++; c = bar ? bar + 1 : NULL; } }
+                row++; }
+            for (i = 0; i < tw * th; i++) s_tpxa[3][i] = (s_tpxa[3][i] & 0x00FFFFFFu) | 0xE0000000u;
+            toast_end(); s_pan_drawn = s_pan_ver; } }
+    *px = s_tpxa[3]; *w = s_twa[3]; *h = s_tha[3]; *ver = s_pan_drawn + 0x40000000u;
+    *x = (scw - s_twa[3]) / 2; *y = (sch - s_tha[3]) / 2;
+    LeaveCriticalSection(&s_lock);
+    return s_tpxa[3] != NULL;
 }
 int xbox_BannerRender(int scw, int sch, const uint32_t **px, int *w, int *h, unsigned *ver, int *x, int *y)
 {

@@ -2042,3 +2042,110 @@ L:Quit	Wyjdź
 L:Select	Wybierz
 L:Launcher	Launcher
 L:Choose a setting to change it, then Play.	Wybierz ustawienie, aby je zmienić, potem Graj.
+L:Last One Standing	Ostatni na nogach
+L:Win a Free-for-all match.	Wygraj mecz każdy na każdego.
+L:King of the Arena	Król areny
+L:Win 5 Free-for-all matches.	Wygraj 5 meczów każdy na każdego.
+L:Brothers in Arms	Towarzysze broni
+L:Win a Team Deathmatch match.	Wygraj drużynowy deathmatch.
+L:Shield Brothers	Bracia tarczy
+L:Win 5 Team Deathmatch matches.	Wygraj 5 drużynowych deathmatchów.
+L:Four Trolls Enter	Wchodzą cztery trolle
+L:Win a Troll Battle with four trolls.	Wygraj bitwę trolli z czterema trollami.
+L:A Company of Three	Drużyna trzech
+L:Win a level in co-op with three players.	Wygraj poziom w kooperacji z trzema graczami.
+L:The Fellowship of Four	Drużyna czterech
+L:Win a level in co-op with four players.	Wygraj poziom w kooperacji z czterema graczami.
+L:Many Hands	Wiele rąk
+L:Win 5 different levels in co-op with three or four players.	Wygraj 5 różnych poziomów w kooperacji z trzema lub czterema graczami.
+L:Storming Orthanc	Szturm na Orthank
+L:Win the secret mission at Orthanc in co-op with four players.	Wygraj tajną misję w Orthanku w kooperacji z czterema graczami.
+P:Players:	Gracze:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Urządzenie P3:
+P:P4 Device:	Urządzenie P4:
+P:P3 Controls	Sterowanie P3
+P:P4 Controls	Sterowanie P4
+P:Reset P3 Controls	Przywróć sterowanie P3
+P:Reset P4 Controls	Przywróć sterowanie P4
+P:P2, P3, P4 Teleport:	Teleport P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleport P2, P3, P4: WŁ.
+P:P2, P3, P4 Teleport: OFF	Teleport P2, P3, P4: WYŁ.
+P:Replace Companions:	Zastąp towarzyszy:
+P:Show Upgrades Player {1}	Ulepszenia gracza {1}
+P:Team Deathmatch	Drużynowy deathmatch
+P:Free-for-all	Każdy na każdego
+P:Player 3:	Gracz 3:
+P:Player 4:	Gracz 4:
+P:Player 3 Plays:	Gracz 3 gra:
+P:Player 4 Plays:	Gracz 4 gra:
+P:Team 1 - P1:	Drużyna 1 - P1:
+P:Team 2 - P2:	Drużyna 2 - P2:
+P:Team 1 - P3:	Drużyna 1 - P3:
+P:Team 2 - P4:	Drużyna 2 - P4:
+P:Yes	Tak
+P:No	Nie
+P:No (three players)	Nie (trzech graczy)
+P:Player 3: choose your hero	Gracz 3: wybierz bohatera
+P:Player 4: choose your hero	Gracz 4: wybierz bohatera
+P:Player 2: {1} is taken	Gracz 2: {1} jest zajęty
+P:Player 3: {1} is taken	Gracz 3: {1} jest zajęty
+P:Player 4: {1} is taken	Gracz 4: {1} jest zajęty
+P:Player 3: {1} not available	Gracz 3: {1} niedostępny
+P:Player 4: {1} not available	Gracz 4: {1} niedostępny
+P:PLAYER {1} WINS THE MATCH  ({2})	GRACZ {1} WYGRYWA MECZ  ({2})
+P:TEAM {1} WINS ROUND {2}	DRUŻYNA {1} WYGRYWA RUNDĘ {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	DRUŻYNA {1} WYGRYWA MECZ  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	WYGRYWA DRUŻYNA {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	WYGRYWA GRACZ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDA {1}   DRUŻYNA {2} {3} - {4} DRUŻYNA {5}
+P:FREE-FOR-ALL RESULTS	WYNIKI KAŻDY NA KAŻDEGO
+P:TEAM DEATHMATCH RESULTS	WYNIKI DRUŻYNOWEGO DEATHMATCHU
+P:KILLS	ZABÓJSTWA
+P:DEATHS	ŚMIERCI
+P:KILLS PER DEATH	ZABÓJSTWA NA ŚMIERĆ
+P:TEAM	DRUŻYNA
+P:TEAM ROUNDS WON	RUNDY DRUŻYNY
+P:MOST KILLS: PLAYER {1} ({2})	NAJWIĘCEJ ZABÓJSTW: GRACZ {1} ({2})
+L:DOWN	NA ZIEMI
+L:TROLL BATTLE	BITWA TROLLI
+L:FREE-FOR-ALL	KAŻDY NA KAŻDEGO
+L:TEAM DEATHMATCH	DRUŻYNOWY DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	RUNDA {1}  (DO {2} WYGRANYCH)
+L:The leader needs {1} more round to win	Prowadzącemu brakuje {1} rundy do zwycięstwa
+L:The leader needs {1} more rounds to win	Prowadzącemu brakuje {1} rund do zwycięstwa
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	DRUŻYNA 1 {1} - {2} DRUŻYNA 2   (brakuje {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	GRACZ 1 {1} - {2} GRACZ 2   (brakuje {3} / {4})
+L:PLAYER	GRACZ
+L:HERO	BOHATER
+L:TEAM	DRUŻYNA
+L:ROUNDS	RUNDY
+L:KILLS	ZABÓJSTWA
+L:DEATHS	ŚMIERCI
+L:down	na ziemi
+L:FPS counter	Licznik FPS
+L:Frames a second, in the top-left corner	Klatki na sekundę, w lewym górnym rogu
+L:Last One Standing - Player 1	Ostatni na nogach - Gracz 1
+L:Win a Free-for-all match as player 1.	Wygraj mecz każdy na każdego jako gracz 1.
+L:Brothers in Arms - Player 1	Towarzysze broni - Gracz 1
+L:Win a Team Deathmatch match as player 1.	Wygraj drużynowy deathmatch jako gracz 1.
+L:Last One Standing - Player 2	Ostatni na nogach - Gracz 2
+L:Win a Free-for-all match as player 2.	Wygraj mecz każdy na każdego jako gracz 2.
+L:Brothers in Arms - Player 2	Towarzysze broni - Gracz 2
+L:Win a Team Deathmatch match as player 2.	Wygraj drużynowy deathmatch jako gracz 2.
+L:Last One Standing - Player 3	Ostatni na nogach - Gracz 3
+L:Win a Free-for-all match as player 3.	Wygraj mecz każdy na każdego jako gracz 3.
+L:Brothers in Arms - Player 3	Towarzysze broni - Gracz 3
+L:Win a Team Deathmatch match as player 3.	Wygraj drużynowy deathmatch jako gracz 3.
+L:Last One Standing - Player 4	Ostatni na nogach - Gracz 4
+L:Win a Free-for-all match as player 4.	Wygraj mecz każdy na każdego jako gracz 4.
+L:Brothers in Arms - Player 4	Towarzysze broni - Gracz 4
+L:Win a Team Deathmatch match as player 4.	Wygraj drużynowy deathmatch jako gracz 4.
+L:The Orange Banner	Pomarańczowy sztandar
+L:Win a Team Deathmatch match as the orange team.	Wygraj drużynowy deathmatch jako drużyna pomarańczowa.
+L:The Red Banner	Czerwony sztandar
+L:Win a Team Deathmatch match as the red team.	Wygraj drużynowy deathmatch jako drużyna czerwona.

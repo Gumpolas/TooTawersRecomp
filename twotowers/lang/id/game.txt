@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	REKOR LAGA TROLL
 P:TROLL BATTLE RESULTS	HASIL LAGA TROLL
 P:P{1}	P{1}
 P:Launcher	Peluncur
+P:Players:	Pemain:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Otomatis
+P:P3 Device:	Perangkat P3:
+P:P4 Device:	Perangkat P4:
+P:P3 Controls	Kontrol P3
+P:P4 Controls	Kontrol P4
+P:Reset P3 Controls	Atur Ulang Kontrol P3
+P:Reset P4 Controls	Atur Ulang Kontrol P4
+P:P2, P3, P4 Teleport:	Teleportasi P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleportasi P2, P3, P4: AKTIF
+P:P2, P3, P4 Teleport: OFF	Teleportasi P2, P3, P4: NONAKTIF
+P:Replace Companions:	Ganti rekan:
+P:Show Upgrades Player {1}	Peningkatan pemain {1}
+P:Team Deathmatch	Deathmatch Tim
+P:Free-for-all	Bebas untuk Semua
+P:Player 3:	Pemain 3:
+P:Player 4:	Pemain 4:
+P:Player 3 Plays:	Pemain 3 bermain:
+P:Player 4 Plays:	Pemain 4 bermain:
+P:Team 1 - P1:	Tim 1 - P1:
+P:Team 2 - P2:	Tim 2 - P2:
+P:Team 1 - P3:	Tim 1 - P3:
+P:Team 2 - P4:	Tim 2 - P4:
+P:Yes	Ya
+P:No	Tidak
+P:No (three players)	Tidak (tiga pemain)
+P:Player 3: choose your hero	Pemain 3: pilih pahlawan Anda
+P:Player 4: choose your hero	Pemain 4: pilih pahlawan Anda
+P:Player 2: {1} is taken	Pemain 2: {1} sudah dipilih
+P:Player 3: {1} is taken	Pemain 3: {1} sudah dipilih
+P:Player 4: {1} is taken	Pemain 4: {1} sudah dipilih
+P:Player 3: {1} not available	Pemain 3: {1} tidak tersedia
+P:Player 4: {1} not available	Pemain 4: {1} tidak tersedia
+P:PLAYER {1} WINS THE MATCH  ({2})	PEMAIN {1} MEMENANGI PERTANDINGAN  ({2})
+P:TEAM {1} WINS ROUND {2}	TIM {1} MENANG RONDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TIM {1} MEMENANGI PERTANDINGAN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TIM {1} MENANG  {2} - {3}
+P:PLAYER {1} WINS  {2}	PEMAIN {1} MENANG  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RONDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RONDE {1}   TIM {2} {3} - {4} TIM {5}
+P:FREE-FOR-ALL RESULTS	HASIL BEBAS UNTUK SEMUA
+P:TEAM DEATHMATCH RESULTS	HASIL DEATHMATCH TIM
+P:KILLS	PEMBUNUHAN
+P:DEATHS	KEMATIAN
+P:KILLS PER DEATH	PEMBUNUHAN PER KEMATIAN
+P:TEAM	TIM
+P:TEAM ROUNDS WON	RONDE TIM
+P:MOST KILLS: PLAYER {1} ({2})	PEMBUNUHAN TERBANYAK: PEMAIN {1} ({2})

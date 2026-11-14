@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	Pilih pengaturan untuk mengubahnya, 
 L:Voices:	Suara:
 L:Films:	Film:
 L:(as the text)	(seperti teks)
+L:Last One Standing	Yang terakhir berdiri
+L:Win a Free-for-all match.	Menangkan pertandingan Bebas untuk Semua.
+L:King of the Arena	Raja arena
+L:Win 5 Free-for-all matches.	Menangkan 5 pertandingan Bebas untuk Semua.
+L:Brothers in Arms	Saudara seperjuangan
+L:Win a Team Deathmatch match.	Menangkan Deathmatch Tim.
+L:Shield Brothers	Saudara perisai
+L:Win 5 Team Deathmatch matches.	Menangkan 5 Deathmatch Tim.
+L:Four Trolls Enter	Empat troll masuk
+L:Win a Troll Battle with four trolls.	Menangkan Laga Troll dengan empat troll.
+L:A Company of Three	Rombongan bertiga
+L:Win a level in co-op with three players.	Menangkan satu level dalam co-op dengan tiga pemain.
+L:The Fellowship of Four	Persekutuan berempat
+L:Win a level in co-op with four players.	Menangkan satu level dalam co-op dengan empat pemain.
+L:Many Hands	Banyak tangan
+L:Win 5 different levels in co-op with three or four players.	Menangkan 5 level berbeda dalam co-op dengan tiga atau empat pemain.
+L:Storming Orthanc	Menyerbu Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Menangkan misi rahasia di Orthanc dalam co-op dengan empat pemain.
+P:Players:	Pemain:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Otomatis
+P:P3 Device:	Perangkat P3:
+P:P4 Device:	Perangkat P4:
+P:P3 Controls	Kontrol P3
+P:P4 Controls	Kontrol P4
+P:Reset P3 Controls	Atur Ulang Kontrol P3
+P:Reset P4 Controls	Atur Ulang Kontrol P4
+P:P2, P3, P4 Teleport:	Teleportasi P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleportasi P2, P3, P4: AKTIF
+P:P2, P3, P4 Teleport: OFF	Teleportasi P2, P3, P4: NONAKTIF
+P:Replace Companions:	Ganti rekan:
+P:Show Upgrades Player {1}	Peningkatan pemain {1}
+P:Team Deathmatch	Deathmatch Tim
+P:Free-for-all	Bebas untuk Semua
+P:Player 3:	Pemain 3:
+P:Player 4:	Pemain 4:
+P:Player 3 Plays:	Pemain 3 bermain:
+P:Player 4 Plays:	Pemain 4 bermain:
+P:Team 1 - P1:	Tim 1 - P1:
+P:Team 2 - P2:	Tim 2 - P2:
+P:Team 1 - P3:	Tim 1 - P3:
+P:Team 2 - P4:	Tim 2 - P4:
+P:Yes	Ya
+P:No	Tidak
+P:No (three players)	Tidak (tiga pemain)
+P:Player 3: choose your hero	Pemain 3: pilih pahlawan Anda
+P:Player 4: choose your hero	Pemain 4: pilih pahlawan Anda
+P:Player 2: {1} is taken	Pemain 2: {1} sudah dipilih
+P:Player 3: {1} is taken	Pemain 3: {1} sudah dipilih
+P:Player 4: {1} is taken	Pemain 4: {1} sudah dipilih
+P:Player 3: {1} not available	Pemain 3: {1} tidak tersedia
+P:Player 4: {1} not available	Pemain 4: {1} tidak tersedia
+P:PLAYER {1} WINS THE MATCH  ({2})	PEMAIN {1} MEMENANGI PERTANDINGAN  ({2})
+P:TEAM {1} WINS ROUND {2}	TIM {1} MENANG RONDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TIM {1} MEMENANGI PERTANDINGAN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TIM {1} MENANG  {2} - {3}
+P:PLAYER {1} WINS  {2}	PEMAIN {1} MENANG  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RONDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RONDE {1}   TIM {2} {3} - {4} TIM {5}
+P:FREE-FOR-ALL RESULTS	HASIL BEBAS UNTUK SEMUA
+P:TEAM DEATHMATCH RESULTS	HASIL DEATHMATCH TIM
+P:KILLS	PEMBUNUHAN
+P:DEATHS	KEMATIAN
+P:KILLS PER DEATH	PEMBUNUHAN PER KEMATIAN
+P:TEAM	TIM
+P:TEAM ROUNDS WON	RONDE TIM
+P:MOST KILLS: PLAYER {1} ({2})	PEMBUNUHAN TERBANYAK: PEMAIN {1} ({2})
+L:DOWN	TUMBANG
+L:TROLL BATTLE	LAGA TROLL
+L:FREE-FOR-ALL	BEBAS UNTUK SEMUA
+L:TEAM DEATHMATCH	DEATHMATCH TIM
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	RONDE {1}  (PERTAMA MENCAPAI {2})
+L:The leader needs {1} more round to win	Pemimpin butuh {1} ronde lagi untuk menang
+L:The leader needs {1} more rounds to win	Pemimpin butuh {1} ronde lagi untuk menang
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	TIM 1 {1} - {2} TIM 2   (kurang {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	PEMAIN 1 {1} - {2} PEMAIN 2   (kurang {3} / {4})
+L:PLAYER	PEMAIN
+L:HERO	PAHLAWAN
+L:TEAM	TIM
+L:ROUNDS	RONDE
+L:KILLS	PEMBUNUHAN
+L:DEATHS	KEMATIAN
+L:down	tumbang
+L:FPS counter	Penghitung FPS
+L:Frames a second, in the top-left corner	Bingkai per detik, di kiri atas
+L:Last One Standing - Player 1	Yang terakhir berdiri - Pemain 1
+L:Win a Free-for-all match as player 1.	Menangkan pertandingan Bebas untuk Semua sebagai pemain 1.
+L:Brothers in Arms - Player 1	Saudara seperjuangan - Pemain 1
+L:Win a Team Deathmatch match as player 1.	Menangkan Deathmatch Tim sebagai pemain 1.
+L:Last One Standing - Player 2	Yang terakhir berdiri - Pemain 2
+L:Win a Free-for-all match as player 2.	Menangkan pertandingan Bebas untuk Semua sebagai pemain 2.
+L:Brothers in Arms - Player 2	Saudara seperjuangan - Pemain 2
+L:Win a Team Deathmatch match as player 2.	Menangkan Deathmatch Tim sebagai pemain 2.
+L:Last One Standing - Player 3	Yang terakhir berdiri - Pemain 3
+L:Win a Free-for-all match as player 3.	Menangkan pertandingan Bebas untuk Semua sebagai pemain 3.
+L:Brothers in Arms - Player 3	Saudara seperjuangan - Pemain 3
+L:Win a Team Deathmatch match as player 3.	Menangkan Deathmatch Tim sebagai pemain 3.
+L:Last One Standing - Player 4	Yang terakhir berdiri - Pemain 4
+L:Win a Free-for-all match as player 4.	Menangkan pertandingan Bebas untuk Semua sebagai pemain 4.
+L:Brothers in Arms - Player 4	Saudara seperjuangan - Pemain 4
+L:Win a Team Deathmatch match as player 4.	Menangkan Deathmatch Tim sebagai pemain 4.
+L:The Orange Banner	Panji jingga
+L:Win a Team Deathmatch match as the orange team.	Menangkan Deathmatch Tim sebagai tim jingga.
+L:The Red Banner	Panji merah
+L:Win a Team Deathmatch match as the red team.	Menangkan Deathmatch Tim sebagai tim merah.

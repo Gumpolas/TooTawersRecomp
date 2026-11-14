@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	Válassz egy beállítást a módos�
 L:Voices:	Hangok:
 L:Films:	Filmek:
 L:(as the text)	(mint a szöveg)
+L:Last One Standing	Az utolsó, aki áll
+L:Win a Free-for-all match.	Nyerj meg egy mindenki mindenki ellen meccset.
+L:King of the Arena	Az aréna királya
+L:Win 5 Free-for-all matches.	Nyerj meg 5 mindenki mindenki ellen meccset.
+L:Brothers in Arms	Fegyvertársak
+L:Win a Team Deathmatch match.	Nyerj meg egy csapatos deathmatch-et.
+L:Shield Brothers	Pajzstestvérek
+L:Win 5 Team Deathmatch matches.	Nyerj meg 5 csapatos deathmatch-et.
+L:Four Trolls Enter	Négy troll lép színre
+L:Win a Troll Battle with four trolls.	Nyerj meg egy trollcsatát négy trollal.
+L:A Company of Three	Hármak kompániája
+L:Win a level in co-op with three players.	Nyerj meg egy pályát kooperatív módban három játékossal.
+L:The Fellowship of Four	A négyek szövetsége
+L:Win a level in co-op with four players.	Nyerj meg egy pályát kooperatív módban négy játékossal.
+L:Many Hands	Sok kéz
+L:Win 5 different levels in co-op with three or four players.	Nyerj meg 5 különböző pályát kooperatív módban három vagy négy játékossal.
+L:Storming Orthanc	Orthanc ostroma
+L:Win the secret mission at Orthanc in co-op with four players.	Nyerd meg az orthanci titkos küldetést kooperatív módban négy játékossal.
+P:Players:	Játékosok:
+P:P3 Bot:	P3 bot:
+P:P4 Bot:	P4 bot:
+P:Auto	Auto
+P:P3 Device:	P3 eszköze:
+P:P4 Device:	P4 eszköze:
+P:P3 Controls	P3 irányítása
+P:P4 Controls	P4 irányítása
+P:Reset P3 Controls	P3 irányítás visszaállítása
+P:Reset P4 Controls	P4 irányítás visszaállítása
+P:P2, P3, P4 Teleport:	P2, P3, P4 teleport:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 teleport: BE
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 teleport: KI
+P:Replace Companions:	Társak cseréje:
+P:Show Upgrades Player {1}	{1}. játékos fejlesztései
+P:Team Deathmatch	Csapatos deathmatch
+P:Free-for-all	Mindenki mindenki ellen
+P:Player 3:	3. játékos:
+P:Player 4:	4. játékos:
+P:Player 3 Plays:	3. játékos játszik:
+P:Player 4 Plays:	4. játékos játszik:
+P:Team 1 - P1:	1. csapat - P1:
+P:Team 2 - P2:	2. csapat - P2:
+P:Team 1 - P3:	1. csapat - P3:
+P:Team 2 - P4:	2. csapat - P4:
+P:Yes	Igen
+P:No	Nem
+P:No (three players)	Nem (három játékos)
+P:Player 3: choose your hero	3. játékos: válassz hőst
+P:Player 4: choose your hero	4. játékos: válassz hőst
+P:Player 2: {1} is taken	2. játékos: {1} már foglalt
+P:Player 3: {1} is taken	3. játékos: {1} már foglalt
+P:Player 4: {1} is taken	4. játékos: {1} már foglalt
+P:Player 3: {1} not available	3. játékos: {1} nem elérhető
+P:Player 4: {1} not available	4. játékos: {1} nem elérhető
+P:PLAYER {1} WINS THE MATCH  ({2})	{1}. JÁTÉKOS NYERTE A MECCSET  ({2})
+P:TEAM {1} WINS ROUND {2}	{2}. KÖR: {1}. CSAPAT NYERT
+P:TEAM {1} WINS THE MATCH  {2} - {3}	{1}. CSAPAT NYERTE A MECCSET  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	{1}. CSAPAT NYERT  {2} - {3}
+P:PLAYER {1} WINS  {2}	{1}. JÁTÉKOS NYERT  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. KÖR   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. KÖR   {2}. CSAPAT {3} - {4} {5}. CSAPAT
+P:FREE-FOR-ALL RESULTS	MINDENKI MINDENKI ELLEN EREDMÉNYEK
+P:TEAM DEATHMATCH RESULTS	CSAPATOS DEATHMATCH EREDMÉNYEK
+P:KILLS	ÖLÉSEK
+P:DEATHS	HALÁLOK
+P:KILLS PER DEATH	ÖLÉS HALÁLONKÉNT
+P:TEAM	CSAPAT
+P:TEAM ROUNDS WON	CSAPAT NYERT KÖREI
+P:MOST KILLS: PLAYER {1} ({2})	LEGTÖBB ÖLÉS: {1}. JÁTÉKOS ({2})
+L:DOWN	KIÜTVE
+L:TROLL BATTLE	TROLLCSATA
+L:FREE-FOR-ALL	MINDENKI MINDENKI ELLEN
+L:TEAM DEATHMATCH	CSAPATOS DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	{1}. KÖR  ({2} NYERT KÖRIG)
+L:The leader needs {1} more round to win	A vezetőnek még {1} kör kell a győzelemhez
+L:The leader needs {1} more rounds to win	A vezetőnek még {1} kör kell a győzelemhez
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	1. CSAPAT {1} - {2} 2. CSAPAT   (még {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	1. JÁTÉKOS {1} - {2} 2. JÁTÉKOS   (még {3} / {4})
+L:PLAYER	JÁTÉKOS
+L:HERO	HŐS
+L:TEAM	CSAPAT
+L:ROUNDS	KÖRÖK
+L:KILLS	ÖLÉSEK
+L:DEATHS	HALÁLOK
+L:down	kiütve
+L:FPS counter	FPS-számláló
+L:Frames a second, in the top-left corner	Képkocka másodpercenként, bal felül
+L:Last One Standing - Player 1	Az utolsó, aki áll - 1. játékos
+L:Win a Free-for-all match as player 1.	Nyerj meg egy mindenki mindenki ellen meccset 1. játékosként.
+L:Brothers in Arms - Player 1	Fegyvertársak - 1. játékos
+L:Win a Team Deathmatch match as player 1.	Nyerj meg egy csapatos deathmatch-et 1. játékosként.
+L:Last One Standing - Player 2	Az utolsó, aki áll - 2. játékos
+L:Win a Free-for-all match as player 2.	Nyerj meg egy mindenki mindenki ellen meccset 2. játékosként.
+L:Brothers in Arms - Player 2	Fegyvertársak - 2. játékos
+L:Win a Team Deathmatch match as player 2.	Nyerj meg egy csapatos deathmatch-et 2. játékosként.
+L:Last One Standing - Player 3	Az utolsó, aki áll - 3. játékos
+L:Win a Free-for-all match as player 3.	Nyerj meg egy mindenki mindenki ellen meccset 3. játékosként.
+L:Brothers in Arms - Player 3	Fegyvertársak - 3. játékos
+L:Win a Team Deathmatch match as player 3.	Nyerj meg egy csapatos deathmatch-et 3. játékosként.
+L:Last One Standing - Player 4	Az utolsó, aki áll - 4. játékos
+L:Win a Free-for-all match as player 4.	Nyerj meg egy mindenki mindenki ellen meccset 4. játékosként.
+L:Brothers in Arms - Player 4	Fegyvertársak - 4. játékos
+L:Win a Team Deathmatch match as player 4.	Nyerj meg egy csapatos deathmatch-et 4. játékosként.
+L:The Orange Banner	A narancs zászló
+L:Win a Team Deathmatch match as the orange team.	Nyerj meg egy csapatos deathmatch-et a narancs csapattal.
+L:The Red Banner	A vörös zászló
+L:Win a Team Deathmatch match as the red team.	Nyerj meg egy csapatos deathmatch-et a vörös csapattal.

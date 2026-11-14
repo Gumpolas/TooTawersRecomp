@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	选择要更改的设置，然后点
 L:Voices:	语音：
 L:Films:	影片：
 L:(as the text)	（与文字相同）
+L:Last One Standing	最后的幸存者
+L:Win a Free-for-all match.	赢得一场混战比赛。
+L:King of the Arena	竞技场之王
+L:Win 5 Free-for-all matches.	赢得 5 场混战比赛。
+L:Brothers in Arms	战友
+L:Win a Team Deathmatch match.	赢得一场团队死亡竞赛。
+L:Shield Brothers	盾牌兄弟
+L:Win 5 Team Deathmatch matches.	赢得 5 场团队死亡竞赛。
+L:Four Trolls Enter	四巨魔登场
+L:Win a Troll Battle with four trolls.	以四只巨魔赢得一场巨魔大战。
+L:A Company of Three	三人同行
+L:Win a level in co-op with three players.	在三人合作模式中赢得一个关卡。
+L:The Fellowship of Four	四人护戒队
+L:Win a level in co-op with four players.	在四人合作模式中赢得一个关卡。
+L:Many Hands	众志成城
+L:Win 5 different levels in co-op with three or four players.	在三人或四人合作模式中赢得 5 个不同关卡。
+L:Storming Orthanc	猛攻欧散克
+L:Win the secret mission at Orthanc in co-op with four players.	在四人合作模式中赢得欧散克的秘密任务。
+P:Players:	玩家：
+P:P3 Bot:	P3电脑代打：
+P:P4 Bot:	P4电脑代打：
+P:Auto	自动
+P:P3 Device:	P3设备：
+P:P4 Device:	P4设备：
+P:P3 Controls	P3操作
+P:P4 Controls	P4操作
+P:Reset P3 Controls	重置P3操作
+P:Reset P4 Controls	重置P4操作
+P:P2, P3, P4 Teleport:	P2、P3、P4传送：
+P:P2, P3, P4 Teleport: ON	P2、P3、P4传送：开
+P:P2, P3, P4 Teleport: OFF	P2、P3、P4传送：关
+P:Replace Companions:	替换同伴：
+P:Show Upgrades Player {1}	玩家{1}的升级
+P:Team Deathmatch	团队死亡竞赛
+P:Free-for-all	混战
+P:Player 3:	玩家3：
+P:Player 4:	玩家4：
+P:Player 3 Plays:	玩家3参战：
+P:Player 4 Plays:	玩家4参战：
+P:Team 1 - P1:	队伍1 - P1：
+P:Team 2 - P2:	队伍2 - P2：
+P:Team 1 - P3:	队伍1 - P3：
+P:Team 2 - P4:	队伍2 - P4：
+P:Yes	是
+P:No	否
+P:No (three players)	否（三名玩家）
+P:Player 3: choose your hero	玩家3：请选择英雄
+P:Player 4: choose your hero	玩家4：请选择英雄
+P:Player 2: {1} is taken	玩家2：{1}已被选择
+P:Player 3: {1} is taken	玩家3：{1}已被选择
+P:Player 4: {1} is taken	玩家4：{1}已被选择
+P:Player 3: {1} not available	玩家3：{1}不可用
+P:Player 4: {1} not available	玩家4：{1}不可用
+P:PLAYER {1} WINS THE MATCH  ({2})	玩家{1}赢得比赛  ({2})
+P:TEAM {1} WINS ROUND {2}	队伍{1}赢得第{2}回合
+P:TEAM {1} WINS THE MATCH  {2} - {3}	队伍{1}赢得比赛  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	队伍{1}获胜  {2} - {3}
+P:PLAYER {1} WINS  {2}	玩家{1}获胜  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	第{1}回合   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	第{1}回合   队伍{2} {3} - {4} 队伍{5}
+P:FREE-FOR-ALL RESULTS	混战结果
+P:TEAM DEATHMATCH RESULTS	团队死亡竞赛结果
+P:KILLS	击杀
+P:DEATHS	死亡
+P:KILLS PER DEATH	每次死亡击杀数
+P:TEAM	队伍
+P:TEAM ROUNDS WON	队伍赢得的回合
+P:MOST KILLS: PLAYER {1} ({2})	最多击杀：玩家{1}（{2}）
+L:DOWN	倒下
+L:TROLL BATTLE	巨魔大战
+L:FREE-FOR-ALL	混战
+L:TEAM DEATHMATCH	团队死亡竞赛
+L:DEATHMATCH	死亡竞赛
+L:ROUND {1}  (FIRST TO {2})	第{1}回合  （先赢{2}回合者胜）
+L:The leader needs {1} more round to win	领先者还需赢{1}回合
+L:The leader needs {1} more rounds to win	领先者还需赢{1}回合
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	队伍1 {1} - {2} 队伍2   （还差 {3} / {4}）
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	玩家1 {1} - {2} 玩家2   （还差 {3} / {4}）
+L:PLAYER	玩家
+L:HERO	英雄
+L:TEAM	队伍
+L:ROUNDS	回合
+L:KILLS	击杀
+L:DEATHS	死亡
+L:down	倒下
+L:FPS counter	FPS计数
+L:Frames a second, in the top-left corner	每秒帧数，显示在左上角
+L:Last One Standing - Player 1	最后的幸存者 - 玩家1
+L:Win a Free-for-all match as player 1.	以玩家1的身份赢得一场混战比赛。
+L:Brothers in Arms - Player 1	战友 - 玩家1
+L:Win a Team Deathmatch match as player 1.	以玩家1的身份赢得一场团队死亡竞赛。
+L:Last One Standing - Player 2	最后的幸存者 - 玩家2
+L:Win a Free-for-all match as player 2.	以玩家2的身份赢得一场混战比赛。
+L:Brothers in Arms - Player 2	战友 - 玩家2
+L:Win a Team Deathmatch match as player 2.	以玩家2的身份赢得一场团队死亡竞赛。
+L:Last One Standing - Player 3	最后的幸存者 - 玩家3
+L:Win a Free-for-all match as player 3.	以玩家3的身份赢得一场混战比赛。
+L:Brothers in Arms - Player 3	战友 - 玩家3
+L:Win a Team Deathmatch match as player 3.	以玩家3的身份赢得一场团队死亡竞赛。
+L:Last One Standing - Player 4	最后的幸存者 - 玩家4
+L:Win a Free-for-all match as player 4.	以玩家4的身份赢得一场混战比赛。
+L:Brothers in Arms - Player 4	战友 - 玩家4
+L:Win a Team Deathmatch match as player 4.	以玩家4的身份赢得一场团队死亡竞赛。
+L:The Orange Banner	橙色战旗
+L:Win a Team Deathmatch match as the orange team.	以橙队身份赢得一场团队死亡竞赛。
+L:The Red Banner	红色战旗
+L:Win a Team Deathmatch match as the red team.	以红队身份赢得一场团队死亡竞赛。

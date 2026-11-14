@@ -561,7 +561,7 @@ VOID __stdcall xbox_KeBugCheck(ULONG BugCheckCode)
     DebugBreak();
 #endif
 
-    ExitProcess(BugCheckCode);
+    fflush(NULL); TerminateProcess(GetCurrentProcess(), BugCheckCode);   /* (2.1: at once) */
 }
 
 VOID __stdcall xbox_KeBugCheckEx(
@@ -579,7 +579,7 @@ VOID __stdcall xbox_KeBugCheckEx(
     DebugBreak();
 #endif
 
-    ExitProcess(BugCheckCode);
+    fflush(NULL); TerminateProcess(GetCurrentProcess(), BugCheckCode);   /* (2.1: at once) */
 }
 
 /* ============================================================================
@@ -624,13 +624,13 @@ VOID __stdcall xbox_HalReturnToFirmware(ULONG Routine)
 {
     xbox_log(XBOX_LOG_INFO, XBOX_LOG_HAL,
         "HalReturnToFirmware: routine=%u (exiting)", Routine);
-    ExitProcess(0);
+    fflush(NULL); TerminateProcess(GetCurrentProcess(), 0);   /* (2.1: at once -- ExitProcess's DLL shutdown could hang, the game left in the background) */
 }
 
 VOID __stdcall xbox_HalInitiateShutdown(void)
 {
     xbox_log(XBOX_LOG_INFO, XBOX_LOG_HAL, "HalInitiateShutdown (exiting)");
-    ExitProcess(0);
+    fflush(NULL); TerminateProcess(GetCurrentProcess(), 0);   /* (2.1: at once -- ExitProcess's DLL shutdown could hang, the game left in the background) */
 }
 
 BOOLEAN __stdcall xbox_HalIsResetOrShutdownPending(void)

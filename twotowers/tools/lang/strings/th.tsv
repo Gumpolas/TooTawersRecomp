@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	เลือก​การ​ตั
 L:Voices:	เสียง​พากย์:
 L:Films:	ภาพยนตร์:
 L:(as the text)	(ตาม​ข้อ​ความ)
+L:Last One Standing	ผู้​รอด​คน​สุดท้าย
+L:Win a Free-for-all match.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้
+L:King of the Arena	ราชา​แห่ง​สังเวียน
+L:Win 5 Free-for-all matches.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้ 5 ครั้ง
+L:Brothers in Arms	พี่​น้อง​ร่วม​รบ
+L:Win a Team Deathmatch match.	ชนะ​การ​แข่งขัน​เดธ​แมตช์​แบบ​ทีม
+L:Shield Brothers	พี่​น้อง​แห่ง​โล่
+L:Win 5 Team Deathmatch matches.	ชนะ​การ​แข่งขัน​เดธ​แมตช์​แบบ​ทีม 5 ครั้ง
+L:Four Trolls Enter	โทรลล์​สี่​ตัว​ลง​สนาม
+L:Win a Troll Battle with four trolls.	ชนะ​ศึก​โทรลล์​ด้วย​โทรลล์​สี่​ตัว
+L:A Company of Three	คณะ​สาม​คน
+L:Win a level in co-op with three players.	ชนะ​ด่าน​หนึ่ง​ใน​โหมด​ร่วม​มือ​กับ​ผู้​เล่น​สาม​คน
+L:The Fellowship of Four	คณะ​พันธมิตร​สี่​คน
+L:Win a level in co-op with four players.	ชนะ​ด่าน​หนึ่ง​ใน​โหมด​ร่วม​มือ​กับ​ผู้​เล่น​สี่​คน
+L:Many Hands	หลาย​มือ
+L:Win 5 different levels in co-op with three or four players.	ชนะ 5 ด่าน​ที่​ต่าง​กัน​ใน​โหมด​ร่วม​มือ​กับ​ผู้​เล่น​สาม​หรือ​สี่​คน
+L:Storming Orthanc	บุก​ออร์แธงค์
+L:Win the secret mission at Orthanc in co-op with four players.	ชนะ​ภารกิจ​ลับ​ที่​ออร์แธงค์​ใน​โหมด​ร่วม​มือ​กับ​ผู้​เล่น​สี่​คน
+P:Players:	ผู้​เล่น:
+P:P3 Bot:	บอท P3:
+P:P4 Bot:	บอท P4:
+P:Auto	อัตโนมัติ
+P:P3 Device:	อุปกรณ์ P3:
+P:P4 Device:	อุปกรณ์ P4:
+P:P3 Controls	การ​ควบคุม P3
+P:P4 Controls	การ​ควบคุม P4
+P:Reset P3 Controls	รีเซ็ต​การ​ควบคุม P3
+P:Reset P4 Controls	รีเซ็ต​การ​ควบคุม P4
+P:P2, P3, P4 Teleport:	วาร์ป P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	วาร์ป P2, P3, P4: เปิด
+P:P2, P3, P4 Teleport: OFF	วาร์ป P2, P3, P4: ปิด
+P:Replace Companions:	แทน​ที่​เพื่อน​ร่วม​ทาง:
+P:Show Upgrades Player {1}	การ​อัปเกรด​ของ​ผู้​เล่น {1}
+P:Team Deathmatch	เดธ​แมตช์​แบบ​ทีม
+P:Free-for-all	ต่าง​คน​ต่าง​สู้
+P:Player 3:	ผู้​เล่น 3:
+P:Player 4:	ผู้​เล่น 4:
+P:Player 3 Plays:	ผู้​เล่น 3 ร่วม​เล่น:
+P:Player 4 Plays:	ผู้​เล่น 4 ร่วม​เล่น:
+P:Team 1 - P1:	ทีม 1 - P1:
+P:Team 2 - P2:	ทีม 2 - P2:
+P:Team 1 - P3:	ทีม 1 - P3:
+P:Team 2 - P4:	ทีม 2 - P4:
+P:Yes	ใช่
+P:No	ไม่
+P:No (three players)	ไม่ (ผู้​เล่น​สาม​คน)
+P:Player 3: choose your hero	ผู้​เล่น 3: เลือก​ฮีโร่​ของ​คุณ
+P:Player 4: choose your hero	ผู้​เล่น 4: เลือก​ฮีโร่​ของ​คุณ
+P:Player 2: {1} is taken	ผู้​เล่น 2: {1} ถูก​เลือก​แล้ว
+P:Player 3: {1} is taken	ผู้​เล่น 3: {1} ถูก​เลือก​แล้ว
+P:Player 4: {1} is taken	ผู้​เล่น 4: {1} ถูก​เลือก​แล้ว
+P:Player 3: {1} not available	ผู้​เล่น 3: {1} ใช้​ไม่​ได้
+P:Player 4: {1} not available	ผู้​เล่น 4: {1} ใช้​ไม่​ได้
+P:PLAYER {1} WINS THE MATCH  ({2})	ผู้​เล่น {1} ชนะ​การ​แข่งขัน  ({2})
+P:TEAM {1} WINS ROUND {2}	ทีม {1} ชนะ​รอบ​ที่ {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	ทีม {1} ชนะ​การ​แข่งขัน  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	ทีม {1} ชนะ  {2} - {3}
+P:PLAYER {1} WINS  {2}	ผู้​เล่น {1} ชนะ  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	รอบ​ที่ {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	รอบ​ที่ {1}   ทีม {2} {3} - {4} ทีม {5}
+P:FREE-FOR-ALL RESULTS	ผล​ต่าง​คน​ต่าง​สู้
+P:TEAM DEATHMATCH RESULTS	ผล​เดธ​แมตช์​แบบ​ทีม
+P:KILLS	สังหาร
+P:DEATHS	ตาย
+P:KILLS PER DEATH	สังหาร​ต่อ​การ​ตาย
+P:TEAM	ทีม
+P:TEAM ROUNDS WON	รอบ​ที่​ทีม​ชนะ
+P:MOST KILLS: PLAYER {1} ({2})	สังหาร​มาก​ที่สุด: ผู้​เล่น {1} ({2})
+L:DOWN	ล้ม
+L:TROLL BATTLE	ศึก​โทรลล์
+L:FREE-FOR-ALL	ต่าง​คน​ต่าง​สู้
+L:TEAM DEATHMATCH	เดธ​แมตช์​แบบ​ทีม
+L:DEATHMATCH	เดธ​แมตช์
+L:ROUND {1}  (FIRST TO {2})	รอบ​ที่ {1}  (ใคร​ถึง {2} ก่อน​ชนะ)
+L:The leader needs {1} more round to win	ผู้​นำ​ต้อง​ชนะ​อีก {1} รอบ
+L:The leader needs {1} more rounds to win	ผู้​นำ​ต้อง​ชนะ​อีก {1} รอบ
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	ทีม 1 {1} - {2} ทีม 2   (ขาด​อีก {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	ผู้​เล่น 1 {1} - {2} ผู้​เล่น 2   (ขาด​อีก {3} / {4})
+L:PLAYER	ผู้​เล่น
+L:HERO	ฮีโร่
+L:TEAM	ทีม
+L:ROUNDS	รอบ
+L:KILLS	สังหาร
+L:DEATHS	ตาย
+L:down	ล้ม
+L:FPS counter	ตัว​นับ FPS
+L:Frames a second, in the top-left corner	เฟรม​ต่อ​วินาที ที่​มุม​ซ้าย​บน
+L:Last One Standing - Player 1	ผู้​รอด​คน​สุดท้าย - ผู้​เล่น 1
+L:Win a Free-for-all match as player 1.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้​ใน​ฐานะ​ผู้​เล่น 1
+L:Brothers in Arms - Player 1	พี่​น้อง​ร่วม​รบ - ผู้​เล่น 1
+L:Win a Team Deathmatch match as player 1.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ผู้​เล่น 1
+L:Last One Standing - Player 2	ผู้​รอด​คน​สุดท้าย - ผู้​เล่น 2
+L:Win a Free-for-all match as player 2.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้​ใน​ฐานะ​ผู้​เล่น 2
+L:Brothers in Arms - Player 2	พี่​น้อง​ร่วม​รบ - ผู้​เล่น 2
+L:Win a Team Deathmatch match as player 2.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ผู้​เล่น 2
+L:Last One Standing - Player 3	ผู้​รอด​คน​สุดท้าย - ผู้​เล่น 3
+L:Win a Free-for-all match as player 3.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้​ใน​ฐานะ​ผู้​เล่น 3
+L:Brothers in Arms - Player 3	พี่​น้อง​ร่วม​รบ - ผู้​เล่น 3
+L:Win a Team Deathmatch match as player 3.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ผู้​เล่น 3
+L:Last One Standing - Player 4	ผู้​รอด​คน​สุดท้าย - ผู้​เล่น 4
+L:Win a Free-for-all match as player 4.	ชนะ​การ​แข่งขัน​แบบ​ต่าง​คน​ต่าง​สู้​ใน​ฐานะ​ผู้​เล่น 4
+L:Brothers in Arms - Player 4	พี่​น้อง​ร่วม​รบ - ผู้​เล่น 4
+L:Win a Team Deathmatch match as player 4.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ผู้​เล่น 4
+L:The Orange Banner	ธง​สี​ส้ม
+L:Win a Team Deathmatch match as the orange team.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ทีม​สี​ส้ม
+L:The Red Banner	ธง​สี​แดง
+L:Win a Team Deathmatch match as the red team.	ชนะ​เดธ​แมตช์​แบบ​ทีม​ใน​ฐานะ​ทีม​สี​แดง

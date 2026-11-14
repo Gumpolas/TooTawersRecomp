@@ -198,7 +198,7 @@ static int launcher_cmd(char *out, size_t n)
     const char *ai = getenv("APPIMAGE");
     if (ai && *ai && getenv("TT_APPIMAGE_HOME") && access(ai, X_OK) == 0) { snprintf(out, n, "%s", ai); return 1; }
     snprintf(out, n, "%s/TwoTowers.sh", g_exe_dir);
-    if (access(out, X_OK) == 0) return 1;
+    if (access(out, R_OK) == 0) return 1;   /* (2.0.1: readable is enough -- run through /bin/sh; copied over from Windows it lost its execute bit, and F5 was gone) */
     snprintf(out, n, "%s/twotowers-setup", g_exe_dir);
     return access(out, X_OK) == 0 && isatty(0);
 #endif
@@ -240,7 +240,10 @@ int tt_launcher_open(void)
             for (fd = 3; fd < 1024; fd++) close(fd);   /* (the window, sound: the game's alone) */
             if (chdir(g_exe_dir) != 0) _exit(1);
             env0_restore();
-            if (strstr(c, "TwoTowers.sh")) { unsetenv("TT_LAUNCHED"); execl(c, c, "--launcher", (char *)NULL); }
+            {   /* (2.0.1) this game's own file, for the launcher's Play (TwoTowers.sh): it started ./twotowers_recomp, an older build
+                 * beside a test build that opened it (a playtest: the FPS counter gone after F5 and Play) */
+                char me[4096]; ssize_t r = readlink("/proc/self/exe", me, sizeof me - 1); if (r > 0) { me[r] = 0; setenv("TT_GAME_EXE", me, 1); } }
+            if (strstr(c, "TwoTowers.sh")) { unsetenv("TT_LAUNCHED"); execl("/bin/sh", "sh", c, "--launcher", (char *)NULL); }
             else { unsetenv("LD_LIBRARY_PATH"); unsetenv("TT_APPIMAGE_HOME"); execl(c, c, "--launcher", (char *)NULL); }
             _exit(127);
         }
@@ -549,7 +552,8 @@ static FILE *tt_fopen_under(const char *dir, const char *rel)
 }
 FILE *tt_game_fopen(const char *rel) { return tt_fopen_under(g_game_dir, rel); }
 FILE *tt_exe_fopen(const char *rel) { return tt_fopen_under(g_exe_dir, rel); }
-void tt_dbg(const char *fmt, ...) { va_list ap; va_start(ap, fmt); vfprintf(stderr, fmt, ap); va_end(ap); fflush(stderr); }
+FILE *volatile tt_dbg_tee;   /* (2.1) a second file the lines go to as well (net.c: the desync's own file) */
+void tt_dbg(const char *fmt, ...) { va_list ap; va_start(ap, fmt); vfprintf(stderr, fmt, ap); va_end(ap); fflush(stderr); if (tt_dbg_tee) { va_start(ap, fmt); vfprintf(tt_dbg_tee, fmt, ap); va_end(ap); } }
 /* All-threads sampler (ini [Developer] profile=1 or RECOMP_PROFILE=all):
  * every millisecond, where is each thread of the process? Time inside a DLL
  * is charged to the exe frame that called it (marked W = waiting/system).
@@ -993,8 +997,18 @@ static LONG WINAPI tt_unhandled(PEXCEPTION_POINTERS ep)
             (unsigned long)ep->ExceptionRecord->ExceptionCode, (unsigned long long)ep->ContextRecord->Rip,
             g_esp, g_eax, g_ecx);
     fflush(stderr);
+    if (!getenv("TT_CRASH_KEEP")) { fflush(stdout); TerminateProcess(GetCurrentProcess(), 3); }   /* (2.1) a crash ends the game at once: left to Windows' error
+        * reporting, the window could go and the game stay in the background (a playtest). TT_CRASH_KEEP: as before */
     return EXCEPTION_CONTINUE_SEARCH;
 }
+#if defined(_WIN32)
+static BOOL WINAPI tt_console_ctrl(DWORD ev)   /* (2.1) its console closed, Ctrl+C, signing out or shutting down: the game ends at once */
+{
+    fprintf(stderr, "[EXIT] console event %lu: the game ends\n", (unsigned long)ev); fflush(stderr); fflush(stdout);
+    TerminateProcess(GetCurrentProcess(), 0);
+    return TRUE;
+}
+#endif
 
 static LONG CALLBACK veh_handler(PEXCEPTION_POINTERS ep)
 {
@@ -1171,6 +1185,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         extern void tt_abort_handler(int sig);
         signal(SIGABRT, tt_abort_handler);
         SetUnhandledExceptionFilter(tt_unhandled);
+#if defined(_WIN32)
+        SetConsoleCtrlHandler(tt_console_ctrl, TRUE);
+#endif
     }
 
     /* Step 1: Load XBE */
@@ -1326,6 +1343,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     xbe_entry_point();
 
     printf("\nGame returned. Cleaning up...\n");
+    if (!getenv("TT_EXIT_CLEANUP")) { fflush(stdout); fflush(stderr); TerminateProcess(GetCurrentProcess(), 0); }   /* (2.1) gone at once: the cleanup, and the
+        * runtime's exit after it, could wait on the game's other threads and leave it in the background */
 
     /* Cleanup */
     xbox_kernel_shutdown();
@@ -1389,6 +1408,34 @@ int main(int argc, char **argv)
     return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOW);
 #else
     env0_save();
+    {   /* (2.0.1) the NVIDIA card asked for by the game itself, not only by TwoTowers.sh: started any other way (a script of its own,
+         * a desktop shortcut) a PC with both the CPU's graphics and an NVIDIA card drew on the CPU's -- a playtest's log, "Mesa
+         * Intel UHD Graphics" beside an RTX 3050: 30-40 fps whatever the settings. TT_NO_PRIME=1: leave it to the system */
+        FILE *nv = fopen("/proc/driver/nvidia/version", "r");
+        if (nv) { fclose(nv);
+            if (!getenv("TT_NO_PRIME") && !getenv("__NV_PRIME_RENDER_OFFLOAD") && !getenv("__GLX_VENDOR_LIBRARY_NAME")) {
+                setenv("__NV_PRIME_RENDER_OFFLOAD", "1", 1); setenv("__GLX_VENDOR_LIBRARY_NAME", "nvidia", 1); setenv("__VK_LAYER_NV_optimus", "NVIDIA_only", 1);
+                setenv("TT_PRIME_NOTE", "NVIDIA's driver is loaded: its card asked for (PRIME render offload)", 1); }
+            /* (2.0.1) NVIDIA's threaded driver: its own work for each draw on a thread of its own -- the thread sending the draws was
+             * what held the frame rate (a playtest's log). TT_GL_THREADED=0: off */
+            if (!getenv("__GL_THREADED_OPTIMIZATIONS") && !(getenv("TT_GL_THREADED") && getenv("TT_GL_THREADED")[0] == '0')) setenv("__GL_THREADED_OPTIMIZATIONS", "1", 1); }
+        else {   /* an NVIDIA card (PCI vendor 10de) with no NVIDIA driver loaded: said in the log, the likely cause of a slow game */
+            int k; char amd[64] = ""; for (k = 0; k < 64; k++) { char pth[96], v[16] = "", bv[8] = ""; FILE *f; snprintf(pth, sizeof pth, "/sys/class/drm/card%d/device/vendor", k);
+                if (!(f = fopen(pth, "r"))) { if (k > 8) break; continue; }
+                if (fgets(v, sizeof v, f) && strstr(v, "0x10de")) setenv("TT_PRIME_NOTE", "*** an NVIDIA card is in this PC but NVIDIA's driver is not loaded: the game draws on another chip (install NVIDIA's driver for its speed) ***", 1);
+                fclose(f);
+                /* (2.0.1) an AMD card (1002) that is not the one the screen starts on (boot_vga 0): a laptop's or a desktop's second,
+                 * dedicated card beside the CPU's graphics -- Mesa's PRIME offload asked for it by its PCI address, as NVIDIA's above */
+                if (strstr(v, "0x1002") && !amd[0]) { FILE *b; char lk[300], dv[96]; ssize_t n;
+                    snprintf(pth, sizeof pth, "/sys/class/drm/card%d/device/boot_vga", k);
+                    if ((b = fopen(pth, "r"))) { if (!fgets(bv, sizeof bv, b)) bv[0] = 0; fclose(b); }
+                    snprintf(dv, sizeof dv, "/sys/class/drm/card%d/device", k);
+                    if (bv[0] == '0' && (n = readlink(dv, lk, sizeof lk - 1)) > 0) { char *bn, *q; lk[n] = 0; bn = strrchr(lk, '/'); bn = bn ? bn + 1 : lk;
+                        snprintf(amd, sizeof amd, "pci-%s", bn); for (q = amd; *q; q++) if (*q == ':' || *q == '.') *q = '_'; } } }
+            if (amd[0] && !getenv("TT_NO_PRIME") && !getenv("DRI_PRIME")) {
+                static char note[160]; setenv("DRI_PRIME", amd, 1);
+                snprintf(note, sizeof note, "a second AMD card (%s): asked for (DRI_PRIME)", amd); setenv("TT_PRIME_NOTE", note, 1); } }
+    }
     if (getenv("TT_MSGBOX")) {   /* (1.9.9) TwoTowers.sh's message in a window, when the system has no zenity (an AppImage on a bare desktop) */
         MessageBoxA(NULL, getenv("TT_MSGBOX"), "The Two Towers Recompiled", MB_ICONERROR);
         return 1;

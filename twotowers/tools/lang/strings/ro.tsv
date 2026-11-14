@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	Alegeți o setare pentru a o schimba
 L:Voices:	Voci:
 L:Films:	Filme:
 L:(as the text)	(ca textul)
+L:Last One Standing	Ultimul în picioare
+L:Win a Free-for-all match.	Câștigă un meci fiecare pentru el.
+L:King of the Arena	Regele arenei
+L:Win 5 Free-for-all matches.	Câștigă 5 meciuri fiecare pentru el.
+L:Brothers in Arms	Frați de arme
+L:Win a Team Deathmatch match.	Câștigă un deathmatch pe echipe.
+L:Shield Brothers	Frați de scut
+L:Win 5 Team Deathmatch matches.	Câștigă 5 deathmatch-uri pe echipe.
+L:Four Trolls Enter	Intră patru troli
+L:Win a Troll Battle with four trolls.	Câștigă o luptă a trolilor cu patru troli.
+L:A Company of Three	O ceată de trei
+L:Win a level in co-op with three players.	Câștigă un nivel în cooperativ cu trei jucători.
+L:The Fellowship of Four	Frăția celor patru
+L:Win a level in co-op with four players.	Câștigă un nivel în cooperativ cu patru jucători.
+L:Many Hands	Multe mâini
+L:Win 5 different levels in co-op with three or four players.	Câștigă 5 niveluri diferite în cooperativ cu trei sau patru jucători.
+L:Storming Orthanc	Asaltul asupra Orthancului
+L:Win the secret mission at Orthanc in co-op with four players.	Câștigă misiunea secretă din Orthanc în cooperativ cu patru jucători.
+P:Players:	Jucători:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Dispozitiv P3:
+P:P4 Device:	Dispozitiv P4:
+P:P3 Controls	Comenzi P3
+P:P4 Controls	Comenzi P4
+P:Reset P3 Controls	Resetează comenzile P3
+P:Reset P4 Controls	Resetează comenzile P4
+P:P2, P3, P4 Teleport:	Teleportare P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleportare P2, P3, P4: DA
+P:P2, P3, P4 Teleport: OFF	Teleportare P2, P3, P4: NU
+P:Replace Companions:	Înlocuiește însoțitorii:
+P:Show Upgrades Player {1}	Îmbunătățirile jucătorului {1}
+P:Team Deathmatch	Deathmatch pe echipe
+P:Free-for-all	Fiecare pentru el
+P:Player 3:	Jucătorul 3:
+P:Player 4:	Jucătorul 4:
+P:Player 3 Plays:	Joacă jucătorul 3:
+P:Player 4 Plays:	Joacă jucătorul 4:
+P:Team 1 - P1:	Echipa 1 - P1:
+P:Team 2 - P2:	Echipa 2 - P2:
+P:Team 1 - P3:	Echipa 1 - P3:
+P:Team 2 - P4:	Echipa 2 - P4:
+P:Yes	Da
+P:No	Nu
+P:No (three players)	Nu (trei jucători)
+P:Player 3: choose your hero	Jucătorul 3: alege-ți eroul
+P:Player 4: choose your hero	Jucătorul 4: alege-ți eroul
+P:Player 2: {1} is taken	Jucătorul 2: {1} este deja ales
+P:Player 3: {1} is taken	Jucătorul 3: {1} este deja ales
+P:Player 4: {1} is taken	Jucătorul 4: {1} este deja ales
+P:Player 3: {1} not available	Jucătorul 3: {1} indisponibil
+P:Player 4: {1} not available	Jucătorul 4: {1} indisponibil
+P:PLAYER {1} WINS THE MATCH  ({2})	JUCĂTORUL {1} CÂȘTIGĂ MECIUL  ({2})
+P:TEAM {1} WINS ROUND {2}	ECHIPA {1} CÂȘTIGĂ RUNDA {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	ECHIPA {1} CÂȘTIGĂ MECIUL  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	CÂȘTIGĂ ECHIPA {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	CÂȘTIGĂ JUCĂTORUL {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDA {1}   ECHIPA {2} {3} - {4} ECHIPA {5}
+P:FREE-FOR-ALL RESULTS	REZULTATE FIECARE PENTRU EL
+P:TEAM DEATHMATCH RESULTS	REZULTATE DEATHMATCH PE ECHIPE
+P:KILLS	VICTIME
+P:DEATHS	MORȚI
+P:KILLS PER DEATH	VICTIME PE MOARTE
+P:TEAM	ECHIPA
+P:TEAM ROUNDS WON	RUNDE CÂȘTIGATE DE ECHIPĂ
+P:MOST KILLS: PLAYER {1} ({2})	CELE MAI MULTE VICTIME: JUCĂTORUL {1} ({2})
+L:DOWN	LA PĂMÂNT
+L:TROLL BATTLE	LUPTA TROLILOR
+L:FREE-FOR-ALL	FIECARE PENTRU EL
+L:TEAM DEATHMATCH	DEATHMATCH PE ECHIPE
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	RUNDA {1}  (PRIMUL LA {2})
+L:The leader needs {1} more round to win	Liderului îi mai trebuie {1} rundă pentru victorie
+L:The leader needs {1} more rounds to win	Liderului îi mai trebuie {1} runde pentru victorie
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	ECHIPA 1 {1} - {2} ECHIPA 2   (mai trebuie {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	JUCĂTORUL 1 {1} - {2} JUCĂTORUL 2   (mai trebuie {3} / {4})
+L:PLAYER	JUCĂTOR
+L:HERO	EROU
+L:TEAM	ECHIPĂ
+L:ROUNDS	RUNDE
+L:KILLS	VICTIME
+L:DEATHS	MORȚI
+L:down	la pământ
+L:FPS counter	Contor FPS
+L:Frames a second, in the top-left corner	Cadre pe secundă, stânga sus
+L:Last One Standing - Player 1	Ultimul în picioare - Jucătorul 1
+L:Win a Free-for-all match as player 1.	Câștigă un meci fiecare pentru el ca jucătorul 1.
+L:Brothers in Arms - Player 1	Frați de arme - Jucătorul 1
+L:Win a Team Deathmatch match as player 1.	Câștigă un deathmatch pe echipe ca jucătorul 1.
+L:Last One Standing - Player 2	Ultimul în picioare - Jucătorul 2
+L:Win a Free-for-all match as player 2.	Câștigă un meci fiecare pentru el ca jucătorul 2.
+L:Brothers in Arms - Player 2	Frați de arme - Jucătorul 2
+L:Win a Team Deathmatch match as player 2.	Câștigă un deathmatch pe echipe ca jucătorul 2.
+L:Last One Standing - Player 3	Ultimul în picioare - Jucătorul 3
+L:Win a Free-for-all match as player 3.	Câștigă un meci fiecare pentru el ca jucătorul 3.
+L:Brothers in Arms - Player 3	Frați de arme - Jucătorul 3
+L:Win a Team Deathmatch match as player 3.	Câștigă un deathmatch pe echipe ca jucătorul 3.
+L:Last One Standing - Player 4	Ultimul în picioare - Jucătorul 4
+L:Win a Free-for-all match as player 4.	Câștigă un meci fiecare pentru el ca jucătorul 4.
+L:Brothers in Arms - Player 4	Frați de arme - Jucătorul 4
+L:Win a Team Deathmatch match as player 4.	Câștigă un deathmatch pe echipe ca jucătorul 4.
+L:The Orange Banner	Steagul portocaliu
+L:Win a Team Deathmatch match as the orange team.	Câștigă un deathmatch pe echipe cu echipa portocalie.
+L:The Red Banner	Steagul roșu
+L:Win a Team Deathmatch match as the red team.	Câștigă un deathmatch pe echipe cu echipa roșie.

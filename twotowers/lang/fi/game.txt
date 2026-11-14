@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	PEIKKOTAISTELUN ENNÄTYKSET
 P:TROLL BATTLE RESULTS	PEIKKOTAISTELUN TULOKSET
 P:P{1}	P{1}
 P:Launcher	Käynnistin
+P:Players:	Pelaajat:
+P:P3 Bot:	P3-botti:
+P:P4 Bot:	P4-botti:
+P:Auto	Auto
+P:P3 Device:	P3:n laite:
+P:P4 Device:	P4:n laite:
+P:P3 Controls	P3:n ohjaimet
+P:P4 Controls	P4:n ohjaimet
+P:Reset P3 Controls	Palauta P3:n ohjaimet
+P:Reset P4 Controls	Palauta P4:n ohjaimet
+P:P2, P3, P4 Teleport:	P2:n, P3:n, P4:n siirto:
+P:P2, P3, P4 Teleport: ON	P2:n, P3:n, P4:n siirto: PÄÄLLÄ
+P:P2, P3, P4 Teleport: OFF	P2:n, P3:n, P4:n siirto: POIS
+P:Replace Companions:	Korvaa seuralaiset:
+P:Show Upgrades Player {1}	Pelaajan {1} päivitykset
+P:Team Deathmatch	Joukkueiden kuolonottelu
+P:Free-for-all	Kaikki vastaan kaikki
+P:Player 3:	Pelaaja 3:
+P:Player 4:	Pelaaja 4:
+P:Player 3 Plays:	Pelaaja 3 pelaa:
+P:Player 4 Plays:	Pelaaja 4 pelaa:
+P:Team 1 - P1:	Joukkue 1 - P1:
+P:Team 2 - P2:	Joukkue 2 - P2:
+P:Team 1 - P3:	Joukkue 1 - P3:
+P:Team 2 - P4:	Joukkue 2 - P4:
+P:Yes	Kyllä
+P:No	Ei
+P:No (three players)	Ei (kolme pelaajaa)
+P:Player 3: choose your hero	Pelaaja 3: valitse sankarisi
+P:Player 4: choose your hero	Pelaaja 4: valitse sankarisi
+P:Player 2: {1} is taken	Pelaaja 2: {1} on jo valittu
+P:Player 3: {1} is taken	Pelaaja 3: {1} on jo valittu
+P:Player 4: {1} is taken	Pelaaja 4: {1} on jo valittu
+P:Player 3: {1} not available	Pelaaja 3: {1} ei saatavilla
+P:Player 4: {1} not available	Pelaaja 4: {1} ei saatavilla
+P:PLAYER {1} WINS THE MATCH  ({2})	PELAAJA {1} VOITTAA OTTELUN  ({2})
+P:TEAM {1} WINS ROUND {2}	JOUKKUE {1} VOITTAA ERÄN {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	JOUKKUE {1} VOITTAA OTTELUN  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	JOUKKUE {1} VOITTAA  {2} - {3}
+P:PLAYER {1} WINS  {2}	PELAAJA {1} VOITTAA  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ERÄ {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ERÄ {1}   JOUKKUE {2} {3} - {4} JOUKKUE {5}
+P:FREE-FOR-ALL RESULTS	KAIKKI VASTAAN KAIKKI -TULOKSET
+P:TEAM DEATHMATCH RESULTS	JOUKKUEOTTELUN TULOKSET
+P:KILLS	TAPOT
+P:DEATHS	KUOLEMAT
+P:KILLS PER DEATH	TAPPOJA KUOLEMAA KOHDEN
+P:TEAM	JOUKKUE
+P:TEAM ROUNDS WON	JOUKKUEEN VOITTAMAT ERÄT
+P:MOST KILLS: PLAYER {1} ({2})	ENITEN TAPPOJA: PELAAJA {1} ({2})

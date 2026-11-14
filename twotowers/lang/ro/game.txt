@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	RECORDURI LUPTA TROLILOR
 P:TROLL BATTLE RESULTS	REZULTATE LUPTA TROLILOR
 P:P{1}	P{1}
 P:Launcher	Lansator
+P:Players:	Juctori:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Dispozitiv P3:
+P:P4 Device:	Dispozitiv P4:
+P:P3 Controls	Comenzi P3
+P:P4 Controls	Comenzi P4
+P:Reset P3 Controls	Reseteaz comenzile P3
+P:Reset P4 Controls	Reseteaz comenzile P4
+P:P2, P3, P4 Teleport:	Teleportare P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleportare P2, P3, P4: DA
+P:P2, P3, P4 Teleport: OFF	Teleportare P2, P3, P4: NU
+P:Replace Companions:	Înlocuiete însoitorii:
+P:Show Upgrades Player {1}	Îmbuntirile juctorului {1}
+P:Team Deathmatch	Deathmatch pe echipe
+P:Free-for-all	Fiecare pentru el
+P:Player 3:	Juctorul 3:
+P:Player 4:	Juctorul 4:
+P:Player 3 Plays:	Joac juctorul 3:
+P:Player 4 Plays:	Joac juctorul 4:
+P:Team 1 - P1:	Echipa 1 - P1:
+P:Team 2 - P2:	Echipa 2 - P2:
+P:Team 1 - P3:	Echipa 1 - P3:
+P:Team 2 - P4:	Echipa 2 - P4:
+P:Yes	Da
+P:No	Nu
+P:No (three players)	Nu (trei juctori)
+P:Player 3: choose your hero	Juctorul 3: alege-i eroul
+P:Player 4: choose your hero	Juctorul 4: alege-i eroul
+P:Player 2: {1} is taken	Juctorul 2: {1} este deja ales
+P:Player 3: {1} is taken	Juctorul 3: {1} este deja ales
+P:Player 4: {1} is taken	Juctorul 4: {1} este deja ales
+P:Player 3: {1} not available	Juctorul 3: {1} indisponibil
+P:Player 4: {1} not available	Juctorul 4: {1} indisponibil
+P:PLAYER {1} WINS THE MATCH  ({2})	JUCTORUL {1} CÂTIG MECIUL  ({2})
+P:TEAM {1} WINS ROUND {2}	ECHIPA {1} CÂTIG RUNDA {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	ECHIPA {1} CÂTIG MECIUL  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	CÂTIG ECHIPA {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	CÂTIG JUCTORUL {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDA {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDA {1}   ECHIPA {2} {3} - {4} ECHIPA {5}
+P:FREE-FOR-ALL RESULTS	REZULTATE FIECARE PENTRU EL
+P:TEAM DEATHMATCH RESULTS	REZULTATE DEATHMATCH PE ECHIPE
+P:KILLS	VICTIME
+P:DEATHS	MORI
+P:KILLS PER DEATH	VICTIME PE MOARTE
+P:TEAM	ECHIPA
+P:TEAM ROUNDS WON	RUNDE CÂTIGATE DE ECHIP
+P:MOST KILLS: PLAYER {1} ({2})	CELE MAI MULTE VICTIME: JUCTORUL {1} ({2})

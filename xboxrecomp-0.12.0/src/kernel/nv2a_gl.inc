@@ -136,6 +136,12 @@ extern void xbox_FramebufferSetGpuOwned(int on);
 GLFUNCS(GLX_DECL)
 #undef GLX_DECL
 static void (APIENTRY *p_glMaxShaderCompilerThreadsKHR)(GLuint);
+/* (2.0.1) persistent mapped rings (GL 4.4 / ARB_buffer_storage): no map and unmap for every draw's data */
+static void (APIENTRY *p_glBufferStorage)(GLenum, GLsizeiptr, const void *, GLbitfield);
+static void *(APIENTRY *p_glFenceSync)(GLenum, GLbitfield);
+static GLenum (APIENTRY *p_glClientWaitSync)(void *, GLbitfield, GLuint64);
+static void (APIENTRY *p_glDeleteSync)(void *);
+static int g_persist;
 
 #define glViewport p_glViewport
 #define glScissor p_glScissor
@@ -366,7 +372,8 @@ enum { UB_VSC = 0, UB_PSC = 1, UB_CLC = 2, UB_POST = 3, UB_VPC = 4 };
 /* One ring per use: appended to without synchronisation, given a fresh
  * store when it wraps -- the GL counterpart of D3D's NO_OVERWRITE/DISCARD
  * scheme in nv2a_d3d11.inc. Returns the byte offset, or 0xFFFFFFFF. */
-typedef struct { GLuint buf; GLenum target; uint32_t cap, pos; } GRing;
+#define RING_SEGS 4
+typedef struct { GLuint buf; GLenum target; uint32_t cap, pos; uint8_t *map; void *fence[RING_SEGS]; uint32_t seg; } GRing;
 static GRing g_rvb = { 0, GL_ARRAY_BUFFER, 0, 0 }, g_rvbx = { 0, GL_ARRAY_BUFFER, 0, 0 };
 static GRing g_rib = { 0, GL_ELEMENT_ARRAY_BUFFER, 0, 0 }, g_rub = { 0, GL_UNIFORM_BUFFER, 0, 0 };
 static GLint g_ubo_align = 256;
@@ -384,11 +391,56 @@ static void gpu_ring_fresh(GRing *r)
         if (p) { memset(p, 0x7B, r->cap); glUnmapBuffer(r->target); }
     }
 }
+/* (2.0.1) a persistent ring: one store mapped for good, written straight into; split in RING_SEGS parts, each fenced as the
+ * writing leaves it and waited on (rarely: the GPU is a frame or so behind, the ring megabytes long) before it is written again */
+static void gpu_ring_seg_wait(GRing *r, uint32_t k)
+{
+    if (r->fence[k]) { p_glClientWaitSync(r->fence[k], 0x00000001 /* GL_SYNC_FLUSH_COMMANDS_BIT */, 2000000000ull); p_glDeleteSync(r->fence[k]); r->fence[k] = NULL; }
+}
+static void gpu_ring_advance(GRing *r)   /* leaving a part: fenced; the next waited for */
+{
+    if (r->fence[r->seg]) p_glDeleteSync(r->fence[r->seg]);
+    r->fence[r->seg] = p_glFenceSync(0x9117 /* GL_SYNC_GPU_COMMANDS_COMPLETE */, 0);
+    r->seg = (r->seg + 1) % RING_SEGS;
+    gpu_ring_seg_wait(r, r->seg);
+    if (r == &g_rub) g_rub_fresh = 1;   /* (the blocks bound in a part written again: sent again, gpu_ub) */
+}
+static uint32_t gpu_ring_persist(GRing *r, const void *data, uint32_t bytes, uint32_t align)
+{
+    uint32_t at, segsz, endseg;
+    if (!r->buf || r->cap < bytes) {
+        uint32_t k, min = 8u << 20;
+        if (r->buf) { for (k = 0; k < RING_SEGS; k++) gpu_ring_seg_wait(r, k); glBindBuffer(r->target, r->buf); glUnmapBuffer(r->target); glDeleteBuffers(1, &r->buf); r->buf = 0; r->map = NULL; }
+        glGenBuffers(1, &r->buf);
+        r->cap = bytes < min ? min : bytes * 2;
+        r->cap = (r->cap + RING_SEGS * 256u - 1) / (RING_SEGS * 256u) * (RING_SEGS * 256u);
+        glBindBuffer(r->target, r->buf);
+        p_glBufferStorage(r->target, r->cap, NULL, 0x0002 /* MAP_WRITE */ | 0x0040 /* MAP_PERSISTENT */ | 0x0080 /* MAP_COHERENT */);
+        r->map = (uint8_t *)glMapBufferRange(r->target, 0, r->cap, 0x0002 | 0x0040 | 0x0080);
+        if (!r->map) { fprintf(stderr, "  [GL] a persistent buffer could not be mapped: the plain rings from now on\n"); glDeleteBuffers(1, &r->buf); r->buf = 0; r->cap = 0; g_persist = 0; return 0xFFFFFFFEu; }
+        r->pos = 0; r->seg = 0;
+        if (r == &g_rub) g_rub_fresh = 1;
+    } else glBindBuffer(r->target, r->buf);
+    if (!align) align = 1;
+    at = (r->pos + align - 1) / align * align;
+    segsz = r->cap / RING_SEGS;
+    if (at + bytes > r->cap) {   /* wrapped: on through the last parts to the first (all the way round when still in the first) */
+        if (r->seg == 0) { uint32_t k; for (k = 0; k < RING_SEGS; k++) gpu_ring_advance(r); }
+        else while (r->seg != 0) gpu_ring_advance(r);
+        at = 0;
+    }
+    endseg = (at + bytes - 1) / segsz;
+    while (r->seg < endseg) gpu_ring_advance(r);
+    memcpy(r->map + at, data, bytes);
+    r->pos = at + bytes;
+    return at;
+}
 static uint32_t gpu_ring(GRing *r, const void *data, uint32_t bytes, uint32_t align)
 {
     uint32_t at;
     void *p;
     if (g_ringtest < 0) { const char *e = getenv("RECOMP_GL_RINGTEST"); g_ringtest = e ? (atoi(e) == 2 ? 2 : 1) : 0; }
+    if (g_persist && !g_ringtest) { at = gpu_ring_persist(r, data, bytes, align); if (at != 0xFFFFFFFEu) return at; }
     if (!r->buf || r->cap < bytes) {
         uint32_t min = g_ringtest > 0 ? (64u << 10) : (8u << 20);
         if (!r->buf) glGenBuffers(1, &r->buf);
@@ -739,9 +791,10 @@ static void gsurf_ms_make(GSurf *s)
 /* the texture made from what was drawn (before anything reads it) */
 static void gsurf_resolve(GSurf *s)
 {
-    GLbitfield b;
+    GLbitfield b; GLint was = 0;
     if (!s || !s->mrb || !s->ms_new) return;
     s->ms_new = 0;
+    glGetIntegerv(0x8CA6 /* GL_DRAW_FRAMEBUFFER_BINDING */, &was);
     b = s->is_depth ? (GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT) : GL_COLOR_BUFFER_BIT;
     glBindFramebuffer(GL_READ_FRAMEBUFFER, s->is_depth ? gpu_fbo_ms(0, s->mrb) : gpu_fbo_ms(s->mrb, 0));
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, s->is_depth ? gpu_fbo(0, s->tex) : gpu_fbo(s->tex, 0));
@@ -749,8 +802,11 @@ static void gsurf_resolve(GSurf *s)
     if (!s->is_depth) glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     else { glDepthMask(GL_TRUE); glStencilMask(0xFF); }
     glBlitFramebuffer(0, 0, (GLint)s->pw, (GLint)s->ph, 0, 0, (GLint)s->pw, (GLint)s->ph, b, GL_NEAREST);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    /* (2.0.1) the target bound before put back: a draw that samples a surface resolves it after its own targets are bound (its
+     * textures come after), and it went to framebuffer 0 -- with MSAA on, the Gates of Moria's fog and snow (drawn over a
+     * surface they sample) disappeared on Linux; D3D11 binds its targets again itself */
     gpu_sh_reset();
+    glBindFramebuffer(GL_FRAMEBUFFER, (GLuint)was); g_sh.fbo = (GLuint)was; g_sh.tg = 1;
 }
 /* a surface drawn without its multisampled copy from now on */
 static void gsurf_ms_drop(GSurf *s)
@@ -1556,6 +1612,8 @@ static int gpu_init(void)
     if (!gl_load()) { SDL_GL_MakeCurrent(g_win, NULL); return 0; }
     glGetIntegerv(GL_MAJOR_VERSION, &maj);
     glGetIntegerv(GL_MINOR_VERSION, &mnr);
+    if (getenv("TT_PRIME_NOTE")) fprintf(stderr, "  [GL] %s\n", getenv("TT_PRIME_NOTE"));
+    if (getenv("__GL_THREADED_OPTIMIZATIONS") && getenv("__GL_THREADED_OPTIMIZATIONS")[0] == '1') fprintf(stderr, "  [GL] NVIDIA's threaded driver on (TT_GL_THREADED=0: off)\n");
     fprintf(stderr, "  [GL] %s / %s / OpenGL %s\n", (const char *)glGetString(GL_VENDOR),
             (const char *)glGetString(GL_RENDERER), (const char *)glGetString(GL_VERSION));
     {   /* (2.0.0) the driver's own errors and warnings in the log, as [GLDEBUG] lines */
@@ -1563,7 +1621,7 @@ static int gpu_init(void)
         typedef void (APIENTRY *dbgset_t)(dbgcb_t, const void *);
         /* on by default (the driver's errors cost nothing when there are none); TT_GLDEBUG=0: off, =2: synchronous */
         const char *dv = getenv("TT_GLDEBUG");
-        int dm = dv ? atoi(dv) : 1;
+        int dm = dv ? atoi(dv) : !(getenv("__GL_THREADED_OPTIMIZATIONS") && getenv("__GL_THREADED_OPTIMIZATIONS")[0] == '1');   /* (2.0.1: off by default with NVIDIA's threaded driver -- debug output turns it off) */
         dbgset_t set = dm ? (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallback") : NULL;
         if (!set && dm) set = (dbgset_t)SDL_GL_GetProcAddress("glDebugMessageCallbackARB");
         if (set) {
@@ -1580,6 +1638,14 @@ static int gpu_init(void)
     }
     glGetIntegerv(GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT, &g_ubo_align);
     if (g_ubo_align < 16) g_ubo_align = 16;
+    if ((maj > 4 || (maj == 4 && mnr >= 4) || gl_has_ext("GL_ARB_buffer_storage")) && !(getenv("RECOMP_GL_PERSIST") && getenv("RECOMP_GL_PERSIST")[0] == '0')) {
+        *(void **)&p_glBufferStorage = SDL_GL_GetProcAddress("glBufferStorage");
+        *(void **)&p_glFenceSync = SDL_GL_GetProcAddress("glFenceSync");
+        *(void **)&p_glClientWaitSync = SDL_GL_GetProcAddress("glClientWaitSync");
+        *(void **)&p_glDeleteSync = SDL_GL_GetProcAddress("glDeleteSync");
+        g_persist = p_glBufferStorage && p_glFenceSync && p_glClientWaitSync && p_glDeleteSync;
+        fprintf(stderr, "  [GL] streaming buffers: %s\n", g_persist ? "persistent mapped (no map / unmap per draw)" : "mapped per draw");
+    }
     if (gl_has_ext("GL_EXT_texture_filter_anisotropic") || gl_has_ext("GL_ARB_texture_filter_anisotropic"))
         glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &g_max_aniso);
     if (!getenv("RECOMP_GL_SYNC_COMPILE")
@@ -2368,7 +2434,7 @@ static HwVp *hwvp_lookup(void)
     {
         char *src = hwvp_translate(e);
         if (!src) e->state = 2;
-        else { e->vs = gpu_shader_start(GL_VERTEX_SHADER, src); free(src); }
+        else { if (getenv("RECOMP_VPSRC")) fprintf(stderr, "[VPSRC] %08X len %u\n%s\n", (unsigned)h, (unsigned)s_vpd_len, src); e->vs = gpu_shader_start(GL_VERTEX_SHADER, src); free(src); }
     }
     g_hwvp[g_hwvp_n++] = e;
     hwvp_poll(e);
@@ -2868,9 +2934,11 @@ static int shadow_hook_gl(void)
 }
 
 /* ---------------- batches ---------------- */
+static unsigned g_gl_frames;   /* (research) frames presented */
 
 /* Draw the assembled batch with the program's GPU vertex shader; 0 when its
  * program is not linked yet (the caller draws it on the CPU path). */
+
 static int gpu_batch_hw(HwVp *hv, uint32_t nverts)
 {
     uint32_t stride = 16 * hv->nin, vb_at = 0, ib_at;
@@ -2887,6 +2955,13 @@ static int gpu_batch_hw(HwVp *hv, uint32_t nverts)
             g_xin = n; g_xin_cap = (uint32_t)(need * 2);
         }
         hwvp_pack_range(hv, 0, nverts);
+        {   /* (research, RECOMP_VPCDUMP=frame) a frame's draws: the first vertex's inputs and constants c[0..15] */
+            static int fr = -1, nd;
+            if (fr < 0) fr = getenv("RECOMP_VPCDUMP") ? atoi(getenv("RECOMP_VPCDUMP")) : 0;
+            if (fr > 0 && SDL_GetTicks() > (Uint32)fr && nd < 5000) { int q; nd++; if (getenv("RECOMP_VPCSHORT")) { fprintf(stderr, "[VPC] f%u %08X n%u in%u %.1f %.1f %.1f\n", g_gl_frames, (unsigned)hv->hash, nverts, hv->nin, g_xin[0], g_xin[1], g_xin[2]); } else {
+                fprintf(stderr, "[VPC] draw %d nverts %u nin %u hash %08X in0 %.3f %.3f %.3f %.3f\n", nd, nverts, hv->nin, (unsigned)hv->hash, g_xin[0], g_xin[1], g_xin[2], g_xin[3]);
+                for (q = 0; q < 16; q++) fprintf(stderr, "[VPC]   c%d %.4f %.4f %.4f %.4f\n", q, s_3d.c[q][0], s_3d.c[q][1], s_3d.c[q][2], s_3d.c[q][3]); } }
+        }
         glBindVertexArray(g_vao_x);
         g_sh.vao = 2;
         vb_at = gpu_ring(&g_rvbx, g_xin, (uint32_t)(need * sizeof(float)), stride);
@@ -2908,6 +2983,7 @@ static int gpu_batch_hw(HwVp *hv, uint32_t nverts)
         g_vpc_ok = 1;
         gpu_ub(UB_VPC, g_vpc_shadow, sizeof g_vpc_shadow);
     }
+    if (g_sh.vao != 2 && hv->nin) { glBindVertexArray(g_vao_x); g_sh.vao = 2; }
     gpu_set_blend(0);
     gpu_set_depth(g_cur_ds != NULL);
     gpu_use(prog);
@@ -3178,9 +3254,9 @@ static void gpu_readback(uint32_t base, uint32_t pitch)
 /* ---------------- graphics settings overlay ---------------- */
 
 static int g_ov;
-static GLuint g_menu_tex_a[3];
-static int g_menu_w_a[3], g_menu_h_a[3];
-static unsigned g_menu_ver_a[3];
+static GLuint g_menu_tex_a[5];
+static int g_menu_w_a[5], g_menu_h_a[5];
+static unsigned g_menu_ver_a[5];
 #define g_menu_tex g_menu_tex_a[g_ov]
 #define g_menu_w g_menu_w_a[g_ov]
 #define g_menu_h g_menu_h_a[g_ov]
@@ -3197,7 +3273,7 @@ static void gpu_draw_menu_at(int slot, const uint32_t *px, int w, int h, unsigne
 {
     float cb[4] = { 1, 1, 0, 0 };
     int left, top;
-    g_ov = slot % 3;
+    g_ov = slot % 5;   /* (2.1: 3 the FPS counter) */
     if (!g_menu_tex || g_menu_w != w || g_menu_h != h) {
         if (g_menu_tex) glDeleteTextures(1, &g_menu_tex);
         g_menu_tex = gpu_tex2d((uint32_t)w, (uint32_t)h, 0);
@@ -3373,6 +3449,7 @@ static void gpu_dump_window(const char *nm)
 /* The flip: the finished surface onto the window. */
 static void gpu_present(uint32_t base, uint32_t pitch)
 {
+    g_gl_frames++;
     hud_frame_end();   /* this frame's HUD pieces, grouped (hud_wide_x) */
     GSurf *s = gsurf_find(base, 0);
     int wide;
@@ -3454,6 +3531,8 @@ static void gpu_present(uint32_t base, uint32_t pitch)
         if (xbox_GfxMenuRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver)) gpu_draw_menu_at(0, mpx, mw, mh, mver, -1, -1);
         { int tx, ty; if (xbox_ToastRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(1, mpx, mw, mh, mver, tx, ty); }
         { int tx, ty; if (xbox_BannerRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(2, mpx, mw, mh, mver, tx, ty); }
+        { int tx, ty; if (xbox_FpsRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(3, mpx, mw, mh, mver, tx, ty); }   /* (2.1) the FPS counter */
+        { int tx, ty; extern int xbox_PanelRender(int, int, const uint32_t **, int *, int *, unsigned *, int *, int *); if (xbox_PanelRender(g_sc_w, g_sc_h, &mpx, &mw, &mh, &mver, &tx, &ty)) gpu_draw_menu_at(4, mpx, mw, mh, mver, tx, ty); }   /* (2.0.1) a title's panel (Versus' scores, F7) */
     }
     {
         /* RECOMP_PRESENT_DUMP=prefix: every Nth presented frame as a BMP of

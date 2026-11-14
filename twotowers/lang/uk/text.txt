@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	Виберіть налаштува�
 L:Voices:	Голоси:
 L:Films:	Фільми:
 L:(as the text)	(як текст)
+L:Last One Standing	Останній на ногах
+L:Win a Free-for-all match.	Виграйте матч «кожен сам за себе».
+L:King of the Arena	Король арени
+L:Win 5 Free-for-all matches.	Виграйте 5 матчів «кожен сам за себе».
+L:Brothers in Arms	Брати по зброї
+L:Win a Team Deathmatch match.	Виграйте командний бій на смерть.
+L:Shield Brothers	Брати по щиту
+L:Win 5 Team Deathmatch matches.	Виграйте 5 командних боїв на смерть.
+L:Four Trolls Enter	Виходять чотири тролі
+L:Win a Troll Battle with four trolls.	Виграйте битву тролів із чотирма тролями.
+L:A Company of Three	Загін із трьох
+L:Win a level in co-op with three players.	Пройдіть рівень у кооперативі втрьох.
+L:The Fellowship of Four	Братство чотирьох
+L:Win a level in co-op with four players.	Пройдіть рівень у кооперативі вчотирьох.
+L:Many Hands	Багато рук
+L:Win 5 different levels in co-op with three or four players.	Пройдіть 5 різних рівнів у кооперативі втрьох або вчотирьох.
+L:Storming Orthanc	Штурм Ортханка
+L:Win the secret mission at Orthanc in co-op with four players.	Пройдіть таємну місію в Ортханку в кооперативі вчотирьох.
+P:Players:	Гравці:
+P:P3 Bot:	Бот P3:
+P:P4 Bot:	Бот P4:
+P:Auto	Авто
+P:P3 Device:	Пристрій P3:
+P:P4 Device:	Пристрій P4:
+P:P3 Controls	Керування P3
+P:P4 Controls	Керування P4
+P:Reset P3 Controls	Скинути керування P3
+P:Reset P4 Controls	Скинути керування P4
+P:P2, P3, P4 Teleport:	Телепорт P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Телепорт P2, P3, P4: УВІМК.
+P:P2, P3, P4 Teleport: OFF	Телепорт P2, P3, P4: ВИМК.
+P:Replace Companions:	Замінювати супутників:
+P:Show Upgrades Player {1}	Покращення гравця {1}
+P:Team Deathmatch	Командний бій на смерть
+P:Free-for-all	Кожен сам за себе
+P:Player 3:	Гравець 3:
+P:Player 4:	Гравець 4:
+P:Player 3 Plays:	Грає гравець 3:
+P:Player 4 Plays:	Грає гравець 4:
+P:Team 1 - P1:	Команда 1 - P1:
+P:Team 2 - P2:	Команда 2 - P2:
+P:Team 1 - P3:	Команда 1 - P3:
+P:Team 2 - P4:	Команда 2 - P4:
+P:Yes	Так
+P:No	Ні
+P:No (three players)	Ні (три гравці)
+P:Player 3: choose your hero	Гравець 3: оберіть героя
+P:Player 4: choose your hero	Гравець 4: оберіть героя
+P:Player 2: {1} is taken	Гравець 2: {1} уже зайнятий
+P:Player 3: {1} is taken	Гравець 3: {1} уже зайнятий
+P:Player 4: {1} is taken	Гравець 4: {1} уже зайнятий
+P:Player 3: {1} not available	Гравець 3: {1} недоступний
+P:Player 4: {1} not available	Гравець 4: {1} недоступний
+P:PLAYER {1} WINS THE MATCH  ({2})	ГРАВЕЦЬ {1} ВИГРАВ МАТЧ  ({2})
+P:TEAM {1} WINS ROUND {2}	КОМАНДА {1} ВИГРАЛА РАУНД {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	КОМАНДА {1} ВИГРАЛА МАТЧ  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	ПЕРЕМОГЛА КОМАНДА {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	ПЕРЕМІГ ГРАВЕЦЬ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	РАУНД {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	РАУНД {1}   КОМАНДА {2} {3} - {4} КОМАНДА {5}
+P:FREE-FOR-ALL RESULTS	ПІДСУМКИ «КОЖЕН САМ ЗА СЕБЕ»
+P:TEAM DEATHMATCH RESULTS	ПІДСУМКИ КОМАНДНОГО БОЮ
+P:KILLS	ВБИВСТВА
+P:DEATHS	СМЕРТІ
+P:KILLS PER DEATH	ВБИВСТВ НА СМЕРТЬ
+P:TEAM	КОМАНДА
+P:TEAM ROUNDS WON	РАУНДИ КОМАНДИ
+P:MOST KILLS: PLAYER {1} ({2})	НАЙБІЛЬШЕ ВБИВСТВ: ГРАВЕЦЬ {1} ({2})
+L:DOWN	ПОВАЛЕНО
+L:TROLL BATTLE	БИТВА ТРОЛІВ
+L:FREE-FOR-ALL	КОЖЕН САМ ЗА СЕБЕ
+L:TEAM DEATHMATCH	КОМАНДНИЙ БІЙ НА СМЕРТЬ
+L:DEATHMATCH	БІЙ НА СМЕРТЬ
+L:ROUND {1}  (FIRST TO {2})	РАУНД {1}  (ДО {2} ПЕРЕМОГ)
+L:The leader needs {1} more round to win	Лідерові лишилося виграти раундів: {1}
+L:The leader needs {1} more rounds to win	Лідерові лишилося виграти раундів: {1}
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	КОМАНДА 1 {1} - {2} КОМАНДА 2   (лишилося {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	ГРАВЕЦЬ 1 {1} - {2} ГРАВЕЦЬ 2   (лишилося {3} / {4})
+L:PLAYER	ГРАВЕЦЬ
+L:HERO	ГЕРОЙ
+L:TEAM	КОМАНДА
+L:ROUNDS	РАУНДИ
+L:KILLS	ВБИВСТВА
+L:DEATHS	СМЕРТІ
+L:down	повалено
+L:FPS counter	Лічильник FPS
+L:Frames a second, in the top-left corner	Кадри за секунду, у лівому верхньому куті
+L:Last One Standing - Player 1	Останній на ногах - Гравець 1
+L:Win a Free-for-all match as player 1.	Виграйте матч «кожен сам за себе» за гравця 1.
+L:Brothers in Arms - Player 1	Брати по зброї - Гравець 1
+L:Win a Team Deathmatch match as player 1.	Виграйте командний бій на смерть за гравця 1.
+L:Last One Standing - Player 2	Останній на ногах - Гравець 2
+L:Win a Free-for-all match as player 2.	Виграйте матч «кожен сам за себе» за гравця 2.
+L:Brothers in Arms - Player 2	Брати по зброї - Гравець 2
+L:Win a Team Deathmatch match as player 2.	Виграйте командний бій на смерть за гравця 2.
+L:Last One Standing - Player 3	Останній на ногах - Гравець 3
+L:Win a Free-for-all match as player 3.	Виграйте матч «кожен сам за себе» за гравця 3.
+L:Brothers in Arms - Player 3	Брати по зброї - Гравець 3
+L:Win a Team Deathmatch match as player 3.	Виграйте командний бій на смерть за гравця 3.
+L:Last One Standing - Player 4	Останній на ногах - Гравець 4
+L:Win a Free-for-all match as player 4.	Виграйте матч «кожен сам за себе» за гравця 4.
+L:Brothers in Arms - Player 4	Брати по зброї - Гравець 4
+L:Win a Team Deathmatch match as player 4.	Виграйте командний бій на смерть за гравця 4.
+L:The Orange Banner	Помаранчевий стяг
+L:Win a Team Deathmatch match as the orange team.	Виграйте командний бій на смерть за помаранчеву команду.
+L:The Red Banner	Червоний стяг
+L:Win a Team Deathmatch match as the red team.	Виграйте командний бій на смерть за червону команду.

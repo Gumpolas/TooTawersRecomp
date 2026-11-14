@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	FASTI PROELII TROLLORUM
 P:TROLL BATTLE RESULTS	EXITUS PROELII TROLLORUM
 P:P{1}	P{1}
 P:Launcher	Inceptor
+P:Players:	Lusores:
+P:P3 Bot:	P3 Automaton:
+P:P4 Bot:	P4 Automaton:
+P:Auto	Sponte
+P:P3 Device:	P3 Instrumentum:
+P:P4 Device:	P4 Instrumentum:
+P:P3 Controls	P3 Moderamina
+P:P4 Controls	P4 Moderamina
+P:Reset P3 Controls	P3 Moderamina reficere
+P:Reset P4 Controls	P4 Moderamina reficere
+P:P2, P3, P4 Teleport:	P2, P3, P4 Transvectio:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Transvectio: ACCENSA
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Transvectio: EXSTINCTA
+P:Replace Companions:	Comites substituere:
+P:Show Upgrades Player {1}	Lusoris {1} incrementa
+P:Team Deathmatch	Pugna ad mortem turmarum
+P:Free-for-all	Omnes contra omnes
+P:Player 3:	Lusor 3:
+P:Player 4:	Lusor 4:
+P:Player 3 Plays:	Lusor 3 ludit:
+P:Player 4 Plays:	Lusor 4 ludit:
+P:Team 1 - P1:	Turma 1 - P1:
+P:Team 2 - P2:	Turma 2 - P2:
+P:Team 1 - P3:	Turma 1 - P3:
+P:Team 2 - P4:	Turma 2 - P4:
+P:Yes	Ita
+P:No	Non
+P:No (three players)	Non (tres lusores)
+P:Player 3: choose your hero	Lusor 3: heroem elige
+P:Player 4: choose your hero	Lusor 4: heroem elige
+P:Player 2: {1} is taken	Lusor 2: {1} iam captus est
+P:Player 3: {1} is taken	Lusor 3: {1} iam captus est
+P:Player 4: {1} is taken	Lusor 4: {1} iam captus est
+P:Player 3: {1} not available	Lusor 3: {1} non praesto est
+P:Player 4: {1} not available	Lusor 4: {1} non praesto est
+P:PLAYER {1} WINS THE MATCH  ({2})	LUSOR {1} PUGNAM VINCIT  ({2})
+P:TEAM {1} WINS ROUND {2}	TURMA {1} CERTAMEN {2} VINCIT
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TURMA {1} PUGNAM VINCIT  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TURMA {1} VINCIT  {2} - {3}
+P:PLAYER {1} WINS  {2}	LUSOR {1} VINCIT  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	CERTAMEN {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	CERTAMEN {1}   TURMA {2} {3} - {4} TURMA {5}
+P:FREE-FOR-ALL RESULTS	EXITUS OMNIUM CONTRA OMNES
+P:TEAM DEATHMATCH RESULTS	EXITUS PUGNAE TURMARUM
+P:KILLS	CAEDES
+P:DEATHS	MORTES
+P:KILLS PER DEATH	CAEDES PER MORTEM
+P:TEAM	TURMA
+P:TEAM ROUNDS WON	CERTAMINA TURMAE
+P:MOST KILLS: PLAYER {1} ({2})	PLURIMAE CAEDES: LUSOR {1} ({2})

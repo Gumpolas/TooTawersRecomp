@@ -141,7 +141,7 @@ void d3d8_PresentFrame(void)
     /* Pump Windows messages */
     MSG msg;
     while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE)) {
-        if (msg.message == WM_QUIT) ExitProcess(0);
+        if (msg.message == WM_QUIT) { fflush(NULL); TerminateProcess(GetCurrentProcess(), 0); }   /* (2.1: at once, not ExitProcess's DLL shutdown, which could hang) */
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
     }
@@ -458,7 +458,7 @@ static HRESULT __stdcall dev_Present(IDirect3DDevice8 *self, const RECT *src, co
     MSG msg;
     while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE)) {
         if (msg.message == WM_QUIT) {
-            ExitProcess(0);
+            fflush(NULL); TerminateProcess(GetCurrentProcess(), 0);
         }
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
@@ -1391,7 +1391,7 @@ static HRESULT __stdcall dev_Swap(IDirect3DDevice8 *self, DWORD Flags)
     MSG msg;
     while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE)) {
         if (msg.message == WM_QUIT) {
-            ExitProcess(0);
+            fflush(NULL); TerminateProcess(GetCurrentProcess(), 0);
         }
         TranslateMessage(&msg);
         DispatchMessageA(&msg);

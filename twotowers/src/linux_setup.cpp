@@ -17,6 +17,7 @@
 //
 // "install" prints "PROGRESS <0-100>" lines while it extracts (for zenity).
 
+#include <sys/stat.h>
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
@@ -468,6 +469,7 @@ static int menu()
             if (cmdStatus(true) != 0) { std::cout << "Install the game files first.\n"; continue; }
             if (iniGet("Display", "ultra_textures", "0") == "1" && ultra_build::needed(exeDir())) cmdUltra();
             fs::path exe = exeDir() / "twotowers_recomp";
+            if (const char *ge = getenv("TT_GAME_EXE")) { if (access(ge, F_OK) == 0 && access(ge, X_OK) != 0) { struct stat st_; if (stat(ge, &st_) == 0) chmod(ge, st_.st_mode | S_IXUSR); } if (access(ge, X_OK) == 0) exe = ge; unsetenv("TT_GAME_EXE"); }   // (2.0.1) the game that opened the launcher
             if (chdir(exeDir().c_str()) == 0) execl(exe.c_str(), exe.c_str(), (char *)nullptr);
             std::cerr << "Could not start " << exe.string() << "\n";
             return 1;

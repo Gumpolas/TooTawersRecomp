@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	RECORDES DA BATALHA DE TROLLS
 P:TROLL BATTLE RESULTS	RESULTADOS DA BATALHA DE TROLLS
 P:P{1}	J{1}
 P:Launcher	Inicializador
+P:Players:	Jogadores:
+P:P3 Bot:	Bot J3:
+P:P4 Bot:	Bot J4:
+P:Auto	Auto
+P:P3 Device:	Dispositivo J3:
+P:P4 Device:	Dispositivo J4:
+P:P3 Controls	Controles J3
+P:P4 Controls	Controles J4
+P:Reset P3 Controls	Restaurar controles J3
+P:Reset P4 Controls	Restaurar controles J4
+P:P2, P3, P4 Teleport:	Teleporte J2, J3, J4:
+P:P2, P3, P4 Teleport: ON	Teleporte J2, J3, J4: SIM
+P:P2, P3, P4 Teleport: OFF	Teleporte J2, J3, J4: NÃO
+P:Replace Companions:	Substituir companheiros:
+P:Show Upgrades Player {1}	Melhorias do jogador {1}
+P:Team Deathmatch	Mata-mata em equipe
+P:Free-for-all	Todos contra todos
+P:Player 3:	Jogador 3:
+P:Player 4:	Jogador 4:
+P:Player 3 Plays:	Jogador 3 joga:
+P:Player 4 Plays:	Jogador 4 joga:
+P:Team 1 - P1:	Equipe 1 - J1:
+P:Team 2 - P2:	Equipe 2 - J2:
+P:Team 1 - P3:	Equipe 1 - J3:
+P:Team 2 - P4:	Equipe 2 - J4:
+P:Yes	Sim
+P:No	Não
+P:No (three players)	Não (três jogadores)
+P:Player 3: choose your hero	Jogador 3: escolha seu herói
+P:Player 4: choose your hero	Jogador 4: escolha seu herói
+P:Player 2: {1} is taken	Jogador 2: {1} já foi escolhido
+P:Player 3: {1} is taken	Jogador 3: {1} já foi escolhido
+P:Player 4: {1} is taken	Jogador 4: {1} já foi escolhido
+P:Player 3: {1} not available	Jogador 3: {1} indisponível
+P:Player 4: {1} not available	Jogador 4: {1} indisponível
+P:PLAYER {1} WINS THE MATCH  ({2})	JOGADOR {1} VENCE A PARTIDA  ({2})
+P:TEAM {1} WINS ROUND {2}	EQUIPE {1} VENCE O ROUND {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	EQUIPE {1} VENCE A PARTIDA  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	EQUIPE {1} VENCE  {2} - {3}
+P:PLAYER {1} WINS  {2}	JOGADOR {1} VENCE  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ROUND {1}   EQUIPE {2} {3} - {4} EQUIPE {5}
+P:FREE-FOR-ALL RESULTS	RESULTADOS DE TODOS CONTRA TODOS
+P:TEAM DEATHMATCH RESULTS	RESULTADOS DO MATA-MATA EM EQUIPE
+P:KILLS	ABATES
+P:DEATHS	MORTES
+P:KILLS PER DEATH	ABATES POR MORTE
+P:TEAM	EQUIPE
+P:TEAM ROUNDS WON	ROUNDS DA EQUIPE
+P:MOST KILLS: PLAYER {1} ({2})	MAIS ABATES: JOGADOR {1} ({2})

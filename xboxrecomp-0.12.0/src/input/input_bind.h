@@ -35,4 +35,7 @@ int         xbox_BindSet(const char *key, const char *value);
 int         xbox_BindPad2(int action);          /* pad source 0..16 */
 void        xbox_BindAssignPad2(int action, int src);
 void        xbox_BindResetPad2(void);
+int         xbox_BindPadP(int player, int action);   /* (2.1) player 2-4 controller's source */
+void        xbox_BindAssignPadP(int player, int action, int src);
+void        xbox_BindResetPadP(int player);
 #endif

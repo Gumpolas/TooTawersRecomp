@@ -205,6 +205,13 @@ BOOL InitOnceExecuteOnce(PINIT_ONCE once, PINIT_ONCE_FN fn, PVOID param, PVOID *
 
 /* Forward decl; the definition lives further down with the wait helpers. */
 static void deadline_from_ms(DWORD ms, struct timespec *ts);
+/* (2.0.1) WaitForMultipleObjects woken at once: every object's signal bumps one generation and wakes the multi-waiters (it
+ * polled with usleep(1000) -- a millisecond and more late each time, the emulated machine's timer thread and the game's waits
+ * on the GPU among them: Linux held far under Windows' frame rate) */
+static pthread_mutex_t g_any_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t g_any_cond = PTHREAD_COND_INITIALIZER;
+static volatile unsigned long g_any_gen;
+static void w32_any_signal(void) { pthread_mutex_lock(&g_any_lock); g_any_gen++; pthread_cond_broadcast(&g_any_cond); pthread_mutex_unlock(&g_any_lock); }
 
 static void cv_lazy_init(PCONDITION_VARIABLE cv)
 {
@@ -595,9 +602,13 @@ DWORD WaitForMultipleObjectsEx(DWORD count, const HANDLE *handles, BOOL waitAll,
 {
     struct timespec ts;
     int timed = (ms != INFINITE);
+    static int poll = -1;
+    if (poll < 0) poll = getenv("RECOMP_WFMO_POLL") != NULL;
     if (timed) deadline_from_ms(ms, &ts);
 
     for (;;) {
+        unsigned long gen;
+        pthread_mutex_lock(&g_any_lock); gen = g_any_gen; pthread_mutex_unlock(&g_any_lock);
         if (alertable && drain_apcs() > 0)
             return WAIT_IO_COMPLETION;
 
@@ -612,14 +623,30 @@ DWORD WaitForMultipleObjectsEx(DWORD count, const HANDLE *handles, BOOL waitAll,
                     return WAIT_OBJECT_0 + i;
         }
 
-        if (timed) {
-            struct timespec now;
+        {
+            struct timespec now, until;
             clock_gettime(CLOCK_REALTIME, &now);
-            if (now.tv_sec > ts.tv_sec ||
-                (now.tv_sec == ts.tv_sec && now.tv_nsec >= ts.tv_nsec))
+            if (timed && (now.tv_sec > ts.tv_sec ||
+                (now.tv_sec == ts.tv_sec && now.tv_nsec >= ts.tv_nsec)))
                 return WAIT_TIMEOUT;
+            if (poll) { usleep(1000); continue; }
+            /* until: the caller's deadline, an armed timer's due time, and at most 20 ms (a signal from somewhere not counted) */
+            until = now; until.tv_nsec += 20000000L; if (until.tv_nsec >= 1000000000L) { until.tv_sec++; until.tv_nsec -= 1000000000L; }
+            if (timed && timespec_before(&ts, &until)) until = ts;
+            for (DWORD i = 0; i < count; i++) {
+                w32_object *o = obj_get(handles[i]);
+                if (o && o->kind == K_WAITABLE_TIMER) {
+                    pthread_mutex_lock(&o->lock);
+                    if (o->waitable_armed && timespec_before(&o->waitable_due_time, &until)) until = o->waitable_due_time;
+                    pthread_mutex_unlock(&o->lock);
+                }
+            }
+            pthread_mutex_lock(&g_any_lock);
+            while (g_any_gen == gen) {
+                if (pthread_cond_timedwait(&g_any_cond, &g_any_lock, &until) == ETIMEDOUT) break;
+            }
+            pthread_mutex_unlock(&g_any_lock);
         }
-        usleep(1000);
     }
 }
 
@@ -648,6 +675,7 @@ BOOL SetEvent(HANDLE h)
     pthread_mutex_lock(&o->lock);
     o->signaled = 1;
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     pthread_mutex_unlock(&o->lock);
     return TRUE;
 }
@@ -669,6 +697,7 @@ BOOL PulseEvent(HANDLE h)
     pthread_mutex_lock(&o->lock);
     o->signaled = 1;
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     o->signaled = 0;
     pthread_mutex_unlock(&o->lock);
     return TRUE;
@@ -701,6 +730,7 @@ BOOL ReleaseSemaphore(HANDLE h, LONG releaseCount, PLONG previousCount)
     o->sem_count += releaseCount;
     if (o->sem_max && o->sem_count > o->sem_max) o->sem_count = o->sem_max;
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     pthread_mutex_unlock(&o->lock);
     return TRUE;
 }
@@ -739,6 +769,7 @@ BOOL ReleaseMutex(HANDLE h)
         o->mtx_owner = 0;
         o->mtx_recursion = 0;
         pthread_cond_broadcast(&o->cond);
+        w32_any_signal();
     }
     pthread_mutex_unlock(&o->lock);
     return TRUE;
@@ -772,6 +803,7 @@ static void *thread_trampoline(void *arg)
     o->exited    = 1;
     o->signaled  = 1;
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     pthread_mutex_unlock(&o->lock);
 
     obj_release(o);   /* drop the trampoline's reference */
@@ -822,6 +854,7 @@ VOID ExitThread(DWORD exitCode)
         o->exited    = 1;
         o->signaled  = 1;
         pthread_cond_broadcast(&o->cond);
+        w32_any_signal();
         pthread_mutex_unlock(&o->lock);
         obj_release(o);
     }
@@ -873,6 +906,7 @@ BOOL TerminateThread(HANDLE h, DWORD exitCode)
     o->exited    = 1;
     o->signaled  = 1;
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     pthread_mutex_unlock(&o->lock);
     return TRUE;
 }
@@ -905,6 +939,7 @@ DWORD QueueUserAPC(PAPCFUNC func, HANDLE thread, ULONG_PTR data)
         ok = 1;
     }
     pthread_mutex_unlock(&o->lock);
+    if (ok) { pthread_cond_broadcast(&o->cond); w32_any_signal(); }
     return ok;
 }
 
@@ -1073,6 +1108,7 @@ BOOL SetWaitableTimer(HANDLE h, const LARGE_INTEGER *dueTime, LONG period,
     o->waitable_triggered = 0;
     pthread_mutex_unlock(&o->lock);
     pthread_cond_broadcast(&o->cond);
+    w32_any_signal();
     return TRUE;
 }
 
@@ -1421,7 +1457,7 @@ VOID OutputDebugStringA(LPCSTR str)
     if (str) fputs(str, stderr);
 }
 
-VOID ExitProcess(UINT exitCode) { exit((int)exitCode); }
+VOID ExitProcess(UINT exitCode) { fflush(NULL); _exit((int)exitCode); }   /* (2.1: no atexit handlers -- one that waited on a thread kept the game running after it closed) */
 
 BOOL IsDebuggerPresent(void)
 {
@@ -1706,7 +1742,8 @@ DWORD XInputGetState(DWORD idx, XINPUT_STATE *state)
 BOOL TerminateProcess(HANDLE process, UINT exitCode)
 {
     (void)process;
-    exit((int)exitCode);
+    fflush(NULL);
+    _exit((int)exitCode);   /* (2.1: at once -- exit() ran the atexit handlers, which could wait on the game's threads for good) */
 }
 
 VOID OutputDebugStringW(LPCWSTR str)

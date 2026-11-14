@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	TROL SAVAI REKORLARI
 P:TROLL BATTLE RESULTS	TROL SAVAI SONUÇLARI
 P:P{1}	P{1}
 P:Launcher	Balatc
+P:Players:	Oyuncular:
+P:P3 Bot:	P3 Bot:
+P:P4 Bot:	P4 Bot:
+P:Auto	Otomatik
+P:P3 Device:	P3 Cihaz:
+P:P4 Device:	P4 Cihaz:
+P:P3 Controls	P3 Kontrolleri
+P:P4 Controls	P4 Kontrolleri
+P:Reset P3 Controls	P3 Kontrollerini Sfrla
+P:Reset P4 Controls	P4 Kontrollerini Sfrla
+P:P2, P3, P4 Teleport:	P2, P3, P4 Inlanma:
+P:P2, P3, P4 Teleport: ON	P2, P3, P4 Inlanma: AÇIK
+P:P2, P3, P4 Teleport: OFF	P2, P3, P4 Inlanma: KAPALI
+P:Replace Companions:	Yoldalar deitir:
+P:Show Upgrades Player {1}	Oyuncu {1} gelitirmeleri
+P:Team Deathmatch	Takm Ölüm Maç
+P:Free-for-all	Herkes Herkese Kar
+P:Player 3:	Oyuncu 3:
+P:Player 4:	Oyuncu 4:
+P:Player 3 Plays:	Oyuncu 3 oynuyor:
+P:Player 4 Plays:	Oyuncu 4 oynuyor:
+P:Team 1 - P1:	Takm 1 - P1:
+P:Team 2 - P2:	Takm 2 - P2:
+P:Team 1 - P3:	Takm 1 - P3:
+P:Team 2 - P4:	Takm 2 - P4:
+P:Yes	Evet
+P:No	Hayr
+P:No (three players)	Hayr (üç oyuncu)
+P:Player 3: choose your hero	Oyuncu 3: kahramannz seçin
+P:Player 4: choose your hero	Oyuncu 4: kahramannz seçin
+P:Player 2: {1} is taken	Oyuncu 2: {1} alnm
+P:Player 3: {1} is taken	Oyuncu 3: {1} alnm
+P:Player 4: {1} is taken	Oyuncu 4: {1} alnm
+P:Player 3: {1} not available	Oyuncu 3: {1} kullanlamaz
+P:Player 4: {1} not available	Oyuncu 4: {1} kullanlamaz
+P:PLAYER {1} WINS THE MATCH  ({2})	MAÇI OYUNCU {1} KAZANDI  ({2})
+P:TEAM {1} WINS ROUND {2}	{2}. TURU TAKIM {1} KAZANDI
+P:TEAM {1} WINS THE MATCH  {2} - {3}	MAÇI TAKIM {1} KAZANDI  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TAKIM {1} KAZANDI  {2} - {3}
+P:PLAYER {1} WINS  {2}	OYUNCU {1} KAZANDI  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. TUR   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. TUR   TAKIM {2} {3} - {4} TAKIM {5}
+P:FREE-FOR-ALL RESULTS	HERKES HERKESE KARI SONUÇLARI
+P:TEAM DEATHMATCH RESULTS	TAKIM ÖLÜM MAÇI SONUÇLARI
+P:KILLS	LELER
+P:DEATHS	ÖLÜMLER
+P:KILLS PER DEATH	ÖLÜM BAINA LE
+P:TEAM	TAKIM
+P:TEAM ROUNDS WON	TAKIMIN KAZANDII TURLAR
+P:MOST KILLS: PLAYER {1} ({2})	EN ÇOK LE: OYUNCU {1} ({2})

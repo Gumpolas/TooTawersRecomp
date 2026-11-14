@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	REKORDI BITKE TROLOVA
 P:TROLL BATTLE RESULTS	REZULTATI BITKE TROLOVA
 P:P{1}	P{1}
 P:Launcher	Pokreta
+P:Players:	Igrai:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Ureaj P3:
+P:P4 Device:	Ureaj P4:
+P:P3 Controls	Kontrole P3
+P:P4 Controls	Kontrole P4
+P:Reset P3 Controls	Vrati zadane kontrole P3
+P:Reset P4 Controls	Vrati zadane kontrole P4
+P:P2, P3, P4 Teleport:	Teleport P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleport P2, P3, P4: UKLJ.
+P:P2, P3, P4 Teleport: OFF	Teleport P2, P3, P4: ISKLJ.
+P:Replace Companions:	Zamijeni pratioce:
+P:Show Upgrades Player {1}	Poboljanja igraa {1}
+P:Team Deathmatch	Timski deathmatch
+P:Free-for-all	Svatko protiv svakoga
+P:Player 3:	Igra 3:
+P:Player 4:	Igra 4:
+P:Player 3 Plays:	Igra 3 igra:
+P:Player 4 Plays:	Igra 4 igra:
+P:Team 1 - P1:	Tim 1 - P1:
+P:Team 2 - P2:	Tim 2 - P2:
+P:Team 1 - P3:	Tim 1 - P3:
+P:Team 2 - P4:	Tim 2 - P4:
+P:Yes	Da
+P:No	Ne
+P:No (three players)	Ne (tri igraa)
+P:Player 3: choose your hero	Igra 3: odaberite junaka
+P:Player 4: choose your hero	Igra 4: odaberite junaka
+P:Player 2: {1} is taken	Igra 2: {1} je zauzet
+P:Player 3: {1} is taken	Igra 3: {1} je zauzet
+P:Player 4: {1} is taken	Igra 4: {1} je zauzet
+P:Player 3: {1} not available	Igra 3: {1} nije dostupan
+P:Player 4: {1} not available	Igra 4: {1} nije dostupan
+P:PLAYER {1} WINS THE MATCH  ({2})	IGRA {1} OSVAJA ME  ({2})
+P:TEAM {1} WINS ROUND {2}	TIM {1} OSVAJA {2}. RUNDU
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TIM {1} OSVAJA ME  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	POBJEÐUJE TIM {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	POBJEÐUJE IGRA {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. RUNDA   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. RUNDA   TIM {2} {3} - {4} TIM {5}
+P:FREE-FOR-ALL RESULTS	REZULTATI SVATKO PROTIV SVAKOGA
+P:TEAM DEATHMATCH RESULTS	REZULTATI TIMSKOG DEATHMATCHA
+P:KILLS	UBOJSTVA
+P:DEATHS	SMRTI
+P:KILLS PER DEATH	UBOJSTVA PO SMRTI
+P:TEAM	TIM
+P:TEAM ROUNDS WON	RUNDE TIMA
+P:MOST KILLS: PLAYER {1} ({2})	NAJVIE UBOJSTAVA: IGRA {1} ({2})

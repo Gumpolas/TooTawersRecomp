@@ -2043,3 +2043,110 @@ L:Quit	Quitter
 L:Select	Choisir
 L:Launcher	Lanceur
 L:Choose a setting to change it, then Play.	Choisissez un réglage pour le modifier, puis Jouer.
+L:Last One Standing	Le dernier debout
+L:Win a Free-for-all match.	Remportez un match en chacun pour soi.
+L:King of the Arena	Roi de l'arène
+L:Win 5 Free-for-all matches.	Remportez 5 matchs en chacun pour soi.
+L:Brothers in Arms	Frères d'armes
+L:Win a Team Deathmatch match.	Remportez un match à mort par équipe.
+L:Shield Brothers	Frères de bouclier
+L:Win 5 Team Deathmatch matches.	Remportez 5 matchs à mort par équipe.
+L:Four Trolls Enter	Quatre trolls dans l'arène
+L:Win a Troll Battle with four trolls.	Remportez un combat de trolls à quatre trolls.
+L:A Company of Three	Une compagnie de trois
+L:Win a level in co-op with three players.	Remportez un niveau en coop à trois joueurs.
+L:The Fellowship of Four	La Communauté des quatre
+L:Win a level in co-op with four players.	Remportez un niveau en coop à quatre joueurs.
+L:Many Hands	Nombreuses mains
+L:Win 5 different levels in co-op with three or four players.	Remportez 5 niveaux différents en coop à trois ou quatre joueurs.
+L:Storming Orthanc	L'assaut d'Orthanc
+L:Win the secret mission at Orthanc in co-op with four players.	Remportez la mission secrète d'Orthanc en coop à quatre joueurs.
+P:Players:	Joueurs :
+P:P3 Bot:	Bot J3 :
+P:P4 Bot:	Bot J4 :
+P:Auto	Auto
+P:P3 Device:	Périph. J3 :
+P:P4 Device:	Périph. J4 :
+P:P3 Controls	Commandes J3
+P:P4 Controls	Commandes J4
+P:Reset P3 Controls	Réinit. commandes J3
+P:Reset P4 Controls	Réinit. commandes J4
+P:P2, P3, P4 Teleport:	Téléport. J2, J3, J4 :
+P:P2, P3, P4 Teleport: ON	Téléport. J2, J3, J4 : OUI
+P:P2, P3, P4 Teleport: OFF	Téléport. J2, J3, J4 : NON
+P:Replace Companions:	Remplacer les compagnons :
+P:Show Upgrades Player {1}	Améliorations du joueur {1}
+P:Team Deathmatch	Match à mort par équipe
+P:Free-for-all	Chacun pour soi
+P:Player 3:	Joueur 3 :
+P:Player 4:	Joueur 4 :
+P:Player 3 Plays:	Joueur 3 joue :
+P:Player 4 Plays:	Joueur 4 joue :
+P:Team 1 - P1:	Équipe 1 - J1 :
+P:Team 2 - P2:	Équipe 2 - J2 :
+P:Team 1 - P3:	Équipe 1 - J3 :
+P:Team 2 - P4:	Équipe 2 - J4 :
+P:Yes	Oui
+P:No	Non
+P:No (three players)	Non (trois joueurs)
+P:Player 3: choose your hero	Joueur 3 : choisissez votre héros
+P:Player 4: choose your hero	Joueur 4 : choisissez votre héros
+P:Player 2: {1} is taken	Joueur 2 : {1} est déjà pris
+P:Player 3: {1} is taken	Joueur 3 : {1} est déjà pris
+P:Player 4: {1} is taken	Joueur 4 : {1} est déjà pris
+P:Player 3: {1} not available	Joueur 3 : {1} indisponible
+P:Player 4: {1} not available	Joueur 4 : {1} indisponible
+P:PLAYER {1} WINS THE MATCH  ({2})	JOUEUR {1} GAGNE LE MATCH  ({2})
+P:TEAM {1} WINS ROUND {2}	ÉQUIPE {1} GAGNE LA MANCHE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	ÉQUIPE {1} GAGNE LE MATCH  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	ÉQUIPE {1} GAGNE  {2} - {3}
+P:PLAYER {1} WINS  {2}	JOUEUR {1} GAGNE  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	MANCHE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	MANCHE {1}   ÉQUIPE {2} {3} - {4} ÉQUIPE {5}
+P:FREE-FOR-ALL RESULTS	RÉSULTATS DU CHACUN POUR SOI
+P:TEAM DEATHMATCH RESULTS	RÉSULTATS DU MATCH À MORT PAR ÉQUIPE
+P:KILLS	ÉLIMINATIONS
+P:DEATHS	MORTS
+P:KILLS PER DEATH	ÉLIMINATIONS PAR MORT
+P:TEAM	ÉQUIPE
+P:TEAM ROUNDS WON	MANCHES DE L'ÉQUIPE
+P:MOST KILLS: PLAYER {1} ({2})	PLUS D'ÉLIMINATIONS : JOUEUR {1} ({2})
+L:DOWN	À TERRE
+L:TROLL BATTLE	COMBAT DE TROLLS
+L:FREE-FOR-ALL	CHACUN POUR SOI
+L:TEAM DEATHMATCH	MATCH À MORT PAR ÉQUIPE
+L:DEATHMATCH	MATCH À MORT
+L:ROUND {1}  (FIRST TO {2})	MANCHE {1}  (PREMIER À {2})
+L:The leader needs {1} more round to win	Il manque {1} manche au meneur pour gagner
+L:The leader needs {1} more rounds to win	Il manque {1} manches au meneur pour gagner
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	ÉQUIPE 1 {1} - {2} ÉQUIPE 2   (encore {3} / {4} pour gagner)
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	JOUEUR 1 {1} - {2} JOUEUR 2   (encore {3} / {4} pour gagner)
+L:PLAYER	JOUEUR
+L:HERO	HÉROS
+L:TEAM	ÉQUIPE
+L:ROUNDS	MANCHES
+L:KILLS	ÉLIMINATIONS
+L:DEATHS	MORTS
+L:down	à terre
+L:FPS counter	Compteur d'images
+L:Frames a second, in the top-left corner	Images par seconde, en haut à gauche
+L:Last One Standing - Player 1	Le dernier debout - Joueur 1 
+L:Win a Free-for-all match as player 1.	Remportez un match en chacun pour soi en tant que joueur 1.
+L:Brothers in Arms - Player 1	Frères d'armes - Joueur 1 
+L:Win a Team Deathmatch match as player 1.	Remportez un match à mort par équipe en tant que joueur 1.
+L:Last One Standing - Player 2	Le dernier debout - Joueur 2 
+L:Win a Free-for-all match as player 2.	Remportez un match en chacun pour soi en tant que joueur 2.
+L:Brothers in Arms - Player 2	Frères d'armes - Joueur 2 
+L:Win a Team Deathmatch match as player 2.	Remportez un match à mort par équipe en tant que joueur 2.
+L:Last One Standing - Player 3	Le dernier debout - Joueur 3 
+L:Win a Free-for-all match as player 3.	Remportez un match en chacun pour soi en tant que joueur 3.
+L:Brothers in Arms - Player 3	Frères d'armes - Joueur 3 
+L:Win a Team Deathmatch match as player 3.	Remportez un match à mort par équipe en tant que joueur 3.
+L:Last One Standing - Player 4	Le dernier debout - Joueur 4 
+L:Win a Free-for-all match as player 4.	Remportez un match en chacun pour soi en tant que joueur 4.
+L:Brothers in Arms - Player 4	Frères d'armes - Joueur 4 
+L:Win a Team Deathmatch match as player 4.	Remportez un match à mort par équipe en tant que joueur 4.
+L:The Orange Banner	La bannière orange
+L:Win a Team Deathmatch match as the orange team.	Remportez un match à mort par équipe avec l'équipe orange.
+L:The Red Banner	La bannière rouge
+L:Win a Team Deathmatch match as the red team.	Remportez un match à mort par équipe avec l'équipe rouge.

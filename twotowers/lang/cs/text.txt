@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	Vyberte nastavení, které chcete zm
 L:Voices:	Hlasy:
 L:Films:	Filmy:
 L:(as the text)	(jako text)
+L:Last One Standing	Poslední, kdo stojí
+L:Win a Free-for-all match.	Vyhraj zápas každý proti každému.
+L:King of the Arena	Král arény
+L:Win 5 Free-for-all matches.	Vyhraj 5 zápasů každý proti každému.
+L:Brothers in Arms	Bratři ve zbrani
+L:Win a Team Deathmatch match.	Vyhraj týmový deathmatch.
+L:Shield Brothers	Bratři štítu
+L:Win 5 Team Deathmatch matches.	Vyhraj 5 týmových deathmatchů.
+L:Four Trolls Enter	Nastupují čtyři trollové
+L:Win a Troll Battle with four trolls.	Vyhraj bitvu trollů se čtyřmi trolly.
+L:A Company of Three	Společenstvo tří
+L:Win a level in co-op with three players.	Vyhraj úroveň v kooperaci se třemi hráči.
+L:The Fellowship of Four	Společenstvo čtyř
+L:Win a level in co-op with four players.	Vyhraj úroveň v kooperaci se čtyřmi hráči.
+L:Many Hands	Mnoho rukou
+L:Win 5 different levels in co-op with three or four players.	Vyhraj 5 různých úrovní v kooperaci se třemi nebo čtyřmi hráči.
+L:Storming Orthanc	Útok na Orthank
+L:Win the secret mission at Orthanc in co-op with four players.	Vyhraj tajnou misi v Orthanku v kooperaci se čtyřmi hráči.
+P:Players:	Hráči:
+P:P3 Bot:	Bot P3:
+P:P4 Bot:	Bot P4:
+P:Auto	Auto
+P:P3 Device:	Zařízení P3:
+P:P4 Device:	Zařízení P4:
+P:P3 Controls	Ovládání P3
+P:P4 Controls	Ovládání P4
+P:Reset P3 Controls	Obnovit ovládání P3
+P:Reset P4 Controls	Obnovit ovládání P4
+P:P2, P3, P4 Teleport:	Teleport P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	Teleport P2, P3, P4: ZAP.
+P:P2, P3, P4 Teleport: OFF	Teleport P2, P3, P4: VYP.
+P:Replace Companions:	Nahradit společníky:
+P:Show Upgrades Player {1}	Vylepšení hráče {1}
+P:Team Deathmatch	Týmový deathmatch
+P:Free-for-all	Každý proti každému
+P:Player 3:	Hráč 3:
+P:Player 4:	Hráč 4:
+P:Player 3 Plays:	Hráč 3 hraje:
+P:Player 4 Plays:	Hráč 4 hraje:
+P:Team 1 - P1:	Tým 1 - P1:
+P:Team 2 - P2:	Tým 2 - P2:
+P:Team 1 - P3:	Tým 1 - P3:
+P:Team 2 - P4:	Tým 2 - P4:
+P:Yes	Ano
+P:No	Ne
+P:No (three players)	Ne (tři hráči)
+P:Player 3: choose your hero	Hráč 3: vyber hrdinu
+P:Player 4: choose your hero	Hráč 4: vyber hrdinu
+P:Player 2: {1} is taken	Hráč 2: {1} je obsazen
+P:Player 3: {1} is taken	Hráč 3: {1} je obsazen
+P:Player 4: {1} is taken	Hráč 4: {1} je obsazen
+P:Player 3: {1} not available	Hráč 3: {1} není k dispozici
+P:Player 4: {1} not available	Hráč 4: {1} není k dispozici
+P:PLAYER {1} WINS THE MATCH  ({2})	HRÁČ {1} VYHRÁVÁ ZÁPAS  ({2})
+P:TEAM {1} WINS ROUND {2}	TÝM {1} VYHRÁVÁ {2}. KOLO
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TÝM {1} VYHRÁVÁ ZÁPAS  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	VÍTĚZÍ TÝM {1}  {2} - {3}
+P:PLAYER {1} WINS  {2}	VÍTĚZÍ HRÁČ {1}  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	{1}. KOLO   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	{1}. KOLO   TÝM {2} {3} - {4} TÝM {5}
+P:FREE-FOR-ALL RESULTS	VÝSLEDKY KAŽDÝ PROTI KAŽDÉMU
+P:TEAM DEATHMATCH RESULTS	VÝSLEDKY TÝMOVÉHO DEATHMATCHE
+P:KILLS	ZABITÍ
+P:DEATHS	SMRTI
+P:KILLS PER DEATH	ZABITÍ NA SMRT
+P:TEAM	TÝM
+P:TEAM ROUNDS WON	KOLA TÝMU
+P:MOST KILLS: PLAYER {1} ({2})	NEJVÍCE ZABITÍ: HRÁČ {1} ({2})
+L:DOWN	NA ZEMI
+L:TROLL BATTLE	BITVA TROLLŮ
+L:FREE-FOR-ALL	KAŽDÝ PROTI KAŽDÉMU
+L:TEAM DEATHMATCH	TÝMOVÝ DEATHMATCH
+L:DEATHMATCH	DEATHMATCH
+L:ROUND {1}  (FIRST TO {2})	{1}. KOLO  (DO {2} VÍTĚZSTVÍ)
+L:The leader needs {1} more round to win	Vedoucímu chybí {1} kolo k vítězství
+L:The leader needs {1} more rounds to win	Vedoucímu chybí {1} kol k vítězství
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	TÝM 1 {1} - {2} TÝM 2   (chybí {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	HRÁČ 1 {1} - {2} HRÁČ 2   (chybí {3} / {4})
+L:PLAYER	HRÁČ
+L:HERO	HRDINA
+L:TEAM	TÝM
+L:ROUNDS	KOLA
+L:KILLS	ZABITÍ
+L:DEATHS	SMRTI
+L:down	na zemi
+L:FPS counter	Počítadlo FPS
+L:Frames a second, in the top-left corner	Snímky za sekundu, vlevo nahoře
+L:Last One Standing - Player 1	Poslední, kdo stojí - Hráč 1
+L:Win a Free-for-all match as player 1.	Vyhraj zápas každý proti každému jako hráč 1.
+L:Brothers in Arms - Player 1	Bratři ve zbrani - Hráč 1
+L:Win a Team Deathmatch match as player 1.	Vyhraj týmový deathmatch jako hráč 1.
+L:Last One Standing - Player 2	Poslední, kdo stojí - Hráč 2
+L:Win a Free-for-all match as player 2.	Vyhraj zápas každý proti každému jako hráč 2.
+L:Brothers in Arms - Player 2	Bratři ve zbrani - Hráč 2
+L:Win a Team Deathmatch match as player 2.	Vyhraj týmový deathmatch jako hráč 2.
+L:Last One Standing - Player 3	Poslední, kdo stojí - Hráč 3
+L:Win a Free-for-all match as player 3.	Vyhraj zápas každý proti každému jako hráč 3.
+L:Brothers in Arms - Player 3	Bratři ve zbrani - Hráč 3
+L:Win a Team Deathmatch match as player 3.	Vyhraj týmový deathmatch jako hráč 3.
+L:Last One Standing - Player 4	Poslední, kdo stojí - Hráč 4
+L:Win a Free-for-all match as player 4.	Vyhraj zápas každý proti každému jako hráč 4.
+L:Brothers in Arms - Player 4	Bratři ve zbrani - Hráč 4
+L:Win a Team Deathmatch match as player 4.	Vyhraj týmový deathmatch jako hráč 4.
+L:The Orange Banner	Oranžový prapor
+L:Win a Team Deathmatch match as the orange team.	Vyhraj týmový deathmatch jako oranžový tým.
+L:The Red Banner	Rudý prapor
+L:Win a Team Deathmatch match as the red team.	Vyhraj týmový deathmatch jako červený tým.

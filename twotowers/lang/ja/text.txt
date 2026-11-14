@@ -2043,3 +2043,110 @@ L:Choose a setting to change it, then Play.	変更する設定を選んでから
 L:Voices:	音声：
 L:Films:	ムービー：
 L:(as the text)	（テキストと同じ）
+L:Last One Standing	最後に立つ者
+L:Win a Free-for-all match.	バトルロイヤルの試合に勝利する。
+L:King of the Arena	アリーナの王
+L:Win 5 Free-for-all matches.	バトルロイヤルの試合に5回勝利する。
+L:Brothers in Arms	戦友
+L:Win a Team Deathmatch match.	チームデスマッチの試合に勝利する。
+L:Shield Brothers	盾の兄弟
+L:Win 5 Team Deathmatch matches.	チームデスマッチの試合に5回勝利する。
+L:Four Trolls Enter	4体のトロル
+L:Win a Troll Battle with four trolls.	4体のトロルでトロルバトルに勝利する。
+L:A Company of Three	三人の一行
+L:Win a level in co-op with three players.	3人の協力プレイでレベルをクリアする。
+L:The Fellowship of Four	四人の旅の仲間
+L:Win a level in co-op with four players.	4人の協力プレイでレベルをクリアする。
+L:Many Hands	多くの手
+L:Win 5 different levels in co-op with three or four players.	3人か4人の協力プレイで5つの異なるレベルをクリアする。
+L:Storming Orthanc	オルサンク強襲
+L:Win the secret mission at Orthanc in co-op with four players.	4人の協力プレイでオルサンクの秘密ミッションをクリアする。
+P:Players:	プレイヤー数：
+P:P3 Bot:	P3ボット：
+P:P4 Bot:	P4ボット：
+P:Auto	自動
+P:P3 Device:	P3入力機器：
+P:P4 Device:	P4入力機器：
+P:P3 Controls	P3操作設定
+P:P4 Controls	P4操作設定
+P:Reset P3 Controls	P3操作をリセット
+P:Reset P4 Controls	P4操作をリセット
+P:P2, P3, P4 Teleport:	P2・P3・P4テレポート：
+P:P2, P3, P4 Teleport: ON	P2・P3・P4テレポート：オン
+P:P2, P3, P4 Teleport: OFF	P2・P3・P4テレポート：オフ
+P:Replace Companions:	仲間を置き換える：
+P:Show Upgrades Player {1}	プレイヤー{1}の強化
+P:Team Deathmatch	チームデスマッチ
+P:Free-for-all	バトルロイヤル
+P:Player 3:	プレイヤー3：
+P:Player 4:	プレイヤー4：
+P:Player 3 Plays:	プレイヤー3参加：
+P:Player 4 Plays:	プレイヤー4参加：
+P:Team 1 - P1:	チーム1 - P1：
+P:Team 2 - P2:	チーム2 - P2：
+P:Team 1 - P3:	チーム1 - P3：
+P:Team 2 - P4:	チーム2 - P4：
+P:Yes	はい
+P:No	いいえ
+P:No (three players)	いいえ（3人）
+P:Player 3: choose your hero	プレイヤー3：ヒーローを選択
+P:Player 4: choose your hero	プレイヤー4：ヒーローを選択
+P:Player 2: {1} is taken	プレイヤー2：{1}は選択済み
+P:Player 3: {1} is taken	プレイヤー3：{1}は選択済み
+P:Player 4: {1} is taken	プレイヤー4：{1}は選択済み
+P:Player 3: {1} not available	プレイヤー3：{1}は使用不可
+P:Player 4: {1} not available	プレイヤー4：{1}は使用不可
+P:PLAYER {1} WINS THE MATCH  ({2})	プレイヤー{1}が試合に勝利  ({2})
+P:TEAM {1} WINS ROUND {2}	ラウンド{2}：チーム{1}の勝利
+P:TEAM {1} WINS THE MATCH  {2} - {3}	チーム{1}が試合に勝利  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	チーム{1}の勝利  {2} - {3}
+P:PLAYER {1} WINS  {2}	プレイヤー{1}の勝利  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	ラウンド{1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	ラウンド{1}   チーム{2} {3} - {4} チーム{5}
+P:FREE-FOR-ALL RESULTS	バトルロイヤル結果
+P:TEAM DEATHMATCH RESULTS	チームデスマッチ結果
+P:KILLS	キル
+P:DEATHS	デス
+P:KILLS PER DEATH	キル/デス
+P:TEAM	チーム
+P:TEAM ROUNDS WON	チーム勝利ラウンド
+P:MOST KILLS: PLAYER {1} ({2})	最多キル：プレイヤー{1}（{2}）
+L:DOWN	ダウン
+L:TROLL BATTLE	トロルバトル
+L:FREE-FOR-ALL	バトルロイヤル
+L:TEAM DEATHMATCH	チームデスマッチ
+L:DEATHMATCH	デスマッチ
+L:ROUND {1}  (FIRST TO {2})	ラウンド{1}  （先に{2}勝）
+L:The leader needs {1} more round to win	首位はあと{1}ラウンドで勝利
+L:The leader needs {1} more rounds to win	首位はあと{1}ラウンドで勝利
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	チーム1 {1} - {2} チーム2   （残り{3} / {4}）
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	プレイヤー1 {1} - {2} プレイヤー2   （残り{3} / {4}）
+L:PLAYER	プレイヤー
+L:HERO	ヒーロー
+L:TEAM	チーム
+L:ROUNDS	ラウンド
+L:KILLS	キル
+L:DEATHS	デス
+L:down	ダウン
+L:FPS counter	FPS表示
+L:Frames a second, in the top-left corner	1秒あたりのフレーム数を左上に表示
+L:Last One Standing - Player 1	最後に立つ者 - プレイヤー1
+L:Win a Free-for-all match as player 1.	プレイヤー1としてバトルロイヤルの試合に勝利する。
+L:Brothers in Arms - Player 1	戦友 - プレイヤー1
+L:Win a Team Deathmatch match as player 1.	プレイヤー1としてチームデスマッチの試合に勝利する。
+L:Last One Standing - Player 2	最後に立つ者 - プレイヤー2
+L:Win a Free-for-all match as player 2.	プレイヤー2としてバトルロイヤルの試合に勝利する。
+L:Brothers in Arms - Player 2	戦友 - プレイヤー2
+L:Win a Team Deathmatch match as player 2.	プレイヤー2としてチームデスマッチの試合に勝利する。
+L:Last One Standing - Player 3	最後に立つ者 - プレイヤー3
+L:Win a Free-for-all match as player 3.	プレイヤー3としてバトルロイヤルの試合に勝利する。
+L:Brothers in Arms - Player 3	戦友 - プレイヤー3
+L:Win a Team Deathmatch match as player 3.	プレイヤー3としてチームデスマッチの試合に勝利する。
+L:Last One Standing - Player 4	最後に立つ者 - プレイヤー4
+L:Win a Free-for-all match as player 4.	プレイヤー4としてバトルロイヤルの試合に勝利する。
+L:Brothers in Arms - Player 4	戦友 - プレイヤー4
+L:Win a Team Deathmatch match as player 4.	プレイヤー4としてチームデスマッチの試合に勝利する。
+L:The Orange Banner	オレンジの旗
+L:Win a Team Deathmatch match as the orange team.	オレンジチームとしてチームデスマッチの試合に勝利する。
+L:The Red Banner	赤の旗
+L:Win a Team Deathmatch match as the red team.	赤チームとしてチームデスマッチの試合に勝利する。

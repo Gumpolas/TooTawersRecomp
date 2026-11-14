@@ -2042,3 +2042,110 @@ L:Choose a setting to change it, then Play.	בחרו הגדרה כדי לשנו�
 L:Voices:	קולות:
 L:Films:	סרטונים:
 L:(as the text)	(כמו הטקסט)
+L:Last One Standing	האחרון שעומד
+L:Win a Free-for-all match.	נצח במשחק כל אחד לעצמו.
+L:King of the Arena	מלך הזירה
+L:Win 5 Free-for-all matches.	נצח ב-5 משחקי כל אחד לעצמו.
+L:Brothers in Arms	אחים לנשק
+L:Win a Team Deathmatch match.	נצח בקרב קבוצות עד המוות.
+L:Shield Brothers	אחי המגן
+L:Win 5 Team Deathmatch matches.	נצח ב-5 קרבות קבוצות עד המוות.
+L:Four Trolls Enter	ארבעה טרולים נכנסים
+L:Win a Troll Battle with four trolls.	נצח בקרב טרולים עם ארבעה טרולים.
+L:A Company of Three	חבורה של שלושה
+L:Win a level in co-op with three players.	נצח בשלב במשחק שיתופי עם שלושה שחקנים.
+L:The Fellowship of Four	אחוות הארבעה
+L:Win a level in co-op with four players.	נצח בשלב במשחק שיתופי עם ארבעה שחקנים.
+L:Many Hands	ידיים רבות
+L:Win 5 different levels in co-op with three or four players.	נצח ב-5 שלבים שונים במשחק שיתופי עם שלושה או ארבעה שחקנים.
+L:Storming Orthanc	הסתערות על אורתנק
+L:Win the secret mission at Orthanc in co-op with four players.	נצח במשימה הסודית באורתנק במשחק שיתופי עם ארבעה שחקנים.
+P:Players:	שחקנים:
+P:P3 Bot:	בוט P3:
+P:P4 Bot:	בוט P4:
+P:Auto	אוטומטי
+P:P3 Device:	התקן P3:
+P:P4 Device:	התקן P4:
+P:P3 Controls	שליטה P3
+P:P4 Controls	שליטה P4
+P:Reset P3 Controls	איפוס שליטה P3
+P:Reset P4 Controls	איפוס שליטה P4
+P:P2, P3, P4 Teleport:	שיגור P2, P3, P4:
+P:P2, P3, P4 Teleport: ON	שיגור P2, P3, P4: פעיל
+P:P2, P3, P4 Teleport: OFF	שיגור P2, P3, P4: כבוי
+P:Replace Companions:	החלפת מלווים:
+P:Show Upgrades Player {1}	שדרוגי שחקן {1}
+P:Team Deathmatch	קרב קבוצות עד המוות
+P:Free-for-all	כל אחד לעצמו
+P:Player 3:	שחקן 3:
+P:Player 4:	שחקן 4:
+P:Player 3 Plays:	שחקן 3 משחק:
+P:Player 4 Plays:	שחקן 4 משחק:
+P:Team 1 - P1:	קבוצה 1 - P1:
+P:Team 2 - P2:	קבוצה 2 - P2:
+P:Team 1 - P3:	קבוצה 1 - P3:
+P:Team 2 - P4:	קבוצה 2 - P4:
+P:Yes	כן
+P:No	לא
+P:No (three players)	לא (שלושה שחקנים)
+P:Player 3: choose your hero	שחקן 3: בחר גיבור
+P:Player 4: choose your hero	שחקן 4: בחר גיבור
+P:Player 2: {1} is taken	שחקן 2: {1} תפוס
+P:Player 3: {1} is taken	שחקן 3: {1} תפוס
+P:Player 4: {1} is taken	שחקן 4: {1} תפוס
+P:Player 3: {1} not available	שחקן 3: {1} לא זמין
+P:Player 4: {1} not available	שחקן 4: {1} לא זמין
+P:PLAYER {1} WINS THE MATCH  ({2})	שחקן {1} ניצח במשחק  ({2})
+P:TEAM {1} WINS ROUND {2}	קבוצה {1} ניצחה בסיבוב {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	קבוצה {1} ניצחה במשחק  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	קבוצה {1} ניצחה  {2} - {3}
+P:PLAYER {1} WINS  {2}	שחקן {1} ניצח  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	סיבוב {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	סיבוב {1}   קבוצה {2} {3} - {4} קבוצה {5}
+P:FREE-FOR-ALL RESULTS	תוצאות כל אחד לעצמו
+P:TEAM DEATHMATCH RESULTS	תוצאות קרב הקבוצות
+P:KILLS	הריגות
+P:DEATHS	מוות
+P:KILLS PER DEATH	הריגות לכל מוות
+P:TEAM	קבוצה
+P:TEAM ROUNDS WON	סיבובי הקבוצה
+P:MOST KILLS: PLAYER {1} ({2})	הכי הרבה הריגות: שחקן {1} ({2})
+L:DOWN	נפלת
+L:TROLL BATTLE	קרב טרולים
+L:FREE-FOR-ALL	כל אחד לעצמו
+L:TEAM DEATHMATCH	קרב קבוצות עד המוות
+L:DEATHMATCH	קרב עד המוות
+L:ROUND {1}  (FIRST TO {2})	סיבוב {1}  (הראשון ל-{2})
+L:The leader needs {1} more round to win	למוביל חסר עוד סיבוב {1} לניצחון
+L:The leader needs {1} more rounds to win	למוביל חסרים עוד {1} סיבובים לניצחון
+L:TEAM 1 {1} - {2} TEAM 2   ({3} / {4} more to win)	קבוצה 1 {1} - {2} קבוצה 2   (נותרו {3} / {4})
+L:PLAYER 1 {1} - {2} PLAYER 2   ({3} / {4} more to win)	שחקן 1 {1} - {2} שחקן 2   (נותרו {3} / {4})
+L:PLAYER	שחקן
+L:HERO	גיבור
+L:TEAM	קבוצה
+L:ROUNDS	סיבובים
+L:KILLS	הריגות
+L:DEATHS	מוות
+L:down	נפל
+L:FPS counter	מונה FPS
+L:Frames a second, in the top-left corner	פריימים לשנייה, בפינה השמאלית העליונה
+L:Last One Standing - Player 1	האחרון שעומד - שחקן 1
+L:Win a Free-for-all match as player 1.	נצח במשחק כל אחד לעצמו בתור שחקן 1.
+L:Brothers in Arms - Player 1	אחים לנשק - שחקן 1
+L:Win a Team Deathmatch match as player 1.	נצח בקרב קבוצות עד המוות בתור שחקן 1.
+L:Last One Standing - Player 2	האחרון שעומד - שחקן 2
+L:Win a Free-for-all match as player 2.	נצח במשחק כל אחד לעצמו בתור שחקן 2.
+L:Brothers in Arms - Player 2	אחים לנשק - שחקן 2
+L:Win a Team Deathmatch match as player 2.	נצח בקרב קבוצות עד המוות בתור שחקן 2.
+L:Last One Standing - Player 3	האחרון שעומד - שחקן 3
+L:Win a Free-for-all match as player 3.	נצח במשחק כל אחד לעצמו בתור שחקן 3.
+L:Brothers in Arms - Player 3	אחים לנשק - שחקן 3
+L:Win a Team Deathmatch match as player 3.	נצח בקרב קבוצות עד המוות בתור שחקן 3.
+L:Last One Standing - Player 4	האחרון שעומד - שחקן 4
+L:Win a Free-for-all match as player 4.	נצח במשחק כל אחד לעצמו בתור שחקן 4.
+L:Brothers in Arms - Player 4	אחים לנשק - שחקן 4
+L:Win a Team Deathmatch match as player 4.	נצח בקרב קבוצות עד המוות בתור שחקן 4.
+L:The Orange Banner	הדגל הכתום
+L:Win a Team Deathmatch match as the orange team.	נצח בקרב קבוצות עד המוות עם הקבוצה הכתומה.
+L:The Red Banner	הדגל האדום
+L:Win a Team Deathmatch match as the red team.	נצח בקרב קבוצות עד המוות עם הקבוצה האדומה.

@@ -1583,3 +1583,53 @@ P:TROLL BATTLE RECORDS	TROLLKAMPF-REKORDE
 P:TROLL BATTLE RESULTS	TROLLKAMPF-ERGEBNIS
 P:P{1}	S{1}
 P:Launcher	Starter
+P:Players:	Spieler:
+P:P3 Bot:	S3-Bot:
+P:P4 Bot:	S4-Bot:
+P:Auto	Auto
+P:P3 Device:	S3-Gerät:
+P:P4 Device:	S4-Gerät:
+P:P3 Controls	Steuerung S3
+P:P4 Controls	Steuerung S4
+P:Reset P3 Controls	S3-Steuerung zurücksetzen
+P:Reset P4 Controls	S4-Steuerung zurücksetzen
+P:P2, P3, P4 Teleport:	S2, S3, S4 teleportieren:
+P:P2, P3, P4 Teleport: ON	S2, S3, S4 teleportieren: AN
+P:P2, P3, P4 Teleport: OFF	S2, S3, S4 teleportieren: AUS
+P:Replace Companions:	Gefährten ersetzen:
+P:Show Upgrades Player {1}	Aufwertungen von Spieler {1}
+P:Team Deathmatch	Team-Deathmatch
+P:Free-for-all	Jeder gegen jeden
+P:Player 3:	Spieler 3:
+P:Player 4:	Spieler 4:
+P:Player 3 Plays:	Spieler 3 spielt:
+P:Player 4 Plays:	Spieler 4 spielt:
+P:Team 1 - P1:	Team 1 - S1:
+P:Team 2 - P2:	Team 2 - S2:
+P:Team 1 - P3:	Team 1 - S3:
+P:Team 2 - P4:	Team 2 - S4:
+P:Yes	Ja
+P:No	Nein
+P:No (three players)	Nein (drei Spieler)
+P:Player 3: choose your hero	Spieler 3: Wähle deinen Helden
+P:Player 4: choose your hero	Spieler 4: Wähle deinen Helden
+P:Player 2: {1} is taken	Spieler 2: {1} ist vergeben
+P:Player 3: {1} is taken	Spieler 3: {1} ist vergeben
+P:Player 4: {1} is taken	Spieler 4: {1} ist vergeben
+P:Player 3: {1} not available	Spieler 3: {1} nicht verfügbar
+P:Player 4: {1} not available	Spieler 4: {1} nicht verfügbar
+P:PLAYER {1} WINS THE MATCH  ({2})	SPIELER {1} GEWINNT DAS MATCH  ({2})
+P:TEAM {1} WINS ROUND {2}	TEAM {1} GEWINNT RUNDE {2}
+P:TEAM {1} WINS THE MATCH  {2} - {3}	TEAM {1} GEWINNT DAS MATCH  {2} - {3}
+P:TEAM {1} WINS  {2} - {3}	TEAM {1} GEWINNT  {2} - {3}
+P:PLAYER {1} WINS  {2}	SPIELER {1} GEWINNT  {2}
+P:ROUND {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}	RUNDE {1}   P{2} {3}  P{4} {5}  P{6} {7}  P{8} {9}
+P:ROUND {1}   TEAM {2} {3} - {4} TEAM {5}	RUNDE {1}   TEAM {2} {3} - {4} TEAM {5}
+P:FREE-FOR-ALL RESULTS	JEDER-GEGEN-JEDEN-ERGEBNIS
+P:TEAM DEATHMATCH RESULTS	TEAM-DEATHMATCH-ERGEBNIS
+P:KILLS	KILLS
+P:DEATHS	TODE
+P:KILLS PER DEATH	KILLS PRO TOD
+P:TEAM	TEAM
+P:TEAM ROUNDS WON	TEAM-RUNDENSIEGE
+P:MOST KILLS: PLAYER {1} ({2})	MEISTE KILLS: SPIELER {1} ({2})

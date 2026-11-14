@@ -95,13 +95,18 @@ static uint32_t s_unav_saved; static int s_unav_on;
  * do nothing. Once the game is finished (a hero has completed level 11, Hornburg Courtyard, or 13, the secret mission) the
  * levels are open again. Only 13 counted before, so a finished game kept them locked (a playtest). TT_COOP_NOLEVELLOCK: off */
 extern volatile int tt_coop_menu_on;
-static int coop_game_cleared(void) { int h; if (getenv("TT_COOP_TESTCLEARED")) return 1;   /* (test: as cleared) */
+static int coop_game_cleared(void) { int h; if (getenv("TT_COOP_TESTCLEARED")) return 1; if (getenv("TT_COOP_TESTNOTCLEARED")) return 0;   /* (test: as cleared, or not) */
     for (h = 1; h <= 4; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + 11u) == 1 || G8(0x4AB68Fu + (uint32_t)h * 15u + 13u) == 1) return 1; return 0; }
 int tt_coop_level_locked(int lv)
 {
     int h;
     if (!tt_coop_menu_on || lv < 0 || lv > 13 || getenv("TT_COOP_NOLEVELLOCK") || coop_game_cleared()) return 0;
-    for (h = 1; h <= 4; h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + (uint32_t)lv) == 1) return 1;
+    {   extern int tt_heroes_h4_guest_rec(void); int h4 = !tt_heroes_h4_guest_rec() || getenv("TT_COOP_LOCKH4OLD");   /* (2.0.1) hero 4's row only while it is Isildur's: an extra hero's records
+                                                                                     * are swapped in there while he is in front on the select -- Boromir's own
+                                                                                     * finish of the Gates of Moria made it "Already Beaten" and his pick did nothing
+                                                                                     * (a playtest) */
+        if (getenv("TT_COOP_TESTZEROLV") && h4) { static int z; if (!z) { int q; z = 1; for (q = 1; q <= 4; q++) G8(0x4AB68Fu + (uint32_t)q * 15u + (uint32_t)atoi(getenv("TT_COOP_TESTZEROLV"))) = 0; } }   /* (test: that level nobody's yet) */
+        for (h = 1; h <= (h4 ? 4 : 3); h++) if (G8(0x4AB68Fu + (uint32_t)h * 15u + (uint32_t)lv) == 1) return 1; }   /* (test: hero 4's row alone) */
     return 0;
 }
 static uint32_t s_beaten_txt, s_beaten_saved34; static int s_beaten_on, s_beaten_hid[3];
@@ -119,6 +124,9 @@ static int replay_slot(uint32_t el) { return el == SHOP_REPLAY_LEAF ? 0 : el == 
 #define DIFF_NORMAL 0x00432C50u
 #define DIFF_EXPERT 0x00432D2Cu
 static uint32_t s_imp_el, s_imp_txt;
+static volatile int s_diff_swoosh = -1;
+static int diff_here(void);
+int tt_diff_swoosh_x(int k, int def) { static const int cxs[3] = { 85, 228, 375 }; return diff_here() && k >= 0 && k < 3 && !getenv("TT_NODIFFSWOOSH") ? cxs[k] : def; }   /* (2.1) the game's own swoosh for Easy, Normal, Expert at the words diff_layout moved, as the mouse's */   /* (2.1) the swoosh to difficulty k (0 Easy .. 3 Impossible) at the next draw: the mouse's choices and Impossible have it too */
 static int diff_here(void) { return G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 3 && G32(MM_OBJ + 4) != 6 && !tt_coop_menu_on && !tt_vs_menu_on && !getenv("TT_NOIMPWORD"); }
 static void diff_layout(uint32_t el)
 {
@@ -144,6 +152,8 @@ static void diff_imp_draw(void)
     G32(s_imp_el + 8) = 460; G32(s_imp_el + 0x10) = 170;
     G32(s_imp_el + 0x20) = tt_coop_setting(6) == 1 && G32(MM_OBJ + 0x18) == 2 ? 0xFF9FD2F0u : 0xFF28364Eu;
     G8(s_imp_el + 0x24) = 1;
+    if (s_diff_swoosh >= 0) { int k = s_diff_swoosh; s_diff_swoosh = -1;   /* (the game's own, at its row's height 0x18A, across from the word's middle: 85, 228, 375; ours 545) */
+        if (k <= 3 && !getenv("TT_NODIFFSWOOSH")) { static const int cxs[4] = { 85, 228, 375, 545 }; uint32_t a[3] = { 0x1A, (uint32_t)cxs[k], 0x18Au }; tt_gcall(0x000CB590u, 0x4A02F8u, 3, a); } }
     tt_gcall(0x000C8940u, s_imp_el, 0, NULL);
 }
 /* (1.9.7) and on Options > General Options' Difficulty row (the game's own page: the words at y 333, a ring pair over
@@ -497,6 +507,43 @@ void tt_mm_guard(void)
 }
 static uint32_t s_keep3;
 void tt_mm_colors_pre(uint32_t scr) { s_keep = G32(MM_TABLE + 12 * EL_SIZE + 0x20); s_keep2 = G32(MM_TABLE + 13 * EL_SIZE + 0x20); s_keep3 = G32(MM_TABLE + 14 * EL_SIZE + 0x20); (void)scr; }
+/* (2.1) Online: to the right of the main menu's items (right from any of them, left or B back), its own menu (options.c's
+ * page over the Options screen, as Co-op's: net.c's lobby) -- hosting or joining a game played over the network, apart from
+ * the local Co-op and Versus. Back from an online game the game opens it again by itself (net.c, TT_NET_LOBBY) */
+static volatile int s_on_sel, s_on_pass, s_on_auto = -1, s_on_drawn, s_on_swoosh;   /* (s_on_swoosh: the menu's swoosh to Online, at its next draw) */
+static uint32_t s_on_el, s_on_txt;
+extern volatile int tt_net_screen_req;
+/* (2.0.1) online play held back for 2.0.2: no Online on the main menu unless TT_ONLINE (or an online game's own restart) */
+static int online_on(void) { static int v = -1; if (v < 0) v = getenv("TT_ONLINE") || getenv("TT_NET_LOBBY") || getenv("TT_NET"); return v; }
+static void online_draw(uint32_t scr)
+{
+    if (!online_on()) return;
+    extern int tt_tr16(const char *en, uint16_t *out, int max);
+    uint16_t txt[24]; uint32_t i, n;
+    if (s_on_auto < 0) { extern int tt_net_lobby_page_wanted(void); s_on_auto = tt_net_lobby_page_wanted() ? 1 : 0; }
+    s_on_drawn = 1;
+    if (!s_on_el) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); s_on_el = xbox_ContiguousAlloc(0x200, 16u); s_on_txt = s_on_el ? s_on_el + 0x100 : 0; if (!s_on_el) return; }
+    n = (uint32_t)tt_tr16("Online", txt, 24);
+    for (i = 0; i < EL_SIZE; i += 4) G32(s_on_el + i) = G32(COOP_EL + i);
+    G32(s_on_el + 0x08) = G32(COOP_EL + 0x08) + (getenv("TT_ONLINE_DX") ? (uint32_t)atoi(getenv("TT_ONLINE_DX")) : 150u);
+    if (!getenv("TT_ONLINE_WIDEBOX")) { int w0 = (int)G32(s_on_el + 0x10), x0 = (int)G32(s_on_el + 0x08);   /* (2.1) its box just the word's (160), its middle kept: as wide as the
+        * row (440) the wide-screen HUD placed it as the middle's while the pointer test took it for the right side's -- the word drawn one place, the
+        * pointer read another; to its left the game's own Credits took the click, a playtest */
+        if (w0 > 160) { G32(s_on_el + 0x08) = (uint32_t)(x0 + (w0 - 160) / 2); G32(s_on_el + 0x10) = 160u; } }
+    G32(s_on_el + 0x0C) = G32(MM_CREDITS + 0x0C) + mm_step() * 3 / 2;   /* (beside Co-op and Versus) */
+    for (i = 0; i < n; i++) G16(s_on_txt + 2 * i) = txt[i];
+    G16(s_on_txt + 2 * i) = 0;
+    G32(s_on_el + 0x34) = s_on_txt;
+    G32(s_on_el + 0x20) = s_on_sel && mm_here(scr) ? COL_ON : COL_OFF;
+    if (getenv("TT_ONLINE_LOG")) { static int n; if (n++ < 3) tt_dbg("[MENU] Online at %d,%d; Co-op at %d,%d; credits at %d,%d; step %d\n", (int)G32(s_on_el + 8), (int)G32(s_on_el + 0xC), (int)G32(COOP_EL + 8), (int)G32(COOP_EL + 0xC), (int)G32(MM_CREDITS + 8), (int)G32(MM_CREDITS + 0xC), mm_step()); }
+    G8(s_on_el + 0x24) = 1;
+    if (s_on_swoosh) { s_on_swoosh = 0;   /* (2.1) the swoosh the game's items have, to Online's word: as the game's, at its height (the items' swoosh is
+                                            * 0x104 + 28 a row; Credits', row 3, by its element's y), across from the middle of the word */
+        if (s_on_sel && mm_here(scr) && !getenv("TT_ONLINE_NOSWOOSH")) { uint32_t a[3]; int cx = (int)G32(s_on_el + 8) + (int)G32(s_on_el + 0x10) / 2;
+            a[0] = 0x1A; a[1] = (uint32_t)cx; a[2] = (uint32_t)((int)G32(s_on_el + 0xC) + (3 * 0x1C + 0x104) - (int)G32(MM_CREDITS + 0x0C));
+            tt_gcall(0x000CB590u, MM_SWOOSH, 3, a); } }
+    tt_gcall(0x000C8940u, s_on_el, 0, NULL);
+}
 void tt_mm_colors_post(uint32_t scr)
 {
     if (G32(scr + 0x14) >= 4) { G32(MM_TABLE + 12 * EL_SIZE + 0x20) = s_keep; G32(MM_TABLE + 13 * EL_SIZE + 0x20) = s_keep2; G32(MM_TABLE + 14 * EL_SIZE + 0x20) = s_keep3; }   /* (its write for a choice of 4 or 5 lands past its table) */
@@ -504,6 +551,7 @@ void tt_mm_colors_post(uint32_t scr)
     mm_net(scr);
     if (!mm_here(scr)) return;
     if (G32(scr + 0x14) >= 4) G32(MM_CREDITS + 0x20) = COL_OFF;
+    if (s_on_sel && G32(scr + 0x14) <= 3) G32(MM_TABLE + (8 + G32(scr + 0x14)) * EL_SIZE + 0x20) = COL_OFF;   /* (2.1: Online lit instead) */
     if (s_exit_go) {
         extern void xbox_FramebufferRequestClose(void);
         s_exit_go = 0;
@@ -558,16 +606,17 @@ void tt_mm_draw(uint32_t scr)
     help_move();
     launcher_prompt();
     exit_el_setup();
-    G32(COOP_EL + 0x20) = G32(scr + 0x14) == ITEM_COOP || (s_coop_opening && !tt_vs_menu_on) ? COL_ON : COL_OFF;
+    online_draw(scr);
+    G32(COOP_EL + 0x20) = (G32(scr + 0x14) == ITEM_COOP && !s_on_sel) || (s_coop_opening && !tt_vs_menu_on) ? COL_ON : COL_OFF;
     G8(COOP_EL + 0x24) = 1;
     tt_gcall(0x000C8940u, COOP_EL, 0, NULL);
     if (s_vs_el) {
-        G32(s_vs_el + 0x20) = G32(scr + 0x14) == ITEM_VS || (s_coop_opening && tt_vs_menu_on) ? COL_ON : COL_OFF;
+        G32(s_vs_el + 0x20) = (G32(scr + 0x14) == ITEM_VS && !s_on_sel) || (s_coop_opening && tt_vs_menu_on) ? COL_ON : COL_OFF;
         G8(s_vs_el + 0x24) = 1;
         tt_gcall(0x000C8940u, s_vs_el, 0, NULL);
     }
     if (!exit_on()) return;
-    G32(EXIT_EL + 0x20) = G32(scr + 0x14) == ITEM_EXIT ? COL_ON : COL_OFF;
+    G32(EXIT_EL + 0x20) = G32(scr + 0x14) == ITEM_EXIT && !s_on_sel ? COL_ON : COL_OFF;
     G8(EXIT_EL + 0x24) = 1;
     tt_gcall(0x000C8940u, EXIT_EL, 0, NULL);
 }
@@ -640,6 +689,9 @@ static int32_t s_seen_clicks[2];
 #define PAD_LEFT   0x0004
 #define PAD_RIGHT  0x0008
 #define PAD_START  0x0010
+#ifndef PAD_BACK
+#define PAD_BACK   0x0020
+#endif
 #define INJ_A      0x10000
 #define INJ_B      0x20000
 
@@ -664,6 +716,10 @@ static int hit(const Item *t, float x, float y)
 {
     (void)x;
     x = pointer_x_for(t->x + t->w * 0.5f, t->y + t->h * 0.5f);
+    if (t->w > 300 && G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 0 && !getenv("TT_MM_WIDEHIT")) {   /* (2.1) the main menu's items: their words only (the middle, 95 either side),
+        * not the whole row -- the row ran under Online, and a click left of its word chose Credits, a playtest */
+        float cx = t->x + t->w * 0.5f;
+        return x >= cx - 95.0f && x < cx + 95.0f && y >= t->y && y < t->y + t->h; }
     return x >= t->x && x < t->x + t->w && y >= t->y && y < t->y + t->h;
 }
 static int is_help(const Item *t) { return (t->x == 325 || t->x == 525) && t->y == 430 && t->w == 100 && t->h == 25; }   /* (525: moved to the bottom right on the main menu) */
@@ -676,6 +732,7 @@ static void snapshot(void)
     for (i = 0; i < s_nel[p]; i++) {
         uint32_t e = s_el[p][i];
         Item *t = NULL;
+        if (s_on_el && e == s_on_el) continue;   /* (2.1: Online, beside the list -- the pointer's own test, not one of its items: its box over Co-op's and Versus') */
         for (k = 0; k < s_nit; k++) if (s_it[k].a == e) { t = &s_it[k]; break; }
         if (!t) { if (s_nit >= MAXEL) break; t = &s_it[s_nit++]; }
         t->a = e; t->ret = s_ret[p][i];
@@ -1051,17 +1108,23 @@ extern const char *tt_select_place_skin(int p); extern const char *tt_select_pla
 extern int tt_select_guests_open(void); extern int tt_select_unavail;
 static int s_p2t;                 /* 0 player 1 choosing, 1 his pick undone, 2 player 2 choosing, 3 his pick undone, 4 turning back, 5 player 1's pick again, 6 done */
 static int s_p1place = -1, s_p2place = -1, s_p2last = -1, s_p2steps;
+/* (2.1) players 3 and 4 pick after player 2, the same way (s_pk: whose turn, 2 to 4); their picks for twotowers_manual.c */
+static int s_pk = 2, s_pxplace[2] = { -1, -1 };
+char tt_coop_px_selected[2][32];
+extern int tt_coop_nplayers(void);
 static DWORD s_p2wait;
 static char s_p2msg[80], s_p1msg[80];
 static char s_p1tmpl[48], s_p2tmpl[48], s_p1name[40], s_p2name[40];   /* (1.9.9) a line with a hero's name: its template and the name, for the translation */   /* the two status lines: player 1's, player 2's under it */
 int tt_coop_p2_turn(void) { return s_p2t == 2; }
 static uint32_t sel_obj(void) { uint32_t o = tt_select_obj; return o >= 0x10000u && GetTickCount() - tt_select_obj_t < 300 ? o : 0; }
 static int sel_place(uint32_t o) { int p = tt_select_place(); return tt_select_places() > 0 && p >= 0 ? p : (int)G32(o + 0x18); }
+extern int tt_heroes_q14_level(void);
+static int tt_coop_select_level(void) { int l = tt_heroes_q14_level(); return l >= 0 && l < 15 ? l : (int)G32(0x1BB2A4u); }   /* (the level the select is for: the last the game asked "may this hero play" about) */
 static void p2_turn_tick(void)
 {
     uint32_t o = sel_obj(); int mode, p;
     if (!tt_coop_menu_on || !o || !charsel_here() || getenv("TT_NOP2SELECT")) { if (s_p2t && s_p2t != 6) tt_dbg("[P2SELECT] left the select (step %d)\n", s_p2t); s_p2t = 0; s_p2msg[0] = 0; s_p1msg[0] = 0; tt_select_unavail = -1; return; }
-    tt_select_unavail = s_p2t >= 1 && s_p2t <= 3 ? s_p1place : -1;   /* player 1's hero: "Unavailable" while player 2 chooses */
+    tt_select_unavail = s_p2t >= 1 && s_p2t <= 3 && getenv("TT_COOP_UNIQUEHEROES") ? s_p1place : -1;   /* player 1's hero: "Unavailable" while player 2 chooses */
     if (s_phase) return;   /* a press of ours still going */
     mode = (int)G32(o + 0x20); p = sel_place(o);
     switch (s_p2t) {
@@ -1069,7 +1132,7 @@ static void p2_turn_tick(void)
         snprintf(s_p1msg, sizeof s_p1msg, "Player 1: choose your hero"); s_p1tmpl[0] = 0;
         snprintf(s_p2msg, sizeof s_p2msg, "Player 2: waiting"); s_p2tmpl[0] = 0;
         if (mode == 3) {
-            s_p1place = p; tt_coop_p2_selected[0] = 0;
+            s_p1place = p; tt_coop_p2_selected[0] = 0; tt_coop_px_selected[0][0] = tt_coop_px_selected[1][0] = 0; s_pk = 2; s_pxplace[0] = s_pxplace[1] = -1; s_p2place = -1;
             snprintf(s_p1msg, sizeof s_p1msg, "Player 1: %s", tt_select_place_title(p)); snprintf(s_p1tmpl, sizeof s_p1tmpl, "Player 1: {1}"); snprintf(s_p1name, sizeof s_p1name, "%s", tt_select_place_title(p));
             tt_dbg("[P2SELECT] player 1 picked place %d (%s): player 2's turn\n", p, tt_select_place_title(p));
             press(INJ_B); s_p2t = 1; s_p2wait = GetTickCount();
@@ -1080,21 +1143,27 @@ static void p2_turn_tick(void)
         else if (GetTickCount() - s_p2wait > 1500) { press(INJ_B); s_p2wait = GetTickCount(); }   /* not taken: again */
         break;
     case 2:
-        if (!strcmp(s_p2msg, "Player 2: waiting") || (p != s_p2last && s_p2last >= 0)) { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: choose your hero"); s_p2tmpl[0] = 0; }   /* (a refusal's words go once the ring turns) */
+        if (!strcmp(s_p2msg, "Player 2: waiting") || (p != s_p2last && s_p2last >= 0)) { snprintf(s_p2msg, sizeof s_p2msg, "Player %d: choose your hero", s_pk); s_p2tmpl[0] = 0; }   /* (a refusal's words go once the ring turns) */
         s_p2last = p;
         if (mode == 3) {
             const char *sk = tt_select_place_skin(p);
-            if (!sk || p == s_p1place) {   /* not player 1's hero */
-                if (p == s_p1place) { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s is Player 1's", tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1} is Player 1's"); }
-                else { snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s not available", tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1} not available"); }
+            int lvq = tt_coop_select_level(), dup_ok = getenv("TT_COOP_SAMEHEROES") || ((lvq == 0 || lvq == 1) && !getenv("TT_COOP_UNIQUEHEROES"));   /* (2.0.1) one hero to a player
+                * -- the same one only on the prologue and Weathertop (their heroes are few: Isildur alone; Aragorn, Legolas and Gimli), a playtest */
+            int taken = !dup_ok && (p == s_p1place || (s_pk > 2 && p == s_p2place) || (s_pk > 3 && p == s_pxplace[0]));
+            { static int n; if (n++ < 20) tt_dbg("[P2SELECT] level %d (1BB2A4 %d, map %d): %s\n", lvq, (int)G32(0x1BB2A4u), (int)G32(0x4AD050u + 8u + 0x10u), dup_ok ? "a hero may be taken twice" : "one hero to a player"); }   /* (2.1: any hero for any player, the same one
+                * as another player's too -- a playtest: "every character can be selected for any player"; TT_COOP_UNIQUEHEROES: a hero is one player's) */
+            if (!sk || taken) {   /* not player 1's hero */
+                if (taken) { snprintf(s_p2msg, sizeof s_p2msg, "Player %d: %s is taken", s_pk, tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player %d: {1} is taken", s_pk); snprintf(s_p2name, sizeof s_p2name, "%s", tt_select_place_title(p)); }
+                else { snprintf(s_p2msg, sizeof s_p2msg, "Player %d: %s not available", s_pk, tt_select_place_title(p)); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player %d: {1} not available", s_pk); snprintf(s_p2name, sizeof s_p2name, "%s", tt_select_place_title(p)); }   /* (2.0.1: in the chosen language, as a template and the hero's name) */
                 snprintf(s_p2name, sizeof s_p2name, "%s", tt_select_place_title(p));
                 tt_dbg("[P2SELECT] player 2 picked place %d (%s): not his to have, again\n", p, tt_select_place_title(p));
                 press(INJ_B); s_p2t = 1; s_p2wait = GetTickCount();
                 break;
             }
-            snprintf(tt_coop_p2_selected, 32, "%s", sk);
-            s_p2place = p;
-            tt_dbg("[P2SELECT] player 2 picked place %d (%s): \"%s\"; back to player 1's\n", p, tt_select_place_title(p), tt_coop_p2_selected);
+            if (s_pk == 2) { snprintf(tt_coop_p2_selected, 32, "%s", sk); s_p2place = p; }
+            else { snprintf(tt_coop_px_selected[s_pk - 3], 32, "%s", sk); s_pxplace[s_pk - 3] = p; }
+            tt_dbg("[P2SELECT] player %d picked place %d (%s): \"%s\"\n", s_pk, p, tt_select_place_title(p), sk);
+            if (s_pk < tt_coop_nplayers()) { s_pk++; snprintf(s_p2msg, sizeof s_p2msg, "Player %d: choose your hero", s_pk); s_p2tmpl[0] = 0; press(INJ_B); s_p2t = 1; s_p2wait = GetTickCount(); break; }   /* (2.1) the next player's turn */
             press(INJ_B); s_p2t = 3; s_p2wait = GetTickCount();
         }
         break;
@@ -1109,6 +1178,8 @@ static void p2_turn_tick(void)
         if (mode == 3) {
             const char *t2 = s_p2place >= 0 ? tt_select_place_title(s_p2place) : "Frodo";
             snprintf(s_p2msg, sizeof s_p2msg, "Player 2: %s", t2); snprintf(s_p2tmpl, sizeof s_p2tmpl, "Player 2: {1}"); snprintf(s_p2name, sizeof s_p2name, "%s", t2);
+            if (tt_coop_nplayers() > 2) { char t3[24], t4[24]; snprintf(t3, sizeof t3, "%s", s_pxplace[0] >= 0 ? tt_select_place_title(s_pxplace[0]) : "-"); snprintf(t4, sizeof t4, "%s", s_pxplace[1] >= 0 ? tt_select_place_title(s_pxplace[1]) : "");
+                if (tt_coop_nplayers() > 3) snprintf(s_p2msg, sizeof s_p2msg, "P2 %s, P3 %s, P4 %s", t2, t3, t4); else snprintf(s_p2msg, sizeof s_p2msg, "P2 %s, P3 %s", t2, t3); s_p2tmpl[0] = 0; }
             tt_dbg("[P2SELECT] done: player 1 %s, player 2 %s (\"%s\")\n", tt_select_place_title(s_p1place), t2, tt_coop_p2_selected);
             s_p2t = 6;
         } else if (GetTickCount() - s_p2wait > 1500) { press(PAD_START); s_p2wait = GetTickCount(); }
@@ -1450,8 +1521,8 @@ static void imp_screen(XState *st)
     l = (st->Gamepad.wButtons & PAD_LEFT) || st->Gamepad.sThumbLX < -16000;
     r = (st->Gamepad.wButtons & PAD_RIGHT) || st->Gamepad.sThumbLX > 16000;
     if (GetTickCount() - seen > 250) {
-        if (r && !prev_r && !imp && G32(MM_OBJ + 0x18) == 2) { tt_coop_setting_set(6, 1); imp = 1; tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Impossible\n"); }
-        else if (l && !prev_l && imp) { tt_coop_setting_set(6, 0); imp = 0; hold_l = 1; tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Expert (Impossible off)\n");
+        if (r && !prev_r && !imp && G32(MM_OBJ + 0x18) == 2) { tt_coop_setting_set(6, 1); imp = 1; s_diff_swoosh = 3; tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Impossible\n"); }
+        else if (l && !prev_l && imp) { tt_coop_setting_set(6, 0); imp = 0; hold_l = 1; s_diff_swoosh = 2; tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Expert (Impossible off)\n");
             st->Gamepad.wButtons &= (uint16_t)~PAD_LEFT; st->Gamepad.sThumbLX = 0; }
     }
     if (hold_l) { if (l) { st->Gamepad.wButtons &= (uint16_t)~PAD_LEFT; if (st->Gamepad.sThumbLX < 0) st->Gamepad.sThumbLX = 0; } else hold_l = 0; }   /* (held on: still the Left that left Impossible) */
@@ -1468,9 +1539,23 @@ static int s_pad_merging;   /* (the co-op pages' merge reads the other ports: th
  * its first round (twotowers_manual.c, tt_vs_restart_req) and Start, pressed for the player, takes the pause away */
 volatile int tt_vs_restart_req;
 static int s_vs_unpause;   /* (polls of player 1's pad left with Start pressed for him: the pause list closed) */
+/* (2.1) the game paused (the pause list up), any mode */
+int tt_game_paused_now(void) { uint32_t pl = G32(0x4AD054u), fe = G32(0x4AD050u); return (fe == 6 || fe == 8) && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0; }
+/* (2.1) only player 1's controller (the port the game reads as his) drives the menus -- TT_COOP_MENUSALL: every pad, as before */
+static int menus_all(void)
+{
+    static int v = -1; extern int xbox_InputPlayerHasDevice(int port); extern volatile int xbox_input_two_players; uint32_t prim = G32(0x1CB8B4u);
+    if (v < 0) v = getenv("TT_COOP_P1MENUS") == NULL;   /* (2.0.1: every device drives the menus, as in 2.0.0 -- the player-1-only menus left a
+        * controller dead on the Co-op menu once the mouse was used there, a playtest; TT_COOP_P1MENUS: player 1's only) */
+    /* (2.0.1) player 1 with no device of his own (the controllers chosen for players 3 and 4, the keyboard for player 2: a playtest)
+     * -- every device drives the menus, as before, or none could: the Co-op menu's Load Game never left the Options screen */
+    return v || (xbox_input_two_players && !xbox_InputPlayerHasDevice(prim < 4u ? (int)prim : 0));
+}
+static int p1_port(unsigned long port) { uint32_t prim = G32(0x1CB8B4u); return menus_all() || port == (prim < 4u ? prim : 0u); }
 static int vs_paused_now(void)
 {
-    extern int tt_vs_on(void); uint32_t pl = G32(0x4AD054u);
+    extern int tt_vs_on(void), tt_net_on(void); uint32_t pl = G32(0x4AD054u);
+    if (tt_net_on()) return 0;   /* (2.1, online: the pause's own shortcuts are this machine's alone -- the game's pause list only, the same on every machine) */
     return tt_vs_on() && G32(0x4AD050u) == 6 && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0;
 }
 static void vs_restart_ask(int round, const char *how)   /* (tt_vs_restart_req: 1 the match, 2 the round) */
@@ -1490,7 +1575,8 @@ static void vs_pause_restart_tick(void)
  * it -- without going to the settings, for a player 2 stuck somewhere (a playtest). TT_COOP_NOTELEKEY: none */
 static int coop_paused_now(void)
 {
-    extern int tt_vs_on(void); extern int tt_coop_active(void); uint32_t pl = G32(0x4AD054u);
+    extern int tt_vs_on(void); extern int tt_coop_active(void), tt_net_on(void); uint32_t pl = G32(0x4AD054u);
+    if (tt_net_on()) return 0;   /* (2.1, online: no P2 Teleport -- each his own camera; a setting changed on one machine only parts the games) */
     return tt_coop_active() && !tt_vs_on() && G32(0x4AD050u) == 6 && pl >= 0x10000u && pl < 0x04000000u && (G32(pl + 0x4DDCu) & 0xFFu) != 0 && !getenv("TT_COOP_NOTELEKEY");
 }
 static int s_coop_tele_shown = -1;
@@ -1505,7 +1591,7 @@ static void coop_pause_tele_tick(void)
 {
     extern void xbox_BannerSet(const char *title, const char *line); extern int tt_coop_setting(int i);
     int p = coop_paused_now(), v = tt_coop_setting(3);
-    if (p && s_coop_tele_shown != v) { xbox_BannerSet(v ? "P2 Teleport: ON" : "P2 Teleport: OFF", v ? "Turn it off: Y (the I key) or click this note" : "Turn it on: Y (the I key) or click this note"); s_coop_tele_shown = v; }
+    if (p && s_coop_tele_shown != v) { xbox_BannerSet(v ? "P2, P3, P4 Teleport: ON" : "P2, P3, P4 Teleport: OFF", v ? "Turn it off: Y (the I key) or click this note" : "Turn it on: Y (the I key) or click this note"); s_coop_tele_shown = v; }
     else if (!p && s_coop_tele_shown >= 0) { xbox_BannerSet("", ""); s_coop_tele_shown = -1; }
 }
 static void coop_pause_tele_pad(unsigned long port, XState *st)
@@ -1514,7 +1600,7 @@ static void coop_pause_tele_pad(unsigned long port, XState *st)
     if (port >= 4) return;
     if (coop_paused_now()) {
         int y = st->Gamepad.bAnalogButtons[3] > 30;
-        if (y && !prevy[port]) coop_tele_toggle("Y");
+        if (y && !prevy[port] && p1_port(port)) coop_tele_toggle("Y");
         prevy[port] = y; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevy[port] = st->Gamepad.bAnalogButtons[3] > 30;
 }
@@ -1538,7 +1624,7 @@ static void coop_pause_p2upg_pad(unsigned long port, XState *st)
     extern void tt_coop_p2upg_go(void); static int prev[4]; int a;
     if (port >= 4) return;
     a = st->Gamepad.bAnalogButtons[0] > 30;
-    if (a && !prev[port] && coop_paused_now() && G32(0x4B5800u) == 3u && G32(0x4B5808u) == 4u) { tt_coop_p2upg_go(); G32(0x4B5800u) = 2u; }
+    if (a && !prev[port] && p1_port(port) && coop_paused_now() && G32(0x4B5800u) >= 3u && G32(0x4B5808u) >= 4u && G32(0x4B5800u) < G32(0x4B5808u)) { extern void tt_coop_px_upg_go(int item); tt_coop_px_upg_go((int)G32(0x4B5800u) - 3); G32(0x4B5800u) = 2u; }   /* (2.1: players 2 to 4) */
     prev[port] = a;
 }
 static void vs_pause_restart_pad(unsigned long port, XState *st)
@@ -1551,11 +1637,36 @@ static void vs_pause_restart_pad(unsigned long port, XState *st)
     }
     if (vs_paused_now() && !getenv("TT_VS_NORESTART")) {
         WORD b = st->Gamepad.wButtons;
-        if ((b & 0x0020u) && !(prevb[port] & 0x0020u)) vs_restart_ask(0, "BACK");
-        if (st->Gamepad.bAnalogButtons[3] > 30 && !(prevb[port] & 0x8000u)) vs_restart_ask(1, "Y");
+        if ((b & 0x0020u) && !(prevb[port] & 0x0020u) && p1_port(port)) vs_restart_ask(0, "BACK");
+        if (st->Gamepad.bAnalogButtons[3] > 30 && !(prevb[port] & 0x8000u) && p1_port(port)) vs_restart_ask(1, "Y");
         prevb[port] = (WORD)(b | (st->Gamepad.bAnalogButtons[3] > 30 ? 0x8000u : 0u));
         st->Gamepad.wButtons &= (WORD)~0x0020u; st->Gamepad.bAnalogButtons[3] = 0;
     } else prevb[port] = st->Gamepad.wButtons;
+}
+/* the pad on the main menu (any thread, before the game sees it): right to Online, left / B back, A or Start opens it */
+static void online_pad(unsigned long port, XState *st)
+{
+    static int prevs[4]; int *prev = &prevs[port & 3], now = 0, edge;
+    if (!online_on()) return;
+    if (G32(FE_SCREEN) != 4) { s_on_sel = 0; return; }
+    if (s_on_auto > 0) {   /* (back from an online game: through the title, then Online) */
+        static int k;
+        if (G32(MM_OBJ + 0x10) == 1) { if ((++k & 7) < 3) st->Gamepad.wButtons |= PAD_START; return; }
+        if (G32(MM_OBJ + 0x10) == 0) { s_on_auto = 0; s_on_sel = 1; tt_net_screen_req = 1; G32(MM_OBJ + 0x14) = 2; s_on_pass = 8; s_on_sel = 0; tt_dbg("[MENU] back from an online game: the Online menu\n"); }
+    }
+    if (s_on_pass > 0) { s_on_pass--; if (G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 0) G32(MM_OBJ + 0x14) = 2;   /* (2.1: the choice held on Options -- the one
+        * the game is handed for Online -- while the A goes through: nothing else moves it to Credits meanwhile) */
+        memset(&st->Gamepad, 0, sizeof st->Gamepad); if (s_on_pass > 3) st->Gamepad.bAnalogButtons[0] = 255; return; }
+    if (G32(MM_OBJ + 0x10) != 0) { s_on_sel = 0; return; }
+    if ((st->Gamepad.wButtons & PAD_RIGHT) || st->Gamepad.sThumbLX > 16000) now |= 1;
+    if ((st->Gamepad.wButtons & PAD_LEFT) || st->Gamepad.sThumbLX < -16000) now |= 2;
+    if (st->Gamepad.bAnalogButtons[0] > 30 || (st->Gamepad.wButtons & PAD_START)) now |= 4;
+    if (st->Gamepad.bAnalogButtons[1] > 30) now |= 8;
+    edge = now & ~*prev; *prev = now;
+    if (!s_on_sel) { if (edge & 1) { s_on_sel = 1; s_on_swoosh = 1; play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f); tt_dbg("[MENU] Online chosen\n"); } return; }
+    if (edge & (2 | 8)) { s_on_sel = 0; play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f); }
+    else if (edge & 4) { s_on_sel = 0; tt_net_screen_req = 1; G32(MM_OBJ + 0x14) = 2; s_on_pass = 8; tt_dbg("[MENU] Online: its menu\n"); return; }
+    memset(&st->Gamepad, 0, sizeof st->Gamepad);   /* (the game's list keeps still meanwhile) */
 }
 static void pad_filter(unsigned long port, XState *st)
 {
@@ -1571,6 +1682,10 @@ static void pad_filter(unsigned long port, XState *st)
     if (getenv("TT_P1SCRIPT_INPLAY") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { static int n; if (n++ < 6) tt_dbg("[P1SCRIPT] in play: pad port %lu, primary %u\n", port, prim); }
     if (getenv("TT_P1SCRIPT") && port < 4 && (!(G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8) || (getenv("TT_P1SCRIPT_INPLAY") && (port == 0 || port == G32(0x1CB8B4u))))) p1_script(st);   /* (the menus listen to any pad; in play, co-op's own pads -- TT_P1SCRIPT_INPLAY: player 1's port too) */
     vs_pause_restart_pad(port, st);
+    if (port == 0 && !s_on_drawn && G32(FE_SCREEN) == 4 && getenv("TT_NET_LOBBY")) {   /* (2.1) back from an online game: the title's "press Start" pressed
+        * for the player, on to the main menu and its Online menu (net.c's lobby runs there; at the title it never heard the host) */
+        static DWORD t0; DWORD now = GetTickCount(); if (!t0) t0 = now;
+        if (now - t0 > 1500u && ((now - t0) / 250u) % 4u == 0u) { st->Gamepad.wButtons |= 0x0010u; st->dwPacketNumber += 0x10000u; } }
     coop_pause_tele_pad(port, st);
     {   /* (test) player 1's stick from twotowers_manual.c's walk-to (TT_VS_WALKTO) */
         extern volatile int tt_p1_autostick_on; extern volatile int16_t tt_p1_autostick[2];
@@ -1685,16 +1800,23 @@ static void pad_filter(unsigned long port, XState *st)
         /* (the packet number moves with what is added, or the game sees no change) */
         st->dwPacketNumber += s_inj_serial << 20;
     }
-    if (port == (G32(0x1CB8B4u) & 3u) && tt_coop_p2_turn()) {   /* co-op: player 2's turn of the character select -- his controller drives the menu too. (On the port the menus read,
-         * the game's primary pad [0x1CB8B4], and the other's merged: on port 0 alone, with the primary on the other, his presses went nowhere: a playtest, his directions dead) */
+    if (port == (G32(0x1CB8B4u) & 3u) && tt_coop_p2_turn()) {   /* co-op: player 2's (3's, 4's) turn of the character select -- his own controller drives it.
+         * (2.0.1) the player whose turn it is (s_pk), on his own port -- players 3 and 4 had player 2's (port 1) merged in, so their
+         * devices did nothing (a playtest); and his device alone, not player 1's as well (TT_COOP_SELECTMERGE: merged, as before) */
         extern DWORD xbox_InputGetState(DWORD port, void *state);
-        XState s2; int k; DWORD other = port ? 0 : 1;
-        { static int n; if (port && n++ < 4) tt_dbg("[P2SELECT] the menus read port %lu: player 2's turn merges port %lu\n", port, other); }
-        if (xbox_InputGetState(other, &s2) == 0) {
-            st->Gamepad.wButtons |= s2.Gamepad.wButtons;
-            for (k = 0; k < 8; k++) if (s2.Gamepad.bAnalogButtons[k] > st->Gamepad.bAnalogButtons[k]) st->Gamepad.bAnalogButtons[k] = s2.Gamepad.bAnalogButtons[k];
-            if (abs(s2.Gamepad.sThumbLX) > abs(st->Gamepad.sThumbLX)) st->Gamepad.sThumbLX = s2.Gamepad.sThumbLX;
-            if (abs(s2.Gamepad.sThumbLY) > abs(st->Gamepad.sThumbLY)) st->Gamepad.sThumbLY = s2.Gamepad.sThumbLY;
+        XState s2; int k; DWORD other = s_pk == 2 ? (port ? 0 : 1) : (DWORD)(s_pk - 1);
+        { static int n; static int lk; if (s_pk != lk && n++ < 12) { lk = s_pk; tt_dbg("[P2SELECT] the menus read port %lu: player %d's turn takes port %lu\n", port, s_pk, other); } }
+        if (other != port && xbox_InputGetState(other, &s2) == 0) {
+            if (!getenv("TT_COOP_SELECTOWN")) {   /* (2.0.1: merged, as 2.0.0 had it for player 2 -- his pad and player 1's; players 3 and 4 the same, each on his own port.
+                                                   * TT_COOP_SELECTOWN: his pad alone) */
+                st->Gamepad.wButtons |= s2.Gamepad.wButtons;
+                for (k = 0; k < 8; k++) if (s2.Gamepad.bAnalogButtons[k] > st->Gamepad.bAnalogButtons[k]) st->Gamepad.bAnalogButtons[k] = s2.Gamepad.bAnalogButtons[k];
+                if (abs(s2.Gamepad.sThumbLX) > abs(st->Gamepad.sThumbLX)) st->Gamepad.sThumbLX = s2.Gamepad.sThumbLX;
+                if (abs(s2.Gamepad.sThumbLY) > abs(st->Gamepad.sThumbLY)) st->Gamepad.sThumbLY = s2.Gamepad.sThumbLY;
+            } else {
+                st->Gamepad = s2.Gamepad;   /* (his pad in place of player 1's; our own presses -- the steps between turns, clicks -- still added) */
+                if (inj) { st->Gamepad.wButtons |= (uint16_t)(inj & 0xFFFF); for (k = 0; k < 8; k++) if (inj & (0x10000u << k)) st->Gamepad.bAnalogButtons[k] = 255; }
+            }
             st->dwPacketNumber += s2.dwPacketNumber << 8;
         }
     }
@@ -1722,6 +1844,7 @@ static void pad_filter(unsigned long port, XState *st)
          * log, [MMIN]). With the port picked, the game's own check of it (0x000E8960) takes this same press */
         G32(0x1CB8B4u) = (uint32_t)port; tt_dbg("[MENU] title: player 1's controller is port %lu\n", port);
     }
+    online_pad(port, st);
     if (tt_mm_input(port, st->Gamepad.bAnalogButtons[0] > 30, (st->Gamepad.wButtons & PAD_START) != 0)) {
         st->Gamepad.bAnalogButtons[0] = 0;
         st->Gamepad.wButtons &= (uint16_t)~PAD_START;
@@ -1774,7 +1897,9 @@ static void pad_filter(unsigned long port, XState *st)
         if (fe != 10) befshop = fe;
         { extern int tt_coop_post_ph; extern int tt_coop_post_on(void); pshop = (fe == 10 && (befshop == 6 || befshop == 8 || (tt_coop_post_on() && tt_coop_post_ph == 3))) || (fe == 9 && tt_coop_post_on() && tt_coop_post_ph == 1); }   /* (and player 2's stats and shop after a level: his turn, his pad too, a playtest) */
         p2start = two && (fe == 6 || fe == 8) && !paused && !tt_vs_on() && !tt_in_scene() && !tt_opt_coop_page();
-        if ((tt_opt_coop_page() || (two && ((fe != 6 && fe != 8 && fe != 9 && fe != 10) || paused || pshop)) || p2start) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
+        /* (2.1) the menus, the pause, the game over and the Co-op pages: player 1's controller only (a playtest: "only player 1 can control the menus") --
+         * the others' still on their character select (its own merge, above), their stats and shop after a level (pshop: Continue), and Start to pause */
+        if ((((tt_opt_coop_page() || (two && ((fe != 6 && fe != 8 && fe != 9 && fe != 10) || paused))) && menus_all()) || (two && pshop) || p2start) && port == (prim < 4u ? prim : 0u) && !getenv("TT_COOP_PAGEONEPAD")) {
             unsigned long q; int k, got;
             for (q = 0; q < 4; q++) { XState s2;
                 if (q == port) continue;
@@ -2226,6 +2351,7 @@ static void pointer_frame(void)
     rel_on = want_rel;
     down = (btn & 1) != 0; rdown = (btn & 2) != 0;
     if (inside && (lmx < 0 || fabsf(mx - lmx) > 0.002f || fabsf(my - lmy) > 0.002f)) moved = 1;
+    { static int left_on; if (s_on_sel) left_on = 6; else if (left_on > 0) { left_on--; if (inside) moved = 1; } }   /* (2.1: off Online, a few frames of the list seeing the pointer again: the game shows its chosen item again only a frame later) */
     if (inside) { lmx = mx; lmy = my; }
     if (m[2] > 0.01f && m[3] > 0.01f) {
         s_fx = (mx - m[0]) / m[2] * 640.0f; s_fy = (my - m[1]) / m[3] * 480.0f;
@@ -2289,6 +2415,23 @@ static void pointer_frame(void)
     }
 
     if (mouse_log() && diff_here()) { static DWORD lt; if (GetTickCount() - lt > 300) { lt = GetTickCount(); tt_dbg("[MOUSE] difficulty row: pointer %.0f,%.0f shown %d inside %d\n", s_gx, s_gy, s_shown, inside); } }
+    if (s_on_el && G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 0 && s_shown && inside) {   /* (2.1) Online under the pointer: lit, a click opens it -- not the game's
+         * own item (its list's chosen one was pressed: New Game started). Every frame, ahead of the list's own pointer (which waits for its
+         * presses to be seen: Online lit only now and then, the list taking the pointer back to Co-op or Versus, a playtest); its box the
+         * whole word and a little round it */
+        int cx = (int)G32(s_on_el + 8) + (int)G32(s_on_el + 0x10) / 2, y = (int)G32(s_on_el + 0xC), hh = (int)G32(s_on_el + 0x14) > 10 && (int)G32(s_on_el + 0x14) < 60 ? (int)G32(s_on_el + 0x14) : 30;
+        float px = pointer_x_for((float)cx, (float)y + hh * 0.5f);   /* (the pointer where this word is drawn: in a wide window the HUD's right side is moved out, and
+                                                                      * the word with it -- taken as the middle's, the box sat off the word, a playtest) */
+        int over = px >= cx - 82 && px < cx + 80 && s_gy >= y - 6 && s_gy < y + hh + 4;
+        if (getenv("TT_ONLINE_LOG") && moved) tt_dbg("[MENU] pointer %.0f (%.0f there),%.0f; Online's box %d..%d, %d..%d: %s\n", s_gx, px, s_gy, cx - 74, cx + 74, y - 3, y + hh + 4, over ? "over" : "off");
+        if (over) { if (!s_on_sel) { s_on_sel = 1; s_on_swoosh = 1; play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f); }
+            go_clear();
+            if (lclk) { lclk = 0; s_on_sel = 0; if (s_phase) { s_inj = 0; s_inj_serial++; s_phase = 0; }   /* (2.1) a press of the list's still on its way (the pointer passed
+                    * over Credits a moment before) dropped: it moved the list's choice back to Credits, and the A that opens Online opened the Credits, a playtest */
+                tt_net_screen_req = 1; G32(MM_OBJ + 0x14) = 2; s_on_pass = 8; tt_dbg("[MENU] Online clicked: its menu\n"); }
+            return; }
+        if (s_on_sel && (moved || lclk)) s_on_sel = 0;
+    }
     if (!press_tick()) return;
     clk = lclk; rclk = lrclk; lclk = lrclk = 0;
 
@@ -2341,14 +2484,14 @@ static void pointer_frame(void)
         extern int tt_coop_setting(int i); extern void tt_coop_setting_set(int i, int v); extern void tt_opt_move_sound(void);
         int imp = tt_coop_setting(6) == 1, over = s_gx >= 460.0f && s_gx < 640.0f;
         if (over) {
-            if (!imp || G32(MM_OBJ + 0x18) != 2) { G32(MM_OBJ + 0x18) = 2; tt_coop_setting_set(6, 1); tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Impossible (pointer)\n"); }
+            if (!imp || G32(MM_OBJ + 0x18) != 2) { G32(MM_OBJ + 0x18) = 2; tt_coop_setting_set(6, 1); s_diff_swoosh = 3; tt_opt_move_sound(); tt_dbg("[MENU] difficulty: Impossible (pointer)\n"); }
             if (clk) { go_clear(); press(INJ_A); tt_dbg("[MENU] difficulty: Impossible clicked\n"); }
             return;
         }
         if (s_gx >= 0.0f && s_gx < 460.0f) {   /* (1.9.9) Easy, Normal, Expert by the pointer too (words centred at 85, 228, 375 -- diff_layout moved them,
             * and the game's own items no longer took the clicks there: only Impossible answered the mouse, a playtest) */
             uint32_t k = s_gx < 156.0f ? 0u : s_gx < 301.0f ? 1u : 2u;
-            if (moved && (imp || G32(MM_OBJ + 0x18) != k)) { if (imp) tt_coop_setting_set(6, 0); G32(MM_OBJ + 0x18) = k; tt_opt_move_sound(); if (mouse_log()) tt_dbg("[MOUSE] difficulty: %u (pointer)\n", k); }
+            if (moved && (imp || G32(MM_OBJ + 0x18) != k)) { if (imp) tt_coop_setting_set(6, 0); G32(MM_OBJ + 0x18) = k; s_diff_swoosh = (int)k; tt_opt_move_sound(); if (mouse_log()) tt_dbg("[MOUSE] difficulty: %u (pointer)\n", k); }
             if (clk) { if (imp) tt_coop_setting_set(6, 0); G32(MM_OBJ + 0x18) = k; go_clear(); press(INJ_A); tt_dbg("[MENU] difficulty %u clicked\n", k); }
             return;
         }
@@ -2624,10 +2767,37 @@ static void pointer_frame(void)
 done:
     ;
 }
+/* (2.0.1) co-op: Start in a level's own scene (play, no HUD, not paused) goes nowhere -- it paused under the scene, the camera
+ * went its way, and the scene's picture was gone with its sound still playing (a playtest: Enter at the Gates of Moria's opening).
+ * Back still skips a scene, as the game has it. TT_SCENESTART: as before */
+static void pad_filter_all(unsigned long port, XState *st)
+{
+    pad_filter(port, st);
+    if (port == 0 && getenv("TT_TESTBACKAT")) { static DWORD t0; if (!t0) t0 = GetTickCount(); { DWORD d = GetTickCount() - t0, a = (DWORD)atoi(getenv("TT_TESTBACKAT")); if ((d > a && d < a + 300u) || (d > a + 3000u && d < a + 3300u) || (d > a + 6000u && d < a + 6300u)) st->Gamepad.wButtons |= PAD_BACK; } }   /* (test) Back pressed three times */
+    if (port < 4 && (st->Gamepad.wButtons & PAD_BACK) && !getenv("TT_SCENEBACKSKIP")) {   /* (2.0.1) no cutscene skipping: Back (Tab) skipped a level's cutscene, a playtest */
+        extern int tt_cine_active(void);
+        if (tt_cine_active()) { static DWORD lt; st->Gamepad.wButtons &= (WORD)~PAD_BACK; if (GetTickCount() - lt > 2000u) { lt = GetTickCount(); tt_dbg("[SCENE] Back in a cutscene: held back (port %lu)\n", port); } }
+    }
+    if (port < 4 && (st->Gamepad.wButtons & (PAD_START | (getenv("TT_SCENEBACK") ? 0 : PAD_BACK)))) {   /* (2.0.1: Back too -- its skip in co-op left the camera
+        * wandering through the rest of the scene, a playtest: Tab at the Gates of Moria's opening) */
+        extern int tt_in_scene(void), tt_coop_active(void), tt_game_paused_now(void); extern int tt_vs_on(void);
+        if (tt_coop_active() && !tt_vs_on() && tt_in_scene() && !tt_game_paused_now() && !getenv("TT_SCENESTART")) {
+            static DWORD lt; st->Gamepad.wButtons &= (WORD)~(PAD_START | (getenv("TT_SCENEBACK") ? 0 : PAD_BACK));
+            if (GetTickCount() - lt > 2000u) { lt = GetTickCount(); tt_dbg("[COOP] Start in a scene: held back (port %lu)\n", port); } }
+    }
+}
 
 /* once a frame (twotowers_manual.c: the game's wait for the next frame) */
+static void net_pause_note_tick(void)   /* (2.1, online) player 1 paused: the online menu (the votes, bringing the others) from the pause, Y */
+{
+    extern int tt_net_on(void), tt_net_me(void), tt_net_menu_is_open(void); extern void xbox_BannerSet(const char *title, const char *line);
+    static int shown; int p = tt_net_on() && tt_net_me() == 0 && tt_game_paused_now() && !tt_net_menu_is_open();
+    if (p && !shown) { xbox_BannerSet("ONLINE: the online menu (votes, bring the players)", "Y (the I key) opens it"); shown = 1; }
+    else if (!p && shown) { if (!tt_net_menu_is_open()) xbox_BannerSet("", ""); shown = 0; }
+}
 void tt_menus_tick(void)
 {
+    net_pause_note_tick();
     vs_pause_restart_tick();
     coop_pause_tele_tick();
     if (getenv("TT_WALKCAMPAIGN") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { extern void tt_walkto_tick(uint32_t hero, uint32_t now); static DWORD t0; if (!t0) t0 = GetTickCount(); if (GetTickCount() - t0 > (DWORD)atoi(getenv("TT_WALKCAMPAIGN"))) tt_walkto_tick(G32(0x43B15Cu), GetTickCount()); }   /* (test) */
@@ -2654,7 +2824,7 @@ void tt_menus_tick(void)
         if (on < 0) on = getenv("TT_MMSEL") != NULL;
         if (on && G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x14) != last) { last = G32(MM_OBJ + 0x14); tt_dbg("[MMSEL] %u at %lu\n", last, (unsigned long)GetTickCount()); }
     }
-    if (!xbox_pad_filter) xbox_pad_filter = pad_filter;
+    if (!xbox_pad_filter) xbox_pad_filter = pad_filter_all;
     {   /* New Game without the prologue (solo and co-op): New Game sets the level (0x000D1C00 -> [0x1BB2A4])
          * to 0 (00ISUL1, Isildur's prologue) on the main menu screen; it becomes 1 (01WEAT1, Weathertop), and the prologue
          * counts as done for the four heroes (the save's per-hero mission table 0x4AB69E + hero * 15: 0 locked, 1 open,
@@ -2748,4 +2918,14 @@ void tt_menus_tick(void)
             else for (k = 0; k < 0x120; k++) { uint32_t v = G32(o + 4 * k); if (v != snap[k]) { if (k != 0x8A && k != 0x8B) tt_dbg("[SELDIFF] t %lu +%03X %08X -> %08X\n", GetTickCount(), 4 * k, snap[k], v); snap[k] = v; } }
         }
     }
+}
+/* (2.1, online Co-op) player 1's hero from the host's character select, for every machine's start (net.c) */
+const char *tt_net_p1_key(void)
+{
+    static char k[32]; const char *t = s_p1place >= 0 ? tt_select_place_title(s_p1place) : NULL; int i;
+    static const char *const ok[] = { "aragorn", "legolas", "gimli", "isildur", "boromir", "gandalf", "frodo", "lurtz", "elrond", "sauron", "saruman", "eomer" };
+    if (!t) return "aragorn";
+    for (i = 0; t[i] && i < 31; i++) k[i] = (char)(t[i] >= 'A' && t[i] <= 'Z' ? t[i] + 32 : t[i]); k[i] = 0;
+    for (i = 0; i < (int)(sizeof ok / sizeof ok[0]); i++) if (!strcmp(k, ok[i])) return k;
+    return "aragorn";
 }
