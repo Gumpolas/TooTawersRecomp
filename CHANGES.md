@@ -3697,6 +3697,22 @@ src/twotowers_manual.c, src/heroes.c (players 3 and 4, 2.0.1)
     results showed Gandalf); heroes.c also drops a co-op pick when single player reads endlvl.BFF.
   - In-game cutscenes can no longer be skipped: the Start/Back skip (sub_0001B580) is off unless
     TT_SCENESKIP is set, and Back is held back while a cinematic plays (menus.c, tt_cine_active).
+  - sub_000DAD20: players 3 and 4's projectiles step in their own context (their slot put in place)
+    while the weapon-test list holds the Watcher, so their shots hit it as player 2's do.
+xboxrecomp-0.12.0/src/kernel/xbox_memory_layout.c (2.0.1)
+  - The contiguous window's free blocks are handed out best fit, not first fit, and once the window is
+    full a block freed less than 3 s ago is used (after 250 ms, then any) rather than none. Sound
+    streams' 20 and 36 KB packets had left it full with megabytes free in unusable or resting pieces:
+    "[CONTIG] arena exhausted (20480 requested, ... 6201344 free in pieces)", and the menus' music and a
+    level's sound went silent (a playtest). RECOMP_CONTIG_FIRSTFIT, RECOMP_CONTIG_STRICTREST: as before;
+    RECOMP_CONTIG_LOG: each block from the top, with its caller.
+twotowers/src/twotowers_manual.c (2.0.1)
+  - The pool's spill memory (6 MB of the contiguous window) is no longer taken as play begins with three
+    or four players: only when a level's pool is spent, and given back on the main menu and mission
+    select (tt_pool_spill_release). Held all session it left the sound's streams no room (voices, menu
+    music) and the player markers' element unmade. TT_POOL_SPILLEARLY, TT_POOL_SPILLKEEP: as before.
+  - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
+    moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 
 src/twotowers_host.h, src/linux_setup.cpp, linux/TwoTowers.sh
   - An ini with no template yet (the launcher's first settings on a fresh

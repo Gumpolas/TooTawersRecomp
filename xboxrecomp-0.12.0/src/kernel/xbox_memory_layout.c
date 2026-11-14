@@ -3065,17 +3065,31 @@ static void contig_note(uint32_t addr, uint32_t size)   /* a block handed out fr
     g_cblk[g_cblk_n].addr = addr; g_cblk[g_cblk_n].size = size; g_cblk[g_cblk_n].free = 0; g_cblk_n++;
 }
 
-static uint32_t contig_from_free(uint32_t size, uint32_t alignment)
+static uint32_t contig_from_free(uint32_t size, uint32_t alignment, uint32_t rest)
 {
-    int i;
+    int i, best = -1; uint32_t bsz = 0xFFFFFFFFu;
+    /* (2.0.1) the smallest free block that holds it (best fit), not the first: sound streams take 20 KB and 36 KB packets
+     * by turns, and first fit cut 20 KB out of each freed 36 KB, leaving 16 KB pieces nothing could use -- after hours of
+     * play megabytes free in pieces and no room for the next packet (silence). RECOMP_CONTIG_FIRSTFIT: as before */
+    static int ff = -1; if (ff < 0) ff = getenv("RECOMP_CONTIG_FIRSTFIT") != NULL;
     for (i = 0; i < g_cblk_n; i++) {
-        uint32_t a, lead, tail;
-        if (!g_cblk[i].free || GetTickCount() - g_cblk[i].t < XBOX_CONTIG_REST_MS) continue;
+        uint32_t a, lead;
+        if (!g_cblk[i].free || GetTickCount() - g_cblk[i].t < rest) continue;
         a = (g_cblk[i].addr + alignment - 1) & ~(alignment - 1);
         lead = a - g_cblk[i].addr;
         if ((uint64_t)lead + size > g_cblk[i].size) continue;
+        if (g_cblk[i].size < bsz) { bsz = g_cblk[i].size; best = i; if (ff || bsz == size) break; }
+    }
+    if (best >= 0) {
+        uint32_t a, lead, tail;
+        i = best;
+        a = (g_cblk[i].addr + alignment - 1) & ~(alignment - 1);
+        lead = a - g_cblk[i].addr;
         tail = g_cblk[i].size - lead - size;
-        if (g_cblk_n + (lead ? 1 : 0) + (tail ? 1 : 0) > XBOX_CONTIG_MAX_BLOCKS) return 0;
+        if (g_cblk_n + (lead ? 1 : 0) + (tail ? 1 : 0) > XBOX_CONTIG_MAX_BLOCKS) {   /* (2.0.1) the list full: the whole block, unsplit, if it starts aligned */
+            if (lead) return 0;
+            g_cblk[i].free = 0; return g_cblk[i].addr;
+        }
         if (lead) {   /* the part before the alignment stays free, as its own block */
             memmove(&g_cblk[i + 1], &g_cblk[i], (size_t)(g_cblk_n - i) * sizeof g_cblk[0]); g_cblk_n++;
             g_cblk[i].size = lead; g_cblk[i].free = 1; i++;
@@ -3125,6 +3139,8 @@ uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
 
     if (alignment < 4096) alignment = 4096;
     size = (size + 4095u) & ~4095u;   /* (whole pages: what comes back is reusable as it is) */
+    if (size > 16384u && size < 36864u && getenv("RECOMP_CONTIG_ROUND")) size = 36864u;   /* (testing) the sound packets at one size: the game's sound
+        * then went silent from the start (something there wants its own size) -- not by default */
     if (!size) size = 4096;
 
     {   /* testing: RECOMP_CONTIG_TESTFILL=KB -- that much of the window taken once the level is up (the screen's first
@@ -3133,7 +3149,7 @@ uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
         if (!done && xbox_contig_testfill_now && getenv("RECOMP_CONTIG_TESTFILL")) { uint32_t kb = (uint32_t)atoi(getenv("RECOMP_CONTIG_TESTFILL")); done = 1;
             g_contig_next = (g_contig_next + kb * 1024u + 4095u) & ~4095u; fprintf(stderr, "  [CONTIG] test: %u KB taken (%u KB used)\n", kb, (g_contig_next - XBOX_CONTIG_BASE) >> 10); }
     }
-    if (contig_reuse_on() && (result = contig_from_free(size, alignment)) != 0) {
+    if (contig_reuse_on() && (result = contig_from_free(size, alignment, XBOX_CONTIG_REST_MS)) != 0) {
         memset((void *)((uintptr_t)result + g_memory_offset), 0, size);
         return result;
     }
@@ -3144,6 +3160,18 @@ uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
     if ((uint64_t)result + size >
             (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE
                 - XBOX_GPU_INSTANCE_DEFAULT) {
+        /* (2.0.1) the window full: a block freed less than the rest time ago rather than none. A level's end frees its
+         * sound and texture blocks and the next screen asks again within the rest, so each level grew the window by its
+         * own, until it was full and a stream's packets (18 / 36 KB) found only resting blocks: the menus' music and then
+         * a level's sound went silent after some levels, with megabytes free (a playtest; "[CONTIG] arena exhausted
+         * (20480 requested, ... 6201344 free in pieces)"). Still resting a moment (a voice may read a block it just let go
+         * for a frame or two); then any. RECOMP_CONTIG_STRICTREST: as before */
+        if (contig_reuse_on() && !getenv("RECOMP_CONTIG_STRICTREST")
+            && ((result = contig_from_free(size, alignment, 250u)) != 0 || (result = contig_from_free(size, alignment, 0u)) != 0)) {
+            static int n; if (n++ < 20) { fprintf(stderr, "  [CONTIG] window full: %u bytes from a block freed lately\n", size); fflush(stderr); }
+            memset((void *)((uintptr_t)result + g_memory_offset), 0, size);
+            return result;
+        }
         fprintf(stderr, "  [CONTIG] arena exhausted (%u requested, %u of %u used, %u free in pieces)\n",
                 size, g_contig_next - XBOX_CONTIG_BASE,
                 (unsigned)XBOX_CONTIG_SIZE, xbox_ContiguousFreeBytes());
@@ -3153,6 +3181,7 @@ uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment)
 
     contig_note(result, size);
     g_contig_next = result + size;
+    if (getenv("RECOMP_CONTIG_LOG")) { fprintf(stderr, "  [CONTIGLOG] +%u at %08X (top %u KB, %d blocks) from rel %lld\n", size, result, (g_contig_next - XBOX_CONTIG_BASE) >> 10, g_cblk_n, (long long)((char *)__builtin_return_address(0) - (char *)&xbox_ContiguousAlloc)); }
     memset((void *)((uintptr_t)result + g_memory_offset), 0, size);
     return result;
 }

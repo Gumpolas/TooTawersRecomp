@@ -301,6 +301,7 @@ static void tt_fov_hud_tick(void)
 static void tt_main_tick(void)
 {
     { extern void tt_vs_exp_restore(void); tt_vs_exp_restore(); }
+    { extern void tt_pool_spill_release(void); tt_pool_spill_release(); }
     { extern volatile float xbox_apu_stream_gain, xbox_apu_3d_gain; extern int tt_vs_on(void); if (!tt_vs_on()) { xbox_apu_stream_gain = 1.0f; xbox_apu_3d_gain = 1.0f; } }
     tt_fov_hud_tick();
     if (getenv("TT_CAMLOG")) { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); static uint32_t tl; uint32_t cm = MEM32(0x43B164u), h = MEM32(0x43B15Cu);
@@ -4402,7 +4403,7 @@ void sub_000E7DB0(void)
     { extern void tt_mm_guard(void); tt_mm_guard(); }
     {   /* (1.9.8, research) the game's own memory pool ("RDRAM", 32 MB at 0x6B1CFC: left 0x6B1CE4): its low point, logged as it falls by 256 KB */
         COOP_PS int32_t lowest = 0x7FFFFFFF; int32_t left;
-        if (coop_p2_t0 && coop_mode() == 3 && coop_nx() >= 2) { static int once; if (!once) { once = 1; extern void tt_pool_spill_ready(void); tt_pool_spill_ready(); } }   /* (2.1: the spill memory taken while there is room) */
+        if (coop_p2_t0 && coop_mode() == 3 && coop_nx() >= 2 && getenv("TT_POOL_SPILLEARLY")) { static int once; if (!once) { once = 1; extern void tt_pool_spill_ready(void); tt_pool_spill_ready(); } }   /* (2.0.1: not by default -- see pool_spill) */   /* (2.1: the spill memory taken while there is room) */
         if (getenv("TT_POOL_TESTDRAIN") && coop_p2_t0 && coop_now() - coop_p2_t0 > 20000u && MEM32(0x6B1CE4u) > 0x4000u) { static int said; MEM32(0x6B1CE4u) = 0x4000u; if (!said++) tt_dbg("[POOL] test: the pool drained to 16 KB\n"); }
         left = (int32_t)MEM32(0x6B1CE4u);
         if (MEM32(0x6B1CF4u) && left < lowest - 0x40000) { lowest = left; tt_dbg("[POOL] the game's 32 MB pool: %d KB left (screen %u)\n", left / 1024, MEM32(0x4AD050u)); }
@@ -13601,16 +13602,19 @@ extern void sub_000DE630_gen(void); void sub_000DE630(void) { unsigned m = coop_
  * tentacles), but only when its owner (+0x11C) is [0x43B15C] -- player 2's arrows and throws flew through the Watcher
  * and did it no harm (a playtest). His projectiles' steps run in his context while that list holds anything.
  * TT_COOP_NOP2PROJLIST: as before */
-extern void sub_000DAD20_gen(void);
+extern void sub_000DAD20_gen(void); static int coop_slot_after(int prev, int r);
 void sub_000DAD20(void)
 {
     unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur, pj = ecx, ow; int sw = 0;
     coop_proj_mark |= 1u << 2;
     if (coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_depth && pj >= 0x10000u && pj < 0x84000000u && !getenv("TT_COOP_NOP2PROJLIST")) {
-        ow = MEM32(pj + 0x11C);
-        if (ow && (ow == coop_p2 || ow == coop_twin)) { int k; for (k = 0; k < 9 && !MEM32(0x43B0E8u + 4u * k); k++) ;
-            if (k < 9) { extern int tt_coop_enter_ctx(void); sw = tt_coop_enter_ctx();
-                { COOP_PS int n; if (n++ < 8) tt_dbg("[COOPPROJ] player 2's projectile %08X stepped in his context: %08X '%s' on the weapon-test list\n", pj, MEM32(0x43B0E8u + 4u * k), coop_nm(MEM32(0x43B0E8u + 4u * k))); } } }
+        int ks = -1; ow = MEM32(pj + 0x11C);
+        if (ow && ow != coop_first_char && !tt_vs_on() && !getenv("TT_COOP_NOPXPROJLIST")) ks = coop_slot_of(ow);   /* (2.0.1) players 3 and 4's too: their arrows and throws
+            * flew through the Watcher (a playtest) -- the owner's slot put in place first */
+        if (ow && (ow == coop_p2 || ow == coop_twin || ks >= 0)) { int k; for (k = 0; k < 9 && !MEM32(0x43B0E8u + 4u * k); k++) ;
+            if (k < 9) { int prev = coop_slot_cur, chg = ks >= 0 && ks != prev; if (chg) coop_slot_set(ks);
+                sw = coop_slot_after(chg ? prev : -1, coop_enter_ctx_in());
+                { COOP_PS int n; if (n++ < 8) tt_dbg("[COOPPROJ] player %d's projectile %08X stepped in his context: %08X '%s' on the weapon-test list\n", coop_slot_cur + 2, pj, MEM32(0x43B0E8u + 4u * k), coop_nm(MEM32(0x43B0E8u + 4u * k))); } } }
     }
     sub_000DAD20_gen();
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
@@ -16182,8 +16186,8 @@ static uint32_t pool_spill(uint32_t size, uint32_t align, uint32_t ra)
 {
     extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); uint32_t a;
     if (getenv("TT_POOL_NOSPILL") || !size || size > 0x100000u) return 0;   /* (2.1: 1 MB at most -- the Breached Wall's last asks were sizes read from broken data, 1.9 MB each, and spent it all) */
-    if (!pool_spill_base) { int mb = getenv("TT_POOL_SPILLMB") ? atoi(getenv("TT_POOL_SPILLMB")) : 6; static int tried;
-        if (tried) return 0; tried = 1;
+    if (!pool_spill_base) { int mb = getenv("TT_POOL_SPILLMB") ? atoi(getenv("TT_POOL_SPILLMB")) : 6; static unsigned tried_lv = ~0u;
+        if (tried_lv == coop_level_n) return 0; tried_lv = coop_level_n;   /* (2.0.1: once a level, as it is given back after each) */
         /* (6 MB, of the contiguous memory: 12 left the textures too little -- Westfold with four players, "arena exhausted" and a
          * crash, a playtest; from the low heap instead, the game took its addresses for something else and crashed, test runs) */
         for (; mb >= 1 && !pool_spill_base; mb--) { pool_spill_base = xbox_ContiguousAlloc((uint32_t)mb << 20, 4096u); if (pool_spill_base) pool_spill_size = (uint32_t)mb << 20; }
@@ -16197,6 +16201,17 @@ static uint32_t pool_spill(uint32_t size, uint32_t align, uint32_t ra)
     { uint32_t j; for (j = 0; j < size; j += 4) MEM32(a + j) = 0; }
     { static int nl; if (nl++ < 20 || (nl & 255) == 0) tt_dbg("[POOL] the pool spent: %u bytes from %06X out of the spill memory (%u KB of it used)\n", size, ra, pool_spill_used / 1024u); }
     return a;
+}
+/* (2.0.1) the spill memory given back in the menus (the main menu, the mission select: the level unloaded), and taken only when
+ * a level first needs it, not as play begins: held for the whole session, its 6 MB of the contiguous memory left the sound too
+ * little -- the voices, the music in the menus and some players' markers were missing after a co-op level (a playtest; "[CONTIG]
+ * arena exhausted ... 0 free in pieces" with 16 bytes of the spill used). TT_POOL_SPILLKEEP: kept, as before */
+void tt_pool_spill_release(void)
+{
+    extern int xbox_ContiguousFree(uint32_t addr); uint32_t sc = MEM32(0x4AD050u);
+    if (!pool_spill_base || (sc != 4u && sc != 5u) || getenv("TT_POOL_SPILLKEEP")) return;
+    tt_dbg("[POOL] spill memory given back (%u MB, %u KB of it used last)\n", pool_spill_size >> 20, pool_spill_used / 1024u);
+    xbox_ContiguousFree(pool_spill_base); pool_spill_base = 0; pool_spill_size = 0; pool_spill_used = 0; pool_spill_lv = ~0u;
 }
 void tt_pool_spill_ready(void) { if (!pool_spill_base) { uint32_t a = pool_spill(16u, 16u, 0); (void)a; pool_spill_used = 0; } }
 /* (2.1) in play with three or four players, the pool's last 192 KB kept: an ask that would go into them comes from the spill memory

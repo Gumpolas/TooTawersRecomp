@@ -7941,7 +7941,7 @@ int tt_hk(int id, int phase, uint32_t *r)
          * model and flight), but what it strikes is struck as by the shot he
          * had (the object's +0x3D0: a rock, 10, did the Watcher no harm) */
         uint32_t o = s_launching;
-        if (o >= 0x80000000u && o < 0x84000000u && G32(o + 0x3D0) == 10u) G32(o + 0x3D0) = s_frodo_pid;
+        if (o >= 0x80000000u && o < 0x84000000u && (G32(o + 0x3D0) == 10u || G32(o + 0x3D0) == (uint32_t)TROLL_LOG_PROJ)) G32(o + 0x3D0) = s_frodo_pid;
         if (getenv("TT_SHOTLOG")) tt_dbg("[SHOT] frodo's stone %08X: struck as projectile %u\n", o, o >= 0x80000000u && o < 0x84000000u ? G32(o + 0x3D0) : 0);
         s_frodo_pid = 0;
     }
@@ -8290,6 +8290,10 @@ int tt_hk(int id, int phase, uint32_t *r)
              * a playtest asked whether player 2 uses his upgraded bow. Guests as before. TT_COOP_P2PROJMAP: every hero as before */
             if (c && tt_heroes_retail_byte(c) >= 1 && tt_heroes_retail_byte(c) <= 4 && !getenv("TT_COOP_P2PROJMAP") && !getenv("TT_COOP_NOP2MOVES")) to = pj;
             else if (c) { to = 13u; for (q = 0; q < (int)(sizeof own / sizeof own[0]); q++) if (!_stricmp(c, own[q].who)) { to = own[q].pj; break; } }
+            if (to != pj && s_at_watcher && (to == 10u || to == TROLL_LOG_PROJ) && !getenv("TT_NOFRODOSWAP")) {   /* (2.0.1) at the Gates of Moria a stone or a log does
+                * the Watcher no harm: players 2-4's (Frodo's stone, the Uruk-hai's rock) struck as the shot their hero's moves picked, as player 1's
+                * are (above) -- player 3 Frodo's stones never hurt it (a playtest) */
+                s_frodo_pid = pj; { static int n; if (n++ < 6) tt_dbg("[HEROES] co-op: %s's %u at the Watcher, struck as projectile %u\n", c ? c : "?", to, pj); } }
             if (to != pj) G32(g_esp + 16) = to;
             { int cs = coop_ctx_skin(); if (cs >= 0 && s_skins[cs].beam && !getenv("TT_NOBEAM")) { s_beam_p2obj_log[s_beam_p2n & 7] = r[1]; s_beam_p2skin[s_beam_p2n & 7] = cs; s_beam_p2obj[s_beam_p2n++ & 7] = r[1]; } }   /* his bolt: a beam (below) */
             { static int n; uint32_t sh = G32(g_esp + 4), m = sh >= 0x80000000u && sh < 0x84000000u ? G32(sh + 0x494) : 0;
