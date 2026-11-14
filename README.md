@@ -71,8 +71,8 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **The F5 launcher:** F5 on the main menu opens the launcher (mods, language, settings), and Play starts the same build again (It could switch to previous settings before) with the new settings, mods included.
 
 ### Other Fixes 
-- **Launcher settings apply from the first start**, on a fresh install too (Windows and Linux). Graphics settings set in the launcher now stay applied upon first launching the game. 
-- **The game closes completely** when you quit the game or it is shut down no process is left running in the background.
+- **Launcher settings apply from the first start**, on a fresh install (Windows and Linux). Graphics settings set in the launcher now stay applied upon first launching the game. 
+- **The game closes completely** when you quit the game or it is shut down, no process is left running in the background.
 
 ## Tested (2.0.1)
 - Linux: playtests of co-op with four players and Versus with four players. Versus bot runs of Team Deathmatch, Free-for-all and Troll Battle with four players; co-op runs with three and four players (the character wheel, Load Game, the opening scenes, Weathertop, the Tower of Orthanc, players 3 and 4's attacks, bows, combos and rating words).
