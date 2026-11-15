@@ -37,7 +37,6 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **Achievements**: earned as you play, listed on the F10 panel's Achievements page.
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
-other throwing heroes as players 2 to 4.
 
 ## What's new in 2.0.1
 
