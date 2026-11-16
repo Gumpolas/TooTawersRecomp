@@ -41,7 +41,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 2.0.2
 
 - **Character shadows fix.** Shadows on every level were stringy and full of holes and shards (missing triangles), worst while moving, on the heroes and every enemy (the cave trolls most of all). Large parts of each shadow were being left out when drawn; they are now drawn complete.
-- **Sharp text stays sharp for all menus(Including newer options for co-op).** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to lower resolution letters after leaving a game, or while scrolling through the character wheel. Also accounts for every language, Old English and its runes included. 
+- **Sharp text stays sharp for all menus (Including newer options for co-op).** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to lower resolution letters after leaving a game, or while scrolling through the character wheel. Also accounts for every language, Old English and its runes included. 
 
 
 ## What 2.0.1 added
