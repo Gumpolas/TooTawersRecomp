@@ -11,7 +11,7 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 | `TwoTowers-Recompiled-v2.0.2-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
 | `TwoTowers-Recompiled-v2.0.2-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
 | `TwoTowers-Recompiled-v2.0.2-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
-| `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); still the 2.0.0 build, not yet tested on a Mac |
+| `TwoTowers-Recompiled-v2.0.2-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
 | `TwoTowers-Recompiled-v2.0.2-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
