@@ -1,4 +1,4 @@
-# The Two Towers Recompiled v2.0.1
+# The Two Towers Recompiled v2.0.2
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
@@ -8,11 +8,11 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v2.0.1-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v2.0.1-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
+| `TwoTowers-Recompiled-v2.0.2-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v2.0.2-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v2.0.2-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
 | `TwoTowers-Recompiled-v2.0.0-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); still the 2.0.0 build, not yet tested on a Mac |
-| `TwoTowers-Recompiled-v2.0.1-source.zip` | Source code |
+| `TwoTowers-Recompiled-v2.0.2-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
@@ -306,22 +306,22 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 If clicking the AppImage does nothing, start it from a terminal in the folder it is located in:
 
 ```
-chmod +x TwoTowers-Recompiled-v2.0.1-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.1-x86_64.AppImag
+chmod +x TwoTowers-Recompiled-v2.0.2-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.2-x86_64.AppImag
 ```
 
 If that fails with an error about FUSE or libfuse.so.2, either install libfuse2 or skip FUSE entirely:
 ```
-sh ./TwoTowers-Recompiled-v2.0.1-x86_64.AppImage --appimage-extract-and-run
+sh ./TwoTowers-Recompiled-v2.0.2-x86_64.AppImage --appimage-extract-and-run
 ```
 The libfuse2 package is called libfuse2 (or libfuse2t64) on Ubuntu/Mint, fuse-libs on Fedora and fuse2 on Arch. The AppImage keeps the game files, saves and settings in a TwoTowers-Recompiled folder next to it.
 
 To launch the regular Linux version (tar.gz)
 ```
-sh tar xzf TwoTowers-Recompiled-v2.0.1-linux-x86_64.tar.gz 
+sh tar xzf TwoTowers-Recompiled-v2.0.2-linux-x86_64.tar.gz 
 ```
 ```
-cd TwoTowers-Recompiled-v2.0.1-linux-x86_64 
+cd TwoTowers-Recompiled-v2.0.2-linux-x86_64 
 ```
 ```
 chmod +x TwoTowers.sh twotowers_recomp twotowers-setup 
