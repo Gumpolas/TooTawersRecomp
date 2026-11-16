@@ -18,7 +18,7 @@ A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), m
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
 
-Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
+Updating from 2.0.1 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
 
 ## What the port adds
