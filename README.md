@@ -40,7 +40,7 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 
 ## What's new in 2.0.2
 
-- **Character shadows fix.** Shadows on every level were stringy and full of holes and shards (missing triangles), worst while moving, on the heroes and every enemy (the cave trolls most of all). Large parts of each shadow were being left out when drawn; they are now drawn complete.
+- **Character shadows fix.** Fixed missing triangles in character shadows, which left gaps and broken pieces in the shadows of heroes and enemies, most visible while moving.
 - **Sharp text stays sharp for all menus (Including newer options for co-op).** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to lower resolution letters after leaving a game, or while scrolling through the character wheel. Also accounts for every language, Old English and its runes included. 
 
 
@@ -221,7 +221,7 @@ Made possible by [The128ReBits](https://github.com/The128ReBits).
 
 Known issues
 
-    - Visual bugs: Character shadow bug. Sometimes the character shadows can appear stretched out or stringy, especially for larger NPC's. Some visual bugs with lighting as well. With the extra heros mod enabled, replaying the second level can sometimes show an odd texture covering the top of the upgrades screen after completing the level. This can be fixed temporarily by turning the mod off.
+    - Visual bugs: Some visual bugs with lighting may occur. With the extra heros mod enabled, replaying the second level can sometimes show an odd texture covering the top of the upgrades screen after completing the level. This can be fixed temporarily by turning the mod off.
         - Vulkan: If you get any black screens when using the Vulkan rendering option, switch back to DX11. Also make sure that the dxvk folder is in the same folder as the games executable.
     - Extra Heroes: Kicking animations and their range during the Deepening level can be off. Kicking works fine against enemies, but some of the new characters have to be angled to the side to kick down the ladders. Again kicking works fine against enemies but not the ladders during this level. NPC's like Sauron, Frodo, and Lurtz can kick them just fine, but Elrond, Boromir, the Uruk and Gandalf may have some trouble and need to be angled to the side.
     - Extra heroes: Sauron and Lurtz are too tall for the end-of-level upgrade screen and are cut off.
