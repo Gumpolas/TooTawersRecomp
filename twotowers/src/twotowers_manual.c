@@ -2731,6 +2731,13 @@ void sub_000838E0(void)
     { extern int coop_p1_die_hook(void); extern uint32_t coop_p1_actor(void); if (ecx == coop_p1_actor() && ecx && coop_p1_die_hook()) { esp += 4; return; } }   /* ret */
     {   /* player 2: the level script's death check runs in his context (he is [0x43B15C] then) and calls this on him as the player: death animation to state 50, his weapons dropped, the death cam (observed). His going down is ours (coop_death_frame): skipped. TT_COOP_P2DIE lets it run. */
         extern uint32_t coop_p2_actor(void); static unsigned n; if (ecx && ecx == coop_p2_actor() && !getenv("TT_COOP_P2DIE")) { if (n++ < 4) tt_dbg("[COOPDEATH] die method on P2 (from %06X): skipped, the respawn handles him\n", MEM32(esp)); esp += 4; return; } }
+    {   /* (2.0.2) players 3 and 4 (or player 2 asked outside his own step): the same -- a grab's kill or the level's death check
+         * called the die method on an extra player with another slot in place, and his death ran as the player's: the death
+         * camera and a game over with players still standing (a playtest: player 1 down, a troll's grab on another player at
+         * full health, game over). Skipped as player 2's is; his going down is the respawn's (coop_death_frame) */
+        extern int tt_coop_player_of(uint32_t a); extern int tt_vs_on(void); extern uint32_t coop_p1_actor(void);
+        if (ecx && coop_p1_actor() && !tt_vs_on() && tt_coop_player_of(ecx) >= 2 && !getenv("TT_COOP_P2DIE")) { static unsigned nx; if (nx++ < 8) tt_dbg("[COOPDEATH] die method on P%d (from %06X, health %d): skipped, the respawn handles him\n", tt_coop_player_of(ecx), MEM32(esp), (int32_t)MEM32(ecx + 0x2FC)); esp += 4; return; }
+    }
     sub_000838E0_gen();
 }
 
@@ -10943,6 +10950,13 @@ void coop_9c380_after(void)
               for (k2 = 0; so >= 0x10000u && k2 < MEM32(so + 0x174) && k2 < 8; k2++) { uint32_t li = MEM32(so + 0x74 + 4 * k2); tt_dbg("[COOPWSRC]   original listener %u: %08X vt %08X\n", k2, li, li >= 0x10000u ? MEM32(li) : 0); }
               for (k2 = 0; sc >= 0x10000u && k2 < MEM32(sc + 0x174) && k2 < 8; k2++) { uint32_t li = MEM32(sc + 0x74 + 4 * k2); tt_dbg("[COOPWSRC]   copy listener %u: %08X vt %08X\n", k2, li, li >= 0x10000u ? MEM32(li) : 0); } }
             for (k = 0; k < 0x400; k += 4) { uint32_t x = MEM32(o + k), y = MEM32(w + k); if (x != y && !(x >= o && x < o + 0x400 && y >= w && y < w + 0x400 && x - o == y - w) && !((x == coop_first_char || x == MEM32(0x43B15Cu)) && y == coop_p2)) tt_dbg("[COOPWDIFF] +%03X %08X %08X\n", k, x, y); } } } } }   /* (research) */
+    if (getenv("TT_COOP_CTLLOG") && coop_slot_cur == 0) {   /* (2.0.2, research) each player's control: component c+0 (0x8000 player-controlled, 0x10000 locked), state, lock flags */
+        static uint32_t last[4]; int w; char ln[400]; int o = 0, ch = 0;
+        for (w = 0; w < 4; w++) { uint32_t h = coop_hero_n(w), c = h >= 0x10000u ? MEM32(h + 0x494) : 0, k = c >= 0x10000u ? (MEM32(c) & 0x18000u) | (MEM32(h + 0x408) << 20) | ((uint32_t)MEM8(h + 0x464) << 1) | MEM8(h + 0x465) : 0;
+            if (k != last[w]) ch = 1; last[w] = k;
+            o += snprintf(ln + o, sizeof ln - (size_t)o, " P%d %08X c0 %05X st %u lk %u%u", w + 1, h, c >= 0x10000u ? MEM32(c) & 0x18000u : 0, h >= 0x10000u ? MEM32(h + 0x408) : 0, h >= 0x10000u ? MEM8(h + 0x464) : 0, h >= 0x10000u ? MEM8(h + 0x465) : 0); }
+        if (ch) tt_dbg("[CTL] t %u cur %08X:%s\n", coop_now(), MEM32(0x43B15Cu), ln);
+    }
     if (coop_p2 >= 0x10000u && MEM32(0x43B15Cu) >= 0x10000u && !getenv("TT_COOP_NOLOCKMIRROR")) {   /* the level's lock flags (+0x464/+0x465: slot 1 only moves an actor when both are 0) follow player 1 */
         uint32_t q = MEM32(0x43B15Cu); COOP_PS uint8_t last = 0xFF;
         if (MEM8(coop_p2 + 0x464) != MEM8(q + 0x464) || MEM8(coop_p2 + 0x465) != MEM8(q + 0x465)) {
@@ -10952,7 +10966,10 @@ void coop_9c380_after(void)
         {   /* and the component's lock bits (c+0 bit 0x10000: slot 1 skips 0x868F0 while set; c+0x30 bit 0x400000) */
             uint32_t ca = MEM32(q + 0x494), ct = MEM32(coop_p2 + 0x494);
             if (ca >= 0x10000u && ct >= 0x10000u) {
-                uint32_t n0 = (MEM32(ct) & ~0x18000u) | (MEM32(ca) & 0x18000u),   /* 0x8000: player-controlled (SetPlayer's), 0x10000: locked */ n30 = MEM32(ct + 0x30);   /* (c+0x30 is per-frame state: not mirrored) */
+                uint32_t n0 = (MEM32(ct) & ~0x18000u) | (MEM32(ca) & 0x18000u),   /* 0x8000: player-controlled (SetPlayer's), 0x10000: locked */ n30 = MEM32(ct + 0x30);
+                if (!getenv("TT_COOP_CTLMIRROR")) n0 |= 0x8000u;   /* (2.0.2) an extra player is always player-controlled: a grab took it off player 1's (or his own), the mirror took
+                    * it off the extra player too, and the game's own AI drove him -- he walked and fought on his own with the bots off (a playtest:
+                    * player 3 grabbed by a cave troll; Fangorn, every player after one grab, until a checkpoint) */   /* (c+0x30 is per-frame state: not mirrored) */
                 if (n0 != MEM32(ct) || n30 != MEM32(ct + 0x30)) { COOP_PS int k; if (k++ < 10) tt_dbg("[COOP2] component lock bits for player 2: c+0 %08X -> %08X, c+30 %08X -> %08X\n", MEM32(ct), n0, MEM32(ct + 0x30), n30); MEM32(ct) = n0; MEM32(ct + 0x30) = n30; }
             }
         }

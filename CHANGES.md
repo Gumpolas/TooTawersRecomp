@@ -3761,6 +3761,15 @@ twotowers/src/twotowers_manual.c (2.0.2)
     class table is gone, or a list holding one: asked of a character already gone in a four-player co-op game at the
     Gates of Moria, it called a null method for every slot and then read past the list -- a crash (a playtest on
     Linux). [ATTACH] logs each one left out; TT_ATTACHNOCHECK: as before.
+twotowers/src/twotowers_manual.c (2.0.2)
+  - The players 2-4 control mirror (the component's c+0 bits copied from player 1 every frame) keeps 0x8000
+    (player-controlled) on for every extra player: a grab takes it off the grabbed hero, and the mirror copied
+    player 1's cleared bit onto the others -- the game's own AI drove them (walking and fighting on their own with
+    the bots off) until a checkpoint (playtests: Fangorn, a cave troll's and an Uruk's grab; player 3 grabbed by a
+    cave troll). TT_COOP_CTLMIRROR: as before; TT_COOP_CTLLOG: each player's control bits, state and lock flags.
+  - The die method (0x838E0) on players 3 and 4 (or player 2 outside his own step) is skipped as player 2's is:
+    a grab's kill or the level's death check ran it with another slot in place, and his death went as the
+    player's -- the death camera and a game over with a player still standing.
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 
