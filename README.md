@@ -38,6 +38,12 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
+## What's new in 2.0.2
+
+- **Character shadows are whole again.** Shadows on every level were stringy and full of holes and shards, worst while moving, on the heroes and every enemy (the trolls most of all). Large parts of each shadow were being left out when drawn; they are now drawn complete.
+- **Sharp text stays sharp.** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to low-resolution letters after leaving a game, or while you scroll the wheel. This works in every language, Old English and its runes included.
+- **No black screen on Load Game from the Co-op menu.** Choosing Load Game could sometimes leave a black screen until the game was restarted; it now always opens your saves.
+
 ## What's new in 2.0.1
 
 ### Co-op for up to four players

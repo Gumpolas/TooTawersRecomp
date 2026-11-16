@@ -265,8 +265,31 @@ static void ultra_adds(int all)
         if (k < UPAIR_N) { g_up[k].hash = g_uadd[i].hash; g_up[k].idx = idx; }
         if (g_ultra_log) fprintf(stderr, "  [ULTRA] %08X -> %s (the title's)\n", g_uadd[i].hash, g_uadd[i].path);
     }
+    {   /* (paired again: one looked at before may be one of these). (2.0.1) Only those: the ones not paired before (none) and
+         * the new hashes are looked at again; the pictures paired already keep their pair. A language pairs its fonts again
+         * with each file of the game it loads, and the whole map was emptied each time: a picture that keeps changing (the
+         * character wheel's names as it turns) is only paired from the map (ultra_lookup_known), and lost its sharp letters
+         * after each menu or level in a language (a playtest: Old English). RECOMP_ULTRA_ADDCLEAR: as before */
+        static int clr = -1; if (clr < 0) clr = getenv("RECOMP_ULTRA_ADDCLEAR") != NULL;
+        if (clr || all) memset(g_umap, 0, sizeof g_umap);
+        else {
+            static struct { uint32_t hash; int idx; } keep[UMAP_N];
+            int nk = 0, j, m;
+            for (j = 0; j < UMAP_N; j++) {
+                if (!g_umap[j].used || g_umap[j].idx < 0) continue;
+                for (m = g_uadd_done; m < n && g_uadd[m].hash != g_umap[j].hash; m++) ;
+                if (m < n) continue;
+                keep[nk].hash = g_umap[j].hash; keep[nk].idx = g_umap[j].idx; nk++;
+            }
+            memset(g_umap, 0, sizeof g_umap);
+            for (j = 0; j < nk; j++) {
+                uint32_t q = (keep[j].hash * 2654435761u) & (UMAP_N - 1), c;
+                for (c = 0; c < UMAP_N && g_umap[q].used; c++, q = (q + 1) & (UMAP_N - 1)) ;
+                if (c < UMAP_N) { g_umap[q].used = 1; g_umap[q].hash = keep[j].hash; g_umap[q].idx = keep[j].idx; }
+            }
+        }
+    }
     g_uadd_done = n;
-    memset(g_umap, 0, sizeof g_umap);   /* (paired again: one looked at before may be one of these) */
     xbox_tex_rev++;
 }
 
@@ -362,6 +385,20 @@ static int ultra_pick(const uint32_t *argb, int w, int h)
     return best;
 }
 
+/* (2.0.1) only what is known by the hash already (paired before, or a pair given by hash): no look-alike search. For a picture
+ * that keeps changing -- the character wheel's name as the wheel turns, a new picture at each step -- the search is left out, and
+ * the name lost its sharp letters while the wheel turned (a playtest); each of its pictures paired once is known from then on.
+ * -2: not known */
+static int ultra_lookup_known(uint32_t hash)
+{
+    uint32_t i = (hash * 2654435761u) & (UMAP_N - 1), n; int k;
+    for (n = 0; n < UMAP_N; n++, i = (i + 1) & (UMAP_N - 1)) {
+        if (!g_umap[i].used) break;
+        if (g_umap[i].hash == hash) return g_umap[i].idx;
+    }
+    for (k = 0; k < g_upn; k++) if (g_up[k].hash == hash) return g_up[k].idx;
+    return -2;
+}
 /* by the texture's content hash, so each is paired once */
 static int ultra_lookup(uint32_t hash, const uint32_t *argb, int w, int h)
 {

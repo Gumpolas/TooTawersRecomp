@@ -759,6 +759,7 @@ typedef struct {
     int uidx;                /* its Ultra textures picture, or -1 (nv2a_ultra.inc) */
     int redec;               /* decoded again with new content (a movie's frames, streamed pictures) */
     uint32_t dec_ms;         /* (1.9.8) when it was last decoded (GetTickCount) */
+    int uskip;               /* (2.0.1) its Ultra picture not looked for: it had just changed again (redec) */
 } TexCacheEnt;
 extern volatile uint32_t g_pb_runs;
 static TexCacheEnt s_texc[TEXC_SLOTS];
@@ -1053,6 +1054,19 @@ static const uint32_t *texc_get_ver(const Texture *t, uint32_t *ver)
     *ver = s_texc_last_ver;
     return r;
 }
+/* (2.0.1) a texture decoded again and again in a short while (a menu's files loaded one after another as a game is left) was
+ * left without its Ultra picture for good once it stood still: the menus' fonts, the Co-op and Versus words and the character
+ * wheel's names went back to the game's own low-resolution letters after a game (a playtest). Looked for once it has not changed
+ * for 0.4 s (a movie changes every frame). RECOMP_ULTRA_NORETRY: as before */
+static void texc_ultra_retry(TexCacheEnt *e, const Texture *t, uint32_t gen)
+{
+    if (e->gen != gen || gen || e->trev != xbox_tex_rev || GetTickCount() - e->dec_ms < 400u || g_ultra_on != 1 || !e->argb) return;
+    e->uskip = 0; e->redec = 0;
+    if (!ultra_on()) return;
+    e->uidx = ultra_lookup(e->hash, e->argb, (int)t->width, (int)t->height);
+    if (e->uidx >= 0) ultra_request(e->uidx);
+    if (g_ultra_log) { fprintf(stderr, "  [ULTRA] %08X: paired again once it stood still (%d)\n", e->hash, e->uidx); fflush(stderr); }
+}
 static const uint32_t *texc_get(const Texture *t)
 {
     TexCacheEnt *e = NULL, *victim = NULL;
@@ -1094,6 +1108,7 @@ static const uint32_t *texc_get(const Texture *t)
      * run, a texture already checked is current (a texture is bound many
      * times a frame, and the checksum was most of the renderer's CPU time). */
     ep = texc_epoch(t);
+    if (e && e->uskip) texc_ultra_retry(e, t, gen);
     if (e && e->run == ep && e->gen == gen && e->trev == xbox_tex_rev) { e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
     sum = texc_sum(t);
     if (e && e->sum == sum && e->gen == gen && e->trev == xbox_tex_rev) { e->run = ep; e->last_use = s_texc_clock; s_texc_last_ver = e->ver; s_texc_last_hash = e->hash; s_texc_last_uidx = e->uidx; return e->argb; }
@@ -1169,10 +1184,14 @@ decoded:
     QueryPerformanceCounter(&dq1);
     g_slow_dec_t += dq1.QuadPart - dq0.QuadPart;
     s_texc_last_hash = e->hash;
-    e->uidx = -1;
+    e->uidx = -1; e->uskip = 0;
+    if (!gen && !s_texc_hook_changed && e->redec >= 2 && g_ultra_on == 1 && !getenv("RECOMP_ULTRA_NORETRY")) e->uskip = 1;   /* (looked for once it has stood still: texc_ultra_retry) */
     if (!gen && !s_texc_hook_changed && e->redec < 2 && g_ultra_on == 1 && ultra_on()) {   /* (not a picture the GPU drew, nor one that keeps changing) */
         e->uidx = ultra_lookup(e->hash, e->argb, (int)t->width, (int)t->height);
         if (e->uidx >= 0) ultra_request(e->uidx);
+    } else if (e->uskip && ultra_on()) {   /* (2.0.1) one that keeps changing: its picture if this one is known already */
+        int k = ultra_lookup_known(e->hash);
+        if (k >= 0) { e->uidx = k; e->uskip = 0; ultra_request(k); }
     }
     s_texc_last_uidx = e->uidx;
     return e->argb;

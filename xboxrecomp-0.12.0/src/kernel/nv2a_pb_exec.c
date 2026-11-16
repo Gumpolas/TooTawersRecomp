@@ -217,7 +217,7 @@ typedef struct {
 
 #define NV_VERTEX_ATTRS 16
 #define NV_MAX_INDICES  262144
-#define NV_MAX_INLINE   4096            /* dwords of INLINE_ARRAY per batch */
+#define NV_MAX_INLINE   262144          /* dwords of INLINE_ARRAY per batch. (2.0.2) Was 4096: the character shadow volumes (the game's DrawVerticesUP of each side quad and cap, up to 17000 dwords for a troll) lost what came past it -- triangles missing from the volume, the holes and shards in the shadows that flickered as they moved (a playtest) */
 
 /* Texture stage 0, decoded from what the title programmed.
  *
@@ -1678,7 +1678,7 @@ static void draw_inline_array(void)
             s_gpu.attr[a].stride = vsize;
 
     for (i = 0; i < count; i++)
-        s_gpu.idx[i] = (uint16_t)i;
+        s_gpu.idx[i] = i;   /* (2.0.2: past 65535 vertices since the inline batch grew) */
     s_gpu.idx_count = count;
 
     s_gpu.inline_active = 1;
@@ -1727,7 +1727,7 @@ static void draw_immediate(void)
         IMM_VERTEX_DWORDS * 4;
 
     for (i = 0; i < s_gpu.imm_count && i < NV_MAX_INDICES; i++)
-        s_gpu.idx[i] = (uint16_t)i;
+        s_gpu.idx[i] = i;   /* (2.0.2: past 65535 vertices since the inline batch grew) */
     s_gpu.idx_count = i;
 
     /* fetch_attr bounds-checks against inline_count dwords. */
@@ -2237,7 +2237,12 @@ static void nv2a_pb_exec_inline_(const uint32_t *w, uint32_t n)
 #endif
     if (!s_gpu.prim) return;
     room = NV_MAX_INLINE - s_gpu.inline_count;
-    if (n > room) n = room;
+    if (n > room) {
+        static int lg = -1; static unsigned lost, nb; static DWORD t0;
+        if (lg < 0) lg = getenv("RECOMP_INLINE_LOG") != NULL;
+        if (lg) { lost += n - room; nb++; if (GetTickCount() - t0 > 1000u) { fprintf(stderr, "  [INLINE] %u batches past %u dwords: %u dwords lost\n", nb, (unsigned)NV_MAX_INLINE, lost); fflush(stderr); t0 = GetTickCount(); lost = nb = 0; } }
+        n = room;
+    }
     rt_copy(&s_gpu.inline_buf[s_gpu.inline_count], w, (size_t)n * 4);
     s_gpu.inline_count += n;
 }

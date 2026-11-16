@@ -3721,6 +3721,36 @@ twotowers/src/twotowers_manual.c (2.0.1)
     so its script's hurt (0xB8A78, kind 7) went on wherever they went. Each box a player 2-4 came into is
     kept with his distance from it; its hurt on him counts only within that distance + 4 (coop_fire_skip).
     TT_COOP_FIREKEEP: as before.
+xboxrecomp-0.12.0/src/kernel/nv2a_sw3d.inc (2.0.1)
+  - A texture decoded again and again in a short while (redec >= 2: a menu's files loaded one after another
+    as a game is left) is looked for in the Ultra pack once it has stood still for 1.5 s (texc_ultra_retry);
+    before, it kept the game's own low-resolution picture for good. RECOMP_ULTRA_NORETRY: as before.
+  - nv2a_ultra.inc: such a picture that keeps changing (the character wheel's name as it turns) still gets its
+    Ultra picture when this one is known by its hash already (ultra_lookup_known: paired before, or a pair
+    given by hash) -- only the look-alike search is left out; the wait before the search is 0.4 s.
+xboxrecomp-0.12.0/src/kernel/nv2a_ultra.inc (2.0.2)
+  - ultra_adds (a language's fonts paired again with each file the game loads) no longer empties the whole
+    pairing map: the pictures already paired keep their pair; only the unpaired ones and the new hashes are
+    looked at again. Emptied each time, a picture that keeps changing (the character wheel's names) found
+    nothing in it after each menu or level in a language (Old English and its runes) and lost its Ultra
+    letters. RECOMP_ULTRA_ADDCLEAR: as before.
+twotowers/src/menus.c (2.0.2)
+  - The Co-op/Versus menu's New Game / Load Game press on the main menu: when the main menu is already
+    leaving on a press of its own (the button that chose the item still down as the main menu came up, read
+    as New Game), the item is steered to the one chosen, with its next screen, instead of a second press;
+    the press itself waits for the menu to stand still (+0x204 == 2). Before, the item was changed under a
+    press taken for New Game: the main menu left with no next screen (0), the front end called screen 0's
+    null object (0x000D1907) -- a black screen. A guard also gives Load Game, Options or Credits their own
+    screen should the main menu leave on them with none. The Co-op menu's choice still waiting keeps the
+    "co-op off" of a solo press from running. TT_MM_NOFADEGO, TT_MM_NONEXTFIX: as before.
+xboxrecomp-0.12.0/src/kernel/nv2a_pb_exec.c (2.0.2)
+  - INLINE_ARRAY batches up to 262144 dwords (was 4096). The character shadow volumes are drawn with
+    DrawVerticesUP / DrawIndexedVerticesUP -- each cap and the silhouette's quads one inline batch of up to
+    about 17000 dwords for a troll -- and everything past 4096 dwords was dropped: triangles missing from
+    the volume, the holes, shards and strings in every character's shadow, worst while moving (a playtest).
+    The volume the game builds is closed (checked: twotowers_manual.c's TT_SHVOL wraps 0x00030360 and pairs
+    every edge by position); the cut was the only loss. RECOMP_INLINE_LOG: batches cut short, once a second.
+    draw_inline_array's indices are no longer cut to 16 bits.
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 

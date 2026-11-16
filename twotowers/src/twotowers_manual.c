@@ -9880,6 +9880,8 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
         aim = (port < 4 && (MEM32(COOP_PADREC(port) + 0x34u) & 0x4000u)) || (w && now < bot_until);   /* (LT: bit 0x4000 of the record's held buttons, observed) */
         if (getenv("TT_COOP_TESTAIMALL")) aim = 1;   /* (bot test: every player aiming) */
         if (w < 2 ? coop_hero_down(w) : coop_hero_down_n(w)) aim = 0;
+        if (getenv("TT_COOP_AIMLOG")) { COOP_PS uint32_t la[4]; if (now - la[w] > 700u) { la[w] = now; tt_dbg("[AIMLOG] P%d aim %d down %d lock %08X (vt %08X) at %.1f %.1f %.1f\n", w + 1, aim, w < 2 ? coop_hero_down(w) : coop_hero_down_n(w), t,
+            t >= 0x10000u && t < 0x84000000u ? MEM32(t) : 0, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8)); } }
         ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u && MEM32(t + 0x114) == 3 && (int32_t)MEM32(t + 0x2FC) > 0;
         {   int prop = !ok && aim && t >= 0x10000u && t < 0x84000000u && MEM32(t) >= 0x170000u && MEM32(t) < 0x180000u && MEM32(t) != 0x1741C0u;   /* (1.9.8) a locked object that isn't a character (an explosive barrel): the dot on it too */
             if (prop) { float px, py; if (coop_project(MEMF(t + 0xF0), MEMF(t + 0xF4), MEMF(t + 0xF8) + 1.2f, &px, &py) && px >= 8.0f && px <= 632.0f && py >= 8.0f && py <= 472.0f) {
@@ -16302,3 +16304,56 @@ void sub_000E6B50(void)
 }
 void tt_coop_god_tick(void) { int k_, n_, pv_; if (!coop_mode()) return; if (getenv("TT_ENEMYKILL")) { static uint32_t tk; int i; if (coop_now() - tk > (uint32_t)atoi(getenv("TT_ENEMYKILL"))) { tk = coop_now(); for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i]; if (MEM32(e) == 0x1741C0u && MEM32(e + 0x114) == 3 && (int32_t)MEM32(e + 0x2FC) > 0) { MEM32(e + 0x2FC) = 0; coop_hero_state(e, 1u); tt_dbg("[TEST] enemy %08X killed\n", e); break; } } } }   /* (testing) */ if (getenv("TT_ENEMYHP1")) { int i; for (i = 0; i < coop_nchars; i++) if (MEM32(coop_chars[i] + 0x114) == 3 && (int32_t)MEM32(coop_chars[i] + 0x2FC) > 1) MEM32(coop_chars[i] + 0x2FC) = 1; } n_ = coop_nx(); pv_ = coop_slot_cur; for (k_ = 0; k_ < n_; k_++) { coop_slot_set(k_); if (coop_p2 >= 0x10000u && (int32_t)MEM32(coop_p2 + 0x300) > 0) MEM32(coop_p2 + 0x2FC) = MEM32(coop_p2 + 0x300); } coop_slot_set(pv_); }   /* (testing: TT_GOD) */
 int tt_coop_players_n(void) { return coop_mode() ? coop_nx() + 1 : 1; }   /* (2.0.1, achievements) the players in co-op */
+
+/* (2.0.2) the character shadow volume (0x00030360): the game builds it on the CPU -- each vertex moved by its bone
+ * (0x2FA10, to 0x2A5658), each face lit or not by the light at 0x21162C (0x2FAC0, flags at 0x210A28), the silhouette's
+ * edges (0x2FCA0, 0x203218), each vertex carried away from the light to the plane z = -1 (0x2FD30, 0x2A1650), the faces
+ * split into the lit cap (0x207A18) and the dark cap (0x20C218, at the carried vertices) (0x2FE40) and a quad on each
+ * silhouette edge (0x2FED0, 0x211640) -- then draws it twice into the stencil (cull CW: decrement, cull CCW: increment).
+ * TT_SHVOL (research): how closed the volume is, once a second */
+extern void sub_00030360_gen(void);
+static void shvol_check(uint32_t s)
+{
+    static uint32_t lt; uint32_t now = GetTickCount(), nv, nf, ne, fo, eo, i, n1, n2, nq, bad = 0, tot = 0, open = 0, same = 0;
+    static uint32_t *de; static int cap; int nd = 0, k;
+    if (now - lt < 1000u) return; lt = now;
+    nv = MEM32(s); nf = MEM32(s + 8); ne = MEM32(s + 0x10); fo = s + 0xC + MEM32(s + 0xC); eo = s + 0x14 + MEM32(s + 0x14);
+    for (i = 0; i < ne && i < 20000; i++) { uint32_t e = eo + 8 * i; if (MEM16(e) == MEM16(e + 2)) same++; if (MEM16(e) >= nf || MEM16(e + 2) >= nf) open++; }
+    n1 = MEM32(0x210A18u); n2 = MEM32(0x210A1Cu); nq = MEM32(0x203210u) / 4;
+    if (!de) { cap = 1 << 18; de = (uint32_t *)malloc(sizeof(uint32_t) * 2 * cap); if (!de) return; }
+#define SHV_ADD(u, v) do { if (nd < cap) { de[2 * nd] = (u); de[2 * nd + 1] = (v); nd++; } } while (0)
+#define SHV_TRI(a, b, c) do { SHV_ADD(a, b); SHV_ADD(b, c); SHV_ADD(c, a); } while (0)
+    for (i = 0; i < n1; i++) { uint32_t t = 0x207A18u + 6 * i; SHV_TRI(MEM16(t), MEM16(t + 2), MEM16(t + 4)); }
+    for (i = 0; i < n2; i++) { uint32_t t = 0x20C218u + 6 * i; SHV_TRI(MEM16(t) + 65536u, MEM16(t + 2) + 65536u, MEM16(t + 4) + 65536u); }
+    for (i = 0; i < nq; i++) { uint32_t a = MEM16(0x203218u + 4 * i), b = MEM16(0x203218u + 4 * i + 2);
+        SHV_ADD(a, b); SHV_ADD(b, b + 65536u); SHV_ADD(b + 65536u, a + 65536u); SHV_ADD(a + 65536u, a); }
+    {   /* by position (a vertex's copies at a seam are one point): its x, y, z bits */
+        uint32_t bad2 = 0, bad3 = 0;
+#define SHV_P(id, c) MEM32(((id) >= 65536u ? 0x2A1650u + 16u * ((id) - 65536u) : 0x2A5658u + 16u * (id)) + 4u * (c))
+#define SHV_EQ(x, y) (SHV_P(x, 0) == SHV_P(y, 0) && SHV_P(x, 1) == SHV_P(y, 1) && SHV_P(x, 2) == SHV_P(y, 2))
+        for (k = 0; k < nd; k++) { int j, m = 0, mi = 0, ms = 0; tot++;
+            for (j = 0; j < nd; j++) {
+                if (de[2 * j] == de[2 * k + 1] && de[2 * j + 1] == de[2 * k]) mi++;
+                if (SHV_EQ(de[2 * j], de[2 * k + 1]) && SHV_EQ(de[2 * j + 1], de[2 * k])) m++;
+                if (SHV_EQ(de[2 * j], de[2 * k]) && SHV_EQ(de[2 * j + 1], de[2 * k + 1])) ms++;
+            }
+            if (mi != 1) bad++; if (m != ms) bad2++; if (m == 0) bad3++;
+            if (m != ms && getenv("TT_SHVOL2")) { static int nl; if (nl++ < 30) tt_dbg("[SHVOL]   edge %X->%X: %d opposite, %d same way (by index %d)\n", de[2 * k], de[2 * k + 1], m, ms, mi); }
+        }
+        tt_dbg("[SHVOL]   by position: %u edges not paired (%u with none the other way)\n", bad2, bad3);
+#undef SHV_P
+#undef SHV_EQ
+    }
+    { float zmin = 1e9f, zmax = -1e9f, xmin = 1e9f, xmax = -1e9f; for (i = 0; i < nv && i < 4096; i++) { float z = MEMF(0x2A5658u + 16 * i + 8), x = MEMF(0x2A5658u + 16 * i); if (z < zmin) zmin = z; if (z > zmax) zmax = z; if (x < xmin) xmin = x; if (x > xmax) xmax = x; }
+      tt_dbg("[SHVOL]   z %.2f..%.2f, x %.2f..%.2f, w0 %.2f, ext0 %.2f %.2f %.2f %.2f\n", zmin, zmax, xmin, xmax, MEMF(0x2A5658u + 12), MEMF(0x2A1650u), MEMF(0x2A1654u), MEMF(0x2A1658u), MEMF(0x2A165Cu)); }
+    tt_dbg("[SHVOL] %08X: %u verts, %u faces, %u edges (%u one-faced, %u to no face); light %.1f %.1f %.1f; lit cap %u, dark cap %u, sides %u; %u of %u edges unmatched\n",
+           s, nv, nf, ne, same, open, MEMF(0x21162Cu), MEMF(0x211630u), MEMF(0x211634u), n1, n2, nq, bad, tot);
+#undef SHV_ADD
+#undef SHV_TRI
+}
+void sub_00030360(void)
+{
+    uint32_t a0 = MEM32(esp + 4);
+    sub_00030360_gen();
+    if (getenv("TT_SHVOL") && a0 >= 0x10000u) shvol_check(a0 + 0x5F8u);
+}

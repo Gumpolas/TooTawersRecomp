@@ -496,6 +496,10 @@ void tt_mm_guard(void)
     if (G32(FE_SCREEN) != 4) return;
     st = G32(MM_OBJ + 0x10); it = G32(MM_OBJ + 0x14); nx = G32(MM_OBJ + 4);
     if (getenv("TT_MM_GUARDLOG")) { static uint32_t sig; uint32_t g = st * 1000003u + it * 1009u + nx; if (g != sig) { sig = g; tt_dbg("[MENU] guard sees: state %u item %u next %u\n", st, it, nx); } }
+    if (st == 0 && G32(MM_OBJ + 0x204) == 3 && nx == 0 && it >= 1 && it <= 3 && mm_f(MM_OBJ + 0x1FC) > mm_f(0x18AC58u) && !getenv("TT_MM_NONEXTFIX")) {   /* (its idle time not out: out, the title comes back, 0x0007A12E) */   /* (2.0.1) the main menu leaving on Load
+         * Game, Options or Credits with no next screen (the item changed after the press was taken: a black screen, the front end calling
+         * screen 0's null object, 0x000D1907): the item's own screen, as the game sets it at the press (0x00079EB5) */
+        G32(MM_OBJ + 4) = nx = it == 1 ? 3u : it == 2 ? 5u : 2u; tt_dbg("[MENU] guard: the main menu leaving on item %u with no next screen: screen %u\n", it, nx); }
     if (st == 0 && (it == ITEM_COOP || it == ITEM_VS)) { s_mm_last = it; G32(MM_OBJ + 4) = 5; s_net_item = it; }   /* (before the game's update this frame: a press it takes as itself leaves for Options, mm_net_tick opening ours) */
     if (st == 0 || it == 0 || (nx >= 1 && nx <= 11)) return;   /* (New Game, item 0, leaves with +4 unchanged: its difficulty) */
     tt_dbg("[MENU] guard: the main menu leaving (state %u, item %u) for screen %u: Options, as the %s menu\n", st, it, nx, s_mm_last == ITEM_VS ? "Versus" : "Co-op");
@@ -621,6 +625,7 @@ void tt_mm_draw(uint32_t scr)
     tt_gcall(0x000C8940u, EXIT_EL, 0, NULL);
 }
 /* the input (any thread): A or Start pressed on Exit; 1 = take it from the game */
+extern volatile int tt_coop_menu_go;
 static int tt_mm_input(unsigned long port, int a_down, int start_down)
 {
     static int prevs[4];
@@ -643,7 +648,7 @@ static int tt_mm_input(unsigned long port, int a_down, int start_down)
         return 0;
     }
     if (edge && cur <= 1 && s_coop_keep) { s_coop_keep = 0; tt_coop_menu_on = 1; tt_dbg("[MENU] %s from the Co-op menu: co-op on\n", cur ? "Load Game" : "New Game"); return 0; }
-    if (edge && cur <= 1 && tt_coop_menu_on) { extern volatile int tt_vs_start_pending; tt_coop_menu_on = 0; tt_vs_menu_on = 0; tt_vs_start_pending = 0; tt_dbg("[MENU] %s chosen: co-op off (solo)\n", cur ? "Load Game" : "New Game"); }
+    if (edge && cur <= 1 && tt_coop_menu_on && !tt_coop_menu_go) { extern volatile int tt_vs_start_pending;   /* (2.0.1: not while the Co-op/Versus menu's choice waits to be pressed: a press still down from it) */ tt_coop_menu_on = 0; tt_vs_menu_on = 0; tt_vs_start_pending = 0; tt_dbg("[MENU] %s chosen: co-op off (solo)\n", cur ? "Load Game" : "New Game"); }
     if (!exit_on() || cur != ITEM_EXIT) return 0;
     if (edge) s_exit_go = 1;
     return 1;
@@ -2872,7 +2877,15 @@ void tt_menus_tick(void)
         static DWORD seen, t_cover, t_diff, s_go_t; static int diff_on, s_go_retry, s_go_tries;
         uint32_t fe = G32(FE_SCREEN);
         if (tt_coop_menu_go && !tt_coop_cover) { tt_coop_cover = 1; t_cover = GetTickCount(); diff_on = tt_coop_menu_go == 1; }
-        if (tt_coop_menu_go && fe == 4 && G32(MM_OBJ + 0x10) == 0 && !tt_opt_up()) {
+        if (tt_coop_menu_go && fe == 4 && G32(MM_OBJ + 0x10) == 0 && G32(MM_OBJ + 0x204) == 3 && mm_f(MM_OBJ + 0x1FC) > mm_f(0x18AC58u) && !s_phase && !getenv("TT_MM_NOFADEGO")) {
+            /* (2.0.1) the main menu already leaving on a press of its own (the button that chose the item on the Co-op menu, still down
+             * as the main menu came up, read as a press on New Game): the item steered to the one chosen, with its next screen, in place
+             * of a second press (before, the item changed under the press taken for New Game: no next screen, a black screen) */
+            G32(MM_OBJ + 0x14) = (uint32_t)(tt_coop_menu_go - 1); if (tt_coop_menu_go == 2) G32(MM_OBJ + 4) = 3;
+            tt_coop_menu_on = 1; s_coop_keep = 0; s_go_retry = 0;
+            tt_dbg("[MENU] the Co-op menu's %s: the main menu already leaving on a press, steered to it\n", tt_coop_menu_go == 1 ? "New Game" : "Load Game");
+            tt_coop_menu_go = 0; seen = 0; t_diff = 0;
+        } else if (tt_coop_menu_go && fe == 4 && G32(MM_OBJ + 0x10) == 0 && !tt_opt_up() && (G32(MM_OBJ + 0x204) == 2 || getenv("TT_MM_NOFADEGO"))) {
             if (!seen) seen = GetTickCount() | 1;
             else if (GetTickCount() - seen > 400 && !s_phase) {
                 G32(MM_OBJ + 0x14) = (uint32_t)(tt_coop_menu_go - 1); s_coop_keep = 1; press(PAD_START);
@@ -2881,7 +2894,7 @@ void tt_menus_tick(void)
                 tt_coop_menu_go = 0; seen = 0; t_diff = 0;
             }
         } else seen = 0;
-        if (s_go_retry && fe == 4 && G32(MM_OBJ + 0x10) == 0 && !s_phase && GetTickCount() - s_go_t > 1500 && s_go_tries < 6) {   /* (1.9.7) the press not taken (the window busy going full screen, or the press lost): again */
+        if (s_go_retry && fe == 4 && G32(MM_OBJ + 0x10) == 0 && G32(MM_OBJ + 0x204) == 2 && !s_phase && GetTickCount() - s_go_t > 1500 && s_go_tries < 6) {   /* (1.9.7) the press not taken (the window busy going full screen, or the press lost): again */
             G32(MM_OBJ + 0x14) = (uint32_t)(s_go_retry - 1); s_coop_keep = 1; press(PAD_START); s_go_t = GetTickCount(); s_go_tries++;
             tt_dbg("[MENU] the Co-op menu's %s: pressed again (%d)\n", s_go_retry == 1 ? "New Game" : "Load Game", s_go_tries);
         }
