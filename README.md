@@ -306,7 +306,7 @@ If clicking the AppImage does nothing, start it from a terminal in the folder it
 
 ```
 chmod +x TwoTowers-Recompiled-v2.0.2-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.2-x86_64.AppImag
+./TwoTowers-Recompiled-v2.0.2-x86_64.AppImage
 ```
 
 If that fails with an error about FUSE or libfuse.so.2, either install libfuse2 or skip FUSE entirely:
