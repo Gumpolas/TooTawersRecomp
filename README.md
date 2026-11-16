@@ -40,11 +40,11 @@ Updating from 2.0.0 or earlier: unpack over your old folder, or into a new one a
 
 ## What's new in 2.0.2
 
-- **Character shadows are whole again.** Shadows on every level were stringy and full of holes and shards, worst while moving, on the heroes and every enemy (the trolls most of all). Large parts of each shadow were being left out when drawn; they are now drawn complete.
-- **Sharp text stays sharp.** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to low-resolution letters after leaving a game, or while you scroll the wheel. This works in every language, Old English and its runes included.
-- **No black screen on Load Game from the Co-op menu.** Choosing Load Game could sometimes leave a black screen until the game was restarted; it now always opens your saves.
+- **Character shadows fix.** Shadows on every level were stringy and full of holes and shards (missing triangles), worst while moving, on the heroes and every enemy (the cave trolls most of all). Large parts of each shadow were being left out when drawn; they are now drawn complete.
+- **Sharp text stays sharp for all menus(Including newer options for co-op).** With Ultra textures on, menu text, the Co-op and Versus words on the main menu and the names on the character wheel no longer drop back to lower resolution letters after leaving a game, or while scrolling through the character wheel. Also accounts for every language, Old English and its runes included. 
 
-## What's new in 2.0.1
+
+## What 2.0.1 added
 
 ### Co-op for up to four players
 - **Every player is a full hero:** each of the four has his own hero with that hero's own weapons and ranged weapon, moves, combos and combo names, health, ammo, Perfect meter, upgrades, experience and levels. What each player earns goes to his own results and upgrade screens and into the save, so his unlocked combos and upgrades carry on to the next level.
