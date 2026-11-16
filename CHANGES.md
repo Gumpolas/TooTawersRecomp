@@ -3751,6 +3751,10 @@ xboxrecomp-0.12.0/src/kernel/nv2a_pb_exec.c (2.0.2)
     The volume the game builds is closed (checked: twotowers_manual.c's TT_SHVOL wraps 0x00030360 and pairs
     every edge by position); the cut was the only loss. RECOMP_INLINE_LOG: batches cut short, once a second.
     draw_inline_array's indices are no longer cut to 16 bits.
+twotowers/src/coopslot.h, twotowers/src/twotowers_manual.c (2.0.2)
+  - The macOS build: Mach-O section names carry their segment, so the co-op player slots' section is
+    "__DATA,__cps" there, and its bounds come from lld's section$start$/section$end$ symbols (the ELF
+    __start_cps/__stop_cps elsewhere). The 2.1 slot code had left the macOS build unbuildable.
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 

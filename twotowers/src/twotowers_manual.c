@@ -15516,6 +15516,10 @@ __attribute__((used, section(".cps$a"))) static char coop_sec_a = 1;
 __attribute__((used, section(".cps$z"))) static char coop_sec_z = 1;
 #define COOP_SEC_BEG ((uint8_t *)&coop_sec_a + 1)
 #define COOP_SEC_END ((uint8_t *)&coop_sec_z)
+#elif defined(__APPLE__)
+extern uint8_t coop_sec_start_[] __asm("section$start$__DATA$__cps"), coop_sec_stop_[] __asm("section$end$__DATA$__cps");   /* (2.0.2: Mach-O's section bounds) */
+#define COOP_SEC_BEG coop_sec_start_
+#define COOP_SEC_END coop_sec_stop_
 #else
 extern uint8_t __start_cps[], __stop_cps[];
 #define COOP_SEC_BEG __start_cps

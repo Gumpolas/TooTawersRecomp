@@ -10,6 +10,8 @@
 #define COOPSLOT_H
 #if defined(_WIN32)
 #define COOP_SLOT_SEC ".cps$m"
+#elif defined(__APPLE__)
+#define COOP_SLOT_SEC "__DATA,__cps"   /* (2.0.2: Mach-O names a segment and a section) */
 #else
 #define COOP_SLOT_SEC "cps"
 #endif
