@@ -14333,7 +14333,23 @@ extern void sub_000801A0_gen(void); void sub_000801A0(void) { int sw = tt_coop_e
 extern void sub_00080E50_gen(void); void sub_00080E50(void) { int sw = tt_coop_enter(ecx, 0x00080E50u); tt_coop_p1_pre(ecx, 0x00080E50u); if (coop_probe_on()) coop_count(14); sub_00080E50_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000813F0_gen(void); void sub_000813F0(void) { int sw = tt_coop_enter(ecx, 0x000813F0u); tt_coop_p1_pre(ecx, 0x000813F0u); if (coop_probe_on()) coop_count(15); sub_000813F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00081440_gen(void); void sub_00081440(void) { int sw = tt_coop_enter(ecx, 0x00081440u); tt_coop_p1_pre(ecx, 0x00081440u); if (coop_probe_on()) coop_count(16); sub_00081440_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_000815F0_gen(void); void sub_000815F0(void) { int sw = tt_coop_enter(ecx, 0x000815F0u); tt_coop_p1_pre(ecx, 0x000815F0u); if (coop_probe_on()) coop_count(17); sub_000815F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+/* (2.0.2) an object whose class table is gone (0, or not in the game's read-only data): a freed or never-made one */
+static int tt_obj_live(uint32_t o) { uint32_t vt; if (o < 0x10000u || o >= 0x84000000u) return 0; vt = MEM32(o); return vt >= 0x12000u && vt < 0x008E4B20u && MEM32(vt) >= 0x12000u && MEM32(vt) < 0x0016FFA0u; }   /* (in the image; its first method in the code) */
+/* (2.0.2) 0x869E0, a character's show/hide passed to what it carries (the list at +0x3D0: up to 32 slots from +0x74, the
+ * count at +0x174, each told through its class's +0x30). Asked of a character already gone, or with a carried thing
+ * gone, it called a null method for every slot and then read past the list -- a crash in a four-player co-op game at
+ * the Gates of Moria on Linux (a playtest: 0x86A0F, from 0x815F0). Such a call is left out. TT_ATTACHNOCHECK: as before */
+extern void sub_000869E0_gen(void);
+void sub_000869E0(void)
+{
+    uint32_t o = ecx, l, n, i; int ok = tt_obj_live(o);
+    if (ok) { l = MEM32(o + 0x3D0u); if (l < 0x10000u || l >= 0x84000000u) ok = 0; else { n = MEM32(l + 0x174u); if (n > 32u) ok = 0;
+        else for (i = 0; i < n && ok; i++) { uint32_t e = MEM32(l + 0x74u + 8u * i); if (!tt_obj_live(e) || MEM32(MEM32(e) + 0x30u) < 0x12000u || MEM32(MEM32(e) + 0x30u) >= 0x0016FFA0u) ok = 0; } } }
+    if (ok || getenv("TT_ATTACHNOCHECK")) { sub_000869E0_gen(); return; }
+    { static int nl; if (nl++ < 8) tt_dbg("[ATTACH] show/hide of %08X (class %08X) left out: it or what it carries is gone\n", o, o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0); }
+    esp += 8;   /* (thiscall, one argument: ret 4) */
+}
+extern void sub_000815F0_gen(void); void sub_000815F0(void) { if (!tt_obj_live(ecx) && !getenv("TT_ATTACHNOCHECK")) { static int nl; if (nl++ < 8) tt_dbg("[ATTACH] show/hide (0x815F0) of a character already gone (%08X): left out\n", ecx); esp += 8; return; } int sw = tt_coop_enter(ecx, 0x000815F0u); tt_coop_p1_pre(ecx, 0x000815F0u); if (coop_probe_on()) coop_count(17); sub_000815F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00081C60_gen(void); void sub_00081C60(void) { int sw = tt_coop_enter(ecx, 0x00081C60u); tt_coop_p1_pre(ecx, 0x00081C60u); if (coop_probe_on()) coop_count(18); sub_00081C60_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_000821F0_gen(void); void sub_000821F0(void) { int sw = tt_coop_enter(ecx, 0x000821F0u); tt_coop_p1_pre(ecx, 0x000821F0u); if (coop_probe_on()) coop_count(19); sub_000821F0_log(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00082670_gen(void); void sub_00082670(void) { int sw = tt_coop_enter(ecx, 0x00082670u); tt_coop_p1_pre(ecx, 0x00082670u); if (coop_probe_on()) coop_count(20); sub_00082670_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }

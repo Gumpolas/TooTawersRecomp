@@ -3755,6 +3755,12 @@ twotowers/src/coopslot.h, twotowers/src/twotowers_manual.c (2.0.2)
   - The macOS build: Mach-O section names carry their segment, so the co-op player slots' section is
     "__DATA,__cps" there, and its bounds come from lld's section$start$/section$end$ symbols (the ELF
     __start_cps/__stop_cps elsewhere). The 2.1 slot code had left the macOS build unbuildable.
+twotowers/src/twotowers_manual.c (2.0.2)
+  - 0x869E0 (a character's show/hide passed to what it carries: the list at +0x3D0, up to 32 slots from +0x74, the
+    count at +0x174, each told through its class's +0x30) and its caller 0x815F0 are left out for an object whose
+    class table is gone, or a list holding one: asked of a character already gone in a four-player co-op game at the
+    Gates of Moria, it called a null method for every slot and then read past the list -- a crash (a playtest on
+    Linux). [ATTACH] logs each one left out; TT_ATTACHNOCHECK: as before.
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 
