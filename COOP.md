@@ -1,5 +1,10 @@
 # Couch co-op/Versus modes for The Two Towers Recompiled
 
+** 4 player co-op requires the Extra Heroes mod to be enabled. 
+
+To play 4 player co-op, the Extra Heroes mod has to be turned on. In co-op, each player needs their own hero, and two players can’t use the same character.
+
+The base game only has three heroes from the start: Aragorn, Legolas and Gimli. The fourth, Isildur, has to be unlocked first, so the base game doesn’t reliably have enough heroes for four players. The Extra Heroes mod adds more playable heroes, so every player has someone to pick.
 
 ** Cave troll battles and Versus only/exclusive modes and hero's require the extra hero's mod to be enabled. Some crashes may occur during a versus match after playing multiple versus matches in a row. 
 
