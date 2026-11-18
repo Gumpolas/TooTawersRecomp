@@ -13,7 +13,7 @@
 
 It’s recommended to set each player’s controls in the Co-op settings before starting a 2-4 player game. Give every player their own input device (keyboard and mouse, or a controller), and make sure player 1 always has one.
 
-If you only have one input device connected and assign it to a player other than player 1, the input in menus can stop working, and clicking Load Game from the co op menu can lead to a black screen. If this happens, go back to the Co-op settings and give the device back to player 1, or restart the game.
+If you only have one input device connected and assign it to a player other than player 1, the input in menus can stop working, and clicking Load Game from the co op menu can lead to a black screen. If this happens, plug in another device and go back to the Co-op settings and give the device back to player 1, or restart the game.
 
 Up to four players on one PC play the story levels together. They share one camera, and each player has their own
 hero, controller, weapons, health, ammo, experience and upgrades. 
