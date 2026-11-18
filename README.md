@@ -1,24 +1,24 @@
-# The Two Towers Recompiled v2.0.2
+# The Two Towers Recompiled v2.0.3
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co-op and Versus are in beta (see [COOP.md](COOP.md) for how these modes work). See known issues at the bottom.
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co-op and Versus are new additions to the game and are in beta (see [COOP.md](COOP.md) for how these modes work). See known issues at the bottom.
 
 ## Downloads
 
 | File | For |
 |---|---|
-| `TwoTowers-Recompiled-v2.0.2-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
-| `TwoTowers-Recompiled-v2.0.2-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
-| `TwoTowers-Recompiled-v2.0.2-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
-| `TwoTowers-Recompiled-v2.0.2-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
-| `TwoTowers-Recompiled-v2.0.2-source.zip` | Source code |
+| `TwoTowers-Recompiled-v2.0.3-win64.zip` | Windows 7 SP1, 8.1, 10, 11 (64-bit) |
+| `TwoTowers-Recompiled-v2.0.3-linux-x86_64.tar.gz` | 64-bit Linux, glibc 2.27 or newer |
+| `TwoTowers-Recompiled-v2.0.3-x86_64.AppImage` | 64-bit Linux, glibc 2.27 or newer, one file |
+| `TwoTowers-Recompiled-v2.0.3-macos-x86_64.tar.gz` | macOS 10.15 or newer, Intel or Apple silicon (Rosetta 2); not yet tested on a Mac |
+| `TwoTowers-Recompiled-v2.0.3-source.zip` | Source code |
 
 **Ultra textures, GameCube pack:** download the GameCube high-resolution texture pack (`GLOS69`) separately from its author. It is not part of this release.
 https://www.moddb.com/mods/the-two-towers-textures-4k-ai-remaster/addons/the-two-towers-textures-4k-ai-remaster-575gb-version-native
 
 
-Updating from 2.0.1 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
+Updating from 2.0.2 or earlier: unpack over your old folder, or into a new one and copy your `game_files` and `saves` folders. Your saves, settings and achievements carry over.
 
 
 ## What the port adds
@@ -38,7 +38,27 @@ Updating from 2.0.1 or earlier: unpack over your old folder, or into a new one a
 - **Mods**: the ECTS 2002 demo's HUD, orange health pickups, and seven new playable heroes (more in Versus).
 - **Difficulties**: New difficulty (impossible difficulty) added to the game.
 
-## What's new in 2.0.2
+## What's new in 2.0.3
+
+**Co-op fixes:**
+- Memory improvements: increased the game’s memory to make room for all the new 3-4 player co-op systems.
+- Fixes a bug in Fangorn Forest where the cutscene after breaking the first log could play twice if you died before reaching the the next checkpoint and then restarting the level.
+- Fixes a bug in 3-4 player co-op where a cutscene could end with the letterbox bars still up and nobody able to move (seen at the start of Fangorn Forest).
+- Cheats now work in co-op.
+
+**Versus fixes:**
+- Interactable objects around the maps now have sounds (like breaking the water barrels).
+- Music is applied to the Deepening Wall level.
+- Fixes a bug where in a 2 player game, a player can no longer stay unspawned a second time right as the next round starts.
+
+**Menus and control improvements:**
+- Cheats can be entered with keyboard and mouse.
+- Hovering with the mouse over menus and and the save list is now more responsive. 
+- The Secret Codes on the mission select is now easier to hover over with the mouse, and is less likely to jump back to and start the Orthanc mission.
+
+Includes every 2.0.2 hotfix.
+
+## What 2.0.2 added
 
 - **Character shadows fix.** Fixed missing triangles in character shadows, which left gaps and broken pieces in the shadows of heroes and enemies, most visible while moving.
 - **Higher resolution text now stays on all menus, including the newer co-op options.** With Ultra textures on, menu text, the Co-op and Versus text on the main menu and the names on the character wheel no longer drop back to lower resolution letters after leaving a game, or while scrolling through the character wheel. Also accounts for every language, Old English and its runes included.
@@ -305,22 +325,22 @@ https://github.com/user-attachments/assets/5fd31b9a-4d86-4f92-b8f9-b0e9238b8d4b
 If clicking the AppImage does nothing, start it from a terminal in the folder it is located in:
 
 ```
-chmod +x TwoTowers-Recompiled-v2.0.2-x86_64.AppImage
-./TwoTowers-Recompiled-v2.0.2-x86_64.AppImage
+chmod +x TwoTowers-Recompiled-v2.0.3-x86_64.AppImage
+./TwoTowers-Recompiled-v2.0.3-x86_64.AppImage
 ```
 
 If that fails with an error about FUSE or libfuse.so.2, either install libfuse2 or skip FUSE entirely:
 ```
-sh ./TwoTowers-Recompiled-v2.0.2-x86_64.AppImage --appimage-extract-and-run
+sh ./TwoTowers-Recompiled-v2.0.3-x86_64.AppImage --appimage-extract-and-run
 ```
 The libfuse2 package is called libfuse2 (or libfuse2t64) on Ubuntu/Mint, fuse-libs on Fedora and fuse2 on Arch. The AppImage keeps the game files, saves and settings in a TwoTowers-Recompiled folder next to it.
 
 To launch the regular Linux version (tar.gz)
 ```
-sh tar xzf TwoTowers-Recompiled-v2.0.2-linux-x86_64.tar.gz 
+sh tar xzf TwoTowers-Recompiled-v2.0.3-linux-x86_64.tar.gz 
 ```
 ```
-cd TwoTowers-Recompiled-v2.0.2-linux-x86_64 
+cd TwoTowers-Recompiled-v2.0.3-linux-x86_64 
 ```
 ```
 chmod +x TwoTowers.sh twotowers_recomp twotowers-setup 
@@ -371,3 +391,4 @@ The game's code is not included. You translate it from **your own copy** of the 
   It builds into `build-macos/TwoTowers-Recompiled`, with SDL2 copied into `lib`. Double-click `TwoTowers.command` there.
 
 **3. Play:** on first start the game asks for your disc image, or copy your extracted game into `game_files` beside the program.
+
