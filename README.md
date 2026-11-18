@@ -2,7 +2,7 @@
 
 A native PC port of *The Lord of the Rings: The Two Towers* (Xbox, USA, 2002), made by static recompilation. It needs your own copy of the game, either the disc image (ISO) or an extracted folder. No game data is included.
 
-> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co-op and Versus  are in beta (see [COOP.md](COOP.md) for how these modes work). See known issues at the bottom.
+> ⚠ **Work in progress.** The game is fully playable, but not everything works perfectly yet. It is recommended to play the game at no more than 1000 fps. Co-op and Versus modes are in beta (see [COOP.md](COOP.md) for how these modes work). See known issues at the bottom.
 
 ## Downloads
 
@@ -41,7 +41,7 @@ Updating from 2.0.2 or earlier: unpack over your old folder, or into a new one a
 ## What's new in 2.0.3
 
 **Co-op fixes:**
-- Memory improvements: increased the game’s memory to make room for all the new 3-4 player co-op systems.
+- Memory improvements: increased the game’s memory to make room for all the 3-4 player co-op systems.
 - Fixes a bug in Fangorn Forest where the cutscene after breaking the first log could play twice if you died before reaching the the next checkpoint and then restarting the level.
 - Fixes a bug in 3-4 player co-op where a cutscene could end with the letterbox bars still up and nobody able to move (seen at the start of Fangorn Forest).
 - Cheats now work in co-op.
