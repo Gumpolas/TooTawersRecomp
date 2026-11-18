@@ -42,7 +42,7 @@ Updating from 2.0.2 or earlier: unpack over your old folder, or into a new one a
 
 **Co-op fixes:**
 - Memory improvements: increased the game’s memory to make room for all the 3-4 player co-op systems.
-- Fixes a bug in Fangorn Forest where the cutscene after breaking the first log could play twice if you died before reaching the the next checkpoint and then restarting the level.
+- Fixes a bug in Fangorn Forest where the cutscene after breaking the first log could play twice if you died before reaching the the next checkpoint and then restarted the level.
 - Fixes a bug in 3-4 player co-op where a cutscene could end with the letterbox bars still up and nobody able to move (seen at the start of Fangorn Forest).
 - Cheats now work in co-op.
 
