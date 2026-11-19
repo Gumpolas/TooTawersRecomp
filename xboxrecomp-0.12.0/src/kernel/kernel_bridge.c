@@ -95,8 +95,9 @@ static int bridge_va_mapped(uint32_t va, uint32_t bytes)
         return 0;
     if (end <= mapped)
         return 1;
-    return va >= XBOX_CONTIG_BASE
-        && end <= (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE;
+    {   uint32_t hs; xbox_ContiguousHigh(&hs);
+        return va >= XBOX_CONTIG_BASE
+            && end <= (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE + hs; }
 }
 
 /* STATUS_ACCESS_VIOLATION is what NT answers for a user buffer it cannot
@@ -1452,7 +1453,7 @@ static HANDLE bridge_resolve_handle(uint32_t token);
 static int ke_guest_obj(uint32_t va)
 {
     return (va >= 0x00010000u && va < 0x04000000u)
-        || (va >= 0x80000000u && va < 0x84000000u);
+        || (va >= 0x80000000u && (uint64_t)va < XBOX_CONTIG_END);
 }
 
 static HANDLE ke_event_shadow(uint32_t guest_va, int for_wait)

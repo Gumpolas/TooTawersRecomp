@@ -3770,6 +3770,15 @@ twotowers/src/twotowers_manual.c (2.0.2)
   - The die method (0x838E0) on players 3 and 4 (or player 2 outside his own step) is skipped as player 2's is:
     a grab's kill or the level's death check ran it with another slot in place, and his death went as the
     player's -- the death camera and a game over with a player still standing.
+  - That skipped die method now puts the player down (coop_p2_down_now): a grab's kill (0xAB272) on a player with
+    health left left him in the troll's hold (52) and the grab never ended. TT_COOP_DIENODOWN: as before.
+  - Player 1's component keeps 0x8000 (player-controlled) outside cutscenes: a troll's grab on another player took
+    it off player 1, and the game's AI held him in place (he could barely attack) until the grab's end. [COOPCTL]
+    logs each time it is put back; TT_COOP_P1CTLKEEP: as before; TT_COOP_P1CTL: player 1's control state on each
+    change ([P1CTL], research).
+  - The pool's spill memory is given back on the main menu (4) and the mission select (1) only, not on screen 5:
+    that is Options, opened from the pause menu in play too, and the 6 MB were freed under a level still using them
+    -- a cutscene read the freed memory and crashed (a playtest: four players at Amon Hen).
   - heroes.c: players 2 to 4's stones and logs at the Gates of Moria strike as the shot their hero's
     moves picked (as player 1's do), so Frodo and the stone throwers hurt the Watcher.
 
@@ -3779,3 +3788,137 @@ src/twotowers_host.h, src/linux_setup.cpp, linux/TwoTowers.sh
     few (the graphics settings and mods were lost on the first start).
   - F5's Play: the build that opened the launcher given back its execute
     bit when it had lost it, rather than starting the older one beside it.
+
+2.0.3
+kernel/kernel.h, xbox_memory_layout.c/.h, kernel_memory.c, kernel_bridge.c, nv2a_pb_exec.c, nv2a_pb_scan.c
+  - 64 MB of memory past the console's, right above the contiguous window (0x84000000-0x87FFFFFF,
+    xbox_ContiguousHigh): never handed to the game's own allocators, so the game sees exactly the memory it
+    always had. Physical 64 MB and up resolves there for the GPU (dma_resolve, while in use:
+    xbox_ContiguousHighSetInUse), MmGetPhysicalAddress, the bridges' buffer checks and the pushbuffer walk
+    reach it. RECOMP_NOHIGHMEM: not mapped (as before).
+twotowers/src/twotowers_manual.c, heroes.c, menus.c, options.c, e3hud.c
+  - The pool's spill memory is that memory (64 MB, kept all session, its use started again on the main
+    menu and the mission select) instead of 6 MB of the contiguous window: it no longer takes room from the
+    textures and the sound, and is never freed under a level. With three or four players the pool's last
+    1 MB is kept for the spill (was 192 KB). TT_POOL_SPILLLOW: 2.0.2's 6 MB; TT_POOL_FLOORKB: the floor
+    (testing). If the memory can't be mapped, 2.0.2's way is used.
+  - The checks that an address is the game's (0x84000000 as the top) take 0x88000000: objects made in the
+    spill memory (a test: an Uruk at 0x841891F0) are seen by the co-op code.
+  - Cheats in co-op: the co-op pause never reached the game's own pause update (0x0007B950), which looks at
+    the cheat entry first (0x000C5B50: both triggers held, four buttons against the table at 0x1B13D0). It
+    is run after the play screen's update when the game is paused and the game's didn't (TT_COOP_NOCHEATS:
+    as before). With both triggers held, Y is the code's, not P2 Teleport's.
+  - menus.c: with both triggers held in the pause, the left stick (W A S D) counts as the d-pad, so a code's
+    directions can be put in with the movement keys as well as the arrows (TT_CHEAT_NOSTICK: as before).
+  - Research: TT_CHEATLOG ([CHEAT]), TT_PADSEEN ([PADSEEN]), TT_P1SCRIPT_FROMPLAY, RECOMP_KEY_SCRIPT_ARM armed
+    at play.
+  - Cheats with the mouse: in the pause the pointer took the mouse buttons (left a click, right back), so a code
+    with a button bound to a mouse button (Small Enemies with Y on the right button) never reached the game.
+    While both triggers are held in the pause the mouse buttons are the game's (menus.c, s_cheat_t).
+  - Mission select with the mouse: of the places the pointer is on, the one whose middle is nearest it is
+    taken (was: the smallest highlight box). Orthanc's box reaches over the Secret Codes ring, so the ring's
+    left half chose Orthanc and moving onto the ring from Orthanc it stayed Orthanc until the pointer was on
+    the ring's right side. TT_MAP_SMALLEST: as before; TT_MAPHIT, TT_MAPRECTS: research logs.
+  - (and) The Secret Codes ring's box (571-635, 155-219 in 640x480) is 14 to the right of the ring as drawn
+    (570-608, 163-233), and Orthanc's (518-582) covers the ring's left edge: the ring's box is taken as
+    557-621, 160-236, so the split between them falls between the two pictures (x 570). A picture is used
+    only where no place's box is (the one at 553,188 by the ring took its left side for Orthanc). From a
+    player's [MAPRECT] / [MAPHIT] log (on by default for now; TT_NOMAPLOG: off).
+  - (and) The ring's box 553-609 (the split with Orthanc at x 565), and a click where two places' boxes meet is
+    on the place shown: on the ring's left edge it showed Secret Codes, and the click (a pixel or two off the
+    hover) chose Orthanc and started it (a playtest). map_box_has.
+  - The pointer in the main menu and in the game's lists (Load Game / Save Game): the item under it is chosen at
+    once, not a d-pad step at a time (each step held and let go 70 ms and waited for, so the choice trailed the
+    pointer down the save list, a playtest). Main menu: its item (MM_OBJ + 0x14, New Game 0 .. Exit 6, rows 30
+    apart from y 260) set with the swoosh and the move's cues (mm_jump_to). A list: a row on show set as its
+    choice (+0xF0) with the cues; rows off the list still scroll a step at a time. The controller is as it was.
+    TT_MOUSE_STEPS: as before. TT_MMSEL: the chosen item's element and the screen object (research).
+  - (and) Load Game / Save Game is not one of those lists: its choice is the screen's own (object 0x4B04B8,
+    +0x208 of +0x218 rows; the game's move 0x00078AFA). The pointer's row (its place down the list, the
+    chosen one checked against +0x208) is set there at once with the swoosh (0x000CB590: 0x21, 0x140,
+    row * 23.3 + 155) and the cues (load_jump_to). [LOADJUMP] logs when it isn't taken.
+  - Versus: a finishing grab's kill (the die method from 0xAB272) arrived from the round before as the next
+    round began: player 2 went down again at once, at full health, and the round was player 1's (a playtest,
+    1 v 1: rounds 2 and 4 -- "die method on P2 (from 0AB272, health 2000)" just after "ROUND n"). The 2.0.2
+    grab fix had made that call put him down. In the countdown, between rounds and in the first 3 s of a
+    round the die method is ignored for players 1 and 2 (tt_vs_round_fresh); deaths still come from health.
+    TT_VS_STALEDIE: as before.
+  - Versus, Troll Battle 1 v 1: the round's winner, kept where the round ended, could not move all of the next
+    round -- walking in place (states 1 and 10 by turns) beside a tree where his finishing grab had left him, his
+    attacks still his (a playtest). The held-still help (INP_EXPIRED, INP_TAKEDAMAGE, then back on his last safe
+    ground) now also begins for a hero walking in place, not only for a stick seen pushed in the pad's record
+    (it never was for him), and idle/walking by turns is no change of state. In Troll Battle a winner standing
+    off walkable ground at the round's start is set at a level's point as the one who fell is.
+    TT_VS_STUCKOLD, TT_VS_KEEPWINNER: as before.
+  - Mouse steering (menu option mouse_steer): the mouse's push was kept as a stick of its own size, so moving
+    the mouse back toward where it started could leave it near the middle -- W then moved the hero barely or
+    not at all, walking in place with his attacks still his (a playtest's Troll Battle: the log showed player
+    1's stick at 0 while he stood, after a blow, and states 1 and 10 by turns in an earlier round). The mouse's
+    push is now only the direction: W always moves at its full push that way, and near the middle the last
+    direction is kept (menus.c, s_steer_rx/ry). TT_STEER_OLD: as before.
+  - Versus, Troll Battle: a hero caught in a loop of the game's pushes -- player 1 could only walk forward and attack
+    (two playtest logs: his own step 0x843F0 and the characters' message handler 0x85340 each ~100 calls a second at
+    120 fps, the handler's moves hundredths of a unit; once standing on even ground beside player 2, once in the states
+    after a knock-down (20, 16), sunk 2.3 units into the ground at the arena's side, 1.3 units gone a second). The
+    0x85340 wrapper counts the small moves (under 0.3) a message makes on a hero without hurting him, in any state but a
+    blow's or a fall's (32, 44-49, 52); on 60% of the frames or more in a second, with under 2.5 units gone, he is
+    caught (vs_pl_*): those moves are undone for 3 s, and still caught 2.5 s on, or sunk 1.5 under the ground below
+    him for 1 s, he is set back on his good ground (walkable, on the ground, 1.5 to 3 s old) or the round's start
+    ([VS] "set back on good ground", [VSPUSH] once per message). By frames, not a count a second: 2.0.3's first take
+    (8 a second, standing or walking) depended on the frame rate. TT_VS_KEEPPUSH: none of it; TT_VS_PLTEST: a test.
+  - Versus: a hero who will not turn (player 1, and player 2 when no bot plays him): the stick pushed and swung more
+    than 100 degrees within 2.5 s while his facing (+0x70) stays within 10 degrees, outside a blow's or a fall's
+    states -- logged with his state, inputs, blocks, flags and turn speed ([VS] "will not turn"), then his moves'
+    blocks cleared and INP_EXPIRED, again within 6 s INP_TAKEDAMAGE (vs_turnfix_frame). A third playtest's stuck
+    troll spent long stretches in states 20 and 16 with no push loop. TT_VS_NOTURNFIX: only the log; TT_VS_TURNTEST,
+    TT_VS_TURNLOG: tests.
+  - Fangorn (level 5, story only): the cutscene by the checkpoint played twice after a death -- the restart plays it,
+    and its trigger, still set, played it again as the hero walked on (a playtest's video and log: over, then again
+    0.6 s later). A cinematic (asset +0x14) that has already played since the level loaded (coop_level_reset clears
+    the list, a restart too) runs to its end at once when it starts again (its clock +0x28 back to the start), as a
+    skip does: every event in it still happens. TT_FANG_SCENETWICE: as the game; TT_FANG_TESTSKIP, TT_CINETLOG: tests.
+  - Co-op, three or four players: the controls left off after a cutscene. A playtest's three-player Fangorn: the intro
+    ended and the HUD came back, but the bars stayed and nobody could move -- the control flag 0x43B1C0 stayed 1 (the
+    script's end of the scene never ran; in another run it ran in player 2's context). In play with the HUD drawn, no
+    cinematic and no pause, the flag still 1 after 6 s: cleared, and the bars (0x1BAE60: 0 or 2 while in) taken away
+    as @LetterBox does (0xCC3F0, -1) -- coop_ctl_watch. TT_COOP_KEEPNOCTL: as before; TT_COOP_CTLLOG, TT_COOP_CTLTEST:
+    tests.
+  - Versus: a hero walking in place -- walking (state 10 within 0.8 s, or player 1's stick pushed) but not 0.6 units
+    from where it began in 4 s, outside a blow's or a fall's states, and no other hero within 4.5 in front of him: set
+    back on the newest good ground 1.5 units or more away (sampled every 1.5 s), else the round's start ([VS] "walked in
+    place"). A playtest: three trolls on Fangorn, players 1 and 2 through a gate to 246 -404 (player 3 down), player 1
+    knocked into the scenery there and held. TT_VS_NOWALKFREE: not.
+  - Versus gates (vs_gates): players 3 and 4, standing, go too, beside the arrival point (they were left where they
+    were). TT_VS_GATEP12: as before.
+  - Versus, the push loop and walking in place, sooner (a playtest: stuck again in states 20 and 16, the loop 120 of 135
+    frames, 1-2 units a second; the player gave up in about 3 s): half-second windows (3 frames or more, 60% pushed,
+    under 1.25 units); 0.8 s caught: his moves' blocks cleared and INP_EXPIRED; 2 s: good ground. Walking in place:
+    under 1.5 units in 3 s (creeping counted), another hero within 7 in front or 3.5 anywhere is a fight; no good
+    ground of his own 1.5 or more away: left as he is.
+  - Versus: the world's sounds (0xC3B90 from anything but a hero's motions and our own calls -- a barrel's break from
+    0x8C65A, 0x92206 ...) through the software mixer from the arena's bank, loud by the nearest hero's distance (as
+    the enemies'): a bot run on the Deeping Wall had each barrel's break (2350, 2352) leave the mix silent; a
+    playtest: "breaking open the water barrels ... is quiet". The voice cache 400 (was 160). TT_VS_GAMEPROPSOUNDS:
+    the game's.
+  - Versus music watchdog: the mixer counts stream frames (xbox_apu_stream_mixed); none in 3 s of a round, not
+    paused: the track started again ([VS] "silent 3 s"). A playtest: no music on the Deeping Wall, the log's track
+    started. TT_VS_NOMUSICWATCH: off.
+  - Reverted, at a playtest's asking: the 2.0.3 helps for the stuck troll are off -- mouse steering back as before
+    (the mouse's push is the stick; TT_STEER_DIR: the direction-only take), the push loop and its undo, the turn
+    check, walking in place, the held-still help's walking and idle/walking rules and its block clear, the Troll
+    Battle winner's move off unwalkable ground. TT_VS_STUCKFIX: all of them on again.
+  - Co-op, four players: the screen filled with broken shapes, then a crash. A playtest's Westfold with Boromir as
+    player 4 (Gandalf there: fine). The game records each frame's drawing in one of two 3 MB push buffers
+    (CreatePushBuffer 0x11AF30 from 0xE06F0, at 0x80399000 and 0x80699000); a busy four-hero frame wrote past the
+    end of one into the other, the log's "lost its place" at 0x699000, then garbage fetched and an access violation.
+    Both are now 8 MB each from the extra high memory (the front of it; the pool's spill takes the rest), the old
+    3 MB freed; nv2a_pb_scan.c takes a second range where the push buffer may jump (xbox_PbRange2). TT_PB3MB: as
+    before; TT_PBMB: the size in MB.
+  - Co-op bots and P2 Teleport: a bot far behind (22 units for 3 s) or stuck while following was put beside player 1
+    whatever the setting -- a playtest, P2 Teleport off: the bots jumped to player 1 on the Deeping Wall, the shared
+    camera with them. Now only with P2 Teleport on (TT_COOP_BOTPUTALWAYS: as before). And player 1 over 16 units away,
+    the bot leaves its fight (not a boss's or the cave troll's) and runs after him by the pathmap's way to within 8,
+    fighting again once within 10 ([P2BOT] "leaving the fight to follow" / "caught up"; TT_COOP_BOTSTAYFIGHT: as before).
+  - Upgrade screens: an upgrade's name and its price are two lists side by side; the mouse's at-once choice (+0xF0) set
+    only the one under the pointer and split them apart (a playtest). The row is now set in both (upg_sync_lists: every
+    list drawn with the same items and first row). TT_UPG_STEPS: a step at a time there.

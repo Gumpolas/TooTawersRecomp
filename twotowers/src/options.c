@@ -779,8 +779,8 @@ static void draw_coopmenu(void)
         static uint32_t blks[3], objs[3]; static int states[3];   /* 0 not tried, 1 ready, -1 failed; [1] Versus' own (versus\menu_bg.bmp); [2] (2.1) online's (versus\online_bg.bmp) */
         int bi = s_netmenu || (!s_vsmenu && tt_net_coop_flow()) ? 2 : s_vsmenu ? 1 : 0;
         uint32_t blk = blks[bi], obj = objs[bi]; int state = states[bi];
-        uint32_t so = G32(T_BG + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? G32(so + 0x10) : 0, e;
-        if (!state && sd >= 0x80000000u && sd < 0x84000000u && G32(sd + 4) == 512u && G32(sd + 8) == 256u && !getenv("TT_COOP_OLDBG")) {
+        uint32_t so = G32(T_BG + 0xB8), sd = so >= 0x80000000u && so < 0x88000000u ? G32(so + 0x10) : 0, e;
+        if (!state && sd >= 0x80000000u && sd < 0x88000000u && G32(sd + 4) == 512u && G32(sd + 8) == 256u && !getenv("TT_COOP_OLDBG")) {
             extern int tt_coop_menu_bg_pixels(uint32_t *out); extern int tt_vs_image_pixels(const char *file, uint32_t *out, float k); static uint32_t px[512 * 256]; uint32_t k;
             state = -1;
             if ((bi == 2 ? (tt_vs_image_pixels("online_bg.bmp", px, 0.6f) || tt_coop_menu_bg_pixels(px)) : s_vsmenu ? (tt_vs_image_pixels("menu_bg.bmp", px, 0.55f) || tt_coop_menu_bg_pixels(px)) : tt_coop_menu_bg_pixels(px)) && (blk = xbox_ContiguousAlloc(0x80u + sizeof px, 4096u)) != 0 && (obj = xbox_ContiguousAlloc(0x40u, 16u)) != 0) {

@@ -227,7 +227,7 @@ void tt_menu_el(uint32_t el, uint32_t ret)
             if (k == 2) { static uint32_t lt; if (GetTickCount() - lt > 5000u) tt_dbg("[COOPPOST] player 2's stats screen: Replay not drawn\n"); lt = GetTickCount(); } }
     }
     if (el && el == tt_unav_word_el && tt_unav_text) { s_unav_saved = G32(el + 0x34); G32(el + 0x34) = tt_unav_text; s_unav_on = 1; }   /* (the label routine sets the word every frame, just before this draw) */
-    if (el < 0x10000u || (el >= 0x04000000u && (el < 0x80000000u || el >= 0x84000000u))) return;
+    if (el < 0x10000u || (el >= 0x04000000u && (el < 0x80000000u || el >= 0x88000000u))) return;
     if (el == PRESS_EL && G32(0x4AD050u) == 4 && press_kb()) {
         extern const char *xbox_BindKeyName(int vk);
         extern int xbox_BindKey(int a, int i);
@@ -318,7 +318,7 @@ static void el_log(void)
     for (i = 0; i < s_nel[p]; i++) {
         uint32_t e = s_el[p][i], t = G32(e + 0x34);
         char s[48]; int k = 0;
-        if (G32(e + 0x30) == 1 && t >= 0x10000u && t < 0x84000000u)
+        if (G32(e + 0x30) == 1 && t >= 0x10000u && t < 0x88000000u)
             for (; k < 40 && G16(t + 2 * k); k++) s[k] = (char)(G16(t + 2 * k) < 128 ? G16(t + 2 * k) : '?');
         s[k] = 0;
         tt_dbg("[MENU]  %08X r%06X xy %d,%d wh %d,%d col %08X on %u f %u t %u 18 %X 1C %X %s\n", e,
@@ -339,7 +339,7 @@ static void el_log(void)
     for (i = 0; i < s_ntx[p]; i++) {
         TextDraw *t = &s_tx[p][i];
         char s[48]; int k = 0;
-        if (t->txt >= 0x10000u && t->txt < 0x84000000u)
+        if (t->txt >= 0x10000u && t->txt < 0x88000000u)
             for (; k < 40 && G16(t->txt + 2 * k); k++) s[k] = (char)(G16(t->txt + 2 * k) < 128 ? G16(t->txt + 2 * k) : '?');
         s[k] = 0;
         tt_dbg("[MENU]  text r%06X xy %d,%d wh %d,%d col %08X %s\n", t->ret, t->x, t->y, t->w, t->h, t->col, s);
@@ -817,7 +817,35 @@ static Group *group_of(int item)
     return NULL;
 }
 
+/* (2.0.3) the main menu's items (New Game .. Exit, 30 apart from y 260, x 100, 440 wide): the pointer's item chosen at once, as the
+ * game's own move does (the item, the swoosh, the two cues) -- not a d-pad step at a time. TT_MOUSE_STEPS: as before */
+static void swoosh_to(int idx);
+static int mm_jump_to(const Item *s, const Item *t)
+{
+    int idx, mx = exit_on() ? ITEM_EXIT : ITEM_VS;
+    if (getenv("TT_MOUSE_STEPS") || G32(FE_SCREEN) != 4 || G32(MM_OBJ + 0x10) != 0 || t->x != 100 || t->w != 440 || s->x != 100 || s->w != 440) return 0;
+    idx = (t->y - 260 + 15) / 30;
+    if (t->y < 245 || idx < 0 || idx > mx) return 0;
+    if ((int)G32(MM_OBJ + 0x14) != idx) { G32(MM_OBJ + 0x14) = (uint32_t)idx; swoosh_to(idx); play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f); }
+    return 1;
+}
+/* (2.0.3) Load Game / Save Game (screen 3, object 0x4B04B8): its choice is +0x208 of +0x218 rows, moved by the game (0x00078AFA) with
+ * the swoosh at y = row * 23.3 + 155 and the two cues -- the pointer's row set the same way at once, not a step at a time. The row
+ * is the item's place down its list (the chosen one checked against +0x208 first) */
+static int item_rank(const Group *g, const Item *t) { int j, r = 0; for (j = 0; j < g->n; j++) if (s_it[g->m[j]].y < t->y) r++; return r; }
+static int load_jump_to(int si, int ti)
+{
+    const uint32_t o = 0x4B04B8u; Group *g = group_of(ti); int n = (int)G32(o + 0x218), rs, rt;
+    if (getenv("TT_MOUSE_STEPS") || G32(FE_SCREEN) != 3 || !g || group_of(si) != g || n < 1 || n > 64) return 0;
+    rs = item_rank(g, &s_it[si]); rt = item_rank(g, &s_it[ti]);
+    if (rs != (int)G32(o + 0x208) || rt < 0 || rt >= n) return 0;   /* (not the list the game's choice is in) */
+    G32(o + 0x208) = (uint32_t)rt;
+    { uint32_t a[3] = { 0x21, 0x140, (uint32_t)(int)(rt * 23.3f + 155.0f) }; tt_gcall(0x000CB590u, MM_SWOOSH, 3, a); }
+    play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f);
+    return 1;
+}
 /* ---- the injected presses ---- */
+static volatile DWORD s_cheat_t;         /* (2.0.3) both triggers last seen held in the pause (a cheat being put in) */
 static volatile uint32_t s_inj;          /* what the controller also holds now (PAD_ bits, INJ_A/B) */
 static volatile unsigned s_inj_serial;   /* moves when s_inj does (the packet number) */
 static int s_phase, s_left;              /* 1 pressing, 2 letting go; frames left */
@@ -866,7 +894,7 @@ int tt_msg_up(void) { return s_msg_up; }
 static int utf16_has(uint32_t t, const char *w)
 {
     int i, j, n = (int)strlen(w);
-    if (t < 0x10000u || t >= 0x84000000u - 512u) return 0;
+    if (t < 0x10000u || t >= 0x88000000u - 512u) return 0;
     for (i = 0; i < 200 && G16(t + 2 * i); i++) {
         for (j = 0; j < n && G16(t + 2 * (i + j)) == (uint16_t)(unsigned char)w[j]; j++) ;
         if (j == n) return 1;
@@ -917,7 +945,7 @@ static uint32_t bink_find(void)
 {
     const uint8_t *m = (const uint8_t *)(uintptr_t)xbox_GetMemoryOffset();
     uint32_t a;
-    for (a = 0x10000u; a < 0x84000000u - 0x40u; a += 4) {   /* (found low: 0x011AECE0 for the logos) */
+    for (a = 0x10000u; a < 0x88000000u - 0x40u; a += 4) {   /* (found low: 0x011AECE0 for the logos) */
         const uint32_t *q;
         uint32_t w, h, fr, fn, rate, div;
         if (a == 0x04000000u) a = 0x80010000u;
@@ -938,7 +966,7 @@ static void bink_dump(void)   /* testing: TT_FILMCLICK -- where 640, 480 and a f
 {
     const uint8_t *m = (const uint8_t *)(uintptr_t)xbox_GetMemoryOffset();
     uint32_t a; int n = 0;
-    for (a = 0x10000u; a < 0x84000000u - 0x40u && n < 20; a += 4) {
+    for (a = 0x10000u; a < 0x88000000u - 0x40u && n < 20; a += 4) {
         const uint32_t *q;
         if (a == 0x04000000u) a = 0x80000000u;
         q = (const uint32_t *)(m + a);
@@ -973,6 +1001,7 @@ static volatile int s_aim_on;
 static volatile int s_steer_on;            /* mouse steering: the mouse is the stick while forward is held */
 static volatile DWORD s_fwd_tick;          /* (1.9.1) forward (W, the stick pushed up) last held, with steering on */
 static volatile float s_steer_x, s_steer_y = -1.0f;   /* the mouse's stick for steering (up: forward) */
+static float s_steer_rx, s_steer_ry = -1.0f;   /* (2.0.3) where the mouse has pushed it (its direction is s_steer) */
 static volatile float s_aim_x, s_aim_y;
 
 /* what the pointer is after */
@@ -1012,36 +1041,65 @@ static int map_cur(void) { int c = (int)G32(MAP_OBJ + 0x10); return c >= 0 && c 
 void tt_map_research(void)   /* (research) TT_COOP_MAPLOG: the place, and each hero's completed levels (0x000D2420's table) */
 {
     static int last = -2; int c = map_cur(), h, l; char row[24];
+    if (!getenv("TT_NOMAPLOG") && map_here()) {   /* (research) once: each place's highlight boxes and the map's pictures (640x480) */
+        static int done; int n, j, i;
+        if (++done == 120) {   /* (two seconds or so in: its pictures all drawn) */ for (n = 0; n < MAP_NODES; n++) { int cnt = (int)G32(MAP_NODETAB + n * 32), first = (int)G32(MAP_NODETAB + n * 32 + 4);
+                if (cnt < 1 || cnt > 4 || first < 0 || first > 80) continue;
+                for (j = 0; j < cnt; j++) { uint32_t e = MAP_ELBASE + (uint32_t)(first + j) * EL_SIZE; tt_dbg("[MAPRECT] place %d box %d: %d %d %d %d\n", n, j, (int)G32(e + 8), (int)G32(e + 0xC), (int)G32(e + 0x10), (int)G32(e + 0x14)); } }
+            for (i = 0; i < s_nit; i++) { Item *t = &s_it[i]; if (t->ret == 0x00076F17u && !t->text && t->on && t->w <= 200 && t->h <= 200) tt_dbg("[MAPRECT] picture %d %d %d %d\n", t->x, t->y, t->w, t->h); } }
+    }
     if (!getenv("TT_COOP_MAPLOG") || !map_here() || c == last) return;
     last = c;
     tt_dbg("[MAPLOG] place %d (type %u), level [1BB2A4] %d%c", c, c >= 0 ? G32(MAP_NODETAB - 4 + c * 32) : 0, (int)G32(0x1BB2A4u), 10);
     for (h = 0; h <= 4; h++) { for (l = 0; l < 15; l++) row[l] = (char)('0' + (G8(0x4AB68Fu + h * 15 + l) & 7)); row[15] = 0; tt_dbg("[MAPLOG]   hero %d completed: %s%c", h, row, 10); }
 }
+static int map_box_has(int n, float x, float y)   /* (2.0.3) is (x, y) in place n's box (the ring's as moved, below) */
+{
+    int cnt = (int)G32(MAP_NODETAB + n * 32), first = (int)G32(MAP_NODETAB + n * 32 + 4), j;
+    if (n < 0 || n >= MAP_NODES || cnt < 1 || cnt > 4 || first < 0 || first > 80) return 0;
+    for (j = 0; j < cnt; j++) {
+        uint32_t e = MAP_ELBASE + (uint32_t)(first + j) * EL_SIZE;
+        int ex = (int)G32(e + 8), ey = (int)G32(e + 0xC), ew = (int)G32(e + 0x10), eh = (int)G32(e + 0x14);
+        if (n == 27 && ex == 571 && ey == 155 && ew == 64 && eh == 64) { ex = 553; ey = 160; ew = 56; eh = 76; }
+        if (x >= ex && x < ex + ew && y >= ey && y < ey + eh) return 1;
+    }
+    return 0;
+}
 static int map_node_at(float x, float y)
 {
-    int n, best = -1;
-    float ba = 1e9f;
+    /* (2.0.3) of the places the pointer is on, the one whose middle is nearest it: a place's highlight box (or its picture)
+     * reaches over its neighbour's -- with the smallest box taken, the left half of the Secret Codes ring chose the Tower of
+     * Orthanc beside it, and moving onto the ring from there it stayed Orthanc until the pointer was on its right side
+     * (a playtest). TT_MAP_SMALLEST: as before */
+    int n, best = -1, i;
+    float ba = 1e9f, bd = 1e9f;
+    static int old = -1; if (old < 0) old = getenv("TT_MAP_SMALLEST") != NULL;
     for (n = 0; n < MAP_NODES; n++) {
         int cnt = (int)G32(MAP_NODETAB + n * 32), first = (int)G32(MAP_NODETAB + n * 32 + 4), j;
         if (cnt < 1 || cnt > 4 || first < 0 || first > 80) continue;
         for (j = 0; j < cnt; j++) {
             uint32_t e = MAP_ELBASE + (uint32_t)(first + j) * EL_SIZE;
             int ex = (int)G32(e + 8), ey = (int)G32(e + 0xC), ew = (int)G32(e + 0x10), eh = (int)G32(e + 0x14);
-            if (x >= ex && x < ex + ew && y >= ey && y < ey + eh && (float)(ew * eh) < ba) { ba = (float)(ew * eh); best = n; }
+            float cx, cy, d;
+            if (n == 27 && ex == 571 && ey == 155 && ew == 64 && eh == 64 && !old) { ex = 553; ey = 160; ew = 56; eh = 76; }   /* (2.0.3) the Secret Codes ring is drawn
+                * at x 570-608, y 163-233 (640x480), but its box is 571-635, 155-219: its left edge was Orthanc's (box 518-582) and its middle
+                * 14 to the right of the ring's -- moved onto the drawn ring (a player's log, [MAPRECT] / [MAPHIT]) */
+            cx = ex + ew * 0.5f; cy = ey + eh * 0.5f; d = (cx - x) * (cx - x) + (cy - y) * (cy - y);
+            if (!(x >= ex && x < ex + ew && y >= ey && y < ey + eh)) continue;
+            if (old ? (float)(ew * eh) < ba : d < bd) { ba = (float)(ew * eh); bd = d; best = n; }
         }
     }
-    if (best < 0) {
-        /* any of the map's pictures there (a place's icon): the place whose
-         * highlight is nearest it */
-        int i;
-        float bx = -1, by = -1, bd = 1e9f;
+    {   /* the map's pictures there (a place's icon): the place whose highlight is nearest the picture's middle -- taken when that
+         * picture's middle is nearer the pointer than the box's */
+        float bx = -1, by = -1, pd = 1e9f, pa = 1e9f;
         for (i = 0; i < s_nit; i++) {
-            Item *t = &s_it[i];
+            Item *t = &s_it[i]; float d;
             if (t->ret != 0x00076F17u || t->text || !t->on || t->w > 200 || t->h > 200 || !hit(t, x, y)) continue;
-            if ((float)(t->w * t->h) < bd) { bd = (float)(t->w * t->h); bx = icx(t); by = icy(t); }
+            d = (icx(t) - x) * (icx(t) - x) + (icy(t) - y) * (icy(t) - y);
+            if (old ? (float)(t->w * t->h) < pa : d < pd) { pa = (float)(t->w * t->h); pd = d; bx = icx(t); by = icy(t); }
         }
-        if (bx >= 0) {
-            bd = 48.0f * 48.0f;
+        if (bx >= 0 && best < 0) {   /* (only where no place's box is: a picture beside the ring, 553,188, took its left side for Orthanc) */
+            float nd = 48.0f * 48.0f; int pick = -1;
             for (n = 0; n < MAP_NODES; n++) {
                 int first = (int)G32(MAP_NODETAB + n * 32 + 4), cnt = (int)G32(MAP_NODETAB + n * 32);
                 uint32_t e;
@@ -1051,10 +1109,12 @@ static int map_node_at(float x, float y)
                 cx = (float)(int)G32(e + 8) + (float)(int)G32(e + 0x10) * 0.5f;
                 cy = (float)(int)G32(e + 0xC) + (float)(int)G32(e + 0x14) * 0.5f;
                 d = (cx - bx) * (cx - bx) + (cy - by) * (cy - by);
-                if (d < bd) { bd = d; best = n; }
+                if (d < nd) { nd = d; pick = n; }
             }
+            if (pick >= 0) best = pick;
         }
     }
+    if (!getenv("TT_NOMAPLOG")) { static int lb = -2, nl; if (best != lb && nl++ < 400) { lb = best; tt_dbg("[MAPHIT] pointer %.0f %.0f: place %d\n", (double)x, (double)y, best); } }
     return best;
 }
 /* the place n chosen, as the game's move does (0x000776EC..): the place,
@@ -1273,6 +1333,14 @@ void tt_coop_select_draw(void)
 /* ---- the game's lists (tt_menu_list) ---- */
 static int list_rowh(uint32_t o) { uint32_t f = G32(o + 0x1C4); return f == 0 ? 0x19 : f == 2 ? 0x28 : 0x1E; }
 static int list_shown(uint32_t o) { int n = (int)G32(o + 0xF8), v = (int)G32(o + 0x100); return n > v && v > 0 ? v : n; }
+/* (2.0.3) the upgrade screens draw an upgrade's name and its price from two lists side by side (same items, same first row):
+ * a row chosen at once in one is chosen in the other too -- one alone split the name from its price, a playtest */
+static void upg_sync_lists(uint32_t from, uint32_t sel)
+{
+    int p = s_cur ^ 1, i;
+    for (i = 0; i < s_nls[p]; i++) { uint32_t o = s_ls[p][i].obj;
+        if (o != from && G32(o + 0xF8) == G32(from + 0xF8) && G32(o + 0xF4) == G32(from + 0xF4)) G32(o + 0xF0) = sel; }
+}
 /* the item at (x, y) of a list drawn last frame, -1 none */
 static int list_at(float x, float y, uint32_t *obj)
 {
@@ -1443,6 +1511,7 @@ static void p1_script(XState *st)
         static DWORD tm; static int title; if (getenv("TT_P1SCRIPT_FROMMENU")) { if (G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 1) title = 1;
             if (!tm && title && G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 0) { tm = GetTickCount(); tt_dbg("[P1SCRIPT] main menu up (after the title screen): steps timed from now\n"); } if (!tm) { if (G32(FE_SCREEN) == 4 && G32(MM_OBJ + 0x10) == 1 && (GetTickCount() / 700) % 2) st->Gamepad.wButtons |= PAD_START; return; } t0 = tm; } }   /* (until then: Start pressed on the title screen, on and off) */
     now = GetTickCount() - t0;
+    if (getenv("TT_P1SCRIPT_FROMPLAY")) { static DWORD tp; if (!tp && G32(FE_SCREEN) == 6) tp = GetTickCount(); if (!tp) return; now = GetTickCount() - tp; }   /* (test: from play) */
     if (getenv("TT_P1SCRIPT_REPEAT")) { DWORD pr = (DWORD)atoi(getenv("TT_P1SCRIPT_REPEAT")); if (pr) now %= pr; }   /* (test: the script over and over) */
     for (i = 0; i < n; i++) if (now >= ev[i].a && now < ev[i].b) {
         const char *c = ev[i].c;
@@ -1603,6 +1672,8 @@ static void coop_pause_tele_pad(unsigned long port, XState *st)
 {
     static int prevy[4];
     if (port >= 4) return;
+    if (coop_paused_now() && st->Gamepad.bAnalogButtons[6] > 30 && st->Gamepad.bAnalogButtons[7] > 30) { prevy[port] = 1; return; }   /* (2.0.3) both triggers
+        * held: a cheat being put in -- its Y is the code's, not P2 Teleport's (and not taken from the game) */
     if (coop_paused_now()) {
         int y = st->Gamepad.bAnalogButtons[3] > 30;
         if (y && !prevy[port] && p1_port(port)) coop_tele_toggle("Y");
@@ -1686,6 +1757,20 @@ static void pad_filter(unsigned long port, XState *st)
     uint32_t prim = G32(0x1CB8B4u), inj = s_inj;
     if (getenv("TT_P1SCRIPT_INPLAY") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { static int n; if (n++ < 6) tt_dbg("[P1SCRIPT] in play: pad port %lu, primary %u\n", port, prim); }
     if (getenv("TT_P1SCRIPT") && port < 4 && (!(G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8) || (getenv("TT_P1SCRIPT_INPLAY") && (port == 0 || port == G32(0x1CB8B4u))))) p1_script(st);   /* (the menus listen to any pad; in play, co-op's own pads -- TT_P1SCRIPT_INPLAY: player 1's port too) */
+    if (getenv("TT_PADSEEN") && port < 4) {   /* (research) each pad as it changes, before our own changes */
+        static uint8_t last[4][12]; uint8_t now[12]; static int n; memcpy(now, &st->Gamepad.wButtons, 2); memcpy(now + 2, st->Gamepad.bAnalogButtons, 8); now[10] = (uint8_t)G32(0x4AD050u); now[11] = 0;
+        if (memcmp(now, last[port], 12) && n++ < 400) { memcpy(last[port], now, 12); tt_dbg("[PADSEEN] port %lu (primary %u, screen %u): buttons %04X analog %u %u %u %u %u %u lt %u rt %u\n", port, G32(0x1CB8B4u), now[10],
+            st->Gamepad.wButtons, now[2], now[3], now[4], now[5], now[6], now[7], now[8], now[9]); } }
+    if (port < 4 && st->Gamepad.bAnalogButtons[6] > 30 && st->Gamepad.bAnalogButtons[7] > 30 && tt_game_paused_now()) s_cheat_t = GetTickCount() | 1;
+    if (port < 4 && st->Gamepad.bAnalogButtons[6] > 30 && st->Gamepad.bAnalogButtons[7] > 30 && tt_game_paused_now() && !getenv("TT_CHEAT_NOSTICK")) {
+        /* (2.0.3) the pause's cheat entry (both triggers held): the left stick -- W A S D with the keys -- counts as the d-pad, so
+         * a code's directions can be put in with the movement keys as well as the arrows (the game takes the d-pad only) */
+        int sx = st->Gamepad.sThumbLX, sy = st->Gamepad.sThumbLY;
+        if (sx * sx + sy * sy > 16000 * 16000) {
+            st->Gamepad.wButtons |= abs(sy) >= abs(sx) ? (sy > 0 ? PAD_UP : PAD_DOWN) : (sx < 0 ? PAD_LEFT : PAD_RIGHT);
+            st->Gamepad.sThumbLX = st->Gamepad.sThumbLY = 0;
+        }
+    }
     vs_pause_restart_pad(port, st);
     if (port == 0 && !s_on_drawn && G32(FE_SCREEN) == 4 && getenv("TT_NET_LOBBY")) {   /* (2.1) back from an online game: the title's "press Start" pressed
         * for the player, on to the main menu and its Online menu (net.c's lobby runs there; at the title it never heard the host) */
@@ -2199,6 +2284,8 @@ static void pointer_frame(void)
     if (!menu && scr != 6 && scr != 8 && (find_sel() >= 0 || s_nls[s_cur ^ 1] > 0 || leaf_label(0) || leaf_label(1))) menu = 1;
     if (!menu && scr == 6 && !xbox_MoviePlaying() && (find_sel() >= 0 || s_nls[s_cur ^ 1] > 0)) menu = 1;
     if (xbox_GfxGet(GFX_MOUSE) != 0 || !front) menu = 0;
+    if (s_cheat_t && GetTickCount() - s_cheat_t < 250u && scr == 6) menu = 0;   /* (2.0.3) a cheat being put in (the pause, both triggers held): the
+        * mouse buttons are the game's (their bound buttons), not the pointer's click and back -- a right button bound to Y went back */
 
     /* aiming with the mouse in play: while the ranged button is held the
      * mouse's movement is a stick, kept where the mouse has pushed it */
@@ -2253,24 +2340,34 @@ static void pointer_frame(void)
                     got = 1; dx = (int)a; dy = (int)b;
                 }
                 if (got && (dx || dy) && fwd && (rel_on || script || getenv("TT_STEERTEST"))) {
-                    float k = mouse_sens() / 160.0f, x = s_steer_x, y = s_steer_y, l;
+                    float k = mouse_sens() / 160.0f, x = s_steer_rx, y = s_steer_ry, l;
                     int inv = xbox_GfxGet(GFX_MOUSE_INVERT);
                     if (inv == 2 || inv == 3) dx = -dx;
                     if (inv == 1 || inv == 3) dy = -dy;
                     x += dx * k; y += dy * k;
                     l = sqrtf(x * x + y * y);
                     if (l > 1.0f) { x /= l; y /= l; }
-                    s_steer_x = x; s_steer_y = y;
+                    s_steer_rx = x; s_steer_ry = y;
+                    if (!getenv("TT_STEER_DIR")) { s_steer_x = x; s_steer_y = y; }   /* (2.0.3, later: back as it was -- the mouse's push the stick, a playtest asked for it back; TT_STEER_DIR: the direction only, the 2.0.3 take) */
+                    else if (l > 0.05f) { s_steer_x = x / l; s_steer_y = y / l; }   /* (2.0.3) a direction only, always a full push (W's own
+                        * push scales it): kept where the mouse pushed it, the vector could come back near the middle -- W then moved him
+                        * barely or not at all, walking in place, his attacks still his (a playtest's Troll Battle, the log's stick 0 with W
+                        * held). Near the middle the last direction is kept. TT_STEER_OLD: as before */
                     if (mouse_log()) tt_dbg("[MOUSE] steer %+d %+d -> stick %.2f %.2f\n", dx, dy, x, y);
                 }
             }
-            if (!steer) { s_steer_x = 0; s_steer_y = -1.0f; }   /* (next time: ahead) */
+            if (!steer) { s_steer_x = s_steer_rx = 0; s_steer_y = s_steer_ry = -1.0f; }   /* (next time: ahead) */
             tt_steer_active = 0;   /* (the 1.8.2 turning in place: heroes.c, no longer) */
             s_steer_on = steer;
         }
     }
 
     s_active = menu;
+    if (getenv("TT_MMSEL")) {   /* (research) the menus' chosen item as it changes, with the screen object's words */
+        static uint32_t la, lv; int sl = find_sel(); uint32_t a = sl >= 0 ? s_it[sl].a : 0, so = scr == 4 ? MM_OBJ : scr == 3 ? 0x4B04B8u : 0, v = so ? G32(so + 0x14) : 0;
+        if (a != la || v != lv) { int k; la = a; lv = v; tt_dbg("[MMSEL] screen %u sel %08X at %d,%d (%d x %d)", scr, a, sl >= 0 ? s_it[sl].x : -1, sl >= 0 ? s_it[sl].y : -1, sl >= 0 ? s_it[sl].w : 0, sl >= 0 ? s_it[sl].h : 0);
+            if (so) for (k = 0; k < 0x40; k += 4) tt_dbg(" %X", G32(so + k)); tt_dbg("\n"); }
+    }
     /* the pointer's mouse buttons: the left always (a click); the right
      * (back), but on the mission select and the character select -- whose
      * prompts name the keys (Help, Options) -- a right button bound to an
@@ -2600,6 +2697,24 @@ static void pointer_frame(void)
             } else if (cur == s_go.node) {
                 if (s_go.then == 'A') { press(INJ_A); if (mouse_log()) tt_dbg("[MOUSE] A on list item %d\n", cur); }
                 go_clear();
+            } else if (!getenv("TT_MOUSE_STEPS") && (!upg || !getenv("TT_UPG_STEPS")) && s_go.node >= (int)G32(s_go.item + 0xF4) && s_go.node < (int)G32(s_go.item + 0xF4) + list_shown(s_go.item)) {
+                /* (2.0.3, later: on the upgrade screens the names' list and the prices' are set together, upg_sync_lists;
+                 * TT_UPG_STEPS: a step at a time there) */
+                /* (2.0.3) a row on screen (the saved games, the dialogs' answers): chosen at once, not a d-pad step at a time --
+                 * the selection lagged behind the pointer (a playtest). The next frame sees it there (A then, if clicked) */
+                G32(s_go.item + 0xF0) = (uint32_t)s_go.node;
+                if (upg) upg_sync_lists(s_go.item, (uint32_t)s_go.node);
+                play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f);
+                if (mouse_log()) tt_dbg("[MOUSE] list item %d -> %d (at once)\n", cur, s_go.node);
+            } else if (!getenv("TT_MOUSE_STEPS") && (!upg || !getenv("TT_UPG_STEPS")) && s_go.node >= (int)G32(s_go.item + 0xF4) && s_go.node < (int)G32(s_go.item + 0xF4) + list_shown(s_go.item)) {
+                /* (2.0.3) a row on show: chosen at once (the list's choice, +F0), with the move's cues -- not a d-pad step at a time,
+                 * the choice trailing the pointer down the Load Game list (a playtest). Rows off the list still scroll a step at a
+                 * time. TT_MOUSE_STEPS: as before */
+                G32(s_go.item + 0xF0) = (uint32_t)s_go.node;
+                if (upg) upg_sync_lists(s_go.item, (uint32_t)s_go.node);
+                play_sound(0xA9D, -1.0f); play_sound(0xA9E, 1.0f);
+                if (mouse_log()) tt_dbg("[MOUSE] list %08X: %d at once (was %d)\n", s_go.item, s_go.node, cur);
+                if (s_go.then != 'A') go_clear();   /* (a click: A on the next frame, once the game has it chosen -- cur == node above) */
             } else {
                 if (s_go.steps > 0 && (int)s_go.last_sel == cur && GetTickCount() - s_go.step_t < 250) return;   /* (the last step not shown yet) */
                 if (s_go.steps > 0 && (int)s_go.last_sel == cur && ++s_go.fails >= 3) go_clear();
@@ -2619,6 +2734,9 @@ static void pointer_frame(void)
          * game's own move does: the place, its highlight, the move's sound),
          * any place the game's paths reach, wherever it is on the map */
         int cur = map_cur(), at = (moved || clk) && s_shown ? map_node_at(s_gx, s_gy) : -1;
+        if (clk && at >= 0 && at != cur && cur >= 0 && map_box_has(cur, s_gx, s_gy) && !getenv("TT_MAP_SMALLEST")) at = cur;   /* (2.0.3) a click where
+            * two places' boxes meet is on the one shown (the ring's left edge: shown as Secret Codes, the click chose Orthanc and
+            * started it, a playtest) */
         if (at >= 0 && cur >= 0 && at != cur && map_route(cur, at) >= 0) {
             map_jump(at);
             if (mouse_log()) tt_dbg("[MOUSE] map %d -> %d (at %.0f,%.0f)\n", cur, at, s_gx, s_gy);
@@ -2705,6 +2823,9 @@ static void pointer_frame(void)
             {
                 Item *t = &s_it[ti];
                 int there = s->a == t->a || (s->x == t->x && fabsf(icy(s) - icy(t)) <= s->h * 0.5f);
+                if (!there && mm_jump_to(s, t)) there = 1;   /* (2.0.3) the main menu: straight there, no steps */
+                if (!there && load_jump_to(sel, ti)) there = 1;   /* (2.0.3) and Load / Save Game's list */
+                if (!there && G32(FE_SCREEN) == 3) { static int nl; Group *g = group_of(ti); if (nl++ < 40) tt_dbg("[LOADJUMP] not taken: rows %u chosen %u, group %d items (sel in it %d)\n", G32(0x4B04B8u + 0x218), G32(0x4B04B8u + 0x208), g ? g->n : -1, g && group_of(sel) == g); }
                 /* (a step pressed: the game shows the new choice a frame or two
                  * later -- until it does, or a quarter second, no next step;
                  * at a high frame rate the old choice was still seen and the
@@ -2806,7 +2927,7 @@ void tt_menus_tick(void)
     vs_pause_restart_tick();
     coop_pause_tele_tick();
     if (getenv("TT_WALKCAMPAIGN") && (G32(0x4AD050u) == 6 || G32(0x4AD050u) == 8)) { extern void tt_walkto_tick(uint32_t hero, uint32_t now); static DWORD t0; if (!t0) t0 = GetTickCount(); if (GetTickCount() - t0 > (DWORD)atoi(getenv("TT_WALKCAMPAIGN"))) tt_walkto_tick(G32(0x43B15Cu), GetTickCount()); }   /* (test) */
-    if (getenv("TT_P1POSLOG")) { static DWORD tl; uint32_t p1 = G32(0x43B15Cu); if (p1 >= 0x10000u && p1 < 0x84000000u && GetTickCount() - tl > 2000u) { float x, y, z; uint32_t v; tl = GetTickCount(); v = G32(p1 + 0xF0); memcpy(&x, &v, 4); v = G32(p1 + 0xF4); memcpy(&y, &v, 4); v = G32(p1 + 0xF8); memcpy(&z, &v, 4); tt_dbg("[P1POS] %.1f %.1f %.1f pm %d\n", x, y, z, (int)G32(p1 + 0x2ECu)); } }   /* (test) */
+    if (getenv("TT_P1POSLOG")) { static DWORD tl; uint32_t p1 = G32(0x43B15Cu); if (p1 >= 0x10000u && p1 < 0x88000000u && GetTickCount() - tl > 2000u) { float x, y, z; uint32_t v; tl = GetTickCount(); v = G32(p1 + 0xF0); memcpy(&x, &v, 4); v = G32(p1 + 0xF4); memcpy(&y, &v, 4); v = G32(p1 + 0xF8); memcpy(&z, &v, 4); tt_dbg("[P1POS] %.1f %.1f %.1f pm %d\n", x, y, z, (int)G32(p1 + 0x2ECu)); } }   /* (test) */
     if (getenv("TT_TPANY")) {   /* (testing) "x,y,z,ms[,dir]": player 1 put there ms after play starts, then a frame a second into dir */
         static DWORD t0, tl; static int done, k; float x = 0, y = 0, z = 0; int ms = 0; char dir[200] = "";
         uint32_t p1 = G32(0x43B15Cu);

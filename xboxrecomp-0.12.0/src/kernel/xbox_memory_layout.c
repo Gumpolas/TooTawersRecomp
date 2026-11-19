@@ -84,6 +84,7 @@ static void *g_tiled_view = NULL;
  * XBOX_CONTIG_BASE / XBOX_CONTIG_SIZE come from kernel.h - the bridges need
  * the same numbers for MmClaimGpuInstanceMemory. */
 static void *g_contig_memory = NULL;
+static void *g_contig_high = NULL;   /* (2.0.3) XBOX_CONTIG_HIGH_BASE */
 
 /* NV2A GPU register aperture (see MemoryLayoutInit). Backed as plain RAM so
  * that D3D8 code linked into the title can poke it without faulting. */
@@ -614,6 +615,8 @@ static int fence_readable(uint32_t va, uint32_t bytes)
     if (va >= XBOX_CONTIG_BASE
             && (uint64_t)va + bytes <= (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE)
         return g_contig_memory != NULL;
+    if (va >= XBOX_CONTIG_HIGH_BASE && (uint64_t)va + bytes <= XBOX_CONTIG_END)
+        return g_contig_high != NULL;
     return (size_t)va + bytes <= g_memory_size;
 }
 
@@ -1376,6 +1379,7 @@ static int peek_readable(uint32_t va)
     struct { const void *mapped; uint32_t base; uint64_t size; } win[] = {
         { g_memory_base,   XBOX_BASE_ADDRESS, (uint64_t)g_memory_size },
         { g_contig_memory, XBOX_CONTIG_BASE,  XBOX_CONTIG_SIZE },
+        { g_contig_high,   XBOX_CONTIG_HIGH_BASE, XBOX_CONTIG_HIGH_SIZE },
         { g_nv2a_memory,   XBOX_NV2A_BASE,    XBOX_NV2A_SIZE },
         { g_mcpx_memory,   XBOX_MCPX_BASE,    XBOX_MCPX_SIZE },
         { g_flash_memory,  XBOX_FLASH_BASE,   XBOX_FLASH_SIZE },
@@ -2368,6 +2372,17 @@ BOOL xbox_MemoryLayoutInit(const void *xbe_data, size_t xbe_size)
         }
     }
 
+    /* (2.0.3) The memory above the window (XBOX_CONTIG_HIGH_BASE): plain
+     * zeroed pages, no alias. RECOMP_NOHIGHMEM: not mapped (as before). */
+    if (!getenv("RECOMP_NOHIGHMEM")) {
+        g_contig_high = VirtualAlloc((LPVOID)(XBOX_CONTIG_HIGH_BASE + g_memory_offset), XBOX_CONTIG_HIGH_SIZE,
+                                     MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+        if (g_contig_high)
+            fprintf(stderr, "  Memory above the window: %u MB at Xbox VA 0x%08X\n", XBOX_CONTIG_HIGH_SIZE >> 20, XBOX_CONTIG_HIGH_BASE);
+        else
+            fprintf(stderr, "  WARNING: memory above the window at 0x%08X failed (error %lu)\n", XBOX_CONTIG_HIGH_BASE, GetLastError());
+    }
+
     /*
      * NV2A hardware register aperture at 0xFD000000 (16 MB).
      *
@@ -2802,6 +2817,10 @@ void xbox_MemoryLayoutShutdown(void)
         VirtualFree(g_contig_memory, 0, MEM_RELEASE);
         g_contig_memory = NULL;
     }
+    if (g_contig_high) {
+        VirtualFree(g_contig_high, 0, MEM_RELEASE);
+        g_contig_high = NULL;
+    }
     if (g_mcpx_memory) {
         VirtualFree(g_mcpx_memory, 0, MEM_RELEASE);
         g_mcpx_memory = NULL;
@@ -3197,6 +3216,19 @@ size_t xbox_GetMemorySize(void) { return g_memory_size; }
 uint32_t xbox_ContiguousAllocatedBytes(void)
 {
     return g_contig_next - XBOX_CONTIG_BASE;
+}
+
+/* (2.0.3) The memory above the window, for a port's own use: its base (0 when
+ * it is not mapped) and its size. */
+static volatile uint32_t g_contig_high_used;
+/* how much of it the port has in use from its start (the GPU then takes its
+ * physical offsets as this memory, not as the RAM mirror at the same number) */
+void xbox_ContiguousHighSetInUse(uint32_t n) { if (n > g_contig_high_used) g_contig_high_used = n; }
+uint32_t xbox_ContiguousHighInUse(void) { return g_contig_high_used; }
+uint32_t xbox_ContiguousHigh(uint32_t *size)
+{
+    if (size) *size = g_contig_high ? XBOX_CONTIG_HIGH_SIZE : 0u;
+    return g_contig_high ? XBOX_CONTIG_HIGH_BASE : 0u;
 }
 
 

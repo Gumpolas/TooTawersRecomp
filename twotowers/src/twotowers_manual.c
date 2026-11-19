@@ -302,6 +302,7 @@ static void tt_main_tick(void)
 {
     { extern void tt_vs_exp_restore(void); tt_vs_exp_restore(); }
     { extern void tt_pool_spill_release(void); tt_pool_spill_release(); }
+    if (MEM32(0x4AD050u) == 6u) { extern void xbox_KeyScriptArm(void); xbox_KeyScriptArm(); }   /* (testing: RECOMP_KEY_SCRIPT_ARM times a key script from play) */
     { extern volatile float xbox_apu_stream_gain, xbox_apu_3d_gain; extern int tt_vs_on(void); if (!tt_vs_on()) { xbox_apu_stream_gain = 1.0f; xbox_apu_3d_gain = 1.0f; } }
     tt_fov_hud_tick();
     if (getenv("TT_CAMLOG")) { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); static uint32_t tl; uint32_t cm = MEM32(0x43B164u), h = MEM32(0x43B15Cu);
@@ -800,7 +801,7 @@ void sub_000E3350(void)
                 const char *ml = getenv("TT_MEMLOG");
                 while (ml && *ml) { char *e2; uint32_t a2 = (uint32_t)strtoul(ml, &e2, 16), v2 = MEM32(a2);
                     tt_dbg("[MEMLOG] t %u %08X = %08X (%d, %.3f)%s", tt_game_ms, a2, v2, (int32_t)v2, MEMF(a2), "");
-                    if (v2 >= 0x10000u && v2 < 0x84000000u && (v2 < 0x04000000u || v2 >= 0x80000000u)) { uint32_t vt = MEM32(v2), k2; tt_dbg(" -> vt %08X f98 %08X fA4 %08X +2FC %d +300 %d", vt, vt >= 0x10000u ? MEM32(vt + 0x98) : 0, vt >= 0x10000u ? MEM32(vt + 0xA4) : 0, (int32_t)MEM32(v2 + 0x2FC), (int32_t)MEM32(v2 + 0x300)); for (k2 = 0; k2 < 0x600u; k2 += 4) if (MEM32(v2 + k2) == MEM32(0x4ACB50u) && MEM32(0x4ACB50u)) tt_dbg(" [+%X]", k2); }
+                    if (v2 >= 0x10000u && v2 < 0x88000000u && (v2 < 0x04000000u || v2 >= 0x80000000u)) { uint32_t vt = MEM32(v2), k2; tt_dbg(" -> vt %08X f98 %08X fA4 %08X +2FC %d +300 %d", vt, vt >= 0x10000u ? MEM32(vt + 0x98) : 0, vt >= 0x10000u ? MEM32(vt + 0xA4) : 0, (int32_t)MEM32(v2 + 0x2FC), (int32_t)MEM32(v2 + 0x300)); for (k2 = 0; k2 < 0x600u; k2 += 4) if (MEM32(v2 + k2) == MEM32(0x4ACB50u) && MEM32(0x4ACB50u)) tt_dbg(" [+%X]", k2); }
                     tt_dbg("\n"); ml = *e2 == ',' ? e2 + 1 : ""; }
             }
             extern void xbox_PresentDumpRequest(const char *path);
@@ -1454,9 +1455,31 @@ int tt_cine_active(void)
     for (o = 0x1D9970u; o < 0x1E5D70u; o += 0x3100u) if (MEM32(o + 0x20) == 3u) return 1;
     return 0;
 }
+uint32_t tt_fang_played[16]; int tt_fang_nplayed;   /* (2.0.3: the cinematics played since the level loaded, Fangorn) */
 void sub_0001B580(void)
 {
     if (tt_dbg_on()) tt_cine_dump(ecx, "tick");
+    if (getenv("TT_CINETLOG")) { static int n; if (n++ % 20 == 0 && n < 2000) tt_dbg("[CINET] obj %08X st %u asset %08X +2C %08X (%.3f) +24 %08X +28 %08X dt %.4f\n", ecx, MEM32(ecx + 0x20), MEM32(ecx + 0x14), MEM32(ecx + 0x2C), MEMF(ecx + 0x2C), MEM32(ecx + 0x24), MEM32(ecx + 0x28), MEMF(esp + 4)); }
+    if (MEM32(ecx + 0x20) == 3u && MEM32(0x4AD050u) == 6u && !getenv("TT_FANG_SCENETWICE")) {
+        /* (2.0.3) Fangorn: the same cutscene a second time. After dying, the checkpoint by it plays that cutscene; walk on as it ends
+         * and its trigger, still set, plays it again (a playtest's video and log: over, then again 0.6 s later). On Fangorn only (story,
+         * not Versus), a cinematic that has already played since the level loaded (a restart is a load: coop_level_reset clears the
+         * list) runs to its end at once when it starts again, as a skip does -- every event in it still happens, in order.
+         * TT_FANG_SCENETWICE: as the game */
+        extern int tt_vs_on(void);
+        static uint32_t skip_obj, obj_a[8]; static float obj_e[8]; float el = MEMF(ecx + 0x28); uint32_t asset = MEM32(ecx + 0x14), k = (ecx - 0x1D9970u) / 0x3100u;
+        if (MEM32(0x1BB2A4u) == 5u && !tt_vs_on() && k < 8u && asset) {
+            if (obj_a[k] != asset || el < obj_e[k] || el != el) {   /* (it starts: another, or its time (+0x28, ms) back to the start -- a pause holds it) */
+                int i, seen = 0;
+                for (i = 0; i < tt_fang_nplayed; i++) if (tt_fang_played[i] == asset) seen = 1;
+                if (getenv("TT_FANG_TESTSKIP") && (atoi(getenv("TT_FANG_TESTSKIP")) != 2 || tt_fang_nplayed > 0)) seen = 1;   /* (testing: as if every one had played; 2: all but the first) */
+                if (seen) { skip_obj = ecx; tt_dbg("[CINE] Fangorn: cutscene %08X has played already since the level loaded: run to its end\n", asset); }
+                else { if (skip_obj == ecx) skip_obj = 0; if (tt_fang_nplayed < 16) tt_fang_played[tt_fang_nplayed++] = asset; }
+            }
+            obj_a[k] = asset; obj_e[k] = el;
+            if (skip_obj == ecx) { float big = 3600.0f; memcpy((void *)XBOX_PTR(esp + 4), &big, 4); }
+        }
+    }
     if (getenv("TT_SCENESKIP") && MEM32(ecx + 0x20) == 3u && MEM32(0x4AD050u) == 6u && tt_scene_skip_press()) {
         float big = 3600.0f; memcpy((void *)XBOX_PTR(esp + 4), &big, 4);
         tt_dbg("[CINE] skipped (Start / Back): run to its end\n");
@@ -2161,8 +2184,8 @@ static const char *coop_nm(uint32_t a);
 void sub_0009E9D0(void)
 {
     tt_cbev(MEM32(esp + 4), MEM16(esp + 8));
-    if (getenv("TT_COOP_SHIELDLOG")) { uint32_t ob = MEM32(esp + 4); uint32_t ev = MEM16(esp + 8); static int n; const char *nm = ob >= 0x10000u && ob < 0x84000000u ? coop_nm(ob) : "?";
-        if (strstr(nm, "Shield") || strstr(nm, "weaponObj") || ev == 24u) if (n++ < 600 && ev != 7u) tt_dbg("[SHEV] t %u %08X '%s' event %u hp %d +16C %08X player %08X from %06X\n", tt_game_ms, ob, nm, ev, ob >= 0x10000u && ob < 0x84000000u ? (int32_t)MEM32(ob + 0x2FC) : 0, ob >= 0x10000u && ob < 0x84000000u ? MEM32(ob + 0x16C) : 0, MEM32(0x43B15Cu), MEM32(esp)); }
+    if (getenv("TT_COOP_SHIELDLOG")) { uint32_t ob = MEM32(esp + 4); uint32_t ev = MEM16(esp + 8); static int n; const char *nm = ob >= 0x10000u && ob < 0x88000000u ? coop_nm(ob) : "?";
+        if (strstr(nm, "Shield") || strstr(nm, "weaponObj") || ev == 24u) if (n++ < 600 && ev != 7u) tt_dbg("[SHEV] t %u %08X '%s' event %u hp %d +16C %08X player %08X from %06X\n", tt_game_ms, ob, nm, ev, ob >= 0x10000u && ob < 0x88000000u ? (int32_t)MEM32(ob + 0x2FC) : 0, ob >= 0x10000u && ob < 0x88000000u ? MEM32(ob + 0x16C) : 0, MEM32(0x43B15Cu), MEM32(esp)); }
     if (getenv("TT_COOP_EVLOG9E")) { extern uint32_t coop_p1_actor(void); extern int tt_coop_player_of(uint32_t a); extern int coop_slot_cur; static unsigned c[8][3][64]; static uint32_t lt; uint32_t p1_ = coop_p1_actor(), ob = MEM32(esp + 4), ev = MEM16(esp + 8); int cls = 7, k_, st = 2;   /* (research) events by object: 0-2 slot k's file machine, 3 player 1's machine, 4-6 a player 2-4 actor */
         for (k_ = 0; k_ < 3; k_++) if (ob && ob == coop_fm_x[k_]) cls = k_;
         if (cls == 7 && p1_ >= 0x10000u && ob == MEM32(p1_ + 0x3F8)) cls = 3;
@@ -2730,22 +2753,32 @@ void sub_000838E0(void)
     }
     { extern int coop_p1_die_hook(void); extern uint32_t coop_p1_actor(void); if (ecx == coop_p1_actor() && ecx && coop_p1_die_hook()) { esp += 4; return; } }   /* ret */
     {   /* player 2: the level script's death check runs in his context (he is [0x43B15C] then) and calls this on him as the player: death animation to state 50, his weapons dropped, the death cam (observed). His going down is ours (coop_death_frame): skipped. TT_COOP_P2DIE lets it run. */
-        extern uint32_t coop_p2_actor(void); static unsigned n; if (ecx && ecx == coop_p2_actor() && !getenv("TT_COOP_P2DIE")) { if (n++ < 4) tt_dbg("[COOPDEATH] die method on P2 (from %06X): skipped, the respawn handles him\n", MEM32(esp)); esp += 4; return; } }
+        extern uint32_t coop_p2_actor(void); static unsigned n; if (ecx && ecx == coop_p2_actor() && !getenv("TT_COOP_P2DIE")) { extern void coop_p2_down_now(void); if (n++ < 4) tt_dbg("[COOPDEATH] die method on P2 (from %06X, health %d): skipped, he goes down for the respawn\n", MEM32(esp), (int32_t)MEM32(ecx + 0x2FC));
+            { extern int tt_vs_round_fresh(void); if (tt_vs_round_fresh()) { static unsigned nv; if (nv++ < 8) tt_dbg("[VS] die method on P2 at the round's start (health %d): last round's, ignored\n", (int32_t)MEM32(ecx + 0x2FC)); esp += 4; return; } }
+            /* (2.0.3) Versus: a finishing grab's kill (0xAB272) from the round before came in as the next round began -- player 2 went
+             * down again at once, full health, and the round was player 1's (a playtest, 1 v 1: rounds 2 and 4). In the countdown and
+             * the first 3 s of a round it is ignored */
+            if (!getenv("TT_COOP_DIENODOWN")) coop_p2_down_now();   /* (2.0.2) a grab's kill (0xAB272) on a player with health left: not down, he stayed in the troll's hold (52) and the troll's
+                * grab never ended -- player 1 could not move until then (a playtest). Down now: the downed pose plays the death (INP_DIE), out of the hold */
+            esp += 4; return; } }
     {   /* (2.0.2) players 3 and 4 (or player 2 asked outside his own step): the same -- a grab's kill or the level's death check
          * called the die method on an extra player with another slot in place, and his death ran as the player's: the death
          * camera and a game over with players still standing (a playtest: player 1 down, a troll's grab on another player at
          * full health, game over). Skipped as player 2's is; his going down is the respawn's (coop_death_frame) */
         extern int tt_coop_player_of(uint32_t a); extern int tt_vs_on(void); extern uint32_t coop_p1_actor(void);
-        if (ecx && coop_p1_actor() && !tt_vs_on() && tt_coop_player_of(ecx) >= 2 && !getenv("TT_COOP_P2DIE")) { static unsigned nx; if (nx++ < 8) tt_dbg("[COOPDEATH] die method on P%d (from %06X, health %d): skipped, the respawn handles him\n", tt_coop_player_of(ecx), MEM32(esp), (int32_t)MEM32(ecx + 0x2FC)); esp += 4; return; }
+        if (ecx && coop_p1_actor() && !tt_vs_on() && tt_coop_player_of(ecx) >= 2 && !getenv("TT_COOP_P2DIE")) { static unsigned nx; int pk = tt_coop_player_of(ecx) - 2, prev = coop_slot_cur; extern void coop_p2_down_now(void);
+            if (nx++ < 8) tt_dbg("[COOPDEATH] die method on P%d (from %06X, health %d): skipped, he goes down for the respawn\n", pk + 2, MEM32(esp), (int32_t)MEM32(ecx + 0x2FC));
+            if (!getenv("TT_COOP_DIENODOWN")) { coop_slot_set(pk); coop_p2_down_now(); coop_slot_set(prev); }
+            esp += 4; return; }
     }
     sub_000838E0_gen();
 }
 
 extern void sub_000A3DE0_gen(void); void sub_000A3DE0(void)   /* @AllowDeathCam: logged (research, TT_COOP set) */
 {
-    uint32_t cam = MEM32(0x43B164u); int was = cam >= 0x10000u && cam < 0x84000000u ? MEM8(cam + 0x18B) : -1;
+    uint32_t cam = MEM32(0x43B164u); int was = cam >= 0x10000u && cam < 0x88000000u ? MEM8(cam + 0x18B) : -1;
     sub_000A3DE0_gen();
-    if (getenv("TT_COOP")) { static int n; if (n++ < 40) tt_dbg("[COOPDEATH] @AllowDeathCam: camera +18B %d -> %d (level %u)%s", was, cam >= 0x10000u && cam < 0x84000000u ? MEM8(cam + 0x18B) : -1, MEM32(0x1BB2A4u), "\n"); }
+    if (getenv("TT_COOP")) { static int n; if (n++ < 40) tt_dbg("[COOPDEATH] @AllowDeathCam: camera +18B %d -> %d (level %u)%s", was, cam >= 0x10000u && cam < 0x88000000u ? MEM8(cam + 0x18B) : -1, MEM32(0x1BB2A4u), "\n"); }
 }
 extern void sub_00069130_gen(void);
 void sub_00069130(void)
@@ -2812,7 +2845,7 @@ extern void sub_000E8B20_gen(void); void sub_000E8B20(void) { if (coop_probe_on(
 extern void sub_000E8B70_gen(void); void sub_000E8B70(void) {
     uint32_t a1 = MEM32(esp + 4), m = MEM32(esp + 8);
     if (coop_probe_on()) coop_in(0x000E8B70u);
-    tt_dbg("[FILM] %s, mode %u%s\n", a1 >= 0x10000u && a1 < 0x84000000u ? (const char *)XBOX_PTR(a1) : "?", m, m == 1 && !getenv("TT_NOFILMSKIP") ? ": may be skipped (was not)" : "");
+    tt_dbg("[FILM] %s, mode %u%s\n", a1 >= 0x10000u && a1 < 0x88000000u ? (const char *)XBOX_PTR(a1) : "?", m, m == 1 && !getenv("TT_NOFILMSKIP") ? ": may be skipped (was not)" : "");
     if (m == 1 && !getenv("TT_NOFILMSKIP")) MEM32(esp + 8) = 0;
     { extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); uint32_t t0 = (uint32_t)GetTickCount(); sub_000E8B70_gen(); tt_dbg("[FILM] over after %u ms%c", (uint32_t)GetTickCount() - t0, 10); } }
 extern void sub_000D3ED0_gen(void); void sub_000D3ED0(void) { if (coop_probe_on()) coop_in(0x000D3ED0u); sub_000D3ED0_gen(); }
@@ -3060,7 +3093,7 @@ void tt_coop_p1_pre(uint32_t self, uint32_t fn)
         for (k = 0; ar >= 0x10000u && k < 0x100u; k += 4) { uint32_t v = MEM32(ar + k);
             if (v == MEM32(0x43B15Cu) || v == coop_p2) tt_dbg("[HITSCAN] on %s: arg+%X = %s\n", self == coop_p2 ? "P2" : "P1", k, v == coop_p2 ? "P2" : "P1");
             for (i = 0; i < coop_nchars; i++) if (v == coop_chars[i] && MEM32(v + 0x114) == 3) tt_dbg("[HITSCAN] on %s: arg+%X = enemy %08X\n", self == coop_p2 ? "P2" : "P1", k, v); }
-        { uint32_t o = MEM32(ar + 12), ow = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x11C) : 0; tt_dbg("[HITSCAN] +C %08X vt %08X owner +11C %08X (%s, +114 %u)\n", o, o >= 0x10000u ? MEM32(o) : 0, ow, ow == MEM32(0x43B15Cu) ? "P1" : ow == coop_p2 ? "P2" : "other", ow >= 0x10000u && ow < 0x84000000u ? MEM32(ow + 0x114) : 0); }
+        { uint32_t o = MEM32(ar + 12), ow = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x11C) : 0; tt_dbg("[HITSCAN] +C %08X vt %08X owner +11C %08X (%s, +114 %u)\n", o, o >= 0x10000u ? MEM32(o) : 0, ow, ow == MEM32(0x43B15Cu) ? "P1" : ow == coop_p2 ? "P2" : "other", ow >= 0x10000u && ow < 0x88000000u ? MEM32(ow + 0x114) : 0); }
         tt_dbg("[HITSCAN] arg %08X: %08X %08X %08X %08X %08X %08X %08X %08X | %08X\n", ar, MEM32(ar), MEM32(ar+4), MEM32(ar+8), MEM32(ar+12), MEM32(ar+16), MEM32(ar+20), MEM32(ar+24), MEM32(ar+28), MEM32(esp + 8));
     }
     if (fn == 0x00084220u && self >= 0x10000u && (self == coop_p2 || self == MEM32(0x43B15Cu))) {   /* (research) slot 42 = hit/damage */
@@ -3260,11 +3293,11 @@ static void coop_pad2(CoopPad *o)
         if (!strcmp(getenv("TT_COOP_PAD2SEEK"), "2")) coop_seek_near(o); else coop_seek(o);
     }
     { extern void coop_p2bot(CoopPad *o); coop_p2bot(o); }   /* the Co-op menu's P2 Bot */
-    if (getenv("TT_COOP_PXSTLOG") && coop_p2 >= 0x10000u && coop_p2 < 0x84000000u) { COOP_PS uint32_t ls = ~0u; COOP_PS int n; uint32_t st = MEM32(coop_p2 + 0x408);   /* (research) an extra player's state changes, with his buttons */
+    if (getenv("TT_COOP_PXSTLOG") && coop_p2 >= 0x10000u && coop_p2 < 0x88000000u) { COOP_PS uint32_t ls = ~0u; COOP_PS int n; uint32_t st = MEM32(coop_p2 + 0x408);   /* (research) an extra player's state changes, with his buttons */
         if (st != ls && n++ < 400) { uint32_t pm = coop_pathmap(coop_p2); int cv = -9; if (pm) { float ox = MEMF(pm + 0x48u), oy = MEMF(pm + 0x4Cu), sz = (float)(int)MEM32(pm + 0x68u); if (sz > 0) cv = coop_pm_cell(pm, (int)floorf((MEMF(coop_p2 + 0xF0) - ox) / sz), (int)floorf((MEMF(coop_p2 + 0xF4) - oy) / sz)); }
             tt_dbg("[PXST] t %u P%d %u -> %u | pad A%u B%u X%u Y%u | +3E0 %08X +3E4 %08X +466 %u hp %d | pathmap %u cell %d at %.1f %.1f %.1f | +41C %u +420 %.2f\n", coop_now(), coop_slot_cur + 2, ls, st, o->analog[0], o->analog[1], o->analog[2], o->analog[3], MEM32(coop_p2 + 0x3E0), MEM32(coop_p2 + 0x3E4), MEM8(coop_p2 + 0x466), (int32_t)MEM32(coop_p2 + 0x2FC), MEM32(coop_p2 + 0x2EC), cv, MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8), MEM32(coop_p2 + 0x41C), MEMF(coop_p2 + 0x420)); }
         ls = st; }
-    if (coop_slot_cur > 0 && coop_mode() == 3 && coop_p2 >= 0x10000u && coop_p2 < 0x84000000u && coop_p2_t0 && !coop_depth && getenv("TT_COOP_PXUNSTICK")) {   /* (opt-in: the cause found, 0x43B3D8 now each player's, coop_blk) */
+    if (coop_slot_cur > 0 && coop_mode() == 3 && coop_p2 >= 0x10000u && coop_p2 < 0x88000000u && coop_p2_t0 && !coop_depth && getenv("TT_COOP_PXUNSTICK")) {   /* (opt-in: the cause found, 0x43B3D8 now each player's, coop_blk) */
         /* (2.0.1) players 3 and 4: a state that never ends. Their machine's own end of a state (INP_EXPIRED, 30, from its update, 0x868F0)
          * reached them a tenth as often as player 2 or player 1 (counted: 5 against 53 in a minute at Amon Hen), and an extra hero of
          * another build than player 1's (Gimli, Legolas) stood in a hit reaction, a blow or a stop for 5 to 12 s -- his blows never came
@@ -3348,7 +3381,7 @@ COOP_PS uint32_t coop_bot_drove_t;   /* the P2 Bot last wrote pad 2 (the leash i
 /* (1.9.9) an address the game's memory has: its 64 MB (0x10000 up to 0x04000000) or the contiguous window (0x80000000, 64 MB).
  * The level's pathmap list holds leftovers past its own entries -- one pointed at 0x76EA0xxx, and reading it brought the game down
  * in a Troll Battle (a playtest's crash log: vs_floor) */
-static int coop_va_ok(uint32_t a, uint32_t n) { return (a >= 0x10000u && a < 0x04000000u && a + n <= 0x04000000u) || (a >= 0x80000000u && a < 0x84000000u && a + n <= 0x84000000u); }
+static int coop_va_ok(uint32_t a, uint32_t n) { return (a >= 0x10000u && a < 0x04000000u && a + n <= 0x04000000u) || (a >= 0x80000000u && a < 0x88000000u && a + n <= 0x88000000u); }
 static uint32_t coop_pathmap(uint32_t actor); static int coop_pm_cell(uint32_t pm, int c, int r); static void coop_hero_state(uint32_t a, uint32_t st); int coop_hero_down(int who);
 #define COOP_PM_WALK(v) ((v) == 0 || (v) == 2)   /* walkable pathmap states (2: player 1 stands on them) */
 static int coop_pm_line(uint32_t pm, int c0, int r0, int c1, int r1)   /* the cells on the line from (c0,r0) to (c1,r1) all walkable */
@@ -3508,7 +3541,7 @@ static int coop_bot_shoot(CoopPad *o, uint32_t p2, uint32_t e, int fire)
     coop_bot_aim_until = now + 250u;
     if (getenv("TT_COOP_AIMTGTLOG")) { COOP_PS uint32_t al; uint32_t t = c2 >= 0x10000u ? MEM32(c2 + 0x98) : 0;   /* (research) what his lock is while he aims */
         if (now - al >= 250u) { al = now; tt_dbg("[AIMTGT] aiming at %08X (%.1f away), LT for %u ms | his target %08X %s%s\n", e, wn, now - lt_t, t,
-            t == e ? "(the aimed one)" : !t ? "(none)" : "(another)", t && t != e && t >= 0x10000u && t < 0x84000000u ? coop_nm(t) : ""); } }
+            t == e ? "(the aimed one)" : !t ? "(none)" : "(another)", t && t != e && t >= 0x10000u && t < 0x88000000u ? coop_nm(t) : ""); } }
     if (now - lt_last > 400u || e != lt_e) lt_t = now; lt_last = now; lt_e = e;
     /* A only once LT has been held 0.4 s (A before the bow is up is a swing in the air) */
     if (fire && now - lt_t >= 400u && locked && now % 700 < 200) o->analog[0] = 255;
@@ -3672,7 +3705,7 @@ static void coop_bot_view(BotView *v)
     float sx, sy, far2; int i, n = 1;
     v->qx = MEMF(v->p1 + 0xF0); v->qy = MEMF(v->p1 + 0xF4); v->bx = MEMF(v->p2 + 0xF0); v->by = MEMF(v->p2 + 0xF4);
     v->d1 = sqrtf((v->qx - v->bx) * (v->qx - v->bx) + (v->qy - v->by) * (v->qy - v->by));
-    if (v->d1 > 22.0f && coop_place_frames <= 0 && !getenv("TT_COOP_BOTNOPUT") && (getenv("TT_COOP_OLDCATCHUP") || (coop_pathmap(v->p1) && !tt_in_scene()))) {   /* (not while player 1 is off the pathmaps or in a cutscene: a bot run put him
+    if (v->d1 > 22.0f && coop_place_frames <= 0 && !getenv("TT_COOP_BOTNOPUT") && (tt_coop_setting(3) || getenv("TT_COOP_BOTPUTALWAYS")) && (getenv("TT_COOP_OLDCATCHUP") || (coop_pathmap(v->p1) && !tt_in_scene()))) {   /* (not while player 1 is off the pathmaps or in a cutscene: a bot run put him
         * beside a player 1 falling through the Plains of Rohan, as the catch-up did at Weathertop, coop_place) */
         if (!far_t) far_t = v->now | 1;
         else if (v->now - far_t > 3000u) { far_t = 0; coop_place_frames = 3; s_bot_following = 0; tt_dbg("[P2BOT] %.1f behind for 3 s: put beside player 1\n", v->d1); }
@@ -4016,19 +4049,19 @@ static int coop_bot_ranged(BotView *v, CoopPad *o)
     COOP_PS uint32_t nl_e, nl_until, aim_e, aim_t;
     uint32_t c2, gt, rf = 0; float rb = 1e18f, rd = 0; int i;
     if (v->near || v->bossfight || v->dc > v->gr || (int16_t)MEM16(v->p2 + 0x304) <= 0 || getenv("TT_COOP_BOTNORANGED")) return 0;
-    c2 = MEM32(v->p2 + 0x494); gt = c2 >= 0x10000u && c2 < 0x84000000u ? MEM32(c2 + 0x98) : 0;
-    if (gt >= 0x10000u && gt < 0x84000000u && gt != v->p1 && gt != v->p2 && MEM32(gt) == 0x1741C0u && MEM32(gt + 0x114) == 3 && (int32_t)MEM32(gt + 0x2FC) > 0
+    c2 = MEM32(v->p2 + 0x494); gt = c2 >= 0x10000u && c2 < 0x88000000u ? MEM32(c2 + 0x98) : 0;
+    if (gt >= 0x10000u && gt < 0x88000000u && gt != v->p1 && gt != v->p2 && MEM32(gt) == 0x1741C0u && MEM32(gt + 0x114) == 3 && (int32_t)MEM32(gt + 0x2FC) > 0
         && !coop_boss_kind(gt) && coop_bot_seen(gt) && !(gt == nl_e && v->now < nl_until)) {
         float de = (MEMF(gt + 0xF0) - v->bx) * (MEMF(gt + 0xF0) - v->bx) + (MEMF(gt + 0xF4) - v->by) * (MEMF(gt + 0xF4) - v->by);
         if (de <= 1225.0f) { rf = gt; rd = de; }
     }
     if (!rf) for (i = 0; i < coop_nchars; i++) {
         uint32_t e = coop_chars[i], ce, t; float de, s;
-        if (e < 0x10000u || e >= 0x84000000u || e == v->p1 || e == v->p2 || MEM32(e) != 0x1741C0u || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) || !coop_bot_seen(e)) continue;
+        if (e < 0x10000u || e >= 0x88000000u || e == v->p1 || e == v->p2 || MEM32(e) != 0x1741C0u || MEM32(e + 0x114) != 3 || (int32_t)MEM32(e + 0x2FC) <= 0 || coop_boss_kind(e) || !coop_bot_seen(e)) continue;
         if (e == nl_e && v->now < nl_until) continue;
         de = (MEMF(e + 0xF0) - v->bx) * (MEMF(e + 0xF0) - v->bx) + (MEMF(e + 0xF4) - v->by) * (MEMF(e + 0xF4) - v->by);
         if (de > 1225.0f) continue;
-        ce = MEM32(e + 0x494); t = ce >= 0x10000u && ce < 0x84000000u ? MEM32(ce + 0x98) : 0;
+        ce = MEM32(e + 0x494); t = ce >= 0x10000u && ce < 0x88000000u ? MEM32(ce + 0x98) : 0;
         s = t == v->p1 || t == v->p2 ? de : de * 4.0f;
         if (s < rb) { rb = s; rd = de; rf = e; }
     }
@@ -4131,7 +4164,7 @@ static void coop_bot_follow(BotView *v, CoopPad *o)
         else stuck_t = 0;
         chk_t = v->now; chk_x = v->bx; chk_y = v->by;
     }
-    if (stuck_t && v->now - stuck_t >= 3000u && v->d1 > 12.0f) {
+    if (stuck_t && v->now - stuck_t >= 3000u && v->d1 > 12.0f && (tt_coop_setting(3) || getenv("TT_COOP_BOTPUTALWAYS"))) {   /* (2.0.3: only with P2 Teleport on -- a playtest: off, the bots still jumped to player 1, the camera with them) */
         stuck_t = 0; coop_place_frames = 3; s_bot_following = 0;
         tt_dbg("[P2BOT] still stuck, %.1f from player 1: put beside him\n", v->d1);
     } else if (v->now - direct_t < 700u) {
@@ -4216,7 +4249,7 @@ void coop_p2bot(CoopPad *o)
     memset(&v, 0, sizeof v);
     v.now = coop_now(); v.p1 = coop_first_char; v.p2 = coop_p2;
     if (!coop_bot_drives() || v.p1 < 0x10000u || v.p2 < 0x10000u || v.p1 == v.p2 || !coop_p2_t0) return;
-    if ((MEM32(0x4AD050u) != 6u && MEM32(0x4AD050u) != 8u) || v.p1 >= 0x84000000u || v.p2 >= 0x84000000u || MEM32(v.p2) != 0x1741C0u) {   /* (2.0.1) not in play (the stats and upgrade
+    if ((MEM32(0x4AD050u) != 6u && MEM32(0x4AD050u) != 8u) || v.p1 >= 0x88000000u || v.p2 >= 0x88000000u || MEM32(v.p2) != 0x1741C0u) {   /* (2.0.1) not in play (the stats and upgrade
         * screens after a level): the bots rest -- player 3's bot read his hero, gone with the level, and the game crashed after the Hornburg's upgrades (a playtest) */
         memset(o, 0, sizeof *o); return; }
     if ((getenv("TT_COOP_PAD2SCRIPT") || getenv("TT_COOP_PAD2SEEK")) && !getenv("TT_COOP_P2BOT")) return;
@@ -4227,7 +4260,7 @@ void coop_p2bot(CoopPad *o)
     if (getenv("TT_COOP_P2AIMTEST")) { coop_bot_aimtest(o, v.now, v.p1, v.p2); return; }
     if (getenv("TT_COOP_P2SHOOTPROP")) {   /* (bot test) player 2 aims (LT), turning slowly, and shoots whatever prop (not a character) his lock is on */
         uint32_t c2 = MEM32(v.p2 + 0x494), t = c2 >= 0x10000u ? MEM32(c2 + 0x98) : 0;
-        if (t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x174980u) coop_bot_shoot(o, v.p2, t, 1);
+        if (t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x174980u) coop_bot_shoot(o, v.p2, t, 1);
         else { o->analog[6] = 255; coop_bot_aim_until = v.now + 250u; o->lx = (v.now / 4000u) % 2u ? 9000 : 0; }
         return;
     }
@@ -4240,7 +4273,7 @@ void coop_p2bot(CoopPad *o)
     if (getenv("TT_COOP_P2BOMBTEST")) {   /* (bot test) player 2 shoots at the nearest explosive prop ('prop_*bomb*', role 7, within 45) */
         extern uint32_t coop_wobjs[]; extern int coop_nwobjs; uint32_t best = 0; float bd = 2025.0f; int i;
         for (i = 0; i < coop_nwobjs; i++) { uint32_t a = coop_wobjs[i], hn = MEM32(a + 0x18); float dx, dy;
-            if (MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7 || (int32_t)MEM32(a + 0x2FC) <= 0 || hn < 0x10000u || hn >= 0x84000000u || !strstr((const char *)XBOX_PTR(hn), "bomb")) continue;
+            if (MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7 || (int32_t)MEM32(a + 0x2FC) <= 0 || hn < 0x10000u || hn >= 0x88000000u || !strstr((const char *)XBOX_PTR(hn), "bomb")) continue;
             dx = MEMF(a + 0xF0) - MEMF(v.p2 + 0xF0); dy = MEMF(a + 0xF4) - MEMF(v.p2 + 0xF4); if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; best = a; } }
         { COOP_PS uint32_t lb; if (best != lb) { lb = best; tt_dbg("[BOMBTEST] target %08X %s %.1f away\n", best, best ? coop_nm(best) : "-", sqrtf(bd)); } }
         if (best && getenv("TT_VS_BOMBMELEE")) { COOP_PS CoopSeek kb = { 1, 0 }; if (coop_bot_go(&kb, o, v.p2, MEMF(best + 0xF0), MEMF(best + 0xF4), 3.6f) <= 3.6f && v.now % 600 < 200) o->analog[3] = 255; }   /* (test: his fierce blows at it) */
@@ -4260,7 +4293,21 @@ void coop_p2bot(CoopPad *o)
     coop_bot_view(&v);
     coop_bot_pick_melee(&v);
     s_bot_how = "";
-    if (!coop_bot_boss(&v, o) && !coop_bot_troll(&v, o) && !coop_bot_ranged(&v, o) && !coop_bot_melee(&v, o)) coop_bot_follow(&v, o);
+    {   /* (2.0.3) player 1 run on ahead -- over 16 units away: the bot leaves the fight and runs after him, back to fighting once
+         * within 10 (a playtest, P2 Teleport off: the bots stayed fighting on the Deeping Wall and never followed; with the
+         * teleport they were put beside him instead). A boss or the cave troll: fought as before. TT_COOP_BOTSTAYFIGHT: as before */
+        COOP_PS int catching_up; int fight = 1;
+        if (!getenv("TT_COOP_BOTSTAYFIGHT")) {
+            if (v.d1 > 16.0f && !catching_up) { catching_up = 1; tt_dbg("[P2BOT] player 1 %.1f away: leaving the fight to follow\n", v.d1); }
+            else if (v.d1 < 10.0f && catching_up) { catching_up = 0; tt_dbg("[P2BOT] caught up (player 1 %.1f away)\n", v.d1); }
+            if (catching_up) fight = 0;
+        }
+        if (coop_bot_boss(&v, o) || coop_bot_troll(&v, o)) ;
+        else if (!fight) {   /* (straight after player 1 by the pathmap's way, at a run, to within 8 units) */
+            v.foe = 0; v.mode = 1; s_bot_following = 0; s_bot_why = "catching up with player 1"; s_bot_how = "";
+            coop_bot_go(&s_bk, o, v.p2, v.qx, v.qy, 8.0f);
+        } else if (!coop_bot_ranged(&v, o) && !coop_bot_melee(&v, o)) coop_bot_follow(&v, o);
+    }
     bot_lx = o->lx; bot_ly = o->ly;
     if (v.mode != lastmode || v.now - tlog > 1000) { tlog = v.now; lastmode = v.mode;
         tt_dbg("[P2BOT] %s: player 1 %.1f away, rotation %.0f deg (%u samples)\n", v.mode == 3 ? "shooting" : v.mode == 2 ? "fighting" : v.mode ? "following" : "beside player 1", v.d1,
@@ -4272,21 +4319,21 @@ static int coop_p1pad_ry, coop_p1pad_lt;   /* (bot test) player 1's idle pad as 
 static const char *coop_nm(uint32_t a)
 {
     uint32_t h;
-    if (a < 0x10000u || a >= 0x84000000u) return "-";
+    if (a < 0x10000u || a >= 0x88000000u) return "-";
     if (a == coop_first_char) return "P1";
     if (a == coop_p2) return "P2";
     h = MEM32(a + 0x18);
-    return h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?";
+    return h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?";
 }
 const char *coop_nm_x(uint32_t a) { return coop_nm(a); }
 static int coop_boss_kind(uint32_t a)
 {
     const char *n;
-    if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u) return 0;
+    if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x1741C0u) return 0;
     n = coop_nm(a);
     return !strncmp(n, "Tentacle", 8) ? 1 : !strncmp(n, "WatcherObj", 10) ? 2 : !strncmp(n, "TrollBoss", 9) ? 3 : !strncmp(n, "TrollChain", 10) ? 4 : 0;
 }
-static int coop_who_kind(uint32_t a) { int b = coop_boss_kind(a); return b ? b : a == coop_first_char ? 3 : a == coop_p2 ? 4 : a >= 0x80000000u && a < 0x84000000u && MEM32(a) == 0x174980u ? 5 : 6; }
+static int coop_who_kind(uint32_t a) { int b = coop_boss_kind(a); return b ? b : a == coop_first_char ? 3 : a == coop_p2 ? 4 : a >= 0x80000000u && a < 0x88000000u && MEM32(a) == 0x174980u ? 5 : 6; }
 /* XInputGetState (XAPI, stdcall handle, XINPUT_STATE*) */
 extern void sub_001697D9_gen(void);
 /* (Versus) the pads' ranged rules: no bow at all on Weathertop and the prologue (the levels have none in the story);
@@ -4371,7 +4418,7 @@ void sub_001697D9(void)
             if (sv && !strcmp(sv, "bomb")) {   /* (test) TT_COOP_P1SEEK=bomb: player 1 shoots at the nearest explosive prop, as TT_COOP_P2BOMBTEST */
                 extern uint32_t coop_wobjs[]; extern int coop_nwobjs; uint32_t best = 0, h1 = coop_first_char; float bd = 2025.0f; int i;
                 for (i = 0; i < coop_nwobjs; i++) { uint32_t a = coop_wobjs[i], hn = MEM32(a + 0x18); float dx, dy;
-                    if (MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7 || (int32_t)MEM32(a + 0x2FC) <= 0 || hn < 0x10000u || hn >= 0x84000000u || !strstr((const char *)XBOX_PTR(hn), "bomb")) continue;
+                    if (MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7 || (int32_t)MEM32(a + 0x2FC) <= 0 || hn < 0x10000u || hn >= 0x88000000u || !strstr((const char *)XBOX_PTR(hn), "bomb")) continue;
                     dx = MEMF(a + 0xF0) - MEMF(h1 + 0xF0); dy = MEMF(a + 0xF4) - MEMF(h1 + 0xF4); if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; best = a; } }
                 { COOP_PS uint32_t lb; if (best != lb) { lb = best; tt_dbg("[BOMBTEST] P1's target %08X %.1f away\n", best, sqrtf(bd)); } }
                 if (best && getenv("TT_VS_BOMBWALK") && sqrtf(bd) > (float)atof(getenv("TT_VS_BOMBWALK"))) { COOP_PS CoopSeek kb = { 1, 0 }; coop_bot_go(&kb, &p, h1, MEMF(best + 0xF0), MEMF(best + 0xF4), 1.0f); }   /* (test: walk to it first, TT_VS_BOMBWALK units) */
@@ -4418,7 +4465,7 @@ void sub_000E7DB0(void)
         if (coop_p2_t0 && coop_mode() == 3 && coop_nx() >= 2 && getenv("TT_POOL_SPILLEARLY")) { static int once; if (!once) { once = 1; extern void tt_pool_spill_ready(void); tt_pool_spill_ready(); } }   /* (2.0.1: not by default -- see pool_spill) */   /* (2.1: the spill memory taken while there is room) */
         if (getenv("TT_POOL_TESTDRAIN") && coop_p2_t0 && coop_now() - coop_p2_t0 > 20000u && MEM32(0x6B1CE4u) > 0x4000u) { static int said; MEM32(0x6B1CE4u) = 0x4000u; if (!said++) tt_dbg("[POOL] test: the pool drained to 16 KB\n"); }
         left = (int32_t)MEM32(0x6B1CE4u);
-        if (MEM32(0x6B1CF4u) && left < lowest - 0x40000) { lowest = left; tt_dbg("[POOL] the game's 32 MB pool: %d KB left (screen %u)\n", left / 1024, MEM32(0x4AD050u)); }
+        if (MEM32(0x6B1CF4u) && left < lowest - 0x40000) { lowest = left; tt_dbg("[POOL] the game's 32 MB pool: %d KB left (screen %u; at %08X)\n", left / 1024, MEM32(0x4AD050u), MEM32(0x6B1CFCu)); }
     }
     sub_000E7DB0_gen();
 }
@@ -4666,7 +4713,7 @@ static int coop_oc_find(uint32_t a) { int i; for (i = 0; i < coop_noc; i++) if (
  * crashed loading it (a playtest, twice). TT_COOP_ARENARESERVE KB (4096: on Balin Tomb with four players 3 MB more went after the copies, to play) */
 static uint32_t coop_arena_left(void)
 {
-    if (MEM8(0x6B1CECu) && MEM32(0x6B1D00u)) { uint32_t lw = MEM32(0x6B1D04u); return lw >= 0x10000u && lw < 0x84000000u ? MEM32(lw) : 0u; }
+    if (MEM8(0x6B1CECu) && MEM32(0x6B1D00u)) { uint32_t lw = MEM32(0x6B1D04u); return lw >= 0x10000u && lw < 0x88000000u ? MEM32(lw) : 0u; }
     return MEM32(0x6B1CE4u);
 }
 static uint32_t coop_arena_reserve(void) { return (getenv("TT_COOP_ARENARESERVE") ? (uint32_t)atoi(getenv("TT_COOP_ARENARESERVE")) : 3800u) * 1024u; }
@@ -4851,7 +4898,7 @@ static void coop_twin_dump(uint32_t p1)
     tt_dbg("[COOPDIFF] original %08X twin %08X (0x540 bytes): offset original twin\n", a, t);
     for (k = 0; k < 0x540; k += 4) {
         uint32_t x = MEM32(a + k), y = MEM32(t + k);
-        int px = x >= 0x80000000u && x < 0x84000000u, py = y >= 0x80000000u && y < 0x84000000u;
+        int px = x >= 0x80000000u && x < 0x88000000u, py = y >= 0x80000000u && y < 0x88000000u;
         if (x == y && px) { same++; tt_dbg("[COOPDIFF] +%03X %08X %08X  SHARED pointer\n", k, x, y); }
         else if (x != y && !(x >= a && x < a + 0x540 && y >= t && y < t + 0x540 && x - a == y - t)) { diff++; tt_dbg("[COOPDIFF] +%03X %08X %08X%s\n", k, x, y, px != py ? "  (pointer in one only)" : ""); }
     }
@@ -4876,7 +4923,7 @@ static void coop_twin_fix(uint32_t p1)
     if (a < 0x10000u || t < 0x10000u || a == t) return;
     for (k = 0x2AC; k < 0x3F0; k += 4) {
         uint32_t x = MEM32(a + k);
-        if (x >= 0x80000000u && x < 0x84000000u) continue;
+        if (x >= 0x80000000u && x < 0x88000000u) continue;
         if (MEM32(t + k) != x) { MEM32(t + k) = x; n++; }
     }
     {   /* (1.9.7) +0x118 is the object's place in the level's draw tree (0x42ED0 gives one: entry 0x3B1B24 + 72 * the low
@@ -5104,7 +5151,7 @@ static uint32_t coop_goto_t;   /* (bot test) TT_COOP_P2GOTO's time, the catch-up
 static void coop_all_sectors(void)   /* every sector of the level drawn, the second way below (Versus, co-op) */
 {
     static unsigned lv = ~0u; static uint32_t buf; uint32_t w = MEM32(0x3C35A0u), n, i;
-    if (w < 0x10000u || w >= 0x84000000u) return;
+    if (w < 0x10000u || w >= 0x88000000u) return;
     n = MEM32(w + 0x10);
     if (n > 0 && n <= 4096u) {
         extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment);
@@ -5112,7 +5159,7 @@ static void coop_all_sectors(void)   /* every sector of the level drawn, the sec
         if (buf) {
             if (MEM32(0x3C35CCu) != buf || lv != coop_level_n) {
                 uint32_t old = MEM32(0x3C35CCu); unsigned hid = 0;
-                for (i = 0; i < n; i++) { if (old >= 0x10000u && old < 0x84000000u && !MEM8(old + i)) hid++; MEM8(buf + i) = 1; }
+                for (i = 0; i < n; i++) { if (old >= 0x10000u && old < 0x88000000u && !MEM8(old + i)) hid++; MEM8(buf + i) = 1; }
                 if (lv != coop_level_n) tt_dbg("[COOPSEC] sectors: %u in the level (portals %08X, flag %u, array %08X with %u hidden): all drawn\n", n, MEM32(w + 0x14), MEM8(0x3C35C8u), old, hid);
                 lv = coop_level_n;
             }
@@ -5128,7 +5175,7 @@ static void coop_place(void)
          * updated, but a drawn sector is a live one: on the Plains of Rohan, a playtest, the door Gandalf breaks stayed standing (no way
          * through it seen) and events ran early. Not for the campaign */
         uint32_t wd = MEM32(0x3C35A0u);
-        if (coop_mode() == 3 && a >= 0x10000u && !tt_vs_on() && getenv("TT_COOP_ALLSECTORS") && wd >= 0x10000u && wd < 0x84000000u && MEM32(wd + 0x14)) coop_all_sectors();
+        if (coop_mode() == 3 && a >= 0x10000u && !tt_vs_on() && getenv("TT_COOP_ALLSECTORS") && wd >= 0x10000u && wd < 0x88000000u && MEM32(wd + 0x14)) coop_all_sectors();
     }
     if (a >= 0x10000u && p1 >= 0x10000u && coop_mode() == 3 && !tt_vs_on() && !getenv("TT_COOP_NOWAKE")) {
         /* a hero who left the sectors the camera sees stops being updated (+0x110 bits 0x2000 and 0x8000 off, active), and coming back into
@@ -5153,7 +5200,7 @@ static void coop_place(void)
         extern int coop_is_lurtz(uint32_t e); static struct { uint32_t e; int32_t hp, carry; } bh[4]; COOP_PS unsigned blv = ~0u; int i, j;
         if (blv != coop_level_n) { blv = coop_level_n; memset(bh, 0, sizeof bh); }
         for (i = 0; i < coop_nchars && i < COOP_MAXCHARS; i++) { uint32_t e = coop_chars[i]; int32_t hp;
-            if (e < 0x10000u || e >= 0x84000000u || MEM32(e) != 0x1741C0u || (coop_boss_kind(e) != 2 && !coop_is_lurtz(e))) continue;
+            if (e < 0x10000u || e >= 0x88000000u || MEM32(e) != 0x1741C0u || (coop_boss_kind(e) != 2 && !coop_is_lurtz(e))) continue;
             for (j = 0; j < 4 && bh[j].e && bh[j].e != e; j++) ;
             if (j == 4) continue;
             hp = (int32_t)MEM32(e + 0x2FC);
@@ -5166,12 +5213,12 @@ static void coop_place(void)
     if (p1 >= 0x10000u && a >= 0x10000u) { COOP_PS uint32_t ls[2]; COOP_PS int n; int w; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, st = MEM32(h + 0x408); if (st != ls[w]) { ls[w] = st; if (n++ < 3000) tt_dbg("[STLOG] t %u P%d state %u anim %08X\n", coop_now(), w + 1, st, MEM32(h + 0x3F8)); } } { COOP_PS uint32_t lc[2]; COOP_PS int nc; for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x41C); if (c != lc[w]) { lc[w] = c; if (nc++ < 6000) tt_dbg("[STCUR] t %u P%d now in %u (from %u)\n", coop_now(), w + 1, c, MEM32(h + 0x408)); } } } }   /* (research) each hero's state changes, for how long his attacks take */
     if (getenv("TT_COOP_AIMHEAD") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero while he aims: his heading and turn fields against the bearing to his lock */
         COOP_PS uint32_t lt; int w; if (coop_now() - lt >= 100u) { lt = coop_now(); for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
-            if ((MEM32(r + 0x34u) & 0x4000u) || MEM32(h + 0x408) == 26u || MEM32(h + 0x408) == 27u || MEM32(h + 0x408) == 29u) { int ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u; float dx = ok ? MEMF(t + 0xF0) - MEMF(h + 0xF0) : 0, dy = ok ? MEMF(t + 0xF4) - MEMF(h + 0xF4) : 0, dz = ok ? MEMF(t + 0xF8) - MEMF(h + 0xF8) : 0;
+            if ((MEM32(r + 0x34u) & 0x4000u) || MEM32(h + 0x408) == 26u || MEM32(h + 0x408) == 27u || MEM32(h + 0x408) == 29u) { int ok = t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x1741C0u; float dx = ok ? MEMF(t + 0xF0) - MEMF(h + 0xF0) : 0, dy = ok ? MEMF(t + 0xF4) - MEMF(h + 0xF4) : 0, dz = ok ? MEMF(t + 0xF8) - MEMF(h + 0xF8) : 0;
                 tt_dbg("[AIMHEAD] t %u P%d st %u lock %08X d %.1f dz %.1f bearing %.3f | +100 %.3f +104 %.3f +108 %.3f +10C %.3f | +70 %.3f %.3f +80 %.3f %.3f | +D0 %.3f %.3f %.3f | stick %08X %08X\n", coop_now(), w + 1, MEM32(h + 0x408), t, sqrtf(dx * dx + dy * dy), dz, atan2f(dy, dx), MEMF(h + 0x100), MEMF(h + 0x104), MEMF(h + 0x108), MEMF(h + 0x10C), MEMF(h + 0x70), MEMF(h + 0x74), MEMF(h + 0x80), MEMF(h + 0x84), MEMF(h + 0xD0), MEMF(h + 0xD4), MEMF(h + 0xD8), MEM32(r + 0x38), MEM32(r + 0x3C)); } } } }
     if (getenv("TT_COOP_AIMSTATE") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) each hero's state, lock and pad record, 4 times a second */
         COOP_PS uint32_t lt; if (coop_now() - lt >= 250u) { int w, j; lt = coop_now();
             for (w = 0; w < 2; w++) { uint32_t h = w ? a : p1, c = MEM32(h + 0x494), t = c >= 0x10000u ? MEM32(c + 0x98) : 0, r = COOP_PADREC(w ? 1 : 0);
-                tt_dbg("[AIMSTATE] t %u P%d state %u lock %08X%s rec:", coop_now(), w + 1, MEM32(h + 0x408), t, t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u ? " (char)" : "");
+                tt_dbg("[AIMSTATE] t %u P%d state %u lock %08X%s rec:", coop_now(), w + 1, MEM32(h + 0x408), t, t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x1741C0u ? " (char)" : "");
                 for (j = 0; j < 0x60; j += 4) tt_dbg(" %08X", MEM32(r + j)); tt_dbg("\n"); } } }
     if (getenv("TT_COOP_CAMJUMP") && MEM32(0x43B164u) >= 0x10000u && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) the camera's eye (+0x50) or look-at (+0x40) moving more than 1.5 units in a frame */
         extern int coop_hero_down(int); COOP_PS float le[3], ll[3]; COOP_PS int n; uint32_t cm = MEM32(0x43B164u); float de = 0, dl = 0; int k;
@@ -5268,7 +5315,7 @@ static void coop_place(void)
             COOP_PS uint32_t un_t; COOP_PS int said; extern int coop_hero_down(int);
             if (tt_in_scene() || coop_hero_down(1) || (MEM32(a + 0x110) & 0x8000u) || !(MEM32(p1 + 0x110) & 0x8000u)) { un_t = 0; said = 0; }
             else if (!un_t) un_t = coop_now() | 1;
-            else if (coop_now() - un_t > 2000u && !said) { uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u && wd < 0x84000000u ? MEM32(wd + 0x10) : 0, i; char b[200]; int k = 0;
+            else if (coop_now() - un_t > 2000u && !said) { uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u && wd < 0x88000000u ? MEM32(wd + 0x10) : 0, i; char b[200]; int k = 0;
                 said = 1;
                 for (i = 0; i < n && i < 64 && k < 180; i++) { uint32_t sc = MEM32(wd + 0x100 + 4 * i) - 0x20; float x = MEMF(a + 0xF0), y = MEMF(a + 0xF4), z = MEMF(a + 0xF8);
                     if (sc >= 0x80000000u && sc < 0x83F00000u && x >= MEMF(sc + 0x30) && x <= MEMF(sc + 0x40) && y >= MEMF(sc + 0x34) && y <= MEMF(sc + 0x44) && z >= MEMF(sc + 0x38) - 4 && z <= MEMF(sc + 0x48) + 4) k += snprintf(b + k, sizeof b - k, " '%.16s'", (const char *)XBOX_PTR(sc + 0x20)); }
@@ -5282,7 +5329,7 @@ static void coop_place(void)
                 if (in >= 0x80000000u && in < 0x83F00000u) for (o = 0; o < 0x400; o += 4) { uint32_t v = MEM32(in + o); if (have && v != prev[0x200 + o / 4] && v < 256u && prev[0x200 + o / 4] < 256u && k < 1500) k += snprintf(b2 + k, sizeof b2 - k, " i+%X:%u->%u", o, prev[0x200 + o / 4], v); prev[0x200 + o / 4] = v; }
                 have = 1; if (k) tt_dbg("[P2WORDS] P2 at %.1f %.1f %.1f:%s\n", MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0xF8), b2); } }
         if (getenv("TT_COOP_SECLOG") && p1 >= 0x10000u && a >= 0x10000u) {   /* (research) the words of each hero naming a sector of the level, and the sector his place is in, every 3 s */
-            COOP_PS uint32_t tl; uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u && wd < 0x84000000u ? MEM32(wd + 0x10) : 0, i, o, h; int ww;
+            COOP_PS uint32_t tl; uint32_t wd = MEM32(0x3C35A0u), n = wd >= 0x10000u && wd < 0x88000000u ? MEM32(wd + 0x10) : 0, i, o, h; int ww;
             if (coop_now() - tl > 3000u && n && n <= 64) { tl = coop_now();
                 for (ww = 0; ww < 2; ww++) { char b[400]; int k = 0; h = ww ? a : p1;
                     for (o = 0; o < 0x800 && k < 360; o += 4) { uint32_t v = MEM32(h + o), q2; for (i = 0; i < n; i++) { uint32_t sc = MEM32(wd + 0x100 + 4 * i); if (v && (v == sc || v == sc - 0x20)) k += snprintf(b + k, sizeof b - k, " +%X=%u%s", o, i, v == sc ? "" : "(-20)"); }
@@ -5318,7 +5365,7 @@ static void coop_place(void)
             if (st == 1 || (st == 2 && coop_now() - t0 < 6100u)) {
                 float v[3]; v[0] = sv[0] + 20.0f; v[1] = sv[1] + 20.0f; v[2] = sv[2] - 32.0f;
                 if (coop_now() - t0 >= 6000u) { v[0] = sv[0]; v[1] = sv[1]; v[2] = sv[2]; if (st == 1) tt_dbg("[COOP2] test: player 1 back\n"); st = 2; }
-                for (q = 0; q < 3; q++) { MEMF(p1 + 0xF0 + 4 * q) = MEMF(p1 + 0x90 + 4 * q) = MEMF(p1 + 0x130 + 4 * q) = MEMF(p1 + 0x140 + 4 * q) = MEMF(p1 + 0x628 + 4 * q) = v[q]; if (b >= 0x80000000u && b < 0x84000000u) MEMF(b + 0xE8 + 4 * q) = v[q]; }
+                for (q = 0; q < 3; q++) { MEMF(p1 + 0xF0 + 4 * q) = MEMF(p1 + 0x90 + 4 * q) = MEMF(p1 + 0x130 + 4 * q) = MEMF(p1 + 0x140 + 4 * q) = MEMF(p1 + 0x628 + 4 * q) = v[q]; if (b >= 0x80000000u && b < 0x88000000u) MEMF(b + 0xE8 + 4 * q) = v[q]; }
                 MEM32(p1 + 0x2ECu) = st == 1 ? 0xFFFFFFFFu : spm;
             }
         }
@@ -5480,13 +5527,13 @@ static void coop_place(void)
     {   /* (and a long fall's own copies, +0x628 and his body's +0xE8 ([+0x494]): the next frame took his place back from them,
          * 600 units under Weathertop after a cutscene, a playtest; found with TT_COOP_PLACEPROBE. TT_COOP_NOFALLPLACE: as before) */
         uint32_t b = MEM32(a + 0x494);
-        if (!getenv("TT_COOP_NOFALLPLACE")) for (k = 0; k < 3; k++) { MEM32(a + 0x628 + 4 * k) = MEM32(a + 0xF0 + 4 * k); if (b >= 0x80000000u && b < 0x84000000u) MEM32(b + 0xE8 + 4 * k) = MEM32(a + 0xF0 + 4 * k); }
+        if (!getenv("TT_COOP_NOFALLPLACE")) for (k = 0; k < 3; k++) { MEM32(a + 0x628 + 4 * k) = MEM32(a + 0xF0 + 4 * k); if (b >= 0x80000000u && b < 0x88000000u) MEM32(b + 0xE8 + 4 * k) = MEM32(a + 0xF0 + 4 * k); }
         /* and the game's own SetPosition (vtable +0x28, 0x865D0, as @TeleportPlayerTo), which takes his model along: with the fields alone it
          * stayed at the old spot (the Plains of Rohan, a playtest: his weapons 24 units from him after a teleport, then unseen and unmoving
          * for the rest of the level). TT_COOP_NOPLACECALL: fields only */
         if (!getenv("TT_COOP_NOPLACECALL") && MEM32(a) == 0x1741C0u) { extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t xyz[3]; for (k = 0; k < 3; k++) xyz[k] = MEM32(a + 0xF0 + 4 * k); tt_gcall(MEM32(MEM32(a) + 0x28u), a, 3, xyz); }
         if (getenv("TT_COOP_250PLACE")) for (k = 0; k < 3; k++) MEM32(a + 0x250 + 4 * k) = MEM32(a + 0xF0 + 4 * k);
-        if (getenv("TT_COOP_INSTPLACE")) { uint32_t in = MEM32(a + 0x3D0); if (in >= 0x80000000u && in < 0x84000000u) for (k = 0; k < 3; k++) { MEM32(in + 0x40 + 4 * k) = MEM32(a + 0xF0 + 4 * k); MEM32(in + 0x214 + 4 * k) = MEM32(a + 0xF0 + 4 * k); } }   /* (research: the model instance's copies) */   /* (research, both off: +0x250 and the instance's copies held his old place when the Plains of Rohan's
+        if (getenv("TT_COOP_INSTPLACE")) { uint32_t in = MEM32(a + 0x3D0); if (in >= 0x80000000u && in < 0x88000000u) for (k = 0; k < 3; k++) { MEM32(in + 0x40 + 4 * k) = MEM32(a + 0xF0 + 4 * k); MEM32(in + 0x214 + 4 * k) = MEM32(a + 0xF0 + 4 * k); } }   /* (research: the model instance's copies) */   /* (research, both off: +0x250 and the instance's copies held his old place when the Plains of Rohan's
          * catch-ups read his old place back from it every frame, a bot run with TT_COOP_PLACEPROBE; a playtest lost sight of him after one) */
     }
 }static void coop_gate_log(int who)
@@ -5553,8 +5600,8 @@ static int vs_los(float x0, float y0, float z0, float x1, float y1, float z1);
 int tt_vs_is_bomb(uint32_t a)
 {
     uint32_t hn;
-    if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7u) return 0;
-    hn = MEM32(a + 0x18); if (hn < 0x10000u || hn >= 0x84000000u) return 0;
+    if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x174980u || MEM32(a + 0x114) != 7u) return 0;
+    hn = MEM32(a + 0x18); if (hn < 0x10000u || hn >= 0x88000000u) return 0;
     { const char *n = (const char *)XBOX_PTR(hn); int i; for (i = 0; n[i] && i < 60; i++) if ((n[i] | 0x20) == 'b' && (n[i + 1] | 0x20) == 'o' && (n[i + 2] | 0x20) == 'm' && (n[i + 3] | 0x20) == 'b') return 1; }
     return 0;
 }
@@ -5915,7 +5962,7 @@ static void vs4_note_attacker(int victim, int attacker) { if (victim >= 1 && vic
 static int vs_src_player(uint32_t src)   /* the player (1-4) whose blow, weapon or shot this is; 0 none */
 {
     int k, p;
-    for (k = 0; k < 4 && src >= 0x10000u && src < 0x84000000u; k++) { if ((p = tt_coop_player_of(src)) > 0) return p; src = MEM32(src + 0x11Cu); }
+    for (k = 0; k < 4 && src >= 0x10000u && src < 0x88000000u; k++) { if ((p = tt_coop_player_of(src)) > 0) return p; src = MEM32(src + 0x11Cu); }
     return 0;
 }
 static uint32_t vs_opp_for(uint32_t a, int w)   /* the hero this one fights: the other, or in Team Deathmatch the nearest of the other side standing */
@@ -5956,7 +6003,7 @@ static uint32_t coop_x_up_actor(void)   /* (2.1) an extra player who is up (the 
 static int coop_hero_w(uint32_t a)   /* a player's number 0..3 from him, his weapon or his shot; -1 none */
 {
     int k, j;
-    if (a < 0x10000u || a >= 0x84000000u) return -1;
+    if (a < 0x10000u || a >= 0x88000000u) return -1;
     if (a == coop_first_char) return 0;
     for (j = 0; j < coop_nwpn; j++) if (a == coop_wpn_orig[j]) return 0;
     k = coop_slot_of(a); if (k >= 0) return k + 1;
@@ -5970,7 +6017,7 @@ static int coop_thr_idx(uint32_t e) { int i; for (i = 0; i < coop_nchars && i < 
 int coop_is_lurtz(uint32_t e)
 {
     const char *n; extern const char *coop_nm_x(uint32_t a);
-    if (e < 0x10000u || e >= 0x84000000u || MEM32(e) != 0x1741C0u || getenv("TT_COOP_LURTZOWN")) return 0;
+    if (e < 0x10000u || e >= 0x88000000u || MEM32(e) != 0x1741C0u || getenv("TT_COOP_LURTZOWN")) return 0;
     n = coop_nm_x(e); return n && (strstr(n, "urtz") != NULL);
 }
 void coop_threat_hit(uint32_t enemy, uint32_t weapon)
@@ -6017,8 +6064,8 @@ static void coop_threat_apply(void)   /* after the game's arbitration: point eac
     if (off || coop_mode() != 3 || coop_p2 < 0x10000u || coop_first_char < 0x10000u) return;
     if (!getenv("TT_COOP_NOCOPYDETACH")) { int q;   /* a copy has its original's weapons on its model's list too (the instance +0x3D0: objects +0x74, 8 bytes each, count +0x174), besides its own: one weapon on several
          * characters, drawn at each in turn: enemies' weapons and shields flickered (a playtest; 94 of 268 attachments at Balin's Tomb). Each frame such an entry becomes the copy's own weapon, or goes */
-        for (q = 0; q < coop_noc; q++) { uint32_t cc = coop_oc[q].clone, ins = cc >= 0x10000u ? MEM32(cc + 0x3D0) : 0, n, j, jj; if (ins < 0x10000u || ins >= 0x84000000u) continue; n = MEM32(ins + 0x174); if (n > 32u) continue;
-            for (j = 0; j < n; j++) { uint32_t o = MEM32(ins + 0x74 + 8 * j), own = 0; int has = 0; if (o < 0x10000u || o >= 0x84000000u || MEM32(o) != 0x174980u || MEM32(o + 0x11C) != coop_oc[q].orig) continue;
+        for (q = 0; q < coop_noc; q++) { uint32_t cc = coop_oc[q].clone, ins = cc >= 0x10000u ? MEM32(cc + 0x3D0) : 0, n, j, jj; if (ins < 0x10000u || ins >= 0x88000000u) continue; n = MEM32(ins + 0x174); if (n > 32u) continue;
+            for (j = 0; j < n; j++) { uint32_t o = MEM32(ins + 0x74 + 8 * j), own = 0; int has = 0; if (o < 0x10000u || o >= 0x88000000u || MEM32(o) != 0x174980u || MEM32(o + 0x11C) != coop_oc[q].orig) continue;
                 if (o == coop_oc[q].worig) own = coop_oc[q].wclone; else if (o == coop_oc[q].worig2) own = coop_oc[q].wclone2;
                 for (jj = 0; jj < n && own; jj++) if (MEM32(ins + 0x74 + 8 * jj) == own) has = 1;
                 if (own >= 0x10000u && !has) { MEM32(ins + 0x74 + 8 * j) = own; continue; }
@@ -6290,7 +6337,7 @@ extern void sub_00053090_gen(void);
 void sub_00053090(void)
 {
     uint32_t a = ecx - 0x3D8u, in = MEM32(esp + 4);
-    if (getenv("TT_COOP_PXINPLOG") && a >= 0x10000u && a < 0x84000000u) { int pl = tt_coop_player_of(a); static unsigned c[5][64]; static uint32_t lt;   /* (research) the inputs each player's machine gets */
+    if (getenv("TT_COOP_PXINPLOG") && a >= 0x10000u && a < 0x88000000u) { int pl = tt_coop_player_of(a); static unsigned c[5][64]; static uint32_t lt;   /* (research) the inputs each player's machine gets */
         if (pl >= 1 && pl <= 4 && in < 64) { c[pl][in]++; if ((in == 30u || in == 11u) && c[pl][in] <= 4) { uint32_t q, cs[12] = { 0 }; int m = 0; for (q = 0; q < 0x300 && m < 12; q += 4) { uint32_t v = MEM32(esp + q); if (v >= 0x12000u && v < 0x170000u) cs[m++] = v; }
             tt_dbg("[PXINP] P%d input %u from %X %X %X %X %X %X %X %X (slot %d depth %d player %08X)\n", pl, in, cs[0], cs[1], cs[2], cs[3], cs[4], cs[5], cs[6], cs[7], coop_slot_cur, coop_depth, MEM32(0x43B15Cu)); } }
         if (coop_now() - lt > 10000u) { int q, k2; lt = coop_now(); for (q = 1; q <= 4; q++) { char b[500]; int o = 0; for (k2 = 0; k2 < 64; k2++) if (c[q][k2]) o += snprintf(b + o, sizeof b - o, " %d:%u", k2, c[q][k2]); tt_dbg("[PXINP] P%d:%s\n", q, b); } } }
@@ -6388,7 +6435,7 @@ static void coop_respawn(int who)
     } else { float x, y; coop_place_target(o, &x, &y); MEMF(a + 0xF0) = x; MEMF(a + 0xF4) = y; MEMF(a + 0xF8) = MEMF(o + 0xF8); MEM32(a + 0x2EC) = MEM32(o + 0x2EC); }   /* (no trail yet: beside the other on his pathmap) */
     {   /* every place of his, as coop_place, and the game's SetPosition with his model: with the fields alone a fall took him back */
         extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t q, bd = MEM32(a + 0x494), xyz[3];
-        for (q = 0; q < 3; q++) { xyz[q] = MEM32(a + 0xF0 + 4 * q); MEM32(a + 0x90 + 4 * q) = MEM32(a + 0x130 + 4 * q) = MEM32(a + 0x140 + 4 * q) = MEM32(a + 0x628 + 4 * q) = xyz[q]; if (bd >= 0x80000000u && bd < 0x84000000u) MEM32(bd + 0xE8 + 4 * q) = xyz[q]; }
+        for (q = 0; q < 3; q++) { xyz[q] = MEM32(a + 0xF0 + 4 * q); MEM32(a + 0x90 + 4 * q) = MEM32(a + 0x130 + 4 * q) = MEM32(a + 0x140 + 4 * q) = MEM32(a + 0x628 + 4 * q) = xyz[q]; if (bd >= 0x80000000u && bd < 0x88000000u) MEM32(bd + 0xE8 + 4 * q) = xyz[q]; }
         if (MEM32(a) == 0x1741C0u) tt_gcall(MEM32(MEM32(a) + 0x28u), a, 3, xyz); }
     MEM32(a + 0x2FC) = MEM32(a + 0x300);   /* full health */
     if (!getenv("TT_COOP_NOHITFLAGS")) {   /* the death sequence leaves +0x49C bit 0x40 set and +0x110 bit 0x20 clear: no hit reached him after a respawn (observed). Put them back. */
@@ -6429,7 +6476,7 @@ static void coop_p1_real_death(void)   /* the game's own player death: die metho
          * then ends the mission at once -- the game over menu straight away, no slow motion, no Eye; a playtest.
          * TT_COOP_NODEATHCAMON: as the level left it) */
         uint32_t cam = MEM32(0x43B164u);
-        if (cam >= 0x10000u && cam < 0x84000000u && !MEM8(cam + 0x18B) && !getenv("TT_COOP_NODEATHCAMON")) { MEM8(cam + 0x18B) = 1; tt_dbg("[COOPDEATH] game over: the level had the death cam off (camera +18B 0): on\n"); }
+        if (cam >= 0x10000u && cam < 0x88000000u && !MEM8(cam + 0x18B) && !getenv("TT_COOP_NODEATHCAMON")) { MEM8(cam + 0x18B) = 1; tt_dbg("[COOPDEATH] game over: the level had the death cam off (camera +18B 0): on\n"); }
     }
     coop_real_death_done = 1;
     if (coop_last_p2 && coop_p2 >= 0x10000u) {   /* player 2 the last one down: the die method on him, with him the player: the game's own death, its slow motion and the death cam on him (on player 1 it showed the spot where player 1 lay, player 2's death off screen: a playtest) */
@@ -6447,6 +6494,7 @@ int coop_p1_die_hook(void)
 {
     if (coop_gameover && coop_real_death_done && coop_mode() == 3 && !getenv("TT_COOP_DIETWICE")) { COOP_PS int n; if (n++ < 4) tt_dbg("[COOPDEATH] game over: the level's own death of player 1 after ours, skipped (the death cam started again: 18 s, Amon Hen bot run)" "\n"); return 1; }
     if (coop_mode() != 3 || coop_p2 < 0x10000u || getenv("TT_COOP_NODEATH") || coop_gameover) return 0;
+    { extern int tt_vs_round_fresh(void); if (tt_vs_round_fresh()) { COOP_PS int nv; if (nv++ < 8) tt_dbg("[VS] die method on P1 at the round's start (health %d): last round's, ignored\n", coop_first_char >= 0x10000u ? (int32_t)MEM32(coop_first_char + 0x2FC) : -1); return 1; } }   /* (2.0.3, as player 2's) */
     if (tt_vs_on()) { if (!coop_down[0]) { coop_down[0] = 1; coop_down_t[0] = coop_now(); } if (coop_first_char >= 0x10000u) MEM32(coop_first_char + 0x2FC) = 1; return 1; }   /* (Versus: never the game's death; the round ends) */
     if (coop_nx() > 1 ? !coop_x_up_any() : coop_down[1]) { coop_gameover = 1; coop_gameover_t = coop_now(); tt_dbg("[COOPDEATH] P1 down while every other player is down: game over (the game's own death)\n"); return 0; }   /* (2.1: not while player 3 or 4 stands -- player 1 and 2 down ended the mission, a playtest) */
     if (!coop_down[0]) { coop_down[0] = 1; coop_down_t[0] = coop_now(); tt_dbg("[COOPDEATH] P1 down (P2 alive): no death; respawn in %u ms\n", (unsigned)coop_respawn_wait()); }
@@ -6509,6 +6557,7 @@ static int vs_score[2], vs_round, vs_state, vs_have, vs_last_win = -1;   /* stat
 /* the match's numbers per player, for the results (tt_vs_stats) */
 typedef struct { int hits, dmg, taken, shots, shots_hit, rounds, downs, best_hit, parried; uint32_t fastest_ms; int swings, smashes; } VsStats;   /* (swings, smashes: Troll Battle's own -- club swings, blows of 300 or more) */
 VsStats tt_vs_st[2]; static uint32_t vs_round_t0; static int vs_was_down[4];
+int tt_vs_round_fresh(void) { return tt_vs_on() && !getenv("TT_VS_STALEDIE") && (vs_state != 0 || coop_now() - vs_round_t0 < 3000u); }   /* (2.0.3) a round not yet begun or just begun */
 /* (1.9.9) Versus with enemies: each restart (the pause menu's Restart Match or Round) puts the arena's enemies back as the match
  * found them -- where they stood, whole, the fallen up again (as a downed hero gets up: state 47, INP_RESSURECT 28) -- a playtest:
  * "they seem to stay as they were even with a restart". Taken at the first round's start. TT_VS_NOFOERESET */
@@ -6749,7 +6798,7 @@ void tt_vs_shot_launched(uint32_t o, uint32_t pid)   /* o: the shooter (the laun
     if (tt_vs_tdm()) {   /* (2.1) four players: the shooter any of them, at the one he has locked on (or the nearest foe in 40) */
         int pa = vs4_player_of(o), v = -1; uint32_t c = MEM32(o + 0x494);
         if (pa < 0) return;
-        if (c >= 0x10000u && c < 0x84000000u) { int q = vs4_player_of(MEM32(c + 0x98)); if (q >= 0 && q != pa && vs_side_of(q + 1) != vs_side_of(pa + 1) && !coop_hero_down_n(q)) v = q; }
+        if (c >= 0x10000u && c < 0x88000000u) { int q = vs4_player_of(MEM32(c + 0x98)); if (q >= 0 && q != pa && vs_side_of(q + 1) != vs_side_of(pa + 1) && !coop_hero_down_n(q)) v = q; }
         if (getenv("TT_VS_OLDAIM4")) { if (v < 0) v = vs4_foe_near(pa, 40.0f); }
         else {   /* (2.0.1) only one he aims at: within TT_VS_SHOTCONE (35) degrees of where he faces and 40 units -- the one he has locked
                   * on if he is so, else the best in line. A playtest: player 1's arrows found player 4 from anywhere, any way he faced
@@ -6950,7 +6999,7 @@ static void vs_foe_die(uint32_t e)   /* (2.0.0) an enemy felled by our own blow:
                                       * method 0x838E0 left them in 6, standing, a playtest */
 {
     uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx;
-    if (e < 0x10000u || e >= 0x84000000u) return;
+    if (e < 0x10000u || e >= 0x88000000u) return;
     MEM32(e + 0x2FC) = 0;
     if (getenv("TT_VS_FOEDIEOLD")) tt_gcall(0x000838E0u, e, 0, NULL); else coop_hero_state(e, 1u);
     esp = sp; eax = r0; ecx = r1; edx = r2;
@@ -7067,7 +7116,7 @@ static void vs_blast(int k, uint32_t now)
     if (!getenv("TT_VS_NOBOMBSHAKE")) {   /* the level's own camera shake by it (camShakeObj, kept with the camera's objects; the story set them off): its @Activate */
         extern uint32_t tt_allobj[4096]; extern int tt_nallobj; uint32_t bq = 0; float bd = 49.0f;
         for (i = 0; i < tt_nallobj; i++) { uint32_t q = tt_allobj[i]; float dx, dy, dz; const char *nm;
-            if (q < 0x10000u || q >= 0x84000000u || MEM32(q) != 0x00174830u) continue; nm = coop_nm(q); if (_strnicmp(nm, "camShake", 8)) continue;
+            if (q < 0x10000u || q >= 0x88000000u || MEM32(q) != 0x00174830u) continue; nm = coop_nm(q); if (_strnicmp(nm, "camShake", 8)) continue;
             dx = MEMF(q + 0xF0) - vs_bomb[k].x; dy = MEMF(q + 0xF4) - vs_bomb[k].y; dz = MEMF(q + 0xF8) - vs_bomb[k].z;
             if (dx * dx + dy * dy + dz * dz < bd) { bd = dx * dx + dy * dy + dz * dz; bq = q; } }
         if (bq) { uint32_t a1[1], sp = esp, r0 = eax, r1 = ecx, r2 = edx; a1[0] = 1; tt_gcall(MEM32(MEM32(bq) + 0x30u), bq, 1, a1); esp = sp; eax = r0; ecx = r1; edx = r2; tt_dbg("[VSBOMB]   %s set off\n", coop_nm(bq)); }
@@ -7106,7 +7155,7 @@ static void vs_origin_props(void)
     if (lv == coop_level_n || !vs_have || getenv("TT_VS_KEEPORIGINPROPS")) return;
     lv = coop_level_n;
     for (i = 0; i < tt_nallobj; i++) { uint32_t q = tt_allobj[i], a1[1], sp = esp, r0 = eax, r1 = ecx, r2 = edx;
-        if (q < 0x10000u || q >= 0x84000000u || MEM32(q) != 0x174980u || MEMF(q + 0xF0) != 0.0f || MEMF(q + 0xF4) != 0.0f || MEMF(q + 0xF8) != 0.0f || tt_vs_is_bomb(q)) continue;
+        if (q < 0x10000u || q >= 0x88000000u || MEM32(q) != 0x174980u || MEMF(q + 0xF0) != 0.0f || MEMF(q + 0xF4) != 0.0f || MEMF(q + 0xF8) != 0.0f || tt_vs_is_bomb(q)) continue;
         a1[0] = q; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); esp = sp; eax = r0; ecx = r1; edx = r2; n++; }
     tt_dbg("[VS] %d of the level's props never placed (at its origin) taken out of the collision world\n", n);
 }
@@ -7374,7 +7423,10 @@ static void vs_jiggle(void)
             MEMF(h + 0xF0) -= off[w]; off[w] = 0.0f; if (vs_jig_until[w] && (int32_t)(now - vs_jig_until[w]) >= 0) vs_jig_until[w] = 0; continue; }
         d = off[w] > 0.0f ? -0.03f : 0.03f; MEMF(h + 0xF0) += d; off[w] += d; }
 }
-static void vs_place(uint32_t a, const float *p)
+static int vs_placing;   /* (2.0.3: inside vs_place -- its SetPosition is ours, not a push) */
+static void vs_place_in(uint32_t a, const float *p);
+static void vs_place(uint32_t a, const float *p) { vs_placing++; vs_place_in(a, p); vs_placing--; }
+static void vs_place_in(uint32_t a, const float *p)
 {
     uint32_t a3[3], sp = esp, r0 = eax, r1 = ecx, r2 = edx;
     float gp[3];
@@ -7405,7 +7457,7 @@ static void vs_place(uint32_t a, const float *p)
         uint32_t b = MEM32(a + 0x494); int k;
         for (k = 0; k < 3; k++) {
             MEM32(a + 0x90 + 4 * k) = MEM32(a + 0x130 + 4 * k) = MEM32(a + 0x140 + 4 * k) = MEM32(a + 0x628 + 4 * k) = a3[k];
-            if (b >= 0x80000000u && b < 0x84000000u) MEM32(b + 0xE8 + 4 * k) = a3[k];
+            if (b >= 0x80000000u && b < 0x88000000u) MEM32(b + 0xE8 + 4 * k) = a3[k];
         }
     }
     { extern void tt_vs_set_pm(uint32_t a, float x, float y); tt_vs_set_pm(a, p[0], p[1]); }   /* (1.9.9: his pathmap the one there -- set elsewhere he kept the start's, and player 1 is held by it) */
@@ -7608,10 +7660,10 @@ static void vs_edge_guard(void)
         COOP_PS uint32_t lt; if (coop_now() - lt >= 1000u) { lt = coop_now(); for (w = 0; w < 4; w++) { uint32_t h = w == 1 ? coop_p2 : coop_hero_n(w), in, b; if (h < 0x10000u) continue; in = MEM32(h + 0x3D0); b = MEM32(h + 0x494);
             tt_dbg("[VSDRAW] P%d %.1f %.1f %.1f +110 %08X | +90 %.1f %.1f %.1f | +130 %.1f %.1f %.1f | +250 %.1f %.1f %.1f | +628 %.1f %.1f %.1f | inst %08X +40 %.1f %.1f %.1f +214 %.1f %.1f %.1f | body %08X +E8 %.1f %.1f %.1f | pm %d floor %.1f\n", w + 1,
                 MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8), MEM32(h + 0x110), MEMF(h + 0x90), MEMF(h + 0x94), MEMF(h + 0x98), MEMF(h + 0x130), MEMF(h + 0x134), MEMF(h + 0x138), MEMF(h + 0x250), MEMF(h + 0x254), MEMF(h + 0x258), MEMF(h + 0x628), MEMF(h + 0x62C), MEMF(h + 0x630),
-                in, in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x40) : 0, in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x44) : 0, in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x48) : 0,
-                in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x214) : 0, in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x218) : 0, in >= 0x80000000u && in < 0x84000000u ? MEMF(in + 0x21C) : 0,
-                b, b >= 0x80000000u && b < 0x84000000u ? MEMF(b + 0xE8) : 0, b >= 0x80000000u && b < 0x84000000u ? MEMF(b + 0xEC) : 0, b >= 0x80000000u && b < 0x84000000u ? MEMF(b + 0xF0) : 0, (int)MEM32(h + 0x2EC), vs_floor(MEMF(h + 0xF0), MEMF(h + 0xF4)));
-            if (in >= 0x80000000u && in < 0x84000000u) { int q; tt_dbg("[VSDRAW]   P%d inst:", w + 1); for (q = 0x1F0; q < 0x240; q += 4) tt_dbg(" %X=%08X", q, MEM32(in + q)); tt_dbg("\n"); } } } }
+                in, in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x40) : 0, in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x44) : 0, in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x48) : 0,
+                in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x214) : 0, in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x218) : 0, in >= 0x80000000u && in < 0x88000000u ? MEMF(in + 0x21C) : 0,
+                b, b >= 0x80000000u && b < 0x88000000u ? MEMF(b + 0xE8) : 0, b >= 0x80000000u && b < 0x88000000u ? MEMF(b + 0xEC) : 0, b >= 0x80000000u && b < 0x88000000u ? MEMF(b + 0xF0) : 0, (int)MEM32(h + 0x2EC), vs_floor(MEMF(h + 0xF0), MEMF(h + 0xF4)));
+            if (in >= 0x80000000u && in < 0x88000000u) { int q; tt_dbg("[VSDRAW]   P%d inst:", w + 1); for (q = 0x1F0; q < 0x240; q += 4) tt_dbg(" %X=%08X", q, MEM32(in + q)); tt_dbg("\n"); } } } }
     for (w = 0; w < (tt_vs_tdm() ? 4 : 2); w++) {   /* (2.0.1: players 3 and 4 too -- they fell through the map for good, and no kick of theirs off a ledge counted) */
         uint32_t h = w == 0 ? coop_first_char : w == 1 ? coop_p2 : coop_hero_n(w), pm; float x, y, z; int walk = 0;
         if (h < 0x10000u) continue;
@@ -7798,6 +7850,172 @@ static void vs_doom_walk(void)
         lx0[w] = x; ly0[w] = y;
     }
 }
+/* (2.0.3) Versus: a hero caught in a loop of the game's pushes. A Troll Battle's player 1 could only walk forward and attack: his own step
+ * (0x843F0) took him on and a message to him (the characters' handler 0x85340) took him back on almost every frame (100 a second at 120 frames), for
+ * many seconds (two playtest logs: once standing on even ground beside the other troll, once in the states after a knock-down, sunk two
+ * units into the ground at the arena's side). The wrapper of 0x85340 counts the moves a message makes on a hero without hurting him
+ * (vs_pl_note); on 60% of the frames or more, a second and on, is the loop: those moves are undone, and if he is still caught 2 s on, or sunk
+ * under the ground, he is set back on his last good ground (walkable, on the ground, not caught). TT_VS_KEEPPUSH: none of it */
+static struct { uint32_t h, win_t, win_n, prev_n, fr_n, prev_fr, since, sunk_t, latch_t, good_t, wk_t, ws_t, kicked; float good[3], cand[3], wpos[2], prev_d, ring[4][3], ws[2]; int good_ok, cand_ok, nring; } vs_pl[6];
+static int vs_pl_slot(uint32_t h)
+{
+    int i, f = -1;
+    for (i = 0; i < 6; i++) { if (vs_pl[i].h == h) return i; if (!vs_pl[i].h && f < 0) f = i; }
+    if (f < 0) return -1;
+    memset(&vs_pl[f], 0, sizeof vs_pl[f]); vs_pl[f].h = h; return f;
+}
+static int vs_pl_hurt_state(uint32_t st) { return st == 32u || (st >= 44u && st <= 49u) || st == 52u; }
+static void vs_pl_roll(int i)
+{
+    uint32_t now = coop_now();
+    if (now - vs_pl[i].win_t < 500u) return;   /* (half-second windows: a player gives up on a stuck troll in a few seconds) */
+    {   uint32_t h = vs_pl[i].h; float x = MEMF(h + 0xF0), y = MEMF(h + 0xF4);
+        if (now - vs_pl[i].win_t < 1000u) { vs_pl[i].prev_n = vs_pl[i].win_n; vs_pl[i].prev_fr = vs_pl[i].fr_n;
+            vs_pl[i].prev_d = sqrtf((x - vs_pl[i].wpos[0]) * (x - vs_pl[i].wpos[0]) + (y - vs_pl[i].wpos[1]) * (y - vs_pl[i].wpos[1])); }
+        else { vs_pl[i].prev_n = vs_pl[i].prev_fr = 0; vs_pl[i].prev_d = 99.0f; }
+        vs_pl[i].wpos[0] = x; vs_pl[i].wpos[1] = y; }
+    vs_pl[i].win_t = now; vs_pl[i].win_n = vs_pl[i].fr_n = 0;
+}
+/* the loop: in the last full second pushed on 60% of the frames or more (whatever the frame rate: 100 a second at 120 frames a
+ * second in the logs), this second not less than half so far */
+static int vs_pl_ratio(int i)
+{
+    vs_pl_roll(i);
+    return vs_pl[i].prev_fr >= 3u && vs_pl[i].prev_n * 10u >= vs_pl[i].prev_fr * 6u && (vs_pl[i].fr_n < 6u || vs_pl[i].win_n * 2u >= vs_pl[i].fr_n);
+}
+/* stuck by it: the loop, and under 2.5 units gone in that second (walking is 8 a second or so) */
+static int vs_pl_stuck(int i) { return vs_pl_ratio(i) && (vs_pl[i].prev_d < 1.25f || getenv("TT_VS_PLTEST")); }   /* (under 1.25 units in the half second: 2.5 a second) */   /* (testing: any distance) */
+/* its pushes undone: the loop, while stuck by it or within 3 s of it (undone, he gets on, and they stay undone) */
+static int vs_pl_caught(uint32_t h)
+{
+    int i = vs_pl_slot(h);
+    if (i < 0) return 0;
+    if (vs_pl_stuck(i)) vs_pl[i].latch_t = coop_now() | 1u;
+    return vs_pl_ratio(i) && vs_pl[i].latch_t && coop_now() - vs_pl[i].latch_t < 3000u;
+}
+static void vs_pl_note(uint32_t h)
+{
+    int i = vs_pl_slot(h);
+    if (i < 0) return;
+    vs_pl_roll(i);
+    vs_pl[i].win_n++;
+}
+static void vs_pushloop_frame(void)
+{
+    extern float tt_vs_ground_below(float x, float y, float z, float depth);
+    uint32_t now = coop_now(); int k;
+    if (getenv("TT_VS_KEEPPUSH")) return;
+    if (!vs_have || vs_state != 0) { for (k = 0; k < 6; k++) { vs_pl[k].since = 0; vs_pl[k].sunk_t = 0; vs_pl[k].win_n = vs_pl[k].prev_n = vs_pl[k].fr_n = vs_pl[k].prev_fr = 0; } return; }
+    for (k = 0; k < 5; k++) {
+        uint32_t h = k == 4 ? coop_p2 : coop_hero_n(k), st; int i, caught, sunk; float x, y, z, g;
+        if (h < 0x10000u || (k == 4 && (h == coop_first_char || (coop_nx() > 0 && h == coop_hero_n(1))))) continue;
+        if ((int32_t)MEM32(h + 0x2FC) <= 0 || (k < 4 && coop_hero_down_n(k))) continue;
+        i = vs_pl_slot(h); if (i < 0) continue;
+        st = MEM32(h + 0x408); x = MEMF(h + 0xF0); y = MEMF(h + 0xF4); z = MEMF(h + 0xF8);
+        if (getenv("TT_VS_TURNLOG")) { static uint32_t lst[6], lacc[6], ltop[6]; uint32_t mv = MEM32(h + 0x164), acc = mv >= 0x10000u ? MEM32(mv + 0x34) : 0, top = mv >= 0x10000u ? MEM32(mv + 0x38) : 0;
+            if (st != lst[i] || acc != lacc[i] || top != ltop[i]) { lst[i] = st; lacc[i] = acc; ltop[i] = top; tt_dbg("[VSTURN] P%d state %u turn %.3f %.3f\n", k + 1, st, mv >= 0x10000u ? MEMF(mv + 0x34) : -1.0f, mv >= 0x10000u ? MEMF(mv + 0x38) : -1.0f); } }
+        vs_pl_roll(i); vs_pl[i].fr_n++;
+        if (k == 0 && getenv("TT_VS_PLTEST")) { COOP_PS uint32_t t0; if (!t0) t0 = now | 1u; if (now - t0 > (uint32_t)atoi(getenv("TT_VS_PLTEST")) && now - t0 < (uint32_t)atoi(getenv("TT_VS_PLTEST")) + 4000u) { static float px, py; if (!px && !py) { px = MEMF(h + 0xF0); py = MEMF(h + 0xF4); } { int j; for (j = 0; j < 5; j++) { static const uint16_t o[5] = { 0xF0, 0x90, 0x130, 0x140, 0x628 }; MEMF(h + o[j]) = px; MEMF(h + o[j] + 4) = py; } } vs_pl_note(h); vs_pl_note(h); } }   /* (testing: a loop's pushes, holding him) */
+        caught = vs_pl_stuck(i); if (caught) vs_pl[i].latch_t = now | 1u;
+        if (k == 0 && getenv("TT_VS_PLTEST")) { static uint32_t tl; if (now - tl > 1000u) { tl = now; tt_dbg("[VSPL] P1 slot %d win %u/%u prev %u/%u d %.1f caught %d since %u good %d\n", i, vs_pl[i].win_n, vs_pl[i].fr_n, vs_pl[i].prev_n, vs_pl[i].prev_fr, vs_pl[i].prev_d, caught, vs_pl[i].since, vs_pl[i].good_ok); } }
+        g = tt_vs_ground_below(x, y, z + 3.0f, 14.0f);
+        sunk = g == g && z < g - 1.5f && !vs_pl_hurt_state(st);
+        if (!caught && !sunk && g == g && fabsf(z - g) < 1.0f && !vs_pl_hurt_state(st) && vs_union_walk(x, y) == 1) {
+            vs_pl[i].cand[0] = x; vs_pl[i].cand[1] = y; vs_pl[i].cand[2] = z; vs_pl[i].cand_ok = 1; }
+        if (now - vs_pl[i].good_t >= 1500u && !caught && !sunk) {   /* (good ground: where he stood well 1.5 to 3 s ago, not where he is caught) */
+            vs_pl[i].good_t = now; if (vs_pl[i].cand_ok) { memcpy(vs_pl[i].good, vs_pl[i].cand, sizeof vs_pl[i].good); vs_pl[i].good_ok = 1;
+                memmove(vs_pl[i].ring[1], vs_pl[i].ring[0], 3 * sizeof vs_pl[i].ring[0]); memcpy(vs_pl[i].ring[0], vs_pl[i].cand, sizeof vs_pl[i].ring[0]); if (vs_pl[i].nring < 4) vs_pl[i].nring++; } }
+        {   /* (2.0.3) walking in place: a hero who keeps walking (state 10 in the last 0.8 s, or player 1's stick pushed) but has not
+             * got 1.5 units from where it began in 3 s, outside a blow's or a fall's states, and not walking into another hero
+             * (within 7 in front of him, or 3.5 anywhere) -- caught on something (a playtest: Fangorn's lower ground through the gate, player 1 knocked
+             * against the scenery and held there). Set back on the newest good ground (sampled every 1.5 s) 1.5 units or more from
+             * him; none: left as he is. TT_VS_NOWALKFREE: not */
+            int walk_in = 0, j;
+            if (st == 10u) vs_pl[i].wk_t = now | 1u;
+            walk_in = vs_pl[i].wk_t && now - vs_pl[i].wk_t < 800u;
+            if (k == 0) { uint32_t r = COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u); float sx = MEMF(r + 0x14), sy = MEMF(r + 0x18); if (sx * sx + sy * sy > 0.36f) walk_in = 1; }
+            if (walk_in && !vs_pl_hurt_state(st) && !getenv("TT_VS_NOWALKFREE")) {
+                float fx = MEMF(h + 0x70), fy = MEMF(h + 0x74), fl = sqrtf(fx * fx + fy * fy); int body = 0;
+                for (j = 0; j < 5 && !body; j++) { uint32_t o = j == 4 ? coop_p2 : coop_hero_n(j); float ox, oy, od;
+                    if (o < 0x10000u || o == h || (int32_t)MEM32(o + 0x2FC) <= 0) continue;
+                    ox = MEMF(o + 0xF0) - x; oy = MEMF(o + 0xF4) - y; od = sqrtf(ox * ox + oy * oy);
+                    if (od < 7.0f && (fl < 0.01f || od < 0.01f || od < 3.5f || (ox * fx + oy * fy) / (od * fl) > 0.3f)) body = 1; }   /* (a troll's reach is 5.5: fighting, not caught) */
+                if (body || !vs_pl[i].ws_t || (x - vs_pl[i].ws[0]) * (x - vs_pl[i].ws[0]) + (y - vs_pl[i].ws[1]) * (y - vs_pl[i].ws[1]) > 2.25f) { vs_pl[i].ws_t = body ? 0 : now | 1u; vs_pl[i].ws[0] = x; vs_pl[i].ws[1] = y; }
+                else if ((int32_t)(now - vs_pl[i].ws_t) > 3000) {
+                    float q[3]; int pn = tt_coop_player_of(h), r, got = 0;
+                    for (r = 0; r < vs_pl[i].nring && !got; r++) { float *g = vs_pl[i].ring[r]; if ((g[0] - x) * (g[0] - x) + (g[1] - y) * (g[1] - y) > 2.25f) { q[0] = g[0]; q[1] = g[1]; q[2] = g[2] + 0.5f; got = 1; } }
+                    if (!got) { vs_pl[i].ws_t = 0; continue; }   /* (no good ground of his own nearby: left -- the round's start was a jump across the map) */
+                    vs_place(h, q);
+                    for (j = 0; j < 3; j++) { MEMF(h + 0x90 + 4 * j) = MEMF(h + 0x130 + 4 * j) = MEMF(h + 0x140 + 4 * j) = MEMF(h + 0x628 + 4 * j) = MEMF(h + 0xF0 + 4 * j); }
+                    tt_dbg("[VS] P%d walked in place 3 s at %.1f %.1f %.1f (state %u): set back at %.1f %.1f %.1f%s\n", pn ? pn : k + 1, x, y, z, st, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8), "");
+                    vs_pl[i].ws_t = 0; vs_pl[i].nring = 0;
+                }
+            } else vs_pl[i].ws_t = 0;
+        }
+        if (caught) { if (!vs_pl[i].since) vs_pl[i].since = now | 1u; } else vs_pl[i].since = 0;
+        if (sunk) { if (!vs_pl[i].sunk_t) vs_pl[i].sunk_t = now | 1u; } else vs_pl[i].sunk_t = 0;
+        if (vs_pl[i].since && (int32_t)(now - vs_pl[i].since) > 800 && !vs_pl[i].kicked) {   /* (first, 0.8 s in: out of the state that holds him, as the held-still
+            * help does -- his moves' blocks cleared, INP_EXPIRED; a playtest's troll was caught in states 20 and 16 every time) */
+            uint32_t hp0 = MEM32(h + 0x2FC), sm = h + 0x3D8; int pn = tt_coop_player_of(h);
+            vs_pl[i].kicked = 1; MEM32(sm + 0x50) = 0; MEM32(sm + 0x54) = 0; coop_hero_state(h, 30u); MEM32(h + 0x2FC) = hp0;
+            tt_dbg("[VS] P%d caught in the game's pushes in state %u: INP_EXPIRED (state now %u)\n", pn ? pn : k + 1, st, MEM32(h + 0x408)); }
+        if (!vs_pl[i].since) vs_pl[i].kicked = 0;
+        if ((vs_pl[i].since && (int32_t)(now - vs_pl[i].since) > 2000) || (vs_pl[i].sunk_t && (int32_t)(now - vs_pl[i].sunk_t) > 1000)) {
+            float q[3]; int pn = tt_coop_player_of(h);
+            if (vs_pl[i].good_ok && ((vs_pl[i].good[0] - x) * (vs_pl[i].good[0] - x) + (vs_pl[i].good[1] - y) * (vs_pl[i].good[1] - y) > 0.25f || sunk)) {
+                q[0] = vs_pl[i].good[0]; q[1] = vs_pl[i].good[1]; q[2] = vs_pl[i].good[2] + 0.5f; }
+            else { float *sp = vs_rs_ok ? vs_rs_pos[k < 4 ? k : 1] : vs_spot[(k < 4 ? k : 1) & 1]; q[0] = sp[0]; q[1] = sp[1]; q[2] = sp[2] + 1.0f; }
+            vs_place(h, q);
+            { int j; for (j = 0; j < 3; j++) { MEMF(h + 0x90 + 4 * j) = MEMF(h + 0x130 + 4 * j) = MEMF(h + 0x140 + 4 * j) = MEMF(h + 0x628 + 4 * j) = MEMF(h + 0xF0 + 4 * j); } }
+            tt_dbg("[VS] P%d %s at %.1f %.1f %.1f (ground %.2f, state %u): set back on good ground at %.1f %.1f %.1f\n", pn ? pn : k + 1,
+                   vs_pl[i].since ? "caught in the game's pushes" : "sunk under the ground", x, y, z, g, st, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8));
+            vs_pl[i].since = 0; vs_pl[i].sunk_t = 0; vs_pl[i].latch_t = 0; vs_pl[i].win_n = vs_pl[i].prev_n = vs_pl[i].fr_n = vs_pl[i].prev_fr = 0; vs_pl[i].cand_ok = 0;
+        }
+    }
+}
+/* (2.0.3) Versus: a hero who will not turn. A Troll Battle's player 1 "could only move forward and attack" (three playtests): the stick
+ * pushed every way, he went only where he faced. Watched for player 1, and player 2 when no bot plays him: the stick pushed (past 0.6) and swung through
+ * more than 100 degrees within 2.5 s while his facing (+0x70) stays within 10 degrees, not in a blow's or a fall's state -- logged with
+ * all that may hold him ([VS] ... will not turn), then his moves' blocks cleared and INP_EXPIRED, a second time INP_TAKEDAMAGE (as the
+ * held-still help). TT_VS_NOTURNFIX: only the log */
+static void vs_turnfix_frame(void)
+{
+    static uint32_t t0[2], last_fix[2], fixes[2]; static float a0[2], f0[2], amax[2];
+    uint32_t now = coop_now(); int w;
+    for (w = 0; w < 2; w++) {
+        uint32_t h = w ? coop_p2 : coop_first_char, r = w ? COOP_PADREC(1u + (uint32_t)coop_slot_cur) : COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u), st;
+        float sx, sy, fx, fy, a, f, d;
+        if (h < 0x10000u || !vs_have || vs_state != 0 || coop_down[w] || (int32_t)MEM32(h + 0x2FC) <= 0) { t0[w] = 0; continue; }
+        if (w == 1 && (getenv("TT_COOP_P2BOT") || coop_slot_cur != 0 || tt_coop_setting(4))) { t0[w] = 0; continue; }   /* (player 2 only when he is a person) */
+        sx = MEMF(r + 0x14); sy = MEMF(r + 0x18); fx = MEMF(h + 0x70); fy = MEMF(h + 0x74); st = MEM32(h + 0x408);
+        if (sx * sx + sy * sy < 0.36f || fx * fx + fy * fy < 0.01f || vs_pl_hurt_state(st)) { t0[w] = 0; continue; }
+        a = atan2f(sy, sx); f = getenv("TT_VS_TURNTEST") ? 0.0f : atan2f(fy, fx);   /* (testing: a facing that never changes) */
+        if (!t0[w]) { t0[w] = now | 1u; a0[w] = a; f0[w] = f; amax[w] = 0; continue; }
+        d = f - f0[w]; while (d > 3.14159f) d -= 6.28318f; while (d < -3.14159f) d += 6.28318f;
+        if (fabsf(d) > 0.17f) { t0[w] = now | 1u; a0[w] = a; f0[w] = f; amax[w] = 0; continue; }   /* (he turned: no fault) */
+        d = a - a0[w]; while (d > 3.14159f) d -= 6.28318f; while (d < -3.14159f) d += 6.28318f;
+        if (fabsf(d) > amax[w]) amax[w] = fabsf(d);
+        if ((int32_t)(now - t0[w]) > 2500) {
+            if (amax[w] > 1.75f) {
+                uint32_t sm = h + 0x3D8, c = MEM32(h + 0x494), mv = MEM32(h + 0x164);
+                tt_dbg("[VS] P%d will not turn: the stick swung %.0f degrees in %.1f s, his facing held (%.2f %.2f) | state %u +3E0 %08X block %08X %08X inputs %08X %08X | c+0 %08X c+30 %08X c+34 %08X | +464 %08X +49C %08X +110 %08X | turn %.2f %.2f | buttons %08X\n",
+                       w + 1, amax[w] * 57.3f, (now - t0[w]) / 1000.0f, fx, fy, st, MEM32(h + 0x3E0), MEM32(sm + 0x54), MEM32(sm + 0x50), MEM32(sm + 0xC), MEM32(sm + 8),
+                       c >= 0x10000u ? MEM32(c) : 0, c >= 0x10000u ? MEM32(c + 0x30) : 0, c >= 0x10000u ? MEM32(c + 0x34) : 0, MEM32(h + 0x464), MEM32(h + 0x49C), MEM32(h + 0x110),
+                       mv >= 0x10000u ? MEMF(mv + 0x34) : -1.0f, mv >= 0x10000u ? MEMF(mv + 0x38) : -1.0f, MEM32(r + 0x34));
+                if (!getenv("TT_VS_NOTURNFIX")) {
+                    uint32_t hp0 = MEM32(h + 0x2FC);
+                    if (last_fix[w] && now - last_fix[w] < 6000u) fixes[w]++; else fixes[w] = 0;
+                    last_fix[w] = now | 1u;
+                    MEM32(sm + 0x50) = 0; MEM32(sm + 0x54) = 0;
+                    coop_hero_state(h, fixes[w] ? 5u : 30u);
+                    MEM32(h + 0x2FC) = hp0;
+                    tt_dbg("[VS] P%d: his moves' blocks cleared, %s (state now %u)\n", w + 1, fixes[w] ? "INP_TAKEDAMAGE" : "INP_EXPIRED", MEM32(h + 0x408));
+                }
+            }
+            t0[w] = 0;
+        }
+    }
+}
 static void vs_unstick(void)
 {
     COOP_PS float px[2], py[2], sx[2], sy[2], sz2[2]; COOP_PS uint32_t tmv[2], tstep[2], hold[2]; COOP_PS int steps[2]; COOP_PS unsigned lv = ~0u;
@@ -7945,6 +8163,12 @@ static void vs_gates(void)
                     vs_place(a, p); MEMF(a + 0x90) = p[0]; MEMF(a + 0x94) = p[1]; MEMF(a + 0x98) = p[2];
                     if (vs_pm_walk_at(p[0], p[1], &pmi)) MEM32(a + 0x2ECu) = pmi;
                     vs_safe[k][0] = p[0]; vs_safe[k][1] = p[1]; vs_safe[k][2] = G->tz; memset(vs_wt[k], 0, sizeof vs_wt[k]); vs_back_t[k] = 0; }
+                for (k = 2; k < 4 && !getenv("TT_VS_GATEP12"); k++) { uint32_t a = coop_hero_n(k); float p[3], an = G->th + 1.5707963f * (k == 2 ? -1.0f : 2.0f);   /* (2.0.3) players 3
+                    * and 4 with them, a step to the other side and behind -- they were left where they were (a playtest: player 3 left in Fangorn's arena) */
+                    if (a < 0x10000u || a == coop_first_char || a == coop_p2 || coop_hero_down_n(k)) continue;
+                    p[0] = G->tx + 2.5f * cosf(an); p[1] = G->ty + 2.5f * sinf(an); p[2] = G->tz + vs_lift();
+                    vs_place(a, p); MEMF(a + 0x90) = p[0]; MEMF(a + 0x94) = p[1]; MEMF(a + 0x98) = p[2];
+                    { uint32_t pmk = 0; if (vs_pm_walk_at(p[0], p[1], &pmk)) MEM32(a + 0x2ECu) = pmk; } }
                 for (k = 0; k < 2; k++) for (d = 0; d < ng && d < 8; d++) { const VsGate *D = &vs_gate_tab[d];   /* (inside the gate they arrive in: it waits) */
                     in[k][d] = D->level == lvl && (G->tx - D->x) * (G->tx - D->x) + (G->ty - D->y) * (G->ty - D->y) < (D->r + 3.0f) * (D->r + 3.0f); }
                 vs_cam_dx = cosf(G->th); vs_cam_dy = sinf(G->th);   /* (the camera behind them, facing on) */
@@ -8038,6 +8262,14 @@ static void vs_round_start(void)
                 p[2] += vs_lift() * 0.5f; vs_place(L, p); tt_dbg("[VS] P%d back at the level's point %.1f %.1f %.1f, %.0f units from P%d\n", l + 1, p[0], p[1], p[2], sqrtf((p[0] - MEMF(W + 0xF0)) * (p[0] - MEMF(W + 0xF0)) + (p[1] - MEMF(W + 0xF4)) * (p[1] - MEMF(W + 0xF4))), 2 - l);
                 dx = dy = 1e4f; }
         }
+        {   /* (2.0.3) the winner, going on where he stands: if that is not walkable ground (a Troll Battle's round ended with a troll
+             * against a tree, and he walked in place there all the next round, a playtest), to a level's point as the one who fell is */
+            extern int tt_vs_spot_from(float x0, float y0, float lo, float want, float hi, float *p); float q[3];
+            extern int tt_vs_troll_mode(void);
+            if (getenv("TT_VS_STUCKFIX") && tt_vs_troll_mode() && !vs_pm_walk_at(MEMF(W + 0xF0), MEMF(W + 0xF4), NULL) && tt_vs_spot_from(MEMF(L + 0xF0), MEMF(L + 0xF4), 12.0f, sp, 90.0f, q)) {
+                q[2] += vs_lift() * 0.5f; vs_place(W, q); tt_dbg("[VS] P%d (the winner) stood off walkable ground: to the level's point %.1f %.1f %.1f\n", 2 - l, q[0], q[1], q[2]);
+                dx = dy = 1e4f; }
+        }
         if (dx * dx + dy * dy < sp * sp) {
             vs_free_spot(W, MEMF(W + 0xF0), MEMF(W + 0xF4), dx, dy, sp, &p[0], &p[1]); p[2] = fmaxf(MEMF(W + 0xF8), MEMF(L + 0xF8)) + vs_lift();   /* (1.9.9: a little above the higher of the two -- he drops onto the ground there; at the winner's height he could start under a rise and fall through) */
             vs_place(L, p); tt_dbg("[VS] P%d set %.0f units from P%d to go on\n", l + 1, sp, 2 - l);
@@ -8065,6 +8297,7 @@ static void vs_round_start(void)
  * the front end starts its own (0x000C31C0: name, 1 = play, 1, 0 -- the stream player [0x43BCF8]) once a level, at
  * the first FIGHT. The arena's scripts, which would start it, are not run in Versus */
 static uint32_t vs_music_g;   /* (the track's name, in the game's memory) */
+static int tt_vs_paused_now(void) { extern int tt_game_paused_now(void); return tt_game_paused_now() || MEM32(0x4AD050u) != 6u; }
 static void vs_music_play(void)
 {
     uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx;
@@ -8090,6 +8323,7 @@ static void vs_music_start(void)
     tt_dbg("[VS] music: \"%s\" started (level %u)\n", t, li);
 }
 /* the countdown: the round's banner 1 s, then 3, 2, 1 a second each (the Options' tick), then FIGHT (versus/fight.wav) */
+static int vs_pm_walk_at(float x, float y, uint32_t *pmi);
 static void vs_countdown(uint32_t now)
 {
     extern void tt_opt_move_sound(void); extern void tt_vs_play_wav(const char *name, float vol);
@@ -8335,7 +8569,7 @@ static void vs_camera(void)
  * written later in the frame, and the level's culling still went by the level's own camera -- on Amon Hen the ground
  * past a point was not drawn (the level's camera elsewhere) */
 int tt_vs_camera_after(void) { if (!tt_vs_on() || !vs_cam_ours || !vs_have) return 0; vs_camera(); return 1; }
-static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(getenv("TT_VS_ARENAR")); return 0.0f; }   /* (1.9.9: none -- Amon Hen had 50 units, the rest of its map drawn now, every sector and its props out of the way) */
+static float vs_arena_r(void) { if (getenv("TT_VS_ARENAR")) return (float)atof(getenv("TT_VS_ARENAR")); return 0.0f; }   /* (1.9.9: none -- Amon Hen had 50 units, the rest of its map drawn now, every sector and its props out of the way) */   /* (1.9.9: none -- Amon Hen had 50 units, the rest of its map drawn now, every sector and its props out of the way) */
 /* (Versus) the heroes stay within TT_VS_LEASH (24) units of each other, so one camera keeps both: a step that takes
  * them further apart is undone for whoever made it (both, if both did) */
 static void vs_leash(void)
@@ -8389,11 +8623,15 @@ static void vs_leash(void)
     }
     {   /* the arena's edge: on Amon Hen no further than 50 units from where the match began (past it the level is
          * unfinished -- the campaign's gates keep you out: a brown wall where the ground stops). TT_VS_ARENAR */
-        float A = vs_arena_r();
-        if (A > 0 && vs_have) for (w = 0; w < 2; w++) {
-            float cx = 0.5f * (vs_spot[0][0] + vs_spot[1][0]), cy = 0.5f * (vs_spot[0][1] + vs_spot[1][1]);
-            float dx = MEMF(h[w] + 0xF0) - cx, dy = MEMF(h[w] + 0xF4) - cy, d = sqrtf(dx * dx + dy * dy), d0 = sqrtf((px[w] - cx) * (px[w] - cx) + (py[w] - cy) * (py[w] - cy));
-            if (d > A && d > d0) { MEMF(h[w] + 0xF0) = px[w]; MEMF(h[w] + 0xF4) = py[w]; MEMF(h[w] + 0x90) = px[w]; MEMF(h[w] + 0x94) = py[w]; }
+        float A = vs_arena_r(); COOP_PS float ax[4], ay[4]; COOP_PS int aok[4];
+        if (A > 0 && vs_have) for (w = 0; w < 4; w++) {   /* (2.0.3: players 3 and 4 too) */
+            uint32_t hw = w < 2 ? h[w] : coop_hero_n(w); float ox = w < 2 ? px[w] : ax[w], oy = w < 2 ? py[w] : ay[w];
+            float cx = 0.5f * (vs_spot[0][0] + vs_spot[1][0]), cy = 0.5f * (vs_spot[0][1] + vs_spot[1][1]), dx, dy, d, d0;
+            if (hw < 0x10000u || (w >= 2 && (hw == h[0] || hw == h[1]))) { aok[w] = 0; continue; }
+            if (w >= 2 && !aok[w]) { ax[w] = MEMF(hw + 0xF0); ay[w] = MEMF(hw + 0xF4); aok[w] = 1; continue; }
+            dx = MEMF(hw + 0xF0) - cx; dy = MEMF(hw + 0xF4) - cy; d = sqrtf(dx * dx + dy * dy); d0 = sqrtf((ox - cx) * (ox - cx) + (oy - cy) * (oy - cy));
+            if (d > A && d > d0) { MEMF(hw + 0xF0) = ox; MEMF(hw + 0xF4) = oy; MEMF(hw + 0x90) = ox; MEMF(hw + 0x94) = oy; }
+            if (w >= 2) { ax[w] = MEMF(hw + 0xF0); ay[w] = MEMF(hw + 0xF4); }
         }
     }
     for (w = 0; w < 2; w++) { px[w] = MEMF(h[w] + 0xF0); py[w] = MEMF(h[w] + 0xF4); }
@@ -8817,9 +9055,20 @@ static void vs_frame(void)
         tt_dbg("[VS] game voice test: %08X\n", tt_gcall(0x000C3B90u, 0, 10, a)); } }
     if (getenv("TT_VS_VOICETEST")) { COOP_PS uint32_t tv; extern int tt_vs_voice(const char *who, int slot, float vol); if (now - tv > 2000u) { tv = now; tt_dbg("[VS] voice test: %d\n", tt_vs_voice(vs_skin_name(0), 0, 1.0f)); } }
     if (getenv("TT_VS_P2FOLLOW") && vs_state == 0) { MEMF(coop_p2 + 0xF0) = MEMF(coop_first_char + 0xF0) + 2.0f; MEMF(coop_p2 + 0xF4) = MEMF(coop_first_char + 0xF4); MEMF(coop_p2 + 0xF8) = MEMF(coop_first_char + 0xF8); }   /* (test) */
+    if (vs_music_g && vs_state == 0 && !getenv("TT_VS_NOMUSICWATCH") && !tt_vs_paused_now()) {   /* (2.0.3) the music gone quiet in a round: started again. A playtest: no
+        * music on the Deeping Wall though the log has it started -- a stream the arena sets off (its own, not in the donor's bank) can take
+        * the stream player from it. Checked every 3 s by the mixer's count of stream frames; none since: the track again */
+        extern volatile unsigned xbox_apu_stream_mixed; COOP_PS uint32_t mt; COOP_PS unsigned mc;
+        if (now - mt > 3000u) { if (mt && xbox_apu_stream_mixed == mc) { vs_music_play(); { COOP_PS int n; if (n++ < 20) tt_dbg("[VS] music: silent 3 s in a round -- started again\n"); } }
+            mt = now | 1u; mc = xbox_apu_stream_mixed; }
+    }
     vs_leash();
     vs_edge_guard();
+    if (getenv("TT_VS_PROPLIST") && vs_state == 0) { static int done; int i; if (!done) { done = 1; extern uint32_t tt_allobj[4096]; extern int tt_nallobj; for (i = 0; i < tt_nallobj; i++) { uint32_t e = tt_allobj[i]; if (e >= 0x10000u && e < 0x88000000u && MEM32(e + 0x114) == 7u && (int32_t)MEM32(e + 0x2FC) > 0 && (int32_t)MEM32(e + 0x2FC) < 100) tt_dbg("[PROPLIST] '%s' at %.1f %.1f %.1f hp %d\n", coop_nm(e), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8), (int32_t)MEM32(e + 0x2FC)); } } }   /* (testing) */
+    if (getenv("TT_VS_P1TELE") && vs_state == 0) { static int done; static uint32_t t0; float q[3]; int ms = 0; if (!t0) t0 = now | 1u;   /* (testing: "x,y,z,ms" -- player 1 put there once) */
+        if (!done && sscanf(getenv("TT_VS_P1TELE"), "%f,%f,%f,%d", &q[0], &q[1], &q[2], &ms) == 4 && now - t0 > (uint32_t)ms) { done = 1; vs_place(coop_first_char, q); MEMF(coop_first_char + 0x90) = q[0]; MEMF(coop_first_char + 0x94) = q[1]; MEMF(coop_first_char + 0x98) = q[2]; tt_dbg("[VS] test: player 1 put at %.1f %.1f %.1f\n", q[0], q[1], q[2]); } }
     vs_unstick();
+    if (getenv("TT_VS_STUCKFIX")) { vs_pushloop_frame(); vs_turnfix_frame(); }   /* (2.0.3, later: the stuck troll's helps off -- a playtest asked for them gone; TT_VS_STUCKFIX: on) */
     if (!getenv("TT_VS_NOFREE")) {
         /* (2.0.0) a hero who cannot move at all: the stick pushed (no button held) in a round, not down, and not moved a fifth of a unit
          * in 2.5 s -- his state machine waits for something that never comes. The Orthanc Summit, a playtest log: after a Restart Match
@@ -8834,14 +9083,19 @@ static void vs_frame(void)
         for (w2 = 0; w2 < 2; w2++) {
             uint32_t h = w2 ? coop_p2 : coop_first_char, r = w2 ? COOP_PADREC(1u + (uint32_t)coop_slot_cur) : COOP_PADREC(MEM32(0x1CB8B4u) < 4u ? MEM32(0x1CB8B4u) : 0u), o2 = w2 ? coop_first_char : coop_p2;
             float sx = MEMF(r + 0x14), sy = MEMF(r + 0x18), dx = MEMF(h + 0xF0) - lx[w2], dy = MEMF(h + 0xF4) - ly[w2];
-            int push = sx * sx + sy * sy > 0.36f && !(MEM32(r + 0x34) & ~0x000F0000u), busy = 0, i;
+            COOP_PS uint32_t wk[2]; int walking;
+            if (h >= 0x10000u && MEM32(h + 0x408) == 10u) wk[w2] = now | 1u;
+            walking = wk[w2] && (int32_t)(now - wk[w2]) < 800 && getenv("TT_VS_STUCKFIX");   /* (2.0.3) walking (10) and not moving counts as pushing on: a Troll Battle's winner,
+                * kept where round 1 ended, walked in place by a tree all of round 2 (states 1 and 10 by turns, never moving -- a playtest; his
+                * stick was not seen in the pad's record, so this never began) */
+            int push = (sx * sx + sy * sy > 0.36f && !(MEM32(r + 0x34) & ~0x000F0000u)) || walking, busy = 0, i;
             if (h >= 0x10000u) {
                 for (i = 0; i < coop_nchars && !busy; i++) { uint32_t e = coop_chars[i]; float ex, ey;
                     if (e == h || e == o2 || MEM32(e + 0x114) != 3u || (int32_t)MEM32(e + 0x2FC) <= 0) continue;
                     ex = MEMF(e + 0xF0) - MEMF(h + 0xF0); ey = MEMF(e + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < 25.0f) busy = 1; }
                 if (o2 >= 0x10000u && vs_atk_t[w2 ^ 1] && (int32_t)(now - vs_atk_t[w2 ^ 1]) < 2000) { float ex = MEMF(o2 + 0xF0) - MEMF(h + 0xF0), ey = MEMF(o2 + 0xF4) - MEMF(h + 0xF4); if (ex * ex + ey * ey < 16.0f) busy = 1; }
                 if (vs_atk_t[w2] && (int32_t)(now - vs_atk_t[w2]) < 2000) busy = 1;
-                if (t0[w2] && MEM32(h + 0x408) != st0[w2]) busy = 1;
+                if (t0[w2] && MEM32(h + 0x408) != st0[w2] && !(getenv("TT_VS_STUCKFIX") && (MEM32(h + 0x408) == 1u || MEM32(h + 0x408) == 10u) && (st0[w2] == 1u || st0[w2] == 10u))) busy = 1;   /* (2.0.3: idle and walking by turns is no change) */
             }
             if (rest[w2] && (int32_t)(now - rest[w2]) < 15000) busy = 1;   /* (after the three steps: 15 s before it may try again -- pushing into a wall is no fault) */
             if (h < 0x10000u || !vs_have || vs_state != 0 || coop_down[w2] || !push || busy || dx * dx + dy * dy > 0.04f) { t0[w2] = 0; step[w2] = 0; lx[w2] = MEMF(h + 0xF0); ly[w2] = MEMF(h + 0xF4); continue; }
@@ -8849,11 +9103,18 @@ static void vs_frame(void)
             if ((int32_t)(now - t0[w2]) > 2500 + 1000 * (int32_t)step[w2] && step[w2] < 3) {   /* (2.0.0: signed -- t0 is now | 1, a millisecond ahead on even ones: unsigned it wrapped and all
                 * three steps ran at once, a flinch out of nowhere, a playtest: "taking some invisible damage while walking ... they flinch") */
                 uint32_t b = MEM32(h + 0x494), st = MEM32(h + 0x408); int k;
-                for (k = 0; k < 3; k++) { uint32_t v = MEM32(h + 0xF0 + 4 * k); MEM32(h + 0x90 + 4 * k) = MEM32(h + 0x130 + 4 * k) = MEM32(h + 0x140 + 4 * k) = MEM32(h + 0x628 + 4 * k) = v; if (b >= 0x80000000u && b < 0x84000000u) MEM32(b + 0xE8 + 4 * k) = v; }
+                for (k = 0; k < 3; k++) { uint32_t v = MEM32(h + 0xF0 + 4 * k); MEM32(h + 0x90 + 4 * k) = MEM32(h + 0x130 + 4 * k) = MEM32(h + 0x140 + 4 * k) = MEM32(h + 0x628 + 4 * k) = v; if (b >= 0x80000000u && b < 0x88000000u) MEM32(b + 0xE8 + 4 * k) = v; }
                 {   uint32_t hp0 = MEM32(h + 0x2FC);   /* (INP_TAKEDAMAGE takes its health as a blow would: kept) */
                     if (step[w2] == 2 && vs_safe_ok[w2] && !getenv("TT_VS_NOFREEPUT")) {   /* (still held: back on his last safe ground) */
                         float q[3]; q[0] = vs_safe[w2][0]; q[1] = vs_safe[w2][1]; q[2] = vs_safe[w2][2] + 0.5f;
                         if ((q[0] - MEMF(h + 0xF0)) * (q[0] - MEMF(h + 0xF0)) + (q[1] - MEMF(h + 0xF4)) * (q[1] - MEMF(h + 0xF4)) > 1.0f) { vs_place(h, q); tt_dbg("[VS] P%d put back on his last safe ground\n", w2 + 1); } }
+                    {   /* (2.0.3, research for a Troll Battle's stuck troll) what holds him, before the step */
+                        uint32_t sm = h + 0x3D8, c = MEM32(h + 0x494);
+                        tt_dbg("[VS]   P%d held: state %u +3E0 %08X block %08X %08X inputs %08X %08X | c+0 %08X c+30 %08X c+34 %08X | +464 %08X +49C %08X +110 %08X +500 %02X | stick %.2f %.2f walking %d\n",
+                               w2 + 1, MEM32(h + 0x408), MEM32(h + 0x3E0), MEM32(sm + 0x54), MEM32(sm + 0x50), MEM32(sm + 0xC), MEM32(sm + 8), c >= 0x10000u ? MEM32(c) : 0, c >= 0x10000u ? MEM32(c + 0x30) : 0,
+                               c >= 0x10000u ? MEM32(c + 0x34) : 0, MEM32(h + 0x464), MEM32(h + 0x49C), MEM32(h + 0x110), MEM8(h + 0x500), sx, sy, walking);
+                        if (step[w2] >= 1 && getenv("TT_VS_STUCKFIX")) { MEM32(sm + 0x50) = 0; MEM32(sm + 0x54) = 0; }   /* (a hold's block of his moves left behind: cleared) */
+                    }
                     coop_hero_state(h, step[w2] == 0 ? 30u : 5u);
                     MEM32(h + 0x2FC) = hp0; }
                 tt_dbg("[VS] P%d held still %.1f s with the stick pushed (state %u -> %u): %s\n", w2 + 1, (now - t0[w2]) / 1000.0f, st, MEM32(h + 0x408), step[w2] == 0 ? "INP_EXPIRED" : "INP_TAKEDAMAGE");
@@ -9043,14 +9304,14 @@ static void vs_frame(void)
          * once a level. TT_VS_KEEPPROPS */
         COOP_PS unsigned lv = ~0u; extern uint32_t tt_allobj[4096], tt_allobj_t[4096]; extern int tt_nallobj;
         if (lv != coop_level_n && vs_have && getenv("TT_VS_PROPSOFF")) { int i, n = 0; lv = coop_level_n;   /* (1.9.9: off unless asked -- the props are the level's breakables, the log across Amon Hen's path too: without their collision no blow broke anything, a playtest) */
-            for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i]; if (o < 0x10000u || o >= 0x84000000u) continue;
+            for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i]; if (o < 0x10000u || o >= 0x88000000u) continue;
                 if (getenv("TT_VS_ALLOBJCOLL") && MEM32(o) != 0x1741C0u && tt_allobj_t[i] != 7u) { uint32_t a1[1]; a1[0] = o; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); MEM32(o + 0x110) &= ~0x100u; continue; }   /* (test) */
                 if (tt_allobj_t[i] != 7u || MEM32(o) != 0x174980u) continue;
                 { uint32_t a1[1]; a1[0] = o; tt_gcall(0x000C67B0u, 0x0043C5E8u, 1, a1); }   /* (@ObjectCollisionOff: out of the collision world, 0x43C5E8) */
-                if (getenv("TT_VS_PROPLOG")) { uint32_t h = MEM32(o + 0x18); tt_dbg("[VSPROP] %08X '%s' at %.1f %.1f %.1f +110 %08X +2A4 %08X +114 %08X\n", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEMF(o + 0xF0), MEMF(o + 0xF4), MEMF(o + 0xF8), MEM32(o + 0x110), MEM32(o + 0x2A4), MEM32(o + 0x114)); }
+                if (getenv("TT_VS_PROPLOG")) { uint32_t h = MEM32(o + 0x18); tt_dbg("[VSPROP] %08X '%s' at %.1f %.1f %.1f +110 %08X +2A4 %08X +114 %08X\n", o, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", MEMF(o + 0xF0), MEMF(o + 0xF4), MEMF(o + 0xF8), MEM32(o + 0x110), MEM32(o + 0x2A4), MEM32(o + 0x114)); }
                 if (MEM32(o + 0x110) & 0x100u) MEM32(o + 0x110) &= ~0x100u;
                 if (getenv("TT_VS_PROPDEACT")) { uint32_t a1[1]; a1[0] = 0; tt_gcall(MEM32(MEM32(o) + 0x30u), o, 1, a1); }   /* (test: @Deactivate, vtable +0x30 with 0) */
-                if (getenv("TT_VS_PROPSINK")) { uint32_t h = MEM32(o + 0x18); if (h >= 0x10000u && h < 0x84000000u && (!strcmp(getenv("TT_VS_PROPSINK"), "all") || !strcmp((const char *)XBOX_PTR(h), getenv("TT_VS_PROPSINK")))) {
+                if (getenv("TT_VS_PROPSINK")) { uint32_t h = MEM32(o + 0x18); if (h >= 0x10000u && h < 0x88000000u && (!strcmp(getenv("TT_VS_PROPSINK"), "all") || !strcmp((const char *)XBOX_PTR(h), getenv("TT_VS_PROPSINK")))) {
                     float p3[3]; p3[0] = MEMF(o + 0xF0); p3[1] = MEMF(o + 0xF4); p3[2] = MEMF(o + 0xF8) - 300.0f; { uint32_t a3[3]; memcpy(&a3[0], &p3[0], 4); memcpy(&a3[1], &p3[1], 4); memcpy(&a3[2], &p3[2], 4); tt_gcall(0x000865D0u, o, 3, a3); }
                     tt_dbg("[VS] prop %s sunk: now at %.1f\n", (const char *)XBOX_PTR(h), MEMF(o + 0xF8)); } }   /* (test) */
                 n++; }
@@ -9079,7 +9340,7 @@ static void vs_frame(void)
         if (!dn++ && w >= 0x10000u) { for (q = 0; q < 0x120; q += 16) tt_dbg("[WORLD] +%03X %08X %08X %08X %08X\n", q, MEM32(w + q), MEM32(w + q + 4), MEM32(w + q + 8), MEM32(w + q + 12));
             for (k = 0; k < MEM32(w + 0x10) && k < 16; k++) { uint32_t sc = MEM32(MEM32(w + 0x30) + 4 * k); sc = MEM32(w + 0x100 + 4 * k) - 0x20; tt_dbg("[SECTOR] %u %08X '%.12s' %.1f %.1f %.1f .. %.1f %.1f %.1f | +50 %X +54 %X +58 %X +5C %X +60 %08X +64 %08X +68 %X +6C %X\n", k, sc, (const char *)XBOX_PTR(sc + 0x20), MEMF(sc + 0x30), MEMF(sc + 0x34), MEMF(sc + 0x38), MEMF(sc + 0x40), MEMF(sc + 0x44), MEMF(sc + 0x48), MEM32(sc + 0x50), MEM32(sc + 0x54), MEM32(sc + 0x58), MEM32(sc + 0x5C), MEM32(sc + 0x60), MEM32(sc + 0x64), MEM32(sc + 0x68), MEM32(sc + 0x6C)); }
             { uint32_t a = MEM32(w + 0x34); for (q = 0; q < 0x600; q += 16) tt_dbg("[PORTAL] +%03X %08X %08X %08X %08X\n", q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); }
-            for (k = 0x18; k <= 0x40; k += 4) { uint32_t a = MEM32(w + k); if (a >= 0x80000000u && a < 0x84000000u) for (q = 0; q < 0x100; q += 16) tt_dbg("[WORLD] [+%02X]=%08X +%03X %08X %08X %08X %08X\n", k, a, q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); } } }
+            for (k = 0x18; k <= 0x40; k += 4) { uint32_t a = MEM32(w + k); if (a >= 0x80000000u && a < 0x88000000u) for (q = 0; q < 0x100; q += 16) tt_dbg("[WORLD] [+%02X]=%08X +%03X %08X %08X %08X %08X\n", k, a, q, MEM32(a + q), MEM32(a + q + 4), MEM32(a + q + 8), MEM32(a + q + 12)); } } }
     if (getenv("TT_VS_NOPATHROOM")) { COOP_PS int dn; if (!dn++) tt_dbg("[VS] heroes +110 %08X %08X +124 %08X %08X +2A4 %08X\n", MEM32(coop_first_char + 0x110), MEM32(coop_p2 + 0x110), MEM32(coop_first_char + 0x124), MEM32(coop_p2 + 0x124), MEM32(coop_first_char + 0x2A4)); if (coop_first_char >= 0x10000u) MEM32(coop_first_char + 0x110) &= ~0x800u; if (coop_p2 >= 0x10000u) MEM32(coop_p2 + 0x110) &= ~0x800u; }   /* (test) */
     if (getenv("TT_VS_MUSDUMP") && vs_state == 0 && now - vs_round_t0 > 6000u) { COOP_PS int dn; uint32_t o = MEM32(0x43BCF8u), q; if (!dn++ && o >= 0x10000u) for (q = 0; q < 0x200; q += 16) tt_dbg("[MUS] +%03X %08X %08X %08X %08X\n", q, MEM32(o + q), MEM32(o + q + 4), MEM32(o + q + 8), MEM32(o + q + 12)); }   /* (research) */
     if (getenv("TT_RECDUMP") && vs_state == 0 && now - vs_round_t0 > 3000u) { COOP_PS int dn; extern void tt_recdump(const char *sub); if (!dn++) tt_recdump(getenv("TT_RECDUMP")); }   /* (research) */
@@ -9261,7 +9522,7 @@ static void vs_frame(void)
             PUSH32(esp, MEM32(0x1BABE4u + id * 16u)); PUSH32(esp, id); PUSH32(esp, 0x000CCB30u); sub_000CCB30(); esp = sp; eax = r0; ecx = r1; edx = r2;
             if (in) tt_coop_leave(); { extern const char *tt_coop_p2_char_now; tt_dbg("[P2NAMETEST] raised %u (context %d), player 2 '%s', key %08X\n", id, in, tt_coop_p2_char_now ? tt_coop_p2_char_now : "(none)", MEM32(0x1BABE4u + id * 16u + 4u)); } }
         if (tl && now - tl > 300u) { uint32_t p15 = 0x4A3D80u + 15 * 0xDC, e15 = 0x4BA600u + 15 * 0xDC, tp = MEM32(e15 + 0x34); char t[48]; int q = 0; tl = 0;
-            if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 46 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) t[q] = (char)MEM16(tp + 2 * q); t[q] = 0;
+            if (tp >= 0x10000u && tp < 0x88000000u) for (; q < 46 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) t[q] = (char)MEM16(tp + 2 * q); t[q] = 0;
             tt_dbg("[P2NAMETEST] P1's element shown %u at x %d | P2's shown %u at x %d '%s'\n", MEM8(p15 + 0x24), (int32_t)MEM32(p15 + 8), MEM8(e15 + 0x24), (int32_t)MEM32(e15 + 8), t); }
     }
     if (getenv("TT_VS_SHIELDBREAKTEST") && vs_state == 0) { COOP_PS uint32_t tb; int ww; if (now - vs_round_t0 > (uint32_t)atoi(getenv("TT_VS_SHIELDBREAKTEST")) && now - tb > 400u) { tb = now; for (ww = 0; ww < 4; ww++) if (vs_shp[ww] > 0) tt_vs_shield_take(ww, 150); } }   /* (test) blows on the shield */
@@ -9685,7 +9946,7 @@ static void coop_hudlist_dump(void)
             for (li = 0; li < 21; li++) { uint32_t tb = MEM32(COOP_HUD_LIST + li * 12), n = MEM32(COOP_HUD_LIST + li * 12 + 4);
                 tt_dbg("[COOPHUDL]  list %d table %08X n %u on %d\n", li, tb, n, MEM8(COOP_HUD_ON + li));
                 if (li == 0 && tb >= 0x10000u && n > 24) { uint32_t q, el = tb + 24 * 0xDC; tt_dbg("[COOPHUDL]  0.24 whole:"); for (q = 0; q < 0xDC; q += 4) tt_dbg(" %X:%08X", q, MEM32(el + q)); tt_dbg("\n");
-                    { uint32_t tx = MEM32(el + 0x40); if (tx >= 0x10000u && tx < 0x84000000u) { tt_dbg("[COOPHUDL]  +40 -> %08X:", tx); for (q = 0; q < 0x40; q += 4) tt_dbg(" %08X", MEM32(tx + q)); tt_dbg("\n"); } } }
+                    { uint32_t tx = MEM32(el + 0x40); if (tx >= 0x10000u && tx < 0x88000000u) { tt_dbg("[COOPHUDL]  +40 -> %08X:", tx); for (q = 0; q < 0x40; q += 4) tt_dbg(" %08X", MEM32(tx + q)); tt_dbg("\n"); } } }
                 if (!MEM8(COOP_HUD_ON + li) || tb < 0x10000u || n > 64) continue;
                 for (j = 0; j < n; j++) { uint32_t el = tb + j * 0xDC; char t[24]; int k; uint32_t tp = MEM32(el + 0x34) >= 0x10000u ? MEM32(el + 0x34) : el + 0x38;
                     for (k = 0; k < 20 && MEM16(tp + 2 * k); k++) t[k] = (char)MEM16(tp + 2 * k); t[k] = 0;
@@ -9749,7 +10010,7 @@ static int coop_project_frustum(float wx, float wy, float wz, float *fx, float *
 {
     extern uint32_t coop_persp_obj_get(void);
     uint32_t c = coop_persp_obj_get(); float n, f, N[4][3], F0[3], E[3], C[3], R[3], D[3], nr[3], P[3], H[3], t, a, b, rr, dd; int i, j;
-    if (c < 0x10000u || c >= 0x84000000u) return 0;
+    if (c < 0x10000u || c >= 0x88000000u) return 0;
     n = MEMF(c); f = MEMF(c + 4);
     if (!(n > 0.01f && f > n && MEMF(c + 0xC) == 640.0f && MEMF(c + 0x10) == 480.0f)) return 0;
     for (i = 0; i < 4; i++) for (j = 0; j < 3; j++) N[i][j] = MEMF(c + 0xC8 + 16 * i + 4 * j);
@@ -9872,8 +10133,8 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
                     if (MEM32(a) != 0x1741C0u || MEM32(a + 0x114) != 3 || (int32_t)MEM32(a + 0x2FC) <= 0) continue;
                     dx = MEMF(a + 0xF0) - MEMF(h + 0xF0); dy = MEMF(a + 0xF4) - MEMF(h + 0xF4); if (fabsf(MEMF(a + 0xF8) - MEMF(h + 0xF8)) > 8.0f) continue; if (dx * dx + dy * dy < bd && dx * dx + dy * dy < 1600.0f) { bd = dx * dx + dy * dy; t = a; } }
                 if (t >= 0x10000u && MEM32(t + 0x114) == 3 && c >= 0x10000u) MEM32(c + 0x98) = t; } else
-            for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i], hn = MEM32(a + 0x18); if (hn >= 0x10000u && hn < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(hn), getenv("TT_COOP_TESTP2LOCK"), strlen(getenv("TT_COOP_TESTP2LOCK"))) && (int32_t)MEM32(a + 0x2FC) > 0) { if (c >= 0x10000u) MEM32(c + 0x98) = a; t = a; break; } } }
-        if (t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u && (t == coop_p2 || t == coop_first_char || tt_coop_player_of(t) > 0 || MEM32(t + 0x114) == 2) && c >= 0x10000u && !tt_vs_on() && !getenv("TT_COOP_LOCKALLIES")) {   /* (not in Versus) */
+            for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i], hn = MEM32(a + 0x18); if (hn >= 0x10000u && hn < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(hn), getenv("TT_COOP_TESTP2LOCK"), strlen(getenv("TT_COOP_TESTP2LOCK"))) && (int32_t)MEM32(a + 0x2FC) > 0) { if (c >= 0x10000u) MEM32(c + 0x98) = a; t = a; break; } } }
+        if (t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x1741C0u && (t == coop_p2 || t == coop_first_char || tt_coop_player_of(t) > 0 || MEM32(t + 0x114) == 2) && c >= 0x10000u && !tt_vs_on() && !getenv("TT_COOP_LOCKALLIES")) {   /* (not in Versus) */
             tt_gcall(0x00053B30u, c, 0, NULL);
             { COOP_PS uint32_t lt; if (coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[COOPAIM] P%d's lock on an ally (%08X %s): cleared, now %08X\n", w + 1, t, coop_nm(t), MEM32(c + 0x98)); } }
         }
@@ -9888,9 +10149,9 @@ static void coop_aimdot_draw(uint32_t quiver)   /* in tt_coop_hud_pre, before th
         if (getenv("TT_COOP_TESTAIMALL")) aim = 1;   /* (bot test: every player aiming) */
         if (w < 2 ? coop_hero_down(w) : coop_hero_down_n(w)) aim = 0;
         if (getenv("TT_COOP_AIMLOG")) { COOP_PS uint32_t la[4]; if (now - la[w] > 700u) { la[w] = now; tt_dbg("[AIMLOG] P%d aim %d down %d lock %08X (vt %08X) at %.1f %.1f %.1f\n", w + 1, aim, w < 2 ? coop_hero_down(w) : coop_hero_down_n(w), t,
-            t >= 0x10000u && t < 0x84000000u ? MEM32(t) : 0, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8)); } }
-        ok = t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x1741C0u && MEM32(t + 0x114) == 3 && (int32_t)MEM32(t + 0x2FC) > 0;
-        {   int prop = !ok && aim && t >= 0x10000u && t < 0x84000000u && MEM32(t) >= 0x170000u && MEM32(t) < 0x180000u && MEM32(t) != 0x1741C0u;   /* (1.9.8) a locked object that isn't a character (an explosive barrel): the dot on it too */
+            t >= 0x10000u && t < 0x88000000u ? MEM32(t) : 0, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8)); } }
+        ok = t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x1741C0u && MEM32(t + 0x114) == 3 && (int32_t)MEM32(t + 0x2FC) > 0;
+        {   int prop = !ok && aim && t >= 0x10000u && t < 0x88000000u && MEM32(t) >= 0x170000u && MEM32(t) < 0x180000u && MEM32(t) != 0x1741C0u;   /* (1.9.8) a locked object that isn't a character (an explosive barrel): the dot on it too */
             if (prop) { float px, py; if (coop_project(MEMF(t + 0xF0), MEMF(t + 0xF4), MEMF(t + 0xF8) + 1.2f, &px, &py) && px >= 8.0f && px <= 632.0f && py >= 8.0f && py <= 472.0f) {
                     sz[w] = 12.0f; hx[w] = 320.0f + (px - 320.0f) * kk; hy[w] = 240.0f + (py - 240.0f) / 0.93f; tg[w] = t; on[w] = 1; } continue; } }
         if (ok) { last_e[w] = t; last_t[w] = now; }
@@ -10050,10 +10311,10 @@ static uint32_t vs_res_texture(uint32_t tel)
     extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); extern int tt_vs_image_pixels(const char *file, uint32_t *out, float k);
     static uint32_t objs[2]; static int states[2]; extern int tt_vs_troll_mode(void); int md = tt_vs_troll_mode() ? 1 : 0;
     uint32_t obj = objs[md]; int state = states[md];
-    uint32_t so = MEM32(tel + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? MEM32(so + 0x10) : 0, blk, k;
+    uint32_t so = MEM32(tel + 0xB8), sd = so >= 0x80000000u && so < 0x88000000u ? MEM32(so + 0x10) : 0, blk, k;
     static uint32_t px[512 * 256];
     if (state) return state > 0 ? obj : 0;
-    if (sd < 0x80000000u || sd >= 0x84000000u || getenv("TT_VS_NORESPIC")) return 0;
+    if (sd < 0x80000000u || sd >= 0x88000000u || getenv("TT_VS_NORESPIC")) return 0;
     states[md] = -1;
     tt_dbg("[VS] results picture: template texture %08X data %08X: +4 %u +8 %u +30 %08X +38 %08X +3C %08X\n", so, sd, MEM32(sd + 4), MEM32(sd + 8), MEM32(sd + 0x30), MEM32(sd + 0x38), MEM32(sd + 0x3C));
     { char b[900]; int q = 0; for (k = 0; k < 0xDC && q < 860; k += 4) q += snprintf(b + q, sizeof b - q, " %X:%08X", k, MEM32(tel + k)); tt_dbg("[VS] template element:%s\n", b); }
@@ -10401,8 +10662,8 @@ void tt_coop_hud_pre(void)
         coop_el_copy(e13, a + 24 * 0xDC); coop_el_copy(e14, a + 26 * 0xDC);
         if (getenv("TT_COOP_AMMOLOG")) { COOP_PS int done; uint32_t e = a + 24 * 0xDC, k; if (!done++) {   /* (research) the quiver's texture */
             tt_dbg("[COOPAMMO] quiver element %08X: +B0 %08X +B4 %08X +B8 %08X +BC %08X +C0 %08X +C4 %08X\n", e, MEM32(e + 0xB0), MEM32(e + 0xB4), MEM32(e + 0xB8), MEM32(e + 0xBC), MEM32(e + 0xC0), MEM32(e + 0xC4));
-            for (k = 0xB8; k <= 0xBC; k += 4) { uint32_t h = MEM32(e + k); if (h >= 0x10000u && h < 0x84000000u) tt_dbg("[COOPAMMO]   +%X -> %08X: %08X %08X %08X %08X %08X %08X %08X %08X\n", k, h, MEM32(h), MEM32(h + 4), MEM32(h + 8), MEM32(h + 12), MEM32(h + 16), MEM32(h + 20), MEM32(h + 24), MEM32(h + 28)); }
-            { uint32_t d = MEM32(MEM32(a + 24 * 0xDC + 0xB8) + 0x10), q; if (d >= 0x80000000u && d < 0x84000000u) for (q = 0; q < 0xA0; q += 32) tt_dbg("[COOPAMMO]   data +%02X: %08X %08X %08X %08X %08X %08X %08X %08X\n", q, MEM32(d + q), MEM32(d + q + 4), MEM32(d + q + 8), MEM32(d + q + 12), MEM32(d + q + 16), MEM32(d + q + 20), MEM32(d + q + 24), MEM32(d + q + 28)); }
+            for (k = 0xB8; k <= 0xBC; k += 4) { uint32_t h = MEM32(e + k); if (h >= 0x10000u && h < 0x88000000u) tt_dbg("[COOPAMMO]   +%X -> %08X: %08X %08X %08X %08X %08X %08X %08X %08X\n", k, h, MEM32(h), MEM32(h + 4), MEM32(h + 8), MEM32(h + 12), MEM32(h + 16), MEM32(h + 20), MEM32(h + 24), MEM32(h + 28)); }
+            { uint32_t d = MEM32(MEM32(a + 24 * 0xDC + 0xB8) + 0x10), q; if (d >= 0x80000000u && d < 0x88000000u) for (q = 0; q < 0xA0; q += 32) tt_dbg("[COOPAMMO]   data +%02X: %08X %08X %08X %08X %08X %08X %08X %08X\n", q, MEM32(d + q), MEM32(d + q + 4), MEM32(d + q + 8), MEM32(d + q + 12), MEM32(d + q + 16), MEM32(d + q + 20), MEM32(d + q + 24), MEM32(d + q + 28)); }
             e = a + 25 * 0xDC; tt_dbg("[COOPAMMO] flash element %08X: +B8 %08X +BC %08X\n", e, MEM32(e + 0xB8), MEM32(e + 0xBC)); } }
         MEM32(e13 + 8) = (uint32_t)(640 - (int32_t)MEM32(e13 + 8)); MEM32(e13 + 0x10) = (uint32_t)(-(int32_t)MEM32(e13 + 0x10));   /* textured: flipped */
         MEM32(e14 + 8) = (uint32_t)(640 - (int32_t)MEM32(e14 + 8) - (int32_t)MEM32(e14 + 0x10));
@@ -10412,8 +10673,8 @@ void tt_coop_hud_pre(void)
              * {0x1709C4, 0, 0, 0, data} and its data (0x80 header with the D3D texture at +0x2C, its pixels' physical
              * address at +0x30; 0x8000 bytes of pixels after it) -- with his pixels */
             COOP_PS uint32_t blk, obj, src_obj; extern int tt_coop_p2_ammo_pixels(uint32_t cur, unsigned char *out);
-            uint32_t so = MEM32(a + 24 * 0xDC + 0xB8), sd = so >= 0x80000000u && so < 0x84000000u ? MEM32(so + 0x10) : 0;
-            if (sd >= 0x80000000u && sd < 0x84000000u && MEM32(sd + 4) == 64u && MEM32(sd + 8) == 128u) {
+            uint32_t so = MEM32(a + 24 * 0xDC + 0xB8), sd = so >= 0x80000000u && so < 0x88000000u ? MEM32(so + 0x10) : 0;
+            if (sd >= 0x80000000u && sd < 0x88000000u && MEM32(sd + 4) == 64u && MEM32(sd + 8) == 128u) {
                 if (!blk) { blk = xbox_ContiguousAlloc(0x80u + 0x8000u + 0x100u, 4096u); obj = blk ? blk + 0x8100u : 0; }   /* (1.9.9: its object in the same block -- alone it could come back at 0x80000000, physical 0, and the icon was drawn black: player 1 Isildur, Amon Hen) */
                 if (blk && obj && (so != src_obj || coop_ammo_dirty)) {
                     static unsigned char px[0x8000]; uint32_t k;
@@ -10622,7 +10883,7 @@ void coop_9c380_after(void)
                 extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args); uint32_t k, bd = MEM32(q + 0x494), xyz[3];
                 tt_dbg("[COOP2] player %d moved by the level from %.1f %.1f %.1f to %.1f %.1f %.1f (another floor): player 1 there too\n", coop_slot_cur + 2, lx, ly, lz, x, y, z);
                 MEMF(q + 0xF0) = x; MEMF(q + 0xF4) = y; MEMF(q + 0xF8) = z; MEM32(q + 0x2EC) = MEM32(a + 0x2EC);
-                for (k = 0; k < 3; k++) { xyz[k] = MEM32(q + 0xF0 + 4 * k); MEM32(q + 0x90 + 4 * k) = MEM32(q + 0x130 + 4 * k) = MEM32(q + 0x140 + 4 * k) = MEM32(q + 0x628 + 4 * k) = xyz[k]; if (bd >= 0x80000000u && bd < 0x84000000u) MEM32(bd + 0xE8 + 4 * k) = xyz[k]; }
+                for (k = 0; k < 3; k++) { xyz[k] = MEM32(q + 0xF0 + 4 * k); MEM32(q + 0x90 + 4 * k) = MEM32(q + 0x130 + 4 * k) = MEM32(q + 0x140 + 4 * k) = MEM32(q + 0x628 + 4 * k) = xyz[k]; if (bd >= 0x80000000u && bd < 0x88000000u) MEM32(bd + 0xE8 + 4 * k) = xyz[k]; }
                 if (MEM32(q) == 0x1741C0u) tt_gcall(MEM32(MEM32(q) + 0x28u), q, 3, xyz);
             }
         }
@@ -10688,7 +10949,7 @@ void coop_9c380_after(void)
                 d1 = sqrtf((MEMF(q + 0xF0) - MEMF(coop_first_char + 0xF0)) * (MEMF(q + 0xF0) - MEMF(coop_first_char + 0xF0)) + (MEMF(q + 0xF4) - MEMF(coop_first_char + 0xF4)) * (MEMF(q + 0xF4) - MEMF(coop_first_char + 0xF4)));
                 d2 = sqrtf((MEMF(q + 0xF0) - MEMF(coop_p2 + 0xF0)) * (MEMF(q + 0xF0) - MEMF(coop_p2 + 0xF0)) + (MEMF(q + 0xF4) - MEMF(coop_p2 + 0xF4)) * (MEMF(q + 0xF4) - MEMF(coop_p2 + 0xF4)));
                 if (d1 > 6.0f && d2 > 6.0f) continue;
-                tt_dbg("[WPNSCAN] t %u %08X '%s' owner +11C %08X%s, from P1 %.2f P2 %.2f, +110 %08X | P2 state %u\n", coop_now(), q, MEM32(q + 0x18) >= 0x10000u && MEM32(q + 0x18) < 0x84000000u ? (const char *)XBOX_PTR(MEM32(q + 0x18)) : "?",
+                tt_dbg("[WPNSCAN] t %u %08X '%s' owner +11C %08X%s, from P1 %.2f P2 %.2f, +110 %08X | P2 state %u\n", coop_now(), q, MEM32(q + 0x18) >= 0x10000u && MEM32(q + 0x18) < 0x88000000u ? (const char *)XBOX_PTR(MEM32(q + 0x18)) : "?",
                        MEM32(q + 0x11C), MEM32(q + 0x11C) == coop_first_char ? " (P1)" : MEM32(q + 0x11C) == coop_p2 ? " (P2)" : "", d1, d2, MEM32(q + 0x110), MEM32(coop_p2 + 0x408)); } }
     }
     if (getenv("TT_COOP_NEARLOG") && coop_first_char >= 0x10000u) {   /* (research) the characters within 40 units of player 1, every 2 s */
@@ -10697,7 +10958,7 @@ void coop_9c380_after(void)
             for (i = 0; i < coop_nchars && n < 20; i++) { uint32_t e = coop_chars[i]; float dx = MEMF(e + 0xF0) - MEMF(coop_first_char + 0xF0), dy = MEMF(e + 0xF4) - MEMF(coop_first_char + 0xF4), dz = MEMF(e + 0xF8) - MEMF(coop_first_char + 0xF8);
                 if (dx * dx + dy * dy > 1600.0f || e == coop_first_char) continue; n++;
                 tt_dbg("[NEAR] %08X vt %08X role %u hp %d/%d at %.1f %.1f (dz %.1f) state %u name '%s'\n", e, MEM32(e), MEM32(e + 0x114), (int32_t)MEM32(e + 0x2FC), (int32_t)MEM32(e + 0x300), sqrtf(dx * dx + dy * dy), atan2f(dy, dx) * 57.3f, dz, MEM32(e + 0x408),
-                       MEM32(e + 0x18) >= 0x10000u && MEM32(e + 0x18) < 0x84000000u ? (const char *)XBOX_PTR(MEM32(e + 0x18)) : "?"); }
+                       MEM32(e + 0x18) >= 0x10000u && MEM32(e + 0x18) < 0x88000000u ? (const char *)XBOX_PTR(MEM32(e + 0x18)) : "?"); }
             tt_dbg("[NEAR] %d near player 1 at %.1f %.1f %.1f (%d characters listed) | +110 P1 %08X P2 %08X, +49C P1 %08X P2 %08X, state P1 %u P2 %u | ammo P1 %d/%d P2 %d/%d, type +2F0 P1 %08X P2 %08X\n", n, MEMF(coop_first_char + 0xF0), MEMF(coop_first_char + 0xF4), MEMF(coop_first_char + 0xF8), coop_nchars,
                    MEM32(coop_first_char + 0x110), coop_p2 >= 0x10000u ? MEM32(coop_p2 + 0x110) : 0, MEM32(coop_first_char + 0x49C), coop_p2 >= 0x10000u ? MEM32(coop_p2 + 0x49C) : 0, MEM32(coop_first_char + 0x408), coop_p2 >= 0x10000u ? MEM32(coop_p2 + 0x408) : 0,
                    (int16_t)MEM16(coop_first_char + 0x304), (int16_t)MEM16(coop_first_char + 0x306), coop_p2 >= 0x10000u ? (int16_t)MEM16(coop_p2 + 0x304) : 0, coop_p2 >= 0x10000u ? (int16_t)MEM16(coop_p2 + 0x306) : 0, MEM32(coop_first_char + 0x2F0), coop_p2 >= 0x10000u ? MEM32(coop_p2 + 0x2F0) : 0); }
@@ -10724,7 +10985,7 @@ void coop_9c380_after(void)
             if (c1 >= 0x10000u && c2 >= 0x10000u) for (q = 0; q < 0x120; q += 4) { uint32_t v1 = MEM32(c1 + q), v2 = MEM32(c2 + q); if (v1 != v2) tt_dbg("[P2DIFF] c+%03X %08X %08X\n", q, v1, v2); } } }
     if (getenv("TT_COOP_CHARDUMP") && coop_p2_t0) {   /* (research) every 3 s: the characters whose name has this in it: where, health, role, target */
         COOP_PS uint32_t lt; int i; if (coop_now() - lt >= 3000u) { lt = coop_now();
-            for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i], hn = MEM32(a + 0x18), c = MEM32(a + 0x494); const char *nm = hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : "";
+            for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i], hn = MEM32(a + 0x18), c = MEM32(a + 0x494); const char *nm = hn >= 0x10000u && hn < 0x88000000u ? (const char *)XBOX_PTR(hn) : "";
                 if (!strstr(nm, getenv("TT_COOP_CHARDUMP"))) continue;
                 tt_dbg("[CHARDUMP] t %u %08X '%s' at %.1f %.1f %.1f hp %d role %d +110 %08X +49C %08X target %08X\n", coop_now(), a, nm, MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0xF8), (int)MEM32(a + 0x2FC), (int)MEM32(a + 0x114),
                     MEM32(a + 0x110), MEM32(a + 0x49C), c >= 0x10000u ? MEM32(c + 0x98) : 0); } } }
@@ -10733,9 +10994,9 @@ void coop_9c380_after(void)
     if (getenv("TT_COOP_LOCKLOG") && coop_p2_t0) {   /* (research) both heroes' locks every 500 ms: object, vtable, name, where */
         COOP_PS uint32_t lt; int w; if (coop_now() - lt >= 500u) { lt = coop_now();
             for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char, c = h >= 0x10000u ? MEM32(h + 0x494) : 0, t = c >= 0x10000u ? MEM32(c + 0x98) : 0, hn;
-                if (t < 0x10000u || t >= 0x84000000u) continue; hn = MEM32(t + 0x18);
+                if (t < 0x10000u || t >= 0x88000000u) continue; hn = MEM32(t + 0x18);
                 tt_dbg("[LOCKLOG] t %u P%d at %.1f %.1f %.1f locks %08X vt %06X '%s' at %.1f %.1f %.1f role %d hp %d\n", coop_now(), w + 1, MEMF(h + 0xF0), MEMF(h + 0xF4), MEMF(h + 0xF8), t, MEM32(t),
-                    hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : "", MEMF(t + 0xF0), MEMF(t + 0xF4), MEMF(t + 0xF8), (int)MEM32(t + 0x114), (int)MEM32(t + 0x2FC)); } } }
+                    hn >= 0x10000u && hn < 0x88000000u ? (const char *)XBOX_PTR(hn) : "", MEMF(t + 0xF0), MEMF(t + 0xF4), MEMF(t + 0xF8), (int)MEM32(t + 0x114), (int)MEM32(t + 0x2FC)); } } }
     if (getenv("TT_COOP_NEARLOG") && coop_p2_t0) {   /* (research) the enemies within 8 of a hero every 1 s: health, state, target, flags */
         COOP_PS uint32_t lt; int i; if (coop_now() - lt >= 1000u) { lt = coop_now();
             for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i], ce, hn; float a1, b1, a2, b2, d1, d2;
@@ -10743,7 +11004,7 @@ void coop_9c380_after(void)
                 a1 = MEMF(e + 0xF0) - MEMF(coop_first_char + 0xF0); b1 = MEMF(e + 0xF4) - MEMF(coop_first_char + 0xF4); a2 = MEMF(e + 0xF0) - MEMF(coop_p2 + 0xF0); b2 = MEMF(e + 0xF4) - MEMF(coop_p2 + 0xF4);
                 d1 = sqrtf(a1 * a1 + b1 * b1); d2 = sqrtf(a2 * a2 + b2 * b2); if (d1 > 8.0f && d2 > 8.0f) continue;
                 ce = MEM32(e + 0x494); hn = MEM32(e + 0x18);
-                tt_dbg("[NEARLOG] t %u %08X '%s' d %.1f/%.1f hp %d st %u tgt %08X 3E0 %08X 3F0 %d 110 %08X 49C %08X 4BC %08X\n", coop_now(), e, hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : "", d1, d2,
+                tt_dbg("[NEARLOG] t %u %08X '%s' d %.1f/%.1f hp %d st %u tgt %08X 3E0 %08X 3F0 %d 110 %08X 49C %08X 4BC %08X\n", coop_now(), e, hn >= 0x10000u && hn < 0x88000000u ? (const char *)XBOX_PTR(hn) : "", d1, d2,
                     (int)MEM32(e + 0x2FC), MEM32(e + 0x408), ce >= 0x10000u ? MEM32(ce + 0x98) : 0, MEM32(e + 0x3E0), (int)MEM32(e + 0x3F0), MEM32(e + 0x110), MEM32(e + 0x49C), MEM32(e + 0x4BC)); } } }
     {   /* bot test: TT_COOP_P1GOTO = "x,y,ms": player 1 put at x,y (his height kept) ms after player 2 takes over, once a level */
         const char *v = getenv("TT_COOP_P1GOTO"); COOP_PS unsigned lv; COOP_PS int done;
@@ -10761,7 +11022,7 @@ void coop_9c380_after(void)
             done = 1;
             for (i = 0; i < coop_nwobjs; i++) { uint32_t o = coop_wobjs[i], ro; float dx, dy; const char *nm, *w = getenv("TT_COOP_PROPNAME"); if (MEM32(o) != 0x174980u) continue; ro = MEM32(o + 0x114); nm = coop_nm(o); if (ro == 0x16u || ro == 0x11u || !_strnicmp(nm, "weaponObj", 9)) continue; dx = MEMF(o + 0xF0) - MEMF(coop_first_char + 0xF0); dy = MEMF(o + 0xF4) - MEMF(coop_first_char + 0xF4); { COOP_PS int n; if (n++ < 150) tt_dbg("[PROPTEST] prop %08X '%s' role %u health %d +124 %08X, %.1f from player 1\n", o, nm, ro, (int)MEM32(o + 0x2FC), MEM32(o + 0x124), sqrtf(dx * dx + dy * dy)); } if ((int32_t)MEM32(o + 0x2FC) <= 0 || (w && !strstr(nm, w))) continue; if (dx * dx + dy * dy < bd) { bd = dx * dx + dy * dy; pr = o; } }
             if (pr) { fz = MEMF(pr + 0xF8); MEMF(coop_p2 + 0xF0) = MEMF(pr + 0xF0) - fx * 1.5f; MEMF(coop_p2 + 0xF4) = MEMF(pr + 0xF4) - fy * 1.5f; MEMF(coop_p2 + 0xF8) = fz + 0.5f;
-                for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x90 + 4 * q) = MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bdy >= 0x80000000u && bdy < 0x84000000u) MEM32(bdy + 0xE8 + 4 * q) = xyz[q]; }
+                for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x90 + 4 * q) = MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bdy >= 0x80000000u && bdy < 0x88000000u) MEM32(bdy + 0xE8 + 4 * q) = xyz[q]; }
                 tt_gcall(MEM32(MEM32(coop_p2) + 0x28u), coop_p2, 3, xyz); tt_dbg("[PROPTEST] player 2 put by %08X '%s' at %.1f %.1f %.1f, health %d\n", pr, coop_nm(pr), MEMF(pr + 0xF0), MEMF(pr + 0xF4), MEMF(pr + 0xF8), (int)MEM32(pr + 0x2FC)); } else tt_dbg("[PROPTEST] no breakable prop\n"); }
         if (pr && getenv("TT_COOP_TESTPROPHIT") && !coop_depth) { COOP_PS uint32_t mem; COOP_PS unsigned tv; extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);   /* (bot test) a hit of his on it, as 0x91AC0 hands it on */
             if (tv != coop_level_n && coop_now() - coop_p2_t0 >= (uint32_t)atoi(v) + 3000u) { uint32_t a1[1], q; tv = coop_level_n; if (!mem) mem = xbox_ContiguousAlloc(0x80u, 16u);
@@ -10776,7 +11037,7 @@ void coop_9c380_after(void)
             if (c2 && coop_now() - coop_p2_t0 >= (uint32_t)atoi(c2 + 1)) { done = 1; MEMF(coop_p2 + 0xF0) = (float)atof(v); MEMF(coop_p2 + 0xF4) = (float)atof(c1 + 1); MEMF(coop_p2 + 0xF8) = MEMF(coop_first_char + 0xF8);
                 coop_goto_t = coop_now() | 1; if (getenv("TT_COOP_P2GOTOZ")) MEMF(coop_p2 + 0xF8) = (float)atof(getenv("TT_COOP_P2GOTOZ"));
                 { uint32_t q, bd = MEM32(coop_p2 + 0x494), xyz[3]; extern uint32_t tt_gcall(uint32_t va, uint32_t thisptr, int n, const uint32_t *args);   /* (all his places, as coop_place: the game took the next frame's from the others) */
-                  for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bd >= 0x80000000u && bd < 0x84000000u) MEM32(bd + 0xE8 + 4 * q) = xyz[q]; }
+                  for (q = 0; q < 3; q++) { xyz[q] = MEM32(coop_p2 + 0xF0 + 4 * q); MEM32(coop_p2 + 0x130 + 4 * q) = MEM32(coop_p2 + 0x140 + 4 * q) = MEM32(coop_p2 + 0x628 + 4 * q) = xyz[q]; if (bd >= 0x80000000u && bd < 0x88000000u) MEM32(bd + 0xE8 + 4 * q) = xyz[q]; }
                   tt_gcall(MEM32(MEM32(coop_p2) + 0x28u), coop_p2, 3, xyz); }
                 MEM32(coop_p2 + 0x90) = MEM32(coop_p2 + 0xF0); MEM32(coop_p2 + 0x94) = MEM32(coop_p2 + 0xF4); MEM32(coop_p2 + 0x98) = MEM32(coop_p2 + 0xF8);
                 tt_dbg("[COOPGOTO] test: player 2 put at %.1f %.1f %.1f\n", MEMF(coop_p2 + 0xF0), MEMF(coop_p2 + 0xF4), MEMF(coop_p2 + 0xF8)); } }
@@ -10810,7 +11071,7 @@ void coop_9c380_after(void)
             if (k == no) { if (no == 8) continue; obj[no] = e; st[no] = 0xFFFFFFFFu; no++; }
             s = MEM32(e + 0x408); if (s == st[k]) continue; st[k] = s;
             ce = MEM32(e + 0x494); tg = ce >= 0x10000u ? MEM32(ce + 0x98) : 0;
-            if (tg >= 0x10000u && tg < 0x84000000u) { dx = MEMF(tg + 0xF0) - MEMF(e + 0xF0); dy = MEMF(tg + 0xF4) - MEMF(e + 0xF4); }
+            if (tg >= 0x10000u && tg < 0x88000000u) { dx = MEMF(tg + 0xF0) - MEMF(e + 0xF0); dy = MEMF(tg + 0xF4) - MEMF(e + 0xF4); }
             tt_dbg("[BOSS] %s at %.1f %.1f %.1f\n", coop_nm(e), MEMF(e + 0xF0), MEMF(e + 0xF4), MEMF(e + 0xF8));
             tt_dbg("[BOSS] t %u %s state %u | hp %d | after %s %.1f away | +110 %08X +49C %08X\n", coop_now() - coop_p2_t0, coop_nm(e), s, (int32_t)MEM32(e + 0x2FC),
                    coop_nm(tg), sqrtf(dx * dx + dy * dy), MEM32(e + 0x110), MEM32(e + 0x49C)); }
@@ -10851,9 +11112,9 @@ void coop_9c380_after(void)
         if (getenv("TT_COOP_SHAREDUMP") && !done && coop_p2_t0 && coop_now() - coop_p2_t0 > 5000 && coop_first_char >= 0x10000u && coop_twin >= 0x10000u) {
             uint32_t k; done = 1;
             for (k = 0; k < 0x800; k += 4) { uint32_t v = MEM32(coop_first_char + k), w = MEM32(coop_twin + k);
-                if (v == w && v >= 0x80000000u && v < 0x84000000u) { uint32_t vt = MEM32(v), h = MEM32(v + 0x18);
-                    tt_dbg("[SHARED] +%03X %08X vt %08X name '%s'\n", k, v, vt, h >= 0x80000000u && h < 0x84000000u && MEM8(h) >= 32 && MEM8(h) < 127 ? (const char *)XBOX_PTR(h) : "-"); }
-                else if (v >= 0x80000000u && v < 0x84000000u && w >= 0x80000000u && w < 0x84000000u && MEM32(v) == MEM32(w) && MEM32(v) >= 0x170000u && MEM32(v) < 0x180000u)
+                if (v == w && v >= 0x80000000u && v < 0x88000000u) { uint32_t vt = MEM32(v), h = MEM32(v + 0x18);
+                    tt_dbg("[SHARED] +%03X %08X vt %08X name '%s'\n", k, v, vt, h >= 0x80000000u && h < 0x88000000u && MEM8(h) >= 32 && MEM8(h) < 127 ? (const char *)XBOX_PTR(h) : "-"); }
+                else if (v >= 0x80000000u && v < 0x88000000u && w >= 0x80000000u && w < 0x88000000u && MEM32(v) == MEM32(w) && MEM32(v) >= 0x170000u && MEM32(v) < 0x180000u)
                     tt_dbg("[SHARED] +%03X own: P1 %08X twin %08X (vt %08X)\n", k, v, w, MEM32(v)); }
         }
     }
@@ -10916,15 +11177,15 @@ void coop_9c380_after(void)
         MEM32(coop_first_char + 0x2FC) = MEM32(coop_first_char + 0x300);
     if (getenv("TT_COOP_TROLLLOG")) {   /* (research) the troll (and other big ones) once a second: state, health, flags, its target */
         COOP_PS uint32_t lt, last_e; COOP_PS int32_t last_hp = -99999; int i; uint32_t now = coop_now();
-        for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i], h = MEM32(e + 0x18), la; const char *nm = h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : ""; int32_t hp;
+        for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i], h = MEM32(e + 0x18), la; const char *nm = h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : ""; int32_t hp;
             if (_strnicmp(nm, "TrollBoss", 9)) continue;
             hp = (int32_t)MEM32(e + 0x2FC); la = MEM32(e + 0x4BC);
             if (e == last_e && hp != last_hp) { uint32_t lh = la >= 0x10000u ? MEM32(la + 0x18) : 0;
-                tt_dbg("[TROLL] health %d -> %d (%+d), state %u | its last attacker %08X '%s' (%s) state %u%c", last_hp, hp, hp - last_hp, MEM32(e + 0x408), la, lh >= 0x10000u && lh < 0x84000000u ? (const char *)XBOX_PTR(lh) : "?",
+                tt_dbg("[TROLL] health %d -> %d (%+d), state %u | its last attacker %08X '%s' (%s) state %u%c", last_hp, hp, hp - last_hp, MEM32(e + 0x408), la, lh >= 0x10000u && lh < 0x88000000u ? (const char *)XBOX_PTR(lh) : "?",
                        la == coop_first_char ? "player 1" : la == coop_p2 ? "player 2" : "other", la >= 0x10000u ? MEM32(la + 0x408) : 0, 10); }
             last_e = e; last_hp = hp; }
         if (now - lt >= 1000u) { lt = now;
-            for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i], h = MEM32(e + 0x18), c; const char *nm = h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "";
+            for (i = 0; i < coop_nchars; i++) { uint32_t e = coop_chars[i], h = MEM32(e + 0x18), c; const char *nm = h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "";
                 if (_strnicmp(nm, "Troll", 5)) continue;
                 c = MEM32(e + 0x494);
                 tt_dbg("[TROLL] %s state %u (%.1f s) hp %d/%d +49C %08X +110 %08X +466 %u | target %08X | at %.1f %.1f %.1f | P1 %.1f P2 %.1f away%c", nm, MEM32(e + 0x408), MEMF(e + 0x420), (int32_t)MEM32(e + 0x2FC), (int32_t)MEM32(e + 0x300),
@@ -10950,6 +11211,23 @@ void coop_9c380_after(void)
               for (k2 = 0; so >= 0x10000u && k2 < MEM32(so + 0x174) && k2 < 8; k2++) { uint32_t li = MEM32(so + 0x74 + 4 * k2); tt_dbg("[COOPWSRC]   original listener %u: %08X vt %08X\n", k2, li, li >= 0x10000u ? MEM32(li) : 0); }
               for (k2 = 0; sc >= 0x10000u && k2 < MEM32(sc + 0x174) && k2 < 8; k2++) { uint32_t li = MEM32(sc + 0x74 + 4 * k2); tt_dbg("[COOPWSRC]   copy listener %u: %08X vt %08X\n", k2, li, li >= 0x10000u ? MEM32(li) : 0); } }
             for (k = 0; k < 0x400; k += 4) { uint32_t x = MEM32(o + k), y = MEM32(w + k); if (x != y && !(x >= o && x < o + 0x400 && y >= w && y < w + 0x400 && x - o == y - w) && !((x == coop_first_char || x == MEM32(0x43B15Cu)) && y == coop_p2)) tt_dbg("[COOPWDIFF] +%03X %08X %08X\n", k, x, y); } } } } }   /* (research) */
+    if (coop_slot_cur == 0 && coop_first_char >= 0x10000u && coop_p2_t0 && !getenv("TT_COOP_P1CTLKEEP")) {   /* (2.0.2) player 1 is always player-controlled outside a cutscene:
+         * a troll's grab on another player took 0x8000 off player 1's component (c+0, the game's own AI then held him: he stood and could
+         * barely attack until the grab's own end put it back, a playtest -- [P1CTL] logs). Put back at once */
+        extern int tt_in_scene(void); uint32_t c = MEM32(coop_first_char + 0x494);
+        if (c >= 0x10000u && c < 0x88000000u && !(MEM32(c) & 0x8000u) && !tt_in_scene()) { static int n; MEM32(c) |= 0x8000u; if (n++ < 10) tt_dbg("[COOPCTL] player 1's control put back (c+0 %08X, state %u)\n", MEM32(c), MEM32(coop_first_char + 0x408)); }
+    }
+    if (coop_slot_cur == 0 && coop_first_char >= 0x10000u && coop_p2_t0 && getenv("TT_COOP_P1CTL")) {   /* (2.0.2, research) player 1's control, logged on each change (at most 4 a second):
+         * his state, the state machine's block mask and inputs, +49C, +110, +464..467, the component's c+0 and c+30 -- player 1 kept from moving after a troll's grab on another player (a playtest) */
+        static uint32_t lk[9], lt; uint32_t h = coop_first_char, sm = h + 0x3D8u, c = MEM32(h + 0x494), k[9]; int i, ch = 0;
+        k[0] = MEM32(h + 0x408); k[1] = MEM32(sm + 0x54); k[2] = MEM32(sm + 0x50); k[3] = MEM32(sm + 0xC); k[4] = MEM32(sm + 8); k[5] = MEM32(h + 0x49C); k[6] = MEM32(h + 0x110); k[7] = MEM32(h + 0x464); k[8] = c >= 0x10000u ? MEM32(c) ^ (MEM32(c + 0x30) << 1) : 0;
+        for (i = 0; i < 9; i++) if (k[i] != lk[i] && i != 3 && i != 4) ch = 1;
+        if (ch && coop_now() - lt >= 250u) { lt = coop_now(); memcpy(lk, k, sizeof lk);
+            tt_dbg("[P1CTL] t %u st %u mask %08X %08X in %08X %08X 49C %08X 110 %08X 464 %08X c0 %08X c30 %08X at %.1f %.1f\n", coop_now(), k[0], k[1], k[2], k[3], k[4], k[5], k[6], k[7], c >= 0x10000u ? MEM32(c) : 0, c >= 0x10000u ? MEM32(c + 0x30) : 0, MEMF(h + 0xF0), MEMF(h + 0xF4)); }
+    }
+    if (getenv("TT_TEST49C80") && coop_slot_cur == 0 && coop_first_char >= 0x10000u && coop_p2_t0) {   /* (research) +49C bit 0x80 put on player 1 from this many ms on; his position logged */
+        static uint32_t lt; uint32_t t = coop_now() - coop_p2_t0; if (t > (uint32_t)atoi(getenv("TT_TEST49C80"))) MEM32(coop_first_char + 0x49C) |= 0x80u;
+        if (coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[T80] t %u +49C %08X at %.1f %.1f st %u\n", t, MEM32(coop_first_char + 0x49C), MEMF(coop_first_char + 0xF0), MEMF(coop_first_char + 0xF4), MEM32(coop_first_char + 0x408)); } }
     if (getenv("TT_COOP_CTLLOG") && coop_slot_cur == 0) {   /* (2.0.2, research) each player's control: component c+0 (0x8000 player-controlled, 0x10000 locked), state, lock flags */
         static uint32_t last[4]; int w; char ln[400]; int o = 0, ch = 0;
         for (w = 0; w < 4; w++) { uint32_t h = coop_hero_n(w), c = h >= 0x10000u ? MEM32(h + 0x494) : 0, k = c >= 0x10000u ? (MEM32(c) & 0x18000u) | (MEM32(h + 0x408) << 20) | ((uint32_t)MEM8(h + 0x464) << 1) | MEM8(h + 0x465) : 0;
@@ -11059,7 +11337,7 @@ void tt_coop_note_actor(uint32_t a)
 {
     if (a >= 0x10000u && MEM32(a) == 0x174980u && coop_nwobjs < 512) coop_wobjs[coop_nwobjs++] = a;
     if (getenv("TT_COOP_REGLOG") && a >= 0x10000u) {   /* (research) every registered object: its class and name (TT_COOP_REGLOG=substring to filter, or 1) */
-        uint32_t h = MEM32(a + 0x18); const char *nm = h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", *f = getenv("TT_COOP_REGLOG");
+        uint32_t h = MEM32(a + 0x18); const char *nm = h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", *f = getenv("TT_COOP_REGLOG");
         char low[64]; int k; for (k = 0; k < 63 && nm[k]; k++) low[k] = (char)(nm[k] >= 'A' && nm[k] <= 'Z' ? nm[k] + 32 : nm[k]); low[k] = 0;
         if (!strcmp(f, "1") || strstr(low, f)) tt_dbg("[REG] %08X vt %08X +114 %u '%s' at %.1f %.1f %.1f\n", a, MEM32(a), MEM32(a + 0x114), nm, MEMF(a + 0xF0), MEMF(a + 0xF4), MEMF(a + 0xF8));
     }
@@ -11121,8 +11399,37 @@ static void coop_p2_placed_pickups(void)
         tt_dbg("[COOPPICK] player 2 takes the pickup %08X (kind %u): health %d, ammo %u\n", o, kind, (int32_t)MEM32(a + 0x2FC), MEM32(a + 0x304) & 0xFFFFu);
     }
 }
+/* (2.0.3) co-op, three or four players: the controls left off after a cutscene. A playtest's three-player Fangorn: the intro ended,
+ * the HUD came back, but the black bars stayed and nobody could move -- the control flag 0x43B1C0 (no control: 1) never cleared; the
+ * script's end of the scene (@LetterBox off, the control back) never ran (in a run that went on, it ran in player 2's context; 2-player
+ * runs never showed it). In play with the HUD drawn and no cinematic running, the flag still set after 6 s: cleared, and the bars
+ * (0x1BAE60: 0 or 2 while they are in) taken away at once as @LetterBox does (0xCC3F0, -1). TT_COOP_KEEPNOCTL: as before;
+ * TT_COOP_CTLLOG: the flag and the bars as they change */
+static void coop_ctl_watch(void)
+{
+    extern int tt_in_scene(void), tt_cine_active(void), tt_vs_on(void), tt_game_paused_now(void);
+    static uint32_t t0, lc = 99, lb = 99; uint32_t now = coop_now(), c = MEM8(0x43B1C0u), b = MEM32(0x1BAE60u);
+    if (getenv("TT_COOP_CTLLOG") && (c != lc || b != lb)) { lc = c; lb = b; tt_dbg("[COOPCTL] t %u control flag %u, bars %u, scene %d, cinematic %d\n", now, c, b, tt_in_scene(), tt_cine_active()); }
+    if (getenv("TT_COOP_CTLTEST") && coop_p2_t0 && now - coop_p2_t0 > (uint32_t)atoi(getenv("TT_COOP_CTLTEST"))) { static int done; if (!done) { uint32_t a = 0xBF800000u; done = 1; MEM8(0x43B1C0u) = 1; tt_gcall(0x000CC3A0u, 0, 1, &a); tt_dbg("[COOPCTL] test: the controls taken, the bars in\n"); } }   /* (testing) */
+    if (getenv("TT_COOP_KEEPNOCTL") || coop_mode() != 3 || coop_nx() < 1 || tt_vs_on() || MEM32(0x4AD050u) != 6u || !coop_p2_t0 || c != 1u || tt_in_scene() || tt_cine_active() || tt_game_paused_now()) { t0 = 0; return; }
+    if (!t0) { t0 = now | 1u; return; }
+    if ((int32_t)(now - t0) < 6000) return;
+    t0 = 0;
+    MEM8(0x43B1C0u) = 0;
+    if (b == 0u || b == 2u) { uint32_t a = 0xBF800000u; tt_gcall(0x000CC3F0u, 0, 1, &a); }
+    tt_dbg("[COOPCTL] the controls still off 6 s after the cutscene, the HUD up (bars %u): given back%s\n", b, b == 0u || b == 2u ? ", the bars taken away" : "");
+}
 void tt_coop_frame(void)
 {
+    coop_ctl_watch();
+    if (getenv("TT_COOP_ATBOMB") && coop_first_char >= 0x10000u && coop_p2_t0 && coop_now() - coop_p2_t0 > 12000u) { static int done; extern uint32_t coop_wobjs[]; extern int coop_nwobjs; extern int tt_vs_is_bomb(uint32_t o); int i, k = atoi(getenv("TT_COOP_ATBOMB"));   /* (testing: player 1 put 3 units from the k-th explosive prop) */
+        if (!done) { done = 1; for (i = 0; i < coop_nwobjs; i++) { uint32_t o = coop_wobjs[i]; if (!tt_vs_is_bomb(o) || (int32_t)MEM32(o + 0x2FC) <= 0 || (getenv("TT_COOP_ATBOMBNAME") && !strstr(coop_nm(o), getenv("TT_COOP_ATBOMBNAME"))) || k-- > 0) continue;
+            { float q[3]; uint32_t a3[3], sp = esp, r0 = eax, r1 = ecx, r2 = edx; q[0] = MEMF(o + 0xF0) + 3.0f; q[1] = MEMF(o + 0xF4); q[2] = MEMF(o + 0xF8) + 1.0f; memcpy(a3, q, 12); tt_gcall(0x000865D0u, coop_first_char, 3, a3); esp = sp; eax = r0; ecx = r1; edx = r2;
+              tt_dbg("[TEST] player 1 by %s at %.1f %.1f %.1f\n", coop_nm(o), q[0], q[1], q[2]); } break; } } }
+    if (getenv("TT_P1TELE") && coop_first_char >= 0x10000u && coop_p2_t0) { static int done; float q[3]; int ms = 0;   /* (testing: "x,y,z,ms" -- player 1 put there once, any mode) */
+        if (!done && sscanf(getenv("TT_P1TELE"), "%f,%f,%f,%d", &q[0], &q[1], &q[2], &ms) == 4 && coop_now() - coop_p2_t0 > (uint32_t)ms) { uint32_t a3[3], sp = esp, r0 = eax, r1 = ecx, r2 = edx; done = 1;
+            memcpy(&a3[0], &q[0], 4); memcpy(&a3[1], &q[1], 4); memcpy(&a3[2], &q[2], 4); tt_gcall(0x000865D0u, coop_first_char, 3, a3); esp = sp; eax = r0; ecx = r1; edx = r2;
+            MEMF(coop_first_char + 0x90) = q[0]; MEMF(coop_first_char + 0x94) = q[1]; MEMF(coop_first_char + 0x98) = q[2]; tt_dbg("[TEST] player 1 put at %.1f %.1f %.1f\n", q[0], q[1], q[2]); } }
     { extern void tt_netdiff_frame(void); tt_netdiff_frame(); }
     static uint32_t last; uint32_t now = coop_now(), p1 = MEM32(0x43B15Cu), r = COOP_PADREC(1);
     if (coop_mode() && coop_p2 >= 0x10000u) coop_p2_placed_pickups();
@@ -11169,15 +11476,15 @@ void tt_coop_frame(void)
         tt_dbg("[MSGQSTAT] t %u lists total %u:%s\n", now, tot, b); }
     if (getenv("TT_COOP_WPNDIST") && coop_mode() == 3) { extern uint32_t coop_wobjs[]; extern int coop_nwobjs; int k, j;   /* (research) each player's weapons: where, from him */
         for (k = 0; k < 4; k++) { uint32_t h = coop_hero_n(k); if (h < 0x10000u) continue;
-            for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j]; float dx, dy, dz; if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x11C) != h) continue;
+            for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j]; float dx, dy, dz; if (q < 0x10000u || q >= 0x88000000u || MEM32(q + 0x11C) != h) continue;
                 dx = MEMF(q + 0xF0) - MEMF(h + 0xF0); dy = MEMF(q + 0xF4) - MEMF(h + 0xF4); dz = MEMF(q + 0xF8) - MEMF(h + 0xF8);
                 tt_dbg("[WPNDIST] P%d %08X '%s' %08X: %.2f (%.1f %.1f %.1f) +110 %08X +2FC %d +378 %u +5EC %08X st %u\n", k + 1, h, coop_nm(q), q, sqrtf(dx * dx + dy * dy + dz * dz), dx, dy, dz, MEM32(q + 0x110), (int32_t)MEM32(q + 0x2FC), MEM32(q + 0x378), MEM32(q + 0x5EC), MEM32(h + 0x408)); } } }
     if (getenv("TT_FIREAREAS") && coop_p2_t0) { static uint32_t lt; if (now - lt > 5000u) { uint32_t nd = MEM32(0x4383D0u); int c = 0; lt = now;   /* (research) the damage areas' list */
-        while (nd >= 0x10000u && nd < 0x84000000u && c < 40) { uint32_t a = MEM32(nd + 0xC); if (a >= 0x10000u && a < 0x84000000u) tt_dbg("[FIREAREA] t %u node %08X area %08X: %08X %.1f %.1f %.1f %.1f %08X %08X | P1 %.1f %.1f %.1f\n", now, nd, a, MEM32(a), MEMF(a + 4), MEMF(a + 8), MEMF(a + 12), MEMF(a + 16), MEM32(a + 20), MEM32(a + 24), coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF0) : 0.f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF4) : 0.f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF8) : 0.f);
+        while (nd >= 0x10000u && nd < 0x88000000u && c < 40) { uint32_t a = MEM32(nd + 0xC); if (a >= 0x10000u && a < 0x88000000u) tt_dbg("[FIREAREA] t %u node %08X area %08X: %08X %.1f %.1f %.1f %.1f %08X %08X | P1 %.1f %.1f %.1f\n", now, nd, a, MEM32(a), MEMF(a + 4), MEMF(a + 8), MEMF(a + 12), MEMF(a + 16), MEM32(a + 20), MEM32(a + 24), coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF0) : 0.f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF4) : 0.f, coop_first_char >= 0x10000u ? MEMF(coop_first_char + 0xF8) : 0.f);
             nd = MEM32(nd + 4); c++; } } }
     if (getenv("TT_COOP_WPNVIS") && coop_mode() == 3) { extern uint32_t coop_wobjs[]; extern int coop_nwobjs; extern uint32_t coop_wv_o[96], coop_wv_b[96]; extern int coop_wv_n; uint32_t *wo = coop_wv_o, *wb = coop_wv_b; int k, j; int wn = coop_wv_n;   /* (research) each player's weapons' draw bit as it changes */
         for (k = 0; k < 4; k++) { uint32_t h = coop_hero_n(k); if (h < 0x10000u) continue;
-            for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j], b; int i; if (q < 0x10000u || q >= 0x84000000u || MEM32(q + 0x11C) != h) continue;
+            for (j = 0; j < coop_nwobjs; j++) { uint32_t q = coop_wobjs[j], b; int i; if (q < 0x10000u || q >= 0x88000000u || MEM32(q + 0x11C) != h) continue;
                 b = MEM32(q + 0x110) & (getenv("TT_COOP_WPNVISMASK") ? (uint32_t)strtoul(getenv("TT_COOP_WPNVISMASK"), 0, 16) : 0x20000u); for (i = 0; i < wn; i++) if (wo[i] == q) break;
                 if (i == wn) { if (wn >= 96) continue; wo[wn] = q; wb[wn++] = 0xFFFFFFFFu; coop_wv_n = wn; }
                 if (wb[i] != b) { wb[i] = b; tt_dbg("[WPNVIS] t %u P%d '%s' %08X %s %08X st %u prev %u\n", now, k + 1, coop_nm(q), q, b ? "DRAWN" : "hidden", MEM32(q + 0x110), MEM32(h + 0x41C), MEM32(h + 0x408)); } } } 
@@ -11186,7 +11493,7 @@ void tt_coop_frame(void)
             if (ow < 0 && (b | 0x1u) != (wb[j] | 0x1u)) { wb[j] = b | 1u; tt_dbg("[WPNVIS] t %u (no player's: +11C %08X) '%s' %08X %s\n", now, own, coop_nm(q), q, b ? "DRAWN" : "hidden"); } } }
     if (getenv("TT_COOP_PROPSCAN") && coop_p2_t0 && now - coop_p2_t0 > 8000u) { static int done; if (!done) { uint32_t va; int n = 0; done = 1;   /* (research) the level's props */
         { int q; char b[600]; int o = 0; for (q = 0; q < 40; q++) o += snprintf(b + o, sizeof b - o, " %X:%06X", q * 4, MEM32(0x174980u + 4 * q)); tt_dbg("[PROP] vtable 174980:%s\n", b); }
-        for (va = 0x80000000u; va < 0x84000000u && n < 60; va += 4) { uint32_t hn = MEM32(va + 0x18); const char *nm; if (MEM32(va) < 0x170000u || MEM32(va) > 0x180000u || hn < 0x80000000u || hn >= 0x84000000u) continue;
+        for (va = 0x80000000u; va < 0x88000000u && n < 60; va += 4) { uint32_t hn = MEM32(va + 0x18); const char *nm; if (MEM32(va) < 0x170000u || MEM32(va) > 0x180000u || hn < 0x80000000u || hn >= 0x88000000u) continue;
             nm = (const char *)XBOX_PTR(hn); if (_strnicmp(nm, "propObj", 7)) continue; n++;
             tt_dbg("[PROP] %08X vt %08X '%s' at %.1f %.1f %.1f +114 %X +2FC %d +300 %d\n", va, MEM32(va), nm, MEMF(va + 0xF0), MEMF(va + 0xF4), MEMF(va + 0xF8), MEM32(va + 0x114), (int32_t)MEM32(va + 0x2FC), (int32_t)MEM32(va + 0x300)); } } }
     if (getenv("TT_COOP_P2AT") && coop_p2 >= 0x10000u && coop_p2_t0 && now - coop_p2_t0 > 10000u) { static int done; float q[3]; if (!done && sscanf(getenv("TT_COOP_P2AT"), "%f,%f,%f", &q[0], &q[1], &q[2]) == 3) { uint32_t a3[3]; done = 1;   /* (test) */
@@ -11213,7 +11520,7 @@ void tt_coop_frame(void)
             npk = 0;
             for (rg = 0; rg < 2; rg++) for (va = rgs[rg][0]; va < rgs[rg][1] && npk < 256; va += 4) if (MEM32(va) == 0x1748B0u) pks[npk++] = va;
             tt_dbg("[COOPPICK] test: %d pickup objects\n", npk);
-            { int q; for (q = 0; q < npk; q++) { uint32_t hn = MEM32(pks[q] + 0x18); tt_dbg("[COOPPICK]   %08X kind %u flags %08X at %.1f %.1f %.1f '%s'\n", pks[q], MEM32(pks[q] + 0x3D0), MEM32(pks[q] + 0x3F8), MEMF(pks[q] + 0xF0), MEMF(pks[q] + 0xF4), MEMF(pks[q] + 0xF8), hn >= 0x10000u && hn < 0x84000000u ? (const char *)XBOX_PTR(hn) : ""); } }
+            { int q; for (q = 0; q < npk; q++) { uint32_t hn = MEM32(pks[q] + 0x18); tt_dbg("[COOPPICK]   %08X kind %u flags %08X at %.1f %.1f %.1f '%s'\n", pks[q], MEM32(pks[q] + 0x3D0), MEM32(pks[q] + 0x3F8), MEMF(pks[q] + 0xF0), MEMF(pks[q] + 0xF4), MEMF(pks[q] + 0xF8), hn >= 0x10000u && hn < 0x88000000u ? (const char *)XBOX_PTR(hn) : ""); } }
         }
         for (k = 0; k < npk; k++) {
             va = pks[k];
@@ -11358,7 +11665,7 @@ static void coop_pop_check(void)
     }
     if (MEM32(0x4A49BCu) != coop_pop_t0 || (MEMF(0x4A5598u) > *(float *)&coop_pop_f0 + 0.01f)) {
         coop_p2pop_until = coop_now() + 2600; coop_p2pop_txt = MEM32(0x4A49BCu);
-        { static int n; if (n++ < 60) { uint32_t tp = MEM32(0x4A49BCu); char b[40]; int q = 0; if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 38 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q); b[q] = 0;
+        { static int n; if (n++ < 60) { uint32_t tp = MEM32(0x4A49BCu); char b[40]; int q = 0; if (tp >= 0x10000u && tp < 0x88000000u) for (; q < 38 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q); b[q] = 0;
             tt_dbg("[COOPHUD] player %d's popup word '%s' (%08X): on his side (time %.3f, was %.3f, text was %08X)\n", coop_slot_cur + 2, b, tp, MEMF(0x4A5598u), *(float *)&coop_pop_f0, coop_pop_t0); } }
     }
 }
@@ -11496,8 +11803,17 @@ void sub_0007B950(void) { uint32_t o = ecx; sub_0007B950_gen(); if (eax & 0xFFu)
 extern void sub_0007C340_gen(void);
 void sub_0007C340(void)
 {
-    uint32_t o = ecx;
-    s_scr_path = 0; sub_0007C340_gen();
+    uint32_t o = ecx; extern int tt_cheat_ran;
+    s_scr_path = 0; tt_cheat_ran = 0; sub_0007C340_gen();
+    {   /* (2.0.3) co-op: the pause's cheat entry (both triggers held, four buttons) as in single player -- the co-op pause never
+         * reached the game's own (0x0007B950, which checks the cheats first). TT_COOP_NOCHEATS: as before */
+        extern int tt_game_paused_now(void), tt_vs_on(void), tt_net_on(void);
+        if (!tt_cheat_ran && coop_mode() && tt_game_paused_now() && !tt_vs_on() && !tt_net_on() && !getenv("TT_COOP_NOCHEATS")) {
+            uint32_t sp = esp, r0 = eax, r1 = ecx, r2 = edx, r3 = ebx, r4 = esi, r5 = edi;
+            { static int n; if (n++ < 3) tt_dbg("[CHEAT] co-op pause: cheat entry checked\n"); }
+            PUSH32(esp, 0x0007C6C5u); sub_000C5B50(); esp = sp; eax = r0; ecx = r1; edx = r2; ebx = r3; esi = r4; edi = r5;
+        }
+    }
     if ((eax & 0xFFu) && o >= 0x10000u && (MEM32(o + 4) == 0 || MEM32(o + 4) > 11u) && !getenv("TT_SCREEN_NOCHECK")) {
         static int n; if (n++ < 12) tt_dbg("[SCREEN] play \"done\" (path %d) with no next screen (%u; +4DDC %02X %02X %02X, 0x1AFC3C %u): play goes on\n", s_scr_path, MEM32(o + 4),
                                          MEM8(o + 0x4DDC), MEM8(o + 0x4DDD), MEM8(o + 0x4DDE), MEM8(0x1AFC3Cu));
@@ -11515,11 +11831,11 @@ int tt_msg_to_ok(uint32_t node, uint32_t to)
 {
     uint32_t vt, h; static int chk = -1;
     if (chk < 0) chk = getenv("TT_MSG_NOCHECK") == NULL;
-    if (getenv("TT_QLOG") && (MEM8(node) == 0x30 || MEM8(node) == 0x31)) { static int n; if (n++ < 40) tt_dbg("[QLOG] delivering type %X to %08X (vt %08X)\n", MEM8(node), to, to >= 0x10000u && to < 0x84000000u ? MEM32(to) : 0); }
+    if (getenv("TT_QLOG") && (MEM8(node) == 0x30 || MEM8(node) == 0x31)) { static int n; if (n++ < 40) tt_dbg("[QLOG] delivering type %X to %08X (vt %08X)\n", MEM8(node), to, to >= 0x10000u && to < 0x88000000u ? MEM32(to) : 0); }
     if (!chk) return 1;
-    if (to >= 0x10000u && to < 0x84000000u) { vt = MEM32(to); if (vt >= 0x12000u && vt < 0x200000u) { h = MEM32(vt + 0x54u); if (h >= 0x12000u && h < 0x170000u) return 1; } }
+    if (to >= 0x10000u && to < 0x88000000u) { vt = MEM32(to); if (vt >= 0x12000u && vt < 0x200000u) { h = MEM32(vt + 0x54u); if (h >= 0x12000u && h < 0x170000u) return 1; } }
     { static int n; if (n++ < 30) tt_dbg("[MSG] type %u to %08X (class %08X) from %08X: not delivered (no object there)\n", MEM8(node), to,
-                                        to >= 0x10000u && to < 0x84000000u ? MEM32(to) : 0, MEM32(node + 4)); }
+                                        to >= 0x10000u && to < 0x88000000u ? MEM32(to) : 0, MEM32(node + 4)); }
     return 0;
 }
 /* (2.0.1) the message queue's slots (0x000C6F10: 1536 of 128 bytes, thiscall on the queue): all of them taken -- with four players
@@ -11708,15 +12024,15 @@ static void coop_brainmsg_in(void);
 void sub_000922A0(void)   /* (2.1) a brain message from, to or about an extra player: his slot in place first */
 {
     uint32_t nd = MEM32(esp + 8); int prev = -1;
-    if (coop_mode() == 3 && coop_nx() > 1 && !coop_depth && nd >= 0x10000u && nd < 0x84000000u) {
+    if (coop_mode() == 3 && coop_nx() > 1 && !coop_depth && nd >= 0x10000u && nd < 0x88000000u) {
         uint32_t sr = MEM32(nd + 4), tg = MEM32(nd + 8), who = 0;
         if (sr >= 0x10000u && tt_coop_player_of(sr) >= 2) who = sr;
         else if (tg >= 0x10000u && tt_coop_player_of(tg) >= 2) who = tg;
-        else if (sr >= 0x10000u && sr < 0x84000000u && MEM32(sr) == 0x1741C0u && MEM32(sr + 0x114) == 3 && MEM32(sr + 0x494) >= 0x10000u) { uint32_t t = MEM32(MEM32(sr + 0x494) + 0x98); if (t >= 0x10000u && tt_coop_player_of(t) >= 2) who = t; }
+        else if (sr >= 0x10000u && sr < 0x88000000u && MEM32(sr) == 0x1741C0u && MEM32(sr + 0x114) == 3 && MEM32(sr + 0x494) >= 0x10000u) { uint32_t t = MEM32(MEM32(sr + 0x494) + 0x98); if (t >= 0x10000u && tt_coop_player_of(t) >= 2) who = t; }
         if (who) prev = coop_slot_for(who);
     }
-    if (getenv("TT_COOP_BMLOG3") && coop_nx() > 1 && nd >= 0x10000u && nd < 0x84000000u) { static unsigned c[3][64]; static uint32_t lt; int w2;   /* (research) messages to players 2-4's machines, by type */
-        for (w2 = 0; w2 < 3 && w2 < coop_nx(); w2++) { uint32_t a3 = coop_slot_actor(w2), m3 = a3 >= 0x10000u && a3 < 0x84000000u ? MEM32(a3 + 0x3F8) : 0; if (m3 >= 0x10000u && ecx == m3 && MEM32(nd + 4) == a3) c[w2][MEM32(esp + 4) & 63u]++; }
+    if (getenv("TT_COOP_BMLOG3") && coop_nx() > 1 && nd >= 0x10000u && nd < 0x88000000u) { static unsigned c[3][64]; static uint32_t lt; int w2;   /* (research) messages to players 2-4's machines, by type */
+        for (w2 = 0; w2 < 3 && w2 < coop_nx(); w2++) { uint32_t a3 = coop_slot_actor(w2), m3 = a3 >= 0x10000u && a3 < 0x88000000u ? MEM32(a3 + 0x3F8) : 0; if (m3 >= 0x10000u && ecx == m3 && MEM32(nd + 4) == a3) c[w2][MEM32(esp + 4) & 63u]++; }
         if (coop_now() - lt > 10000u) { char b[600]; int o = 0, t2; lt = coop_now(); for (w2 = 0; w2 < 3; w2++) { o += snprintf(b + o, sizeof b - o, " | P%d:", w2 + 2); for (t2 = 0; t2 < 64; t2++) if (c[w2][t2]) o += snprintf(b + o, sizeof b - o, " %d:%u", t2, c[w2][t2]); } tt_dbg("[BM3]%s\n", b); } }
     coop_brainmsg_in();
     if (prev >= 0) coop_slot_set(prev);
@@ -11725,15 +12041,15 @@ static void coop_brainmsg_in(void)
 {
     COOP_PS int off = -1, noswap = -1; int save = coop_twin_ev, sw = 0, ocs = coop_oc_cur; uint32_t nd = MEM32(esp + 8);
     extern int tt_coop_enter_ctx(void); extern void tt_coop_leave(void);
-    if (coop_noc && nd >= 0x10000u && nd < 0x84000000u) {   /* (a pool copy's brain message, from it or to it: its lookups answer it, coop_oc) */
+    if (coop_noc && nd >= 0x10000u && nd < 0x88000000u) {   /* (a pool copy's brain message, from it or to it: its lookups answer it, coop_oc) */
         int ci = coop_oc_find(MEM32(nd + 4)); if (ci < 0) ci = coop_oc_find(MEM32(nd + 8));
         if (ci >= 0) coop_oc_cur = ci; else if (MEM32(nd + 4) >= 0x10000u || MEM32(nd + 8) >= 0x10000u) coop_oc_cur = -1; }
     if (off < 0) { off = getenv("TT_COOP_NOEVREDIRECT") != 0; noswap = getenv("TT_COOP_NOBRAINSWAP") != 0; }
-    if (getenv("TT_COOP_PROPHITLOG") && nd >= 0x10000u && nd < 0x84000000u) {   /* (research) messages to a prop (an explosive barrel): type, source, its owner */
+    if (getenv("TT_COOP_PROPHITLOG") && nd >= 0x10000u && nd < 0x88000000u) {   /* (research) messages to a prop (an explosive barrel): type, source, its owner */
         uint32_t t = MEM32(nd + 8), s = MEM32(nd + 4), ty = MEM32(esp + 4) & 0xFFFFu; COOP_PS int n;
-        if (t >= 0x10000u && t < 0x84000000u && MEM32(t) == 0x174980u && MEM32(t + 0x114) == 7 && ty != 43 && ty != 45 && n++ < 200)
-            tt_dbg("[PROPMSG] t %u type %u to %08X '%s' hp %d from %08X '%s' owner %08X (P1 %08X P2 %08X twin %08X) player %08X\n", coop_now(), ty, t, coop_nm(t), (int)MEM32(t + 0x2FC), s, s >= 0x10000u && s < 0x84000000u ? coop_nm(s) : "",
-                s >= 0x10000u && s < 0x84000000u ? MEM32(s + 0x11C) : 0, coop_first_char, coop_p2, coop_twin, MEM32(0x43B15Cu));
+        if (t >= 0x10000u && t < 0x88000000u && MEM32(t) == 0x174980u && MEM32(t + 0x114) == 7 && ty != 43 && ty != 45 && n++ < 200)
+            tt_dbg("[PROPMSG] t %u type %u to %08X '%s' hp %d from %08X '%s' owner %08X (P1 %08X P2 %08X twin %08X) player %08X\n", coop_now(), ty, t, coop_nm(t), (int)MEM32(t + 0x2FC), s, s >= 0x10000u && s < 0x88000000u ? coop_nm(s) : "",
+                s >= 0x10000u && s < 0x88000000u ? MEM32(s + 0x11C) : 0, coop_first_char, coop_p2, coop_twin, MEM32(0x43B15Cu));
     }
     if (coop_mode() == 3 && coop_p2 && coop_twin >= 0x10000u && nd >= 0x10000u) {
         uint32_t s = MEM32(nd + 4);
@@ -11745,7 +12061,7 @@ static void coop_brainmsg_in(void)
             if (getenv("TT_COOP_BOSSLOG")[0] == '3' && coop_who_kind(s) >= 3 && coop_who_kind(s) <= 5 && ty != 45 && ty != 43 && ty != 9 && ty != 10 && ty != 46) {
                 /* (research) while a tentacle lies stretched (state 9): everything the heroes and their weapons send, to anything */
                 int any9 = 0, q; for (q = 0; q < coop_nchars && !any9; q++) any9 = coop_boss_kind(coop_chars[q]) == 1 && MEM32(coop_chars[q] + 0x408) == 9;
-                if (any9) { COOP_PS unsigned nn; if (nn++ < 400) tt_dbg("[BOSSMSG9] t %u type %u from %s to %s (%08X vt %08X)\n", coop_p2_t0 ? coop_now() - coop_p2_t0 : 0, ty, coop_nm(s), coop_nm(t), t, t >= 0x10000u && t < 0x84000000u ? MEM32(t) : 0); }
+                if (any9) { COOP_PS unsigned nn; if (nn++ < 400) tt_dbg("[BOSSMSG9] t %u type %u from %s to %s (%08X vt %08X)\n", coop_p2_t0 ? coop_now() - coop_p2_t0 : 0, ty, coop_nm(s), coop_nm(t), t, t >= 0x10000u && t < 0x88000000u ? MEM32(t) : 0); }
             }
             if (bs || bt) { uint32_t key = (ty & 0xFFFu) << 8 | (uint32_t)(coop_who_kind(s) << 4) | (uint32_t)coop_who_kind(t); int i;
                 for (i = 0; i < ns && seen[i] != key; i++) ;
@@ -11854,17 +12170,17 @@ void sub_000BA020(void)
 {
     uint32_t a[9], k; int psl; for (k = 0; k < 9; k++) a[k] = MEM32(esp + 4 + 4 * k);
     psl = a[0] >= 0x10000u && a[0] != coop_first_char && !tt_vs_on() && !getenv("TT_COOP_NOBOXSLOT") ? coop_slot_for_src(a[0]) : -1;   /* (2.0.1) player 3's or 4's box: his slot in place (his weapons, his twin) */
-    if (coop_mode() == 3 && coop_p2 >= 0x10000u && a[0] == coop_twin && a[1] >= 0x10000u && a[1] < 0x84000000u && MEM32(a[1]) == 0x174980u && !tt_vs_on() && !getenv("TT_COOP_NOP2BLADE")) {
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && a[0] == coop_twin && a[1] >= 0x10000u && a[1] < 0x88000000u && MEM32(a[1]) == 0x174980u && !tt_vs_on() && !getenv("TT_COOP_NOP2BLADE")) {
         /* player 2's attack box (the second argument its weapon): his own melee weapon, not a ranged copy. His boxes came with his bow
          * copies (the one at his set-up and another), so his swings hit as the bow and did no damage (4 of 4 hits in a bot run, health
          * unchanged; a playtest: no melee kills). His bow: his slot-0 melee weapon; another ranged copy: his slot-1 one (Legolas' second
          * knife), else slot 0 */
         extern uint32_t coop_p2_bow(void);
-        uint32_t h = MEM32(a[1] + 0x18), m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want, pass, j;
+        uint32_t h = MEM32(a[1] + 0x18), m = h >= 0x10008u && h < 0x88000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want, pass, j;
         if (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u || m == 0x4586A62Cu) {
             want = a[1] == coop_p2_bow() ? 0 : 1;
             for (pass = 0; pass < 2 && !pick; pass++, want = 0)
-                for (j = 0; j < coop_np2w && !pick; j++) { uint32_t q = coop_p2w[j], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (j = 0; j < coop_np2w && !pick; j++) { uint32_t q = coop_p2w[j], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     if (coop_p2w_slot[j] == want && !(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u || qm == 0x4586A62Cu)) pick = q; }
             if (pick) { COOP_PS int n; if (n++ < 6) tt_dbg("[COOPWEAPON] player 2's attack box: his %08X in place of the ranged %08X '%s'\n", pick, a[1], coop_nm(a[1])); MEM32(esp + 8) = pick; a[1] = pick; }
         }
@@ -11875,17 +12191,17 @@ void sub_000BA020(void)
              * (a playtest, the Westfold with player 1 Legolas: only his ranged shots landed). Now his own melee weapon's:
              * slot 0's, else any of his */
             for (pass = 0; pass < 2 && !pick; pass++)
-                for (j = 0; j < coop_np2w && !pick; j++) { uint32_t q = coop_p2w[j], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (j = 0; j < coop_np2w && !pick; j++) { uint32_t q = coop_p2w[j], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     if ((pass || coop_p2w_slot[j] == 0) && !(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u || qm == 0x4586A62Cu)) pick = q; }
             if (pick) { COOP_PS int n; if (n++ < 6) tt_dbg("[COOPWEAPON] player 2's attack box: his %08X in place of player 1's %08X '%s'\n", pick, a[1], coop_nm(a[1])); MEM32(esp + 8) = pick; a[1] = pick; }
         }
     }
-    if (tt_vs_on() && a[1] >= 0x10000u && a[1] < 0x84000000u && (a[0] == coop_first_char || (a[0] == coop_twin && a[0]))) { extern void tt_vs_ent_box_weapon(int w, uint32_t wo); extern void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind); tt_vs_ent_box_weapon(a[0] == coop_first_char ? 0 : 1, a[1]); tt_vs_ent_blow(a[0] == coop_first_char ? 0 : 1, (int32_t)a[2], a[3]); }
+    if (tt_vs_on() && a[1] >= 0x10000u && a[1] < 0x88000000u && (a[0] == coop_first_char || (a[0] == coop_twin && a[0]))) { extern void tt_vs_ent_box_weapon(int w, uint32_t wo); extern void tt_vs_ent_blow(int w, int32_t dmg, uint32_t kind); tt_vs_ent_box_weapon(a[0] == coop_first_char ? 0 : 1, a[1]); tt_vs_ent_blow(a[0] == coop_first_char ? 0 : 1, (int32_t)a[2], a[3]); }
     sub_000BA020_gen();
-    if (getenv("TT_COOP_BOXSTAT") && a[0] >= 0x10000u && a[0] < 0x84000000u) { static unsigned mk[5]; static uint32_t mt; int pl = a[0] == coop_first_char ? 1 : tt_coop_player_of(a[0]);
-        if (pl >= 1 && pl <= 4) mk[pl]++; if (coop_now() - mt > 5000u) { mt = coop_now(); tt_dbg("[BOXSTAT] made P1 %u P2 %u P3 %u P4 %u (last: P%d weapon %08X '%s' owner %08X, slot %d)\n", mk[1], mk[2], mk[3], mk[4], pl, a[1], a[1] >= 0x10000u && a[1] < 0x84000000u ? coop_nm(a[1]) : "", a[1] >= 0x10000u && a[1] < 0x84000000u ? MEM32(a[1] + 0x11C) : 0, coop_slot_cur); } }
+    if (getenv("TT_COOP_BOXSTAT") && a[0] >= 0x10000u && a[0] < 0x88000000u) { static unsigned mk[5]; static uint32_t mt; int pl = a[0] == coop_first_char ? 1 : tt_coop_player_of(a[0]);
+        if (pl >= 1 && pl <= 4) mk[pl]++; if (coop_now() - mt > 5000u) { mt = coop_now(); tt_dbg("[BOXSTAT] made P1 %u P2 %u P3 %u P4 %u (last: P%d weapon %08X '%s' owner %08X, slot %d)\n", mk[1], mk[2], mk[3], mk[4], pl, a[1], a[1] >= 0x10000u && a[1] < 0x88000000u ? coop_nm(a[1]) : "", a[1] >= 0x10000u && a[1] < 0x88000000u ? MEM32(a[1] + 0x11C) : 0, coop_slot_cur); } }
     if (getenv("TT_COOP_BOXLOG") && eax >= 0x10000u && a[0] >= 0x10000u && (a[0] == coop_first_char || a[0] == coop_twin || a[0] == coop_p2)) { COOP_PS int n; if (n++ < 40) tt_dbg("[COOPBOX] box %08X by %s (%08X) weapon %08X: mask %08X, +48 %08X +50 %08X\n", eax, a[0] == coop_first_char ? "P1" : "P2", a[0], a[1], MEM32(eax + 0x4C), MEM32(eax + 0x48), MEM32(eax + 0x50)); }   /* (research) */
-    if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && a[0] < 0x84000000u && MEM32(a[0] + 0x114) == 3u) { extern void tt_vs_foe_box(uint32_t e); extern int tt_vs_round_live(void);
+    if (eax >= 0x10000u && tt_vs_on() && a[0] >= 0x10000u && a[0] < 0x88000000u && MEM32(a[0] + 0x114) == 3u) { extern void tt_vs_foe_box(uint32_t e); extern int tt_vs_round_live(void);
         if (!tt_vs_round_live() && !getenv("TT_VS_FOEPREROUND")) {   /* (1.9.9) before a round begins (the countdown, between rounds): an enemy's blow hits no one -- they
              * cut the heroes down while they stood frozen for the countdown (a playtest). TT_VS_FOEPREROUND: as before */
             COOP_PS int n; if (n++ < 6) tt_dbg("[VS] an enemy's blow before the round began: harmless\n");
@@ -11958,7 +12274,7 @@ void sub_000BE0D0(void)
     { extern void tt_clog_swing(uint32_t attack, int after); tt_clog_swing(b, 1); }
     if (sw) tt_coop_leave();
     if (w >= 0 && coop_p2 && MEM32(b + 0x28)) coop_bt[w][5]++;
-    if (getenv("TT_COOP_BOXSTAT") && a >= 0x10000u && a < 0x84000000u) { static unsigned bs[5][4]; static uint32_t bt; int pl = a == coop_first_char ? 1 : tt_coop_player_of(a);   /* (research) each player's boxes: tested, as his (w), contacts, a target */
+    if (getenv("TT_COOP_BOXSTAT") && a >= 0x10000u && a < 0x88000000u) { static unsigned bs[5][4]; static uint32_t bt; int pl = a == coop_first_char ? 1 : tt_coop_player_of(a);   /* (research) each player's boxes: tested, as his (w), contacts, a target */
         if (pl >= 1 && pl <= 4) { uint32_t c = MEM32(a + 0x494); bs[pl][0]++; if (w >= 0) bs[pl][1]++; if (MEM32(b + 0x28)) bs[pl][2]++; if (c >= 0x10000u && MEM32(c + 0x98) >= 0x10000u) bs[pl][3]++; }
         if (coop_now() - bt > 5000u) { bt = coop_now(); tt_dbg("[BOXSTAT] boxes/his/contact/target P1 %u %u %u %u | P2 %u %u %u %u | P3 %u %u %u %u | P4 %u %u %u %u | slot %d\n", bs[1][0], bs[1][1], bs[1][2], bs[1][3], bs[2][0], bs[2][1], bs[2][2], bs[2][3], bs[3][0], bs[3][1], bs[3][2], bs[3][3], bs[4][0], bs[4][1], bs[4][2], bs[4][3], coop_slot_cur); } }
     if (getenv("TT_COOP_CONTACTLOG") && w >= 0 && MEM32(b + 0x28)) {   /* (research) a box that made contact: who, the box's words, the
@@ -11980,7 +12296,7 @@ extern void sub_0006A160_gen(void);
 void sub_0006A160(void)
 {
     uint32_t q = MEM32(esp + 4); int w = coop_bt_who;
-    if (q >= 0x10000u && q < 0x84000000u && tt_vs_on() && getenv("TT_VS_ENTSWEEP")) {   /* (1.9.9) the Ent's blow: his hands hold a prop of no
+    if (q >= 0x10000u && q < 0x88000000u && tt_vs_on() && getenv("TT_VS_ENTSWEEP")) {   /* (1.9.9) the Ent's blow: his hands hold a prop of no
          * triangles, never placed in the world -- his sweeps ran from (0, 2.25, 0) to him and found no one (no orc hit, nothing
          * broken, a playtest). Swept here across the front of him instead, from his right to his left at his reach, chest high */
         uint32_t at = MEM32(q + 0x38); int who = at && at == coop_first_char ? 0 : at && (at == coop_twin || at == coop_p2) ? 1 : -1;
@@ -12076,17 +12392,17 @@ void sub_000B4690(void)
     uint32_t id = MEM32(esp + 4), ra = MEM32(esp);
     if (coop_mode() == 3) coop_watch50("B4690 pre");
     sub_000B4690_gen();
-    if (id < 0x10000u && getenv("TT_PBLOG")) { uint32_t h = eax >= 0x10000u && eax < 0x84000000u ? MEM32(eax + 0x18) : 0; static int n; if (n++ < 300) tt_dbg("[PBLOG] t %u small id %X from %06X -> %08X '%s' (twin ev %d depth %d slot %d)\n", coop_now(), id, ra, eax, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", coop_twin_ev, coop_depth, coop_slot_cur); }
-    if (ra == 0x000A5146u && getenv("TT_PBLOG")) { uint32_t h = eax >= 0x10000u && eax < 0x84000000u ? MEM32(eax + 0x18) : 0; static int n; if (n++ < 300) tt_dbg("[PBLOG] t %u @PassBrain's id %08X -> %08X vt %08X '%s' (ci %d/%d, twin ev %d depth %d)\n", coop_now(), id, eax, eax >= 0x10000u && eax < 0x84000000u ? MEM32(eax) : 0, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", coop_oc_fi, coop_oc_cur, coop_twin_ev, coop_depth); }
+    if (id < 0x10000u && getenv("TT_PBLOG")) { uint32_t h = eax >= 0x10000u && eax < 0x88000000u ? MEM32(eax + 0x18) : 0; static int n; if (n++ < 300) tt_dbg("[PBLOG] t %u small id %X from %06X -> %08X '%s' (twin ev %d depth %d slot %d)\n", coop_now(), id, ra, eax, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", coop_twin_ev, coop_depth, coop_slot_cur); }
+    if (ra == 0x000A5146u && getenv("TT_PBLOG")) { uint32_t h = eax >= 0x10000u && eax < 0x88000000u ? MEM32(eax + 0x18) : 0; static int n; if (n++ < 300) tt_dbg("[PBLOG] t %u @PassBrain's id %08X -> %08X vt %08X '%s' (ci %d/%d, twin ev %d depth %d)\n", coop_now(), id, eax, eax >= 0x10000u && eax < 0x88000000u ? MEM32(eax) : 0, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", coop_oc_fi, coop_oc_cur, coop_twin_ev, coop_depth); }
     if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && id < 0x10000u && coop_p2 >= 0x10000u && !getenv("TT_COOP_NOSMALLID")
-        && !(eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x1741C0u)) {
+        && !(eax >= 0x10000u && eax < 0x88000000u && MEM32(eax) == 0x1741C0u)) {
         /* (2.0.1) a hero command in an extra player's own moves naming no object (an id of 0x14, not a handle) -- the Tower of Orthanc
          * as Isildur with four players: player 3's moves named a particle effect (dynamicParticleObj..) for "him", @PassBrain and
          * @LockHeading on it read through its missing body and the game crashed (test runs): himself */
         COOP_PS int n; if (n++ < 4) tt_dbg("[COOPSCRIPT] player %d's moves name id %X (%08X): him instead (from %06X)\n", coop_slot_cur + 2, id, eax, ra);
         eax = coop_p2;
     }
-    if (coop_lad_force && eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x1741C0u) eax = coop_lad_force;   /* (a ladder's extra climbing: coop_ladarg) */
+    if (coop_lad_force && eax >= 0x10000u && eax < 0x88000000u && MEM32(eax) == 0x1741C0u) eax = coop_lad_force;   /* (a ladder's extra climbing: coop_ladarg) */
     {   int ci = coop_oc_fi >= 0 ? coop_oc_fi : coop_oc_cur;   /* (a spawner pool's copy: its set-up replayed, or its own messages: coop_oc) */
         if (ci >= 0 && ci < coop_noc && eax >= 0x10000u) {
             if (eax == coop_oc[ci].orig) eax = coop_oc[ci].clone;
@@ -12099,13 +12415,13 @@ void sub_000B4690(void)
     { extern void tt_coop_ispw_lookup(uint32_t, uint32_t); tt_coop_ispw_lookup(ra, eax); }
     if (coop_in_obb && eax >= 0x10000u) coop_obb_obj = eax;
     if (coop_mode()) { coop_lk[coop_lkn & 63].ra = ra; coop_lk[coop_lkn & 63].obj = eax; coop_lk[coop_lkn & 63].id = id; coop_lkn++; }
-    if (getenv("TT_LOADLKLOG") && !coop_p2_t0 && eax >= 0x10000u && eax < 0x84000000u) {   /* (research) every lookup before play: the command's return address, the object */
-        COOP_PS int n; uint32_t h = MEM32(eax + 0x18); if (n++ < 6000) tt_dbg("[LOADLK] %06X %08X vt %08X '%s'\n", ra, eax, MEM32(eax), h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?"); }
-    if (getenv("TT_COOP_BOSSCMDLOG") && eax >= 0x10000u && eax < 0x84000000u) {   /* (research) the script commands that look up a tentacle
+    if (getenv("TT_LOADLKLOG") && !coop_p2_t0 && eax >= 0x10000u && eax < 0x88000000u) {   /* (research) every lookup before play: the command's return address, the object */
+        COOP_PS int n; uint32_t h = MEM32(eax + 0x18); if (n++ < 6000) tt_dbg("[LOADLK] %06X %08X vt %08X '%s'\n", ra, eax, MEM32(eax), h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?"); }
+    if (getenv("TT_COOP_BOSSCMDLOG") && eax >= 0x10000u && eax < 0x88000000u) {   /* (research) the script commands that look up a tentacle
          * or the Watcher: each (command's return address, object) the first time, with the object's state and flags, and
          * every 10 s the counts (the address maps to its handler through the command table, local/re/script_cmds.tsv) */
         uint32_t h = MEM32(eax + 0x18);
-        if (h >= 0x10000u && h < 0x84000000u && (strstr((const char *)XBOX_PTR(h), "entacle") || strstr((const char *)XBOX_PTR(h), "atcher"))) {
+        if (h >= 0x10000u && h < 0x88000000u && (strstr((const char *)XBOX_PTR(h), "entacle") || strstr((const char *)XBOX_PTR(h), "atcher"))) {
             static struct { uint32_t ra, obj; unsigned n; } t[96]; COOP_PS int tn; COOP_PS uint32_t last; int i;
             for (i = 0; i < tn && !(t[i].ra == ra && t[i].obj == eax); i++) ;
             if (i == tn && tn < 96) { t[tn].ra = ra; t[tn].obj = eax; t[tn].n = 0; tn++;
@@ -12155,15 +12471,15 @@ void sub_000B4690(void)
     if (coop_head_cmd && eax >= 0x10000u && eax == coop_first_char && coop_p2 >= 0x10000u) { COOP_PS int n; if (n++ < 3) tt_dbg("[COOPHEAD] a heading command in player 2's context names player 1: him instead\n"); eax = coop_p2; }
     if (coop_mode() == 3 && eax >= 0x10000u && eax == coop_first_char && coop_twin >= 0x10000u) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_twin; else coop_resolved_p1 = 1; }
     else if (coop_mode() == 3 && eax >= 0x10000u && MEM32(eax) == 0x174980u && !coop_in_attach) { int i; for (i = 0; i < coop_nwpn; i++) if (coop_wpn_orig[i] == eax) { extern int coop_resolved_hook(void); if (coop_resolved_hook()) eax = coop_wpn_copy[i]; break; } }
-    if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && coop_p2 >= 0x10000u && eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x174980u
+    if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && coop_p2 >= 0x10000u && eax >= 0x10000u && eax < 0x88000000u && MEM32(eax) == 0x174980u
         && (ra == 0x000A5DB3u || ra == 0x000A5E53u || ra == 0x000AA632u || ra == 0x000A5CC3u) && MEM32(eax + 0x11C) != coop_p2 && !getenv("TT_COOP_NOP2BLADE")) {
         /* a weapon's hit box switched in player 2's moves (@ObjectWeaponCollisionOn / Off, @WeaponCollisionOn / Off): his own melee weapon.
          * His moves name player 1's weapons: player 2 Legolas' knives came out as player 1 Aragorn's dagger (no copy of his: the sink, his
          * bow) and bow (his bow copy), so his swings hit with his bow and did no damage -- 4 of 4 hits in a bot run, health unchanged (a
          * playtest: no damage, no melee kills). Player 1's ranged weapon: his slot-1 melee weapon, any other: his slot-0 one (none: as before) */
-        uint32_t h = MEM32(eax + 0x18), m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want = (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) ? 1 : 0, k, pass;
+        uint32_t h = MEM32(eax + 0x18), m = h >= 0x10008u && h < 0x88000000u ? MEM32(h - 8 + 0x40) : 0, pick = 0; int want = (m == 0x0834F2D4u || m == 0x36AC3F58u || m == 0xE7EEC090u) ? 1 : 0, k, pass;
         for (pass = 0; pass < 2 && !pick; pass++, want = 0)
-            for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+            for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                 if (coop_p2w_slot[k] == want && !(qm == 0x0834F2D4u || qm == 0x36AC3F58u || qm == 0xE7EEC090u || qm == 0x4586A62Cu)) pick = q; }
         if (pick) { COOP_PS int n; if (n++ < 8) tt_dbg("[COOPWEAPON] player 2's hit box: %08X '%s' -> his %08X (from %06X)\n", eax, coop_nm(eax), pick, ra); eax = pick; }
     }
@@ -12174,7 +12490,7 @@ void sub_000B4690(void)
             if (!hit) { extern uint32_t coop_p2_ranged_copy(uint32_t w); uint32_t rc = coop_p2_ranged_copy(eax);   /* (and player 1's ranged weapon: his shots are fired from it by name) */
                 if (rc) { COOP_PS int n; if (n++ < 5) tt_dbg("[COOPWEAPON] player 2's event names %08X (player 1's ranged weapon): his copy %08X\n", eax, rc); eax = rc; coop_twin_ev_redir++; } } }
     }
-    if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && eax >= 0x10000u && eax < 0x84000000u && MEM32(eax) == 0x174980u && MEM32(eax + 0x11C) == coop_first_char && coop_first_char
+    if ((coop_twin_ev || coop_depth) && coop_mode() == 3 && eax >= 0x10000u && eax < 0x88000000u && MEM32(eax) == 0x174980u && MEM32(eax + 0x11C) == coop_first_char && coop_first_char
         && !getenv("TT_COOP_NOWSINK")) {   /* player 1's weapon he has no copy of, named in player 2's events or context: the sink (coop_p2_weapon_sink) */
         extern uint32_t coop_p2_weapon_sink(void); uint32_t sk = coop_p2_weapon_sink(); int i, paired = 0;
         for (i = 0; i < coop_nwpn; i++) if (coop_wpn_orig[i] == eax) paired = 1;
@@ -12216,7 +12532,7 @@ static void coop_mev_note(int k)
 {
     uint32_t m = MEM32(esp + 4), a = MEM32(esp + 8), n = MEM32(esp + 0xC); int i;
     if (coop_mev_lv != coop_level_n) { coop_mev_lv = coop_level_n; coop_mevn[0] = coop_mevn[1] = 0; }
-    if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u || coop_mode() != 3) return;
+    if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x1741C0u || coop_mode() != 3) return;
     for (i = 0; i < coop_mevn[k]; i++) if (coop_mev[k][i].actor == a) break;
     if (i == coop_mevn[k]) { if (i >= 64) return; coop_mevn[k]++; }
     coop_mev[k][i].actor = a; coop_mev[k][i].mach = m; coop_mev[k][i].num = n;
@@ -12237,7 +12553,7 @@ void coop_p2_show_hands(uint32_t only)
 {
     int k;
     if (getenv("TT_COOP_NOP2SHOW")) return;
-    for (k = 0; k < coop_np2w; k++) { uint32_t q = coop_p2w[k], qh = q >= 0x10000u ? MEM32(q + 0x18) : 0, qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+    for (k = 0; k < coop_np2w; k++) { uint32_t q = coop_p2w[k], qh = q >= 0x10000u ? MEM32(q + 0x18) : 0, qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
         extern const char *tt_coop_p2_char_now;
         if (!only && coop_p2w_slot[k] == 2 && qm == 0x69DAC4B8u && tt_coop_p2_char_now && !strcmp(tt_coop_p2_char_now, "legolas") && MEM32(q) == 0x174980u) {   /* (Legolas'
             * dagger: player 1's, weaponObj135, is never drawn (+0x110 00017D40); player 2's was, by his leg while he drew: a playtest) */
@@ -12312,7 +12628,7 @@ static uint32_t coop_machine_from_file(const char *w)
         * machine was built over player 2's (his memory, his script's arena) and the two shared it -- player 3 Gimli stuck in his hit reactions for
         * seconds, never swinging (a playtest: "not able to land any attacks") */
     uint32_t m = m_[ss_], rec = rec_[ss_], arena = arena_[ss_], left_word = lw_[ss_]; uint8_t sv0; uint32_t sv1, sv2; uint32_t pm = MEM32(coop_first_char + 0x3F8), b, l2, l1 = MEM32(0x43B438u), self = MEM32(0x43B4A4u), a[3], q; unsigned n = 0;
-    if (getenv("TT_COOP_NOFILEMACHINE") || pm < 0x10000u || pm >= 0x84000000u || !(b = tt_heroes_hero_script(w, &n))) return 0;
+    if (getenv("TT_COOP_NOFILEMACHINE") || pm < 0x10000u || pm >= 0x88000000u || !(b = tt_heroes_hero_script(w, &n))) return 0;
     if (!m) { m = xbox_ContiguousAlloc(0x4490u + 0x40u, 16u); if (m == 0x80000000u) m = xbox_ContiguousAlloc(0x4490u + 0x40u, 16u); rec = m + 0x4490u; }
     if (!arena) { arena = xbox_ContiguousAlloc(0x100000u, 16u); left_word = xbox_ContiguousAlloc(16u, 16u); }
     m_[ss_] = m; rec_[ss_] = rec; arena_[ss_] = arena; lw_[ss_] = left_word;
@@ -12353,9 +12669,9 @@ static void coop_own_machines(void)   /* each frame (coop_place): once a level *
                 if (inst < 0x10000u) continue;
                 n = MEM32(inst + 0x174); if (n > 32u) n = 0;
                 tt_dbg("[BOWLOG] %s yaw? +F0 %.2f %.2f %.2f, %u attached:", pl ? "P2" : "P1", MEMF(c + 0xF0), MEMF(c + 0xF4), MEMF(c + 0xF8), n);
-                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0; tt_dbg(" %s@%u", h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM16(inst + 0x78 + 8 * j)); }
+                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0; tt_dbg(" %s@%u", h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", MEM16(inst + 0x78 + 8 * j)); }
                 tt_dbg("\n");
-                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, q;
+                for (j = 0; j < n; j++) { uint32_t o = MEM32(inst + 0x74 + 8 * j), h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x88000000u ? MEM32(h - 8 + 0x40) : 0, q;
                     if (m != 0x0834F2D4u && !getenv("TT_COOP_BOWLOGALL")) continue;
                     tt_dbg("[BOWLOG]   %s (model %08X) on bone %u:", (const char *)XBOX_PTR(h), m, MEM16(inst + 0x78 + 8 * j));
                     for (q = 0x20; q < 0x60; q += 4) tt_dbg(" %.3f", MEMF(o + q));
@@ -12394,7 +12710,7 @@ static void coop_oc_after(uint32_t fn, void (*call)(void), uint32_t vm, unsigned
     unsigned q; int i; uint32_t o = 0, wo = 0, sp0 = 0;
     if (!coop_noc || coop_oc_replaying || coop_p2_t0 || vm < 0x10000u) return;
     for (q = lk0; q < coop_lkn && q < lk0 + 6; q++) { uint32_t x = coop_lk[q & 63].obj; int k;
-        if (x < 0x10000u || x >= 0x84000000u) continue;
+        if (x < 0x10000u || x >= 0x88000000u) continue;
         if (!o) for (k = 0; k < coop_noc; k++) if (coop_oc[k].orig == x) { o = x; break; }
         if (!wo && MEM32(x) == 0x174980u) wo = x;
         if (!sp0 && MEM32(x) == 0x174B60u) sp0 = x; }
@@ -12478,10 +12794,10 @@ static void coop_replay(uint32_t fn, const char *name, void (*gen)(void))
     if (mlog) {   /* (research) each machine command: the objects it looked up (the actor, the machine) by name */
         unsigned q; tt_dbg("[%s] t %u @%s%s%s ret %08X:", mlog == 4 ? "ATK" : mlog == 3 ? "HEAD" : mlog == 2 ? "WPNCMD" : "MACH", coop_now(), name, coop_replaying ? " (replay)" : "", mlog >= 3 ? (coop_depth ? " (player 2's context)" : " (player 1's context)") : "", eax);
         if (mlog == 4) tt_dbg(" [1B11F0 %d, player %08X, twin event %d]", (int32_t)MEM32(0x1B11F0u), MEM32(0x43B15Cu), coop_twin_ev);
-        for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
-            tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x2F0) : 0); }
+        for (q = mlk0; q < coop_lkn && q < mlk0 + 4; q++) { uint32_t o = coop_lk[q & 63].obj, h = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x18) : 0;
+            tt_dbg(" %08X '%s' (vt %08X, type +2F0 %u)", o, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", o >= 0x10000u && o < 0x88000000u ? MEM32(o) : 0, o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x2F0) : 0); }
         if (!strcmp(name, "SetRenderOffset") && coop_lkn > mlk0) { uint32_t o = coop_lk[(coop_lkn - 1) & 63].obj; tt_dbg(" ->");
-            for (q = 0x20; q < 0x60 && o >= 0x10000u && o < 0x84000000u; q += 4) tt_dbg(" %.3f", MEMF(o + q)); tt_dbg(" (player %08X)", MEM32(0x43B15Cu)); }
+            for (q = 0x20; q < 0x60 && o >= 0x10000u && o < 0x88000000u; q += 4) tt_dbg(" %.3f", MEMF(o + q)); tt_dbg(" (player %08X)", MEM32(0x43B15Cu)); }
         tt_dbg("\n"); }
     coop_in_attach = 0;
     if (!strcmp(name, "SetEnemyID") && coop_p2 >= 0x10000u && coop_p2 == coop_twin) coop_p2_own_type("a later @SetEnemyID");   /* (after the take-over the script's lookups of the player can land on him) */
@@ -12680,7 +12996,7 @@ static int coop_mult_kind(uint32_t a)
 {
     const char *n;
     if (getenv("TT_COOP_MULTALL")) return 1;
-    if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u) return 0;
+    if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x1741C0u) return 0;
     n = coop_nm(a);
     if (getenv("TT_COOP_MULTORCS")) return !_strnicmp(n, "lesserOrcMelee", 14) || !_strnicmp(n, "lesserOrcShield", 15) || !_strnicmp(n, "OrcMelee", 8) || !_strnicmp(n, "orcShield", 9);
     {   /* (a playtest: every melee kind but trolls and bosses, Helm's Deep's kamikaze bombers too) */
@@ -12696,14 +13012,14 @@ static int coop_mult_kind(uint32_t a)
 static uint32_t coop_spawner_next(uint32_t sp)
 {
     uint32_t hd = MEM32(sp + 0x3D4);
-    return (int32_t)MEM32(sp + 0x3D0) > 0 && hd >= 0x10000u && hd < 0x84000000u ? MEM32(hd + 0xC) : 0;
+    return (int32_t)MEM32(sp + 0x3D0) > 0 && hd >= 0x10000u && hd < 0x88000000u ? MEM32(hd + 0xC) : 0;
 }
 /* a spawner: class 0x174B60, or Helm's Deep's siege ladders (0x174A90, 2-4 lesser orcs each: the same ready and spawned
  * lists; their send out 0x92A40 is the spawner's 0x930F0, the one sent kept at the ladder's +0x4D4). TT_COOP_NOLADDERMULT:
  * ladders not multiplied */
 static int coop_is_spawner(uint32_t sp)
 {
-    return sp >= 0x10000u && sp < 0x84000000u && (MEM32(sp) == 0x174B60u || (MEM32(sp) == 0x174A90u && !getenv("TT_COOP_NOLADDERMULT")));
+    return sp >= 0x10000u && sp < 0x88000000u && (MEM32(sp) == 0x174B60u || (MEM32(sp) == 0x174A90u && !getenv("TT_COOP_NOLADDERMULT")));
 }
 /* a ladder's extras. Sent out alone, an orc stands at the ladder's foot for good: the level's script makes its own climb
  * with @ClimbLadder (0xADC30: the orc's name, then 7 numbers, the ladder's ends) right after @SpawnAnObject, and 2.7 s in
@@ -12790,7 +13106,7 @@ static int coop_enemy_mult(void)
 static void coop_lad_keep(uint32_t fn, uint32_t ctx, unsigned n0)   /* a ladder command the script gave its climber: kept */
 {
     unsigned i;
-    if (coop_lad_force || !coop_mode() || ctx < 0x10000u || ctx >= 0x84000000u) return;
+    if (coop_lad_force || !coop_mode() || ctx < 0x10000u || ctx >= 0x88000000u) return;
     for (i = n0; i < coop_lkn && i < n0 + 4; i++) {
         uint32_t o = coop_lk[i & 63].obj, b = MEM32(ctx + 0x10); int k, j, q, ns;
         if (o < 0x10000u || MEM32(o) != 0x1741C0u) continue;
@@ -12825,8 +13141,8 @@ extern void sub_000ADFC0_gen(void); void sub_000ADFC0(void) { uint32_t ctx = MEM
 static void coop_a6480(void);
 extern void sub_000A6480_gen(void); void sub_000A6480(void)
 {
-    uint32_t vm = MEM32(esp + 4), b = vm >= 0x10000u && vm < 0x84000000u ? MEM32(vm + 0x10) : 0; unsigned n0 = coop_lkn, q;
-    int ns = b >= 0x10000u && b < 0x84000000u ? (int)((MEM32(vm) - b) / 4u) : 0;
+    uint32_t vm = MEM32(esp + 4), b = vm >= 0x10000u && vm < 0x88000000u ? MEM32(vm + 0x10) : 0; unsigned n0 = coop_lkn, q;
+    int ns = b >= 0x10000u && b < 0x88000000u ? (int)((MEM32(vm) - b) / 4u) : 0;
     if (ns < 0 || ns > 16) ns = 0;
     if (ns) { coop_oc_svvm = vm; for (q = 0; q < 8; q++) coop_oc_svh[q] = MEM32(vm + q * 4u); for (q = 0; q < (unsigned)ns; q++) coop_oc_svs[q] = MEM32(b + q * 4u); coop_oc_svn = ns; } else coop_oc_svvm = 0;
     coop_a6480();
@@ -12853,9 +13169,9 @@ void coop_pool_frame_x(void) { coop_pool_frame(); }
 static void coop_pool_frame(void)
 {
     int k, m = coop_enemy_mult(); uint32_t now = coop_now();
-    if (getenv("TT_SCRWATCH")) { static uint32_t so, sv, sn; uint32_t o = MEM32(0x4AD054u), v = o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0, nx = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 4) : 0;
+    if (getenv("TT_SCRWATCH")) { static uint32_t so, sv, sn; uint32_t o = MEM32(0x4AD054u), v = o >= 0x10000u && o < 0x88000000u ? MEM32(o) : 0, nx = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 4) : 0;
         if (o != so || v != sv || nx != sn) { sn = nx; int q; tt_dbg("[SCRWATCH] t %u screen %u object %08X class %08X (was %08X %08X):", now, MEM32(0x4AD050u), o, v, so, sv);
-            if (o >= 0x10000u && o < 0x84000000u) for (q = 0; q < 16; q++) tt_dbg(" %08X", MEM32(o + 4 * q)); tt_dbg("\n"); so = o; sv = v; }
+            if (o >= 0x10000u && o < 0x88000000u) for (q = 0; q < 16; q++) tt_dbg(" %08X", MEM32(o + 4 * q)); tt_dbg("\n"); so = o; sv = v; }
         { static uint32_t lt; if (now - lt > 3000u) { uint32_t a; static const uint32_t off[11] = { 8, 0x40C, 0x3468, 0x3864, 0x3A78, 0x3C80, 0x3E90, 0x8C80, 0x9078, 0x9474, 0x9A78 }; int q2; lt = now; (void)a;
             tt_dbg("[SCRWATCH] screens' classes:"); for (q2 = 0; q2 < 11; q2++) tt_dbg(" %d=%08X", q2, MEM32(0x4AD050u + off[q2])); tt_dbg("\n"); } } }
     static uint32_t lt; static unsigned oc_lv = ~0u;
@@ -12878,7 +13194,7 @@ static void coop_pool_frame(void)
             if (!coop_oc[i].out && on) {
                 float an = (float)i * 2.4f, xyzf[3]; uint32_t xyz[3], bd = MEM32(c + 0x494), wc = coop_oc[i].wclone; int k2;
                 xyzf[0] = MEMF(o + 0xF0) + 2.0f * cosf(an); xyzf[1] = MEMF(o + 0xF4) + 2.0f * sinf(an); xyzf[2] = MEMF(o + 0xF8);
-                for (k2 = 0; k2 < 3; k2++) { memcpy(&xyz[k2], &xyzf[k2], 4); MEM32(c + 0xF0 + 4 * k2) = MEM32(c + 0x90 + 4 * k2) = MEM32(c + 0x130 + 4 * k2) = MEM32(c + 0x140 + 4 * k2) = MEM32(c + 0x628 + 4 * k2) = xyz[k2]; if (bd >= 0x80000000u && bd < 0x84000000u) MEM32(bd + 0xE8 + 4 * k2) = xyz[k2]; }
+                for (k2 = 0; k2 < 3; k2++) { memcpy(&xyz[k2], &xyzf[k2], 4); MEM32(c + 0xF0 + 4 * k2) = MEM32(c + 0x90 + 4 * k2) = MEM32(c + 0x130 + 4 * k2) = MEM32(c + 0x140 + 4 * k2) = MEM32(c + 0x628 + 4 * k2) = xyz[k2]; if (bd >= 0x80000000u && bd < 0x88000000u) MEM32(bd + 0xE8 + 4 * k2) = xyz[k2]; }
                 MEM32(c + 0x2EC) = MEM32(o + 0x2EC); MEM32(c + 0x110) &= ~0x200000u;
                 tt_gcall(MEM32(MEM32(c) + 0x28u), c, 3, xyz); tt_gcall(MEM32(MEM32(c) + 0x30u), c, 1, &one);
                 if (wc >= 0x10000u) tt_gcall(MEM32(MEM32(wc) + 0x30u), wc, 1, &one);
@@ -12999,10 +13315,10 @@ extern void sub_000C6150_gen(void);
 void sub_000C6150(void)
 {
     uint32_t m = ecx, a = MEM32(esp + 4), n = MEM32(esp + 8), ra = MEM32(esp);
-    if (!getenv("TT_PASSBRAIN_NOGUARD") && (a < 0x10000u || a >= 0x84000000u || MEM32(a + 0x494) < 0x10000u || MEM32(a + 0x494) >= 0x84000000u)) {
+    if (!getenv("TT_PASSBRAIN_NOGUARD") && (a < 0x10000u || a >= 0x88000000u || MEM32(a + 0x494) < 0x10000u || MEM32(a + 0x494) >= 0x88000000u)) {
         /* (2.0.1) an actor with no body (+0x494 not a pointer: one gone, or not a character): nothing to pass the brain to -- read through it,
          * 4-player co-op crashed on the Westfold as player 2's throws set off the explosive barrels (a playtest; the call from 0xA5155) */
-        static int n2; if (n2++ < 10) { uint32_t h = a >= 0x10000u && a < 0x84000000u ? MEM32(a + 0x18) : 0; tt_dbg("[COOPBRAIN] 0xC6150 on %08X (body %08X, vt %08X, '%s', +114 %d, +110 %08X) from %08X: no body, skipped\n", a, a >= 0x10000u && a < 0x84000000u ? MEM32(a + 0x494) : 0, a >= 0x10000u && a < 0x84000000u ? MEM32(a) : 0, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", a >= 0x10000u && a < 0x84000000u ? (int)MEM32(a + 0x114) : -1, a >= 0x10000u && a < 0x84000000u ? MEM32(a + 0x110) : 0, ra); }
+        static int n2; if (n2++ < 10) { uint32_t h = a >= 0x10000u && a < 0x88000000u ? MEM32(a + 0x18) : 0; tt_dbg("[COOPBRAIN] 0xC6150 on %08X (body %08X, vt %08X, '%s', +114 %d, +110 %08X) from %08X: no body, skipped\n", a, a >= 0x10000u && a < 0x88000000u ? MEM32(a + 0x494) : 0, a >= 0x10000u && a < 0x88000000u ? MEM32(a) : 0, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", a >= 0x10000u && a < 0x88000000u ? (int)MEM32(a + 0x114) : -1, a >= 0x10000u && a < 0x88000000u ? MEM32(a + 0x110) : 0, ra); }
         esp += 12; return; }
     sub_000C6150_gen();
     if (coop_mode() == 3 && a >= 0x10000u && (a == coop_first_char || a == coop_twin)) {
@@ -13108,7 +13424,7 @@ static void coop_hit_in(void);
 static int coop_slot_for_src(uint32_t src)   /* (2.1) a hit's or a weapon's source (a player, his weapon or his shot): his slot put in place; the one before returned (-1: none changed) */
 {
     int k, prev = coop_slot_cur;
-    if (coop_mode() != 3 || coop_depth || coop_nx() < 2 || src < 0x10000u || src >= 0x84000000u) return -1;
+    if (coop_mode() != 3 || coop_depth || coop_nx() < 2 || src < 0x10000u || src >= 0x88000000u) return -1;
     k = coop_slot_of(src);
     if (k < 0 && MEM32(src) != 0x1741C0u) k = coop_slot_of(MEM32(src + 0x11C));
     if (k < 0 || k == prev) return -1;
@@ -13116,13 +13432,13 @@ static int coop_slot_for_src(uint32_t src)   /* (2.1) a hit's or a weapon's sour
 }
 void sub_000849F0(void)
 {
-    uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; int prev;
-    if (!src && ecx >= 0x10000u && ecx < 0x84000000u) src = MEM32(ecx + 0x4BC);
+    uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; int prev;
+    if (!src && ecx >= 0x10000u && ecx < 0x88000000u) src = MEM32(ecx + 0x4BC);
     prev = coop_slot_for_src(src);
-    { uint32_t v = ecx; int pv = v >= 0x10000u && v < 0x84000000u ? tt_coop_player_of(v) : 0; int32_t h0 = pv >= 3 ? (int32_t)MEM32(v + 0x2FC) : 0;
+    { uint32_t v = ecx; int pv = v >= 0x10000u && v < 0x88000000u ? tt_coop_player_of(v) : 0; int32_t h0 = pv >= 3 ? (int32_t)MEM32(v + 0x2FC) : 0;
       coop_hit_in();
-      if (pv >= 3) { COOP_PS int n; if (n++ < (getenv("TT_COOP_HIT4ALL") ? 400 : 30)) { uint32_t ow = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, oc = ow >= 0x10000u && ow < 0x84000000u ? MEM32(ow + 0x494) : 0, ot = oc >= 0x10000u && oc < 0x84000000u ? MEM32(oc + 0x98) : 0;
-          tt_dbg("[COOP4HIT] hit on P%d from %08X '%s': health %d -> %d (its owner %08X targets P%d, state %u -> %u)\n", pv, src, src >= 0x10000u && src < 0x84000000u ? coop_nm(src) : "", h0, (int32_t)MEM32(v + 0x2FC), ow, ot ? tt_coop_player_of(ot) : 0, 0u, MEM32(v + 0x408)); } } }
+      if (pv >= 3) { COOP_PS int n; if (n++ < (getenv("TT_COOP_HIT4ALL") ? 400 : 30)) { uint32_t ow = src >= 0x10000u && src < 0x88000000u ? MEM32(src + 0x11C) : 0, oc = ow >= 0x10000u && ow < 0x88000000u ? MEM32(ow + 0x494) : 0, ot = oc >= 0x10000u && oc < 0x88000000u ? MEM32(oc + 0x98) : 0;
+          tt_dbg("[COOP4HIT] hit on P%d from %08X '%s': health %d -> %d (its owner %08X targets P%d, state %u -> %u)\n", pv, src, src >= 0x10000u && src < 0x88000000u ? coop_nm(src) : "", h0, (int32_t)MEM32(v + 0x2FC), ow, ot ? tt_coop_player_of(ot) : 0, 0u, MEM32(v + 0x408)); } } }
     if (prev >= 0) coop_slot_set(prev);
 }
 static void coop_hit_in(void)
@@ -13132,8 +13448,8 @@ static void coop_hit_in(void)
     if (off < 0) off = getenv("TT_COOP_NOHITSWAP") != 0;
     {   /* an enemy copy's hit on a civilian (team 23): dropped. Copies are there for the heroes; since their weapons took real damage (f3fdd0b) three enemies stood where the level has one,
          * and villagers it gives time to save were gone first (Plains of Rohan, a playtest: wiped by 190 s with 10 copies, 3 left at 343 s with none). TT_COOP_COPYHURTSVILLAGERS: as before */
-        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
-        if (coop_mode() == 3 && !tt_vs_on() && src >= 0x10000u && src < 0x84000000u && v >= 0x10000u && MEM32(v + 0x114) == 23u && (coop_oc_find(src) >= 0 || coop_oc_find(MEM32(src + 0x11Cu)) >= 0) && !getenv("TT_COOP_COPYHURTSVILLAGERS")) {
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
+        if (coop_mode() == 3 && !tt_vs_on() && src >= 0x10000u && src < 0x88000000u && v >= 0x10000u && MEM32(v + 0x114) == 23u && (coop_oc_find(src) >= 0 || coop_oc_find(MEM32(src + 0x11Cu)) >= 0) && !getenv("TT_COOP_COPYHURTSVILLAGERS")) {
             COOP_PS unsigned n; n++; if (n <= 10 || n % 50 == 0) tt_dbg("[COOPCLONE] copy's hit on '%s' dropped (%u so far)\n", coop_nm(v), n);
             eax = 0; esp += 8; return;
         }
@@ -13141,14 +13457,14 @@ static void coop_hit_in(void)
     {   /* (1.9.8) a hero's own weapon hitting him (Versus, player 1 as Frodo: his knife's blows landed on him while player 2's
          * knocked him about -- 20 and 30 units from player 2, a playtest: "Aragorn hits Frodo from anywhere"). Dropped.
          * TT_SELFHIT: as before */
-        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
-        if (coop_mode() == 3 && src >= 0x10000u && src < 0x84000000u && src != v && MEM32(src + 0x11Cu) == v && (v == coop_first_char || v == coop_p2) && !getenv("TT_SELFHIT")) {
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
+        if (coop_mode() == 3 && src >= 0x10000u && src < 0x88000000u && src != v && MEM32(src + 0x11Cu) == v && (v == coop_first_char || v == coop_p2) && !getenv("TT_SELFHIT")) {
             COOP_PS int n; if (n++ < 10) tt_dbg("[VS] P%d's own weapon %08X '%s' hit him: not taken\n", v == coop_p2 ? 2 : 1, src, coop_nm(src));
             eax = 0; esp += 8; return;
         }
     }
     {   /* (2.1) Team Deathmatch: a teammate's blow or shot doesn't hurt (players 1 and 3, 2 and 4) */
-        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; int pv = 0, pa = 0;
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; int pv = 0, pa = 0;
         if (tt_vs_tdm() && src && v >= 0x10000u && (pv = tt_coop_player_of(v)) > 0 && (pa = vs_src_player(src)) > 0 && pa != pv && vs_side_of(pa) == vs_side_of(pv) && !getenv("TT_VS_FRIENDLYFIRE")) {
             COOP_PS int n; if (n++ < 10) tt_dbg("[VS] P%d's hit on teammate P%d: not taken\n", pa, pv);
             eax = 0; esp += 8; return;
@@ -13156,16 +13472,16 @@ static void coop_hit_in(void)
         if (tt_vs_tdm() && v >= 0x10000u && !pv) pv = tt_coop_player_of(v);
         if (tt_vs_tdm() && pv > 0 && !pa) {   /* (2.0.1) not a {0x103, source} message (or its source no player's): the victim's last attacker (+0x4BC) -- a playtest:
             * three kills by player 1 in a free-for-all, one on the board */
-            uint32_t m2 = MEM32(esp + 4), s2 = m2 >= 0x10000u && m2 < 0x84000000u ? MEM32(m2 + 4) : 0; pa = vs_src_player(s2); if (pa <= 0) pa = vs_src_player(MEM32(v + 0x4BC)); }
+            uint32_t m2 = MEM32(esp + 4), s2 = m2 >= 0x10000u && m2 < 0x88000000u ? MEM32(m2 + 4) : 0; pa = vs_src_player(s2); if (pa <= 0) pa = vs_src_player(MEM32(v + 0x4BC)); }
         if (tt_vs_tdm() && pv > 0 && pa > 0 && pa != pv) vs4_note_attacker(pv, pa);   /* (a foe's own blow: who attacks him) */
     }
     {   /* (2.0.1) Versus: a player's blow or kick lands only in front of him -- within TT_VS_HITARC (100) degrees either side of where he
          * faces. A playtest: the Ent's kick (his moves fitted to his size) missed Gimli before him and threw player 2 behind him off
          * Orthanc. Shots are not held to it (their aim is judged at the launch). TT_VS_HITARC=0: off */
-        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
-        if (tt_vs_on() && src >= 0x10000u && src < 0x84000000u && v >= 0x10000u && !(getenv("TT_VS_HITARC") && atof(getenv("TT_VS_HITARC")) <= 0)) {
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0;
+        if (tt_vs_on() && src >= 0x10000u && src < 0x88000000u && v >= 0x10000u && !(getenv("TT_VS_HITARC") && atof(getenv("TT_VS_HITARC")) <= 0)) {
             int pv2 = tt_coop_player_of(v), pa2 = vs_src_player(src); uint32_t sh = MEM32(src + 0x18);
-            int proj = sh >= 0x10000u && sh < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(sh), "dynamicProjectile", 17);
+            int proj = sh >= 0x10000u && sh < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(sh), "dynamicProjectile", 17);
             if (pv2 > 0 && pa2 > 0 && pa2 != pv2 && !proj) {
                 uint32_t A = coop_hero_n(pa2 - 1);
                 if (A >= 0x10000u) {
@@ -13174,9 +13490,9 @@ static void coop_hit_in(void)
                     if (fn > 1e-3f && d > 0.6f && (fx * dx + fy * dy) / (fn * d) < cosf(arc * 0.0174533f)) {
                         COOP_PS int n; if (n++ < 20) tt_dbg("[VS] P%d's blow on P%d behind him (%.0f degrees off his facing, %.1f away): not taken\n", pa2, pv2, acosf(fmaxf(-1.0f, fminf(1.0f, (fx * dx + fy * dy) / (fn * d)))) * 57.2958f, d);
                         eax = 0; esp += 8; return; } } } } }
-    if (getenv("TT_COOP_PROPHITLOG") && v >= 0x10000u && v < 0x84000000u && MEM32(v) == 0x174980u) {   /* (research) a hit on a prop (an explosive barrel): its message, from where */
+    if (getenv("TT_COOP_PROPHITLOG") && v >= 0x10000u && v < 0x88000000u && MEM32(v) == 0x174980u) {   /* (research) a hit on a prop (an explosive barrel): its message, from where */
         uint32_t m = MEM32(esp + 4); COOP_PS int n; if (n++ < 60) tt_dbg("[PROPHIT] on %08X '%s' hp %d: msg %08X type %08X src %08X '%s' +C %08X +10 %08X | ret %06X player %08X\n", v, coop_nm(v), (int)MEM32(v + 0x2FC), m,
-            m >= 0x10000u ? MEM32(m) : 0, m >= 0x10000u ? MEM32(m + 4) : 0, m >= 0x10000u && MEM32(m + 4) >= 0x10000u && MEM32(m + 4) < 0x84000000u ? coop_nm(MEM32(m + 4)) : "", m >= 0x10000u ? MEM32(m + 0xC) : 0, m >= 0x10000u ? MEM32(m + 0x10) : 0, MEM32(esp), MEM32(0x43B15Cu));
+            m >= 0x10000u ? MEM32(m) : 0, m >= 0x10000u ? MEM32(m + 4) : 0, m >= 0x10000u && MEM32(m + 4) >= 0x10000u && MEM32(m + 4) < 0x88000000u ? coop_nm(MEM32(m + 4)) : "", m >= 0x10000u ? MEM32(m + 0xC) : 0, m >= 0x10000u ? MEM32(m + 0x10) : 0, MEM32(esp), MEM32(0x43B15Cu));
     }
     int p2hit = 0;
     {   /* whose hit: a hit message {0x103, weapon or projectile, victim} is player 2's when he or his object (owner +0x11C)
@@ -13188,28 +13504,28 @@ static void coop_hit_in(void)
     }
     if (getenv("TT_COOP_HITSRCLOG") && coop_p2 && v >= 0x10000u && MEM32(v + 0x114) == 3) {   /* (research) each hit on an enemy: its source, the source's owner, whose */
         uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && MEM32(m) == 0x103u ? MEM32(m + 4) : 0; COOP_PS int k;
-        uint32_t ow = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
+        uint32_t ow = src >= 0x10000u && src < 0x88000000u ? MEM32(src + 0x11C) : 0;
         if (m >= 0x10000u && MEM32(m) == 0x103u && (src == coop_p2 || src == coop_first_char || ow == coop_p2 || ow == coop_first_char) && k++ < 120) tt_dbg("[HITSRC] t %u on %08X: source %08X '%s' owner +11C %08X -> %s (depth %d, player 2 %08X, his meter %.1f)\n", coop_now(), v, src, coop_nm(src),
-            src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, p2hit ? "player 2's" : "not his", coop_depth, coop_p2, coop_rec_addr ? MEMF(coop_rec_addr + 4) : -1.0f);
+            src >= 0x10000u && src < 0x88000000u ? MEM32(src + 0x11C) : 0, p2hit ? "player 2's" : "not his", coop_depth, coop_p2, coop_rec_addr ? MEMF(coop_rec_addr + 4) : -1.0f);
     }
     { extern int coop_is_lurtz(uint32_t e); if (p2hit && coop_is_lurtz(v)) { COOP_PS int n; if (n++ < 4) tt_dbg("[COOPLURTZ] player 2's hit on %s: handled as player 1's\n", coop_nm(v)); p2hit = 0; coop_lurtz_hit = v; coop_lurtz_p2_hits++; } }
     if (p2hit && v >= 0x10000u) { extern void coop_p2hit_note(uint32_t v); coop_p2hit_note(v); }
     if (!off && coop_mode() == 3 && coop_p2 && !coop_depth && v >= 0x10000u && v != coop_p2 && p2hit) {
         sw = tt_coop_enter_ctx(); { COOP_PS unsigned n; if ((n++ & 63) == 0) tt_dbg("[COOPEXP] hits by player 2 handled in his context: %u (victim %08X hp %d)\n", n, v, (int32_t)MEM32(v + 0x2FC)); } }
     if (getenv("TT_VS_FARHITLOG") && tt_vs_on() && (v == coop_first_char || v == coop_p2) && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u) {
-        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, q; int k = 0; float dx = MEMF(coop_p2 + 0xF0) - MEMF(coop_first_char + 0xF0), dy = MEMF(coop_p2 + 0xF4) - MEMF(coop_first_char + 0xF4);
-        COOP_PS int n; if (n++ < 40) { tt_dbg("[VSFAR] hit on P%d, %.1f apart: msg %08X type %X src %08X '%s' (owner %08X) +8 %08X +C %08X | src at %.1f %.1f | stack:", v == coop_p2 ? 2 : 1, sqrtf(dx * dx + dy * dy), m, m >= 0x10000u ? MEM32(m) : 0, src, src >= 0x10000u && src < 0x84000000u ? coop_nm(src) : "-", src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0, m >= 0x10000u ? MEM32(m + 8) : 0, m >= 0x10000u ? MEM32(m + 0xC) : 0,
-            src >= 0x10000u && src < 0x84000000u ? MEMF(src + 0xF0) : 0, src >= 0x10000u && src < 0x84000000u ? MEMF(src + 0xF4) : 0);
+        uint32_t m = MEM32(esp + 4), src = m >= 0x10000u && m < 0x88000000u ? MEM32(m + 4) : 0, q; int k = 0; float dx = MEMF(coop_p2 + 0xF0) - MEMF(coop_first_char + 0xF0), dy = MEMF(coop_p2 + 0xF4) - MEMF(coop_first_char + 0xF4);
+        COOP_PS int n; if (n++ < 40) { tt_dbg("[VSFAR] hit on P%d, %.1f apart: msg %08X type %X src %08X '%s' (owner %08X) +8 %08X +C %08X | src at %.1f %.1f | stack:", v == coop_p2 ? 2 : 1, sqrtf(dx * dx + dy * dy), m, m >= 0x10000u ? MEM32(m) : 0, src, src >= 0x10000u && src < 0x88000000u ? coop_nm(src) : "-", src >= 0x10000u && src < 0x88000000u ? MEM32(src + 0x11C) : 0, m >= 0x10000u ? MEM32(m + 8) : 0, m >= 0x10000u ? MEM32(m + 0xC) : 0,
+            src >= 0x10000u && src < 0x88000000u ? MEMF(src + 0xF0) : 0, src >= 0x10000u && src < 0x88000000u ? MEMF(src + 0xF4) : 0);
             for (q = 0; q < 0x300 && k < 10; q += 4) { uint32_t r = MEM32(esp + q); if (r >= 0x11000u && r < 0x170000u) { tt_dbg(" %06X", r); k++; } } tt_dbg("\n"); }
     }
     {   /* (research) TT_COOP_HITLOG: each hit's victim, its last attacker and its health before and after */
         COOP_PS int hl = -1; uint32_t hp0 = v >= 0x10000u ? MEM32(v + 0x2FC) : 0, at = v >= 0x10000u ? MEM32(v + 0x4BC) : 0, msg = MEM32(esp + 4);
         uint32_t st0 = v >= 0x10000u ? MEM32(v + 0x408) : 0, vh = v >= 0x10000u ? MEM32(v + 0x18) : 0;
-        int troll = getenv("TT_COOP_TROLLLOG") && vh >= 0x10000u && vh < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(vh), "TrollBoss", 9);
+        int troll = getenv("TT_COOP_TROLLLOG") && vh >= 0x10000u && vh < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(vh), "TrollBoss", 9);
         if (hl < 0) hl = getenv("TT_COOP_HITLOG") ? atoi(getenv("TT_COOP_HITLOG")) : 0;   /* 1: player 2's hits, 2: all */
         if (getenv("TT_COOP_PROJSTACK") && msg >= 0x10000u && MEM32(msg) == 0x103u) {   /* (research) a projectile's hit: the code addresses on the stack (who called) */
             uint32_t src = MEM32(msg + 4), sh = src >= 0x10000u ? MEM32(src + 0x18) : 0; COOP_PS int n;
-            if (sh >= 0x10000u && sh < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(sh), "dynamicProjectile", 17) && n++ < 6) { uint32_t q; int k = 0; extern unsigned coop_proj_mark; extern uint32_t coop_proj_cur;
+            if (sh >= 0x10000u && sh < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(sh), "dynamicProjectile", 17) && n++ < 6) { uint32_t q; int k = 0; extern unsigned coop_proj_mark; extern uint32_t coop_proj_cur;
                 tt_dbg("[PROJSTACK] marks %03X (bits: 0 DB150 1 DE630 2 DAD20 3 D6B40 4 D6530 5 D62F0 6 D5820 7 D50D0 8 D5960), projectile in update %08X\n", coop_proj_mark, coop_proj_cur);
                 tt_dbg("[PROJSTACK] %s (vtable %08X) hits %08X '%s': msg %08X %08X %08X %08X %08X | stack:", (const char *)XBOX_PTR(sh), MEM32(src), v, coop_nm(v), MEM32(msg), MEM32(msg + 4), MEM32(msg + 8), MEM32(msg + 0xC), MEM32(msg + 0x10));
                 for (q = 0; q < 0x400 && k < 14; q += 4) { uint32_t r = MEM32(esp + q); if (r >= 0x11000u && r < 0x170000u) { tt_dbg(" +%X:%06X", q, r); k++; } } tt_dbg("\n"); } }
@@ -13220,18 +13536,18 @@ static void coop_hit_in(void)
         { float mb = coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f; uint32_t m1 = MEM32(esp + 4), wsrc = m1 >= 0x10000u && MEM32(m1) == 0x103u ? MEM32(m1 + 4) : 0;
         sub_000849F0_gen();
         if (coop_lurtz_hit && coop_lurtz_hit == v) { if (MEM32(v + 0x4BC) == coop_p2 && coop_first_char) MEM32(v + 0x4BC) = coop_first_char; coop_lurtz_hit = 0; }   /* (his last attacker player 1's) */
-        if (getenv("TT_COOP_HITSRCLOG") && v >= 0x10000u && MEM32(v + 0x114) == 3 && (p2hit || wsrc == coop_first_char || (wsrc >= 0x10000u && wsrc < 0x84000000u && MEM32(wsrc + 0x11C) == coop_first_char))) { COOP_PS int k; if (k++ < 150)
+        if (getenv("TT_COOP_HITSRCLOG") && v >= 0x10000u && MEM32(v + 0x114) == 3 && (p2hit || wsrc == coop_first_char || (wsrc >= 0x10000u && wsrc < 0x88000000u && MEM32(wsrc + 0x11C) == coop_first_char))) { COOP_PS int k; if (k++ < 150)
             tt_dbg("[HITAFT] t %u %s hit by %s %08X '%s': hp %d -> %d, state %u -> %u, last attacker %08X -> %08X, player %08X, meter %.1f -> %.1f, msg +8..+18 %08X %08X %08X %08X %08X\n", coop_now(), p2hit ? "P2" : "P1", coop_nm(wsrc), v, coop_nm(v), (int32_t)hp0, (int32_t)MEM32(v + 0x2FC), st0, MEM32(v + 0x408), at, MEM32(v + 0x4BC),
                    MEM32(0x43B15Cu), mb, coop_rec_addr ? MEMF(coop_rec_addr + 4) : 0.0f, MEM32(m1 + 8), MEM32(m1 + 0xC), MEM32(m1 + 0x10), MEM32(m1 + 0x14), MEM32(m1 + 0x18)); } }
         if (v >= 0x10000u && coop_mode() == 3 && (int32_t)MEM32(v + 0x2FC) < (int32_t)hp0 && MEM32(v + 0x114) == 3) {   /* (its health lowered by this hit: whose) */
-            uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u && src < 0x84000000u ? MEM32(src + 0x11C) : 0;
+            uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u && src < 0x88000000u ? MEM32(src + 0x11C) : 0;
             coop_lastdmg_note(v, p2hit ? 2 + coop_slot_cur : (src == coop_first_char || own == coop_first_char || (!src && MEM32(v + 0x4BC) == coop_first_char)) ? 1 : 0); }
         if (tdf) { int q, m = 0; COOP_PS int n; if (n++ < 40) { tt_dbg("[TROLLDIFF] hit from %s (state %u, block mask +428 %08X +42C %08X, inputs +3E0 %08X +3E4 %08X) changed:", coop_nm(MEM32(msg + 4)), MEM32(v + 0x408), MEM32(v + 0x428), MEM32(v + 0x42C), MEM32(v + 0x3E0), MEM32(v + 0x3E4));
             for (q = 0; q < 0x180 && m < 24; q++) if (MEM32(v + 4 * q) != tdb[q]) { tt_dbg(" +%X %08X->%08X", 4 * q, tdb[q], MEM32(v + 4 * q)); m++; } tt_dbg("\n"); } }
         if (troll) {   /* (research) every hit on the troll: its state then, the source, the health change */
             uint32_t src = msg >= 0x10000u && MEM32(msg) == 0x103u ? MEM32(msg + 4) : 0, own = src >= 0x10000u ? MEM32(src + 0x11C) : 0, sh = src >= 0x10000u ? MEM32(src + 0x18) : 0;
             COOP_PS unsigned k; if (k++ < 300) tt_dbg("[TROLLHIT] state %u -> %u, hp %d -> %d | msg type %X from %08X '%s' owner %08X (%s) | msg %08X %08X %08X %08X%c", st0, MEM32(v + 0x408), (int32_t)hp0, (int32_t)MEM32(v + 0x2FC),
-                msg >= 0x10000u ? MEM32(msg) : 0, src, sh >= 0x10000u && sh < 0x84000000u ? (const char *)XBOX_PTR(sh) : "?", own,
+                msg >= 0x10000u ? MEM32(msg) : 0, src, sh >= 0x10000u && sh < 0x88000000u ? (const char *)XBOX_PTR(sh) : "?", own,
                 src == coop_first_char || own == coop_first_char ? "player 1" : src == coop_p2 || own == coop_p2 ? "player 2" : "other",
                 msg >= 0x10000u ? MEM32(msg + 8) : 0, msg >= 0x10000u ? MEM32(msg + 0xC) : 0, msg >= 0x10000u ? MEM32(msg + 0x10) : 0, msg >= 0x10000u ? MEM32(msg + 0x14) : 0, 10);
         }
@@ -13290,7 +13606,7 @@ void sub_0005A150(void)
         int strip = coop_mode() == 3 && coop_p2 >= 0x10000u && n <= 0xC0u && !tt_vs_on() && !getenv("TT_COOP_AIMALLIES");   /* (not in Versus: there the other hero is the one to aim at) */
         if (strip) {
             for (i = 0; i < n; i++) { uint32_t q = MEM32(0x411510u + 4 * i); saved[i] = q;
-                if (q != h && q >= 0x10000u && q < 0x84000000u && (q == coop_p2 || q == coop_first_char || q == coop_twin || MEM32(q + 0x114) == 2)) { cut++; continue; }
+                if (q != h && q >= 0x10000u && q < 0x88000000u && (q == coop_p2 || q == coop_first_char || q == coop_twin || MEM32(q + 0x114) == 2)) { cut++; continue; }
                 MEM32(0x411510u + 4 * k++) = q; }
             MEM32(0x411850u) = k;
         }
@@ -13307,7 +13623,7 @@ void sub_0005A150(void)
 extern void sub_000C1710_gen(void);
 void sub_000C1710(void)
 {
-    uint32_t o = MEM32(esp + 4), r1 = ecx, h = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 8) : 0; int sw = 0;
+    uint32_t o = MEM32(esp + 4), r1 = ecx, h = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 8) : 0; int sw = 0;
     if (coop_mode() == 3 && coop_p2 >= 0x10000u && h == coop_p2 && !coop_depth && !tt_vs_on() && (MEM32(COOP_PADREC(1u + (uint32_t)coop_slot_cur) + 0x34u) & 0x4000u) && !getenv("TT_COOP_NOP2AIMTURN")) { sw = tt_coop_enter_ctx(); ecx = r1; }
     sub_000C1710_gen();
     if (sw) { uint32_t r0 = eax; tt_coop_leave(); eax = r0; }
@@ -13563,15 +13879,15 @@ static struct { uint32_t pr, sh, lk; int beam; } coop_pn[32]; static unsigned co
 void coop_proj_note(uint32_t proj, uint32_t shooter, int beam)
 {
     uint32_t c, lk;
-    if (proj < 0x10000u || shooter < 0x10000u || shooter >= 0x84000000u || coop_mode() != 3) return;
-    c = MEM32(shooter + 0x494); lk = c >= 0x10000u && c < 0x84000000u ? MEM32(c + 0x98) : 0;
+    if (proj < 0x10000u || shooter < 0x10000u || shooter >= 0x88000000u || coop_mode() != 3) return;
+    c = MEM32(shooter + 0x494); lk = c >= 0x10000u && c < 0x88000000u ? MEM32(c + 0x98) : 0;
     coop_pn[coop_pn_i & 31].pr = proj; coop_pn[coop_pn_i & 31].sh = shooter; coop_pn[coop_pn_i & 31].lk = lk; coop_pn[coop_pn_i & 31].beam = beam; coop_pn_i++;
     if (getenv("TT_COOP_PROJLOG")) tt_dbg("[PROJNOTE] shot %08X by %08X, his lock %08X%s\n", proj, shooter, lk, beam ? " (a beam)" : "");
 }
 void coop_launch_pre(uint32_t sp)
 {
     uint32_t pj = MEM32(sp + 0x18), pid = MEM32(sp + 0x10), a = MEM32(sp + 4), b = MEM32(sp + 8), c = MEM32(sp + 0xC);
-    if (getenv("TT_COOP_LAUNCHLOG") && pj >= 0x10000u && pj < 0x84000000u) { COOP_PS int n;
+    if (getenv("TT_COOP_LAUNCHLOG") && pj >= 0x10000u && pj < 0x88000000u) { COOP_PS int n;
         if (n++ < 40) tt_dbg("[LAUNCH] by %08X%s at %.1f %.1f %.1f | start %.1f %.1f %.1f | aim %.1f %.1f %.1f | third %.2f %.2f %.2f %.2f | id %u, +14 %08X | P1 at %.1f %.1f %.1f\n", pj, pj == coop_p2 ? " (P2)" : pj == coop_first_char ? " (P1)" : "",
             MEMF(pj + 0xF0), MEMF(pj + 0xF4), MEMF(pj + 0xF8), a > 0x10000u ? MEMF(a) : 0, a > 0x10000u ? MEMF(a + 4) : 0, a > 0x10000u ? MEMF(a + 8) : 0,
             b > 0x10000u ? MEMF(b) : 0, b > 0x10000u ? MEMF(b + 4) : 0, b > 0x10000u ? MEMF(b + 8) : 0, c > 0x10000u ? MEMF(c) : 0, c > 0x10000u ? MEMF(c + 4) : 0, c > 0x10000u ? MEMF(c + 8) : 0, c > 0x10000u ? MEMF(c + 12) : 0, pid, MEM32(sp + 0x14),
@@ -13580,14 +13896,14 @@ void coop_launch_pre(uint32_t sp)
      * Tomb: 8.4 -3.0 1.9 for every shot, wherever he stood; a playtest: Gandalf's bolts hit nothing). From his hand
      * instead: 3.6 over his feet (the companions' shots leave 3-5.4 over theirs), half a unit ahead where it goes.
      * The aim (his lock, or none: the speed alone) is the game's. TT_COOP_P2GAMESTART: as before */
-    if (coop_mode() == 3 && pj == coop_p2 && pj >= 0x10000u && a >= 0x10000u && a < 0x84000000u && !tt_vs_on() && !getenv("TT_COOP_P2GAMESTART")) {
+    if (coop_mode() == 3 && pj == coop_p2 && pj >= 0x10000u && a >= 0x10000u && a < 0x88000000u && !tt_vs_on() && !getenv("TT_COOP_P2GAMESTART")) {
         extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); COOP_PS uint32_t buf; COOP_PS unsigned k;
         float px = MEMF(pj + 0xF0), py = MEMF(pj + 0xF4), pz = MEMF(pj + 0xF8), dx, dy, dn, sx, sy, sz, hz = getenv("TT_COOP_P2SHOTZ") ? (float)atof(getenv("TT_COOP_P2SHOTZ")) : 3.6f; uint32_t v;
         if (!buf) buf = xbox_ContiguousAlloc(4 * 16, 16u);
         sx = MEMF(a); sy = MEMF(a + 4); sz = MEMF(a + 8);
         if (buf && ((sx - px) * (sx - px) + (sy - py) * (sy - py) > 36.0f || fabsf(sz - pz) > 12.0f)) {   /* (only a place well off him: the game's own is his bow, 2.5 ahead and 6.9 up for Legolas, and this took it for a stale one: his arrows left from his chest, a playtest) */
-            if (b >= 0x10000u && b < 0x84000000u && (MEMF(b) != 0.0f || MEMF(b + 4) != 0.0f)) { dx = MEMF(b) - px; dy = MEMF(b + 4) - py; }
-            else if (c >= 0x10000u && c < 0x84000000u) { dx = MEMF(c); dy = MEMF(c + 4); } else { dx = MEMF(pj + 0x70); dy = MEMF(pj + 0x74); }
+            if (b >= 0x10000u && b < 0x88000000u && (MEMF(b) != 0.0f || MEMF(b + 4) != 0.0f)) { dx = MEMF(b) - px; dy = MEMF(b + 4) - py; }
+            else if (c >= 0x10000u && c < 0x88000000u) { dx = MEMF(c); dy = MEMF(c + 4); } else { dx = MEMF(pj + 0x70); dy = MEMF(pj + 0x74); }
             dn = sqrtf(dx * dx + dy * dy); if (dn > 1e-3f) { dx /= dn; dy /= dn; } else dx = dy = 0;
             v = buf + (k++ & 3u) * 16u;
             MEMF(v) = px + dx * 0.5f; MEMF(v + 4) = py + dy * 0.5f; MEMF(v + 8) = pz + hz; MEM32(v + 12) = MEM32(a + 12);
@@ -13602,19 +13918,19 @@ int coop_proj_pass(void)
     int i, pass;
     if (coop_mode() != 3 || coop_p2 < 0x10000u || (sh != coop_p2 && sh != coop_first_char) || q < 0x10000u || tt_vs_on() || getenv("TT_COOP_PROJHITALL")) return 0;   /* (not in Versus: the other hero is the target there) */
     for (k = 0; k < 0xD0 && !hit; k += 4) { uint32_t a = MEM32(q + k);
-        if (a < 0x10000u || a >= 0x84000000u || a == sh) continue;
+        if (a < 0x10000u || a >= 0x88000000u || a == sh) continue;
         if (a == coop_p2 || a == coop_first_char) { hit = a; off = k; break; }
         for (i = 0; i < coop_nchars; i++) if (coop_chars[i] == a) { hit = a; off = k; break; } }
     c = MEM32(sh + 0x494); lk = c >= 0x10000u ? MEM32(c + 0x98) : 0;
     { int beam = 0; for (i = 0; i < 32; i++) if (coop_pn[i].pr == pr && coop_pn[i].sh == sh) { if (!getenv("TT_COOP_PROJLOCKNOW")) lk = coop_pn[i].lk; beam = coop_pn[i].beam; break; }
       if (beam && !getenv("TT_COOP_BEAMLOCKONLY")) lk = 0; }   /* (a beam: any enemy; TT_COOP_BEAMLOCKONLY: its lock only, as arrows) */
-    if (lk < 0x10000u || lk >= 0x84000000u || MEM32(lk) != 0x1741C0u || MEM32(lk + 0x114) != 3 || (int32_t)MEM32(lk + 0x2FC) <= 0) lk = 0;
+    if (lk < 0x10000u || lk >= 0x88000000u || MEM32(lk) != 0x1741C0u || MEM32(lk + 0x114) != 3 || (int32_t)MEM32(lk + 0x2FC) <= 0) lk = 0;
     pass = hit && (hit == coop_p2 || hit == coop_first_char || MEM32(hit + 0x114) == 2 || (lk && hit != lk));
     if (hit && !pass && MEM32(hit + 0x114) == 3) coop_pdmg_note(hit, sh);
     if (getenv("TT_COOP_PROJLOG")) { COOP_PS int n; if (n++ < 60) tt_dbg("[PROJHIT] %s's projectile %08X hits %08X %s (role %d, result +%X), his lock %08X: %s\n", sh == coop_p2 ? "P2" : "P1", pr,
         hit, hit ? coop_nm(hit) : "(no character)", hit ? (int)MEM32(hit + 0x114) : -1, off, lk, pass ? "let through" : "hit");
-        if (n <= 60) { uint32_t o = MEM32(q + 0x68), sh124 = MEM32(sh + 0x124); tt_dbg("[PROJHIT]   object hit %08X '%s' vt %06X role %d hp %d +124 %08X | shooter +124 %08X\n", o, o >= 0x10000u && o < 0x84000000u ? coop_nm(o) : "", o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0,
-            o >= 0x10000u && o < 0x84000000u ? (int)MEM32(o + 0x114) : -1, o >= 0x10000u && o < 0x84000000u ? (int)MEM32(o + 0x2FC) : 0, o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x124) : 0, sh124); }
+        if (n <= 60) { uint32_t o = MEM32(q + 0x68), sh124 = MEM32(sh + 0x124); tt_dbg("[PROJHIT]   object hit %08X '%s' vt %06X role %d hp %d +124 %08X | shooter +124 %08X\n", o, o >= 0x10000u && o < 0x88000000u ? coop_nm(o) : "", o >= 0x10000u && o < 0x88000000u ? MEM32(o) : 0,
+            o >= 0x10000u && o < 0x88000000u ? (int)MEM32(o + 0x114) : -1, o >= 0x10000u && o < 0x88000000u ? (int)MEM32(o + 0x2FC) : 0, o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x124) : 0, sh124); }
         if (n <= 60) tt_dbg("[PROJHIT]   at %.1f %.1f %.1f, last %.1f %.1f %.1f, next %.1f %.1f %.1f, start %.1f %.1f %.1f, aim %.1f %.1f %.1f\n", MEMF(pr + 0xF0), MEMF(pr + 0xF4), MEMF(pr + 0xF8),
             MEMF(pr + 0x418), MEMF(pr + 0x41C), MEMF(pr + 0x420), MEMF(pr + 0x408), MEMF(pr + 0x40C), MEMF(pr + 0x410), MEMF(pr + 0x3E8), MEMF(pr + 0x3EC), MEMF(pr + 0x3F0), MEMF(pr + 0x3F8), MEMF(pr + 0x3FC), MEMF(pr + 0x400)); }
     return pass;
@@ -13634,7 +13950,7 @@ void sub_000DAD20(void)
 {
     unsigned m = coop_proj_mark; uint32_t c = coop_proj_cur, pj = ecx, ow; int sw = 0;
     coop_proj_mark |= 1u << 2;
-    if (coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_depth && pj >= 0x10000u && pj < 0x84000000u && !getenv("TT_COOP_NOP2PROJLIST")) {
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && !coop_depth && pj >= 0x10000u && pj < 0x88000000u && !getenv("TT_COOP_NOP2PROJLIST")) {
         int ks = -1; ow = MEM32(pj + 0x11C);
         if (ow && ow != coop_first_char && !tt_vs_on() && !getenv("TT_COOP_NOPXPROJLIST")) ks = coop_slot_of(ow);   /* (2.0.1) players 3 and 4's too: their arrows and throws
             * flew through the Watcher (a playtest) -- the owner's slot put in place first */
@@ -13666,25 +13982,25 @@ void sub_000C7030(void)
     uint32_t ty = MEM8(esp + 4), pl = MEM32(esp + 8), ac = MEM32(esp + 0xC), h = 0; const char *nm = "?";
     if (getenv("TT_COOP_PROJSTACK")) {   /* (research) events from or about a projectile: type, the caller */
         COOP_PS int n; uint32_t q[2] = { pl, ac }; int i;
-        for (i = 0; i < 2; i++) { uint32_t o = q[i], hn = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x18) : 0;
-            if (hn >= 0x10000u && hn < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(hn), "dynamicProjectile", 17) && n++ < 40) {
+        for (i = 0; i < 2; i++) { uint32_t o = q[i], hn = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x18) : 0;
+            if (hn >= 0x10000u && hn < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(hn), "dynamicProjectile", 17) && n++ < 40) {
                 tt_dbg("[PROJEV] type %u from %08X arg %08X %08X (the projectile is arg %d) | called from %06X, then %06X%c", ty, pl, ac, MEM32(esp + 0x10), i + 2, MEM32(esp), MEM32(esp + 0x14), 10); break; } } }
-    if (getenv("TT_COOP_PROPHITLOG") && pl >= 0x10000u && pl < 0x84000000u && MEM32(pl) == 0x174980u && ty != 6 && ty != 21) {   /* (research) a prop's event: the call stack */
+    if (getenv("TT_COOP_PROPHITLOG") && pl >= 0x10000u && pl < 0x88000000u && MEM32(pl) == 0x174980u && ty != 6 && ty != 21) {   /* (research) a prop's event: the call stack */
         COOP_PS int n; int k, m = 0; if (n++ < 30) { tt_dbg("[PROPEV] type %u from %08X '%s' arg %08X player %08X, stack:", ty, pl, coop_nm(pl), ac, MEM32(0x43B15Cu));
             for (k = 0; k < 512 && m < 16; k += 4) { uint32_t r = MEM32(esp + k); if (r >= 0x11000u && r < 0x170000u) { tt_dbg(" +%X:%06X", k, r); m++; } } tt_dbg("\n"); }
     }
     if (getenv("TT_COOP_EVLOG")) {   /* (research) every event posted: its type, sender (and its name, if an object's) and argument */
-        COOP_PS int n; uint32_t h2 = pl >= 0x10000u && pl < 0x84000000u ? MEM32(pl + 0x18) : 0;
-        if (ty == 21 && h2 >= 0x10000u && h2 < 0x84000000u && !_strnicmp((const char *)XBOX_PTR(h2), "camera", 6)) { COOP_PS int m; if (m++ < 1) { int q; tt_dbg("[EVLOG] %s %08X: vtable %08X:", (const char *)XBOX_PTR(h2), pl, MEM32(pl)); for (q = 0; q < 40; q++) tt_dbg(" %d:%06X", q, MEM32(MEM32(pl) + 4 * q)); tt_dbg("\n"); } }
-        if (ty != 6 && ty != 21 && (ty < 32 || ty > 37) && n++ < 3000) tt_dbg("[EVLOG] t %u type %u from %08X '%s' arg %08X%s %08X (ret %06X)\n", coop_now(), ty, pl, h2 >= 0x10000u && h2 < 0x84000000u ? (const char *)XBOX_PTR(h2) : "",
+        COOP_PS int n; uint32_t h2 = pl >= 0x10000u && pl < 0x88000000u ? MEM32(pl + 0x18) : 0;
+        if (ty == 21 && h2 >= 0x10000u && h2 < 0x88000000u && !_strnicmp((const char *)XBOX_PTR(h2), "camera", 6)) { COOP_PS int m; if (m++ < 1) { int q; tt_dbg("[EVLOG] %s %08X: vtable %08X:", (const char *)XBOX_PTR(h2), pl, MEM32(pl)); for (q = 0; q < 40; q++) tt_dbg(" %d:%06X", q, MEM32(MEM32(pl) + 4 * q)); tt_dbg("\n"); } }
+        if (ty != 6 && ty != 21 && (ty < 32 || ty > 37) && n++ < 3000) tt_dbg("[EVLOG] t %u type %u from %08X '%s' arg %08X%s %08X (ret %06X)\n", coop_now(), ty, pl, h2 >= 0x10000u && h2 < 0x88000000u ? (const char *)XBOX_PTR(h2) : "",
             ac, ac == coop_p2 && ac ? " (player 2)" : ac == coop_first_char && ac ? " (player 1)" : "", MEM32(esp + 0x10), MEM32(esp));
     }
-    if (coop_mode() == 3 && coop_p2 >= 0x10000u && ty >= 0xDu && ty <= 0xFu && pl >= 0x10000u && pl < 0x84000000u) {
-        h = MEM32(pl + 0x18); if (h >= 0x10000u && h < 0x84000000u) nm = (const char *)XBOX_PTR(h);
+    if (coop_mode() == 3 && coop_p2 >= 0x10000u && ty >= 0xDu && ty <= 0xFu && pl >= 0x10000u && pl < 0x88000000u) {
+        h = MEM32(pl + 0x18); if (h >= 0x10000u && h < 0x88000000u) nm = (const char *)XBOX_PTR(h);
         if (coop_triglog_on() && strstr(nm, "damage")) tt_dbg("[TRIGLOG] box '%s' at %.1f %.1f %.1f, +E0 %.1f %.1f %.1f %.1f, actor at %.1f %.1f %.1f\n", nm, MEMF(pl + 0xF0), MEMF(pl + 0xF4), MEMF(pl + 0xF8), MEMF(pl + 0xE0), MEMF(pl + 0xE4), MEMF(pl + 0xE8), MEMF(pl + 0xEC), ac >= 0x10000u ? MEMF(ac + 0xF0) : 0.f, ac >= 0x10000u ? MEMF(ac + 0xF4) : 0.f, ac >= 0x10000u ? MEMF(ac + 0xF8) : 0.f);
         if (coop_triglog_on()) { COOP_PS int n; if (n++ < 400) tt_dbg("[TRIGLOG] t %u event %u plane %08X '%s' actor %08X (%s)\n", coop_now(), ty, pl, nm,
             ac, ac == coop_p2 ? "player 2" : ac == coop_first_char ? "player 1" : "other"); }
-        if (ac >= 0x10000u && ac < 0x84000000u && h && (strstr(nm, "damage_box") || !_strnicmp(nm, "dmgBox", 6))) { int pn = tt_coop_player_of(ac);   /* (2.0.1) a fire's damage box a player 2-4 came into */
+        if (ac >= 0x10000u && ac < 0x88000000u && h && (strstr(nm, "damage_box") || !_strnicmp(nm, "dmgBox", 6))) { int pn = tt_coop_player_of(ac);   /* (2.0.1) a fire's damage box a player 2-4 came into */
             if (pn >= 2 && pn <= 4) { extern void coop_dmgbox_note(int pn, uint32_t box, uint32_t actor); coop_dmgbox_note(pn, pl, ac); } }
         /* every plane and trigger is player 1's: player 2's events on them are dropped (a playtest: "p2 seems to fire triggers it
          * shouldnt, only p1 can triggers everything"; before, only the camera planes were). TT_COOP_P2TRIGGERS: as before */
@@ -13742,10 +14058,10 @@ void tt_objs_near(float x, float y, float r)
 {
     int i; tt_dbg("[OBJNEAR] objects within %.0f of %.1f %.1f (of %d linked):\n", r, x, y, tt_nallobj);
     for (i = 0; i < tt_nallobj; i++) { uint32_t o = tt_allobj[i], h; float ox, oy;
-        if (o < 0x10000u || o >= 0x84000000u) continue;
+        if (o < 0x10000u || o >= 0x88000000u) continue;
         ox = MEMF(o + 0xF0); oy = MEMF(o + 0xF4); if (r > 0 && (!(ox == ox) || (ox - x) * (ox - x) + (oy - y) * (oy - y) > r * r)) continue;
         h = MEM32(o + 0x18);
-        tt_dbg("[OBJNEAR] %08X type %u vt %08X '%s' at %.1f %.1f %.1f | +10 %08X +14 %08X +1C %08X +20 %08X +24 %08X +110 %08X +114 %08X +2F0 %08X\n", o, tt_allobj_t[i], MEM32(o), h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", ox, oy, MEMF(o + 0xF8),
+        tt_dbg("[OBJNEAR] %08X type %u vt %08X '%s' at %.1f %.1f %.1f | +10 %08X +14 %08X +1C %08X +20 %08X +24 %08X +110 %08X +114 %08X +2F0 %08X\n", o, tt_allobj_t[i], MEM32(o), h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", ox, oy, MEMF(o + 0xF8),
             MEM32(o + 0x10), MEM32(o + 0x14), MEM32(o + 0x1C), MEM32(o + 0x20), MEM32(o + 0x24), MEM32(o + 0x110), MEM32(o + 0x114), MEM32(o + 0x2F0)); }
 }
 /* player 2's weapons are his own hero's, whatever player 1 plays: each hero's weapons by the slot the level script
@@ -13833,7 +14149,7 @@ static void coop_p2_ranged_build(void)
 COOP_PS uint32_t coop_p2_arrow_c; COOP_PS unsigned coop_p2_arrow_lv;
 static int coop_is_arrow(uint32_t w)
 {
-    uint32_t h = w >= 0x10000u && w < 0x84000000u && MEM32(w) == 0x174980u ? MEM32(w + 0x18) : 0, rec = h >= 0x10008u && h < 0x84000000u ? h - 8 : 0;
+    uint32_t h = w >= 0x10000u && w < 0x88000000u && MEM32(w) == 0x174980u ? MEM32(w + 0x18) : 0, rec = h >= 0x10008u && h < 0x88000000u ? h - 8 : 0;
     return rec && MEM32(rec + 0x40) == 0x4586A62Cu && MEM32(rec + 0x50) == 0x3B6EEB8Eu;
 }
 uint32_t coop_p2_arrow(void) { return coop_p2_arrow_lv == coop_level_n ? coop_p2_arrow_c : 0; }
@@ -13891,7 +14207,7 @@ uint32_t coop_p2_bow(void)
     uint32_t want = kind[MEM8(0x4AB69Du) < 5 ? MEM8(0x4AB69Du) : 0], sink = coop_p2_weapon_sink(), best = 0; int i, pass;
     if (coop_rng_lv != coop_level_n) return 0;
     for (pass = 0; pass < 3 && !best; pass++)
-        for (i = 0; i < coop_rng_n && !best; i++) { uint32_t o = coop_rng_orig[i], h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x84000000u ? MEM32(h - 8 + 0x40) : 0, c = coop_rng_copy[i];
+        for (i = 0; i < coop_rng_n && !best; i++) { uint32_t o = coop_rng_orig[i], h = o >= 0x10000u ? MEM32(o + 0x18) : 0, m = h >= 0x10008u && h < 0x88000000u ? MEM32(h - 8 + 0x40) : 0, c = coop_rng_copy[i];
             if (!c || (pass < 2 && c == sink)) continue;
             if (pass == 0 ? (want && m == want) : (m == 0x0834F2D4u || m == 0x36AC3F58u)) best = c; }
     for (i = 0; i < coop_rng_n && !best; i++) if (coop_rng_copy[i] && coop_rng_copy[i] != sink) best = coop_rng_copy[i];   /* (1.9.9: a copy of a melee weapon, coop_p2_ranged_build's fallback) */
@@ -13982,7 +14298,7 @@ uint32_t coop_build_weapon_ext(uint32_t child) { return coop_build_weapon(child)
 static uint32_t coop_oc_weapon(uint32_t wo, int ci)   /* a pool copy's own weapon: the original's record built again, renamed (coop_oc) */
 {
     uint32_t h = MEM32(wo + 0x18), rec = h - 8, key = 0, m, k, n, w, sp = esp, ra = eax, rc = ecx, rd = edx; int i;
-    if (h < 0x10008u || h >= 0x84000000u || !coop_oc_world) return 0;
+    if (h < 0x10008u || h >= 0x88000000u || !coop_oc_world) return 0;
     for (i = 0; i < coop_nreckey; i++) if (coop_reckey[i].rec == rec) { key = coop_reckey[i].key; break; }
     if (i == coop_nreckey) { tt_dbg("[COOPCLONE] no loader key for weapon record %08X\n", rec); return 0; }
     if (s_oc_on ? MEM32(s_oc_word) < 0x8000u : coop_arena_left() < 0x100000u) return 0;   /* (2.1: the level's memory kept for its own) */
@@ -14043,9 +14359,9 @@ static int vs_spot_ok(float x, float y, float z)
     { float need = vs_need_clear(); if (need > 0.0f && vs_clearance(x, y) < need) { if (getenv("TT_VS_SPOTLOG")) tt_dbg("[VSSPOT]   %.1f %.1f: open ground %.0f, under %.0f\n", x, y, vs_clearance(x, y), need); return 0; } }
     if (MEM32(0x1BB2A4u) == 0u && !getenv("TT_VS_DOOMANY") && y > -193.0f && y < -180.0f) return 0;   /* (1.9.9, Mount Doom: not the points at the lava's edge -- one put a hero into it, a playtest; the far side is in reach now, vs_doom_walk) */
     if (MEM32(0x1BB2A4u) == 3u && !getenv("TT_VS_BALINANY") && (z > 4.0f || y < -30.0f)) return 0;   /* (Balin's Tomb: the hall's floor only -- its spawner at the south end stands by the ledges, a playtest: "no one can spawn on the ledge/catwalk") */
-    if (w < 0x10000u || w >= 0x84000000u || (n = MEM32(w + 0x10)) == 0 || n > 64) return 1;
+    if (w < 0x10000u || w >= 0x88000000u || (n = MEM32(w + 0x10)) == 0 || n > 64) return 1;
     for (i = 0; i < n && !sec; i++) { uint32_t sc = MEM32(w + 0x100 + 4 * i) - 0x20; const char *nm;
-        if (sc < 0x10000u || sc >= 0x84000000u) continue; nm = (const char *)XBOX_PTR(sc + 0x20);
+        if (sc < 0x10000u || sc >= 0x88000000u) continue; nm = (const char *)XBOX_PTR(sc + 0x20);
         (void)nm; if (!(MEMF(sc + 0x30) <= MEMF(sc + 0x40))) continue;   /* (an empty box: a sector with nothing in it; "Default" holds Balin's Tomb's whole hall) */
         named++;
         if (x >= MEMF(sc + 0x30) - 2 && x <= MEMF(sc + 0x40) + 2 && y >= MEMF(sc + 0x34) - 2 && y <= MEMF(sc + 0x44) + 2 && z >= MEMF(sc + 0x38) - 4 && z <= MEMF(sc + 0x48) + 4) sec = 1; }
@@ -14070,7 +14386,7 @@ int tt_vs_random_spot(float *p, uint32_t seed)
 {
     static float cand[1024][3]; int i, n = 0;
     for (i = coop_reckey_lv0; i < coop_nreckey && n < 1024; i++) { uint32_t r = coop_reckey[i].rec; char nm[16]; int k; float x, y, z;
-        if (r < 0x10000u || r >= 0x84000000u) continue;
+        if (r < 0x10000u || r >= 0x88000000u) continue;
         for (k = 0; k < 15 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
         if (!vs_point_name(nm)) continue;
         x = MEMF(r + 0x28); y = MEMF(r + 0x2C); z = MEMF(r + 0x30);
@@ -14108,7 +14424,7 @@ int tt_vs_spot_cands(float (*c)[3], int max, int good)
 {
     int i, n = 0;
     for (i = coop_reckey_lv0; i < coop_nreckey && n < max; i++) { uint32_t r = coop_reckey[i].rec; char nm[16]; int k; float x, y, z;
-        if (r < 0x10000u || r >= 0x84000000u) continue;
+        if (r < 0x10000u || r >= 0x88000000u) continue;
         for (k = 0; k < 15 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
         if (!vs_point_name(nm)) continue;
         x = MEMF(r + 0x28); y = MEMF(r + 0x2C); z = MEMF(r + 0x30);
@@ -14140,7 +14456,7 @@ int tt_vs_spot_from(float x0, float y0, float lo, float want, float hi, float *p
 {
     int i, got = 0; float best = 1e30f;
     for (i = coop_reckey_lv0; i < coop_nreckey; i++) { uint32_t r = coop_reckey[i].rec; char nm[16]; int k; float x, y, z, d;
-        if (r < 0x10000u || r >= 0x84000000u) continue;
+        if (r < 0x10000u || r >= 0x88000000u) continue;
         for (k = 0; k < 15 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
         if (!vs_point_name(nm)) continue;
         x = MEMF(r + 0x28); y = MEMF(r + 0x2C); z = MEMF(r + 0x30);
@@ -14155,7 +14471,7 @@ void tt_recdump(const char *sub)
 {
     int i; uint32_t q;
     for (i = 0; i < coop_nreckey; i++) { uint32_t r = coop_reckey[i].rec; char nm[40]; int k;
-        if (r < 0x10000u || r >= 0x84000000u) continue; for (k = 0; k < 39 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
+        if (r < 0x10000u || r >= 0x88000000u) continue; for (k = 0; k < 39 && MEM8(r + 8 + k) >= 32 && MEM8(r + 8 + k) < 127; k++) nm[k] = (char)MEM8(r + 8 + k); nm[k] = 0;
         if (!strstr(nm, sub)) continue;
         for (q = 0; q < 0x100; q += 16) tt_dbg("[REC] %s +%02X %08X %08X %08X %08X | %.2f %.2f %.2f %.2f\n", nm, q, MEM32(r + q), MEM32(r + q + 4), MEM32(r + q + 8), MEM32(r + q + 12), MEMF(r + q), MEMF(r + q + 4), MEMF(r + q + 8), MEMF(r + q + 12)); }
     tt_dbg("[REC] %d records seen\n", coop_nreckey);
@@ -14351,7 +14667,7 @@ extern void sub_00080E50_gen(void); void sub_00080E50(void) { int sw = tt_coop_e
 extern void sub_000813F0_gen(void); void sub_000813F0(void) { int sw = tt_coop_enter(ecx, 0x000813F0u); tt_coop_p1_pre(ecx, 0x000813F0u); if (coop_probe_on()) coop_count(15); sub_000813F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00081440_gen(void); void sub_00081440(void) { int sw = tt_coop_enter(ecx, 0x00081440u); tt_coop_p1_pre(ecx, 0x00081440u); if (coop_probe_on()) coop_count(16); sub_00081440_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 /* (2.0.2) an object whose class table is gone (0, or not in the game's read-only data): a freed or never-made one */
-static int tt_obj_live(uint32_t o) { uint32_t vt; if (o < 0x10000u || o >= 0x84000000u) return 0; vt = MEM32(o); return vt >= 0x12000u && vt < 0x008E4B20u && MEM32(vt) >= 0x12000u && MEM32(vt) < 0x0016FFA0u; }   /* (in the image; its first method in the code) */
+static int tt_obj_live(uint32_t o) { uint32_t vt; if (o < 0x10000u || o >= 0x88000000u) return 0; vt = MEM32(o); return vt >= 0x12000u && vt < 0x008E4B20u && MEM32(vt) >= 0x12000u && MEM32(vt) < 0x0016FFA0u; }   /* (in the image; its first method in the code) */
 /* (2.0.2) 0x869E0, a character's show/hide passed to what it carries (the list at +0x3D0: up to 32 slots from +0x74, the
  * count at +0x174, each told through its class's +0x30). Asked of a character already gone, or with a carried thing
  * gone, it called a null method for every slot and then read past the list -- a crash in a four-player co-op game at
@@ -14360,10 +14676,10 @@ extern void sub_000869E0_gen(void);
 void sub_000869E0(void)
 {
     uint32_t o = ecx, l, n, i; int ok = tt_obj_live(o);
-    if (ok) { l = MEM32(o + 0x3D0u); if (l < 0x10000u || l >= 0x84000000u) ok = 0; else { n = MEM32(l + 0x174u); if (n > 32u) ok = 0;
+    if (ok) { l = MEM32(o + 0x3D0u); if (l < 0x10000u || l >= 0x88000000u) ok = 0; else { n = MEM32(l + 0x174u); if (n > 32u) ok = 0;
         else for (i = 0; i < n && ok; i++) { uint32_t e = MEM32(l + 0x74u + 8u * i); if (!tt_obj_live(e) || MEM32(MEM32(e) + 0x30u) < 0x12000u || MEM32(MEM32(e) + 0x30u) >= 0x0016FFA0u) ok = 0; } } }
     if (ok || getenv("TT_ATTACHNOCHECK")) { sub_000869E0_gen(); return; }
-    { static int nl; if (nl++ < 8) tt_dbg("[ATTACH] show/hide of %08X (class %08X) left out: it or what it carries is gone\n", o, o >= 0x10000u && o < 0x84000000u ? MEM32(o) : 0); }
+    { static int nl; if (nl++ < 8) tt_dbg("[ATTACH] show/hide of %08X (class %08X) left out: it or what it carries is gone\n", o, o >= 0x10000u && o < 0x88000000u ? MEM32(o) : 0); }
     esp += 8;   /* (thiscall, one argument: ret 4) */
 }
 extern void sub_000815F0_gen(void); void sub_000815F0(void) { if (!tt_obj_live(ecx) && !getenv("TT_ATTACHNOCHECK")) { static int nl; if (nl++ < 8) tt_dbg("[ATTACH] show/hide (0x815F0) of a character already gone (%08X): left out\n", ecx); esp += 8; return; } int sw = tt_coop_enter(ecx, 0x000815F0u); tt_coop_p1_pre(ecx, 0x000815F0u); if (coop_probe_on()) coop_count(17); sub_000815F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
@@ -14454,7 +14770,7 @@ static int coop_fire_skip(uint32_t self)   /* 1: a fire box's hurt on a player 2
     for (k = 0; k < 0x80 && !from; k += 4) if (MEM32(esp + k) == 0x000B8A78u) from = 1;   /* (the box script's hurt) */
     if (!from) return 0;
     if (coop_dmgbox_lv != coop_level_n) return 1;
-    for (i = 0; i < coop_ndmgbox[pn]; i++) { uint32_t b = coop_dmgbox[pn][i].box; if (b >= 0x10000u && b < 0x84000000u && coop_d3(b, self) <= coop_dmgbox[pn][i].d + 4.0f) return 0; }
+    for (i = 0; i < coop_ndmgbox[pn]; i++) { uint32_t b = coop_dmgbox[pn][i].box; if (b >= 0x10000u && b < 0x88000000u && coop_d3(b, self) <= coop_dmgbox[pn][i].d + 4.0f) return 0; }
     { static unsigned n; if (n++ < 10 || (n & 1023) == 0) tt_dbg("[COOPFIRE] player %d out of the fire: its hurt (%d) not taken\n", pn, (int32_t)MEM32(esp + 4)); }
     return 1;
 }
@@ -14463,7 +14779,7 @@ extern void sub_00084220_gen(void); void sub_00084220(void)
     uint32_t self = ecx, p1 = MEM32(0x43B15Cu); int mode = 0; int32_t h0 = 0, mx = 0;
     if (coop_fire_skip(self)) { eax = 0; esp += 12; return; }   /* (thiscall, ret 8) */
     int sw = tt_coop_enter(ecx, 0x00084220u);
-    if (getenv("TT_COOP4LOG") && self >= 0x10000u && self < 0x84000000u && tt_coop_player_of(self) >= 2) { COOP_PS int n; if (n++ < 40) tt_dbg("[COOP4DMG] 84220 on P%d (slot %d, coop_p2 %08X, sw %d, depth %d) hp %d args %08X %08X\n", tt_coop_player_of(self), coop_slot_cur, coop_p2, sw, coop_depth, (int32_t)MEM32(self + 0x2FC), MEM32(esp + 4), MEM32(esp + 8)); }
+    if (getenv("TT_COOP4LOG") && self >= 0x10000u && self < 0x88000000u && tt_coop_player_of(self) >= 2) { COOP_PS int n; if (n++ < 40) tt_dbg("[COOP4DMG] 84220 on P%d (slot %d, coop_p2 %08X, sw %d, depth %d) hp %d args %08X %08X\n", tt_coop_player_of(self), coop_slot_cur, coop_p2, sw, coop_depth, (int32_t)MEM32(self + 0x2FC), MEM32(esp + 4), MEM32(esp + 8)); }
     if (self >= 0x10000u && tt_impossible() && (self == p1 || (coop_p2 && self == coop_p2))) {
         extern int coop_hero_down(int);
         int guarded = coop_mode() == 3 && coop_p2 && (self == coop_p2 || (self == p1 && !coop_hero_down(1)));   /* (the co-op's guard takes it: imp_rule there) */
@@ -14507,7 +14823,42 @@ extern void sub_00084220_gen(void); void sub_00084220(void)
     if (sw) tt_coop_leave();
 }
 extern void sub_000843F0_gen(void); void sub_000843F0(void) { int sw = tt_coop_enter(ecx, 0x000843F0u); tt_coop_p1_pre(ecx, 0x000843F0u); if (coop_probe_on()) coop_count(26); sub_000843F0_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
-extern void sub_00085340_gen(void); void sub_00085340(void) { if (getenv("TT_P1MSGLOG") && ecx >= 0x10000u && ecx == coop_first_char) { static int n; if (n++ < 400) tt_dbg("[P1MSG] t %u msg %X from %06X\n", coop_now(), MEM16(esp + 4), MEM32(esp)); } if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { uint32_t m = MEM16(esp + 4), d = MEM32(esp + 8); if (1) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp) ^ (m << 24); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[POSMSG] msg %X data %08X pos %.1f %.1f %.1f; senders:", m, d, MEMF(d + 0x18), MEMF(d + 0x1C), MEMF(d + 0x20)); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg(" | stack %08X %08X %08X %08X %08X %08X\n", MEM32(esp + 12), MEM32(esp + 16), MEM32(esp + 20), MEM32(esp + 24), MEM32(esp + 28), MEM32(esp + 32)); } } } int sw = tt_coop_enter(ecx, 0x00085340u); tt_coop_p1_pre(ecx, 0x00085340u); if (coop_probe_on()) coop_count(27); sub_00085340_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
+extern void sub_00085340_gen(void); void sub_00085340(void) { if (getenv("TT_P1MSGLOG") && ecx >= 0x10000u && ecx == coop_first_char) { static int n; if (n++ < 400) tt_dbg("[P1MSG] t %u msg %X from %06X\n", coop_now(), MEM16(esp + 4), MEM32(esp)); } if (getenv("TT_SETPOSLOG") && ecx == coop_first_char && coop_first_char >= 0x10000u) { uint32_t m = MEM16(esp + 4), d = MEM32(esp + 8); if (1) { static uint32_t ras[8], cnt[8], tl; int i; uint32_t ra = MEM32(esp) ^ (m << 24); for (i = 0; i < 8 && ras[i] && ras[i] != ra; i++) ; if (i < 8) { ras[i] = ra; cnt[i]++; } if (coop_now() - tl > 3000u) { tl = coop_now(); tt_dbg("[POSMSG] msg %X data %08X pos %.1f %.1f %.1f; senders:", m, d, MEMF(d + 0x18), MEMF(d + 0x1C), MEMF(d + 0x20)); for (i = 0; i < 8 && ras[i]; i++) tt_dbg(" %06X x%u", ras[i], cnt[i]); tt_dbg(" | stack %08X %08X %08X %08X %08X %08X\n", MEM32(esp + 12), MEM32(esp + 16), MEM32(esp + 20), MEM32(esp + 24), MEM32(esp + 28), MEM32(esp + 32)); } } } uint32_t me = ecx, msg = MEM16(esp + 4), from = MEM32(esp), st0 = 0, keep = 0, sv[20]; int32_t hp0 = 0; int k;
+    {   /* (2.0.3) Versus: a hero standing or walking (1, 10) that a message moves while he stays standing or walking, his health the
+         * same: the move undone. A Troll Battle's player 1 walked in place by the other troll for many seconds, his own step (0x843F0)
+         * taking him on and a message here taking him back every frame (the log's "moved by 00085340", 100+ a second), his attacks
+         * still his (a playtest, twice). The message and its sender logged ([VSPUSH]). TT_VS_KEEPPUSH: as before */
+        extern int tt_vs_on(void), tt_coop_player_of(uint32_t a);
+        if (me >= 0x10000u && vs_state == 0 && tt_vs_on() && (me == coop_first_char || me == coop_p2 || tt_coop_player_of(me) >= 1) && getenv("TT_VS_STUCKFIX")) {
+            st0 = MEM32(me + 0x408);
+            if (!vs_pl_hurt_state(st0)) { static const uint16_t o[15] = { 0xF0, 0xF4, 0xF8, 0x90, 0x94, 0x98, 0x130, 0x134, 0x138, 0x140, 0x144, 0x148, 0x628, 0x62C, 0x630 };
+                keep = 1; hp0 = (int32_t)MEM32(me + 0x2FC); for (k = 0; k < 15; k++) sv[k] = MEM32(me + o[k]);
+                { uint32_t b = MEM32(me + 0x494); if (b >= 0x80000000u && b < 0x88000000u) for (k = 0; k < 3; k++) sv[15 + k] = MEM32(b + 0xE8 + 4 * k); } }
+        }
+    }
+    int sw = tt_coop_enter(ecx, 0x00085340u); tt_coop_p1_pre(ecx, 0x00085340u); if (coop_probe_on()) coop_count(27); sub_00085340_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave();
+    if (keep) { uint32_t st1 = MEM32(me + 0x408); float dx, dy;
+        memcpy(&dx, &sv[0], 4); memcpy(&dy, &sv[1], 4); dx = MEMF(me + 0xF0) - dx; dy = MEMF(me + 0xF4) - dy;
+        static uint32_t win_t[5], win_n[5]; int w = me == coop_first_char ? 0 : me == coop_p2 ? 1 : tt_coop_player_of(me) >= 1 && tt_coop_player_of(me) <= 4 ? tt_coop_player_of(me) : 4;
+        int unhurt = (int32_t)MEM32(me + 0x2FC) == hp0 && !vs_pl_hurt_state(st1) && dx * dx + dy * dy > 1e-6f && dx * dx + dy * dy < 0.09f;   /* (small: the loop's were
+            * hundredths of a unit; a message that carries him half a unit or more a frame is some move of the game's own) */
+        int moved = unhurt && (st0 == 1u || st0 == 10u) && (st1 == 1u || st1 == 10u);
+        if (unhurt) vs_pl_note(me);
+        if (unhurt && getenv("TT_VS_PLTEST")) { static int n; if (n++ < 80) tt_dbg("[VSPLMSG] P%d msg %X from %06X moved %.3f state %u->%u other %.1f away\n", tt_coop_player_of(me), msg, from, sqrtf(dx * dx + dy * dy), st0, st1, me == coop_first_char && coop_p2 >= 0x10000u ? sqrtf((MEMF(coop_p2 + 0xF0) - MEMF(me + 0xF0)) * (MEMF(coop_p2 + 0xF0) - MEMF(me + 0xF0)) + (MEMF(coop_p2 + 0xF4) - MEMF(me + 0xF4)) * (MEMF(coop_p2 + 0xF4) - MEMF(me + 0xF4))) : -1.0f); }
+        if (moved) { uint32_t now = coop_now(); if (now - win_t[w] > 1000u) { win_t[w] = now; win_n[w] = 0; } win_n[w]++; }
+        (void)moved; if (unhurt && vs_pl_caught(me)) {   /* (only while caught in the loop, vs_pl_caught -- in any state but a blow's or a fall's: the
+            * second playtest's troll was in the states after a knock-down, 20 and 16. 2.0.3's first take, 8 a second while standing or
+            * walking, depended on the frame rate) */   /* (only a run of them -- 8 or more in a second, as the stuck troll's 100 a second: a single one, such as
+            * the round's start, goes through) */
+            static const uint16_t o[15] = { 0xF0, 0xF4, 0xF8, 0x90, 0x94, 0x98, 0x130, 0x134, 0x138, 0x140, 0x144, 0x148, 0x628, 0x62C, 0x630 };
+            for (k = 0; k < 15; k++) MEM32(me + o[k]) = sv[k];
+            { uint32_t b = MEM32(me + 0x494); if (b >= 0x80000000u && b < 0x88000000u) for (k = 0; k < 3; k++) MEM32(b + 0xE8 + 4 * k) = sv[15 + k]; }
+            { static uint32_t seen[16]; static int ns; int i, nl; uint32_t key = (msg << 24) ^ from; for (i = 0; i < ns && seen[i] != key; i++) ;
+              if (i == ns && ns < 16) { seen[ns++] = key; nl = 1; } else nl = 0;
+              if (nl) tt_dbg("[VSPUSH] P%d moved %.2f by message %X from %06X in state %u: undone\n", tt_coop_player_of(me) ? tt_coop_player_of(me) : 1, sqrtf(dx * dx + dy * dy), msg, from, st0); }
+        }
+    }
+}
 extern void sub_00086120_gen(void); void sub_00086120(void) { int sw = tt_coop_enter(ecx, 0x00086120u); tt_coop_p1_pre(ecx, 0x00086120u); if (coop_probe_on()) coop_count(28); sub_00086120_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086140_gen(void); void sub_00086140(void) { int sw = tt_coop_enter(ecx, 0x00086140u); tt_coop_p1_pre(ecx, 0x00086140u); if (coop_probe_on()) coop_count(29); sub_00086140_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
 extern void sub_00086490_gen(void); void sub_00086490(void) { int sw = tt_coop_enter(ecx, 0x00086490u); tt_coop_p1_pre(ecx, 0x00086490u); if (coop_probe_on()) coop_count(30); sub_00086490_gen(); tt_coop_p1_post(); if (sw) tt_coop_leave(); }
@@ -14573,26 +14924,37 @@ void sub_000A9D80(void)   /* (research) @GetWeaponDamageVsProps: the object its 
 {
     unsigned n0 = coop_lkn; uint32_t p0 = MEM32(0x43B15Cu);
     sub_000A9D80_gen();
-    if (coop_mode() == 3) { static int n; uint32_t w = coop_lkn > n0 ? coop_lk[n0 & 63].obj : 0; if (n++ < 60) tt_dbg("[PROPWPN] @GetWeaponDamageVsProps: '%s' id %X, player %08X\n", w >= 0x10000u && w < 0x84000000u ? coop_nm(w) : "-", w >= 0x10000u && w < 0x84000000u ? MEM32(w + 0x2F4) : 0, p0); }
+    if (coop_mode() == 3) { static int n; uint32_t w = coop_lkn > n0 ? coop_lk[n0 & 63].obj : 0; if (n++ < 60) tt_dbg("[PROPWPN] @GetWeaponDamageVsProps: '%s' id %X, player %08X\n", w >= 0x10000u && w < 0x88000000u ? coop_nm(w) : "-", w >= 0x10000u && w < 0x88000000u ? MEM32(w + 0x2F4) : 0, p0); }
 }
 extern void sub_00091AC0_gen(void);
 uint32_t coop_prop_hit_by, coop_prop_hit_t;   /* the hero whose hit on a prop came last, and when (sub_000B2930) */
 void sub_00091AC0(void)
 {
     uint32_t r = MEM32(esp + 8); int slot_prev = -1, sw, sw2 = 0;
-    if ((MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && r >= 0x10000u && r < 0x84000000u && !getenv("TT_COOP_NOPXPROP"))
+    if ((MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && r >= 0x10000u && r < 0x88000000u && !getenv("TT_COOP_NOPXPROP"))
         slot_prev = coop_slot_for_src(MEM32(r + 0x1C));   /* (2.0.1) a hit by player 3 or 4: his slot in place, so the rest takes it as player 2's is
         * (Weathertop's fire lit only players 1's and 2's torches: players 3 and 4 could not hurt the Nazgul, a playtest) */
+    if (getenv("TT_TEST_PXBOMB") && (MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && r >= 0x10000u && r < 0x88000000u && MEM32(r + 0x1C) == coop_first_char && tt_vs_is_bomb(ecx) && slot_prev < 0) {   /* (testing: player 1's hit on an explosive prop as if player 3 (0) or 4 (1) had made it) */
+        int k = atoi(getenv("TT_TEST_PXBOMB")); slot_prev = coop_slot_cur; coop_slot_set(k); MEM32(r + 0x1C) = coop_p2; tt_dbg("[TEST] player 1's hit on '%s' taken as player %d's\n", coop_nm(ecx), k + 3); }
+    if (slot_prev >= 0 && slot_prev != coop_slot_cur && tt_vs_is_bomb(ecx) && !tt_vs_on() && MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x88000000u
+        && !strncmp(coop_nm(MEM32(r + 4)), "dynamicProjectile", 17) && !getenv("TT_COOP_PXBOMBCTX")) {
+        /* (2.0.3) player 3's or 4's thrown weapon setting off an explosive prop: the blast's script in player 1's context, not his. A playtest:
+         * four players on the Westfold, Boromir player 4 -- his thrown weapon blew up a stack of bombs with its script in his context, and
+         * from that frame on the picture broke up (the GPU's commands lost their place every frame: a command list the game jumps to each
+         * frame was overwritten); with Gandalf as player 4 it never happened. TT_COOP_PXBOMBCTX: as before */
+        { COOP_PS int n; if (n++ < 6) tt_dbg("[COOPPROP] player %d's thrown '%s' on '%s': the blast in player 1's context\n", coop_slot_cur + 3, coop_nm(MEM32(r + 4)), coop_nm(ecx)); }
+        coop_slot_set(slot_prev); slot_prev = -1;
+    }
     sw = tt_coop_enter_weapon2(ecx, 0x00091AC0u);
-    if ((MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && r >= 0x10000u && r < 0x84000000u && MEM32(r + 0x1C) >= 0x10000u
+    if ((MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && r >= 0x10000u && r < 0x88000000u && MEM32(r + 0x1C) >= 0x10000u
         && (MEM32(r + 0x1C) == coop_p2 || MEM32(r + 0x1C) == coop_first_char)) { coop_prop_hit_by = MEM32(r + 0x1C); coop_prop_hit_t = coop_now(); }
-    if (!sw && (MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && coop_p2 >= 0x10000u && r >= 0x10000u && r < 0x84000000u && MEM32(r + 0x1C) == coop_p2
+    if (!sw && (MEM32(esp + 4) & 0xFFFFu) == 3u && coop_mode() == 3 && coop_p2 >= 0x10000u && r >= 0x10000u && r < 0x88000000u && MEM32(r + 0x1C) == coop_p2
         && MEM32(0x43B15Cu) != coop_p2 && !tt_vs_on() && !getenv("TT_COOP_NOP2PROPCTX")) {
         sw2 = tt_coop_enter_ctx();
         { COOP_PS unsigned n; if (sw2 && n++ < 6) tt_dbg("[COOPPROP] player %d's hit on '%s' with '%s': its script in his context\n", coop_slot_cur + 2, coop_nm(ecx), coop_nm(MEM32(r + 4))); }
     }
     {   /* the record's weapon (+4): his copy ('weaponObj8b') as player 1's own ('weaponObj8') for the call, as the script may name it */
-        uint32_t wc = sw2 && !getenv("TT_COOP_NOP2PROPWPN") ? MEM32(r + 4) : 0, wo = 0; const char *cn = wc >= 0x10000u && wc < 0x84000000u && MEM32(wc) == 0x174980u ? coop_nm(wc) : NULL;
+        uint32_t wc = sw2 && !getenv("TT_COOP_NOP2PROPWPN") ? MEM32(r + 4) : 0, wo = 0; const char *cn = wc >= 0x10000u && wc < 0x88000000u && MEM32(wc) == 0x174980u ? coop_nm(wc) : NULL;
         size_t ln = cn ? strlen(cn) : 0;
         if (ln > 1 && cn[ln - 1] >= 'b' && cn[ln - 1] <= 'z') { extern uint32_t coop_wobjs[]; extern int coop_nwobjs; int i;
             for (i = 0; i < coop_nwobjs; i++) { const char *on = coop_nm(coop_wobjs[i]); if (MEM32(coop_wobjs[i] + 0x11C) == coop_first_char && strlen(on) == ln - 1 && !strncmp(on, cn, ln - 1)) { wo = coop_wobjs[i]; break; } } }
@@ -14645,7 +15007,7 @@ extern void sub_00092000_gen(void); void sub_00092000(void)
     if (MEM32(esp) == 0x00090503u && MEM32(esp + 8) == 0x10u && !fire_due(ecx)) { esp += 4 + 8; eax = 0; return; }
     uint32_t self = ecx, gra = MEM32(esp), g1 = MEM32(esp + 4), g2 = MEM32(esp + 8), g3 = MEM32(esp + 12); int32_t hb = self >= 0x10000u ? (int32_t)MEM32(self + 0x2FC) : 0;
     int sw = tt_coop_enter_weapon2(ecx, 0x00092000u); sub_00092000_gen(); tt_coop_weapon_post(0x00092000u); if (sw) tt_coop_leave();
-    if (coop_mode() == 3 && self >= 0x10000u && self < 0x84000000u && MEM32(self) == 0x174980u && (MEM32(self + 0x114) == 7 || getenv("TT_COOP_SHIELDLOG"))) { static int n; if (n++ < 400)
+    if (coop_mode() == 3 && self >= 0x10000u && self < 0x88000000u && MEM32(self) == 0x174980u && (MEM32(self + 0x114) == 7 || getenv("TT_COOP_SHIELDLOG"))) { static int n; if (n++ < 400)
         tt_dbg("[PROP92] t %u %08X '%s' ra %06X args %08X %08X %08X: hp %d -> %d, +5EC %08X +110 %08X, player %08X\n", coop_now(), self, coop_nm(self), gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC), MEM32(self + 0x5EC), MEM32(self + 0x110), MEM32(0x43B15Cu)); }
     {   static int gl = -1; if (gl < 0) gl = getenv("TT_GATELOG") != NULL;
         if (gl && self >= 0x10000u && self == MEM32(0x4ACBACu) && hb != (int32_t)MEM32(self + 0x2FC)) tt_dbg("[GATEHIT2] t %u ra %08X args %08X %08X %08X: %d -> %d\n", tt_game_ms, gra, g1, g2, g3, hb, (int32_t)MEM32(self + 0x2FC)); }
@@ -14719,8 +15081,8 @@ void sub_00085FB0(void)
     if (getenv("TT_COOP_TAKELOG") && w >= 0x10000u && MEM32(w) == 0x174980u && (ecx == coop_p2 || ecx == coop_first_char)) {   /* (research) every take: who, what, its model and id */
         COOP_PS int n; uint32_t h = MEM32(w + 0x18), m = MEM32(w + 0x494), rec = h >= 0x10008u ? h - 8 : 0;
         if (n++ < (getenv("TT_COOP_TAKELOGN") ? atoi(getenv("TT_COOP_TAKELOGN")) : 60)) tt_dbg("[TAKE] %s takes %08X '%s' arg2 %08X | model res %08X key %08X | record model %08X texture %08X | id +2F4 %X\n",
-            ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
-            m, m >= 0x10000u && m < 0x84000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
+            ecx == coop_p2 ? "P2" : ecx == coop_first_char ? "P1" : "other", w, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp + 8),
+            m, m >= 0x10000u && m < 0x88000000u ? MEM32(m + 4) : 0, rec ? MEM32(rec + 0x40) : 0, rec ? MEM32(rec + 0x50) : 0, MEM32(w + 0x2F4));
     }
     {   /* (1.9.9) player 2's bow and arrow where player 1 has none: player 1 a guest who shoots from an empty hand or a staff
          * (Frodo, Gandalf: his bow-hand weapon the empty prop 6E0B0E00, his "arrow" -- id 9 -- his blade), whose moves player 2
@@ -14731,14 +15093,14 @@ void sub_00085FB0(void)
         if (bo_lv != coop_level_n) { bo_lv = coop_level_n; bow_out = 0; }
         if (coop_p2 >= 0x10000u && ecx == coop_p2 && !nested && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2BOWSUB")) {
             extern uint32_t coop_p2_bow(void); extern uint32_t coop_p2_arrow(void);
-            uint32_t hh = MEM32(w + 0x18), mm = hh >= 0x10008u && hh < 0x84000000u ? MEM32(hh - 8 + 0x40) : 0, sl = MEM32(esp + 8), b = coop_p2_bow(), a = coop_p2_arrow(); int own = 0, k;
+            uint32_t hh = MEM32(w + 0x18), mm = hh >= 0x10008u && hh < 0x88000000u ? MEM32(hh - 8 + 0x40) : 0, sl = MEM32(esp + 8), b = coop_p2_bow(), a = coop_p2_arrow(); int own = 0, k;
             for (k = 0; k < coop_np2w; k++) if (coop_p2w[k] == w) own = 1;
             if (!own && mm == EMPTY_PROP_KEY_M && b) { COOP_PS int n; if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 takes his bow %08X for player 1's empty one %08X (slot %X)\n", b, w, sl); MEM32(esp + 4) = b; w = b; bow_out = 1; }
             else if (!own && MEM32(w + 0x2F4) == 9u && a && w != a && b) { COOP_PS int n; if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 takes his arrow %08X for player 1's %08X (slot %X)\n", a, w, sl); MEM32(esp + 4) = a; w = a; }
             else if (own && bow_out && sl < 8u && b && w != b && w != a) {   /* the aim over: his melee back in his hand, the bow onto his back */
                 uint32_t s1 = 0, args[2]; int k2;
                 bow_out = 0;
-                for (k2 = 0; k2 < coop_np2w && !s1; k2++) { uint32_t q = coop_p2w[k2], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (k2 = 0; k2 < coop_np2w && !s1; k2++) { uint32_t q = coop_p2w[k2], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     if (coop_p2w_slot[k2] == 1 && q != w && !coop_rng_key(qm) && qm != 0x4586A62Cu) s1 = q; }
                 coop_take_nested = 1;
                 args[0] = b; args[1] = 0xAu; tt_gcall(0x00085FB0u, coop_p2, 2, args);
@@ -14751,7 +15113,7 @@ void sub_00085FB0(void)
     {   /* the bow copy the twin's set-up attaches (@AttachToBone replayed: coop_in_attach) is his bow: only a weapon attached
          * that way is drawn right in his hand (frames at the Gates of Moria: that copy upright in player 2 Legolas' bow hand
          * as player 1 Legolas', the other copies sideways or not at all -- a playtest: he shot with his blade) */
-        uint32_t hh = w >= 0x10000u ? MEM32(w + 0x18) : 0, mm = hh >= 0x10008u && hh < 0x84000000u ? MEM32(hh - 8 + 0x40) : 0;
+        uint32_t hh = w >= 0x10000u ? MEM32(w + 0x18) : 0, mm = hh >= 0x10008u && hh < 0x88000000u ? MEM32(hh - 8 + 0x40) : 0;
         if (coop_in_attach && coop_twin >= 0x10000u && ecx == coop_twin && MEM32(w) == 0x174980u && coop_rng_key(mm)) {
             extern void coop_p2_bow_attached(uint32_t w); coop_p2_bow_attached(w); }
     }
@@ -14767,7 +15129,7 @@ void sub_00085FB0(void)
         if (coop_p2 >= 0x10000u && ecx == coop_p2 && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8)
             && w >= 0x10000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_NOP2SLOTPICK") && !nested) {
             extern const char *tt_coop_p2_char_now; extern uint32_t coop_p2_bow(void); extern uint32_t coop_p2_arrow(void); extern uint32_t coop_p2_arrow_for(uint32_t w);
-            int k; uint32_t pick = 0, wh = MEM32(w + 0x18), wm = wh >= 0x10008u && wh < 0x84000000u ? MEM32(wh - 8 + 0x40) : 0;
+            int k; uint32_t pick = 0, wh = MEM32(w + 0x18), wm = wh >= 0x10008u && wh < 0x88000000u ? MEM32(wh - 8 + 0x40) : 0;
             int wr = coop_rng_key(wm);
             if (tt_coop_p2_char_now && !strcmp(tt_coop_p2_char_now, "legolas") && !getenv("TT_COOP_NOP2DRAW")) {
                 /* player 2 Legolas, as player 1 Legolas (his takes at the Gates of Moria): the draw puts the knives into 0xA, the bow
@@ -14779,7 +15141,7 @@ void sub_00085FB0(void)
                  * into 0xA. TT_COOP_NOP2DRAW: as before */
                 uint32_t bow = coop_p2_bow();
                 if (sl == 0xAu) { int want = stow_n++ & 1;
-                    for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                    for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                         if (!coop_rng_key(qm) && coop_p2w_slot[k] == want) pick = q; } }
                 else { stow_n = 0;
                     if (sl == 0u && (coop_p2_arrow_for(w) || w == coop_p2_arrow())) {
@@ -14792,7 +15154,7 @@ void sub_00085FB0(void)
             if (!pick && sl < 8u && coop_p2_arrow() && (coop_p2_arrow_for(w) || w == coop_p2_arrow())) pick = coop_p2_arrow();   /* (the arrow: his copy -- player 2
                 * Aragorn's draw had his sword in place of it, no arrow in his hand: a playtest) */
             if (sl < 8u && !pick)   /* slots 0-3: his own melee weapon for that slot (putting the bow away fills 0, 1 and 2) */
-                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     int ranged = coop_rng_key(qm);
                     if (!ranged && (uint32_t)coop_p2w_slot[k] == sl) pick = q; }
             if (!pick && (sl >= 8u || wr)) {   /* (never the sink, coop_p2_weapon_sink: a copy nobody draws; the P2 Bot's moves had made
@@ -14803,10 +15165,10 @@ void sub_00085FB0(void)
                                                  * he already holds (owner +0x11C), so the one on his back goes to his hand (a playtest
                                                  * from the level's start: one stayed on his back while another copy went to his hand,
                                                  * and he shot with his blade); none held: the one asked for if it is his, else his first */
-                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     if (coop_rng_key(qm) && MEM32(q + 0x11C) == coop_p2 && (q != sink || q == coop_p2_bow())) pick = q; }
                 for (k = 0; k < coop_np2w && !pick && wr && w != sink; k++) if (coop_p2w[k] == w) pick = w;
-                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x84000000u ? MEM32(qh - 8 + 0x40) : 0;
+                for (k = 0; k < coop_np2w && !pick; k++) { uint32_t q = coop_p2w[k], qh = MEM32(q + 0x18), qm = qh >= 0x10008u && qh < 0x88000000u ? MEM32(qh - 8 + 0x40) : 0;
                     if (coop_rng_key(qm) && q != sink) pick = q; }
             }
             if (pick && pick != w) {
@@ -14822,7 +15184,7 @@ void sub_00085FB0(void)
         COOP_PS uint32_t first; COOP_PS unsigned lv; extern const char *tt_coop_p2_char_now;
         uint32_t h = w >= 0x10000u ? MEM32(w + 0x18) : 0;
         if (lv != coop_level_n) { lv = coop_level_n; first = 0; }
-        if (((coop_p2 >= 0x10000u && ecx == coop_p2) || (coop_twin >= 0x10000u && ecx == coop_twin && coop_mode() == 3)) && h >= 0x10008u && h < 0x84000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {   /* (the twin too: his set-up, before the take-over, puts one on his back) */
+        if (((coop_p2 >= 0x10000u && ecx == coop_p2) || (coop_twin >= 0x10000u && ecx == coop_twin && coop_mode() == 3)) && h >= 0x10008u && h < 0x88000000u && MEM32(w) == 0x174980u && !getenv("TT_COOP_P2ALLBOWS")) {   /* (the twin too: his set-up, before the take-over, puts one on his back) */
             uint32_t m = MEM32(h - 8 + 0x40);
             if (coop_rng_key(m)) {   /* (Legolas' bow, Aragorn's bow, Gimli's throwing axe: a ranged copy) */
                 if (!first) { extern uint32_t coop_p2_bow(void); first = coop_p2_bow(); if (!first) first = w; }   /* (coop_p2_bow: the copy drawn right; the same one on his back and in his hand) */
@@ -14838,7 +15200,7 @@ void sub_00085FB0(void)
         }
         if (!mine) {
             COOP_PS int n; uint32_t h = MEM32(w + 0x18);
-            if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 doesn't take %08X '%s' (not his)\n", w, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?");
+            if (n++ < 20) tt_dbg("[COOPWEAPON] player 2 doesn't take %08X '%s' (not his)\n", w, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?");
             eax = 0; esp += 12; return;   /* (thiscall, two arguments: ret 8) */
         }
     }
@@ -14853,7 +15215,7 @@ void sub_00085FB0(void)
                 if (res < 0x10000u) continue;
                 MEM32(tmp) = sl2; args[0] = sl2; args[1] = tmp; t = tt_gcall(0x000282E0u, res, 2, args);
                 tt_dbg("[TAG] slot %X %s (type %u) inst %08X res %08X -> tag %08X (out %08X):", sl2, nm[i], MEM32(who[i] + 0x2F0), inst, res, t, MEM32(tmp));
-                for (q = 0; q < 0x50 && t >= 0x10000u && t < 0x84000000u; q += 4) tt_dbg(" %08X", MEM32(t + q));
+                for (q = 0; q < 0x50 && t >= 0x10000u && t < 0x88000000u; q += 4) tt_dbg(" %08X", MEM32(t + q));
                 tt_dbg("\n"); } } }
     {   uint32_t fw = MEM32(esp + 4), fsl = MEM32(esp + 8); int mine = ecx == coop_p2 && coop_p2_draw_on();
         if (ecx == coop_p2 && coop_p2 >= 0x10000u && coop_first_char >= 0x10000u && MEM32(coop_p2 + 0x3F8) != MEM32(coop_first_char + 0x3F8) && fsl < 8u) { extern void coop_p2_show_hands(uint32_t only); coop_p2_show_hands(fw); }
@@ -14868,7 +15230,7 @@ void sub_00085FB0(void)
 extern void sub_00097A10_gen(void); void sub_00097A10(void) {
     if (getenv("TT_COOP_WPNSCAN") && coop_p2 >= 0x10000u && MEM32(esp + 4) == coop_p2) {   /* (research) player 2 made the owner of a weapon that isn't his copy */
         int i, mine = 0; for (i = 0; i < coop_nwpn; i++) if (coop_wpn_copy[i] == ecx) mine = 1;
-        if (!mine) { COOP_PS int n; uint32_t h = MEM32(ecx + 0x18); if (n++ < 40) tt_dbg("[WPNOWN] %08X '%s' -> owner P2, from %08X %08X %08X %08X (stack)\n", ecx, h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp), MEM32(esp + 8), MEM32(esp + 12), MEM32(esp + 16)); } }
+        if (!mine) { COOP_PS int n; uint32_t h = MEM32(ecx + 0x18); if (n++ < 40) tt_dbg("[WPNOWN] %08X '%s' -> owner P2, from %08X %08X %08X %08X (stack)\n", ecx, h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", MEM32(esp), MEM32(esp + 8), MEM32(esp + 12), MEM32(esp + 16)); } }
     { int sw = tt_coop_enter_weapon2(ecx, 0x00097A10u); sub_00097A10_gen(); tt_coop_weapon_post(0x00097A10u); if (sw) tt_coop_leave(); } }
 /* ---- COOP-WEAPON end ---- */
 
@@ -14900,6 +15262,7 @@ extern void sub_0003D9B0_gen(void); void sub_0003D9B0(void) { if (coop_phase) co
  * ran one level per launch, so nothing reset this. */
 void coop_level_reset(void)
 {
+    { extern int tt_fang_nplayed; tt_fang_nplayed = 0; }   /* (2.0.3: Fangorn's cutscenes as new) */
     coop_slot_set(0); coop_slot_fresh(1); coop_slot_fresh(2);   /* (2.1) players 3 and 4: as new for the level */
     { extern int tt_nallobj; tt_nallobj = 0; }   /* (the linked objects: the new level's from now) */
     coop_reckey_lv0 = coop_nreckey;
@@ -15017,14 +15380,14 @@ void sub_000EBF10(void)
     int k;
     if (getenv("TT_VS_MUSICLOG")) { static int n; if (n++ < 60) { char b[400]; int o = 0;
         for (k = 1; k <= 10 && o < 360; k++) { uint32_t a = MEM32(esp + 4 * k);
-            if (a >= 0x10000u && a < 0x84000000u && MEM8(a) >= '0' && MEM8(a) <= 'z') o += snprintf(b + o, sizeof b - o, " [%d]\"%.24s\"", k, (const char *)XBOX_PTR(a));
+            if (a >= 0x10000u && a < 0x88000000u && MEM8(a) >= '0' && MEM8(a) <= 'z') o += snprintf(b + o, sizeof b - o, " [%d]\"%.24s\"", k, (const char *)XBOX_PTR(a));
             else o += snprintf(b + o, sizeof b - o, " [%d]%X", k, a); }
         { uint32_t k2, cs[12]; int m = 0; for (k2 = 0; k2 < 0x400 && m < 12; k2 += 4) { uint32_t v = MEM32(esp + k2); if (v >= 0x12000u && v < 0x170000u) cs[m++] = v; }
           o += snprintf(b + o, sizeof b - o, " | ecx %08X ra", ecx); for (k2 = 0; k2 < (uint32_t)m && o < 390; k2++) o += snprintf(b + o, sizeof b - o, " %X", cs[k2]); }
         tt_dbg("[VSMUSIC] stream:%s\n", b); } }
     if (tt_vs_on()) for (k = 1; k <= 10; k++) {
         uint32_t a = MEM32(esp + 4 * k); const char *r;
-        if (a < 0x10000u || a >= 0x84000000u || MEM8(a) < '0' || MEM8(a) > '9') continue;
+        if (a < 0x10000u || a >= 0x88000000u || MEM8(a) < '0' || MEM8(a) > '9') continue;
         r = tt_vs_music_track_for_stream((const char *)XBOX_PTR(a));
         if (!r) continue;
         if (!gname) { extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); gname = xbox_ContiguousAlloc(64u, 16u); }
@@ -15048,7 +15411,7 @@ void tt_hero_hp_tick(void)
     if (getenv("TT_POPSCAN")) {   /* (research) where a pointer to a text starting with TT_POPSCAN's letters is kept */
         static uint32_t seen[64]; COOP_PS int ns; const char *w = getenv("TT_POPSCAN"); uint32_t a;
         for (a = 0x400000u; a < 0x4C0000u; a += 4) { uint32_t p = MEM32(a); int k, ok = 1, j;
-            if (p < 0x10000u || p >= 0x84000000u || (p >= 0x4000000u && p < 0x80000000u)) continue;
+            if (p < 0x10000u || p >= 0x88000000u || (p >= 0x4000000u && p < 0x80000000u)) continue;
             for (k = 0; w[k] && ok; k++) if (MEM16(p + 2 * k) != (uint8_t)w[k]) ok = 0;
             if (!ok) continue;
             for (j = 0; j < ns && seen[j] != a; j++) ;
@@ -15071,9 +15434,9 @@ void tt_hero_hp_tick(void)
     }
     if (getenv("TT_POPSCAN2")) {   /* (research) TT_POPSCAN2=word: its UTF-16 copies in memory, then every 300 ms what points at them */
         COOP_PS uint32_t str[16]; COOP_PS int nstr = -1; static uint32_t lt, seen[64]; COOP_PS int ns; const char *w = getenv("TT_POPSCAN2"); uint32_t a;
-        if (nstr < 0 && tt_game_ms > 20000u) { nstr = 0; for (a = 0x80000000u; a < 0x84000000u - 64 && nstr < 16; a += 2) { int k, ok = 1; for (k = 0; w[k] && ok; k++) if (MEM16(a + 2 * k) != (uint8_t)w[k]) ok = 0; if (ok) { str[nstr++] = a; tt_dbg("[POPSCAN2] '%s' at %08X\n", w, a); } } }
+        if (nstr < 0 && tt_game_ms > 20000u) { nstr = 0; for (a = 0x80000000u; a < 0x88000000u - 64 && nstr < 16; a += 2) { int k, ok = 1; for (k = 0; w[k] && ok; k++) if (MEM16(a + 2 * k) != (uint8_t)w[k]) ok = 0; if (ok) { str[nstr++] = a; tt_dbg("[POPSCAN2] '%s' at %08X\n", w, a); } } }
         if (nstr > 0 && tt_game_ms - lt > 300u) { lt = tt_game_ms;
-            for (a = 0x400000u; a < 0x84000000u; a += 4) { uint32_t v; int k, j; if (a == 0x4000000u) a = 0x80000000u; v = MEM32(a);
+            for (a = 0x400000u; a < 0x88000000u; a += 4) { uint32_t v; int k, j; if (a == 0x4000000u) a = 0x80000000u; v = MEM32(a);
                 for (k = 0; k < nstr; k++) if (v >= str[k] && v < str[k] + 8) break;
                 if (k == nstr) continue;
                 for (j = 0; j < ns && seen[j] != a; j++) ;
@@ -15084,7 +15447,7 @@ void tt_hero_hp_tick(void)
         for (li = 0; li < 40; li++) { uint32_t tb = MEM32(0x1BAAE4u + li * 12), n = MEM32(0x1BAAE4u + li * 12 + 4); if (tb < 0x10000u || n > 32) continue;
             for (e = 0; e < (int)n; e++) { uint32_t el = tb + e * 0xDC, tp = MEM32(el + 0x34) ? MEM32(el + 0x34) : el + 0x38, key = tp ^ MEM32(tp) ^ (MEM8(el + 0x24) << 31); char b[48]; int q = 0;
                 if (key == last[li][e]) continue; last[li][e] = key;
-                if (tp >= 0x10000u && tp < 0x84000000u) for (; q < 40 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q);
+                if (tp >= 0x10000u && tp < 0x88000000u) for (; q < 40 && MEM16(tp + 2 * q) >= 32 && MEM16(tp + 2 * q) < 127; q++) b[q] = (char)MEM16(tp + 2 * q);
                 b[q] = 0; if (q) tt_dbg("[POPLOG] t %u list %d.%d '%s' on %u at %d,%d\n", tt_game_ms, li, e, b, MEM8(el + 0x24), (int)MEM32(el + 8), (int)MEM32(el + 0xC)); } }
     }
     extern int tt_vs_on(void); COOP_PS uint32_t who[2], base[2], ours[2]; int w;
@@ -15097,7 +15460,7 @@ void tt_hero_hp_tick(void)
     for (w = 0; w < 2; w++) {
         uint32_t a = w ? (coop_mode() == 3 ? coop_p2 : 0) : (coop_mode() == 3 && coop_first_char >= 0x10000u ? coop_first_char : MEM32(0x43B15Cu));
         int32_t mx, hp, nm;
-        if (a < 0x10000u || a >= 0x84000000u) { who[w] = 0; continue; }
+        if (a < 0x10000u || a >= 0x88000000u) { who[w] = 0; continue; }
         mx = (int32_t)MEM32(a + 0x300); hp = (int32_t)MEM32(a + 0x2FC);
         if (mx <= 0 || mx > 100000) continue;
         if (a == who[w] && (uint32_t)mx == ours[w]) continue;
@@ -15166,12 +15529,27 @@ void sub_000C3B90(void)
     }
     {   /* (2.0.0, Versus) the enemies' own: through the port's mixer (versus.c, tt_vs_foe_sound), loud by how near the heroes are */
         extern int tt_vs_on(void); extern int tt_vs_foe_sound(uint32_t id, float vol);
-        if (MEM32(esp) == 0x00085B90u && tt_vs_on() && esi >= 0x10000u && esi < 0x84000000u && esi != coop_first_char && esi != coop_p2 && esi != coop_twin && MEM32(esi + 0x114) == 3u) {
+        if (MEM32(esp) == 0x00085B90u && tt_vs_on() && esi >= 0x10000u && esi < 0x88000000u && esi != coop_first_char && esi != coop_p2 && esi != coop_twin && MEM32(esi + 0x114) == 3u) {
             float vol = MEMF(esp + 8), x = MEMF(esp + 16), y = MEMF(esp + 20), d = 1e9f; int w;
             for (w = 0; w < 2; w++) { uint32_t h = w ? coop_p2 : coop_first_char; float dx, dy, dd; if (h < 0x10000u) continue; dx = MEMF(h + 0xF0) - x; dy = MEMF(h + 0xF4) - y; dd = sqrtf(dx * dx + dy * dy); if (dd < d) d = dd; }
             if (!(vol > 0.0f) || vol > 1.0f) vol = 1.0f;
             vol = fmaxf(vol, 0.6f) * (d < 15.0f ? 1.0f : d > 45.0f ? 0.3f : 1.0f - 0.7f * (d - 15.0f) / 30.0f);
             if (tt_vs_foe_sound(MEM32(esp + 4), vol)) { if (on) tt_dbg("[SNDRET] id %u: ours (an enemy's)\n", MEM32(esp + 4)); eax = 0; esp += 4; return; }
+        }
+    }
+    {   /* (2.0.3, Versus) the props' and the world's own sounds -- a barrel broken, a crate, a blow on wood or stone (0xC3B90 from 0x92206,
+         * 0x8C65A, 0x87D75 ...): placed at them by the game they came out faint or not at all, as the enemies' did (a playtest: "breaking open
+         * the water barrels ... is quiet"; a bot run on the Deeping Wall: the three sounds of each barrel's break left the mix silent). Through
+         * the software mixer from the arena's bank, loud by how near the nearest hero is (full within 15 units, 0.3 at 45; past 60 the game's
+         * own). TT_VS_GAMEPROPSOUNDS: the game's */
+        extern int tt_vs_on(void); extern int tt_vs_foe_sound(uint32_t id, float vol);
+        uint32_t from = MEM32(esp);
+        if (tt_vs_on() && from != 0x00085B90u && from != 0x000D19A2u && !getenv("TT_VS_GAMEPROPSOUNDS")) {   /* (not ours, tt_gcall) */
+            float vol = MEMF(esp + 8), x = MEMF(esp + 16), y = MEMF(esp + 20), d = 1e9f; int w;
+            for (w = 0; w < 4; w++) { uint32_t h = w == 1 ? coop_p2 : coop_hero_n(w); float dx, dy, dd; if (h < 0x10000u) continue; dx = MEMF(h + 0xF0) - x; dy = MEMF(h + 0xF4) - y; dd = sqrtf(dx * dx + dy * dy); if (dd < d) d = dd; }
+            if (!(vol > 0.0f) || vol > 1.0f) vol = 1.0f;
+            if (d < 60.0f) { vol = fmaxf(vol, 0.6f) * (d < 15.0f ? 1.0f : d > 45.0f ? 0.3f : 1.0f - 0.7f * (d - 15.0f) / 30.0f);
+                if (tt_vs_foe_sound(MEM32(esp + 4), vol)) { if (on) tt_dbg("[SNDRET] id %u: ours (the world's, from %06X)\n", MEM32(esp + 4), from); eax = 0; esp += 4; return; } }
         }
     }
     if (MEM32(esp) == 0x00085B90u) { tt_snd3d_hit_id = MEM32(esp + 4); tt_snd3d_hit_vol = MEM32(esp + 8); tt_snd3d_hit_pitch = MEM32(esp + 12); }
@@ -15194,6 +15572,7 @@ void sub_000C3640(void)
 {
     static int on = -1; if (on < 0) on = getenv("TT_SNDLOG") != NULL;
     if (on) { static int n; if (n++ < 3000) tt_dbg("[SNDID] t %u id %u from %08X args %08X %08X %08X\n", coop_now(), MEM32(esp + 4), MEM32(esp), MEM32(esp + 8), MEM32(esp + 12), MEM32(esp + 16)); }
+    if (getenv("TT_SNDBLOCK") && (uint32_t)atoi(getenv("TT_SNDBLOCK")) == MEM32(esp + 4)) { eax = 0; esp += 4; return; }   /* (testing; cdecl) */
     sub_000C3640_gen();
 }
 
@@ -15202,13 +15581,13 @@ void sub_000C3640(void)
 extern void sub_0002D5C0_gen(void);
 void sub_0002D5C0(void)
 {
-    uint32_t o = ecx, m = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x5ECu) : 0, n = m >= 0x10000u && m < 0x84000000u ? MEM32(m + 0x2Cu) : 0xFFFFFFFFu;
+    uint32_t o = ecx, m = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x5ECu) : 0, n = m >= 0x10000u && m < 0x88000000u ? MEM32(m + 0x2Cu) : 0xFFFFFFFFu;
     if (getenv("TT_SKINDRAWLOG")) { static uint32_t seen[64]; static int ns; int i; for (i = 0; i < ns && seen[i] != o; i++) ;
         if (i == ns && ns < 64) { seen[ns++] = o; tt_dbg("[SKINDRAW] %08X vt %08X owner %08X model %08X parts %u\n", o, MEM32(o), MEM32(o + 0x11Cu), m, n); } }
-    if (m < 0x10000u || m >= 0x84000000u || n > 64u) {
+    if (m < 0x10000u || m >= 0x88000000u || n > 64u) {
         static int k; if (k++ < 10) { uint32_t h = o >= 0x10000u ? MEM32(o + 0x18u) : 0, q;
             tt_dbg("[SKINDRAW] %08X (vt %08X, owner %08X, '%s'): model %08X with %u parts -- not drawn\n", o, o >= 0x10000u ? MEM32(o) : 0, o >= 0x10000u ? MEM32(o + 0x11Cu) : 0,
-                   h >= 0x10000u && h < 0x84000000u ? (const char *)XBOX_PTR(h) : "?", m, n);
+                   h >= 0x10000u && h < 0x88000000u ? (const char *)XBOX_PTR(h) : "?", m, n);
             if (k == 1 && getenv("TT_SKINDRAWLOG")) for (q = 0; q < 0x620; q += 0x20) tt_dbg("[SKINDRAW]   +%03X %08X %08X %08X %08X %08X %08X %08X %08X\n", q, MEM32(o + q), MEM32(o + q + 4), MEM32(o + q + 8), MEM32(o + q + 12), MEM32(o + q + 16), MEM32(o + q + 20), MEM32(o + q + 24), MEM32(o + q + 28)); }
         esp += 8; return;   /* (ret 4) */
     }
@@ -15244,7 +15623,7 @@ void sub_000CCF30(void)
 static void coop_sword_one(uint8_t *A2, uint32_t *S2, unsigned *LV, int *OK)
 {
     static uint8_t cur[COOP_SW_AN]; uint32_t cs[COOP_SW_NS], i, p2 = coop_p2, sp, r0, r1, r2; int sw;
-    if (coop_mode() != 3 || p2 < 0x10000u || p2 >= 0x84000000u || coop_depth || MEM32(0x43B15Cu) == p2 || getenv("TT_COOP_P1SILVER")
+    if (coop_mode() != 3 || p2 < 0x10000u || p2 >= 0x88000000u || coop_depth || MEM32(0x43B15Cu) == p2 || getenv("TT_COOP_P1SILVER")
         || MEM32(0x4AD050u) != 6u || MEM32(p2) != 0x1741C0u || p2 != coop_twin) { (*OK) = 0; return; }   /* (in play only, on a live twin: after a level, its stats and save, coop_p2 was a freed actor -- a crash, a playtest) */
     for (i = 0; i < COOP_SW_AN; i++) cur[i] = MEM8(COOP_SW_A0 + i);
     for (i = 0; i < COOP_SW_NS; i++) cs[i] = MEM32(coop_sw_sc[i]);
@@ -15322,7 +15701,7 @@ static void coop_meter_slot(void)   /* in slot coop_slot_cur's state */
         st = coop_p2_state() + 0x400;
         if (p2 >= 0x10000u && COOP_P2REC) { for (j = 0; j < 0x348; j += 4) MEM32(COOP_P2REC + j) = *(const uint32_t *)(st + j); coop_p2rec_ok = 1; } }
     if (getenv("TT_COOP_PXMETERLOG")) { COOP_PS uint32_t lt; if (coop_now() - lt > 1000u) { lt = coop_now(); tt_dbg("[PXMETER] slot %d: actor %08X rec ok %d cam %08X meter %.2f\n", coop_slot_cur, p2, coop_p2rec_ok, MEM32(0x43B15Cu), coop_p2rec_ok ? MEMF(COOP_P2REC + 4) : -1.0f); } }
-    if (p2 < 0x10000u || p2 >= 0x84000000u || MEM32(p2) != 0x1741C0u || !coop_p2rec_ok || MEM32(0x43B15Cu) == p2) { coop_gmx_ok = 0; return; }
+    if (p2 < 0x10000u || p2 >= 0x88000000u || MEM32(p2) != 0x1741C0u || !coop_p2rec_ok || MEM32(0x43B15Cu) == p2) { coop_gmx_ok = 0; return; }
     for (i = 0; i < COOP_GM_AN; i++) cur[i] = MEM8(COOP_GM_A0 + i);
     for (i = 0; i < COOP_GM_NS; i++) cs[i] = MEM32(coop_gm_sc[i]);
     if (coop_gmx_lv != coop_level_n || !coop_gmx_ok) { coop_gmx_lv = coop_level_n; memcpy(coop_gmx_a, cur, COOP_GM_AN);
@@ -15360,7 +15739,7 @@ void sub_000CF910(void)
 static void coop_meter_p2(void)
 {
     static uint8_t cur[COOP_GM_AN]; uint32_t cs[COOP_GM_NS], i, p2 = coop_p2, sp, r0, r1, r2; int sw; extern int coop_p2rec_ok;
-    if (coop_mode() != 3 || p2 < 0x10000u || p2 >= 0x84000000u || coop_depth || MEM32(0x43B15Cu) == p2 || getenv("TT_COOP_P1METER") || !coop_p2rec_ok
+    if (coop_mode() != 3 || p2 < 0x10000u || p2 >= 0x88000000u || coop_depth || MEM32(0x43B15Cu) == p2 || getenv("TT_COOP_P1METER") || !coop_p2rec_ok
         || MEM32(0x4AD050u) != 6u || MEM32(p2) != 0x1741C0u || p2 != coop_twin) { coop_p2_meter_ok = 0; return; }
     for (i = 0; i < COOP_GM_AN; i++) cur[i] = MEM8(COOP_GM_A0 + i);
     for (i = 0; i < COOP_GM_NS; i++) cs[i] = MEM32(coop_gm_sc[i]);
@@ -15439,8 +15818,8 @@ void coop_p2hit_note(uint32_t v) { coop_p2hits[coop_p2hit_i & 15].e = v; coop_p2
 extern void sub_0009D490_gen(void);
 void sub_0009D490(void)
 {
-    uint32_t rec = ecx, self = MEM32(0x43B4A4u), own = self >= 0x10000u && self < 0x84000000u ? MEM32(self + 0x11C) : 0, sv[4]; int mine, hit = 0, q;
-    if (tt_vs_on() && rec >= 0x10000u && rec < 0x84000000u && !getenv("TT_VS_NOSTANCEFIX")) {
+    uint32_t rec = ecx, self = MEM32(0x43B4A4u), own = self >= 0x10000u && self < 0x88000000u ? MEM32(self + 0x11C) : 0, sv[4]; int mine, hit = 0, q;
+    if (tt_vs_on() && rec >= 0x10000u && rec < 0x88000000u && !getenv("TT_VS_NOSTANCEFIX")) {
         /* (2.0.0) Versus: a hero record whose stance multipliers are empty (0: the extra heroes' records, the Ent's) took every
          * blow of his to nothing -- the Ent's blows reached the enemies and did no harm (a playtest: "the Ents ... seem unable to do
          * any damage"). For the call, an empty one is 1 */
@@ -15464,21 +15843,21 @@ void sub_0009D490(void)
 extern void sub_00091920_gen(void);
 void sub_00091920(void)
 {
-    uint32_t o = ecx, r = MEM32(esp + 4), at = r >= 0x10000u && r < 0x84000000u ? MEM32(r + 0x1C) : 0, add = 0, rc = 0, st0 = 0, fx0 = 0; int sw = 0;
+    uint32_t o = ecx, r = MEM32(esp + 4), at = r >= 0x10000u && r < 0x88000000u ? MEM32(r + 0x1C) : 0, add = 0, rc = 0, st0 = 0, fx0 = 0; int sw = 0;
     /* (1.9.9) any object player 1 can damage, not only the props: the boxes, Fangorn's log, the Breached Wall's catapult, the enemies'
      * shields (a heavy blow of player 2's never broke one) -- a playtest: "any object that player 1 can break so should 2 be able to".
      * Objects that take player 2's hits already (the enemies) are left as they were. TT_COOP_P2PROPONLY: the props only, as in 1.9.8 */
     {   /* (2.1) players 3 and 4 too (and in Versus every player): an object the player's hits break (its +0x574 has the player's bit) takes theirs --
          * the props, the boxes, Fangorn's log, the catapults -- not a character (the heroes and the enemies have their own rules). A playtest: "any player
          * should be able to break any interactable object". TT_VS_NOALLPROPHIT: as before */
-        int pl = at >= 0x10000u && at < 0x84000000u ? tt_coop_player_of(at) : 0;
-        if (pl >= 1 && !(pl == 2 && at == coop_p2 && !tt_vs_on()) && !(pl == 1 && !tt_vs_on()) && coop_mode() == 3 && o >= 0x10000u && o < 0x84000000u && MEM32(o) != 0x1741C0u && !tt_coop_player_of(o)
+        int pl = at >= 0x10000u && at < 0x88000000u ? tt_coop_player_of(at) : 0;
+        if (pl >= 1 && !(pl == 2 && at == coop_p2 && !tt_vs_on()) && !(pl == 1 && !tt_vs_on()) && coop_mode() == 3 && o >= 0x10000u && o < 0x88000000u && MEM32(o) != 0x1741C0u && !tt_coop_player_of(o)
             && !getenv("TT_VS_NOALLPROPHIT") && (MEM32(o + 0x574) & 2u) && !(MEM32(o + 0x574) & (1u << (MEM32(at + 0x114) & 31u)))) {
             add = 1u << (MEM32(at + 0x114) & 31u); MEM32(o + 0x574) |= add;
             { static unsigned n; if (n++ < 20) tt_dbg("[COOPPROP] player %d's hit on '%s' (damage %d): taken as the player's\n", pl, coop_nm(o), (int32_t)MEM32(r + 0x14)); }
         }
     }
-    if (!add && coop_mode() == 3 && coop_p2 >= 0x10000u && at == coop_p2 && o >= 0x10000u && o < 0x84000000u && o != coop_p2 && o != coop_first_char && (!tt_vs_on() || tt_vs_is_bomb(o)) && !getenv("TT_COOP_NOP2PROPHIT")
+    if (!add && coop_mode() == 3 && coop_p2 >= 0x10000u && at == coop_p2 && o >= 0x10000u && o < 0x88000000u && o != coop_p2 && o != coop_first_char && (!tt_vs_on() || tt_vs_is_bomb(o)) && !getenv("TT_COOP_NOP2PROPHIT")
         && (!getenv("TT_COOP_P2PROPONLY") || (MEM32(o) == 0x174980u && MEM32(o + 0x114) == 7))
         && (MEM32(o + 0x574) & 2u) && !(MEM32(o + 0x574) & (1u << (MEM32(coop_p2 + 0x114) & 31u)))) {
         uint32_t b = 1u << (MEM32(coop_p2 + 0x114) & 31u);
@@ -15490,14 +15869,14 @@ void sub_00091920(void)
                 { COOP_PS int k; if (k++ < 12) tt_dbg("[COOPDMG] player 2's hit on an object: his stance %d, multipliers %.3f %.3f %.3f\n", (int)MEM32(rc + 0x80), MEMF(rc + 0x84), MEMF(rc + 0x88), MEMF(rc + 0x8C)); }
                 st0 = MEM32(rc + 0x80); fx0 = MEM32(rc + 0x88); MEM32(rc + 0x80) = 1u; if (MEMF(rc + 0x88) <= 0.0f) MEMF(rc + 0x88) = 1.0f; } else rc = 0; }
     }
-    {   uint32_t m0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x574) : 0, f0 = o >= 0x10000u && o < 0x84000000u ? MEM32(o + 0x110) : 0; int32_t h0 = o >= 0x10000u && o < 0x84000000u ? (int32_t)MEM32(o + 0x2FC) : 0;
+    {   uint32_t m0 = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x574) : 0, f0 = o >= 0x10000u && o < 0x88000000u ? MEM32(o + 0x110) : 0; int32_t h0 = o >= 0x10000u && o < 0x88000000u ? (int32_t)MEM32(o + 0x2FC) : 0;
         sub_00091920_gen();
         if (tt_vs_on() && h0 > 0 && tt_vs_is_bomb(o)) {   /* (2.0.0) a hero's hit on an explosive prop: who set it off (vs_blast) */
-            uint32_t wo = r >= 0x10000u && r < 0x84000000u ? MEM32(r + 4) : 0, ow = wo >= 0x10000u && wo < 0x84000000u ? MEM32(wo + 0x11C) : 0, who = at ? at : ow;
+            uint32_t wo = r >= 0x10000u && r < 0x88000000u ? MEM32(r + 4) : 0, ow = wo >= 0x10000u && wo < 0x88000000u ? MEM32(wo + 0x11C) : 0, who = at ? at : ow;
             if (who == coop_first_char || who == coop_p2) { extern void tt_vs_bomb_hit(uint32_t o, int who); tt_vs_bomb_hit(o, who == coop_p2); }
             { COOP_PS int n; if (n++ < 40) tt_dbg("[VSBOMB] hit on %s by %s: health %d -> %d\n", coop_nm(o), who == coop_p2 ? "P2" : who == coop_first_char ? "P1" : "?", h0, (int32_t)MEM32(o + 0x2FC)); } }
-        if (coop_mode() == 3 && o >= 0x10000u && o < 0x84000000u && (at == coop_p2 || at == coop_first_char) && (MEM32(o + 0x114) != 3u || getenv("TT_ENEMYDMGLOG"))) { COOP_PS int n; if (n++ < 200) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
-            at == coop_p2 ? "P2" : "P1", MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x84000000u ? coop_nm(MEM32(r + 4)) : "-", MEM32(0x1B1078u), h0, (int32_t)MEM32(o + 0x2FC), f0, MEM32(o + 0x110)); } }
+        if (coop_mode() == 3 && o >= 0x10000u && o < 0x88000000u && (at == coop_p2 || at == coop_first_char) && (MEM32(o + 0x114) != 3u || getenv("TT_ENEMYDMGLOG"))) { COOP_PS int n; if (n++ < 200) tt_dbg("[PROPDMG] '%s' role %u mask +574 %08X (added %08X) dmg %d kind %d by %s weapon '%s' grade %u: health %d -> %d, +110 %08X -> %08X\n", coop_nm(o), MEM32(o + 0x114), m0, add, (int32_t)MEM32(r + 0x14), (int32_t)MEM32(r + 0x18),
+            at == coop_p2 ? "P2" : "P1", MEM32(r + 4) >= 0x10000u && MEM32(r + 4) < 0x88000000u ? coop_nm(MEM32(r + 4)) : "-", MEM32(0x1B1078u), h0, (int32_t)MEM32(o + 0x2FC), f0, MEM32(o + 0x110)); } }
     if (rc) { MEM32(rc + 0x80) = st0; MEM32(rc + 0x88) = fx0; }
     if (add) MEM32(o + 0x574) &= ~add;
     if (sw) { extern void tt_coop_leave(void); tt_coop_leave(); }
@@ -15531,7 +15910,7 @@ void sub_0003FA60(void)
     sub_0003FA60_gen();
     if (on && tt_game_ms > 5000u) { static uint32_t seen[256]; static int ns; uint32_t key = id ^ (ra << 12); int j; char b[48]; int q = 0;
         for (j = 0; j < ns && seen[j] != key; j++) ;
-        if (j == ns && ns < 256) { seen[ns++] = key; if (eax >= 0x10000u && eax < 0x84000000u) for (; q < 44 && MEM16(eax + 2 * q) >= 32 && MEM16(eax + 2 * q) < 127; q++) b[q] = (char)MEM16(eax + 2 * q); b[q] = 0;
+        if (j == ns && ns < 256) { seen[ns++] = key; if (eax >= 0x10000u && eax < 0x88000000u) for (; q < 44 && MEM16(eax + 2 * q) >= 32 && MEM16(eax + 2 * q) < 127; q++) b[q] = (char)MEM16(eax + 2 * q); b[q] = 0;
             tt_dbg("[STRLOG] t %u id %u (0x%X) from %06X -> %08X '%s' | player %08X depth %d\n", tt_game_ms, id, id, ra, eax, b, MEM32(0x43B15Cu), coop_depth); } }
 }
 /* (research, TT_SETPOSLOG) who sets player 1's position through 0x181C0 */
@@ -15825,7 +16204,7 @@ static struct { uint32_t a, f110, who; uint32_t w[4], wf[4]; int nw; } coop_rep[
 static void coop_rep_restore(void)
 {
     int i, k;
-    for (i = 0; i < coop_nrep; i++) { uint32_t a = coop_rep[i].a; if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u) continue;
+    for (i = 0; i < coop_nrep; i++) { uint32_t a = coop_rep[i].a; if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x1741C0u) continue;
         MEM32(a + 0x110) = coop_rep[i].f110;
         for (k = 0; k < coop_rep[i].nw; k++) if (coop_rep[i].w[k] >= 0x10000u && MEM32(coop_rep[i].w[k]) == 0x174980u) MEM32(coop_rep[i].w[k] + 0x110) = coop_rep[i].wf[k]; }
     coop_nrep = 0;
@@ -15842,11 +16221,11 @@ void coop_replace_allies(void)
     for (w = 1; w <= coop_nx(); w++) {
         uint32_t h = coop_hero_n(w), ty; if (h < 0x10000u) continue; ty = MEM32(h + 0x2F0);
         for (i = 0; i < coop_nchars; i++) { uint32_t a = coop_chars[i]; int have = -1;
-            if (a < 0x10000u || a >= 0x84000000u || MEM32(a) != 0x1741C0u || MEM32(a + 0x114) != 2u || a == coop_first_char || tt_coop_player_of(a) >= 2 || MEM32(a + 0x2F0) != ty) continue;
+            if (a < 0x10000u || a >= 0x88000000u || MEM32(a) != 0x1741C0u || MEM32(a + 0x114) != 2u || a == coop_first_char || tt_coop_player_of(a) >= 2 || MEM32(a + 0x2F0) != ty) continue;
             if (coop_oc_find(a) >= 0) continue;
             for (k = 0; k < coop_nrep; k++) if (coop_rep[k].a == a) have = k;
             if (have < 0) { if (coop_nrep >= 8) continue; have = coop_nrep++; coop_rep[have].a = a; coop_rep[have].f110 = MEM32(a + 0x110); coop_rep[have].who = (uint32_t)w; coop_rep[have].nw = 0;
-                for (k = 0; k < coop_nwobjs && coop_rep[have].nw < 4; k++) { uint32_t q = coop_wobjs[k]; if (q >= 0x10000u && q < 0x84000000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == a) { coop_rep[have].w[coop_rep[have].nw] = q; coop_rep[have].wf[coop_rep[have].nw++] = MEM32(q + 0x110); } }
+                for (k = 0; k < coop_nwobjs && coop_rep[have].nw < 4; k++) { uint32_t q = coop_wobjs[k]; if (q >= 0x10000u && q < 0x88000000u && MEM32(q) == 0x174980u && MEM32(q + 0x11C) == a) { coop_rep[have].w[coop_rep[have].nw] = q; coop_rep[have].wf[coop_rep[have].nw++] = MEM32(q + 0x110); } }
                 tt_dbg("[COOPALLY] player %d's hero replaces the companion %08X '%s' (type %u)\n", w + 1, a, coop_nm(a), ty); }
             MEM32(a + 0x110) = (MEM32(a + 0x110) | 0x200000u) & ~0x21000u;   /* (off and not drawn, as a pool copy waiting) */
             for (k = 0; k < coop_rep[have].nw; k++) MEM32(coop_rep[have].w[k] + 0x110) &= ~0x21000u;
@@ -15869,8 +16248,8 @@ static uint32_t coop_px_ammo_tex(int k, uint32_t so)
 {
     static uint32_t blk[3], obj[3], src[3]; static int ok[3]; static unsigned lvl[3] = { ~0u, ~0u, ~0u };
     extern int tt_coop_px_ammo_pixels(int k, uint32_t cur, unsigned char *out);
-    uint32_t sd = so >= 0x80000000u && so < 0x84000000u ? MEM32(so + 0x10) : 0;
-    if (k < 1 || k > 2 || sd < 0x80000000u || sd >= 0x84000000u || MEM32(sd + 4) != 64u || MEM32(sd + 8) != 128u) return 0;
+    uint32_t sd = so >= 0x80000000u && so < 0x88000000u ? MEM32(so + 0x10) : 0;
+    if (k < 1 || k > 2 || sd < 0x80000000u || sd >= 0x88000000u || MEM32(sd + 4) != 64u || MEM32(sd + 8) != 128u) return 0;
     if (!blk[k]) { blk[k] = xbox_ContiguousAlloc(0x80u + 0x8000u + 0x100u, 4096u); obj[k] = blk[k] ? blk[k] + 0x8100u : 0; }
     if (!blk[k]) return 0;
     if (so != src[k] || lvl[k] != coop_level_n) {
@@ -16053,8 +16432,8 @@ static void hrec_take(uint32_t step)
     for (w = 0; w < 4; w++) { uint32_t h = (int)w <= coop_nx() ? coop_hero_n((int)w) : 0, c = 0;
         if (w == 0) c = coop_view_p1cam ? coop_view_p1cam : MEM32(0x43B164u); else if ((int)w - 1 < coop_nx()) coop_slot_peek((int)w - 1, &coop_cam, &c, 4);
         s_hrec_addr[r][2 * w] = h; s_hrec_addr[r][2 * w + 1] = c;
-        for (o = 0; o < 0x180; o++) s_hrec[r][w][o] = h >= 0x10000u && h < 0x84000000u ? MEM32(h + 4 * o) : 0;
-        for (o = 0; o < 0xC8; o++) s_crec[r][w][o] = c >= 0x10000u && c < 0x84000000u ? MEM32(c + 4 * o) : 0; }
+        for (o = 0; o < 0x180; o++) s_hrec[r][w][o] = h >= 0x10000u && h < 0x88000000u ? MEM32(h + 4 * o) : 0;
+        for (o = 0; o < 0xC8; o++) s_crec[r][w][o] = c >= 0x10000u && c < 0x88000000u ? MEM32(c + 4 * o) : 0; }
 }
 static void hrec_dump(void)
 {
@@ -16082,26 +16461,26 @@ void tt_simhash_frame(void)
     inplay++; tt_sim_frame = inplay;
     { extern int tt_net_active(void); if (!getenv("TT_SIMHASH") && !tt_net_active()) return; }
     if (inplay == 1) tt_dbg("[SIMHASH] play starts\n");
-    for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i], o; if (e < 0x10000u || e >= 0x84000000u) continue;
+    for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i], o; if (e < 0x10000u || e >= 0x88000000u) continue;
         for (o = 0xF0; o < 0xFC; o += 4) { va = MEM32(e + o); h = (h ^ va) * 16777619u; }
         h = (h ^ MEM32(e + 0x2FC)) * 16777619u; h = (h ^ MEM32(e + 0x408)) * 16777619u; }
     h = (h ^ inplay) * 16777619u;
     {   /* TT_SIMHASH_AT=a,b: every character of frames a to b, for finding where two runs part */
         static int ra = -2, rb; if (ra == -2) { const char *e = getenv("TT_SIMHASH_AT"); ra = -1; if (e) { ra = atoi(e); e = strchr(e, ','); rb = e ? atoi(e + 1) : ra; } }
-        if (ra >= 0 && (int)inplay >= ra && (int)inplay <= rb) for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e < 0x10000u || e >= 0x84000000u) continue;
+        if (ra >= 0 && (int)inplay >= ra && (int)inplay <= rb) for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i]; if (e < 0x10000u || e >= 0x88000000u) continue;
             tt_dbg("[SIMCH] %u %u %08X %08X %08X %08X hp %d st %u\n", inplay, i, e, MEM32(e + 0xF0), MEM32(e + 0xF4), MEM32(e + 0xF8), (int32_t)MEM32(e + 0x2FC), MEM32(e + 0x408)); }
     }
     { extern void tt_net_hash(uint32_t h); tt_net_hash(h); }
     if (getenv("TT_NET_CLKLOG") && (inplay < 6 || inplay % 300 == 0)) { tt_dbg("[CLKSTEP] %u ", inplay); tt_net_clock_log(); }
     if (getenv("TT_NET_WATCHOFF")) { static uint32_t last[512]; uint32_t off = (uint32_t)strtoul(getenv("TT_NET_WATCHOFF"), NULL, 0);
-        for (i = 0; i < (uint32_t)coop_nchars && i < 512; i++) { uint32_t e = coop_chars[i]; if (e < 0x10000u || e >= 0x84000000u) continue;
+        for (i = 0; i < (uint32_t)coop_nchars && i < 512; i++) { uint32_t e = coop_chars[i]; if (e < 0x10000u || e >= 0x88000000u) continue;
             if (MEM32(e + off) != last[i]) { last[i] = MEM32(e + off); tt_dbg("[WCH] %u %u %08X %08X ret %08X clk %08X %08X %08X %08X\n", inplay, i, e, last[i], MEM32(e + 0x16C), MEM32(0x4B8B9Cu), MEM32(0x4B8BB4u), MEM32(0x4B8BBCu), MEM32(0x4B8BC8u)); } } }
-    if (getenv("TT_NET_CHARDUMP") && inplay == (uint32_t)atoi(getenv("TT_NET_CHARDUMP"))) for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i], o; char b[16]; if (e < 0x10000u || e >= 0x84000000u) continue;
+    if (getenv("TT_NET_CHARDUMP") && inplay == (uint32_t)atoi(getenv("TT_NET_CHARDUMP"))) for (i = 0; i < (uint32_t)coop_nchars; i++) { uint32_t e = coop_chars[i], o; char b[16]; if (e < 0x10000u || e >= 0x88000000u) continue;
         for (o = 0; o < 0x800; o += 4) { snprintf(b, sizeof b, "%08X", MEM32(e + o)); tt_dbg("[CHD] %u %08X +%03X %s\n", i, e, o, b); } }
     hrec_take(inplay);
     {   /* (online) the last 32 steps of every character kept: at a desync both machines log them (tt_net_dump_recent) */
         uint32_t r = inplay & 127u, j; s_rec_step[r] = inplay; s_rec_n[r] = 0;
-        for (i = 0; i < (uint32_t)coop_nchars && s_rec_n[r] < 256; i++) { uint32_t e = coop_chars[i], o, hh = 2166136261u; if (e < 0x10000u || e >= 0x84000000u) continue;
+        for (i = 0; i < (uint32_t)coop_nchars && s_rec_n[r] < 256; i++) { uint32_t e = coop_chars[i], o, hh = 2166136261u; if (e < 0x10000u || e >= 0x88000000u) continue;
             for (o = 0; o < 0x600; o += 4) hh = (hh ^ MEM32(e + o)) * 16777619u;
             j = s_rec_n[r]++; s_rec[r][j][0] = e; s_rec[r][j][1] = MEM32(e + 0xF0); s_rec[r][j][2] = MEM32(e + 0xF4); s_rec[r][j][3] = MEM32(e + 0xF8); s_rec[r][j][4] = MEM32(e + 0x408); s_rec[r][j][5] = hh; }
     }
@@ -16268,12 +16647,54 @@ static void pool_trace(uint32_t ra, uint32_t b0, uint32_t a0, uint32_t aw)
 /* (2.1) when the game's pool is spent: an allocation it can't give comes from memory of ours instead (a block taken once, its use
  * started again each level) -- with four players and extra heroes the pool ran out over a long level (Amon Hen: 1.9 MB at the
  * start of play, then 1.5, 1.2 ... 0, and a crash, a playtest). TT_POOL_SPILLMB (6), TT_POOL_NOSPILL: off */
-static uint32_t pool_spill_base, pool_spill_size, pool_spill_used; static unsigned pool_spill_lv = ~0u;
+static uint32_t pool_spill_base, pool_spill_size, pool_spill_used, pool_spill_high; static unsigned pool_spill_lv = ~0u;
+/* (2.0.3) the spill memory is the memory above the console's 64 MB (xbox_ContiguousHigh: 64 MB the game's own allocators never
+ * see), kept all session: it no longer takes from the textures' and the sound's memory, and is never given back under a level.
+ * TT_POOL_SPILLLOW: 6 MB of the contiguous window as in 2.0.2 */
+static uint32_t tt_high_front;   /* (2.0.3) the memory above the window taken from its start for good (the game's push buffers, below) */
+static uint32_t tt_high_take(uint32_t size)
+{
+    extern uint32_t xbox_ContiguousHigh(uint32_t *size); extern void xbox_ContiguousHighSetInUse(uint32_t n); uint32_t hs = 0, hb = xbox_ContiguousHigh(&hs), a;
+    if (!hb || pool_spill_high || tt_high_front + size > hs / 2u) return 0;   /* (before the spill takes the rest; half of it at most) */
+    a = hb + tt_high_front; tt_high_front += size; xbox_ContiguousHighSetInUse(tt_high_front);
+    { uint32_t j; for (j = 0; j < size; j += 4) MEM32(a + j) = 0; }
+    return a;
+}
+static int pool_spill_high_take(void)
+{
+    extern uint32_t xbox_ContiguousHigh(uint32_t *size); uint32_t hs = 0, hb;
+    if (getenv("TT_POOL_SPILLLOW") || !(hb = xbox_ContiguousHigh(&hs)) || !hs || hs <= tt_high_front) return 0;
+    pool_spill_base = hb + tt_high_front; pool_spill_size = hs - tt_high_front; pool_spill_high = 1;
+    tt_dbg("[POOL] spill memory for when the pool is spent: %u MB above the console's memory, at %08X\n", hs >> 20, hb);
+    return 1;
+}
+/* (2.0.3) the game's two push buffers (D3D's CreatePushBuffer, 0x11AF30, 3 MB each, from 0xE06F0): it records each frame's drawing into one
+ * and runs it, the other the next frame. Four players on the Westfold, Boromir among them, drew more than 3 MB in a frame: the record ran past
+ * its buffer's end into the next one -- the start the game jumps to every frame -- and the picture broke up for good, then the game crashed
+ * (two playtests: the GPU's commands lost their place at 0x699000, the second buffer's start, every frame). Each now 8 MB, in the memory
+ * above the window (the 3 MB the game had given back). TT_PB3MB: as the game */
+void sub_0011AF30(void)
+{
+    uint32_t size = MEM32(esp + 4), cpu = MEM32(esp + 8), ra = MEM32(esp), o, hi;
+    extern void sub_0011AF30_gen(void);
+    sub_0011AF30_gen();
+    o = eax;
+    if (size == 0x300000u && ra == 0x000E089Cu && !cpu && o >= 0x10000u && o < 0x88000000u && MEM32(o + 0x10) == size && !getenv("TT_PB3MB")
+        && (hi = tt_high_take(getenv("TT_PBMB") ? (uint32_t)atoi(getenv("TT_PBMB")) << 20 : 0x800000u))) {
+        extern int xbox_ContiguousFree(uint32_t addr); uint32_t old = MEM32(o + 4);
+        if (old >= 0x80000000u && old < 0x84000000u) xbox_ContiguousFree(old);
+        MEM32(o + 4) = hi; MEM32(o + 0x10) = getenv("TT_PBMB") ? (uint32_t)atoi(getenv("TT_PBMB")) << 20 : 0x800000u;
+        tt_dbg("[PB] the game's push buffer %08X: %u MB at %08X (was 3 MB at %08X)\n", o, MEM32(o + 0x10) >> 20, hi, old);
+        {   /* (the GPU's fetch may jump there: physical, both buffers) */
+            extern uint32_t xbox_ContiguousHigh(uint32_t *size); extern void xbox_PbRange2(uint32_t lo, uint32_t hi); uint32_t hb = xbox_ContiguousHigh(NULL);
+            xbox_PbRange2(hb - 0x80000000u, hi - 0x80000000u + MEM32(o + 0x10)); }
+    }
+}
 static uint32_t pool_spill(uint32_t size, uint32_t align, uint32_t ra)
 {
     extern uint32_t xbox_ContiguousAlloc(uint32_t size, uint32_t alignment); uint32_t a;
     if (getenv("TT_POOL_NOSPILL") || !size || size > 0x100000u) return 0;   /* (2.1: 1 MB at most -- the Breached Wall's last asks were sizes read from broken data, 1.9 MB each, and spent it all) */
-    if (!pool_spill_base) { int mb = getenv("TT_POOL_SPILLMB") ? atoi(getenv("TT_POOL_SPILLMB")) : 6; static unsigned tried_lv = ~0u;
+    if (!pool_spill_base && !pool_spill_high_take()) { int mb = getenv("TT_POOL_SPILLMB") ? atoi(getenv("TT_POOL_SPILLMB")) : 6; static unsigned tried_lv = ~0u;
         if (tried_lv == coop_level_n) return 0; tried_lv = coop_level_n;   /* (2.0.1: once a level, as it is given back after each) */
         /* (6 MB, of the contiguous memory: 12 left the textures too little -- Westfold with four players, "arena exhausted" and a
          * crash, a playtest; from the low heap instead, the game took its addresses for something else and crashed, test runs) */
@@ -16285,6 +16706,7 @@ static uint32_t pool_spill(uint32_t size, uint32_t align, uint32_t ra)
     a = (pool_spill_base + pool_spill_used + align - 1u) & ~(align - 1u);
     if (a + size > pool_spill_base + pool_spill_size) { static int nf; if (nf++ < 5) tt_dbg("[POOL] spill memory spent too (%u bytes asked from %06X)\n", size, ra); return 0; }
     pool_spill_used = a + size - pool_spill_base;
+    if (pool_spill_high) { extern void xbox_ContiguousHighSetInUse(uint32_t n); xbox_ContiguousHighSetInUse(tt_high_front + pool_spill_used); }   /* (the GPU's offsets there) */
     { uint32_t j; for (j = 0; j < size; j += 4) MEM32(a + j) = 0; }
     { static int nl; if (nl++ < 20 || (nl & 255) == 0) tt_dbg("[POOL] the pool spent: %u bytes from %06X out of the spill memory (%u KB of it used)\n", size, ra, pool_spill_used / 1024u); }
     return a;
@@ -16296,7 +16718,12 @@ static uint32_t pool_spill(uint32_t size, uint32_t align, uint32_t ra)
 void tt_pool_spill_release(void)
 {
     extern int xbox_ContiguousFree(uint32_t addr); uint32_t sc = MEM32(0x4AD050u);
-    if (!pool_spill_base || (sc != 4u && sc != 5u) || getenv("TT_POOL_SPILLKEEP")) return;
+    if (!pool_spill_base || (sc != 4u && sc != 1u) || getenv("TT_POOL_SPILLKEEP")) return;   /* (2.0.2) the main menu (4) and the mission select (1) only: 5 is
+        * Options, opened from the pause menu in play too -- the spill memory was given back under a level still using it, and a cutscene
+        * read the freed memory and crashed (a playtest: four players at Amon Hen, "[POOL] spill memory given back" mid-level) */
+    if (pool_spill_high) {   /* (2.0.3) kept: only its use started again (as each level does) */
+        if (pool_spill_used > 16u) tt_dbg("[POOL] spill memory free again (%u KB of it used last)\n", pool_spill_used / 1024u);
+        pool_spill_used = 0; pool_spill_lv = ~0u; return; }
     tt_dbg("[POOL] spill memory given back (%u MB, %u KB of it used last)\n", pool_spill_size >> 20, pool_spill_used / 1024u);
     xbox_ContiguousFree(pool_spill_base); pool_spill_base = 0; pool_spill_size = 0; pool_spill_used = 0; pool_spill_lv = ~0u;
 }
@@ -16309,9 +16736,13 @@ static int pool_floor_take(uint32_t size)
     static int off = -1; extern int tt_coop_nplayers(void);
     if (off < 0) off = getenv("TT_POOL_NOFLOOR") != NULL;
     if (off || MEM32(0x4AD050u) != 6u || coop_mode() != 3 || tt_coop_nplayers() < 3 || MEM8(0x6B1CECu)) return 0;
-    return MEM32(0x6B1CE4u) < size + 0x30000u;
+    {   /* (2.0.3) with the memory above the console's (plenty, its own): the pool's last 1 MB kept, not 192 KB.
+         * TT_POOL_FLOORKB: that many KB (testing) */
+        static uint32_t fl; if (!fl) { const char *v = getenv("TT_POOL_FLOORKB"); extern uint32_t xbox_ContiguousHigh(uint32_t *size);
+            fl = v ? (uint32_t)atoi(v) * 1024u : xbox_ContiguousHigh(NULL) && !getenv("TT_POOL_SPILLLOW") ? 0x100000u : 0x30000u; }
+        return MEM32(0x6B1CE4u) < size + fl; }
 }
-#define POOL_WRAP(fn) extern void fn##_gen(void); void fn(void) { uint32_t ra = MEM32(esp), b0 = MEM32(0x6B1CE4u), aw = MEM32(0x6B1D04u), a0 = aw >= 0x10000u && aw < 0x84000000u ? MEM32(aw) : 0, a1 = MEM32(esp + 4), a2 = MEM32(esp + 8), a3 = MEM32(esp + 12); \
+#define POOL_WRAP(fn) extern void fn##_gen(void); void fn(void) { uint32_t ra = MEM32(esp), b0 = MEM32(0x6B1CE4u), aw = MEM32(0x6B1D04u), a0 = aw >= 0x10000u && aw < 0x88000000u ? MEM32(aw) : 0, a1 = MEM32(esp + 4), a2 = MEM32(esp + 8), a3 = MEM32(esp + 12); \
     if ((fn##_spill_ok) && pool_floor_take(a1)) { uint32_t sp0_ = pool_spill(a1, fn##_spill_align, ra); if (sp0_) { esp += 4; eax = sp0_; return; } }   /* (its ret: the return address off) */ \
     fn##_gen(); if (getenv("TT_POOLTRACE")) pool_trace(ra, b0, a0, aw); \
     if (getenv("TT_POOLTRACE") && coop_oc_building()) { static int nl; if (nl++ < 60) tt_dbg("[POOLCOPY] " #fn " from %06X (%08X %08X %08X) -> %08X, pool -%u\n", ra, a1, a2, a3, eax, b0 - MEM32(0x6B1CE4u)); } \
@@ -16330,7 +16761,7 @@ POOL_WRAP(sub_000E6D30)
  * at the first frame of play and every 10 s */
 void sub_000E6B50(void)
 {
-    uint32_t ra = MEM32(esp), b0, aw = MEM32(0x6B1D04u), a0 = aw >= 0x10000u && aw < 0x84000000u ? MEM32(aw) : 0;
+    uint32_t ra = MEM32(esp), b0, aw = MEM32(0x6B1D04u), a0 = aw >= 0x10000u && aw < 0x88000000u ? MEM32(aw) : 0;
     if (getenv("TT_POOL_TESTDRAIN") && coop_p2_t0 && coop_now() - coop_p2_t0 > 20000u && MEM32(0x6B1CE4u) > 0x10000u) { static int said; MEM32(0x6B1CE4u) = 0x10000u; if (!said++) tt_dbg("[POOL] test: the pool drained to 64 KB\n"); }
     b0 = MEM32(0x6B1CE4u);
     if (pool_floor_take(MEM32(esp + 4))) { uint32_t sp0 = pool_spill((MEM32(esp + 4) + 15u) & ~15u, 16u, ra); if (sp0) { esp += 4; eax = sp0; return; } }
@@ -16393,4 +16824,20 @@ void sub_00030360(void)
     uint32_t a0 = MEM32(esp + 4);
     sub_00030360_gen();
     if (getenv("TT_SHVOL") && a0 >= 0x10000u) shvol_check(a0 + 0x5F8u);
+}
+
+/* (2.0.3) the pause menu's cheat entry (0x000C5B50: both triggers held, then four buttons matched against the table at
+ * 0x1B13D0). TT_CHEATLOG: each call while the triggers are held, and each button taken (research) */
+extern void sub_000C5B50_gen(void);
+int tt_cheat_ran;   /* (the game's own pause looked at the cheats this frame) */
+void sub_000C5B50(void)
+{
+    uint32_t n0 = MEM32(0x43C5C0u); tt_cheat_ran = 1;
+    static int on = -1; if (on < 0) on = getenv("TT_CHEATLOG") != NULL;
+    sub_000C5B50_gen();
+    if (on) { static int n; uint32_t n1 = MEM32(0x43C5C0u), pt = MEM32(0x1CB8B4u);
+        if ((n1 != n0 || (n & 0) ) && n++ < 200) tt_dbg("[CHEAT] entered %u -> %u: %u %u %u %u | port %u held %08X used %08X\n", n0, n1, MEM32(0x43C5B0u), MEM32(0x43C5B4u), MEM32(0x43C5B8u), MEM32(0x43C5BCu), pt,
+            pt < 4u ? MEM32(0x6B278Cu + pt * 0x14Cu) : 0, pt < 4u ? MEM32(0x6B2784u + pt * 0x14Cu) : 0);
+        { static uint32_t lt; extern __declspec(dllimport) tt_dword __stdcall GetTickCount(void); if (GetTickCount() - lt > 1000u && n++ < 200) { lt = GetTickCount(); tt_dbg("[CHEAT] called (port %u, held %08X, used %08X)\n", pt, pt < 4u ? MEM32(0x6B278Cu + pt * 0x14Cu) : 0, pt < 4u ? MEM32(0x6B2784u + pt * 0x14Cu) : 0); } }
+        { static uint32_t lh; uint32_t h = pt < 4u ? MEM32(0x6B278Cu + pt * 0x14Cu) : 0; if (h != lh && n++ < 200) { lh = h; tt_dbg("[CHEAT] call: held %08X used %08X\n", h, pt < 4u ? MEM32(0x6B2784u + pt * 0x14Cu) : 0); } } }
 }

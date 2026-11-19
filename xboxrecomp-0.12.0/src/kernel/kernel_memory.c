@@ -214,10 +214,10 @@ ULONG_PTR __stdcall xbox_MmGetPhysicalAddress(PVOID BaseAddress)
      */
     uint32_t va = (uint32_t)(uintptr_t)BaseAddress;
     if (!(va >= XBOX_CONTIG_BASE &&
-          (uint64_t)va < (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE))
+          (uint64_t)va < XBOX_CONTIG_END))
         xbox_note_identity_phys(va);
     return (ULONG_PTR)((va >= XBOX_CONTIG_BASE &&
-                        (uint64_t)va < (uint64_t)XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE)
+                        (uint64_t)va < XBOX_CONTIG_END)
                      ? va - XBOX_CONTIG_BASE : va);
 }
 

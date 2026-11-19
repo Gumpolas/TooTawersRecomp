@@ -284,12 +284,12 @@ const char *tt_vs_music_track_for_stream(const char *stream)
  * names each wave's id by its place in sound\WB_<level>.xwb), decoded once each, through the software mixer */
 extern int tt_heroes_voice_src(const char *skin, int slot, char *bank, size_t bn, uint32_t *id, float *pitch);
 typedef struct { char bank[16]; uint32_t id; int16_t *pcm; uint32_t n, rate; } VsVox;
-static VsVox s_vox[160]; static int s_nvox;
+static VsVox s_vox[400]; static int s_nvox;   /* (2.0.3: 400, was 160 -- the world's sounds too) */
 static VsVox *vox_get(const char *bank, uint32_t id)
 {
     char p[900], xp[128]; FILE *f; long n; uint8_t *b = 0, *t = 0; uint32_t cnt, last = 0, base, i, k, idx = ~0u, tn; VsVox *v; int j;
     for (j = 0; j < s_nvox; j++) if (s_vox[j].id == id && !strcmp(s_vox[j].bank, bank)) return s_vox[j].pcm ? &s_vox[j] : 0;
-    if (s_nvox >= 160) return 0;
+    if (s_nvox >= 400) return 0;
     v = &s_vox[s_nvox++]; memset(v, 0, sizeof *v); snprintf(v->bank, sizeof v->bank, "%s", bank); v->id = id;
     snprintf(xp, sizeof xp, "\\Device\\CdRom0\\sound\\%s.tbl", bank);
     if (!tt_host_path(xp, p, sizeof p) || !(f = fopen(p, "rb"))) return 0;
@@ -394,7 +394,7 @@ static VsVox *vox_get_named(const char *xwb, const char *name)
     char p[900], xp[128], key[16]; FILE *f; uint8_t hd[0x30], *nm = 0, *en = 0, *w = 0; uint32_t cnt, esz, nsz, i, idx = ~0u; VsVox *v; int j;
     snprintf(key, sizeof key, "%.15s", name);
     for (j = 0; j < s_nvox; j++) if (s_vox[j].id == 0xFFFFFFFEu && !strcmp(s_vox[j].bank, key)) return s_vox[j].pcm ? &s_vox[j] : 0;
-    if (s_nvox >= 160) return 0;
+    if (s_nvox >= 400) return 0;
     v = &s_vox[s_nvox++]; memset(v, 0, sizeof *v); snprintf(v->bank, sizeof v->bank, "%s", key); v->id = 0xFFFFFFFEu;
     snprintf(xp, sizeof xp, "\\Device\\CdRom0\\sound\\%s.xwb", xwb);
     if (!tt_host_path(xp, p, sizeof p) || !(f = fopen(p, "rb"))) return 0;

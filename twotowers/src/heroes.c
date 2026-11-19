@@ -3102,7 +3102,7 @@ static void hero_size_prepare(const char *path,int g)
 }
 static void hero_size_bind(uint32_t base,int g)
 {
-    if(g!=s_size_guest||!s_size_plan.count||base<0x80000000u||s_size_len>0x84000000u-base)return;
+    if(g!=s_size_guest||!s_size_plan.count||base<0x80000000u||s_size_len>0x88000000u-base)return;
     if(G32(base)!=9||G32(base+4)!=s_size_tab)return;
     unsigned char *d=(unsigned char *)(xbox_GetMemoryOffset()+base);
     if(!ts_apply(&s_size_plan,d,s_size_len,1.0f,1.0f)){
@@ -4078,7 +4078,7 @@ void tt_heroes_endlvl_show(const char *skin)
     if (!s_end_mem) {   /* where the game keeps the picture it read */
         uint8_t *base = (uint8_t *)xbox_GetMemoryOffset();
         if (!endlvl_pic(s_end_loaded, cur)) { tt_dbg("[HEROES] results picture: the one read not found in its file\n"); s_end_loaded = -2; return; }
-        for (a = 0x80000000u; a + 0x10000u <= 0x84000000u; a += 0x80u) if (*(uint32_t *)(base + a) == *(uint32_t *)cur && !memcmp(base + a, cur, 0x10000)) { s_end_mem = a; break; }
+        for (a = 0x80000000u; a + 0x10000u <= 0x88000000u; a += 0x80u) if (*(uint32_t *)(base + a) == *(uint32_t *)cur && !memcmp(base + a, cur, 0x10000)) { s_end_mem = a; break; }
         if (!s_end_mem) { tt_dbg("[HEROES] results picture: not found in memory\n"); s_end_loaded = -2; return; }
         s_end_shown = s_end_loaded;
         tt_dbg("[HEROES] results picture of hero 4 at %08X (%s's)\n", s_end_mem, s_end_loaded >= 0 ? s_skins[s_end_loaded].name : "isildur");
@@ -5110,7 +5110,7 @@ static void name_find(void)
     /* after "Gimli": "Isildur" (the hero lists) or "Play as Isildur" (the
      * level map's line for Isildur's level) -- only the name is changed */
     const volatile uint16_t *m = (const volatile uint16_t *)xbox_GetMemoryOffset();
-    for (va = 0x10000u; va < 0x84000000u - 64 && s_nname < 16; va += 2) {
+    for (va = 0x10000u; va < 0x88000000u - 64 && s_nname < 16; va += 2) {
         if (va == 0x03FF0000u) va = 0x80000000u;
         if (m[va / 2] != 'G' || m[va / 2 + 1] != 'i' || !u16_is(va, "Gimli", 1)) continue;
         if (name_is_ours(va + 12)) s_name_at[s_nname++] = va + 12;
@@ -5179,7 +5179,7 @@ static void upn_find(void)
     int i0;
     for (i0 = 0; i0 < UPN_MAX; i0++) { free(s_upn_orig[i0]); free(s_upn_now[i0]); s_upn_orig[i0] = s_upn_now[i0] = NULL; }
     s_upn_n = 0;
-    for (va = 0x10000u; va < 0x84000000u - 64 && s_upn_n < UPN_MAX; va += 2) {
+    for (va = 0x10000u; va < 0x88000000u - 64 && s_upn_n < UPN_MAX; va += 2) {
         uint32_t s0, e, k;
         if (va == 0x03FF0000u) va = 0x80000000u;
         if (m[va / 2] != 'T' || !u16_is(va, "Triple Strike", 1) || !u16_is(va + 28, "Double Hack", 1) || !u16_is(va + 52, "Dunedain Bow", 1)) continue;
@@ -5256,7 +5256,7 @@ static void hl_find(void)
     }
     s_hla_n = hl_retain();
     s_hla_scan = GetTickCount();
-    for (va = 0x10002u; va < 0x84000000u - 600 && s_hla_n < UPN_MAX; va += 2) {
+    for (va = 0x10002u; va < 0x88000000u - 600 && s_hla_n < UPN_MAX; va += 2) {
         uint16_t c;
         if (va == 0x03FF0000u) va = 0x80000002u;
         c = m[va / 2];
@@ -5984,7 +5984,7 @@ static void keyswap_apply(void)
         e = (*q == ',') ? q + 1 : q;
         if (!*q) break;
     }
-    for (va = 0x80000000u; va < 0x84000000u; va += 4) {
+    for (va = 0x80000000u; va < 0x88000000u; va += 4) {
         uint32_t v = G32(va);
         for (i = 0; i < n; i++)
             if (v == from[i]) {
@@ -6065,10 +6065,10 @@ static void fe_spawn_extras(void)
             if (fewlog && w[i] == 0 && (kw < N_SEL || w[i + 1] == MENU_SWORD_KEY) && w[i + 2] == 0 && w[i + 3] >= 0x80000000u && w[i + 3] < 0x83FFFFF0u)
                 tt_dbg("[HEROES] fe weapon? key %X at %08X data %08X magic %08X %08X\n", w[i + 1], 0x80000000u + i * 4u, w[i + 3], w[(w[i + 3] - 0x80000000u) / 4u], w[(w[i + 3] - 0x80000000u) / 4u + 1]);
             if (w[i] == 0 && kw < N_SEL && w[i + 2] == 0 && IS_PROP(w[i + 3])) { uint32_t va = 0x80000000u + i * 4u; if (CLOSER(gwm[kw], va)) gwm[kw] = va; }
-            if (w[i] == 0x001709C4u && w[i + 1] == 0 && kt < N_SEL && w[i + 4] >= 0x80000000u && w[i + 4] < 0x84000000u)
+            if (w[i] == 0x001709C4u && w[i + 1] == 0 && kt < N_SEL && w[i + 4] >= 0x80000000u && w[i + 4] < 0x88000000u)
                 { uint32_t va = 0x80000000u + i * 4u; if (CLOSER(gwt[kt], va)) gwt[kt] = va; }
         }
-        if (w[i] == 0x001709C4u && w[i + 1] == 0 && w[i + 2] == MENU_SWORD_KEY && w[i + 4] >= 0x80000000u && w[i + 4] < 0x84000000u)
+        if (w[i] == 0x001709C4u && w[i + 1] == 0 && w[i + 2] == MENU_SWORD_KEY && w[i + 4] >= 0x80000000u && w[i + 4] < 0x88000000u)
             { uint32_t va = 0x80000000u + i * 4u; if (CLOSER(wtex, va)) wtex = va; }
         if (w[i] == 0 && k < N_SEL && w[i + 2] == 0) {
             d = w[i + 3];
@@ -6080,7 +6080,7 @@ static void fe_spawn_extras(void)
             }
         }
         k = w[i + 2] - KEY0;
-        if (w[i] == 0x001709C4u && k < N_SEL && w[i + 1] == 0 && w[i + 4] >= 0x80000000u && w[i + 4] < 0x84000000u)
+        if (w[i] == 0x001709C4u && k < N_SEL && w[i + 1] == 0 && w[i + 4] >= 0x80000000u && w[i + 4] < 0x88000000u)
             { uint32_t va = 0x80000000u + i * 4u; if (CLOSER(tex[k], va)) tex[k] = va; }
     }
     for (g = 0; g < N_SEL; g++) {   /* all four, or none yet */
@@ -6420,11 +6420,11 @@ static int wop_is_him(void)
     e = ctx + 0x188 + (uint32_t)i * 0xE4u;
     for (q = 0; q < 0xE4u; q += 4) if (G32(e + q) == k1 || G32(e + q) == k2) return 1;
     act = G32(e + 8);
-    if (act < 0x80000000u || act >= 0x84000000u - 0x800u) return -1;
+    if (act < 0x80000000u || act >= 0x88000000u - 0x800u) return -1;
     for (q = 0; q < 0x800u; q += 4) {
         uint32_t v = G32(act + q);
         if (v == k1 || v == k2) return 1;
-        if (v >= 0x80000000u && v < 0x84000000u - 8u && (G32(v + 4) == k1 || G32(v + 4) == k2)) return 1;
+        if (v >= 0x80000000u && v < 0x88000000u - 8u && (G32(v + 4) == k1 || G32(v + 4) == k2)) return 1;
     }
     return 0;
 }
@@ -6733,7 +6733,7 @@ static uint32_t s_rock_obj[8]; static int s_rock_burst[8], s_self_burst;   /* (h
 static unsigned s_burst_n;   /* the fire pots' bursts (testing: TT_SHOTLOG) */
 void tt_partlog(int kind, uint32_t a, uint32_t b, uint32_t c)
 {
-    if (kind == 0 && a == 0x73u && G32(tt_guest_esp()) == 0x000D76ADu && !s_self_burst && b >= 0x10000u && b < 0x84000000u) {   /* a fire pot's burst (sub_000D7530): one of his? */
+    if (kind == 0 && a == 0x73u && G32(tt_guest_esp()) == 0x000D76ADu && !s_self_burst && b >= 0x10000u && b < 0x88000000u) {   /* a fire pot's burst (sub_000D7530): one of his? */
         int i;
         s_burst_n++;
         {   /* (the nearest still unburst: where it lies, or the one it struck, within a few units) */
@@ -6754,7 +6754,7 @@ void tt_partlog(int kind, uint32_t a, uint32_t b, uint32_t c)
     if (kind == 1) { if (g++ < 50) tt_dbg("[GLOW] args %08X %08X %08X\n", a, b, c); return; }
     if (kind == 2) { if (g++ < 50) tt_dbg("[SHIMMER] args %08X %08X %08X\n", a, b, c); return; }
     { static DWORD last; if (GetTickCount() - last > 5000) { int i; last = GetTickCount(); for (i = 0; i < 1024; i++) if (n[i] > 20) tt_dbg("[PARTN] id %X n %u\n", i, n[i]); } }
-    if (a < 1024 && n[a]++ < 3) tt_dbg("[PART] id %X from %08X pos %.1f %.1f %.1f\n", a, G32(tt_guest_esp()), b >= 0x10000u && b < 0x84000000u ? GF(b) : 0, b >= 0x10000u && b < 0x84000000u ? GF(b + 4) : 0, b >= 0x10000u && b < 0x84000000u ? GF(b + 8) : 0);
+    if (a < 1024 && n[a]++ < 3) tt_dbg("[PART] id %X from %08X pos %.1f %.1f %.1f\n", a, G32(tt_guest_esp()), b >= 0x10000u && b < 0x88000000u ? GF(b) : 0, b >= 0x10000u && b < 0x88000000u ? GF(b + 4) : 0, b >= 0x10000u && b < 0x88000000u ? GF(b + 8) : 0);
     (void)c;
 }
 /* testing: TT_SWEEPLOG -- script callbacks counted (22 OnKillingBlow, 24 OnBreakShield) */
@@ -6875,9 +6875,9 @@ static int prec_at(uint32_t va, uint32_t id)
 static uint32_t proj_record(uint32_t pid)
 {
     uint32_t va, base = s_prec_va;
-    if (!(base >= 0x80000000u && base < 0x84000000u && prec_at(base, 0) && prec_at(base + 0x40, 1))) {
+    if (!(base >= 0x80000000u && base < 0x88000000u && prec_at(base, 0) && prec_at(base + 0x40, 1))) {
         base = 0;
-        for (va = 0x80000000u; va < 0x84000000u - 0x1000; va += 4)
+        for (va = 0x80000000u; va < 0x88000000u - 0x1000; va += 4)
             if (prec_at(va, 0) && prec_at(va + 0x40, 1) && G32(va + 0x7C) == 0u) { base = va; break; }
         s_prec_va = base;
         if (getenv("TT_SHOTLOG")) {
@@ -6975,15 +6975,15 @@ static int s_ec_n;
 static void effect_colour(uint32_t id, int mode)
 {
     uint32_t db = G32(0x32AF90u), t, n, i, k, q;
-    if (db < 0x10000u || db >= 0x84000000u) return;
+    if (db < 0x10000u || db >= 0x88000000u) return;
     t = db + G32(db + 0x1C); n = G32(db + 0xC);
     if (n > 4096) return;
     for (i = 0; i < n; i++) if (G32(t + 8 * i) == id) {
         uint32_t arr = G32(t + 8 * i + 4);
-        if (arr < 0x80000000u || arr >= 0x84000000u) return;
+        if (arr < 0x80000000u || arr >= 0x88000000u) return;
         for (k = 0; k < 8; k++) {
             uint32_t e = G32(arr + 4 * k);
-            if (e < 0x80000000u || e >= 0x84000000u - 0x200) continue;
+            if (e < 0x80000000u || e >= 0x88000000u - 0x200) continue;
             for (q = 0; q < 0x180; q += 4) if (G32(e + q) == 0x000C0BB8u && G32(e + q + 4) == 0x00034C70u) {
                 int c, j;
                 for (c = 0; c < 2; c++) {
@@ -7053,7 +7053,7 @@ static void fall_catch_frame(void)
     if (off < 0) off = getenv("TT_NOCATCH") != NULL;
     if (off || tt_heroes_guest() < 0 || (scr != 6 && scr != 8)) { pl = 0; return; }
     p = G32(0x43B15Cu);
-    if (p < 0x80000000u || p >= 0x84000000u) { pl = 0; return; }
+    if (p < 0x80000000u || p >= 0x88000000u) { pl = 0; return; }
     if (getenv("TT_SINK")) {   /* testing: "frame,count[,depth]" -- he sinks depth (3) a frame for count frames from that frame of play (a fall-through, made) */
         static int sf; int f0 = 0, cnt = 0; float dz = 3.0f;
         sf++;
@@ -7133,7 +7133,7 @@ static void anim_probe(void)
     static uint32_t prev[0x800], obj;
     uint32_t p = G32(0x43B15Cu), q;
     if (from == -2) { const char *e = getenv("TT_ANIMPROBE"); from = -1; if (e) sscanf(e, "%d,%d", &from, &cnt); }
-    if (from < 0 || p < 0x80000000u || p >= 0x84000000u - 0x2000u) return;
+    if (from < 0 || p < 0x80000000u || p >= 0x88000000u - 0x2000u) return;
     ++fr;
     if (p != obj) { obj = p; for (q = 0; q < 0x800; q++) prev[q] = G32(p + 4 * q); return; }
     {   /* (only while he moves: from = frames to skip once moving, cnt = frames logged) */
@@ -7185,7 +7185,7 @@ static void sprint_frame(void)
         mode = !e || !*e || !_stricmp(e, "toggle") || !strcmp(e, "1") ? 1 : !_stricmp(e, "hold") ? 2 : 0;
     }
     if (!mode || s_guest < 0 || s_guest >= N_EXTRA || strcmp(s_skins[s_guest].name, "sauron")
-        || G8(HERO_BYTE) != 4 || G32(0x4AD050u) != 6 || p < 0x80000000u || p >= 0x84000000u - 0x1000u) {
+        || G8(HERO_BYTE) != 4 || G32(0x4AD050u) != 6 || p < 0x80000000u || p >= 0x88000000u - 0x1000u) {
         static int nlog;
         if (l3 && !was_l3 && G32(0x4AD050u) == 6 && nlog++ < 10)
             tt_dbg("[SPRINT] button, not sprinting: mode %d, guest %d (%s), hero %d\n", mode, s_guest,
@@ -7260,7 +7260,7 @@ static void steer_frame(void)
     float turn, now_yaw;
     int moving;
     static int off;
-    if (!tt_steer_active || p < 0x80000000u || p >= 0x84000000u - 0x200u || tt_in_scene()) {
+    if (!tt_steer_active || p < 0x80000000u || p >= 0x88000000u - 0x200u || tt_in_scene()) {
         if (++off > 15) { have = 0; tt_steer_rot = 0; }   /* (a moment's lapse keeps the way he was going) */
         tt_steer_turn = 0;
         return;
@@ -7316,7 +7316,7 @@ static void yaw_find(void)   /* testing: TT_YAWFIND -- the player's words that f
     uint32_t p = G32(0x43B15Cu), q;
     float ax, ay, a;
     char ln[1500]; int l = 0;
-    if (!getenv("TT_YAWFIND") || p < 0x80000000u || p >= 0x84000000u - 0x1000u || (++fr % 10)) return;
+    if (!getenv("TT_YAWFIND") || p < 0x80000000u || p >= 0x88000000u - 0x1000u || (++fr % 10)) return;
     ax = GF(p + 0x60); ay = GF(p + 0x64);
     a = atan2f(ay, ax);
     l += snprintf(ln + l, sizeof ln - l, "[YAW] mat %.3f %.3f %.3f %.3f a %.3f:", GF(p + 0x60), GF(p + 0x64), GF(p + 0x70), GF(p + 0x74), a);
@@ -7373,7 +7373,7 @@ void tt_framelog(void)
     fall_catch_frame();
     if (getenv("TT_POSLOGF")) {   /* testing: the player's place (0x43B15C +0xF0) every 15 frames */
         static unsigned fr; uint32_t p = G32(0x43B15Cu);
-        if (++fr % 15 == 0 && p >= 0x80000000u && p < 0x84000000u) tt_dbg("[POSF] %u %.2f %.2f %.2f\n", fr, GF(p + 0xF0), GF(p + 0xF4), GF(p + 0xF8));
+        if (++fr % 15 == 0 && p >= 0x80000000u && p < 0x88000000u) tt_dbg("[POSF] %u %.2f %.2f %.2f\n", fr, GF(p + 0xF0), GF(p + 0xF4), GF(p + 0xF8));
     }
     select_gone();   /* the select gone: the bank's own sounds back */
     {   /* Sauron's bolt red, Gandalf's white: once the level's effects are in, now and then (cheap: one effect) */
@@ -7398,7 +7398,7 @@ void tt_framelog(void)
         static int done;
         uint32_t db = G32(0x32AF90u), id = (uint32_t)strtoul(getenv("TT_PARTDUMP"), NULL, 0), t, n, i, k, q;
         if (!done) tt_dbg("[PART] db %08X\n", db);
-        if (!done && db >= 0x10000u && db < 0x84000000u) {
+        if (!done && db >= 0x10000u && db < 0x88000000u) {
             done = 1;
             t = db + G32(db + 0x1C); n = G32(db + 0xC);
             tt_dbg("[PART] db %08X %u effects\n", db, n);
@@ -7412,7 +7412,7 @@ void tt_framelog(void)
                     if (!e) continue;
                     tt_dbg("[PART] emitter %u at %08X\n", k, e);
                     for (q = 0; q < 0x40; q += 4) tt_dbg("[PART]   +%02X %08X %.3f\n", q, G32(e + q), GF(e + q));
-                    { uint32_t d = G32(e + 0x10); if (d >= 0x10000u && d < 0x84000000u) for (q = 0; q < 0x200; q += 4) tt_dbg("[PART]     d+%03X %08X %.3f\n", q, G32(d + q), GF(d + q)); }
+                    { uint32_t d = G32(e + 0x10); if (d >= 0x10000u && d < 0x88000000u) for (q = 0; q < 0x200; q += 4) tt_dbg("[PART]     d+%03X %08X %.3f\n", q, G32(d + q), GF(d + q)); }
                 }
             }
         }
@@ -7508,7 +7508,7 @@ void tt_framelog(void)
         float sx, sy, sz;
         if (++fr0 == 20 && getenv("TT_TPSTART") && sscanf(getenv("TT_TPSTART"), "%f,%f,%f", &sx, &sy, &sz) == 3) {
             uint32_t va;
-            for (va = 0x80000000u; va < 0x84000000u - 0x100; va += 16)
+            for (va = 0x80000000u; va < 0x88000000u - 0x100; va += 16)
                 if (fabsf(GF(va + 0x30) - sx) < 1.5f && fabsf(GF(va + 0x34) - sy) < 1.5f && fabsf(GF(va + 0x38) - sz) < 1.5f && GF(va + 0x3C) == 1.0f
                     && fabsf(GF(va + 0x28) - 1.0f) < 0.01f && fabsf(GF(va + 0x08)) < 0.01f) {
                     static int ci;
@@ -7550,8 +7550,8 @@ void tt_sweep2(uint32_t a0, uint32_t a1, double res)
     uint32_t w, own;
     float wt[3], h, bx, by, vx, vy;
     if (on < 0) on = getenv("TT_HEADLOG") || getenv("TT_SLOTLOG") ? 1 : 0;
-    if (!on || a0 < 0x10000u || a0 >= 0x84000000u || a1 < 0x80000000u || a1 >= 0x83FFF000u) return;
-    w = G32(a0 + 0x14); if (w < 0x80000000u || w >= 0x84000000u || G32(w + 0x2F4) != 1) return;
+    if (!on || a0 < 0x10000u || a0 >= 0x88000000u || a1 < 0x80000000u || a1 >= 0x83FFF000u) return;
+    w = G32(a0 + 0x14); if (w < 0x80000000u || w >= 0x88000000u || G32(w + 0x2F4) != 1) return;
     wt[0] = GF(w + 0x60 + 48); wt[1] = GF(w + 0x60 + 52); wt[2] = GF(w + 0x60 + 56);
     if (wo < 0 && wo != -2) {
         uint32_t o;
@@ -7582,8 +7582,8 @@ void tt_sweep(uint32_t a0, double res)
     uint32_t w, id;
     static int on = -1;
     if (on < 0) on = getenv("TT_SWEEPLOG") ? 1 : 0;
-    if (!on || a0 < 0x10000u || a0 >= 0x84000000u) return;
-    w = G32(a0 + 0x14); if (w < 0x80000000u || w >= 0x84000000u) return;
+    if (!on || a0 < 0x10000u || a0 >= 0x88000000u) return;
+    w = G32(a0 + 0x14); if (w < 0x80000000u || w >= 0x88000000u) return;
     id = G32(w + 0x2F4); if (id >= 64) return;
     n[id]++; if (res >= 0) hit[id]++;
     if (getenv("TT_SWEEPT")) {   /* testing: each weapon's sweeps, at most one line per 100 ms, with the weapon's model */
@@ -7594,7 +7594,7 @@ void tt_sweep(uint32_t a0, double res)
     if (id == 1 && n[id] == 3) {   /* the player's sword: the models it refers to (a resource's key at +4) */
         uint32_t o2;
         tt_dbg("[SWP] sword res %08X key %08X\n", s_sword_res, s_sword_res ? G32(s_sword_res + 4) : 0);
-        for (o2 = 0; o2 < 0x800; o2 += 4) { uint32_t q = G32(w + o2); if (q >= 0x80000000u && q < 0x84000000u && (G32(q + 4) & 0xFF000000u) && G32(q) >= 0x80000000u && G32(q) < 0x84000000u) tt_dbg("[SWP]   w+%03X -> %08X (+4 %08X)\n", o2, q, G32(q + 4)); }
+        for (o2 = 0; o2 < 0x800; o2 += 4) { uint32_t q = G32(w + o2); if (q >= 0x80000000u && q < 0x88000000u && (G32(q + 4) & 0xFF000000u) && G32(q) >= 0x80000000u && G32(q) < 0x88000000u) tt_dbg("[SWP]   w+%03X -> %08X (+4 %08X)\n", o2, q, G32(q + 4)); }
     }
     if (GetTickCount() - last > 5000) { int i; last = GetTickCount(); for (i = 0; i < 64; i++) if (n[i]) tt_dbg("[SWP] id %d sweeps %u hits %u\n", i, n[i], hit[i]); }
 }
@@ -7711,10 +7711,10 @@ int tt_wvec(uint32_t out, uint32_t v, uint32_t m, uint32_t ret)
 static int shot_res_is(uint32_t shooter, uint32_t res, uint32_t key)
 {
     uint32_t m;
-    if (shooter < 0x80000000u || shooter >= 0x84000000u) return 0;
+    if (shooter < 0x80000000u || shooter >= 0x88000000u) return 0;
     m = G32(shooter + 0x494);
     if (res && m == res) return 1;
-    return m >= 0x80000000u && m < 0x84000000u && G32(m + 4) == key;
+    return m >= 0x80000000u && m < 0x88000000u && G32(m + 4) == key;
 }
 /* the level being loaded is the prologue (Isildur's, whoever hero 4 is) */
 static int s_prologue;
@@ -7889,7 +7889,7 @@ int tt_hk(int id, int phase, uint32_t *r)
             uint32_t st = G32(g_esp + 4), dv = G32(g_esp + 12);
             float fx = GF(dv), fy = GF(dv + 4), l = sqrtf(fx * fx + fy * fy);
             float ahead = getenv("TT_ROCKAHEAD") ? (float)atof(getenv("TT_ROCKAHEAD")) : !strcmp(s_skins[s_guest].name, "troll") ? 5.0f : 3.5f;   /* (el troll, mas ancho) */
-            if (st >= 0x80000000u && st < 0x84000000u && dv >= 0x10000u && l > 0.01f && l < 1000.0f) {
+            if (st >= 0x80000000u && st < 0x88000000u && dv >= 0x10000u && l > 0.01f && l < 1000.0f) {
                 s_rock_start = st;
                 s_rock_start_save[0] = GF(st); s_rock_start_save[1] = GF(st + 4); s_rock_start_save[2] = GF(st + 8);
                 if (!strcmp(s_skins[s_guest].name, "troll") && !getenv("TT_TROLLROCKHAND")) troll_rock_start(st, fx / l, fy / l, ahead);
@@ -7948,7 +7948,7 @@ int tt_hk(int id, int phase, uint32_t *r)
     }
     if (id == 22 && phase == 1 && s_rock_rec) {   /* his rock: on its own entry */
         uint32_t o = s_launching;
-        if (o >= 0x80000000u && o < 0x84000000u && G32(o + 0x3DC) == s_rock_rec && G32(o + 0x3D0) == 10u) {
+        if (o >= 0x80000000u && o < 0x88000000u && G32(o + 0x3DC) == s_rock_rec && G32(o + 0x3D0) == 10u) {
             static int nx;
             G32(o + 0x3DC) = s_fire_page + (s_rock_pot ? POT_REC : 0u);
             /* a fire-pot rock is the pot (4) from here: where it lands, or
@@ -7964,7 +7964,7 @@ int tt_hk(int id, int phase, uint32_t *r)
             }
             nx++;
         }
-        if (getenv("TT_SHOTLOG")) tt_dbg("[SHOT] rock %08X entry %08X\n", o, o >= 0x80000000u && o < 0x84000000u ? G32(o + 0x3DC) : 0);
+        if (getenv("TT_SHOTLOG")) tt_dbg("[SHOT] rock %08X entry %08X\n", o, o >= 0x80000000u && o < 0x88000000u ? G32(o + 0x3DC) : 0);
         s_rock_rec = 0;
     }
     if (id == 22 && phase == 1 && s_frodo_pid) {
@@ -7972,8 +7972,8 @@ int tt_hk(int id, int phase, uint32_t *r)
          * model and flight), but what it strikes is struck as by the shot he
          * had (the object's +0x3D0: a rock, 10, did the Watcher no harm) */
         uint32_t o = s_launching;
-        if (o >= 0x80000000u && o < 0x84000000u && (G32(o + 0x3D0) == 10u || G32(o + 0x3D0) == (uint32_t)TROLL_LOG_PROJ)) G32(o + 0x3D0) = s_frodo_pid;
-        if (getenv("TT_SHOTLOG")) tt_dbg("[SHOT] frodo's stone %08X: struck as projectile %u\n", o, o >= 0x80000000u && o < 0x84000000u ? G32(o + 0x3D0) : 0);
+        if (o >= 0x80000000u && o < 0x88000000u && (G32(o + 0x3D0) == 10u || G32(o + 0x3D0) == (uint32_t)TROLL_LOG_PROJ)) G32(o + 0x3D0) = s_frodo_pid;
+        if (getenv("TT_SHOTLOG")) tt_dbg("[SHOT] frodo's stone %08X: struck as projectile %u\n", o, o >= 0x80000000u && o < 0x88000000u ? G32(o + 0x3D0) : 0);
         s_frodo_pid = 0;
     }
     if (id == 22 && phase == 1 && s_memdump_arm == 1) {   /* testing: guest memory after his first shot */
@@ -7994,9 +7994,9 @@ int tt_hk(int id, int phase, uint32_t *r)
     }
     if (id == 22 && phase == 0 && getenv("TT_SHOTLOG")) {   /* testing */
         uint32_t sh = G32(g_esp + 4);
-        tt_dbg("[SHOT] ret %08X shooter %08X id %u res %08X bow %08X proj %u guest %d hero %u\n", G32(g_esp), sh, sh >= 0x80000000u && sh < 0x84000000u ? G32(sh + 0x2F4) : 0,
-               sh >= 0x80000000u && sh < 0x84000000u ? G32(sh + 0x494) : 0, s_bow_res, G32(g_esp + 16), s_guest, G8(HERO_BYTE));
-        if (sh >= 0x80000000u && sh < 0x84000000u && G32(sh + 0x494) >= 0x80000000u && G32(sh + 0x494) < 0x84000000u) { uint32_t rr = G32(sh + 0x494), q; for (q = 0; q < 0x40; q += 16) tt_dbg("[SHOT]   res+%02X %08X %08X %08X %08X\n", q, G32(rr + q), G32(rr + q + 4), G32(rr + q + 8), G32(rr + q + 12)); }
+        tt_dbg("[SHOT] ret %08X shooter %08X id %u res %08X bow %08X proj %u guest %d hero %u\n", G32(g_esp), sh, sh >= 0x80000000u && sh < 0x88000000u ? G32(sh + 0x2F4) : 0,
+               sh >= 0x80000000u && sh < 0x88000000u ? G32(sh + 0x494) : 0, s_bow_res, G32(g_esp + 16), s_guest, G8(HERO_BYTE));
+        if (sh >= 0x80000000u && sh < 0x88000000u && G32(sh + 0x494) >= 0x80000000u && G32(sh + 0x494) < 0x88000000u) { uint32_t rr = G32(sh + 0x494), q; for (q = 0; q < 0x40; q += 16) tt_dbg("[SHOT]   res+%02X %08X %08X %08X %08X\n", q, G32(rr + q), G32(rr + q + 4), G32(rr + q + 8), G32(rr + q + 12)); }
     }
     if (id == 22 && phase == 0) s_launching = r[1];
     if (id == 22) s_in_launch = phase == 0;   /* (testing, TT_SHOTLOG: the lookups a launch makes) */
@@ -8005,22 +8005,22 @@ int tt_hk(int id, int phase, uint32_t *r)
         int p2b = 0, q2, p2sk = s_playas; for (q2 = 0; q2 < 8; q2++) if (s_launching && s_beam_p2obj[q2] == s_launching) { p2b = 1; p2sk = s_beam_p2skin[q2]; }
     if (id == 22 && phase == 1 && !getenv("TT_NOBEAM") && (p2b || (!s_launch_p2 && tt_heroes_on() && G8(HERO_BYTE) == 4 && s_guest >= 0 && s_skins[s_guest].beam))) {
         int bg = p2b ? p2sk : s_guest;
-        if (p2b && getenv("TT_COOP_BEAMLOG")) { extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), pb = G32(0x43B15Cu), ob = s_launching; static int n; if (n++ < 12 && pa && ob >= 0x80000000u && ob < 0x84000000u) tt_dbg("[COOPBEAM] start %.2f %.2f %.2f aim %.2f %.2f %.2f | P2 %.2f %.2f %.2f | player %08X %.2f %.2f %.2f\n", GF(ob + 0x3E8), GF(ob + 0x3EC), GF(ob + 0x3F0), GF(ob + 0x3F8), GF(ob + 0x3FC), GF(ob + 0x400), GF(pa + 0xF0), GF(pa + 0xF4), GF(pa + 0xF8), pb, GF(pb + 0xF0), GF(pb + 0xF4), GF(pb + 0xF8)); }
+        if (p2b && getenv("TT_COOP_BEAMLOG")) { extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), pb = G32(0x43B15Cu), ob = s_launching; static int n; if (n++ < 12 && pa && ob >= 0x80000000u && ob < 0x88000000u) tt_dbg("[COOPBEAM] start %.2f %.2f %.2f aim %.2f %.2f %.2f | P2 %.2f %.2f %.2f | player %08X %.2f %.2f %.2f\n", GF(ob + 0x3E8), GF(ob + 0x3EC), GF(ob + 0x3F0), GF(ob + 0x3F8), GF(ob + 0x3FC), GF(ob + 0x400), GF(pa + 0xF0), GF(pa + 0xF4), GF(pa + 0xF8), pb, GF(pb + 0xF0), GF(pb + 0xF4), GF(pb + 0xF8)); }
         if (p2b && getenv("TT_COOP_P2GAMESTART") && !getenv("TT_COOP_BEAMGAMESTART")) {   /* (1.9.8: his shot leaves his hand now, coop_launch_pre; this only with TT_COOP_P2GAMESTART) */   /* player 2's shot starts where player 1's bow is held (5 units over his head, beside him: observed), and the staff's
              * offset below is from a hand: his own place at hand height (TT_COOP_BEAMZ, 1.4) as the start, for the beam and the bolt's sweep */
             extern uint32_t coop_p2_actor(void); uint32_t pa = coop_p2_actor(), ob = s_launching;
             float hz = getenv("TT_COOP_BEAMZ") ? (float)atof(getenv("TT_COOP_BEAMZ")) : 1.4f;
-            if (pa >= 0x80000000u && pa < 0x84000000u && ob >= 0x80000000u && ob < 0x84000000u) { GF(ob + 0x3E8) = GF(pa + 0xF0); GF(ob + 0x3EC) = GF(pa + 0xF4); GF(ob + 0x3F0) = GF(pa + 0xF8) + hz;
+            if (pa >= 0x80000000u && pa < 0x88000000u && ob >= 0x80000000u && ob < 0x88000000u) { GF(ob + 0x3E8) = GF(pa + 0xF0); GF(ob + 0x3EC) = GF(pa + 0xF4); GF(ob + 0x3F0) = GF(pa + 0xF8) + hz;
                 /* (1.9.8) ... and its end at his lock: the shot's aim (+0x3F8) is worked out in his context from player 1's
                  * (a playtest: Gandalf's bolts hit nothing; a test, at the enemy's feet 130 units under or 100 units past it).
                  * With his lock on a living enemy: its chest (TT_COOP_BEAMAIMZ, 2.6), the beam going on past it to the length
                  * the game gave (the bolt sweeps it all); without, straight ahead of him at the game's length.
                  * TT_COOP_BEAMGAMEAIM: as before */
                 if (!getenv("TT_COOP_BEAMGAMEAIM")) {
-                    uint32_t c2 = G32(pa + 0x494), t = c2 >= 0x80000000u && c2 < 0x84000000u ? G32(c2 + 0x98) : 0; float e[3], d[3], l, L0; int c3;
+                    uint32_t c2 = G32(pa + 0x494), t = c2 >= 0x80000000u && c2 < 0x88000000u ? G32(c2 + 0x98) : 0; float e[3], d[3], l, L0; int c3;
                     for (c3 = 0; c3 < 3; c3++) d[c3] = GF(ob + 0x3F8 + 4 * c3) - GF(ob + 0x3E8 + 4 * c3);
                     L0 = sqrtf(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); if (L0 < 20.0f || L0 > 200.0f) L0 = 60.0f;
-                    if (t >= 0x80000000u && t < 0x84000000u && G32(t) == 0x1741C0u && G32(t + 0x114) == 3 && (int32_t)G32(t + 0x2FC) > 0) {
+                    if (t >= 0x80000000u && t < 0x88000000u && G32(t) == 0x1741C0u && G32(t + 0x114) == 3 && (int32_t)G32(t + 0x2FC) > 0) {
                         e[0] = GF(t + 0xF0); e[1] = GF(t + 0xF4); e[2] = GF(t + 0xF8) + (getenv("TT_COOP_BEAMAIMZ") ? (float)atof(getenv("TT_COOP_BEAMAIMZ")) : 2.6f);
                     } else { float fx = GF(pa + 0x70), fy = GF(pa + 0x74), fn = sqrtf(fx * fx + fy * fy);   /* (his facing, +0x70 / +0x74, as Versus sets it) */
                         if (fn < 1e-3f) { fx = 1.0f; fy = 0.0f; fn = 1.0f; }
@@ -8035,7 +8035,7 @@ int tt_hk(int id, int phase, uint32_t *r)
         float a[3], b[3], d[3], len, step;
         int k, n, c, mine = 0, q;
         for (q = 0; q < 8; q++) if (o && (p2b ? s_beam_p2obj[q] : s_beam_obj[q]) == o) { mine = 1; if (p2b) s_beam_p2obj[q] = 0; else s_beam_obj[q] = 0; }
-        if (mine && o >= 0x80000000u && o < 0x84000000u && s_shooter >= 0x80000000u && s_shooter < 0x84000000u) {
+        if (mine && o >= 0x80000000u && o < 0x88000000u && s_shooter >= 0x80000000u && s_shooter < 0x88000000u) {
             /* (1.7) the bolt flies unseen: only the beam shows. Its model
              * (+0x494, as the weapons') was the arrows' -- the bow hand's
              * empty prop instead, the shooter's own */
@@ -8053,8 +8053,8 @@ int tt_hk(int id, int phase, uint32_t *r)
                 }
             }
             if (getenv("TT_SHOTLOG")) tt_dbg("[BEAM] bolt %08X model %08X (key %08X), the bow hand's %08X (key %08X)\n", o, m,
-                                              m >= 0x80000000u && m < 0x84000000u ? G32(m + 4) : 0, e, e >= 0x80000000u && e < 0x84000000u ? G32(e + 4) : 0);
-            if (!getenv("TT_BEAMARROW") && (m == 0 || (m >= 0x80000000u && m < 0x84000000u)) && e >= 0x80000000u && e < 0x84000000u && G32(e + 4) == EMPTY_PROP_KEY)
+                                              m >= 0x80000000u && m < 0x88000000u ? G32(m + 4) : 0, e, e >= 0x80000000u && e < 0x88000000u ? G32(e + 4) : 0);
+            if (!getenv("TT_BEAMARROW") && (m == 0 || (m >= 0x80000000u && m < 0x88000000u)) && e >= 0x80000000u && e < 0x88000000u && G32(e + 4) == EMPTY_PROP_KEY)
                 G32(o + 0x494) = e;
             /* ... and it is at the end of its flight at once: its last place
              * the start (+0x3E8), its place a step short of where it is aimed
@@ -8094,7 +8094,7 @@ int tt_hk(int id, int phase, uint32_t *r)
                     const char *ws; uint32_t wm = 0, wt;
                     skin_weapon(bg, 1, &ws, &wm, &wt);
                     for (va = s_shooter - 0x4000u; va < s_shooter + 0x4000u && !ob; va += 4)
-                        if (va - 0x494u != s_shooter && G32(va) >= 0x80000000u && G32(va) < 0x84000000u
+                        if (va - 0x494u != s_shooter && G32(va) >= 0x80000000u && G32(va) < 0x88000000u
                             && ((s_sword_res && G32(va) == s_sword_res) || (wm && G32(G32(va) + 4) == wm))) ob = va - 0x494u;
                 }
                 if (ob && !getenv("TT_TIP")) {
@@ -8155,15 +8155,15 @@ int tt_hk(int id, int phase, uint32_t *r)
                 uint32_t q, q2;
                 for (q = 0; q < 0x800; q += 4) {
                     uint32_t p = G32(a1 + q);
-                    if (p < 0x80000000u || p >= 0x84000000u) continue;
+                    if (p < 0x80000000u || p >= 0x88000000u) continue;
                     if (G32(p) == 0x7A696E61u) tt_dbg("[PRJ]   +%X -> aniz size %X\n", q, G32(p + 0xC));
-                    for (q2 = 0; q2 < 0x200; q2 += 4) { uint32_t p2 = G32(p + q2); if (p2 >= 0x80000000u && p2 < 0x84000000u && G32(p2) == 0x7A696E61u) tt_dbg("[PRJ]   +%X+%X -> aniz size %X\n", q, q2, G32(p2 + 0xC)); }
+                    for (q2 = 0; q2 < 0x200; q2 += 4) { uint32_t p2 = G32(p + q2); if (p2 >= 0x80000000u && p2 < 0x88000000u && G32(p2) == 0x7A696E61u) tt_dbg("[PRJ]   +%X+%X -> aniz size %X\n", q, q2, G32(p2 + 0xC)); }
                 }
                 tt_dbg("[PRJ]   bow res %08X\n", s_bow_res);
                 for (q = 0; q < 0x800; q += 4) {
                     uint32_t p = G32(a1 + q);
                     if (p == s_bow_res) tt_dbg("[PRJ]   +%X = bow res\n", q);
-                    if (p >= 0x80000000u && p < 0x84000000u) for (q2 = 0; q2 < 0x100; q2 += 4) if (G32(p + q2) == s_bow_res) tt_dbg("[PRJ]   +%X+%X = bow res\n", q, q2);
+                    if (p >= 0x80000000u && p < 0x88000000u) for (q2 = 0; q2 < 0x100; q2 += 4) if (G32(p + q2) == s_bow_res) tt_dbg("[PRJ]   +%X+%X = bow res\n", q, q2);
                 }
             }
         }
@@ -8327,8 +8327,8 @@ int tt_hk(int id, int phase, uint32_t *r)
                 s_frodo_pid = pj; { static int n; if (n++ < 6) tt_dbg("[HEROES] co-op: %s's %u at the Watcher, struck as projectile %u\n", c ? c : "?", to, pj); } }
             if (to != pj) G32(g_esp + 16) = to;
             { int cs = coop_ctx_skin(); if (cs >= 0 && s_skins[cs].beam && !getenv("TT_NOBEAM")) { s_beam_p2obj_log[s_beam_p2n & 7] = r[1]; s_beam_p2skin[s_beam_p2n & 7] = cs; s_beam_p2obj[s_beam_p2n++ & 7] = r[1]; } }   /* his bolt: a beam (below) */
-            { static int n; uint32_t sh = G32(g_esp + 4), m = sh >= 0x80000000u && sh < 0x84000000u ? G32(sh + 0x494) : 0;
-              if (n++ < 20) tt_dbg("[COOPSHOT] player 2 (%s) shoots: projectile %u -> %u, shooter %08X model %08X (key %08X)\n", c ? c : "copy", pj, to, sh, m, m >= 0x80000000u && m < 0x84000000u ? G32(m + 4) : 0); }
+            { static int n; uint32_t sh = G32(g_esp + 4), m = sh >= 0x80000000u && sh < 0x88000000u ? G32(sh + 0x494) : 0;
+              if (n++ < 20) tt_dbg("[COOPSHOT] player 2 (%s) shoots: projectile %u -> %u, shooter %08X model %08X (key %08X)\n", c ? c : "copy", pj, to, sh, m, m >= 0x80000000u && m < 0x88000000u ? G32(m + 4) : 0); }
         }
     }
     if (id == 22 && phase == 0 && getenv("TT_COOP_SHOTLOG")) { extern uint32_t coop_p2_actor(void); static int n; if (n++ < 60) tt_dbg("[COOPSHOT] t %lu launch: ecx %08X args %08X %08X %08X %08X %08X %08X %08X %08X | player now %08X, P1 %08X P2 %08X\n", GetTickCount(), r[1], G32(g_esp + 4), G32(g_esp + 8), G32(g_esp + 12), G32(g_esp + 16), G32(g_esp + 20), G32(g_esp + 24), G32(g_esp + 28), G32(g_esp + 32), G32(0x43B15Cu), G32(0x43B15Cu), coop_p2_actor()); }
@@ -8571,9 +8571,9 @@ void tt_hitmsg(uint32_t victim, uint32_t msg)
     uint32_t pl = G32(0x43B15Cu), att;
     float fx, fy, sx, sy, dx, dy;
     if (on < 0) on = getenv("TT_HITMSG") ? 1 : 0;
-    if (!on || msg < 0x10000u || msg >= 0x84000000u || pl < 0x80000000u) return;
+    if (!on || msg < 0x10000u || msg >= 0x88000000u || pl < 0x80000000u) return;
     att = G32(msg + 0x1C);
-    if (victim == pl || att == pl || (att >= 0x80000000u && att < 0x84000000u && G32(att) == pl)) tt_dbg("[HITMSG0] victim %08X type %u att %08X pl %08X\n", victim, G32(msg + 0x18), att, pl);
+    if (victim == pl || att == pl || (att >= 0x80000000u && att < 0x88000000u && G32(att) == pl)) tt_dbg("[HITMSG0] victim %08X type %u att %08X pl %08X\n", victim, G32(msg + 0x18), att, pl);
     if (att != pl) return;
     fx = GF(pl + 0x70); fy = GF(pl + 0x74); sx = GF(pl + 0x60); sy = GF(pl + 0x64);
     dx = GF(msg + 0x20) - GF(pl + 0xF0); dy = GF(msg + 0x24) - GF(pl + 0xF4);
@@ -8592,9 +8592,9 @@ void tt_hitbt(uint32_t msg, uint32_t sp)
     uint32_t k, t;
     char b[400]; int l = 0;
     if (on < 0) on = getenv("TT_HITMSG") ? 1 : 0;
-    if (!on || n > 60 || msg < 0x10000u || msg >= 0x84000000u) return;
+    if (!on || n > 60 || msg < 0x10000u || msg >= 0x88000000u) return;
     t = G32(msg + 0x18);
-    for (k = 0; k < 8 && sp > 0x10000u && sp < 0x84000000u && l < 360; k++) { l += snprintf(b + l, sizeof b - l, "%X ", G32(sp + 4)); sp = G32(sp); }
+    for (k = 0; k < 8 && sp > 0x10000u && sp < 0x88000000u && l < 360; k++) { l += snprintf(b + l, sizeof b - l, "%X ", G32(sp + 4)); sp = G32(sp); }
     n++;
     tt_dbg("[HITBT] type %u att %08X: %s\n", t, G32(msg + 0x1C), b);
 }

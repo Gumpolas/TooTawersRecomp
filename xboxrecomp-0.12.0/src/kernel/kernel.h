@@ -394,6 +394,14 @@ typedef VOID (__stdcall *PXBOX_SYSTEM_ROUTINE)(PVOID StartContext);
  * the layout and the bridges cannot disagree about where it is. */
 #define XBOX_CONTIG_BASE 0x80000000u
 #define XBOX_CONTIG_SIZE (64u * 1024u * 1024u)
+/* (2.0.3) Memory past the console's 64 MB, right above the contiguous window
+ * (0x84000000-0x87FFFFFF): never handed to the title's own allocators, so the
+ * game sees exactly the memory it always had; a port takes it for its own
+ * overflow (xbox_ContiguousHigh). Physical P there is 0x80000000 + P, as in
+ * the window below it. */
+#define XBOX_CONTIG_HIGH_BASE (XBOX_CONTIG_BASE + XBOX_CONTIG_SIZE)
+#define XBOX_CONTIG_HIGH_SIZE (64u * 1024u * 1024u)
+#define XBOX_CONTIG_END ((uint64_t)XBOX_CONTIG_HIGH_BASE + XBOX_CONTIG_HIGH_SIZE)
 
 /* Default GPU instance size, used when a caller asks to claim everything. */
 #define XBOX_GPU_INSTANCE_DEFAULT (128u * 1024u)

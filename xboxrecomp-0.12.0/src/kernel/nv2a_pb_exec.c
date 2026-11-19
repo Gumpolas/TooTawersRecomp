@@ -110,6 +110,11 @@ static uint32_t dma_resolve(uint32_t offset)
      * framebuffer at 0x80A6C000 stayed untouched and the screen stayed black. */
     if (offset < xbox_ContiguousAllocatedBytes())
         return XBOX_CONTIG_BASE + offset;
+    {   extern uint32_t xbox_ContiguousHighInUse(void);   /* (2.0.3) the memory above the window, as far as
+         * it is in use: physical 64 MB and up lives at 0x80000000 + P, not in the RAM mirror the same number names */
+        uint32_t hu = xbox_ContiguousHighInUse();
+        if (hu && offset >= XBOX_CONTIG_SIZE && offset - XBOX_CONTIG_SIZE < hu)
+            return XBOX_CONTIG_BASE + offset; }
     if (!surface_hits_image(offset, 1))
         return offset;
     if ((uint64_t)offset < XBOX_CONTIG_SIZE)

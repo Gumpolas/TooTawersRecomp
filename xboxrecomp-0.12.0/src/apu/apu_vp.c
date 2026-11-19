@@ -1123,6 +1123,7 @@ static int voice_resample(MCPXAPUState *d, uint16_t v, float samples[][2],
  * ============================================================ */
 
 volatile float xbox_apu_stream_gain = 1.0f, xbox_apu_3d_gain = 1.0f;
+volatile unsigned xbox_apu_stream_mixed;
 static void voice_process(MCPXAPUState *d,
                           float mixbins[NUM_MIXBINS][NUM_SAMPLES_PER_FRAME],
                           float sample_buf[NUM_SAMPLES_PER_FRAME][2],
@@ -1358,6 +1359,7 @@ static void voice_process(MCPXAPUState *d,
                     (unsigned)voice_get_mask(d, v, NV_PAVS_VOICE_CUR_PSL_START, NV_PAVS_VOICE_CUR_PSL_START_BA), ea_value, attenuate(vol[0]), attenuate(vol[1]), attenuate(vol[2]), attenuate(vol[3]), bin[0], bin[1]);
         }
     }
+    if (voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE)) { extern volatile unsigned xbox_apu_stream_mixed; xbox_apu_stream_mixed++; }   /* (a title may watch its music: a count of stream voices' frames mixed) */
     if (voice_get_mask(d, v, NV_PAVS_VOICE_CFG_FMT, NV_PAVS_VOICE_CFG_FMT_DATA_TYPE)) { static float tg = -1.0f; if (tg < 0) { const char *e = getenv("RECOMP_APU_STREAMTEST"); tg = e ? (float)atof(e) : 1.0f; } tgain = xbox_apu_stream_gain * tg; }   /* (testing: the streams' share of the mix) */
     else if (v < MCPX_HW_MAX_3D_VOICES) tgain = xbox_apu_3d_gain;
     for (int b = 0; b < 8; b++) {

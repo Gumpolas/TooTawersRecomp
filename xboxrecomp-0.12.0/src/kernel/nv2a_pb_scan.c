@@ -35,6 +35,19 @@ extern const char *recomp_cgetenv(const char *name);
 #endif
 
 extern ptrdiff_t xbox_GetMemoryOffset(void);
+/* (2.0.3) where the pushbuffer's memory ends: the window and the memory above
+ * it, when that is mapped (a port's overflow can hold a mesh's own commands) */
+extern uint32_t xbox_ContiguousHigh(uint32_t *size);
+static uint32_t pb_mem_end(void)
+{
+    static uint32_t e;
+    if (!e) { uint32_t hs = 0; xbox_ContiguousHigh(&hs); e = XBOX_CONTIG_BASE + 0x04000000u + hs - 4u; }
+    return e;
+}
+#define PB_MEM_END pb_mem_end()
+static volatile uint32_t s_pb_rng2_lo, s_pb_rng2_hi;
+/* (2.0.3) a second range of physical addresses where the pushbuffer may jump (lo, hi: physical) */
+void xbox_PbRange2(uint32_t lo, uint32_t hi) { s_pb_rng2_lo = XBOX_CONTIG_BASE | lo; s_pb_rng2_hi = XBOX_CONTIG_BASE | hi; }
 
 #define PB_MAX_METHODS 4096
 
@@ -580,7 +593,7 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
      * (RECOMP_PB_RANGE=lo-hi, physical). A jump or call anywhere else is
      * the fetch having walked into data -- stop there instead of
      * executing it (it once rewrote the semaphore DMA object). */
-    static uint32_t rng_lo = 1, rng_hi;
+    static uint32_t rng_lo = 1, rng_hi, rng2_lo, rng2_hi;
     if (rng_lo == 1) {
         const char *v = getenv("RECOMP_PB_RANGE");
         char *e;
@@ -590,7 +603,8 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
             if (*e == '-') rng_hi = XBOX_CONTIG_BASE | (uint32_t)strtoul(e + 1, NULL, 0);
         }
     }
-#define PB_TARGET_OK(t) ((t) >= rng_lo && (t) < rng_hi)
+    rng2_lo = s_pb_rng2_lo; rng2_hi = s_pb_rng2_hi;   /* (2.0.3) a second range a title sets (xbox_PbRange2: its push buffers moved above the window) */
+#define PB_TARGET_OK(t) (((t) >= rng_lo && (t) < rng_hi) || ((t) >= rng2_lo && (t) < rng2_hi))
     static int raw_on = -1;
     int raw;
     if (raw_on < 0) raw_on = !getenv("RECOMP_PB_NO_RAW");
@@ -598,12 +612,12 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
     if (trace) fprintf(stderr, "  [PBFLOW] run GET %08X -> PUT %08X\n", s_get, put);
     while (s_get != put && words < 0x200000u) {
         uint32_t w;
-        if (s_get < XBOX_CONTIG_BASE || s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) {
+        if (s_get < XBOX_CONTIG_BASE || s_get >= PB_MEM_END) {
             words = 0x200000u;               /* off the end of RAM: resync */
             break;
         }
         if (raw) {   /* (1.9.5: see PB_RAW_HDR) whole methods up to the next jump, call, return or odd word */
-            uint32_t at = s_get, lim = (put > s_get) ? put : XBOX_CONTIG_BASE + 0x04000000u - 4u, e;
+            uint32_t at = s_get, lim = (put > s_get) ? put : PB_MEM_END, e;
             while (at < lim && at - s_get < (64u << 10) * 4u) {
                 uint32_t h2 = *(const uint32_t *)(mem + at);
                 if ((h2 & 0xE0030003u) != 0 && (h2 & 0xE0030003u) != 0x40000000u) break;   /* not a method header */
@@ -664,8 +678,8 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
             if (s_async > 0 && s_exec_enabled && noninc && subch == 0 && method == 0x1818u && count > 1 && !inventory) {
                 /* (a run of inline vertex words: one record -- see pb_emit_inline) */
                 uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
-                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
-                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                uint32_t lim = (PB_MEM_END - s_get) / 4;
+                if (s_get >= PB_MEM_END) lim = 0;
                 if (avail > count) avail = count;
                 if (avail > lim) avail = lim;
                 if (avail) {
@@ -680,8 +694,8 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
                 && (noninc || method + count * 4 <= 0x0C00u)) {
                 /* (1.9.5) the constants of a SetVertexShaderConstant: one record */
                 uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
-                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
-                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                uint32_t lim = (PB_MEM_END - s_get) / 4;
+                if (s_get >= PB_MEM_END) lim = 0;
                 if (avail > count) avail = count;
                 if (avail > lim) avail = lim;
                 if (avail) {
@@ -696,8 +710,8 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
                  * with its own method was most of the time the game thread
                  * spent recording (a few hundred thousand words a frame) */
                 uint32_t avail = put > s_get ? (put - s_get) / 4 : count;
-                uint32_t lim = (XBOX_CONTIG_BASE + 0x04000000u - 4u - s_get) / 4;
-                if (s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u) lim = 0;
+                uint32_t lim = (PB_MEM_END - s_get) / 4;
+                if (s_get >= PB_MEM_END) lim = 0;
                 if (avail > count) avail = count;
                 if (avail > lim) avail = lim;
                 if (avail > 1) {
@@ -710,7 +724,7 @@ static void nv2a_pb_run_(uint32_t put_phys, uint32_t init_get_phys)
             }
             for (i = 0; i < count; i++) {
                 uint32_t m = noninc ? method : method + i * 4;
-                if (s_get == put || s_get >= XBOX_CONTIG_BASE + 0x04000000u - 4u)
+                if (s_get == put || s_get >= PB_MEM_END)
                     break;
                 if (inventory) note(subch, m);
                 if (s_exec_enabled)
